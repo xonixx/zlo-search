@@ -290,9 +290,9 @@
     </library>
     <library name="Lucene">
       <CLASSES>
-        <root url="jar://D:/JAVA_DISTR/Lucene/2007-05-31/lucene-2007-05-31_00-04-53/lucene-core-2007-05-31_00-04-53.jar!/" />
-        <root url="jar://D:/JAVA_DISTR/Lucene/2007-05-31/lucene-2007-05-31_00-04-53/lucene-demos-2007-05-31_00-04-53.jar!/" />
-        <root url="jar://D:/JAVA_DISTR/Lucene/2007-05-31/lucene-2007-05-31_00-04-53/contrib/analyzers/lucene-analyzers-2007-05-31_00-04-53.jar!/" />
+        <root url="jar://D:/TEST/Java/lib/lucene-core-2007-05-31_00-04-53.jar!/" />
+        <root url="jar://D:/TEST/Java/lib/lucene-demos-2007-05-31_00-04-53.jar!/" />
+        <root url="jar://D:/TEST/Java/lib/lucene-analyzers-2007-05-31_00-04-53.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />

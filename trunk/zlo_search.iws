@@ -140,19 +140,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Search.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zlo_web/resources/Search.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="85" column="0" selection-start="3725" selection-end="3725" vertical-scroll-proportion="0.97360706">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ZloIndexer.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/ZloIndexer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="18" selection-start="1483" selection-end="1483" vertical-scroll-proportion="0.5609756">
+            <state line="45" column="18" selection-start="1483" selection-end="1483" vertical-scroll-proportion="0.646">
               <folding />
             </state>
           </provider>
@@ -161,7 +152,7 @@
       <file leaf-file-name="PageRetriever.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/PageRetriever.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="63" selection-start="480" selection-end="480" vertical-scroll-proportion="0.19512194">
+            <state line="41" column="17" selection-start="1478" selection-end="1478" vertical-scroll-proportion="0.595">
               <folding />
             </state>
           </provider>
@@ -170,10 +161,8 @@
       <file leaf-file-name="SearchServlet.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/zlo_web/src/org/xonix/zlo/web/servlets/SearchServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="10" selection-start="984" selection-end="984" vertical-scroll-proportion="0.2682927">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="27" column="10" selection-start="984" selection-end="984" vertical-scroll-proportion="0.34">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -181,7 +170,7 @@
       <file leaf-file-name="displaytag.tld" pinned="false" current="false" current-in-tab="false">
         <entry file="jar://D:/TEST/Java/lib/displaytag-1.1.1.jar!/META-INF/displaytag.tld">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="244" column="44" selection-start="9958" selection-end="9958" vertical-scroll-proportion="-10.476327">
+            <state line="244" column="44" selection-start="9958" selection-end="9958" vertical-scroll-proportion="0.017">
               <folding />
             </state>
           </provider>
@@ -190,7 +179,7 @@
       <file leaf-file-name="main.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/zlo_web/resources/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="16" selection-start="142" selection-end="142" vertical-scroll-proportion="0.2682927">
+            <state line="11" column="16" selection-start="142" selection-end="142" vertical-scroll-proportion="0.187">
               <folding />
             </state>
           </provider>
@@ -199,10 +188,8 @@
       <file leaf-file-name="SearchResultLineDecorator.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/zlo_web/src/org/xonix/zlo/web/decorators/SearchResultLineDecorator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="25" selection-start="874" selection-end="874" vertical-scroll-proportion="0.73170733">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="30" column="25" selection-start="874" selection-end="874" vertical-scroll-proportion="0.442">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -210,7 +197,7 @@
       <file leaf-file-name="ZloMessage.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/model/ZloMessage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="13" selection-start="494" selection-end="494" vertical-scroll-proportion="0.14956012">
+            <state line="18" column="13" selection-start="494" selection-end="494" vertical-scroll-proportion="0.017258883">
               <folding />
             </state>
           </provider>
@@ -219,7 +206,7 @@
       <file leaf-file-name="__log.txt" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/__log.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="65" column="97" selection-start="2598" selection-end="2598" vertical-scroll-proportion="0.94721407">
+            <state line="65" column="97" selection-start="2598" selection-end="2598" vertical-scroll-proportion="0.017258883">
               <folding />
             </state>
           </provider>
@@ -228,7 +215,7 @@
       <file leaf-file-name="web.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/zlo_web/WEB-INF/web.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="28" selection-start="794" selection-end="794" vertical-scroll-proportion="0.4390244">
+            <state line="18" column="28" selection-start="794" selection-end="794" vertical-scroll-proportion="0.306">
               <folding />
             </state>
           </provider>
@@ -382,28 +369,6 @@
           <option name="myItemId" value="Libraries" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
         </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Lucene" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\JAVA_DISTR\Lucene\2007-05-31\lucene-2007-05-31_00-04-53\lucene-core-2007-05-31_00-04-53.jar" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search.ipr" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
       </PATH>
       <PATH>
         <PATH_ELEMENT>
@@ -428,7 +393,7 @@
       <showLibraryContents />
       <hideEmptyPackages />
       <abbreviatePackageNames />
-      <showStructure ProjectPane="false" PackagesPane="false" Scope="false" Favorites="false" />
+      <showStructure Scope="false" ProjectPane="false" PackagesPane="false" Favorites="false" />
       <autoscrollToSource />
       <autoscrollFromSource />
       <sortByType />
@@ -473,17 +438,12 @@
         <option name="Make" value="true" />
       </method>
     </tempConfiguration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
     </configuration>
     <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local">
       <option name="WORKING_DIRECTORY" />
@@ -515,13 +475,6 @@
         <option name="Make" value="true" />
       </method>
     </configuration>
-    <configuration default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
-    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit" enabled="false" merge="false">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -540,6 +493,18 @@
       <method>
         <option name="Make" value="true" />
       </method>
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
     </configuration>
     <configuration default="false" name="ZloIndexer" type="Application" factoryName="Application" enabled="false" merge="false">
       <option name="MAIN_CLASS_NAME" value="org.xonix.zlo.search.ZloIndexer" />
@@ -834,21 +799,14 @@
   <component name="com.intellij.ide.util.scopeChooser.ScopeChooserConfigurable" proportions="" version="1">
     <option name="myLastEditedConfigurable" />
   </component>
-  <component name="com.intellij.openapi.roots.ui.configuration.projectRoot.ProjectRootMasterDetailsConfigurable" proportions="0.3682353,0.5" version="1">
+  <component name="com.intellij.openapi.roots.ui.configuration.projectRoot.ProjectRootMasterDetailsConfigurable" proportions="0.26004016" version="1">
     <option name="myPlainMode" value="false" />
-    <option name="myLastEditedConfigurable" value="zlo_search" />
+    <option name="myLastEditedConfigurable" value="commons-logging-1.1.jar" />
   </component>
   <component name="com.intellij.profile.ui.ErrorOptionsConfigurable" proportions="0.16666667,0.5314286" version="1">
     <option name="myLastEditedConfigurable" value="Default" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/zlo_web/resources/import.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="57" selection-start="123" selection-end="123" vertical-scroll-proportion="0.063079774">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/zlo_web/src/org/xonix/zlo/web/servlets/helpful/ForwardingRequest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="13" selection-start="338" selection-end="338" vertical-scroll-proportion="0.33333334">
@@ -992,76 +950,79 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/WEB-INF/web.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="28" selection-start="794" selection-end="794" vertical-scroll-proportion="0.4390244">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/src/org/xonix/zlo/web/decorators/SearchResultLineDecorator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="25" selection-start="874" selection-end="874" vertical-scroll-proportion="0.73170733">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/resources/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="16" selection-start="142" selection-end="142" vertical-scroll-proportion="0.2682927">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/__log.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="97" selection-start="2598" selection-end="2598" vertical-scroll-proportion="0.94721407">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/zlo_web/resources/Search.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="0" selection-start="3725" selection-end="3725" vertical-scroll-proportion="0.97360706">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/model/ZloMessage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="13" selection-start="494" selection-end="494" vertical-scroll-proportion="0.14956012">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/ZloIndexer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="18" selection-start="1483" selection-end="1483" vertical-scroll-proportion="0.5609756">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/TEST/Java/lib/displaytag-1.1.1.jar!/META-INF/displaytag.tld">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="244" column="44" selection-start="9958" selection-end="9958" vertical-scroll-proportion="-10.476327">
+        <state line="85" column="0" selection-start="3725" selection-end="3725" vertical-scroll-proportion="0.9390863">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/zlo_web/src/org/xonix/zlo/web/servlets/SearchServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="10" selection-start="984" selection-end="984" vertical-scroll-proportion="0.2682927">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="27" column="10" selection-start="984" selection-end="984" vertical-scroll-proportion="0.34">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/TEST/Java/lib/displaytag-1.1.1.jar!/META-INF/displaytag.tld">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="244" column="44" selection-start="9958" selection-end="9958" vertical-scroll-proportion="0.017">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zlo_web/resources/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="16" selection-start="142" selection-end="142" vertical-scroll-proportion="0.187">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zlo_web/src/org/xonix/zlo/web/decorators/SearchResultLineDecorator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="25" selection-start="874" selection-end="874" vertical-scroll-proportion="0.442">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/model/ZloMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="13" selection-start="494" selection-end="494" vertical-scroll-proportion="0.017258883">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/__log.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="97" selection-start="2598" selection-end="2598" vertical-scroll-proportion="0.017258883">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zlo_web/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="28" selection-start="794" selection-end="794" vertical-scroll-proportion="0.306">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/ZloIndexer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="18" selection-start="1483" selection-end="1483" vertical-scroll-proportion="0.646">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/TEST/Java/lib/commons-httpclient-3.1-rc1-src.zip!/commons-httpclient-3.1-rc1/src/java/org/apache/commons/httpclient/HttpClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="59" column="13" selection-start="2560" selection-end="2560" vertical-scroll-proportion="0.333">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/PageRetriever.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="63" selection-start="480" selection-end="480" vertical-scroll-proportion="0.19512194">
+        <state line="41" column="17" selection-start="1478" selection-end="1478" vertical-scroll-proportion="0.595">
           <folding />
         </state>
       </provider>
