@@ -4,10 +4,14 @@
   Time: 16:46:12
 --%>
 <%@ include file="import.jsp" %>
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=windows-1251" %>
 
 <jsp:useBean id="backendBeen" class="org.xonix.zlo.web.BackendBeen" scope="session" />
 <jsp:setProperty name="backendBeen" property="*" /> <%-- all from request --%>
+
+<c:if test="${not empty requestScope['site']}">
+    <jsp:setProperty name="backendBeen" property="site" value="${requestScope['site']}" />
+</c:if>
 
 <html>
     <head>
@@ -22,13 +26,14 @@
                     <td width="33%"></td>
                     <td>
                         <form action="search" method="get">
-                            Title: <input type="text" name="title" value="<c:out value="${param['title']}" />" style="width:450px;" />
+                            Title: <input type="text" name="title" <c:if test="${not empty param['title']}">value="<c:out value="${param['title']}" />" </c:if>style="width:450px;" />
                             Topic: <jsp:getProperty name="backendBeen" property="topicSelector" />
                             <br/>
-                            Text: <input type="text" name="body" value="<c:out value="${param['body']}" />" style="width:450px;" /><br/>
-                            Nick: <input type="text" name="nick" value="<c:out value="${param['nick']}" />" style="width:200px;" />
-                            Host: <input type="text" name="host" value="<c:out value="${param['host']}" />" style="width:200px;" />
+                            Text: <input type="text" name="body" <c:if test="${not empty param['body']}">value="<c:out value="${param['body']}" />" </c:if>style="width:450px;" /><br/>
+                            Nick: <input type="text" name="nick" <c:if test="${not empty param['nick']}">value="<c:out value="${param['nick']}" />" </c:if>style="width:200px;" />
+                            Host: <input type="text" name="host" <c:if test="${not empty param['host']}">value="<c:out value="${param['host']}" />" </c:if>style="width:200px;" />
                             <br/>
+                            Site: <jsp:getProperty name="backendBeen" property="siteSelector" />
                             <input type="submit" value="Search"/>
                         </form>
                     </td>
@@ -52,7 +57,7 @@
                     <display:column title="Num"><c:out value="${msg_rowNum}" /></display:column>
                     <display:column title="Title">
                         <a href="http://<c:out value="${requestScope['siteRoot']}" />/?read=<c:out value="${msg.num}" />">
-                            <c:if test="${not empty msg.topic and msg.topic != 'Ð‘ÐµÐ· Ñ‚ÐµÐ¼Ñ‹'}">
+                            <c:if test="${not empty msg.topic and msg.topic != 'Áåç òåìû'}">
                                 [<c:out value="${msg.topic}" />]
                             </c:if>
                             <c:out value="${msg.title}" />

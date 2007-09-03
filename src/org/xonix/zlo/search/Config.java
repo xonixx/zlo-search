@@ -2,9 +2,8 @@ package org.xonix.zlo.search;
 
 import org.apache.lucene.analysis.Analyzer;
 
-import java.util.Properties;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Properties;
 
 /**
  * Author: gubarkov
@@ -25,7 +24,9 @@ public class Config {
         }
     }
 
-    public static String URL = props.getProperty("url");
+    public static String [] SITES = props.getProperty("sites").split("\\|");
+
+    public static String INDEXING_URL = props.getProperty("indexing.url");
     public static String READ_QUERY = props.getProperty("query.read");
     public static final int BUFFER = Integer.parseInt(props.getProperty("buffer", "512"));
 

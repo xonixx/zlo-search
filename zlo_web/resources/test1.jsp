@@ -4,12 +4,12 @@
   Time: 21:10:26
 --%>
 <%@ include file="import.jsp"%>
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=windows-1251" %>
 
 <c:out value="${requestScope['aaa']}" />
 
-<c:out value="${'Ð¿Ñ€Ð¸Ð²ÐµÑ‚ Ð¼Ð¸Ñ€'}" />  <br />
-<c:out value="${'Ð‘ÐµÐ· Ñ‚ÐµÐ¼Ñ‹' == 'Ð‘ÐµÐ· Ñ‚ÐµÐ¼Ñ‹'}" />
+<c:out value="${'ïðèâåò ìèð'}" />  <br />
+<c:out value="${'Áåç òåìû' == 'Áåç òåìû'}" />
 
-<c:set var="a" value="${'Ð‘ÐµÐ· Ñ‚ÐµÐ¼Ñ‹'}" />
-<c:out value="${a}   ${a == 'Ð‘ÐµÐ· Ñ‚ÐµÐ¼Ñ‹'}   ${a != 'Ð‘ÐµÐ· Ñ‚ÐµÐ¼Ñ‹'}" /> 
+<c:set var="a" value="${'Áåç òåìû'}" />
+<c:out value="${a}   ${a == 'Áåç òåìû'}   ${a != 'Áåç òåìû'}" /> 

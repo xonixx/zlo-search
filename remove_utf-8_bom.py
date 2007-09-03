@@ -6,7 +6,7 @@ import glob
 UTF_8_BOM = '\xef\xbb\xbf'
 
 def remove_bom_in_dir(_dir):
-	print 'Scanning', _dir
+	#print 'Scanning', _dir
 	for _file in os.listdir(_dir):
 		f = _dir + '/' + _file
 		if os.path.isdir(f):

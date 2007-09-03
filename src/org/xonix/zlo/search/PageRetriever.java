@@ -15,12 +15,12 @@ import java.util.ArrayList;
  */
 public class PageRetriever {
     public static String getPageContentByNumber(int num) throws IOException{
-        String uri = "http://" + Config.URL + Config.READ_QUERY + num;
+        String uri = "http://" + Config.INDEXING_URL + Config.READ_QUERY + num;
         System.out.println("Retrieving: "+uri);
         HttpClient httpClient = new HttpClient();
 
         GetMethod getMethod = new GetMethod(uri);
-        getMethod.addRequestHeader("Host", Config.URL);
+        getMethod.addRequestHeader("Host", Config.INDEXING_URL);
         httpClient.executeMethod(getMethod);
         // реализовано чтение до "<BIG>Сообщения в этом потоке</BIG>"
         InputStream is = getMethod.getResponseBodyAsStream();
