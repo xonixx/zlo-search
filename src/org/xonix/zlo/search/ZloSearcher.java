@@ -8,6 +8,7 @@ import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.commons.lang.StringUtils;
 import org.xonix.zlo.search.model.ZloMessage;
 
 import java.io.IOException;
@@ -25,6 +26,32 @@ public class ZloSearcher {
 
     public static ZloSearchResult search(String queryString) {
         return ZLO_SEARCHER_INSTANCE.search0(queryString);
+    }
+
+    public static ZloSearchResult search(String topicCode,
+                                         String title,
+                                         String body,
+                                         String nick,
+                                         String host) {
+        StringBuilder res = new StringBuilder();
+
+        if (StringUtils.isNotEmpty(body))
+            res.append("+").append(body);
+
+        if (!"0".equals(topicCode)) {
+            res.append(" +topic:").append(topicCode);
+        }
+
+        if (StringUtils.isNotEmpty(title))
+            res.append(" +title:(").append(title).append(")");
+
+        if (StringUtils.isNotEmpty(nick))
+            res.append(" +nick:").append(nick);
+
+        if (StringUtils.isNotEmpty(host))
+            res.append(" +host:").append(host);
+
+        return ZLO_SEARCHER_INSTANCE.search0(res.toString());
     }
 
     private ZloSearchResult search0(String queryStr) {

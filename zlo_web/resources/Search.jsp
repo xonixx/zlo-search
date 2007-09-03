@@ -4,7 +4,11 @@
   Time: 16:46:12
 --%>
 <%@ include file="import.jsp" %>
-<%--<% response.setCharacterEncoding("UTF-8"); %>--%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+
+<jsp:useBean id="backendBeen" class="org.xonix.zlo.web.BackendBeen" scope="session" />
+<jsp:setProperty name="backendBeen" property="*" /> <%-- all from request --%>
+
 <html>
     <head>
         <title>Search Files</title>
@@ -18,7 +22,9 @@
                     <td width="33%"></td>
                     <td>
                         <form action="search" method="get">
-                            Title: <input type="text" name="title" value="<c:out value="${param['title']}" />" style="width:450px;" /><br/>
+                            Title: <input type="text" name="title" value="<c:out value="${param['title']}" />" style="width:450px;" />
+                            Topic: <jsp:getProperty name="backendBeen" property="topicSelector" />
+                            <br/>
                             Text: <input type="text" name="body" value="<c:out value="${param['body']}" />" style="width:450px;" /><br/>
                             Nick: <input type="text" name="nick" value="<c:out value="${param['nick']}" />" style="width:200px;" />
                             Host: <input type="text" name="host" value="<c:out value="${param['host']}" />" style="width:200px;" />
@@ -30,22 +36,6 @@
                 </tr>
             </table>
         </div>
-<%--        <div id="results">
-            <jsp:useBean id="sb" class="org.xonix.zlo.web.SearchBean" />
-            <c:if test="${param['text'] ne '' and param['text'] ne null}">
-                <jsp:setProperty name="sb" property="*" />
-                <c:forEach var="result_line" items="${sb.searchResult}" varStatus="status">
-                    <c:out value="${status.index}" />
-                        &nbsp;&nbsp;<c:out value="${result_line.compName}" escapeXml="false" />
-                        &nbsp;&nbsp;<c:out value="${result_line.fileName}" escapeXml="false" />
-                        &nbsp;&nbsp;<c:out value="${result_line.fileSize}" escapeXml="false" />
-                        <br/>
-                </c:forEach>
-            </c:if>
-        </div>--%>
-<%--    <c:out value="${requestScope['text']}" />
-    <c:out value="${requestScope['searchResult']}" />--%>
-
     <c:if test="${requestScope['debug'] == true}">
         <br/>
         <div id="debug">
@@ -56,24 +46,34 @@
 
     <c:choose>
         <c:when test="${empty requestScope['error']}">
-            <display:table name="searchResult.msgs" id="row" htmlId="resultTable"
-                           decorator="org.xonix.zlo.web.decorators.SearchResultLineDecorator">
-                <display:column title="Num"><c:out value="${row_rowNum}" /></display:column>
-                <display:column title="Title" property="title" />
-                <display:column title="Nick">
-                    <c:choose>
-                        <c:when test="${not row.reg}">
-                            <c:out value="${row.nick}" />
-                        </c:when>
-                        <c:otherwise>
-                            <a href="http://<c:out value="${requestScope['siteRoot']}" />/?uinfo=<c:out value="${row.nick}" />">
-                                <c:out value="${row.nick}" />
-                            </a>
-                        </c:otherwise>
-                    </c:choose>
-                </display:column>
-                <display:column title="Date" property="date" />
-            </display:table>
+            <c:if test="${not empty requestScope['searchResult']}">
+                <display:table name="searchResult.msgs" id="msg" htmlId="resultTable"
+                               decorator="org.xonix.zlo.web.decorators.SearchResultLineDecorator">
+                    <display:column title="Num"><c:out value="${msg_rowNum}" /></display:column>
+                    <display:column title="Title">
+                        <a href="http://<c:out value="${requestScope['siteRoot']}" />/?read=<c:out value="${msg.num}" />">
+                            <c:if test="${not empty msg.topic and msg.topic != 'Без темы'}">
+                                [<c:out value="${msg.topic}" />]
+                            </c:if>
+                            <c:out value="${msg.title}" />
+                        </a>
+                    </display:column>
+                    <display:column title="Nick">
+                        <c:choose>
+                            <c:when test="${not msg.reg}">
+                                <c:out value="${msg.nick}" />
+                            </c:when>
+                            <c:otherwise>
+                                <a href="http://<c:out value="${requestScope['siteRoot']}" />/?uinfo=<c:out value="${msg.nick}" />">
+                                    <c:out value="${msg.nick}" />
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
+                    </display:column>
+                    <display:column title="Host" property="host" />
+                    <display:column title="Date" property="date" />
+                </display:table>
+            </c:if>
         </c:when>
         <c:otherwise>
             <div class="error">

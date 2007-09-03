@@ -9,6 +9,8 @@ import org.apache.lucene.analysis.KeywordAnalyzer;
 import org.xonix.zlo.search.Config;
 
 import java.util.Date;
+import java.util.Map;
+import java.util.HashMap;
 import java.text.ParseException;
 
 /**
@@ -34,6 +36,26 @@ public class ZloMessage {
     private Date date;
     private boolean reg = false;
     private int num = -1; // default
+    
+    public static String [] TOPICS = {
+        "Все темы", "Без темы",
+        "Учеба", "Работа", "Мурзилка",
+        "Обсуждение", "Новости", "Спорт",
+        "Развлечения", "Движок борды", "Программирование",
+        "Куплю", "Продам", "Услуги",
+        "Windows", "BSD/Linux", "Проблемы сети",
+        "Голосование", "Потеряно/Найдено", "Temp"
+    };
+
+    public static Map<String, String> TOPIC_CODES = new HashMap<String, String>(TOPIC.length());
+
+    static {
+        TOPIC_CODES.put(TOPICS[0], "0"); // all topics ?? 
+        TOPIC_CODES.put("", "1"); // wo topics
+        for (int i=2; i<TOPICS.length; i++) {
+            TOPIC_CODES.put(TOPICS[i], Integer.toString(i));
+        }
+    }
 
     public ZloMessage() {
     }
@@ -129,7 +151,7 @@ public class ZloMessage {
     public Document getDocument() {
         Document doc = new Document();
         doc.add(new Field(URL_NUM, Integer.toString(num), Field.Store.YES, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(TOPIC, topic, Field.Store.YES, Field.Index.UN_TOKENIZED));
+        doc.add(new Field(TOPIC, TOPIC_CODES.get(topic), Field.Store.YES, Field.Index.UN_TOKENIZED));
         doc.add(new Field(TITLE, title, Field.Store.YES, Field.Index.TOKENIZED));
         doc.add(new Field(NICK, nick, Field.Store.YES, Field.Index.UN_TOKENIZED));
         doc.add(new Field(REG, Boolean.toString(reg), Field.Store.YES, Field.Index.NO));
@@ -143,7 +165,7 @@ public class ZloMessage {
         ZloMessage result = null;
         try {
             result = new ZloMessage(
-                doc.get(NICK), doc.get(HOST), doc.get(TOPIC), doc.get(TITLE), doc.get(BODY),
+                doc.get(NICK), doc.get(HOST), TOPICS[Integer.parseInt(doc.get(TOPIC))], doc.get(TITLE), doc.get(BODY),
                 DateTools.stringToDate(doc.get(DATE)), "true".equals(doc.get(REG)), Integer.parseInt(doc.get(URL_NUM))
             );
         } catch (ParseException e) {
