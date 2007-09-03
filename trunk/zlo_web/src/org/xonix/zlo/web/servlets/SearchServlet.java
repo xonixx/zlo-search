@@ -2,6 +2,7 @@ package org.xonix.zlo.web.servlets;
 
 import org.apache.commons.lang.StringUtils;
 import org.xonix.zlo.search.ZloSearcher;
+import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 import org.xonix.zlo.web.servlets.helpful.ForwardingServlet;
 
@@ -17,10 +18,18 @@ import java.io.IOException;
 public class SearchServlet extends ForwardingServlet {
 
     protected void doGet(ForwardingRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String queryString = formQueryString(request);
+        String topicCode = request.getParameter("topic");
+        String title = request.getParameter("title");
+        String body = request.getParameter("body");
+        String nick = request.getParameter("nick");
+        String host = request.getParameter("host");
 
-        if (StringUtils.isNotEmpty(queryString)){
-            request.setAttribute("searchResult", ZloSearcher.search(queryString));
+        if (StringUtils.isNotEmpty(title) |
+                StringUtils.isNotEmpty(body) |
+                StringUtils.isNotEmpty(nick) |
+                StringUtils.isNotEmpty(host) |
+                StringUtils.isNotEmpty(topicCode) && !"0".equals(topicCode)) {
+            request.setAttribute("searchResult", ZloSearcher.search(topicCode, title, body, nick, host));
         }
 
         request.setAttribute("debug", "true".equalsIgnoreCase(getServletContext().getInitParameter("debug")));
@@ -29,23 +38,5 @@ public class SearchServlet extends ForwardingServlet {
 
         response.setCharacterEncoding("UTF-8");
         request.forwardTo("/Search.jsp");
-    }
-
-    private String formQueryString(ForwardingRequest request) {
-        StringBuffer res = new StringBuffer();
-
-        if (StringUtils.isNotEmpty(request.getParameter("body")))
-            res.append(request.getParameter("body"));
-
-        if (StringUtils.isNotEmpty(request.getParameter("title")))
-            res.append(" +title:(").append(request.getParameter("title")).append(")");
-
-        if (StringUtils.isNotEmpty(request.getParameter("nick")))
-            res.append(" +nick:").append(request.getParameter("nick"));
-
-        if (StringUtils.isNotEmpty(request.getParameter("host")))
-            res.append(" +host:").append(request.getParameter("host"));
-
-        return res.toString();
     }
 }

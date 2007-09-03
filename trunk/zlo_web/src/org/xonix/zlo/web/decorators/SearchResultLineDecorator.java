@@ -14,14 +14,14 @@ import java.text.SimpleDateFormat;
 public class SearchResultLineDecorator extends TableDecorator {
     public static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-    public String getTitle() {
+/*    public String getTitle() {
         ZloMessage msg = (ZloMessage) getCurrentRowObject();
 
         if (StringUtils.isNotEmpty(msg.getTopic()))
             return "[" + msg.getTopic() + "] " + msg.getTitle();
         else
             return msg.getTitle();
-    }
+    }*/
 
     public String getDate() {
         ZloMessage msg = (ZloMessage) getCurrentRowObject();
