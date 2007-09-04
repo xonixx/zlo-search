@@ -33,6 +33,7 @@ public class Config {
     public static final String CHARSET_NAME = "windows-1251";
     public static final String END_MSG_MARK = "<BIG>Сообщения в этом потоке</BIG>";
     public static final String INDEX_DIR = props.getProperty("index.dir");
+
     public static final Analyzer ANALYZER;
     static {
         Analyzer _a = null;
@@ -42,5 +43,29 @@ public class Config {
             e.printStackTrace();
         }
         ANALYZER = _a;
+    }
+
+    public static final String PAGE_TITLE = props.getProperty("page.title");
+    public static final String LABEL_TITLE = props.getProperty("label.title");
+    public static final String LABEL_TOPIC = props.getProperty("label.topic");
+    public static final String LABEL_TEXT = props.getProperty("label.text");
+    public static final String LABEL_NICK = props.getProperty("label.nick");
+    public static final String LABEL_HOST = props.getProperty("label.host");
+    public static final String LABEL_SITE = props.getProperty("label.site");
+    public static final String LABEL_FROM_DATE = props.getProperty("label.from.date");
+    public static final String LABEL_TO_DATE = props.getProperty("label.to.date");
+
+    public static enum ErrorMsgs {
+        ToDateInvalid(props.getProperty("error.toDate")),
+        FromDateInvalid(props.getProperty("error.fromDate"));
+
+        private String msg;
+        private ErrorMsgs(String msg) {
+            this.msg = msg;
+        }
+
+        public String toString() {
+            return msg;
+        }
     }
 }
