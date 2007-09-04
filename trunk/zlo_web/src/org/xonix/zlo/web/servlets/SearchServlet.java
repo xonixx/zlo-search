@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+import java.util.Date;
 
 /**
  * Author: gubarkov
@@ -19,13 +22,58 @@ import java.io.IOException;
  * Time: 20:31:41
  */
 public class SearchServlet extends ForwardingServlet {
+    public static final String QS_TOPIC = ZloMessage.TOPIC;
+    public static final String QS_BODY = ZloMessage.BODY;
+    public static final String QS_TITLE = ZloMessage.TITLE;
+    public static final String QS_NICK = ZloMessage.NICK;
+    public static final String QS_HOST = ZloMessage.HOST;
+    public static final String QS_SITE = "site";
+    public static final String QS_FROM_DATE = "fd";
+    public static final String QS_TO_DATE = "td";
+
+    public static final String ERROR = "error";
+
+    public static SimpleDateFormat FROM_TO_DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd");
 
     protected void doGet(ForwardingRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String topicCode = request.getParameter("topic");
-        String title = request.getParameter("title");
-        String body = request.getParameter("body");
-        String nick = request.getParameter("nick");
-        String host = request.getParameter("host");
+        String topicCode = request.getParameter(QS_TOPIC);
+        String title = request.getParameter(QS_TITLE);
+        String body = request.getParameter(QS_BODY);
+        String nick = request.getParameter(QS_NICK);
+        String host = request.getParameter(QS_HOST);
+        String fromDateStr = request.getParameter(QS_FROM_DATE);
+        String toDateStr = request.getParameter(QS_TO_DATE);
+
+        Date fromDate;
+        Date toDate;
+        if (StringUtils.isEmpty(toDateStr)) {
+            toDate = new Date(); // now
+            //request
+        } else {
+            try {
+                toDate = FROM_TO_DATE_FORMAT.parse(toDateStr);
+            } catch (ParseException e) {
+                request.setAttribute(ERROR, Config.ErrorMsgs.ToDateInvalid);
+                request.forwardTo("/Search.jsp");
+                return;
+            }
+        }
+
+        if (StringUtils.isEmpty(fromDateStr)) {
+            toDate = new Date(); // now
+        } else {
+            try {
+                toDate = FROM_TO_DATE_FORMAT.parse(fromDateStr);
+            } catch (ParseException e) {
+                request.setAttribute(ERROR, Config.ErrorMsgs.FromDateInvalid);
+                request.forwardTo("/Search.jsp");
+                return;
+            }
+        }
+
+
+
+
 
         if (StringUtils.isNotEmpty(title) ||
                 StringUtils.isNotEmpty(body) ||
@@ -38,11 +86,12 @@ public class SearchServlet extends ForwardingServlet {
         request.setAttribute("debug", "true".equalsIgnoreCase(getServletContext().getInitParameter("debug")));
 
         String siteInCookie;
-        if (StringUtils.isNotEmpty(request.getParameter("site"))){
-            request.setAttribute("siteRoot", Config.SITES[Integer.valueOf(request.getParameter("site"))]);
-            rememberInCookie(response, "site", request.getParameter("site"));
-        } else if (StringUtils.isNotEmpty(siteInCookie = recallFromCookie(request, "site"))){
-            request.setAttribute("site", siteInCookie); // for drop-down
+        if (StringUtils.isNotEmpty(request.getParameter(QS_SITE))){
+            request.setAttribute("siteRoot", Config.SITES[Integer.valueOf(request.getParameter(QS_SITE))]);
+            rememberInCookie(response, QS_SITE, request.getParameter(QS_SITE));
+        } else if (StringUtils.isNotEmpty(siteInCookie = recallFromCookie(request, QS_SITE))){
+            ///request.setAttribute(QS_SITE, siteInCookie); // for drop-down
+            request.setParameter(QS_SITE, siteInCookie);
             request.setAttribute("siteRoot", Config.SITES[Integer.valueOf(siteInCookie)]); // for search result list
         } else {
             request.setAttribute("siteRoot", Config.SITES[0]);
@@ -50,13 +99,12 @@ public class SearchServlet extends ForwardingServlet {
 
         //request.setAttribute("error", "Fuck!!!");
 
-        //response.setCharacterEncoding("UTF-8");
         request.forwardTo("/Search.jsp");
     }
 
     private void rememberInCookie(HttpServletResponse response, String fieldname, String value, int age) {
         Cookie cookie = new Cookie(fieldname, value);
-        cookie.setMaxAge(age); // forever
+        cookie.setMaxAge(age);
         response.addCookie(cookie);
     }
 

@@ -8,7 +8,7 @@ import org.xonix.zlo.search.Config;
  * Date: 03.09.2007
  * Time: 20:03:46
  */
-public class BackendBeen {
+public class BackendBean {
     private int topic;
     private String title;
     private String body;
@@ -18,7 +18,7 @@ public class BackendBeen {
     private String toDate;
     private int site;
 
-    public BackendBeen() {
+    public BackendBean() {
     }
 
     public String getTopicSelector() {

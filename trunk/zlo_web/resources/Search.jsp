@@ -1,3 +1,4 @@
+<%@ page import="org.xonix.zlo.search.Config" %>
 <%--
   User: gubarkov
   Date: 14.08.2007
@@ -6,16 +7,16 @@
 <%@ include file="import.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 
-<jsp:useBean id="backendBeen" class="org.xonix.zlo.web.BackendBeen" scope="session" />
-<jsp:setProperty name="backendBeen" property="*" /> <%-- all from request --%>
+<jsp:useBean id="backendBean" class="org.xonix.zlo.web.BackendBean" scope="session" />
+<jsp:setProperty name="backendBean" property="*" /> <%-- all from request --%>
 
-<c:if test="${not empty requestScope['site']}">
-    <jsp:setProperty name="backendBeen" property="site" value="${requestScope['site']}" />
-</c:if>
+<%--<c:if test="${not empty requestScope['site']}">
+    <jsp:setProperty name="backendBean" property="site" value="${requestScope['site']}" />
+</c:if>--%>
 
 <html>
     <head>
-        <title>Search Files</title>
+        <title><%= Config.PAGE_TITLE %></title>
         <link rel="stylesheet" type="text/css" href="main.css" />
     </head>
     <body>
@@ -26,14 +27,18 @@
                     <td width="33%"></td>
                     <td>
                         <form action="search" method="get">
-                            Title: <input type="text" name="title" <c:if test="${not empty param['title']}">value="<c:out value="${param['title']}" />" </c:if>style="width:450px;" />
-                            Topic: <jsp:getProperty name="backendBeen" property="topicSelector" />
+                            <%= Config.LABEL_TITLE %> <input type="text" name="title" <c:if test="${not empty param['title']}">value="<c:out value="${param['title']}" />" </c:if>style="width:450px;" />
+                            <%= Config.LABEL_TOPIC %> <jsp:getProperty name="backendBean" property="topicSelector" />
                             <br/>
-                            Text: <input type="text" name="body" <c:if test="${not empty param['body']}">value="<c:out value="${param['body']}" />" </c:if>style="width:450px;" /><br/>
-                            Nick: <input type="text" name="nick" <c:if test="${not empty param['nick']}">value="<c:out value="${param['nick']}" />" </c:if>style="width:200px;" />
-                            Host: <input type="text" name="host" <c:if test="${not empty param['host']}">value="<c:out value="${param['host']}" />" </c:if>style="width:200px;" />
+                            <%= Config.LABEL_TEXT %> <input type="text" name="body" <c:if test="${not empty param['body']}">value="<c:out value="${param['body']}" />" </c:if>style="width:450px;" /><br/>
+                            <%= Config.LABEL_NICK %> <input type="text" name="nick" <c:if test="${not empty param['nick']}">value="<c:out value="${param['nick']}" />" </c:if>style="width:200px;" />
+                            <%= Config.LABEL_HOST %> <input type="text" name="host" <c:if test="${not empty param['host']}">value="<c:out value="${param['host']}" />" </c:if>style="width:200px;" />
                             <br/>
-                            Site: <jsp:getProperty name="backendBeen" property="siteSelector" />
+                            <%= Config.LABEL_FROM_DATE %> <input type="text" name="fd" value="${param['fd']}" />
+                            <%= Config.LABEL_TO_DATE %> <input type="text" name="td" value="${param['td']}" />
+                            <br/>
+                            <%= Config.LABEL_SITE %> <jsp:getProperty name="backendBean" property="siteSelector" />
+                            <br/>
                             <input type="submit" value="Search"/>
                         </form>
                     </td>
