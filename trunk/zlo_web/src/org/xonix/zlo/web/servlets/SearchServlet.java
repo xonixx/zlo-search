@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * Author: gubarkov
@@ -28,6 +30,7 @@ public class SearchServlet extends ForwardingServlet {
     public static final String QS_NICK = ZloMessage.NICK;
     public static final String QS_HOST = ZloMessage.HOST;
     public static final String QS_SITE = "site";
+    public static final String QS_DATES = "dates";
     public static final String QS_FROM_DATE = "fd";
     public static final String QS_TO_DATE = "td";
 
@@ -48,7 +51,6 @@ public class SearchServlet extends ForwardingServlet {
         Date toDate;
         if (StringUtils.isEmpty(toDateStr)) {
             toDate = new Date(); // now
-            //request
         } else {
             try {
                 toDate = FROM_TO_DATE_FORMAT.parse(toDateStr);
@@ -60,10 +62,14 @@ public class SearchServlet extends ForwardingServlet {
         }
 
         if (StringUtils.isEmpty(fromDateStr)) {
-            toDate = new Date(); // now
+            Calendar cal = new GregorianCalendar();
+            cal.setTime(toDate);
+            cal.add(Calendar.YEAR, -Config.TIME_PERIOD_YEARS);
+            cal.add(Calendar.MONTH, -Config.TIME_PERIOD_MONTHS);
+            fromDate = cal.getTime();
         } else {
             try {
-                toDate = FROM_TO_DATE_FORMAT.parse(fromDateStr);
+                fromDate = FROM_TO_DATE_FORMAT.parse(fromDateStr);
             } catch (ParseException e) {
                 request.setAttribute(ERROR, Config.ErrorMsgs.FromDateInvalid);
                 request.forwardTo("/Search.jsp");
@@ -71,16 +77,19 @@ public class SearchServlet extends ForwardingServlet {
             }
         }
 
-
-
-
+        // request
+        request.setParameter(QS_TO_DATE, FROM_TO_DATE_FORMAT.format(toDate));
+        request.setParameter(QS_FROM_DATE, FROM_TO_DATE_FORMAT.format(fromDate));
 
         if (StringUtils.isNotEmpty(title) ||
                 StringUtils.isNotEmpty(body) ||
                 StringUtils.isNotEmpty(nick) ||
                 StringUtils.isNotEmpty(host) ||
                 StringUtils.isNotEmpty(topicCode) && !"0".equals(topicCode)) {
-            request.setAttribute("searchResult", ZloSearcher.search(topicCode, title, body, nick, host));
+            if (StringUtils.isEmpty(request.getParameter(QS_DATES)))
+                request.setAttribute("searchResult", ZloSearcher.search(topicCode, title, body, nick, host));
+            else
+                request.setAttribute("searchResult", ZloSearcher.search(topicCode, title, body, nick, host, fromDate, toDate));
         }
 
         request.setAttribute("debug", "true".equalsIgnoreCase(getServletContext().getInitParameter("debug")));

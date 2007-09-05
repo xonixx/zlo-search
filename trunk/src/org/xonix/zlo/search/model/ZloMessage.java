@@ -180,6 +180,7 @@ public class ZloMessage {
         analyzer.addAnalyzer(NICK, new KeywordAnalyzer());
         analyzer.addAnalyzer(HOST, new KeywordAnalyzer());
         analyzer.addAnalyzer(URL_NUM, new KeywordAnalyzer());
+        analyzer.addAnalyzer(DATE, new KeywordAnalyzer());
         return analyzer;
     }
 }

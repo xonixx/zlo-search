@@ -1,7 +1,13 @@
 
+html,
+body {
+    padding: 0;
+    margin: 0;
+}
+
 #searchform {
     background: bisque;
-    border: blue dashed 1px;
+    /*border: blue dashed 1px;*/
 }
 
 #results {

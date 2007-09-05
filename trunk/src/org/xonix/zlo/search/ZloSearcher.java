@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 /**
  * Author: gubarkov
@@ -23,6 +25,7 @@ import java.util.List;
  */
 public class ZloSearcher {
     private final static ZloSearcher ZLO_SEARCHER_INSTANCE = new ZloSearcher();
+    public final static SimpleDateFormat QUERY_DATEFORMAT = new SimpleDateFormat("M/d/yy");
 
     public static ZloSearchResult search(String queryString) {
         return ZLO_SEARCHER_INSTANCE.search0(queryString);
@@ -32,11 +35,13 @@ public class ZloSearcher {
                                          String title,
                                          String body,
                                          String nick,
-                                         String host) {
+                                         String host,
+                                         Date fromdDate,
+                                         Date toDate) {
         StringBuilder res = new StringBuilder();
 
         if (StringUtils.isNotEmpty(body))
-            res.append("+").append(body);
+            res.append("+body:(").append(body).append(")");
 
         if (!"0".equals(topicCode)) {
             res.append(" +topic:").append(topicCode);
@@ -51,7 +56,18 @@ public class ZloSearcher {
         if (StringUtils.isNotEmpty(host))
             res.append(" +host:").append(host);
 
+        if (fromdDate != null && toDate != null)
+            res.append(" +date:[").append(QUERY_DATEFORMAT.format(fromdDate)).append(" TO ").append(QUERY_DATEFORMAT.format(toDate)).append("]");
+
         return ZLO_SEARCHER_INSTANCE.search0(res.toString());
+    }
+
+    public static ZloSearchResult search(String topicCode,
+                                         String title,
+                                         String body,
+                                         String nick,
+                                         String host) {
+        return search(topicCode, title, body, nick, host, null, null);
     }
 
     private ZloSearchResult search0(String queryStr) {

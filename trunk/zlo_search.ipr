@@ -279,23 +279,25 @@
   <component name="libraryTable">
     <library name="commons-lang">
       <CLASSES>
-        <root url="jar://D:/TEST/Java/lib/commons-lang-2.3.jar!/" />
+        <root url="jar://D:/!TRY/JAVA/lib/commons-lang-2.3.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://D:/TEST/Java/lib/commons-lang-2.3-javadoc.jar!/" />
+        <root url="jar://D:/!TRY/JAVA/lib/commons-lang-2.3-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://D:/TEST/Java/lib/commons-lang-2.3-sources.jar!/" />
+        <root url="jar://D:/!TRY/JAVA/lib/commons-lang-2.3-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Lucene">
       <CLASSES>
-        <root url="jar://D:/TEST/Java/lib/lucene-core-2007-05-31_00-04-53.jar!/" />
-        <root url="jar://D:/TEST/Java/lib/lucene-demos-2007-05-31_00-04-53.jar!/" />
-        <root url="jar://D:/TEST/Java/lib/lucene-analyzers-2007-05-31_00-04-53.jar!/" />
+        <root url="jar://D:/!TRY/JAVA/lib/lucene-core-2.2.0.jar!/" />
+        <root url="jar://D:/!TRY/JAVA/lib/lucene-analyzers-2.2.0.jar!/" />
       </CLASSES>
       <JAVADOC />
-      <SOURCES />
+      <SOURCES>
+        <root url="jar://D:/!TRY/JAVA/lib/lucene-2.2.0-src.zip!/lucene-2.2.0/src/java" />
+        <root url="jar://D:/!TRY/JAVA/lib/lucene-2.2.0-src.zip!/lucene-2.2.0/contrib/analyzers" />
+      </SOURCES>
     </library>
   </component>
   <component name="uidesigner-configuration">
