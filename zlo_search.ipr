@@ -279,24 +279,25 @@
   <component name="libraryTable">
     <library name="commons-lang">
       <CLASSES>
-        <root url="jar://D:/!TRY/JAVA/lib/commons-lang-2.3.jar!/" />
+        <root url="jar://D:/TEST/JAVA/ZloSearcher/lib/commons-lang-2.3.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://D:/!TRY/JAVA/lib/commons-lang-2.3-javadoc.jar!/" />
+        <root url="jar://D:/TEST/JAVA/ZloSearcher/lib/commons-lang-2.3-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://D:/!TRY/JAVA/lib/commons-lang-2.3-sources.jar!/" />
+        <root url="jar://D:/TEST/JAVA/ZloSearcher/lib/commons-lang-2.3-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Lucene">
       <CLASSES>
-        <root url="jar://D:/!TRY/JAVA/lib/lucene-core-2.2.0.jar!/" />
-        <root url="jar://D:/!TRY/JAVA/lib/lucene-analyzers-2.2.0.jar!/" />
+        <root url="jar://D:/TEST/JAVA/ZloSearcher/lib/lucene-analyzers-2.2.0.jar!/" />
+        <root url="jar://D:/TEST/JAVA/ZloSearcher/lib/lucene-core-2.2.0.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://D:/!TRY/JAVA/lib/lucene-2.2.0-src.zip!/lucene-2.2.0/src/java" />
-        <root url="jar://D:/!TRY/JAVA/lib/lucene-2.2.0-src.zip!/lucene-2.2.0/contrib/analyzers" />
+        <root url="jar://D:/TEST/JAVA/ZloSearcher/lib/lucene-analyzers-2.2.0.jar!/" />
+        <root url="jar://D:/TEST/JAVA/ZloSearcher/lib-src/lucene-2.2.0-src.zip!/lucene-2.2.0/src/java" />
+        <root url="jar://D:/TEST/JAVA/ZloSearcher/lib-src/lucene-2.2.0-src.zip!/lucene-2.2.0/contrib/analyzers" />
       </SOURCES>
     </library>
   </component>
