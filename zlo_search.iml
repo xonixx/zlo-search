@@ -42,6 +42,7 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" name="commons-lang" level="project" />
     <orderEntryProperties />
   </component>
 </module>
