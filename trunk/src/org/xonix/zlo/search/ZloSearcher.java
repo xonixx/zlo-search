@@ -3,10 +3,7 @@ package org.xonix.zlo.search;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.search.Hit;
-import org.apache.lucene.search.Hits;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
+import org.apache.lucene.search.*;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.commons.lang.StringUtils;
 import org.xonix.zlo.search.model.ZloMessage;
@@ -25,7 +22,7 @@ import java.text.SimpleDateFormat;
  */
 public class ZloSearcher {
     private final static ZloSearcher ZLO_SEARCHER_INSTANCE = new ZloSearcher();
-    public final static SimpleDateFormat QUERY_DATEFORMAT = new SimpleDateFormat("M/d/yy");
+    public final static SimpleDateFormat QUERY_DATEFORMAT = new SimpleDateFormat("M.d.yy"); // because of locale
 
     public static ZloSearchResult search(String queryString) {
         return ZLO_SEARCHER_INSTANCE.search0(queryString);
@@ -85,8 +82,9 @@ public class ZloSearcher {
             result.setQueryParser(parser);
             result.setQuery(query);
 
-            Hits hits = searcher.search(query);
+            Hits hits = searcher.search(query, new Sort(ZloMessage.DATE, false));
 
+            // TODO: this must be lazy!!! ---VVV
             for (Iterator it = hits.iterator(); it.hasNext();) {
                 msgs.add(ZloMessage.fromDocument(((Hit)it.next()).getDocument()));
             }
