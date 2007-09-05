@@ -16,7 +16,13 @@
     <option name="USER" value="" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" name="Default" comment="" />
+    <list default="true" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/test/Test1.java" afterPath="$PROJECT_DIR$/src/org/xonix/zlo/search/test/Test1.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/zlo_web.iml" afterPath="$PROJECT_DIR$/zlo_web/zlo_web.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/ZloSearcher.java" afterPath="$PROJECT_DIR$/src/org/xonix/zlo/search/ZloSearcher.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_search.iws" afterPath="$PROJECT_DIR$/zlo_search.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_search.iml" afterPath="$PROJECT_DIR$/zlo_search.iml" />
+    </list>
   </component>
   <component name="ChangeListSynchronizer" />
   <component name="ChangesViewManager" flattened_view="true" />
@@ -143,7 +149,7 @@
       <file leaf-file-name="SearchServlet.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/zlo_web/src/org/xonix/zlo/web/servlets/SearchServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="91" column="60" selection-start="3727" selection-end="3727" vertical-scroll-proportion="0.31710708">
+            <state line="91" column="60" selection-start="3727" selection-end="3727" vertical-scroll-proportion="0.33480176">
               <folding />
             </state>
           </provider>
@@ -152,7 +158,16 @@
       <file leaf-file-name="ZloSearcher.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/ZloSearcher.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="13" selection-start="717" selection-end="717" vertical-scroll-proportion="0.024147727">
+            <state line="86" column="48" selection-start="3293" selection-end="3293" vertical-scroll-proportion="0.5615616">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ZloMessage.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/model/ZloMessage.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="162" column="51" selection-start="4893" selection-end="4893" vertical-scroll-proportion="3.4774776">
               <folding />
             </state>
           </provider>
@@ -161,16 +176,7 @@
       <file leaf-file-name="DateFormat.java" pinned="false" current="false" current-in-tab="false">
         <entry file="jar://C:/Program Files/Java/jdk1.6.0/src.zip!/java/text/DateFormat.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="406" column="28" selection-start="16679" selection-end="16679" vertical-scroll-proportion="0.02364395">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ZloMessage.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/model/ZloMessage.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="182" column="48" selection-start="5826" selection-end="5826" vertical-scroll-proportion="1.2173295">
+            <state line="481" column="17" selection-start="19010" selection-end="19010" vertical-scroll-proportion="0.3979442">
               <folding />
             </state>
           </provider>
@@ -179,7 +185,7 @@
       <file leaf-file-name="Main1.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/test/Main1.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="13" selection-start="218" selection-end="218" vertical-scroll-proportion="0.21279556">
+            <state line="12" column="13" selection-start="218" selection-end="218" vertical-scroll-proportion="0.2246696">
               <folding />
             </state>
           </provider>
@@ -188,16 +194,16 @@
       <file leaf-file-name="t1.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/test/t1.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="2" selection-start="100" selection-end="100" vertical-scroll-proportion="0.1418637">
+            <state line="6" column="2" selection-start="100" selection-end="100" vertical-scroll-proportion="0.14977974">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.properties" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/config.properties">
+      <file leaf-file-name="Search.jsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/zlo_web/resources/Search.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="35" selection-start="306" selection-end="306" vertical-scroll-proportion="0.2837274">
+            <state line="21" column="63" selection-start="735" selection-end="735" vertical-scroll-proportion="0.22972973">
               <folding />
             </state>
           </provider>
@@ -206,7 +212,16 @@
       <file leaf-file-name="Test1.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/test/Test1.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="13" selection-start="304" selection-end="304" vertical-scroll-proportion="0.21279556">
+            <state line="11" column="53" selection-start="302" selection-end="302" vertical-scroll-proportion="0.12481645">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="QueryParser.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://D:/TEST/JAVA/ZloSearcher/lib-src/lucene-2.2.0-src.zip!/lucene-2.2.0/src/java/org/apache/lucene/queryParser/QueryParser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="540" column="0" selection-start="17326" selection-end="17326" vertical-scroll-proportion="0.3243243">
               <folding />
             </state>
           </provider>
@@ -447,8 +462,98 @@
       <recent name="org.xonix.zlo" />
     </key>
   </component>
-  <component name="RestoreUpdateTree" />
-  <component name="RunManager" selected="Application.ZloIndexer">
+  <component name="RestoreUpdateTree">
+    <UpdateInfo date="06.09.07 2:56" ActionInfo="_Update">
+      <UpdatedFiles>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated from server" />
+          <option name="myStatusName" value="Changed on server" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CHANGED_ON_SERVER" />
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Updated" />
+            <option name="myStatusName" value="Changed" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="UPDATED" />
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Created" />
+            <option name="myStatusName" value="Created" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="CREATED" />
+            <PATH>D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\resources\script.js</PATH>
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Deleted" />
+            <option name="myStatusName" value="Deleted" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="true" />
+            <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Restored" />
+            <option name="myStatusName" value="Will be restored" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="RESTORED" />
+          </FILE-GROUP>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Modified" />
+          <option name="myStatusName" value="Modified" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MODIFIED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Skipped" />
+          <option name="myStatusName" value="Skipped" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="SKIPPED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with conflicts" />
+          <option name="myStatusName" value="Will be merged with conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_CONFLICTS" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged" />
+          <option name="myStatusName" value="Will be merged" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Not in repository" />
+          <option name="myStatusName" value="Not in repository" />
+          <option name="mySupportsDeletion" value="true" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UNKNOWN" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Locally added" />
+          <option name="myStatusName" value="Locally added" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="LOCALLY_ADDED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Locally removed" />
+          <option name="myStatusName" value="Locally removed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="LOCALLY_REMOVED" />
+        </FILE-GROUP>
+      </UpdatedFiles>
+    </UpdateInfo>
+  </component>
+  <component name="RunManager" selected="Tomcat Server.TomCat1">
     <tempConfiguration default="false" name="Test1" type="Application" factoryName="Application" enabled="false" merge="false">
       <option name="MAIN_CLASS_NAME" value="org.xonix.zlo.search.test.Test1" />
       <option name="VM_PARAMETERS" />
@@ -458,7 +563,13 @@
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <module name="zlo_search" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="4049" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
       <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
       <ConfigurationWrapper RunnerId="Run" />
       <method>
         <option name="Make" value="true" />
@@ -696,6 +807,7 @@
     <option name="UPDATE_RUN_STATUS" value="false" />
     <option name="UPDATE_RECURSIVELY" value="true" />
     <option name="MERGE_DRY_RUN" value="false" />
+    <configuration useDefault="true">C:\Documents and Settings\Vovan\Application Data\Subversion</configuration>
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -729,13 +841,13 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="1" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26789168" order="2" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.191875" order="2" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26789168" order="2" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19124275" order="2" />
       <window_info id="File View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30464217" order="4" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30464217" order="4" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="0" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32982457" order="8" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32978722" order="8" />
       <window_info id="SQL" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="0" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="2" />
@@ -766,7 +878,7 @@
     <option name="FILE_HISTORY_DIALOG_COMMENTS_SPLITTER_PROPORTION" value="0.8" />
     <option name="FILE_HISTORY_DIALOG_SPLITTER_PROPORTION" value="0.5" />
     <option name="ERROR_OCCURED" value="false" />
-    <option name="ACTIVE_VCS_NAME" />
+    <option name="ACTIVE_VCS_NAME" value="" />
     <option name="UPDATE_GROUP_BY_PACKAGES" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
@@ -823,37 +935,6 @@
     <option name="myLastEditedConfigurable" value="Default" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/Config.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="77" selection-start="2443" selection-end="2443" vertical-scroll-proportion="0.8658892">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/!DISTRIBs/Programming/Java/Lucene/lucene-2.1.0-src.zip!/lucene-2.1.0/src/java/org/apache/lucene/queryParser/FastCharStream.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="9" selection-start="1542" selection-end="1542" vertical-scroll-proportion="0.9215407">
-          <folding>
-            <marker date="1180451734599" expanded="true" signature="886:1163" placeholder="/**...*/" />
-            <marker date="1180451734599" expanded="true" signature="1500:1532" placeholder="/**...*/" />
-            <marker date="1180451734599" expanded="true" signature="1567:1587" placeholder="{...}" />
-            <marker date="1180451734599" expanded="true" signature="1639:1737" placeholder="{...}" />
-            <marker date="1180451734599" expanded="true" signature="1788:2672" placeholder="{...}" />
-            <marker date="1180451734599" expanded="true" signature="2726:2787" placeholder="{...}" />
-            <marker date="1180451734599" expanded="true" signature="2828:2863" placeholder="{...}" />
-            <marker date="1180451734599" expanded="true" signature="2898:2975" placeholder="{...}" />
-            <marker date="1180451734599" expanded="true" signature="3018:3142" placeholder="{...}" />
-            <marker date="1180451734599" expanded="true" signature="3171:3301" placeholder="{...}" />
-            <marker date="1180451734599" expanded="true" signature="3334:3380" placeholder="{...}" />
-            <marker date="1180451734599" expanded="true" signature="3410:3429" placeholder="{...}" />
-            <marker date="1180451734599" expanded="true" signature="3464:3510" placeholder="{...}" />
-            <marker date="1180451734599" expanded="true" signature="3543:3562" placeholder="{...}" />
-            <marker date="1180451734599" expanded="true" signature="3599:3641" placeholder="{...}" />
-            <marker date="1180451734599" expanded="true" signature="3676:3695" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://D:/!DISTRIBs/Programming/Java/Lucene/lucene-2.1.0-src.zip!/lucene-2.1.0/src/java/org/apache/lucene/queryParser/MultiFieldQueryParser.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="177" column="51" selection-start="6150" selection-end="6150" vertical-scroll-proportion="0.25655976">
@@ -887,58 +968,93 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/src/org/xonix/zlo/web/servlets/SearchServlet.java">
+    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/config.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="60" selection-start="3727" selection-end="3727" vertical-scroll-proportion="0.31710708">
+        <state line="11" column="86" selection-start="287" selection-end="287" vertical-scroll-proportion="0.2820513">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/ZloSearcher.java">
+    <entry file="jar://D:/TEST/JAVA/ZloSearcher/lib-src/lucene-2.2.0-src.zip!/lucene-2.2.0/src/java/org/apache/lucene/search/Query.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="13" selection-start="717" selection-end="717" vertical-scroll-proportion="0.024147727">
+        <state line="46" column="22" selection-start="1570" selection-end="1570" vertical-scroll-proportion="-2.9485397">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0/jre/lib/rt.jar!/sun/util/LocaleServiceProviderPool.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="30" selection-start="1526" selection-end="1526" vertical-scroll-proportion="0.5787037">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.6.0/src.zip!/java/text/DateFormat.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="406" column="28" selection-start="16679" selection-end="16679" vertical-scroll-proportion="0.02364395">
+        <state line="481" column="17" selection-start="19010" selection-end="19010" vertical-scroll-proportion="0.3979442">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/model/ZloMessage.java">
+    <entry file="file://$PROJECT_DIR$/zlo_web/src/org/xonix/zlo/web/servlets/SearchServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="182" column="48" selection-start="5826" selection-end="5826" vertical-scroll-proportion="1.2173295">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/test/Main1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="13" selection-start="218" selection-end="218" vertical-scroll-proportion="0.21279556">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/test/t1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="2" selection-start="100" selection-end="100" vertical-scroll-proportion="0.1418637">
+        <state line="91" column="60" selection-start="3727" selection-end="3727" vertical-scroll-proportion="0.33480176">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/test/Test1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="13" selection-start="304" selection-end="304" vertical-scroll-proportion="0.21279556">
+        <state line="11" column="53" selection-start="302" selection-end="302" vertical-scroll-proportion="0.12481645">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/config.properties">
+    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/test/Main1.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="35" selection-start="306" selection-end="306" vertical-scroll-proportion="0.2837274">
+        <state line="12" column="13" selection-start="218" selection-end="218" vertical-scroll-proportion="0.2246696">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/test/t1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="2" selection-start="100" selection-end="100" vertical-scroll-proportion="0.14977974">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zlo_web/resources/Search.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="63" selection-start="735" selection-end="735" vertical-scroll-proportion="0.22972973">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/TEST/JAVA/ZloSearcher/lib-src/lucene-2.2.0-src.zip!/lucene-2.2.0/src/java/org/apache/lucene/queryParser/QueryParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="540" column="0" selection-start="17326" selection-end="17326" vertical-scroll-proportion="0.3243243">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/TEST/JAVA/ZloSearcher/lib-src/lucene-2.2.0-src.zip!/lucene-2.2.0/src/java/org/apache/lucene/document/Field.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="169" column="12" selection-start="7248" selection-end="7248" vertical-scroll-proportion="0.33333334">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/ZloSearcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="86" column="48" selection-start="3293" selection-end="3293" vertical-scroll-proportion="0.5615616">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/model/ZloMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="162" column="51" selection-start="4893" selection-end="4893" vertical-scroll-proportion="3.4774776">
           <folding />
         </state>
       </provider>
