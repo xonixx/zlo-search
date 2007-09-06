@@ -1,7 +1,7 @@
 1) „тоб данные с полей форм приходили в правильной кодировке, прописать в томкате в server.xml:
     <Server ...>
     <Service ...>
-    <Connector ... URIEncoding="UTF-8"/>
+    <Connector ... URIEncoding="windows-1251"/>
     ...
     </Connector>
     </Service>
