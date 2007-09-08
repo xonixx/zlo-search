@@ -3,6 +3,7 @@ package org.xonix.zlo.search.test;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.analysis.SimpleAnalyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.search.Query;
 
 import java.text.DateFormat;
@@ -31,5 +32,9 @@ public class Test1 {
     public static void m2() {
         DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
         System.out.println(df.format(new Date()));
+    }
+
+    public static void m3() {
+        //new StandardAnalyzer().
     }
 }
