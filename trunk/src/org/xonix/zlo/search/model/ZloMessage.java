@@ -1,17 +1,17 @@
 package org.xonix.zlo.search.model;
 
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.KeywordAnalyzer;
+import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
+import org.apache.lucene.document.DateTools;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.document.DateTools;
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
-import org.apache.lucene.analysis.KeywordAnalyzer;
 import org.xonix.zlo.search.Config;
 
-import java.util.Date;
-import java.util.Map;
-import java.util.HashMap;
 import java.text.ParseException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Author: gubarkov

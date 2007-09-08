@@ -8,11 +8,7 @@
 <%@ page contentType="text/html; charset=windows-1251" %>
 
 <jsp:useBean id="backendBean" class="org.xonix.zlo.web.BackendBean" scope="session" />
-<jsp:setProperty name="backendBean" property="*" /> <%-- all from request --%>
-
-<%--<c:if test="${not empty requestScope['site']}">
-    <jsp:setProperty name="backendBean" property="site" value="${requestScope['site']}" />
-</c:if>--%>
+<jsp:setProperty name="backendBean" property="*" /> <%-- all from request properties --%>
 
 <html>
     <head>
@@ -59,7 +55,7 @@
     <c:choose>
         <c:when test="${empty requestScope['error']}">
             <c:if test="${not empty requestScope['searchResult']}">
-                <display:table name="searchResult.msgs" id="msg" htmlId="resultTable"
+                <display:table name="searchResult" id="msg" htmlId="resultTable" pagesize="<%= (Integer) request.getAttribute("pageSize") %>"
                                decorator="org.xonix.zlo.web.decorators.SearchResultLineDecorator">
                     <display:column title="Num"><c:out value="${msg_rowNum}" /></display:column>
                     <display:column title="Title">
@@ -76,13 +72,15 @@
                                 <c:out value="${msg.nick}" />
                             </c:when>
                             <c:otherwise>
-                                <a href="http://<c:out value="${requestScope['siteRoot']}" />/?uinfo=<c:out value="${msg.nick}" />">
-                                    <c:out value="${msg.nick}" />
-                                </a>
+                                <a href="http://<c:out value="${requestScope['siteRoot']}" />/?uinfo=<c:out value="${msg.nick}" />"><c:out value="${msg.nick}" /></a>
                             </c:otherwise>
                         </c:choose>
+                        <a class="search" href="search?topic=0&nick=<c:out value="${msg.nick}" />">?</a>
                     </display:column>
-                    <display:column title="Host" property="host" />
+                    <display:column title="Host">
+                        <c:out value="${msg.host}" />
+                        <a class="search" href="search?topic=0&host=<c:out value="${msg.host}" />">?</a>
+                    </display:column>
                     <display:column title="Date" property="date" />
                 </display:table>
             </c:if>

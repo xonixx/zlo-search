@@ -2,8 +2,8 @@ package org.xonix.zlo.search.test;
 
 import org.apache.lucene.document.DateTools;
 
-import java.util.Date;
 import java.text.ParseException;
+import java.util.Date;
 
 /**
  * Author: gubarkov

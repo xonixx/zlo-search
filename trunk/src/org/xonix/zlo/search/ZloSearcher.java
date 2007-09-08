@@ -1,19 +1,19 @@
 package org.xonix.zlo.search;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.search.*;
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.commons.lang.StringUtils;
+import org.apache.lucene.search.Hits;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.Sort;
 import org.xonix.zlo.search.model.ZloMessage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Author: gubarkov
@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
  */
 public class ZloSearcher {
     private final static ZloSearcher ZLO_SEARCHER_INSTANCE = new ZloSearcher();
-    public final static SimpleDateFormat QUERY_DATEFORMAT = new SimpleDateFormat("M.d.yy"); // because of locale
+    public final static SimpleDateFormat QUERY_DATEFORMAT = new SimpleDateFormat("yyyyMMdd"); // because of locale
 
     public static ZloSearchResult search(String queryString) {
         return ZLO_SEARCHER_INSTANCE.search0(queryString);
@@ -40,7 +40,7 @@ public class ZloSearcher {
         if (StringUtils.isNotEmpty(body))
             res.append("+body:(").append(body).append(")");
 
-        if (!"0".equals(topicCode)) {
+        if (StringUtils.isNotEmpty(topicCode) && !"0".equals(topicCode)) {
             res.append(" +topic:").append(topicCode);
         }
 
@@ -48,7 +48,7 @@ public class ZloSearcher {
             res.append(" +title:(").append(title).append(")");
 
         if (StringUtils.isNotEmpty(nick))
-            res.append(" +nick:").append(nick);
+            res.append(" +nick:\"").append(nick).append("\"");
 
         if (StringUtils.isNotEmpty(host))
             res.append(" +host:").append(host);
@@ -68,8 +68,7 @@ public class ZloSearcher {
     }
 
     private ZloSearchResult search0(String queryStr) {
-        List<ZloMessage> msgs = new ArrayList<ZloMessage>();
-        ZloSearchResult result = new ZloSearchResult(msgs);
+        ZloSearchResult result = new ZloSearchResult();
         try {
             IndexReader reader = IndexReader.open(Config.INDEX_DIR);
             IndexSearcher searcher = new IndexSearcher(reader);
@@ -83,12 +82,7 @@ public class ZloSearcher {
             result.setQuery(query);
 
             Hits hits = searcher.search(query, new Sort(ZloMessage.DATE, false));
-
-            // TODO: this must be lazy!!! ---VVV
-            for (Iterator it = hits.iterator(); it.hasNext();) {
-                msgs.add(ZloMessage.fromDocument(((Hit)it.next()).getDocument()));
-            }
-
+            result.setHits(hits);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
@@ -108,8 +102,8 @@ public class ZloSearcher {
         query="topic:Развлечения";
         System.out.println(query);
         ZloSearcher searcher = new ZloSearcher();
-        for (ZloMessage msg: ZloSearcher.search(query).getMsgs()) {
+/*        for (ZloMessage msg: ZloSearcher.search(query).iterator()) {
             System.out.println(msg);
-        }
+        }*/
     }
 }
