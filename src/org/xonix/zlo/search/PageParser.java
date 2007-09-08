@@ -1,13 +1,14 @@
 package org.xonix.zlo.search;
 
 import org.xonix.zlo.search.model.ZloMessage;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-import java.util.Date;
+
 import java.io.IOException;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Author: gubarkov

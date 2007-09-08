@@ -33,10 +33,11 @@ public class SearchServlet extends ForwardingServlet {
     public static final String QS_DATES = "dates";
     public static final String QS_FROM_DATE = "fd";
     public static final String QS_TO_DATE = "td";
+    public static final String QS_PAGE_SIZE = "pagesize";
 
     public static final String ERROR = "error";
 
-    public static SimpleDateFormat FROM_TO_DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd");
+    public static SimpleDateFormat FROM_TO_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 
     protected void doGet(ForwardingRequest request, HttpServletResponse response) throws ServletException, IOException {
         String topicCode = request.getParameter(QS_TOPIC);
@@ -46,6 +47,17 @@ public class SearchServlet extends ForwardingServlet {
         String host = request.getParameter(QS_HOST);
         String fromDateStr = request.getParameter(QS_FROM_DATE);
         String toDateStr = request.getParameter(QS_TO_DATE);
+        String pageSizeStr = request.getParameter(QS_PAGE_SIZE);
+
+        int pageSize = 10;
+        if (StringUtils.isNotEmpty(pageSizeStr)) {
+            try {
+                pageSize = Integer.valueOf(pageSizeStr);
+            } catch(NumberFormatException ex){
+                ;
+            }
+        }
+        request.setAttribute("pageSize", pageSize);
 
         Date fromDate;
         Date toDate;
