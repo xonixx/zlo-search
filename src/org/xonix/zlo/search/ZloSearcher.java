@@ -33,7 +33,7 @@ public class ZloSearcher {
                                          String body,
                                          String nick,
                                          String host,
-                                         Date fromdDate,
+                                         Date fromDate,
                                          Date toDate) {
         StringBuilder res = new StringBuilder();
 
@@ -53,10 +53,18 @@ public class ZloSearcher {
         if (StringUtils.isNotEmpty(host))
             res.append(" +host:").append(host);
 
-        if (fromdDate != null && toDate != null)
-            res.append(" +date:[").append(QUERY_DATEFORMAT.format(fromdDate)).append(" TO ").append(QUERY_DATEFORMAT.format(toDate)).append("]");
+        if (fromDate != null && toDate != null)
+            res.append(" +date:[").append(QUERY_DATEFORMAT.format(fromDate)).append(" TO ").append(QUERY_DATEFORMAT.format(toDate)).append("]");
 
-        return ZLO_SEARCHER_INSTANCE.search0(res.toString());
+        ZloSearchResult result = ZLO_SEARCHER_INSTANCE.search0(res.toString());
+        result.setTopicCode(topicCode);
+        result.setTitle(title);
+        result.setBody(body);
+        result.setNick(nick);
+        result.setHost(host);
+        result.setFromDate(fromDate);
+        result.setToDate(toDate);
+        return result;
     }
 
     public static ZloSearchResult search(String topicCode,

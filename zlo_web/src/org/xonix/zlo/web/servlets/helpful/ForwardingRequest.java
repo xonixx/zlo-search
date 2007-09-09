@@ -41,7 +41,7 @@ public class ForwardingRequest extends HttpServletRequestWrapper {
     }
 
     public String getParameter(String key) {
-        String val =  super.getParameter(key);
+        String val = super.getParameter(key);
         if (StringUtils.isEmpty(val)){
             val = _parameters.get(key);
         }
