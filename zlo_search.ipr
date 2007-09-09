@@ -295,9 +295,8 @@
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://D:/TEST/JAVA/ZloSearcher/lib/lucene-analyzers-2.2.0.jar!/" />
         <root url="jar://D:/TEST/JAVA/ZloSearcher/lib-src/lucene-2.2.0-src.zip!/lucene-2.2.0/src/java" />
-        <root url="jar://D:/TEST/JAVA/ZloSearcher/lib-src/lucene-2.2.0-src.zip!/lucene-2.2.0/contrib/analyzers" />
+        <root url="jar://D:/TEST/JAVA/ZloSearcher/lib-src/lucene-2.2.0-src.zip!/lucene-2.2.0/contrib/analyzers/src/java" />
       </SOURCES>
     </library>
   </component>
