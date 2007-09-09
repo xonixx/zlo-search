@@ -15,7 +15,7 @@ import java.util.Date;
  */
 public class Test1 {
     public static void main(String[] args) {
-        m1();
+        m3();
     }
 
     public static void m1(){
@@ -35,5 +35,6 @@ public class Test1 {
 
     public static void m3() {
         //new StandardAnalyzer().
+        System.out.println(new Date().hashCode());
     }
 }

@@ -10,6 +10,8 @@
 <jsp:useBean id="backendBean" class="org.xonix.zlo.web.BackendBean" scope="session" />
 <jsp:setProperty name="backendBean" property="*" /> <%-- all from request properties --%>
 
+<jsp:useBean id="siteRoot" class="java.lang.String" scope="session" />
+
 <html>
     <head>
         <title><%= Config.PAGE_TITLE %></title>
@@ -32,8 +34,8 @@
                             <%= Config.LABEL_HOST %> <input type="text" name="host" <c:if test="${not empty param['host']}">value="<c:out value="${param['host']}" />" </c:if>style="width:200px;" />
                             <br/>
                             <input type="checkbox" name="dates" id="dates" onchange="changedDatesSelector();" <c:if test="${not empty param['dates']}">checked="true"</c:if>/> <label for="dates"><%= Config.LABEL_DATES %></label>
-                            <%= Config.LABEL_FROM_DATE %> <input type="text" name="fd" id="fd" value="${param['fd']}" />
-                            <%= Config.LABEL_TO_DATE %> <input type="text" name="td" id="td" value="${param['td']}" />
+                            <%= Config.LABEL_FROM_DATE %> <input type="text" name="fd" id="fd" value="${sessionScope['fd']}" />
+                            <%= Config.LABEL_TO_DATE %> <input type="text" name="td" id="td" value="${sessionScope['td']}" />
                             <br/>
                             <%= Config.LABEL_SITE %> <jsp:getProperty name="backendBean" property="siteSelector" />
                             <br/>
@@ -47,19 +49,19 @@
     <c:if test="${requestScope['debug'] == true}">
         <br/>
         <div id="debug">
-            Query: <c:out value="${requestScope['searchResult'].query}" />
+            Query: <c:out value="${sessionScope['searchResult'].query}" />
         </div>
         <br/>
     </c:if>
 
     <c:choose>
         <c:when test="${empty requestScope['error']}">
-            <c:if test="${not empty requestScope['searchResult']}">
-                <display:table name="searchResult" id="msg" htmlId="resultTable" pagesize="<%= (Integer) request.getAttribute("pageSize") %>"
-                               decorator="org.xonix.zlo.web.decorators.SearchResultLineDecorator">
+            <c:if test="${not empty sessionScope['searchResult']}">
+                <display:table name="sessionScope.searchResult" id="msg" htmlId="resultTable" pagesize="<%= (Integer) session.getAttribute("pageSize") %>"
+                               decorator="org.xonix.zlo.web.decorators.SearchResultLineDecorator" requestURI="search">
                     <display:column title="Num"><c:out value="${msg_rowNum}" /></display:column>
                     <display:column title="Title">
-                        <a href="http://<c:out value="${requestScope['siteRoot']}" />/?read=<c:out value="${msg.num}" />">
+                        <a href="http://<c:out value="${siteRoot}" />/?read=<c:out value="${msg.num}" />">
                             <c:if test="${not empty msg.topic and msg.topic != 'Без темы'}">
                                 [<c:out value="${msg.topic}" />]
                             </c:if>
@@ -72,7 +74,7 @@
                                 <c:out value="${msg.nick}" />
                             </c:when>
                             <c:otherwise>
-                                <a href="http://<c:out value="${requestScope['siteRoot']}" />/?uinfo=<c:out value="${msg.nick}" />"><c:out value="${msg.nick}" /></a>
+                                <a href="http://<c:out value="${siteRoot}" />/?uinfo=<c:out value="${msg.nick}" />"><c:out value="${msg.nick}" /></a>
                             </c:otherwise>
                         </c:choose>
                         <a class="search" href="search?topic=0&nick=<c:out value="${msg.nick}" />">?</a>

@@ -3,6 +3,7 @@ package org.xonix.zlo.web.servlets;
 import org.apache.commons.lang.StringUtils;
 import org.xonix.zlo.search.ZloSearcher;
 import org.xonix.zlo.search.Config;
+import org.xonix.zlo.search.ZloSearchResult;
 import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 import org.xonix.zlo.web.servlets.helpful.ForwardingServlet;
@@ -11,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
@@ -24,6 +26,7 @@ import java.util.GregorianCalendar;
  * Time: 20:31:41
  */
 public class SearchServlet extends ForwardingServlet {
+    // query string params
     public static final String QS_TOPIC = ZloMessage.TOPIC;
     public static final String QS_BODY = ZloMessage.BODY;
     public static final String QS_TITLE = ZloMessage.TITLE;
@@ -34,6 +37,11 @@ public class SearchServlet extends ForwardingServlet {
     public static final String QS_FROM_DATE = "fd";
     public static final String QS_TO_DATE = "td";
     public static final String QS_PAGE_SIZE = "pagesize";
+
+    // session keys
+    public static final String SESS_SEARCH_RESULT = "searchResult";
+    public static final String SESS_SITE_ROOT = "siteRoot";
+    public static final String SESS_PAGE_SIZE = "pageSize";
 
     public static final String ERROR = "error";
 
@@ -49,6 +57,8 @@ public class SearchServlet extends ForwardingServlet {
         String toDateStr = request.getParameter(QS_TO_DATE);
         String pageSizeStr = request.getParameter(QS_PAGE_SIZE);
 
+        HttpSession session = request.getSession(true); // create if session not started
+
         int pageSize = 10;
         if (StringUtils.isNotEmpty(pageSizeStr)) {
             try {
@@ -57,7 +67,7 @@ public class SearchServlet extends ForwardingServlet {
                 ;
             }
         }
-        request.setAttribute("pageSize", pageSize);
+        session.setAttribute(SESS_PAGE_SIZE, pageSize);
 
         Date fromDate;
         Date toDate;
@@ -90,35 +100,38 @@ public class SearchServlet extends ForwardingServlet {
         }
 
         // request
-        request.setParameter(QS_TO_DATE, FROM_TO_DATE_FORMAT.format(toDate));
-        request.setParameter(QS_FROM_DATE, FROM_TO_DATE_FORMAT.format(fromDate));
+        session.setAttribute(QS_TO_DATE, FROM_TO_DATE_FORMAT.format(toDate));
+        session.setAttribute(QS_FROM_DATE, FROM_TO_DATE_FORMAT.format(fromDate));
 
         if (StringUtils.isNotEmpty(title) ||
                 StringUtils.isNotEmpty(body) ||
                 StringUtils.isNotEmpty(nick) ||
                 StringUtils.isNotEmpty(host) ||
                 StringUtils.isNotEmpty(topicCode) && !"0".equals(topicCode)) {
-            if (StringUtils.isEmpty(request.getParameter(QS_DATES)))
-                request.setAttribute("searchResult", ZloSearcher.search(topicCode, title, body, nick, host));
-            else
-                request.setAttribute("searchResult", ZloSearcher.search(topicCode, title, body, nick, host, fromDate, toDate));
+
+            if (StringUtils.isEmpty(request.getParameter(QS_DATES))) {
+                fromDate = toDate = null;
+            }
+
+            if (session.getAttribute(SESS_SEARCH_RESULT) == null ||
+                    ((ZloSearchResult) session.getAttribute(SESS_SEARCH_RESULT)).isNotTheSameSearch(topicCode, title, body, nick, host, fromDate, toDate)) {
+                session.setAttribute(SESS_SEARCH_RESULT, ZloSearcher.search(topicCode, title, body, nick, host, fromDate, toDate));
+            }
         }
 
         request.setAttribute("debug", "true".equalsIgnoreCase(getServletContext().getInitParameter("debug")));
 
         String siteInCookie;
         if (StringUtils.isNotEmpty(request.getParameter(QS_SITE))){
-            request.setAttribute("siteRoot", Config.SITES[Integer.valueOf(request.getParameter(QS_SITE))]);
+            session.setAttribute(SESS_SITE_ROOT, Config.SITES[Integer.valueOf(request.getParameter(QS_SITE))]);
             rememberInCookie(response, QS_SITE, request.getParameter(QS_SITE));
         } else if (StringUtils.isNotEmpty(siteInCookie = recallFromCookie(request, QS_SITE))){
             ///request.setAttribute(QS_SITE, siteInCookie); // for drop-down
             request.setParameter(QS_SITE, siteInCookie);
-            request.setAttribute("siteRoot", Config.SITES[Integer.valueOf(siteInCookie)]); // for search result list
+            session.setAttribute(SESS_SITE_ROOT, Config.SITES[Integer.valueOf(siteInCookie)]); // for search result list
         } else {
-            request.setAttribute("siteRoot", Config.SITES[0]);
+            session.setAttribute(SESS_SITE_ROOT, Config.SITES[0]);
         }
-
-        //request.setAttribute("error", "Fuck!!!");
 
         request.forwardTo("/Search.jsp");
     }
