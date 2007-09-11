@@ -170,8 +170,8 @@ public class ZloSearchResult implements Iterable {
                 StringUtils.equals(this.body, body) &&
                 StringUtils.equals(this.nick, nick) &&
                 StringUtils.equals(this.host, host) &&
-                (this.fromDate == fromDate || this.fromDate.equals(fromDate)) &&
-                (this.toDate == toDate || this.toDate.equals(toDate));
+                (this.fromDate == fromDate || this.fromDate != null && this.fromDate.equals(fromDate)) &&
+                (this.toDate == toDate || this.toDate != null && this.toDate.equals(toDate));
     }
 
     public boolean isNotTheSameSearch(String topicCode,
