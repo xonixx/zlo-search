@@ -38,6 +38,7 @@
                             <%= Config.LABEL_TO_DATE %> <input type="text" name="td" id="td" value="${sessionScope['td']}" />
                             <br/>
                             <%= Config.LABEL_SITE %> <jsp:getProperty name="backendBean" property="siteSelector" />
+                            <%= Config.LABEL_PER_PAGE %> <jsp:getProperty name="backendBean" property="pageSizeSelector" />
                             <br/>
                             <input type="submit" value="Search"/>
                         </form>

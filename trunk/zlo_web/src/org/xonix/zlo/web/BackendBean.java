@@ -2,6 +2,7 @@ package org.xonix.zlo.web;
 
 import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.Config;
+import org.xonix.zlo.web.servlets.SearchServlet;
 
 /**
  * Author: Vovan
@@ -17,42 +18,25 @@ public class BackendBean {
     private String fromDate;
     private String toDate;
     private int site;
+    private int pageSize;
+
+    public static final String SN_TOPIC = SearchServlet.QS_TOPIC;
+    public static final String SN_SITE = SearchServlet.QS_SITE;
+    public static final String SN_PAGE_SIZE = SearchServlet.QS_PAGE_SIZE;
 
     public BackendBean() {
     }
 
     public String getTopicSelector() {
-        StringBuilder res = new StringBuilder("<select name=\"topic\">\n");
-
-        for (int i=0; i<ZloMessage.TOPICS.length; i++) {
-            if (i == topic)
-                res.append("<option value=\"")
-                        .append(i).append("\" selected>")
-                        .append(ZloMessage.TOPICS[i]).append("</option>\n");
-            else
-                res.append("<option value=\"")
-                        .append(i).append("\">")
-                        .append(ZloMessage.TOPICS[i]).append("</option>\n");
-        }
-
-        res.append("</select>");
-        return res.toString();
+        return HtmlConstructor.constructSelector(SN_TOPIC, ZloMessage.TOPICS, topic, true);
     }
 
     public String getSiteSelector() {
-        StringBuilder res = new StringBuilder("<select name=\"site\">\n");
-        for (int i=0; i<Config.SITES.length; i++){
-            if (i == site)
-                res.append("<option value=\"")
-                        .append(i).append("\" selected>")
-                        .append(Config.SITES[i]).append("</option>\n");
-            else
-                res.append("<option value=\"")
-                        .append(i).append("\">")
-                        .append(Config.SITES[i]).append("</option>\n");
-        }
-        res.append("</select>");
-        return res.toString();
+        return HtmlConstructor.constructSelector(SN_SITE, Config.SITES, site, true);
+    }
+
+    public String getPageSizeSelector() {
+        return HtmlConstructor.constructSelector(SN_PAGE_SIZE, Config.NUMS_PER_PAGE, pageSize, true);
     }
 
     public int getSite() {
@@ -117,5 +101,13 @@ public class BackendBean {
 
     public void setToDate(String toDate) {
         this.toDate = toDate;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 }

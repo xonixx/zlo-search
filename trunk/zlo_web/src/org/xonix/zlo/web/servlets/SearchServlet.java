@@ -36,12 +36,12 @@ public class SearchServlet extends ForwardingServlet {
     public static final String QS_DATES = "dates";
     public static final String QS_FROM_DATE = "fd";
     public static final String QS_TO_DATE = "td";
-    public static final String QS_PAGE_SIZE = "pagesize";
+    public static final String QS_PAGE_SIZE = "pageSize";
 
     // session keys
     public static final String SESS_SEARCH_RESULT = "searchResult";
     public static final String SESS_SITE_ROOT = "siteRoot";
-    public static final String SESS_PAGE_SIZE = "pageSize";
+    public static final String SESS_PAGE_SIZE = QS_PAGE_SIZE;
 
     public static final String ERROR = "error";
 
@@ -62,7 +62,7 @@ public class SearchServlet extends ForwardingServlet {
         int pageSize = 10;
         if (StringUtils.isNotEmpty(pageSizeStr)) {
             try {
-                pageSize = Integer.valueOf(pageSizeStr);
+                pageSize = Integer.parseInt(Config.NUMS_PER_PAGE[Integer.valueOf(pageSizeStr)]);
             } catch(NumberFormatException ex){
                 ;
             }
@@ -126,8 +126,7 @@ public class SearchServlet extends ForwardingServlet {
             session.setAttribute(SESS_SITE_ROOT, Config.SITES[Integer.valueOf(request.getParameter(QS_SITE))]);
             rememberInCookie(response, QS_SITE, request.getParameter(QS_SITE));
         } else if (StringUtils.isNotEmpty(siteInCookie = recallFromCookie(request, QS_SITE))){
-            ///request.setAttribute(QS_SITE, siteInCookie); // for drop-down
-            request.setParameter(QS_SITE, siteInCookie);
+            request.setParameter(QS_SITE, siteInCookie); // for drop-down
             session.setAttribute(SESS_SITE_ROOT, Config.SITES[Integer.valueOf(siteInCookie)]); // for search result list
         } else {
             session.setAttribute(SESS_SITE_ROOT, Config.SITES[0]);

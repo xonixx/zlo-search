@@ -25,6 +25,7 @@ public class Config {
     }
 
     public static String [] SITES = props.getProperty("sites").split("\\|");
+    public static String [] NUMS_PER_PAGE = props.getProperty("nums.per.page").split("\\|");
 
     public static String INDEXING_URL = props.getProperty("indexing.url");
     public static String READ_QUERY = props.getProperty("query.read");
@@ -60,14 +61,15 @@ public class Config {
     public static final String LABEL_DATES = props.getProperty("label.dates");
     public static final String LABEL_FROM_DATE = props.getProperty("label.from.date");
     public static final String LABEL_TO_DATE = props.getProperty("label.to.date");
+    public static final String LABEL_PER_PAGE = props.getProperty("label.per.page");
 
     public static enum ErrorMsgs {
-        ToDateInvalid(props.getProperty("error.toDate")),
-        FromDateInvalid(props.getProperty("error.fromDate"));
+        ToDateInvalid("error.toDate"),
+        FromDateInvalid("error.fromDate");
 
         private String msg;
         private ErrorMsgs(String msg) {
-            this.msg = msg;
+            this.msg = props.getProperty(msg);
         }
 
         public String toString() {
