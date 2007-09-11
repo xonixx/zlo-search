@@ -40,7 +40,7 @@
                             <%= Config.LABEL_SITE %> <jsp:getProperty name="backendBean" property="siteSelector" />
                             <%= Config.LABEL_PER_PAGE %> <jsp:getProperty name="backendBean" property="pageSizeSelector" />
                             <br/>
-                            <input type="submit" value="Search"/>
+                            <input type="submit" name="submit" value="Search"/>
                         </form>
                     </td>
                     <td></td>

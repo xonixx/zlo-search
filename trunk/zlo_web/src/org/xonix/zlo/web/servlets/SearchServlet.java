@@ -37,6 +37,7 @@ public class SearchServlet extends ForwardingServlet {
     public static final String QS_FROM_DATE = "fd";
     public static final String QS_TO_DATE = "td";
     public static final String QS_PAGE_SIZE = "pageSize";
+    public static final String QS_SUBMIT = "submit";
 
     // session keys
     public static final String SESS_SEARCH_RESULT = "searchResult";
@@ -55,16 +56,31 @@ public class SearchServlet extends ForwardingServlet {
         String host = request.getParameter(QS_HOST);
         String fromDateStr = request.getParameter(QS_FROM_DATE);
         String toDateStr = request.getParameter(QS_TO_DATE);
-        String pageSizeStr = request.getParameter(QS_PAGE_SIZE);
+        String pageSizeStrInd = request.getParameter(QS_PAGE_SIZE);
 
         HttpSession session = request.getSession(true); // create if session not started
 
-        int pageSize = 10;
-        if (StringUtils.isNotEmpty(pageSizeStr)) {
+        int pageSize = 100; // default
+        if (StringUtils.isNotEmpty(pageSizeStrInd)) {
             try {
-                pageSize = Integer.parseInt(Config.NUMS_PER_PAGE[Integer.valueOf(pageSizeStr)]);
+                pageSize = Integer.parseInt(Config.NUMS_PER_PAGE[Integer.valueOf(pageSizeStrInd)]);
+                rememberInCookie(response, QS_PAGE_SIZE, pageSizeStrInd);
             } catch(NumberFormatException ex){
                 ;
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                ;
+            }
+        } else {
+            String pageSizeStrIndCookie = recallFromCookie(request, QS_PAGE_SIZE);
+            if (StringUtils.isNotEmpty(pageSizeStrIndCookie)) {
+                try {
+                    pageSize = Integer.parseInt(Config.NUMS_PER_PAGE[Integer.valueOf(pageSizeStrIndCookie)]);
+                    request.setParameter(QS_PAGE_SIZE, pageSizeStrIndCookie);
+                } catch (NumberFormatException ex) {
+                    ;
+                }
+            } else {
+                pageSize = Integer.parseInt(Config.NUMS_PER_PAGE[0]);
             }
         }
         session.setAttribute(SESS_PAGE_SIZE, pageSize);
@@ -117,6 +133,8 @@ public class SearchServlet extends ForwardingServlet {
                     ((ZloSearchResult) session.getAttribute(SESS_SEARCH_RESULT)).isNotTheSameSearch(topicCode, title, body, nick, host, fromDate, toDate)) {
                 session.setAttribute(SESS_SEARCH_RESULT, ZloSearcher.search(topicCode, title, body, nick, host, fromDate, toDate));
             }
+        } else if (StringUtils.isNotEmpty(request.getParameter(QS_SUBMIT))) {
+            request.setAttribute(ERROR, Config.ErrorMsgs.MustSelectCriterion);    
         }
 
         request.setAttribute("debug", "true".equalsIgnoreCase(getServletContext().getInitParameter("debug")));
