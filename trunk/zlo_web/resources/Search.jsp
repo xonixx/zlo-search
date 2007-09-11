@@ -1,4 +1,4 @@
-<%@ page import="org.xonix.zlo.search.Config" %>
+<%@ page import="org.xonix.zlo.search.config.Config, org.xonix.zlo.search.config.HtmlStrings" %>
 <%--
   User: gubarkov
   Date: 14.08.2007
@@ -14,7 +14,7 @@
 
 <html>
     <head>
-        <title><%= Config.PAGE_TITLE %></title>
+        <title><%= HtmlStrings.PAGE_TITLE %></title>
         <link rel="stylesheet" type="text/css" href="main.css" />
         <script type="text/javascript" src="script.js"></script>
     </head>
@@ -26,19 +26,19 @@
                     <td width="33%"></td>
                     <td>
                         <form action="search" method="get">
-                            <%= Config.LABEL_TITLE %> <input type="text" name="title" <c:if test="${not empty param['title']}">value="<c:out value="${param['title']}" />" </c:if>style="width:450px;" />
-                            <%= Config.LABEL_TOPIC %> <jsp:getProperty name="backendBean" property="topicSelector" />
+                            <%= HtmlStrings.LABEL_TITLE %> <input type="text" name="title" <c:if test="${not empty param['title']}">value="<c:out value="${param['title']}" />" </c:if>style="width:450px;" />
+                            <%= HtmlStrings.LABEL_TOPIC %> <jsp:getProperty name="backendBean" property="topicSelector" />
                             <br/>
-                            <%= Config.LABEL_TEXT %> <input type="text" name="body" <c:if test="${not empty param['body']}">value="<c:out value="${param['body']}" />" </c:if>style="width:450px;" /><br/>
-                            <%= Config.LABEL_NICK %> <input type="text" name="nick" <c:if test="${not empty param['nick']}">value="<c:out value="${param['nick']}" />" </c:if>style="width:200px;" />
-                            <%= Config.LABEL_HOST %> <input type="text" name="host" <c:if test="${not empty param['host']}">value="<c:out value="${param['host']}" />" </c:if>style="width:200px;" />
+                            <%= HtmlStrings.LABEL_TEXT %> <input type="text" name="body" <c:if test="${not empty param['body']}">value="<c:out value="${param['body']}" />" </c:if>style="width:450px;" /><br/>
+                            <%= HtmlStrings.LABEL_NICK %> <input type="text" name="nick" <c:if test="${not empty param['nick']}">value="<c:out value="${param['nick']}" />" </c:if>style="width:200px;" />
+                            <%= HtmlStrings.LABEL_HOST %> <input type="text" name="host" <c:if test="${not empty param['host']}">value="<c:out value="${param['host']}" />" </c:if>style="width:200px;" />
                             <br/>
-                            <input type="checkbox" name="dates" id="dates" onchange="changedDatesSelector();" <c:if test="${not empty param['dates']}">checked="true"</c:if>/> <label for="dates"><%= Config.LABEL_DATES %></label>
-                            <%= Config.LABEL_FROM_DATE %> <input type="text" name="fd" id="fd" value="${sessionScope['fd']}" />
-                            <%= Config.LABEL_TO_DATE %> <input type="text" name="td" id="td" value="${sessionScope['td']}" />
+                            <input type="checkbox" name="dates" id="dates" onchange="changedDatesSelector();" <c:if test="${not empty param['dates']}">checked="true"</c:if>/> <label for="dates"><%= HtmlStrings.LABEL_DATES %></label>
+                            <%= HtmlStrings.LABEL_FROM_DATE %> <input type="text" name="fd" id="fd" value="${sessionScope['fd']}" />
+                            <%= HtmlStrings.LABEL_TO_DATE %> <input type="text" name="td" id="td" value="${sessionScope['td']}" />
                             <br/>
-                            <%= Config.LABEL_SITE %> <jsp:getProperty name="backendBean" property="siteSelector" />
-                            <%= Config.LABEL_PER_PAGE %> <jsp:getProperty name="backendBean" property="pageSizeSelector" />
+                            <%= HtmlStrings.LABEL_SITE %> <jsp:getProperty name="backendBean" property="siteSelector" />
+                            <%= HtmlStrings.LABEL_PER_PAGE %> <jsp:getProperty name="backendBean" property="pageSizeSelector" />
                             <br/>
                             <input type="submit" name="submit" value="Search"/>
                         </form>

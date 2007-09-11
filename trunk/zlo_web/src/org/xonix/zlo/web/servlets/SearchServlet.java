@@ -2,7 +2,8 @@ package org.xonix.zlo.web.servlets;
 
 import org.apache.commons.lang.StringUtils;
 import org.xonix.zlo.search.ZloSearcher;
-import org.xonix.zlo.search.Config;
+import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.config.ErrorMsgs;
 import org.xonix.zlo.search.ZloSearchResult;
 import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.web.servlets.helpful.ForwardingRequest;
@@ -45,6 +46,8 @@ public class SearchServlet extends ForwardingServlet {
     public static final String SESS_PAGE_SIZE = QS_PAGE_SIZE;
 
     public static final String ERROR = "error";
+
+    public static final String JSP_SEARCH = "/Search.jsp";
 
     public static SimpleDateFormat FROM_TO_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 
@@ -93,8 +96,8 @@ public class SearchServlet extends ForwardingServlet {
             try {
                 toDate = FROM_TO_DATE_FORMAT.parse(toDateStr);
             } catch (ParseException e) {
-                request.setAttribute(ERROR, Config.ErrorMsgs.ToDateInvalid);
-                request.forwardTo("/Search.jsp");
+                request.setAttribute(ERROR, ErrorMsgs.ToDateInvalid);
+                request.forwardTo(JSP_SEARCH);
                 return;
             }
         }
@@ -109,8 +112,8 @@ public class SearchServlet extends ForwardingServlet {
             try {
                 fromDate = FROM_TO_DATE_FORMAT.parse(fromDateStr);
             } catch (ParseException e) {
-                request.setAttribute(ERROR, Config.ErrorMsgs.FromDateInvalid);
-                request.forwardTo("/Search.jsp");
+                request.setAttribute(ERROR, ErrorMsgs.FromDateInvalid);
+                request.forwardTo(JSP_SEARCH);
                 return;
             }
         }
@@ -134,7 +137,9 @@ public class SearchServlet extends ForwardingServlet {
                 session.setAttribute(SESS_SEARCH_RESULT, ZloSearcher.search(topicCode, title, body, nick, host, fromDate, toDate));
             }
         } else if (StringUtils.isNotEmpty(request.getParameter(QS_SUBMIT))) {
-            request.setAttribute(ERROR, Config.ErrorMsgs.MustSelectCriterion);    
+            request.setAttribute(ERROR, ErrorMsgs.MustSelectCriterion);
+        } else {
+            session.setAttribute(SESS_SEARCH_RESULT, null);
         }
 
         request.setAttribute("debug", "true".equalsIgnoreCase(getServletContext().getInitParameter("debug")));
@@ -150,7 +155,7 @@ public class SearchServlet extends ForwardingServlet {
             session.setAttribute(SESS_SITE_ROOT, Config.SITES[0]);
         }
 
-        request.forwardTo("/Search.jsp");
+        request.forwardTo(JSP_SEARCH);
     }
 
     private void rememberInCookie(HttpServletResponse response, String fieldname, String value, int age) {

@@ -2,6 +2,7 @@ package org.xonix.zlo.search;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.xonix.zlo.search.config.Config;
 
 import java.io.IOException;
 import java.io.InputStream;

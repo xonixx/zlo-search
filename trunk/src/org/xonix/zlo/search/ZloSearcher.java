@@ -10,6 +10,7 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
 import org.xonix.zlo.search.model.ZloMessage;
+import org.xonix.zlo.search.config.Config;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;

@@ -1,4 +1,4 @@
-package org.xonix.zlo.search;
+package org.xonix.zlo.search.config;
 
 import org.apache.lucene.analysis.Analyzer;
 
@@ -17,7 +17,7 @@ public class Config {
         try {
             props.load(Thread.currentThread()
                     .getContextClassLoader()
-                    .getResourceAsStream("org/xonix/zlo/search/config.properties"));
+                    .getResourceAsStream("org/xonix/zlo/search/config/config.properties"));
         } catch (IOException e) {
             System.out.println("Can't load config!");
             e.printStackTrace();
@@ -50,31 +50,11 @@ public class Config {
     public static final int TIME_PERIOD_YEARS = Integer.valueOf(TIME_PERIOD.split("y")[0]);
     public static final int TIME_PERIOD_MONTHS = Integer.valueOf(TIME_PERIOD.split("y")[1].split("m")[0]);
 
-    // visual:
-    public static final String PAGE_TITLE = props.getProperty("page.title");
-    public static final String LABEL_TITLE = props.getProperty("label.title");
-    public static final String LABEL_TOPIC = props.getProperty("label.topic");
-    public static final String LABEL_TEXT = props.getProperty("label.text");
-    public static final String LABEL_NICK = props.getProperty("label.nick");
-    public static final String LABEL_HOST = props.getProperty("label.host");
-    public static final String LABEL_SITE = props.getProperty("label.site");
-    public static final String LABEL_DATES = props.getProperty("label.dates");
-    public static final String LABEL_FROM_DATE = props.getProperty("label.from.date");
-    public static final String LABEL_TO_DATE = props.getProperty("label.to.date");
-    public static final String LABEL_PER_PAGE = props.getProperty("label.per.page");
+    public static String getProp(String key) {
+        return props.getProperty(key);
+    }
 
-    public static enum ErrorMsgs {
-        ToDateInvalid("error.toDate"),
-        FromDateInvalid("error.fromDate"),
-        MustSelectCriterion("error.must.select.criterion");
-
-        private String msg;
-        private ErrorMsgs(String msg) {
-            this.msg = props.getProperty(msg);
-        }
-
-        public String toString() {
-            return msg;
-        }
+    public static String getProp(String key, String defaultVal) {
+        return props.getProperty(key, defaultVal);
     }
 }
