@@ -4,9 +4,11 @@ import org.apache.lucene.analysis.SimpleAnalyzer;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Query;
+import org.xonix.zlo.search.ZloSearcher;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Iterator;
 
 /**
  * Author: Vovan
@@ -39,6 +41,12 @@ public class Test1 {
     }
 
     public static void m4() {
-            
+//        NumberFormat f = new DecimalFormat("0000000000");
+//        System.out.println(f.format(-123));
+//        System.out.println(Integer.parseInt(f.format(-123)));
+//        System.out.println(ZloSearcher.searchMsgByNum(3765011));
+        for (Object o : ZloSearcher.searchInNumRange(3765002, 3765007)) {
+            System.out.println(o);
+        }
     }
 }

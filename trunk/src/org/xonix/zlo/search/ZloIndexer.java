@@ -53,6 +53,6 @@ public class ZloIndexer {
     }
 
     public static void main(String[] args) {
-        new ZloIndexer().indexRange(3765000, 3765100);
+        new ZloIndexer().indexRange(3765000, 3765010);
     }
 }

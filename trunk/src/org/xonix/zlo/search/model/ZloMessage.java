@@ -10,6 +10,8 @@ import org.apache.lucene.search.Hit;
 import org.xonix.zlo.search.config.Config;
 
 import java.text.ParseException;
+import java.text.NumberFormat;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +52,8 @@ public class ZloMessage {
         "Windows", "BSD/Linux", "Проблемы сети",
         "Голосование", "Потеряно/Найдено", "Temp"
     };
+
+    public static NumberFormat URL_NUM_FORMAT = new DecimalFormat("0000000000"); // 10 zeros
 
     public static Map<String, String> TOPIC_CODES = new HashMap<String, String>(TOPIC.length());
 
@@ -162,7 +166,7 @@ public class ZloMessage {
 
     public Document getDocument() {
         Document doc = new Document();
-        doc.add(new Field(URL_NUM, Integer.toString(num), Field.Store.YES, Field.Index.UN_TOKENIZED));
+        doc.add(new Field(URL_NUM, URL_NUM_FORMAT.format(num), Field.Store.YES, Field.Index.UN_TOKENIZED));
         doc.add(new Field(TOPIC, TOPIC_CODES.get(topic), Field.Store.YES, Field.Index.UN_TOKENIZED));
         doc.add(new Field(TITLE, title, Field.Store.YES, Field.Index.TOKENIZED));
         doc.add(new Field(NICK, nick, Field.Store.YES, Field.Index.UN_TOKENIZED));

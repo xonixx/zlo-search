@@ -15,6 +15,7 @@ import org.xonix.zlo.search.config.Config;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.NoSuchElementException;
 
 /**
  * Author: gubarkov
@@ -98,6 +99,19 @@ public class ZloSearcher {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public static ZloMessage searchMsgByNum(int urlNum) {
+        try {
+            return search("+num:" + ZloMessage.URL_NUM_FORMAT.format(urlNum)).iterator().next(); // returns 1 result
+        } catch (NoSuchElementException e) { // 0 results found => msg with such num not indexed
+            return null;
+        }
+    }
+
+    public static ZloSearchResult searchInNumRange(int urlFrom, int urlTo) {
+        return search("+num:[" + ZloMessage.URL_NUM_FORMAT.format(urlFrom) 
+                + " TO " + ZloMessage.URL_NUM_FORMAT.format(urlTo) + "]");
     }
 
     public static void main(String[] args) {

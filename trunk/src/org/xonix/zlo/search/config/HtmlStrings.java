@@ -16,7 +16,8 @@ public enum HtmlStrings {
     LABEL_DATES("label.dates"),
     LABEL_FROM_DATE("label.from.date"),
     LABEL_TO_DATE("label.to.date"),
-    LABEL_PER_PAGE("label.per.page");
+    LABEL_PER_PAGE("label.per.page"),
+    LINK_SAVED_MSG("link.saved.msg");
 
     private String val;
 
