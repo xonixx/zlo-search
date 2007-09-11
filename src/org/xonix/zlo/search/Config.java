@@ -65,7 +65,8 @@ public class Config {
 
     public static enum ErrorMsgs {
         ToDateInvalid("error.toDate"),
-        FromDateInvalid("error.fromDate");
+        FromDateInvalid("error.fromDate"),
+        MustSelectCriterion("error.must.select.criterion");
 
         private String msg;
         private ErrorMsgs(String msg) {
