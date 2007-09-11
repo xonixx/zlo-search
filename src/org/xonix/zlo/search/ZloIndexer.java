@@ -2,6 +2,7 @@ package org.xonix.zlo.search;
 
 import org.apache.lucene.index.IndexWriter;
 import org.xonix.zlo.search.model.ZloMessage;
+import org.xonix.zlo.search.config.Config;
 
 import java.io.File;
 import java.io.IOException;

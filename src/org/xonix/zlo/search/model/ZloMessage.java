@@ -6,12 +6,14 @@ import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
 import org.apache.lucene.document.DateTools;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.xonix.zlo.search.Config;
+import org.apache.lucene.search.Hit;
+import org.xonix.zlo.search.config.Config;
 
 import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.io.IOException;
 
 /**
  * Author: gubarkov
@@ -36,6 +38,8 @@ public class ZloMessage {
     private Date date;
     private boolean reg = false;
     private int num = -1; // default
+
+    private int hitId;
     
     public static String [] TOPICS = {
         "Все темы", "Без темы",
@@ -136,6 +140,14 @@ public class ZloMessage {
         this.num = num;
     }
 
+    public int getHitId() {
+        return hitId;
+    }
+
+    public void setHitId(int hitId) {
+        this.hitId = hitId;
+    }
+
     public String toString() {
         return new StringBuffer("ZloMessage(\n")
                 .append("\t").append("num=").append(num).append(",\n")
@@ -162,16 +174,26 @@ public class ZloMessage {
     }
 
     public static ZloMessage fromDocument(Document doc) {
-        ZloMessage result = null;
         try {
-            result = new ZloMessage(
+            return new ZloMessage(
                 doc.get(NICK), doc.get(HOST), TOPICS[Integer.parseInt(doc.get(TOPIC))], doc.get(TITLE), doc.get(BODY),
                 DateTools.stringToDate(doc.get(DATE)), "true".equals(doc.get(REG)), Integer.parseInt(doc.get(URL_NUM))
             );
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return result;
+        return null;
+    }
+
+    public static ZloMessage fromHit(Hit hit) {
+        try {
+            ZloMessage res = fromDocument(hit.getDocument());
+            res.setHitId(hit.getId()); // to be adle to determine hit by msg
+            return res;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static Analyzer constructAnalyzer() {

@@ -1,17 +1,16 @@
 package org.xonix.zlo.search;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Hit;
 import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
-import org.apache.commons.lang.StringUtils;
 import org.xonix.zlo.search.model.ZloMessage;
 
-import java.io.IOException;
-import java.util.Iterator;
 import java.util.Date;
+import java.util.Iterator;
 
 /**
  * Author: gubarkov
@@ -86,12 +85,7 @@ public class ZloSearchResult implements Iterable {
         }
 
         public ZloMessage next() {
-            try {
-                return ZloMessage.fromDocument(((Hit) hitsIterator.next()).getDocument());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
+            return ZloMessage.fromHit((Hit) hitsIterator.next());
         }
 
         public void remove() {
