@@ -50,11 +50,10 @@ public class PageRetriever {
     }
 
     /* load page until first root-message found
-    *  return loaded content as string
+    *  returns last number of root-message or -1 if not found
      */
-    public static String getIndexPageContent() throws IOException {
+    public static int getLastRootMessageNumber() throws IOException {
         String uri = "http://" + Config.INDEXING_URL;
-        System.out.println("Retrieving: " + uri);
         HttpClient httpClient = new HttpClient();
 
         GetMethod getMethod = new GetMethod(uri);
@@ -81,7 +80,13 @@ public class PageRetriever {
         for (String s : stringGroups) {
             sb.append(s);
         }
-        return sb.toString();
+
+        m = PageParser.INDEX_UNREG_RE.matcher(sb.toString());
+        if (m.find()) {
+            return Integer.parseInt(m.group(1));
+        } else {
+            return -1;
+        }
     }
 
     public static void main(String[] args) {
