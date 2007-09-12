@@ -35,16 +35,6 @@ public class PageParser {
         "<A NAME=(\\d+) HREF=\"\\?read=(\\d+)\">"
     );
 
-    // returns last number of root-message or -1 if not found
-    public static int parseIndex(String msg) {
-        Matcher m = INDEX_UNREG_RE.matcher(msg);
-        if (m.find()) {
-            return Integer.parseInt(m.group(1));
-        } else {
-            return -1;
-        }
-    }
-
     public static ZloMessage parseMessage(String msg) {
         ZloMessage zloMessage = new ZloMessage();
 
