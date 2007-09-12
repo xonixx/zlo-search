@@ -65,7 +65,7 @@ public class PageRetriever {
         stringGroups.add("");
 
         int currSize;
-        Matcher m;
+        Matcher m = null;
         do {
             byte[] buff = new byte[Config.BUFFER];
             int lenRead = is.read(buff);
@@ -76,13 +76,8 @@ public class PageRetriever {
             m = PageParser.INDEX_UNREG_RE.matcher(stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1));
         } while(!m.find());
         is.close();
-        StringBuffer sb = new StringBuffer(stringGroups.size());
-        for (String s : stringGroups) {
-            sb.append(s);
-        }
 
-        m = PageParser.INDEX_UNREG_RE.matcher(sb.toString());
-        if (m.find()) {
+        if (m != null) {
             return Integer.parseInt(m.group(1));
         } else {
             return -1;
