@@ -77,11 +77,7 @@ public class PageRetriever {
         } while(!m.find());
         is.close();
 
-        if (m != null) {
-            return Integer.parseInt(m.group(1));
-        } else {
-            return -1;
-        }
+        return m != null ? Integer.parseInt(m.group(1)) : -1;
     }
 
     public static void main(String[] args) {
