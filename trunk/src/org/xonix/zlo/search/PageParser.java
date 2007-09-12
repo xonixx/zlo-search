@@ -28,6 +28,22 @@ public class PageParser {
         "<small>\\((.*?)\\)</small><BR>Дата:\\s*(.*?)</DIV><BR><br\\s*/><div class=\"body\">(.*?)</div>"      
     );
 
+    /* pattern to find message number on index page
+    * public need as we must use it in PageRetriever to load page until pattern found
+    */
+    public static Pattern INDEX_UNREG_RE = Pattern.compile(
+        "<A NAME=(\\d+) HREF=\"\\?read=(\\d+)\">"
+    );
+
+    // returns last number of root-message or -1 if not found
+    public static int parseIndex(String msg) {
+        Matcher m = INDEX_UNREG_RE.matcher(msg);
+        if (m.find()) {
+            return Integer.parseInt(m.group(1));
+        } else {
+            return -1;
+        }
+    }
 
     public static ZloMessage parseMessage(String msg) {
         ZloMessage zloMessage = new ZloMessage();
