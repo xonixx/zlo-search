@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
 
 /**
  * Author: gubarkov
@@ -40,6 +41,41 @@ public class PageRetriever {
         } while(
             (stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1)).indexOf(Config.END_MSG_MARK) == -1
             );
+        is.close();
+        StringBuffer sb = new StringBuffer(stringGroups.size());
+        for (String s : stringGroups) {
+            sb.append(s);
+        }
+        return sb.toString();
+    }
+
+    /* load page until first root-message found
+    *  return loaded content as string
+     */
+    public static String getIndexPageContent() throws IOException {
+        String uri = "http://" + Config.INDEXING_URL;
+        System.out.println("Retrieving: " + uri);
+        HttpClient httpClient = new HttpClient();
+
+        GetMethod getMethod = new GetMethod(uri);
+        getMethod.addRequestHeader("Host", Config.INDEXING_URL);
+        httpClient.executeMethod(getMethod);
+        // реализовано чтение до матча с PageParser.INDEX_UNREG_RE"
+        InputStream is = getMethod.getResponseBodyAsStream();
+        List<String> stringGroups = new ArrayList<String>();
+        stringGroups.add("");
+
+        int currSize;
+        Matcher m;
+        do {
+            byte[] buff = new byte[Config.BUFFER];
+            int lenRead = is.read(buff);
+            if (lenRead == -1)
+                break;
+            stringGroups.add(new String(buff, 0, lenRead, Config.CHARSET_NAME));
+            currSize = stringGroups.size();
+            m = PageParser.INDEX_UNREG_RE.matcher(stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1));
+        } while(!m.find());
         is.close();
         StringBuffer sb = new StringBuffer(stringGroups.size());
         for (String s : stringGroups) {
