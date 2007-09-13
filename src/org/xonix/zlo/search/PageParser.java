@@ -103,9 +103,9 @@ public class PageParser {
 //                "<script language=\"JavaScript\" type=\"text/javascript\">function popup(action, value, w, h){wnd=window.open(\"?\"+action+\"=\"+value,\"popup\",\"resizable=no,menubars=no,scrollbars=yes,width=\"+w+\",height=\"+h); }</script><div class=\"menu\"><A HREF=\"#1\">Перейти к ответам</A><A HREF=\"#Reply\">Ответить</A><A HREF=\"?index#1\" style=\"color:red;\">На главную страницу</A><a HREF=\"http://boards.alexzam.ru\">Поиск</A><A HREF=\"?register=form\">Регистрация</A><A HREF=\"?login=form\">Вход</A><A HREF=\"?rules\">Правила</A></div><BR><DIV ALIGN=CENTER><BIG>[без темы]</BIG>&nbsp;&nbsp;<BIG>Добро пожаловать на новую старую борду</BIG><BR>Сообщение было послано: <b>Bbsadmin</b><SMALL> (unreg)</SMALL> <small>(ignition.3ka.mipt.ru)</small><BR>Дата: Суббота, Апрель 7 14:16:27 2001</DIV><BR><br /><div class=\"body\"><P>Если появились какие то глюки с куками, сотрите их, они могли остаться от предыдущей борды..<P>IE: C:\\WINDOWS\\Cookies NN:<P>C:\\Program Files\\Netscape\\Users\\{user}\\cookies.txt</div><P></P><BR><CENTER><BIG>Сообщения в этом потоке</BIG></CENTER><DIV class=w><span id=m1><A NAME";
         //System.out.println(parseMessage(s));
 
-        for (int i=3764000; i<3764113; i++) {
-            System.out.println(parseMessage(PageRetriever.getPageContentByNumber(i), i));
-        }
-        //System.out.println(prepareDate("Четверг, Май 31 21:52:27 2007"));
+//        for (int i=3764000; i<3764113; i++) {
+//            System.out.println(parseMessage(PageRetriever.getPageContentByNumber(i), i));
+//        }
+//        System.out.println(prepareDate("Четверг, Май 31 21:52:27 2007"));
     }
 }
