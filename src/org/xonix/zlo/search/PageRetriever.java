@@ -1,6 +1,7 @@
 package org.xonix.zlo.search;
 
 import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.xonix.zlo.search.config.Config;
 
@@ -16,32 +17,39 @@ import java.util.regex.Matcher;
  * Time: 17:36:44
  */
 public class PageRetriever {
+    private static HttpClient HTTP_CLIENT = new HttpClient(new MultiThreadedHttpConnectionManager());
+
     public static String getPageContentByNumber(int num) throws IOException{
-        String uri = "http://" + Config.INDEXING_URL + Config.READ_QUERY + num;
-        System.out.println("Retrieving: "+uri);
-        HttpClient httpClient = new HttpClient();
+        GetMethod getMethod = formGetMethod("http://" + Config.INDEXING_URL + Config.READ_QUERY + num);
 
-        GetMethod getMethod = new GetMethod(uri);
-        getMethod.addRequestHeader("Host", Config.INDEXING_URL);
-        httpClient.executeMethod(getMethod);
-        // реализовано чтение до "<BIG>Сообщения в этом потоке</BIG>"
-        InputStream is = getMethod.getResponseBodyAsStream();
         List<String> stringGroups = new ArrayList<String>();
-        stringGroups.add("");
+        InputStream is = null;
 
-        int currSize;
-        do {
-            byte[] buff = new byte[Config.BUFFER];
-            int lenRead = is.read(buff);
-            //System.out.println(">>"+lenRead);
-            if (lenRead == -1)
-                break;
-            stringGroups.add(new String(buff, 0, lenRead, Config.CHARSET_NAME));
-            currSize = stringGroups.size();
-        } while(
-            (stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1)).indexOf(Config.END_MSG_MARK) == -1
-            );
-        is.close();
+        try {
+            HTTP_CLIENT.executeMethod(getMethod);
+
+            // реализовано чтение до "<BIG>Сообщения в этом потоке</BIG>"
+            is = getMethod.getResponseBodyAsStream();
+            stringGroups.add("");
+
+            int currSize;
+            do {
+                byte[] buff = new byte[Config.BUFFER];
+                int lenRead = is.read(buff);
+
+                if (lenRead == -1)
+                    break;
+
+                stringGroups.add(new String(buff, 0, lenRead, Config.CHARSET_NAME));
+                currSize = stringGroups.size();
+            } while(
+                (stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1)).indexOf(Config.END_MSG_MARK) == -1
+                );
+        } finally {
+            if (is != null)
+                is.close();
+            getMethod.releaseConnection(); // http://jakarta.apache.org/httpcomponents/httpclient-3.x/threading.html
+        }
         StringBuffer sb = new StringBuffer(stringGroups.size());
         for (String s : stringGroups) {
             sb.append(s);
@@ -53,31 +61,42 @@ public class PageRetriever {
     *  returns last number of root-message or -1 if not found
      */
     public static int getLastRootMessageNumber() throws IOException {
-        String uri = "http://" + Config.INDEXING_URL;
-        HttpClient httpClient = new HttpClient();
+        GetMethod getMethod = formGetMethod("http://" + Config.INDEXING_URL);
 
-        GetMethod getMethod = new GetMethod(uri);
-        getMethod.addRequestHeader("Host", Config.INDEXING_URL);
-        httpClient.executeMethod(getMethod);
-        // реализовано чтение до матча с PageParser.INDEX_UNREG_RE"
-        InputStream is = getMethod.getResponseBodyAsStream();
-        List<String> stringGroups = new ArrayList<String>();
-        stringGroups.add("");
-
-        int currSize;
+        InputStream is = null;
         Matcher m = null;
-        do {
-            byte[] buff = new byte[Config.BUFFER];
-            int lenRead = is.read(buff);
-            if (lenRead == -1)
-                break;
-            stringGroups.add(new String(buff, 0, lenRead, Config.CHARSET_NAME));
-            currSize = stringGroups.size();
-            m = PageParser.INDEX_UNREG_RE.matcher(stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1));
-        } while(!m.find());
-        is.close();
+
+        try {
+            HTTP_CLIENT.executeMethod(getMethod);
+            // реализовано чтение до матча с PageParser.INDEX_UNREG_RE"
+            is = getMethod.getResponseBodyAsStream();
+            List<String> stringGroups = new ArrayList<String>();
+            stringGroups.add("");
+
+            int currSize;
+            do {
+                byte[] buff = new byte[Config.BUFFER];
+                int lenRead = is.read(buff);
+                if (lenRead == -1)
+                    break;
+                stringGroups.add(new String(buff, 0, lenRead, Config.CHARSET_NAME));
+                currSize = stringGroups.size();
+                m = PageParser.INDEX_UNREG_RE.matcher(stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1));
+            } while(!m.find());
+        } finally {
+            if (is != null)
+                is.close();
+            getMethod.releaseConnection();
+        }
 
         return m != null ? Integer.parseInt(m.group(1)) : -1;
+    }
+
+    private static GetMethod formGetMethod(String uri) {
+        GetMethod getMethod = new GetMethod(uri);
+        getMethod.addRequestHeader("Host", Config.INDEXING_URL);
+        getMethod.addRequestHeader("User-Agent", Config.USER_AGENT);
+        return getMethod;
     }
 
     public static void main(String[] args) {

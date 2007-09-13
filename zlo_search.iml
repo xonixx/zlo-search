@@ -43,6 +43,7 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="commons-lang" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-5.0.7-bin" level="project" />
     <orderEntryProperties />
   </component>
   <component name="VcsManagerConfiguration">

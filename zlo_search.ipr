@@ -299,6 +299,15 @@
         <root url="jar://D:/TEST/JAVA/ZloSearcher/lib-src/lucene-2.2.0-src.zip!/lucene-2.2.0/contrib/analyzers/src/java" />
       </SOURCES>
     </library>
+    <library name="mysql-connector-java-5.0.7-bin">
+      <CLASSES>
+        <root url="jar://D:/TEST/JAVA/ZloSearcher/lib/mysql-connector-java-5.0.7-bin.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://D:/TEST/JAVA/ZloSearcher/lib-src/mysql-connector-java-5.0.7.zip!/mysql-connector-java-5.0.7/src" />
+      </SOURCES>
+    </library>
   </component>
   <component name="uidesigner-configuration">
     <option name="INSTRUMENT_CLASSES" value="true" />
