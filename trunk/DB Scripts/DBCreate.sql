@@ -5,10 +5,11 @@ CREATE DATABASE `zlostorage` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 USE zlostorage;
 
-CREATE TABLE messages (id INT UNIQUE PRIMARY KEY,
+CREATE TABLE messages (num INT UNIQUE PRIMARY KEY,
+		       host CHAR(255) NOT NULL,
                        topic CHAR(255) NOT NULL,
                        title CHAR(255) NOT NULL,
                        nick CHAR(255) NOT NULL,
-                       mdate TIMESTAMP NOT NULL,
-                       body TEXT);       
-
+                       date TIMESTAMP NOT NULL,
+		       reg BOOL,
+                       body TEXT);
