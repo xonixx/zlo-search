@@ -37,6 +37,9 @@ public class Config {
     public static final String CHARSET_NAME = "windows-1251";
     public static final String END_MSG_MARK = "<BIG>Сообщения в этом потоке</BIG>";
     public static final String INDEX_DIR = props.getProperty("index.dir");
+    public static final String USER_AGENT = props.getProperty("user.agent");
+    public static final int THREADS_NUMBER = Integer.parseInt(props.getProperty("threads"));
+    public static final String TRUE = "true";
 
     public static final Analyzer ANALYZER;
     static {
@@ -64,11 +67,13 @@ public class Config {
     public static final Connection DBCONNECTION;
     static {
         Connection _a = null;
-        try {
-             Class.forName(props.getProperty("db.driver"));
-            _a = DriverManager.getConnection(props.getProperty("db.url"), props.getProperty("db.user"), props.getProperty("db.password"));
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (TRUE.equals(getProp("db.initialize"))) {
+            try {
+                 Class.forName(props.getProperty("db.driver"));
+                _a = DriverManager.getConnection(props.getProperty("db.url"), props.getProperty("db.user"), props.getProperty("db.password"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         DBCONNECTION = _a;
     }
