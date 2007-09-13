@@ -4,6 +4,9 @@ import org.apache.lucene.analysis.Analyzer;
 
 import java.io.IOException;
 import java.util.Properties;
+import java.sql.SQLException;
+import java.sql.DriverManager;
+import java.sql.Connection;
 
 /**
  * Author: gubarkov
@@ -56,5 +59,17 @@ public class Config {
 
     public static String getProp(String key, String defaultVal) {
         return props.getProperty(key, defaultVal);
+    }
+
+    public static final Connection DBCONNECTION;
+    static {
+        Connection _a = null;
+        try {
+             Class.forName(props.getProperty("db.driver"));
+            _a = DriverManager.getConnection(props.getProperty("db.url"), props.getProperty("db.user"), props.getProperty("db.password"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        DBCONNECTION = _a;
     }
 }
