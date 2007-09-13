@@ -44,7 +44,7 @@ public class ZloIndexer {
 
     private void indexMsgs(IndexWriter writer, int startNum, int endNum) throws IOException{
         for (int i=startNum; i<=endNum; i++) {
-            ZloMessage msg = PageParser.parseMessage(PageRetriever.getPageContentByNumber(i), i);
+            ZloMessage msg = DAO.Site.getMessageByNumber(i);
             if (msg != null) {
                 log.info("Saving: "+msg);
                 writer.addDocument(msg.getDocument());
