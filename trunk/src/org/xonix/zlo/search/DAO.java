@@ -25,7 +25,7 @@ public class DAO {
             if (threads == 1) {
                 msgs = new ArrayList<ZloMessage>();
 
-                for (int i = 0; i <= to; i++) {
+                for (int i = from; i <= to; i++) {
                     msgs.add(getMessageByNumber(i));
                 }
             } else {
