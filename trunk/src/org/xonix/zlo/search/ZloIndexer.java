@@ -27,32 +27,38 @@ public class ZloIndexer {
         }
     }
 
-    public void indexRange(int startNum, int endNum) {
+    public void indexRange(IndexingSource source, int startNum, int endNum) {
         final File INDEX_DIR = new File(Config.INDEX_DIR);
         try {
           IndexWriter writer = new IndexWriter(INDEX_DIR, ZloMessage.constructAnalyzer(), true);
           log.info("Indexing to directory '" +INDEX_DIR+ "'...");
-          indexMsgs(writer, startNum, endNum);
+          indexMsgs(writer, source, startNum, endNum);
           log.info("Optimizing...");
           writer.optimize();
           writer.close();
         } catch (IOException e) {
           System.out.println(" caught a " + e.getClass() +
            "\n with message: " + e.getMessage());
+        } catch (DAO.Exception e) {
+            e.printStackTrace();
         }
     }
 
-    private void indexMsgs(IndexWriter writer, int startNum, int endNum) throws IOException{
+    private void indexMsgs(IndexWriter writer, IndexingSource source, int startNum, int endNum) throws DAO.Exception{
         for (int i=startNum; i<=endNum; i++) {
-            ZloMessage msg = DAO.Site.getMessageByNumber(i);
+            ZloMessage msg = source.getMessageByNumber(i);
             if (msg != null) {
                 log.info("Saving: "+msg);
-                writer.addDocument(msg.getDocument());
+                try {
+                    writer.addDocument(msg.getDocument());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
     public static void main(String[] args) {
-        new ZloIndexer().indexRange(3765000, 3765010);
+        new ZloIndexer().indexRange(DAO.Site.SOURCE, 3765000, 3765010);
     }
 }

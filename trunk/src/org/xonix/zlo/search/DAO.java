@@ -21,11 +21,26 @@ import java.util.Vector;
 
 // data access object
 public class DAO {
-    public static class Site {
+    public static class Exception extends java.lang.Exception {
+        public Exception(Throwable cause) {
+            super(cause);
+        }
+
+        public Exception(String message, Throwable cause) {
+            super(message, cause);
+        }
+    }
+
+    public static class Site implements IndexingSource {
+        public static Site SOURCE = new Site();
         private Site() {} // not to create
 
-        public static ZloMessage getMessageByNumber(int num) throws IOException {
-            return PageParser.parseMessage(PageRetriever.getPageContentByNumber(num), num);
+        public ZloMessage getMessageByNumber(int num) throws Exception {
+            try {
+                return PageParser.parseMessage(PageRetriever.getPageContentByNumber(num), num);
+            } catch (IOException e) {
+                throw new Exception(e);
+            }
         }
 
         private static class MessageRetriever extends Thread {
@@ -61,15 +76,15 @@ public class DAO {
                 while (hasMoreToDownload()) {
                     try {
                         System.out.println("Downloading " + i);
-                        msgs.add(getMessageByNumber(getNextNum()));
-                    } catch (IOException e) {
+                        msgs.add(SOURCE.getMessageByNumber(getNextNum()));
+                    } catch (Exception e) {
                         e.printStackTrace(); // todo: need to decide what to do here
                     }
                 }
             }
         }
 
-        public static List<ZloMessage> getMessages(final int from, final int to, int threadsNum) throws IOException {
+        public List<ZloMessage> getMessages(final int from, final int to, int threadsNum) throws Exception {
             final List<ZloMessage> msgs;
             if (threadsNum == 1) {
                 msgs = new ArrayList<ZloMessage>();
@@ -99,27 +114,46 @@ public class DAO {
             return msgs;
         }
 
-        public static List<ZloMessage> getMessages(int from, int to) throws IOException {
+        public List<ZloMessage> getMessages(int from, int to) throws Exception {
             return getMessages(from, to, Config.THREADS_NUMBER);
         }
 
-        public static int getLastRootMessageNumber() throws IOException {
-            return PageRetriever.getLastRootMessageNumber();
+        public static int getLastRootMessageNumber() throws Exception {
+            try {
+                return PageRetriever.getLastRootMessageNumber();
+            } catch (IOException e) {
+                throw new Exception(e);
+            }
         }
     }
 
-    public static class DB {
-        
-        public static void saveMessages(List<ZloMessage> listZloMessages) throws DBException {
-            DBManager.saveMessages(listZloMessages);
+    public static class DB implements IndexingSource {
+        public static DB SOURCE = new DB();
+
+        private DB(){}
+
+        public static void saveMessages(List<ZloMessage> listZloMessages) throws Exception {
+            try {
+                DBManager.saveMessages(listZloMessages);
+            } catch (DBException e) {
+                throw new Exception(e);
+            }
         }
 
-        public static ZloMessage getMessageByNumber(int num) throws DBException {
-            return DBManager.getMessageByNumber(num);
+        public ZloMessage getMessageByNumber(int num) throws Exception {
+            try {
+                return DBManager.getMessageByNumber(num);
+            } catch (DBException e) {
+                throw new Exception(e);
+            }
         }
 
-        public static List<ZloMessage> getMessagesByRange(int start, int end) throws DBException {
-            return DBManager.getMessagesByRange(start, end);
+        public List<ZloMessage> getMessages(int start, int end) throws Exception {
+            try {
+                return DBManager.getMessagesByRange(start, end);
+            } catch (DBException e) {
+                throw new Exception(e);
+            }
         }
 
     }
