@@ -36,9 +36,9 @@ public class DBManager {
         try {
             PreparedStatement chkstmt = Config.DB_CONNECTION.prepareStatement(selectMessageById);
             PreparedStatement pstmt = Config.DB_CONNECTION.prepareStatement(insertPreparedStatement);
-            int numOfDeleted = 0;
 
             for (ZloMessage zloMessage : msgs) {
+                int numOfDeleted = 0;
                 if (zloMessage != null) {
                     chkstmt.setInt(1, zloMessage.getNum());
                     ResultSet rs = chkstmt.executeQuery();
