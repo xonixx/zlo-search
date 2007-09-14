@@ -21,37 +21,54 @@ import java.util.Date;
  */
 public class DBManager {
     private static String insertPreparedStatement = "INSERT INTO messages(" +
-        ZloMessage.URL_NUM + ", " +
-        ZloMessage.HOST + ", " +
-        ZloMessage.TOPIC + ", " +
-        ZloMessage.TITLE + ", " +
-        ZloMessage.NICK + ", "  +
-        ZloMessage.DATE + ", "  +
-        ZloMessage.REG + ", "  +
-        ZloMessage.BODY + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        "num, " +
+        "host, " +
+        "topic, " +
+        "title, " +
+        "nick, "  +
+        "date, "  +
+        "reg, "  +
+        "body) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+    private static String deletePreparedStatement = "DELETE FROM messages " +
+        "WHERE num=?";
 
     private static String selectMessageById = "SELECT * FROM messages WHERE " +
-        ZloMessage.URL_NUM + "=?";
+       "num=?";
 
     private static String selectMessagesInRange = "SELECT * FROM messages WHERE " +
-        ZloMessage.URL_NUM + ">? AND " + ZloMessage.URL_NUM + "<?";
+        "num>? AND " + "num<?";
 
-    public static void saveMessages(List<ZloMessage> listZloMessages) throws SQLException, IOException {
-        System.out.println(insertPreparedStatement);
+    public static void saveMessages(List<ZloMessage> listZloMessages, boolean update) throws SQLException, IOException {
+        PreparedStatement chkstmt = Config.DBCONNECTION.prepareStatement(selectMessageById);
         PreparedStatement pstmt = Config.DBCONNECTION.prepareStatement(insertPreparedStatement);
+        int numOfDeleted = 0;
 
         for (ZloMessage zloMessage : listZloMessages) {
-            if (zloMessage != null) {
-                pstmt.setInt(1, zloMessage.getNum());
-                pstmt.setString(2, zloMessage.getHost());
-                pstmt.setString(3, zloMessage.getTopic());
-                pstmt.setString(4, zloMessage.getTitle());
-                pstmt.setString(5, zloMessage.getNick());
-                pstmt.setTimestamp(6, new Timestamp(zloMessage.getDate().getTime()));
-                pstmt.setBoolean(7, zloMessage.isReg());
-                pstmt.setString(8, zloMessage.getBody());
+            if (zloMessage != null){
+                chkstmt.setInt(1, zloMessage.getNum());
+                ResultSet rs = chkstmt.executeQuery();
+                if (rs.wasNull() || (update && !rs.wasNull())) {
+                    if (!rs.wasNull()){
+                        PreparedStatement deletestmt = Config.DBCONNECTION.prepareStatement(deletePreparedStatement);
+                        deletestmt.setInt(1, zloMessage.getNum());
+                        numOfDeleted = deletestmt.executeUpdate();
+                    }
+                    if (rs.wasNull() || numOfDeleted>0){
+                        pstmt.setInt(1, zloMessage.getNum());
+                        pstmt.setString(2, zloMessage.getHost());
+                        pstmt.setString(3, zloMessage.getTopic());
+                        pstmt.setString(4, zloMessage.getTitle());
+                        pstmt.setString(5, zloMessage.getNick());
+                        pstmt.setTimestamp(6, new Timestamp(zloMessage.getDate().getTime()));
+                        pstmt.setBoolean(7, zloMessage.isReg());
+                        pstmt.setString(8, zloMessage.getBody());
 
-                pstmt.executeUpdate();
+                        pstmt.executeUpdate();
+                    } else {
+                        throw new SQLException("comodified DataBase");
+                    }
+                }
             }
         }
     }
