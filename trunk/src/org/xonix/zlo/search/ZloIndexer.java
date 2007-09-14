@@ -3,6 +3,7 @@ package org.xonix.zlo.search;
 import org.apache.lucene.index.IndexWriter;
 import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.test.storage.ZloStorage;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +18,8 @@ import java.util.logging.SimpleFormatter;
  */
 public class ZloIndexer {
     private static Logger log = Logger.getLogger(ZloIndexer.class.getName());
+    private IndexingSource source;
+
     static {
         try {
             FileHandler fileHandler = new FileHandler("__log.txt");
@@ -27,12 +30,16 @@ public class ZloIndexer {
         }
     }
 
-    public void indexRange(IndexingSource source, int startNum, int endNum) {
+    public ZloIndexer(IndexingSource source) {
+        this.source = source;
+    }
+
+    public void indexRange(int startNum, int endNum) {
         final File INDEX_DIR = new File(Config.INDEX_DIR);
         try {
           IndexWriter writer = new IndexWriter(INDEX_DIR, ZloMessage.constructAnalyzer(), true);
           log.info("Indexing to directory '" +INDEX_DIR+ "'...");
-          indexMsgs(writer, source, startNum, endNum);
+          indexMsgs(writer, startNum, endNum);
           log.info("Optimizing...");
           writer.optimize();
           writer.close();
@@ -44,7 +51,7 @@ public class ZloIndexer {
         }
     }
 
-    private void indexMsgs(IndexWriter writer, IndexingSource source, int startNum, int endNum) throws DAO.Exception{
+    private void indexMsgs(IndexWriter writer, int startNum, int endNum) throws DAO.Exception{
         for (int i=startNum; i<=endNum; i++) {
             ZloMessage msg = source.getMessageByNumber(i);
             if (msg != null) {
@@ -59,6 +66,7 @@ public class ZloIndexer {
     }
 
     public static void main(String[] args) {
-        new ZloIndexer().indexRange(DAO.Site.SOURCE, 3765000, 3765010);
+//        new ZloIndexer(DAO.Site.SOURCE).indexRange(3765000, 3765010);
+        new ZloIndexer(new ZloStorage()).indexRange(ZloStorage.FROM, ZloStorage.TO);
     }
 }

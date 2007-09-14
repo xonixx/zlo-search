@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Logger;
 
 /**
  * Author: gubarkov
@@ -21,6 +22,7 @@ import java.util.Vector;
 
 // data access object
 public class DAO {
+    private static Logger logger = Logger.getLogger(DAO.class.getName());
     public static class Exception extends java.lang.Exception {
         public Exception(Throwable cause) {
             super(cause);
@@ -36,6 +38,7 @@ public class DAO {
         private Site() {} // not to create
 
         public ZloMessage getMessageByNumber(int num) throws Exception {
+            logger.info("Reseiving from site: " + num);
             try {
                 return PageParser.parseMessage(PageRetriever.getPageContentByNumber(num), num);
             } catch (IOException e) {
