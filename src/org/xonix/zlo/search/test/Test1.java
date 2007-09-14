@@ -58,8 +58,8 @@ public class Test1 {
     public static void m5() {
         for (int i=0; i<10; i++){
             try {
-                System.out.println(">"+ DAO.Site.getLastRootMessageNumber());
-            } catch (IOException e) {
+                System.out.println(">"+ DAO.Site.SOURCE.getLastRootMessageNumber());
+            } catch (DAO.Exception e) {
                 e.printStackTrace();
             }
         }
@@ -95,10 +95,10 @@ public class Test1 {
 
     public static void m7() {
         try {
-            for (ZloMessage m : DAO.Site.getMessages(10, 110)) {
+            for (ZloMessage m : DAO.Site.SOURCE.getMessages(10, 110)) {
                 System.out.println(m);
             }
-        } catch (IOException e) {
+        } catch (DAO.Exception e) {
             e.printStackTrace();
         }
     }
