@@ -28,7 +28,7 @@ public class DAO {
             return PageParser.parseMessage(PageRetriever.getPageContentByNumber(num), num);
         }
 
-        private static class MessageRetriever implements Runnable {
+        private static class MessageRetriever extends Thread {
             private static int from = -1;
             private static int to = -1;
             private static int i = -1;
@@ -37,6 +37,7 @@ public class DAO {
 
 
             public MessageRetriever(int from, int to, List<ZloMessage> msgs) {
+                super("MessageRetriever(i=" + i + ")");
                 if (MessageRetriever.from == -1)
                     MessageRetriever.from = from;
                 if (MessageRetriever.to == -1)
@@ -44,7 +45,7 @@ public class DAO {
                 if (i == -1)
                     i = from;
                 this.msgs = msgs;
-                System.out.println("Born "+i);
+                System.out.println("Born " + i);
             }
 
             private static boolean hasMoreToDownload() {
@@ -82,7 +83,7 @@ public class DAO {
 
                 // starting all threads
                 for (int i = 0; i < threadsNum; i++) {
-                    Thread t = new Thread(new MessageRetriever(from, to, msgs));
+                    Thread t = new MessageRetriever(from, to, msgs);
                     t.start();
                     threads.add(t);
                 }
@@ -109,15 +110,15 @@ public class DAO {
 
     public static class DB {
         
-        public static void saveMessages(List<ZloMessage> listZloMessages, boolean update) throws SQLException, IOException {
-            DBManager.saveMessages(listZloMessages, update);
+        public static void saveMessages(List<ZloMessage> listZloMessages) throws DBException {
+            DBManager.saveMessages(listZloMessages);
         }
 
-        public static ZloMessage getMessageByNumber(int num) throws SQLException, UnsupportedEncodingException {
+        public static ZloMessage getMessageByNumber(int num) throws DBException {
             return DBManager.getMessageByNumber(num);
         }
 
-        public static List<ZloMessage> getMessagesByRange(int start, int end) throws SQLException, UnsupportedEncodingException {
+        public static List<ZloMessage> getMessagesByRange(int start, int end) throws DBException {
             return DBManager.getMessagesByRange(start, end);
         }
 
