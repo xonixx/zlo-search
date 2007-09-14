@@ -26,41 +26,57 @@ public class DBManager {
         "reg, "  +
         "body) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
+    private static String updatePreparedStatement = "UPDATE messages " +
+        "SET num=?, " +
+        "host=?, " +
+        "topic=?, " +
+        "title=?, " +
+        "nick=?, "  +
+        "date=?, "  +
+        "reg=?, "  +
+        "body=? WHERE num=?";
+
     private static String deletePreparedStatement = "DELETE FROM messages WHERE num=?";
 
     private static String selectMessageById = "SELECT * FROM messages WHERE num=?";
 
     private static String selectMessagesInRange = "SELECT * FROM messages WHERE num>? AND num<?";
 
+    private static void applyZloFieldsOnPreparedStatement(ZloMessage zloMessage, PreparedStatement pstmt) throws DBException {
+        try {
+            if (zloMessage != null) {
+                pstmt.setInt(1, zloMessage.getNum());
+                pstmt.setString(2, zloMessage.getHost());
+                pstmt.setString(3, zloMessage.getTopic());
+                pstmt.setString(4, zloMessage.getTitle());
+                pstmt.setString(5, zloMessage.getNick());
+                pstmt.setTimestamp(6, new Timestamp(zloMessage.getDate().getTime()));
+                pstmt.setBoolean(7, zloMessage.isReg());
+                pstmt.setString(8, zloMessage.getBody());
+           }
+        } catch (SQLException e) {
+            throw new DBException(e);
+        }
+    }
+    
     public static void saveMessages(List<ZloMessage> msgs, boolean update) throws DBException {
         try {
             PreparedStatement chkstmt = Config.DB_CONNECTION.prepareStatement(selectMessageById);
-            PreparedStatement pstmt = Config.DB_CONNECTION.prepareStatement(insertPreparedStatement);
+            PreparedStatement insertPstmt = Config.DB_CONNECTION.prepareStatement(insertPreparedStatement);
+            PreparedStatement updatePstmt = Config.DB_CONNECTION.prepareStatement(updatePreparedStatement);
 
             for (ZloMessage zloMessage : msgs) {
-                int numOfDeleted = 0;
-                if (zloMessage != null) {
-                    chkstmt.setInt(1, zloMessage.getNum());
-                    ResultSet rs = chkstmt.executeQuery();
-                    if (rs.wasNull() || (update && !rs.wasNull())) {
-                        if (!rs.wasNull()) {
-                            PreparedStatement deletestmt = Config.DB_CONNECTION.prepareStatement(deletePreparedStatement);
-                            deletestmt.setInt(1, zloMessage.getNum());
-                            numOfDeleted = deletestmt.executeUpdate();
-                        }
-                        if (rs.wasNull() || numOfDeleted > 0) {
-                            pstmt.setInt(1, zloMessage.getNum());
-                            pstmt.setString(2, zloMessage.getHost());
-                            pstmt.setString(3, zloMessage.getTopic());
-                            pstmt.setString(4, zloMessage.getTitle());
-                            pstmt.setString(5, zloMessage.getNick());
-                            pstmt.setTimestamp(6, new Timestamp(zloMessage.getDate().getTime()));
-                            pstmt.setBoolean(7, zloMessage.isReg());
-                            pstmt.setString(8, zloMessage.getBody());
-
-                            pstmt.executeUpdate();
-                        } else {
-                            throw new SQLException("comodified DataBase");
+                chkstmt.setInt(1, zloMessage.getNum());
+                ResultSet rs = chkstmt.executeQuery();
+                if (!rs.next()) {
+                    applyZloFieldsOnPreparedStatement(zloMessage, insertPstmt);
+                    insertPstmt.executeUpdate();
+                } else {
+                    if (update){
+                        applyZloFieldsOnPreparedStatement(zloMessage, updatePstmt);
+                        updatePstmt.setInt(9, zloMessage.getNum());
+                        if (updatePstmt.executeUpdate() == 0){
+                            throw new SQLException("Failed to update record");
                         }
                     }
                 }
