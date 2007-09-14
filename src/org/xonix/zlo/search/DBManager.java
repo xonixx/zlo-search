@@ -37,12 +37,10 @@ public class DBManager {
         "body=? WHERE num=?";
 
     private static String deletePreparedStatement = "DELETE FROM messages WHERE num=?";
-
     private static String selectMessageById = "SELECT * FROM messages WHERE num=?";
-
     private static String selectMessagesInRange = "SELECT * FROM messages WHERE num>? AND num<?";
 
-    private static void applyZloFieldsOnPreparedStatement(ZloMessage zloMessage, PreparedStatement pstmt) throws DBException {
+    private static void fillPreparedStatement(PreparedStatement pstmt, ZloMessage zloMessage) throws DBException {
         try {
             if (zloMessage != null) {
                 pstmt.setInt(1, zloMessage.getNum());
@@ -69,16 +67,13 @@ public class DBManager {
                 chkstmt.setInt(1, zloMessage.getNum());
                 ResultSet rs = chkstmt.executeQuery();
                 if (!rs.next()) {
-                    applyZloFieldsOnPreparedStatement(zloMessage, insertPstmt);
+                    fillPreparedStatement(insertPstmt, zloMessage);
                     insertPstmt.executeUpdate();
-                } else {
-                    if (update){
-                        applyZloFieldsOnPreparedStatement(zloMessage, updatePstmt);
-                        updatePstmt.setInt(9, zloMessage.getNum());
-                        if (updatePstmt.executeUpdate() == 0){
-                            throw new SQLException("Failed to update record");
-                        }
-                    }
+                } else if (update){
+                    fillPreparedStatement(updatePstmt, zloMessage);
+                    updatePstmt.setInt(9, zloMessage.getNum());
+                    if (updatePstmt.executeUpdate() == 0)
+                        throw new SQLException("Failed to update record");
                 }
             }
         } catch (SQLException e) {

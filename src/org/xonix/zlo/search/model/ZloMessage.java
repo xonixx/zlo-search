@@ -16,13 +16,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * Author: gubarkov
  * Date: 30.05.2007
  * Time: 20:18:10
  */
-public class ZloMessage {
+public class ZloMessage implements Serializable {
     public static final String URL_NUM = "num";
     public static final String NICK = "nick";
     public static final String HOST = "host";
