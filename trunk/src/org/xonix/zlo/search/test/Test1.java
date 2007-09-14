@@ -58,7 +58,7 @@ public class Test1 {
     public static void m5() {
         for (int i=0; i<10; i++){
             try {
-                System.out.println(">"+ DAO.Site.SOURCE.getLastRootMessageNumber());
+                System.out.println(">"+ DAO.Site.getLastRootMessageNumber());
             } catch (DAO.Exception e) {
                 e.printStackTrace();
             }
