@@ -44,7 +44,7 @@ public class DAO {
                 if (i == -1)
                     i = from;
                 this.msgs = msgs;
-               // System.out.println("Born "+i);
+                System.out.println("Born "+i);
             }
 
             private static boolean hasMoreToDownload() {
@@ -56,10 +56,10 @@ public class DAO {
             }
 
             public void run() {
-                //System.out.println("Run " + i + ", " + from + ", " + to);
+                System.out.println("Run " + i + ", " + from + ", " + to);
                 while (hasMoreToDownload()) {
                     try {
-                  //      System.out.println("Downloading " + i);
+                        System.out.println("Downloading " + i);
                         msgs.add(getMessageByNumber(getNextNum()));
                     } catch (IOException e) {
                         e.printStackTrace(); // todo: need to decide what to do here
