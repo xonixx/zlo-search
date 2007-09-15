@@ -3,7 +3,7 @@ package org.xonix.zlo.web.servlets;
 import org.apache.commons.lang.StringUtils;
 import org.xonix.zlo.search.ZloSearcher;
 import org.xonix.zlo.search.config.Config;
-import org.xonix.zlo.search.config.ErrorMsgs;
+import org.xonix.zlo.search.config.ErrorMessages;
 import org.xonix.zlo.search.ZloSearchResult;
 import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.web.servlets.helpful.ForwardingRequest;
@@ -96,7 +96,7 @@ public class SearchServlet extends ForwardingServlet {
             try {
                 toDate = FROM_TO_DATE_FORMAT.parse(toDateStr);
             } catch (ParseException e) {
-                request.setAttribute(ERROR, ErrorMsgs.ToDateInvalid);
+                request.setAttribute(ERROR, ErrorMessages.ToDateInvalid);
                 request.forwardTo(JSP_SEARCH);
                 return;
             }
@@ -112,7 +112,7 @@ public class SearchServlet extends ForwardingServlet {
             try {
                 fromDate = FROM_TO_DATE_FORMAT.parse(fromDateStr);
             } catch (ParseException e) {
-                request.setAttribute(ERROR, ErrorMsgs.FromDateInvalid);
+                request.setAttribute(ERROR, ErrorMessages.FromDateInvalid);
                 request.forwardTo(JSP_SEARCH);
                 return;
             }
@@ -137,7 +137,7 @@ public class SearchServlet extends ForwardingServlet {
                 session.setAttribute(SESS_SEARCH_RESULT, ZloSearcher.search(topicCode, title, body, nick, host, fromDate, toDate));
             }
         } else if (StringUtils.isNotEmpty(request.getParameter(QS_SUBMIT))) {
-            request.setAttribute(ERROR, ErrorMsgs.MustSelectCriterion);
+            request.setAttribute(ERROR, ErrorMessages.MustSelectCriterion);
         } else {
             session.setAttribute(SESS_SEARCH_RESULT, null);
         }
