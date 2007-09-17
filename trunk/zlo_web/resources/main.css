@@ -3,6 +3,12 @@ html,
 body {
     padding: 0;
     margin: 0;
+    background-color: #f0f0f0;
+}
+
+big {
+    font-size:120%;
+    font-weight:bold;
 }
 
 #searchform {
@@ -26,6 +32,14 @@ body {
     background-color: #f0f0f0;
 }
 
+#body {
+    padding: 0 5px;
+}
+
+.nick {
+    font-weight: bold;
+}
+
 .error {
     font-weight: bold;
     color: red;
@@ -34,4 +48,5 @@ body {
 .search {
     font-weight:bold;
     color: green;
+    font-size: small;
 }

@@ -19,6 +19,7 @@ import java.util.logging.SimpleFormatter;
 public class ZloIndexer {
     private static Logger log = Logger.getLogger(ZloIndexer.class.getName());
     private IndexingSource source;
+    private static File INDEX_DIR = new File(Config.INDEX_DIR);
 
     static {
         try {
@@ -31,11 +32,22 @@ public class ZloIndexer {
     }
 
     public ZloIndexer(IndexingSource source) {
+        this(source, false);
+    }
+
+    public ZloIndexer(IndexingSource source, boolean reindex) {
         this.source = source;
+        if (reindex) {
+            log.info("Clearing index dir...");
+            for (File f : INDEX_DIR.listFiles()) {
+                if(!f.delete()) {
+                    log.warning("Problems with delting file: " + f.getAbsolutePath());
+                }
+            }
+        }
     }
 
     public void indexRange(int startNum, int endNum) {
-        final File INDEX_DIR = new File(Config.INDEX_DIR);
         try {
           IndexWriter writer = new IndexWriter(INDEX_DIR, ZloMessage.constructAnalyzer(), true);
           log.info("Indexing to directory '" +INDEX_DIR+ "'...");
@@ -67,6 +79,6 @@ public class ZloIndexer {
 
     public static void main(String[] args) {
 //        new ZloIndexer(DAO.Site.SOURCE).indexRange(3765000, 3765010);
-        new ZloIndexer(new ZloStorage()).indexRange(ZloStorage.FROM, ZloStorage.TO);
+        new ZloIndexer(new ZloStorage(), true).indexRange(ZloStorage.FROM, ZloStorage.TO);
     }
 }
