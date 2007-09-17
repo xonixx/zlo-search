@@ -24,24 +24,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../lib/jstl.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../lib/standard.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/../../lib/displaytag-1.1.1.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -86,6 +68,8 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="Lucene" level="project" />
+    <orderEntry type="library" name="commons-lang" level="project" />
+    <orderEntry type="library" name="jstl" level="project" />
     <orderEntryProperties />
   </component>
   <component name="VcsManagerConfiguration">
@@ -158,16 +142,6 @@
     </containerElement>
     <containerElement type="library" level="module">
       <attribute name="method" value="1" />
-      <attribute name="URI" value="/WEB-INF/lib/jstl.jar" />
-      <url>jar://$MODULE_DIR$/../../lib/jstl.jar!/</url>
-    </containerElement>
-    <containerElement type="library" level="module">
-      <attribute name="method" value="1" />
-      <attribute name="URI" value="/WEB-INF/lib/standard.jar" />
-      <url>jar://$MODULE_DIR$/../../lib/standard.jar!/</url>
-    </containerElement>
-    <containerElement type="library" level="module">
-      <attribute name="method" value="1" />
       <attribute name="URI" value="/WEB-INF/lib/commons-codec-1.3.jar" />
       <url>jar://$MODULE_DIR$/../../../../JAVA_DISTR/codec/commons-codec-1.3/commons-codec-1.3.jar!/</url>
     </containerElement>
@@ -196,8 +170,16 @@
       <attribute name="URI" value="/WEB-INF/lib/lucene-demos-2007-05-31_00-04-53.jar" />
       <url>jar://$MODULE_DIR$/../../../../JAVA_DISTR/Lucene/2007-05-31/lucene-2007-05-31_00-04-53/lucene-demos-2007-05-31_00-04-53.jar!/</url>
     </containerElement>
+    <containerElement type="library" name="jstl" level="project">
+      <attribute name="method" value="1" />
+      <attribute name="URI" value="/WEB-INF/lib" />
+    </containerElement>
     <containerElement type="library" name="Lucene" level="project">
       <attribute name="method" value="1" />
+      <attribute name="URI" value="/WEB-INF/lib" />
+    </containerElement>
+    <containerElement type="library" name="mysql-connector-java-5.0.7-bin" level="project">
+      <attribute name="method" value="0" />
       <attribute name="URI" value="/WEB-INF/lib" />
     </containerElement>
     <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/WEB-INF/web.xml" optional="false" version="2.4" />

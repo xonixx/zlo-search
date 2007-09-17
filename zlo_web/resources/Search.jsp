@@ -60,6 +60,21 @@
             <c:if test="${not empty sessionScope['searchResult']}">
                 <display:table name="sessionScope.searchResult" id="msg" htmlId="resultTable" pagesize="<%= (Integer) session.getAttribute("pageSize") %>"
                                decorator="org.xonix.zlo.web.decorators.SearchResultLineDecorator" requestURI="search">
+                    <display:setProperty name="basic.msg.empty_list"><span class="pagebanner">Сообщения, соответствующие введенным критериям поиска не найдены. </span></display:setProperty>
+                    <display:setProperty name="paging.banner.one_item_found"><span class="pagebanner">Найдено одно сообщение. </span></display:setProperty>
+                    <display:setProperty name="paging.banner.all_items_found"><span class="pagebanner">Найдено сообщений: {0}, показаны все. </span></display:setProperty>
+                    <display:setProperty name="paging.banner.some_items_found"><span class="pagebanner">Найдено сообщений: {0}, показаны с {2} по {3}. </span></display:setProperty>
+                    <display:setProperty name="paging.banner.group_size">15</display:setProperty>
+                    <display:setProperty name="paging.banner.full">
+                        <span class="pagelinks">[<a href="{1}">Перв</a>/<a href="{2}">Пред</a>] {0} [<a href="{3}">След</a>/<a href="{4}">Последн</a>]</span>
+                    </display:setProperty>
+                    <display:setProperty name="paging.banner.first">
+                        <span class="pagelinks">[Перв/Пред] {0} [<a href="{3}">След</a>/<a href="{4}">Последн</a>]</span>
+                    </display:setProperty>
+                    <display:setProperty name="paging.banner.last">
+                        <span class="pagelinks">[<a href="{1}">Перв</a>/<a href="{2}">Пред</a>] {0} [След/Последн]</span>
+                    </display:setProperty>
+
                     <display:column title="Num"><c:out value="${msg_rowNum}" /></display:column>
                     <display:column title="Title">
                         <a href="http://<c:out value="${siteRoot}" />/?read=<c:out value="${msg.num}" />">
@@ -67,17 +82,20 @@
                                 [<c:out value="${msg.topic}" />]
                             </c:if>
                             <c:out value="${msg.title}" /></a>
+                        <c:if test="${empty msg.body}">(-)</c:if> 
                         <a class="search" href="msg?num=<c:out value="${msg.num}" />"><%= HtmlStrings.LINK_SAVED_MSG %></a>
                     </display:column>
                     <display:column title="Nick">
-                        <c:choose>
-                            <c:when test="${not msg.reg}">
-                                <c:out value="${msg.nick}" />
-                            </c:when>
-                            <c:otherwise>
-                                <a href="http://<c:out value="${siteRoot}" />/?uinfo=<c:out value="${msg.nick}" />"><c:out value="${msg.nick}" /></a>
-                            </c:otherwise>
-                        </c:choose>
+                        <span class="nick">
+                            <c:choose>
+                                <c:when test="${not msg.reg}">
+                                    <c:out value="${msg.nick}" />
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="http://<c:out value="${siteRoot}" />/?uinfo=<c:out value="${msg.nick}" />"><c:out value="${msg.nick}" /></a>
+                                </c:otherwise>
+                            </c:choose>
+                        </span>
                         <a class="search" href="search?topic=0&nick=<c:out value="${msg.nick}" />">?</a>
                     </display:column>
                     <display:column title="Host">
