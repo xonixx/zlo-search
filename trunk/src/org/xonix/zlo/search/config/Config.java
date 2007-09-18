@@ -34,7 +34,6 @@ public class Config {
     public static final int BUFFER = Integer.parseInt(getProp("buffer", "512"));
 
     public static final String CHARSET_NAME = "windows-1251";
-    public static final String END_MSG_MARK = "<BIG>Сообщения в этом потоке</BIG>";
     public static final String INDEX_DIR = getProp("index.dir");
     public static final String USER_AGENT = getProp("user.agent");
     public static final int THREADS_NUMBER = Integer.parseInt(getProp("threads"));
