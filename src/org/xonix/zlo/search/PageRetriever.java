@@ -17,6 +17,10 @@ import java.util.regex.Matcher;
  * Time: 17:36:44
  */
 public class PageRetriever {
+    public static final String END_MSG_MARK = "<BIG>Сообщения в этом потоке</BIG>";
+    public static final String END_MSG_MARK_SIGN = "<div class=\"sign\">";
+
+    
     private static HttpClient HTTP_CLIENT = new HttpClient(new MultiThreadedHttpConnectionManager());
 
     public static String getPageContentByNumber(int num) throws IOException{
@@ -33,6 +37,7 @@ public class PageRetriever {
             stringGroups.add("");
 
             int currSize;
+            String ending;
             do {
                 byte[] buff = new byte[Config.BUFFER];
                 int lenRead = is.read(buff);
@@ -42,8 +47,10 @@ public class PageRetriever {
 
                 stringGroups.add(new String(buff, 0, lenRead, Config.CHARSET_NAME));
                 currSize = stringGroups.size();
+                ending = stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1);
             } while(
-                (stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1)).indexOf(Config.END_MSG_MARK) == -1
+                ending.indexOf(END_MSG_MARK) == -1 &&
+                ending.indexOf(END_MSG_MARK_SIGN) == -1 // if user have sign - won't read it all
                 );
         } finally {
             if (is != null)
@@ -101,7 +108,9 @@ public class PageRetriever {
 
     public static void main(String[] args) {
         try {
-            System.out.println(getPageContentByNumber(1));
+            String pageS = getPageContentByNumber(3982207);
+            System.out.println(pageS);
+            System.out.println(PageParser.parseMessage(pageS));
         } catch (IOException e) {
             e.printStackTrace();
         }
