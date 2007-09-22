@@ -25,7 +25,8 @@
                         <c:if test="${not empty savedMsg.topic}">
                             [<c:out value="${savedMsg.topic}" />]
                         </c:if>
-                        <c:out value="${savedMsg.title}" />
+                        <c:out value="${savedMsg.title}" escapeXml="false" />
+                        <a href="http://<c:out value="${siteRoot}" />/?read=<c:out value="${savedMsg.num}" />">?</a>
                     </big>
                     <br />Сообщение было послано:
                     <span class="nick">
@@ -37,8 +38,10 @@
                                 <a href="http://<c:out value="${siteRoot}" />/?uinfo=<c:out value="${savedMsg.nick}" />"><c:out value="${savedMsg.nick}" /></a>
                             </c:otherwise>
                         </c:choose>
+                        <a class="search" href="search?topic=0&nick=<c:out value="${savedMsg.nick}" />">?</a>
                     </span>
-                    (<c:out value="${savedMsg.host}" />)
+                    (<c:out value="${savedMsg.host}" />
+                    <a class="search" href="search?topic=0&host=<c:out value="${savedMsg.host}" />">?</a>)
                     <br />Дата:
                     <fmt:formatDate value="${savedMsg.date}" pattern="EEEE, MMMM d HH:mm:ss yyyy" />
                 </div>

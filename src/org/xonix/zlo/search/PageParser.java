@@ -17,14 +17,14 @@ import java.util.regex.Pattern;
  */
 public class PageParser {
     private static Pattern MSG_UNREG_RE = Pattern.compile(
-        "<DIV ALIGN=CENTER><BIG>(.*?)</BIG>&nbsp;&nbsp;<BIG>(.*?)</BIG>" +
+        "<DIV ALIGN=CENTER><BIG>\\[(.*?)\\]</BIG>&nbsp;&nbsp;<BIG>(.*?)</BIG>" +
         "<BR>Сообщение было послано:\\s*<b>(.*?)</b><SMALL>\\s*\\(unreg\\)</SMALL>\\s*<small>" +
         "\\((.*?)\\)</small><BR>Дата:\\s*(.*?)</DIV><BR><br\\s*/><div class=\"body\">(.*?)</div>",
         Pattern.DOTALL
     );
 
     private static Pattern MSG_REG_RE = Pattern.compile(
-        "<DIV ALIGN=CENTER><BIG>(.*?)</BIG>&nbsp;&nbsp;<BIG>(.*?)</BIG>" +
+        "<DIV ALIGN=CENTER><BIG>\\[(.*?)\\]</BIG>&nbsp;&nbsp;<BIG>(.*?)</BIG>" +
         "<BR>Сообщение было послано:\\s*<a href=\"\\?uinfo=.*?\" class=\"nn\" onclick=\"popup\\('uinfo', '.*?', 700, 600\\); return false;\" title=\"Информация о Пользователе\" target=\"_blank\">(.*?)</a>\\s*" +
         "<small>\\((.*?)\\)</small><BR>Дата:\\s*(.*?)</DIV><BR><br\\s*/><div class=\"body\">(.*?)</div>",
         Pattern.DOTALL
@@ -55,7 +55,7 @@ public class PageParser {
         zloMessage.setNick(m.group(3));
         zloMessage.setHost(m.group(4));
         zloMessage.setDate(prepareDate(m.group(5)));
-        zloMessage.setBody(prepareBody(m.group(6)));
+        zloMessage.setBody(m.group(6));
 
         return zloMessage;
     }
@@ -70,16 +70,7 @@ public class PageParser {
     }
 
     private static String prepareTopic(String topic) {
-        topic = topic.substring(1, topic.length()-1);
         return "без темы".equals(topic) ? "" : topic;
-    }
-
-    private static String prepareBody(String body) {
-        return body.replaceAll("<P>", "\n")
-                .replaceAll("<br>", "\n")
-                .replaceAll("<BR>", "\n")
-                .replaceAll("<IMG BORDER=0 SRC=\".*?\" ALT=\"(.*?)\">", "$1") // картинки
-                .trim();
     }
 
     private static Date prepareDate(String s) {
