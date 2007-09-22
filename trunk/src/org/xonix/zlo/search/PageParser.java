@@ -19,13 +19,15 @@ public class PageParser {
     private static Pattern MSG_UNREG_RE = Pattern.compile(
         "<DIV ALIGN=CENTER><BIG>(.*?)</BIG>&nbsp;&nbsp;<BIG>(.*?)</BIG>" +
         "<BR>Сообщение было послано:\\s*<b>(.*?)</b><SMALL>\\s*\\(unreg\\)</SMALL>\\s*<small>" +
-        "\\((.*?)\\)</small><BR>Дата:\\s*(.*?)</DIV><BR><br\\s*/><div class=\"body\">(.*?)</div>"
+        "\\((.*?)\\)</small><BR>Дата:\\s*(.*?)</DIV><BR><br\\s*/><div class=\"body\">(.*?)</div>",
+        Pattern.DOTALL
     );
 
     private static Pattern MSG_REG_RE = Pattern.compile(
         "<DIV ALIGN=CENTER><BIG>(.*?)</BIG>&nbsp;&nbsp;<BIG>(.*?)</BIG>" +
         "<BR>Сообщение было послано:\\s*<a href=\"\\?uinfo=.*?\" class=\"nn\" onclick=\"popup\\('uinfo', '.*?', 700, 600\\); return false;\" title=\"Информация о Пользователе\" target=\"_blank\">(.*?)</a>\\s*" +
-        "<small>\\((.*?)\\)</small><BR>Дата:\\s*(.*?)</DIV><BR><br\\s*/><div class=\"body\">(.*?)</div>"      
+        "<small>\\((.*?)\\)</small><BR>Дата:\\s*(.*?)</DIV><BR><br\\s*/><div class=\"body\">(.*?)</div>",
+        Pattern.DOTALL
     );
 
     /* pattern to find message number on index page

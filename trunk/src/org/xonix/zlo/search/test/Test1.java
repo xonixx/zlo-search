@@ -6,6 +6,7 @@ import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Query;
 import org.xonix.zlo.search.ZloSearcher;
 import org.xonix.zlo.search.DAO;
+import org.xonix.zlo.search.PageParser;
 import org.xonix.zlo.search.model.ZloMessage;
 
 import java.text.DateFormat;
@@ -23,7 +24,8 @@ import java.io.IOException;
  */
 public class Test1 {
     public static void main(String[] args) {
-        m7();
+        m8();
+        System.exit(0);
     }
 
     public static void m1(){
@@ -101,5 +103,53 @@ public class Test1 {
         } catch (DAO.Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void m8() {
+/*        try {
+            System.out.println(DAO.Site.SOURCE.getMessageByNumber(3975000));
+        } catch (DAO.Exception e) {
+            e.printStackTrace();
+        }*/
+        System.out.println(PageParser.parseMessage("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" +
+                "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=windows-1251\" /><link rel=\"shortcut icon\" href=\"/favicon.ico\" /><link rel=\"stylesheet\" type=\"text/css\" href=\"/main.css\" /><meta http-equiv=\"Page-Exit\" content=\"progid:DXImageTransform.Microsoft.Fade(Duration=0.2)\" /><title>Форум-ФРТК-МФТИ : Программирование : я говорю про коды на FORTRAN-87, какие RPC?</title></head><body>\n" +
+                "<script language=\"JavaScript\" type=\"text/javascript\">function popup(action, value, w, h){wnd=window.open(\"?\"+action+\"=\"+value,\"popup\",\"resizable=no,menubars=no,scrollbars=yes,width=\"+w+\",height=\"+h); }</script><div class=\"menu\"><A HREF=\"#3975000\">Перейти к ответам</A><A HREF=\"#Reply\">Ответить</A><A HREF=\"?index#3974909\" style=\"color:red;\">На главную страницу</A><a HREF=\"http://boards.alexzam.ru\">Поиск</A><A HREF=\"?register=form\">Регистрация</A><A HREF=\"?login=form\">Вход</A><A HREF=\"?rules\">Правила</A></div><BR><DIV ALIGN=CENTER><BIG>[Программирование]</BIG>&nbsp;&nbsp;<BIG>я говорю про коды на FORTRAN-87, какие RPC?</BIG><BR>Сообщение было послано: <b>Ник0лай</b><SMALL> (unreg)</SMALL> <small>(88.84.192.198)</small><BR>Дата: Пятница, Сентябрь 14 22:11:33 2007</DIV><BR><br /><div class=\"body\">Я говорю о синтаксисе вроде<BR><PRE STYLE=\"margin-left:25px\">\n" +
+                "\n" +
+                "\tSUBROUTINE RTMAP( JOPT, MSK, JER )\n" +
+                "\tCHARACTER FNAME*20,NAME*20,JNAME*20\n" +
+                "\tCHARACTER RTNAM*16\n" +
+                "\tDIMENSION KER(2)\n" +
+                "\tDIMENSION ER1(2),DELTA(2)\n" +
+                "\tREAL*8 DMIN,DMAX,D,GM\n" +
+                "\tINTEGER*2 MSK(1)\n" +
+                "        INTEGER*4 TIM\n" +
+                "\tCOMPLEX*16 ZD(6500),ZV(256),Z\n" +
+                "\tCOMPLEX CF(130),FCT\n" +
+                "\tinteger*2 ipremap\n" +
+                "\tcommon /premap/ ipremap\n" +
+                "\tCOMMON /RTM/ ZV,CF,DEL,ER,MD,KD,KF,LF,IENT\n" +
+                "\tCOMMON /RTDMN/ ZD,ND(3),INDX(2,200),NK\n" +
+                "\tCOMMON /PARAM/ FNAME,NAME,DLT,EP,EP1,IPLT,JOURN,JPLAY,IPG\n" +
+                "\n" +
+                "        CALL GETTIM(IHR,IMN,ISC,IDC)\n" +
+                "        TIM=(INT4(IHR)*60+IMN)*60+ISC\n" +
+                "\tJER=0\n" +
+                "\tMSK(1)=3\n" +
+                "\tIF(JPLAY.EQ.0) THEN\n" +
+                "\t  MSK(4)=3\n" +
+                "\tELSE\n" +
+                "\t  MSK(4)=1\n" +
+                "\tENDIF\n" +
+                "\tDELTA(1)=DLT\n" +
+                "\tDELTA(2)=DLT\n" +
+                "\tND3=ND(1)+ND(2)+ND(3)\n" +
+                "\tIF(JOPT.EQ.1) THEN\n" +
+                "\t  NR=1\n" +
+                "\t  NK=0\n" +
+                "\tELSE\n" +
+                "\t  NR=IABS(INDX(1,NK))+INDX(2,NK)+2\n" +
+                "\tENDIF\n" +
+                "\tKER(1)=ND(1)\n" +
+                "\tKER(2)=ND(2)</PRE><BR><BR>О чём Вы говорите! современный Фортран такое, уверен, не скомпилит даже.</div><P></P><BR><CENTER><BIG>Сообщения в этом потоке</BIG></CENTER><DIV class=w><span id=m3974909"));
     }
 }

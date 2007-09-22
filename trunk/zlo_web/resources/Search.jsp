@@ -81,7 +81,7 @@
                             <c:if test="${not empty msg.topic and msg.topic != 'Без темы'}">
                                 [<c:out value="${msg.topic}" />]
                             </c:if>
-                            <c:out value="${msg.title}" /></a>
+                            <c:out value="${msg.title}" escapeXml="false" /></a>
                         <c:if test="${empty msg.body}">(-)</c:if> 
                         <a class="search" href="msg?num=<c:out value="${msg.num}" />"><%= HtmlStrings.LINK_SAVED_MSG %></a>
                     </display:column>
