@@ -82,7 +82,11 @@
                                 [<c:out value="${msg.topic}" />]
                             </c:if>
                             <c:out value="${msg.title}" escapeXml="false" /></a>
-                        <c:if test="${empty msg.body}">(-)</c:if> 
+                        <small>
+                            <c:if test="${empty msg.body}">(-)</c:if>
+                            <c:if test="${msg.hasUrl}">(url)</c:if>
+                            <c:if test="${msg.hasImg}">(pic)</c:if>
+                        </small>
                         <a class="search" href="msg?num=<c:out value="${msg.num}" />"><%= HtmlStrings.LINK_SAVED_MSG %></a>
                     </display:column>
                     <display:column title="Nick">

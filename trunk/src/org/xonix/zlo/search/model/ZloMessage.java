@@ -190,14 +190,6 @@ public class ZloMessage implements Serializable {
         return hasImg;
     }
 
-/*    public void makeHtmlCleanup() {
-
-        hasUrl = HtmlUtils.hasUrl(body);
-        hasImg = HtmlUtils.hasImg(body);
-        titleClean = HtmlUtils.cleanHtml(title);
-        bodyClean = HtmlUtils.cleanHtml(body);
-    }*/
-
     public String toString() {
         return new StringBuffer("ZloMessage(\n")
                 .append("\t").append("num=").append(num).append(",\n")
@@ -213,8 +205,6 @@ public class ZloMessage implements Serializable {
     }
 
     public Document getDocument() {
-//        makeHtmlCleanup(); // to create titleClean && bodyClean
-
         Document doc = new Document();
         doc.add(new Field(URL_NUM, URL_NUM_FORMAT.format(num), Field.Store.YES, Field.Index.UN_TOKENIZED));
         doc.add(new Field(TOPIC, TOPIC_CODES.get(topic), Field.Store.YES, Field.Index.UN_TOKENIZED));
@@ -261,15 +251,6 @@ public class ZloMessage implements Serializable {
     }
 
     public static Analyzer constructAnalyzer() {
-/*        PerFieldAnalyzerWrapper analyzer = new PerFieldAnalyzerWrapper(Config.ANALYZER);
-        analyzer.addAnalyzer(TOPIC, new KeywordAnalyzer());
-        analyzer.addAnalyzer(NICK, new KeywordAnalyzer());
-        analyzer.addAnalyzer(HOST, new KeywordAnalyzer());
-        analyzer.addAnalyzer(URL_NUM, new KeywordAnalyzer());
-        analyzer.addAnalyzer(DATE, new KeywordAnalyzer());
-        analyzer.addAnalyzer(REG, new KeywordAnalyzer());
-        analyzer.addAnalyzer(HAS_IMG, new KeywordAnalyzer());
-        analyzer.addAnalyzer(HAS_URL, new KeywordAnalyzer());*/
         PerFieldAnalyzerWrapper analyzer = new PerFieldAnalyzerWrapper(new KeywordAnalyzer());
         analyzer.addAnalyzer(TITLE, Config.ANALYZER);
         analyzer.addAnalyzer(BODY, Config.ANALYZER);

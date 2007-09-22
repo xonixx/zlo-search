@@ -7,6 +7,7 @@ import org.apache.lucene.search.Query;
 import org.xonix.zlo.search.ZloSearcher;
 import org.xonix.zlo.search.DAO;
 import org.xonix.zlo.search.PageParser;
+import org.xonix.zlo.search.test.storage.ZloStorage;
 import org.xonix.zlo.search.model.ZloMessage;
 
 import java.text.DateFormat;
@@ -106,12 +107,12 @@ public class Test1 {
     }
 
     public static void m8() {
-/*        try {
-            System.out.println(DAO.Site.SOURCE.getMessageByNumber(3975000));
+        try {
+            System.out.println(DAO.Site.SOURCE.getMessageByNumber(3960198));
         } catch (DAO.Exception e) {
             e.printStackTrace();
-        }*/
-        System.out.println(PageParser.parseMessage("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" +
+        }
+        /*System.out.println(PageParser.parseMessage("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" +
                 "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=windows-1251\" /><link rel=\"shortcut icon\" href=\"/favicon.ico\" /><link rel=\"stylesheet\" type=\"text/css\" href=\"/main.css\" /><meta http-equiv=\"Page-Exit\" content=\"progid:DXImageTransform.Microsoft.Fade(Duration=0.2)\" /><title>Форум-ФРТК-МФТИ : Программирование : я говорю про коды на FORTRAN-87, какие RPC?</title></head><body>\n" +
                 "<script language=\"JavaScript\" type=\"text/javascript\">function popup(action, value, w, h){wnd=window.open(\"?\"+action+\"=\"+value,\"popup\",\"resizable=no,menubars=no,scrollbars=yes,width=\"+w+\",height=\"+h); }</script><div class=\"menu\"><A HREF=\"#3975000\">Перейти к ответам</A><A HREF=\"#Reply\">Ответить</A><A HREF=\"?index#3974909\" style=\"color:red;\">На главную страницу</A><a HREF=\"http://boards.alexzam.ru\">Поиск</A><A HREF=\"?register=form\">Регистрация</A><A HREF=\"?login=form\">Вход</A><A HREF=\"?rules\">Правила</A></div><BR><DIV ALIGN=CENTER><BIG>[Программирование]</BIG>&nbsp;&nbsp;<BIG>я говорю про коды на FORTRAN-87, какие RPC?</BIG><BR>Сообщение было послано: <b>Ник0лай</b><SMALL> (unreg)</SMALL> <small>(88.84.192.198)</small><BR>Дата: Пятница, Сентябрь 14 22:11:33 2007</DIV><BR><br /><div class=\"body\">Я говорю о синтаксисе вроде<BR><PRE STYLE=\"margin-left:25px\">\n" +
                 "\n" +
@@ -150,6 +151,11 @@ public class Test1 {
                 "\t  NR=IABS(INDX(1,NK))+INDX(2,NK)+2\n" +
                 "\tENDIF\n" +
                 "\tKER(1)=ND(1)\n" +
-                "\tKER(2)=ND(2)</PRE><BR><BR>О чём Вы говорите! современный Фортран такое, уверен, не скомпилит даже.</div><P></P><BR><CENTER><BIG>Сообщения в этом потоке</BIG></CENTER><DIV class=w><span id=m3974909"));
+                "\tKER(2)=ND(2)</PRE><BR><BR>О чём Вы говорите! современный Фортран такое, уверен, не скомпилит даже.</div><P></P><BR><CENTER><BIG>Сообщения в этом потоке</BIG></CENTER><DIV class=w><span id=m3974909"))*/;
+/*        try {
+            System.out.println(new ZloStorage().getMessageByNumber(3960198));
+        } catch (DAO.Exception e) {
+            e.printStackTrace();
+        }*/
     }
 }
