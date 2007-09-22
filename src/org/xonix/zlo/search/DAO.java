@@ -4,11 +4,6 @@ import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.model.ZloMessage;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -49,41 +44,44 @@ public class DAO {
         private static class MessageRetriever extends Thread {
             private static int from = -1;
             private static int to = -1;
-            private static int i = -1;
+            private static int currentNum = -1;
+
+            private static int threadNum = 0;
 
             private List<ZloMessage> msgs;
 
 
             public MessageRetriever(int from, int to, List<ZloMessage> msgs) {
-                super("MessageRetriever(i=" + i + ")");
+                super("MessageRetriever #" + threadNum++);
                 if (MessageRetriever.from == -1)
                     MessageRetriever.from = from;
                 if (MessageRetriever.to == -1)
                     MessageRetriever.to = to;
-                if (i == -1)
-                    i = from;
+                if (currentNum == -1)
+                    currentNum = from;
                 this.msgs = msgs;
-                System.out.println("Born " + i);
+                logger.info("Born " + currentNum);
             }
 
             private static boolean hasMoreToDownload() {
-                return i <= to;
+                return currentNum <= to;
             }
 
             private int getNextNum() {
-                return i++;
+                return currentNum++;
             }
 
             public void run() {
-                System.out.println("Run " + i + ", " + from + ", " + to);
+//                System.out.println("Run " + currentNum + ", " + from + ", " + to);
                 while (hasMoreToDownload()) {
                     try {
-                        System.out.println("Downloading " + i);
+                        logger.info("Downloading " + currentNum);
                         msgs.add(SOURCE.getMessageByNumber(getNextNum()));
                     } catch (Exception e) {
                         e.printStackTrace(); // todo: need to decide what to do here
                     }
                 }
+                logger.info(getName()+" finished.");
             }
         }
 

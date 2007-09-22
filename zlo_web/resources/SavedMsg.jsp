@@ -44,7 +44,7 @@
                 </div>
                 <br />
                 <div id="body">
-                    <c:out value="${savedMsg.body}" />
+                    <c:out value="${savedMsg.body}" escapeXml="false"/>
                 </div>
             </c:when>
             <c:otherwise>

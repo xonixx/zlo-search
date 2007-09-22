@@ -8,6 +8,7 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.search.Hit;
 import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.utils.HtmlUtils;
 
 import java.text.ParseException;
 import java.text.NumberFormat;
@@ -24,14 +25,21 @@ import java.io.Serializable;
  * Time: 20:18:10
  */
 public class ZloMessage implements Serializable {
+    private static final String TRUE = "1";
+    private static final String FALSE = "0";
+
     public static final String URL_NUM = "num";
     public static final String NICK = "nick";
     public static final String HOST = "host";
     public static final String TOPIC = "topic";
-    public static final String TITLE = "title";
-    public static final String BODY = "body";
+    public static final String TITLE_HTML = "titleHtml";
+    public static final String TITLE = "title"; // clean - w/o html
+    public static final String BODY_HTML = "bodyHtml";
+    public static final String BODY = "body"; // clean - w/o html
     public static final String DATE = "date";
     public static final String REG = "reg";
+    public static final String HAS_URL = "url";
+    public static final String HAS_IMG = "img";
 
     private String nick;
     private String host;
@@ -41,6 +49,11 @@ public class ZloMessage implements Serializable {
     private Date date;
     private boolean reg = false;
     private int num = -1; // default
+
+    private String titleClean;
+    private String bodyClean;
+    private Boolean hasUrl;
+    private Boolean hasImg;
 
     private int hitId;
     
@@ -113,12 +126,24 @@ public class ZloMessage implements Serializable {
         this.title = title;
     }
 
+    public String getCleanTitle() {
+        if (titleClean == null)
+            titleClean = HtmlUtils.cleanHtml(title);
+        return titleClean;
+    }
+
     public String getBody() {
         return body;
     }
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public String getCleanBody() {
+        if (bodyClean == null)
+            bodyClean = HtmlUtils.cleanBoardSpecific(body);
+        return bodyClean;
     }
 
     public Date getDate() {
@@ -153,6 +178,26 @@ public class ZloMessage implements Serializable {
         this.hitId = hitId;
     }
 
+    public boolean isHasUrl() {
+        if (hasUrl == null)
+            hasUrl = HtmlUtils.hasUrl(body);
+        return hasUrl;
+    }
+
+    public boolean isHasImg() {
+        if (hasImg == null)
+            hasImg = HtmlUtils.hasImg(body);
+        return hasImg;
+    }
+
+/*    public void makeHtmlCleanup() {
+
+        hasUrl = HtmlUtils.hasUrl(body);
+        hasImg = HtmlUtils.hasImg(body);
+        titleClean = HtmlUtils.cleanHtml(title);
+        bodyClean = HtmlUtils.cleanHtml(body);
+    }*/
+
     public String toString() {
         return new StringBuffer("ZloMessage(\n")
                 .append("\t").append("num=").append(num).append(",\n")
@@ -162,27 +207,41 @@ public class ZloMessage implements Serializable {
                 .append("\t").append("reg=").append(reg).append(",\n")
                 .append("\t").append("host=").append(host).append(",\n")
                 .append("\t").append("date=").append(date).append(",\n")
+                .append("\t").append("hasUrl=").append(isHasUrl() ? TRUE : FALSE).append(",\n")
+                .append("\t").append("hasImg=").append(isHasImg() ? TRUE : FALSE).append(",\n")
                 .append("\t").append("body=").append(body.replaceAll("\n","\n\t\t")).append("\n)").toString();
     }
 
     public Document getDocument() {
+//        makeHtmlCleanup(); // to create titleClean && bodyClean
+
         Document doc = new Document();
         doc.add(new Field(URL_NUM, URL_NUM_FORMAT.format(num), Field.Store.YES, Field.Index.UN_TOKENIZED));
         doc.add(new Field(TOPIC, TOPIC_CODES.get(topic), Field.Store.YES, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(TITLE, title, Field.Store.YES, Field.Index.TOKENIZED));
+        doc.add(new Field(TITLE_HTML, title, Field.Store.YES, Field.Index.NO)); // "грязный" - храним, не индексируем
+        doc.add(new Field(TITLE, getCleanTitle(), Field.Store.NO, Field.Index.TOKENIZED)); // "чистый" - индексируем, не храним
         doc.add(new Field(NICK, nick, Field.Store.YES, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(REG, Boolean.toString(reg), Field.Store.YES, Field.Index.NO));
+        doc.add(new Field(REG, reg ? TRUE : FALSE, Field.Store.YES, Field.Index.UN_TOKENIZED));
         doc.add(new Field(HOST, host, Field.Store.YES, Field.Index.UN_TOKENIZED));
         doc.add(new Field(DATE, DateTools.dateToString(date, DateTools.Resolution.MINUTE), Field.Store.YES, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(BODY, body, Field.Store.COMPRESS, Field.Index.TOKENIZED));
+        doc.add(new Field(BODY_HTML, body, Field.Store.COMPRESS, Field.Index.NO)); // "грязный" - храним сжатый, не индексируем
+        doc.add(new Field(BODY, getCleanBody(), Field.Store.NO, Field.Index.TOKENIZED)); // "чистый" - индексируем, не храним
+        doc.add(new Field(HAS_URL, isHasUrl() ? TRUE : FALSE, Field.Store.YES, Field.Index.UN_TOKENIZED));
+        doc.add(new Field(HAS_IMG, isHasImg() ? TRUE : FALSE, Field.Store.YES, Field.Index.UN_TOKENIZED));
         return doc;
     }
 
     public static ZloMessage fromDocument(Document doc) {
         try {
             return new ZloMessage(
-                doc.get(NICK), doc.get(HOST), TOPICS[Integer.parseInt(doc.get(TOPIC))], doc.get(TITLE), doc.get(BODY),
-                DateTools.stringToDate(doc.get(DATE)), "true".equals(doc.get(REG)), Integer.parseInt(doc.get(URL_NUM))
+                doc.get(NICK),
+                doc.get(HOST),
+                TOPICS[Integer.parseInt(doc.get(TOPIC))],
+                doc.get(TITLE_HTML),
+                doc.get(BODY_HTML),
+                DateTools.stringToDate(doc.get(DATE)),
+                TRUE.equals(doc.get(REG)),
+                Integer.parseInt(doc.get(URL_NUM))
             );
         } catch (ParseException e) {
             e.printStackTrace();
@@ -202,12 +261,18 @@ public class ZloMessage implements Serializable {
     }
 
     public static Analyzer constructAnalyzer() {
-        PerFieldAnalyzerWrapper analyzer = new PerFieldAnalyzerWrapper(Config.ANALYZER);
+/*        PerFieldAnalyzerWrapper analyzer = new PerFieldAnalyzerWrapper(Config.ANALYZER);
         analyzer.addAnalyzer(TOPIC, new KeywordAnalyzer());
         analyzer.addAnalyzer(NICK, new KeywordAnalyzer());
         analyzer.addAnalyzer(HOST, new KeywordAnalyzer());
         analyzer.addAnalyzer(URL_NUM, new KeywordAnalyzer());
         analyzer.addAnalyzer(DATE, new KeywordAnalyzer());
+        analyzer.addAnalyzer(REG, new KeywordAnalyzer());
+        analyzer.addAnalyzer(HAS_IMG, new KeywordAnalyzer());
+        analyzer.addAnalyzer(HAS_URL, new KeywordAnalyzer());*/
+        PerFieldAnalyzerWrapper analyzer = new PerFieldAnalyzerWrapper(new KeywordAnalyzer());
+        analyzer.addAnalyzer(TITLE, Config.ANALYZER);
+        analyzer.addAnalyzer(BODY, Config.ANALYZER);
         return analyzer;
     }
 }

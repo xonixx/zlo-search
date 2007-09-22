@@ -12,9 +12,10 @@ public class TestZloStorage {
     public static void main(String[] args) {
         ZloStorage zs = new ZloStorage();
         try {
-            System.out.println("3974701>" + zs.getMessages(3964700, 3964710));
+            System.out.println(zs.getMessageByNumber(3975000));
         } catch (DAO.Exception e) {
             e.printStackTrace();
         }
+        System.exit(0);
     }
 }
