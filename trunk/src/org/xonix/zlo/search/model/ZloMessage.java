@@ -83,7 +83,8 @@ public class ZloMessage implements Serializable {
     }
 
     public ZloMessage(String userName, String hostName, String msgTopic, String msgTitle, String msgBody, Date msgDate,
-                      boolean reg, int urlNum) {
+                      boolean reg, int urlNum,
+                      Boolean hasUrl, Boolean hasImg) {
         this.nick = userName;
         this.host = hostName;
         this.topic = msgTopic;
@@ -92,6 +93,8 @@ public class ZloMessage implements Serializable {
         this.date = msgDate;
         this.reg = reg;
         this.num = urlNum;
+        this.hasUrl = hasUrl;
+        this.hasImg = hasImg;
     }
 
     public String getNick() {
@@ -231,7 +234,9 @@ public class ZloMessage implements Serializable {
                 doc.get(BODY_HTML),
                 DateTools.stringToDate(doc.get(DATE)),
                 TRUE.equals(doc.get(REG)),
-                Integer.parseInt(doc.get(URL_NUM))
+                Integer.parseInt(doc.get(URL_NUM)),
+                TRUE.equals(doc.get(HAS_URL)),
+                TRUE.equals(doc.get(HAS_IMG))
             );
         } catch (ParseException e) {
             e.printStackTrace();
@@ -256,4 +261,6 @@ public class ZloMessage implements Serializable {
         analyzer.addAnalyzer(BODY, Config.ANALYZER);
         return analyzer;
     }
+
+    static final long serialVersionUID = -3231624250115810539L; // for deserialization
 }

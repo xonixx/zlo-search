@@ -99,7 +99,9 @@ public class DBManager {
                         rs.getString(ZloMessage.BODY),
                         rs.getTimestamp(ZloMessage.DATE),
                         rs.getBoolean(ZloMessage.REG),
-                        rs.getInt(ZloMessage.URL_NUM));
+                        rs.getInt(ZloMessage.URL_NUM),
+                        null,
+                        null);
             } else
                 return null;
         } catch (SQLException e) {
@@ -124,7 +126,9 @@ public class DBManager {
                                 rs.getString(ZloMessage.BODY),
                                 rs.getTimestamp(ZloMessage.DATE),
                                 rs.getBoolean(ZloMessage.REG),
-                                rs.getInt(ZloMessage.URL_NUM)));
+                                rs.getInt(ZloMessage.URL_NUM),
+                                null,
+                                null));
             }
             return msgs;
         } catch (SQLException e) {
