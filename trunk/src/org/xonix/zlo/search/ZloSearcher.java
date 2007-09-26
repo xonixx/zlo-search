@@ -103,7 +103,7 @@ public class ZloSearcher {
 
     public static ZloMessage searchMsgByNum(int urlNum) {
         try {
-            return search("+num:" + ZloMessage.URL_NUM_FORMAT.format(urlNum)).iterator().next(); // returns 1 result
+            return search("+num:" + ZloMessage.URL_NUM_FORMAT.format(urlNum)).iterator().next().getMessage(); // returns 1 result
         } catch (NoSuchElementException e) { // 0 results found => msg with such num not indexed
             return null;
         }

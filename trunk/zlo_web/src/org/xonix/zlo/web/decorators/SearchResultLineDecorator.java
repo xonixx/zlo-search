@@ -2,6 +2,7 @@ package org.xonix.zlo.web.decorators;
 
 import org.displaytag.decorator.TableDecorator;
 import org.xonix.zlo.search.model.ZloMessage;
+import org.xonix.zlo.search.model.ZloMessageAccessor;
 
 import java.text.SimpleDateFormat;
 
@@ -14,7 +15,7 @@ public class SearchResultLineDecorator extends TableDecorator {
     public static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
     public String getDate() {
-        ZloMessage msg = (ZloMessage) getCurrentRowObject();
+        ZloMessageAccessor msg = (ZloMessageAccessor) getCurrentRowObject();
         return DATE_FORMAT.format(msg.getDate());
     }
 }

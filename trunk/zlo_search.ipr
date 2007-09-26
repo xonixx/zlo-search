@@ -316,6 +316,24 @@
       <JAVADOC />
       <SOURCES />
     </library>
+    <library name="commons-collections-3.2">
+      <CLASSES>
+        <root url="jar://D:/TEST/JAVA/ZloSearcher/lib/commons-collections-3.2.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://D:/TEST/JAVA/ZloSearcher/lib-src/commons-collections-3.2-src.zip!/commons-collections-3.2-src/src/java" />
+      </SOURCES>
+    </library>
+    <library name="displaytag-1.1.1">
+      <CLASSES>
+        <root url="jar://D:/TEST/JAVA/ZloSearcher/lib/displaytag-1.1.1.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://D:/TEST/JAVA/ZloSearcher/lib-src/displaytag-1.1.1-src.zip!/displaytag-1.1.1/displaytag/src/main/java" />
+      </SOURCES>
+    </library>
   </component>
   <component name="uidesigner-configuration">
     <option name="INSTRUMENT_CLASSES" value="true" />

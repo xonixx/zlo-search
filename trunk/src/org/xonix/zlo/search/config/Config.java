@@ -51,8 +51,8 @@ public class Config {
     }
 
     private static final String TIME_PERIOD = getProp("time.period");
-    public static final int TIME_PERIOD_YEARS = Integer.valueOf(TIME_PERIOD.split("y")[0]);
-    public static final int TIME_PERIOD_MONTHS = Integer.valueOf(TIME_PERIOD.split("y")[1].split("m")[0]);
+    public static final int TIME_PERIOD_YEARS = Integer.parseInt(TIME_PERIOD.split("y")[0]);
+    public static final int TIME_PERIOD_MONTHS = Integer.parseInt(TIME_PERIOD.split("y")[1].split("m")[0]);
 
     public static String getProp(String key) {
         return props.getProperty(key);
