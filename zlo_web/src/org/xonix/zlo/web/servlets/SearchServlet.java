@@ -8,6 +8,7 @@ import org.xonix.zlo.search.ZloSearchResult;
 import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 import org.xonix.zlo.web.servlets.helpful.ForwardingServlet;
+import org.xonix.zlo.web.ZloPaginatedList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
@@ -38,6 +39,7 @@ public class SearchServlet extends ForwardingServlet {
     public static final String QS_FROM_DATE = "fd";
     public static final String QS_TO_DATE = "td";
     public static final String QS_PAGE_SIZE = "pageSize";
+    public static final String QS_PAGE_NUMBER = "page";
     public static final String QS_SUBMIT = "submit";
 
     // session keys
@@ -66,7 +68,7 @@ public class SearchServlet extends ForwardingServlet {
         int pageSize = 100; // default
         if (StringUtils.isNotEmpty(pageSizeStrInd)) {
             try {
-                pageSize = Integer.parseInt(Config.NUMS_PER_PAGE[Integer.valueOf(pageSizeStrInd)]);
+                pageSize = Integer.parseInt(Config.NUMS_PER_PAGE[Integer.parseInt(pageSizeStrInd)]);
                 rememberInCookie(response, QS_PAGE_SIZE, pageSizeStrInd);
             } catch(NumberFormatException ex){
                 ;
@@ -77,7 +79,7 @@ public class SearchServlet extends ForwardingServlet {
             String pageSizeStrIndCookie = recallFromCookie(request, QS_PAGE_SIZE);
             if (StringUtils.isNotEmpty(pageSizeStrIndCookie)) {
                 try {
-                    pageSize = Integer.parseInt(Config.NUMS_PER_PAGE[Integer.valueOf(pageSizeStrIndCookie)]);
+                    pageSize = Integer.parseInt(Config.NUMS_PER_PAGE[Integer.parseInt(pageSizeStrIndCookie)]);
                     request.setParameter(QS_PAGE_SIZE, pageSizeStrIndCookie);
                 } catch (NumberFormatException ex) {
                     ;
@@ -132,9 +134,18 @@ public class SearchServlet extends ForwardingServlet {
                 fromDate = toDate = null;
             }
 
+            ZloPaginatedList zloPaginatedList;
             if (session.getAttribute(SESS_SEARCH_RESULT) == null ||
                     ((ZloSearchResult) session.getAttribute(SESS_SEARCH_RESULT)).isNotTheSameSearch(topicCode, title, body, nick, host, fromDate, toDate)) {
-                session.setAttribute(SESS_SEARCH_RESULT, ZloSearcher.search(topicCode, title, body, nick, host, fromDate, toDate));
+                ZloSearchResult zloSearchResult = ZloSearcher.search(topicCode, title, body, nick, host, fromDate, toDate);
+                session.setAttribute(SESS_SEARCH_RESULT, zloSearchResult);
+                zloPaginatedList = (ZloPaginatedList) zloSearchResult.getPaginatedList();
+            } else {
+                zloPaginatedList = (ZloPaginatedList) ((ZloSearchResult) session.getAttribute(SESS_SEARCH_RESULT)).getPaginatedList();
+            }
+            zloPaginatedList.setObjectsPerPage(pageSize);
+            if (StringUtils.isNotEmpty(request.getParameter(QS_PAGE_NUMBER))) {
+                zloPaginatedList.setPageNumber(Integer.parseInt(request.getParameter(QS_PAGE_NUMBER)));
             }
         } else if (StringUtils.isNotEmpty(request.getParameter(QS_SUBMIT))) {
             request.setAttribute(ERROR, ErrorMessages.MustSelectCriterion);
@@ -146,11 +157,11 @@ public class SearchServlet extends ForwardingServlet {
 
         String siteInCookie;
         if (StringUtils.isNotEmpty(request.getParameter(QS_SITE))){
-            session.setAttribute(SESS_SITE_ROOT, Config.SITES[Integer.valueOf(request.getParameter(QS_SITE))]);
+            session.setAttribute(SESS_SITE_ROOT, Config.SITES[Integer.parseInt(request.getParameter(QS_SITE))]);
             rememberInCookie(response, QS_SITE, request.getParameter(QS_SITE));
         } else if (StringUtils.isNotEmpty(siteInCookie = recallFromCookie(request, QS_SITE))){
             request.setParameter(QS_SITE, siteInCookie); // for drop-down
-            session.setAttribute(SESS_SITE_ROOT, Config.SITES[Integer.valueOf(siteInCookie)]); // for search result list
+            session.setAttribute(SESS_SITE_ROOT, Config.SITES[Integer.parseInt(siteInCookie)]); // for search result list
         } else {
             session.setAttribute(SESS_SITE_ROOT, Config.SITES[0]);
         }

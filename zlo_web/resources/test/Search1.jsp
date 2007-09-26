@@ -1,10 +1,10 @@
-<%@ page import="org.xonix.zlo.search.config.Config, org.xonix.zlo.search.config.HtmlStrings" %>
+<%@ page import="org.xonix.zlo.search.config.Config, org.xonix.zlo.search.config.HtmlStrings, org.xonix.zlo.search.model.ZloMessageAccessor, org.apache.commons.lang.StringUtils" %>
 <%--
   User: gubarkov
   Date: 14.08.2007
   Time: 16:46:12
 --%>
-<%@ include file="import.jsp" %>
+<%@ include file="../import.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 
 <jsp:useBean id="backendBean" class="org.xonix.zlo.web.BackendBean" scope="session" />
@@ -15,18 +15,20 @@
 <html>
     <head>
         <title><%= HtmlStrings.PAGE_TITLE %></title>
-        <link rel="stylesheet" type="text/css" href="main.css" />
-        <script type="text/javascript" src="script.js"></script>
+        <link rel="stylesheet" type="text/css" href="../main.css"/>
+        <script type="text/javascript" src="../script.js"></script>
     </head>
     <body>
-        <div id="searchform">
-            <table width="100%">
-                <tr><td height="20px"></td></tr>
-                <tr>
-                    <td width="33%"></td>
-                    <td>
-                        <form action="search" method="get">
-                            <%= HtmlStrings.LABEL_TITLE %> <input type="text" name="title" <c:if test="${not empty param['title']}">value="<c:out value="${param['title']}" />" </c:if>style="width:450px;" />
+    <div id="searchform">
+        <table width="100%">
+            <tr>
+                <td height="20px"></td>
+            </tr>
+            <tr>
+                <td width="33%"></td>
+                <td>
+                    <form action="search" method="get">
+                        <%= HtmlStrings.LABEL_TITLE %> <input type="text" name="title" <c:if test="${not empty param['title']}">value="<c:out value="${param['title']}" />" </c:if>style="width:450px;" />
                             <%= HtmlStrings.LABEL_TOPIC %> <jsp:getProperty name="backendBean" property="topicSelector" />
                             <br/>
                             <%= HtmlStrings.LABEL_TEXT %> <input type="text" name="body" <c:if test="${not empty param['body']}">value="<c:out value="${param['body']}" />" </c:if>style="width:450px;" /><br/>
@@ -58,7 +60,7 @@
     <c:choose>
         <c:when test="${empty requestScope['error']}">
             <c:if test="${not empty sessionScope['searchResult']}">
-                <display:table name="sessionScope.searchResult.paginatedList" id="msg" htmlId="resultTable" pagesize="<%= (Integer) session.getAttribute("pageSize") %>"
+                <display:table name="sessionScope.searchResult" id="msg" htmlId="resultTable" pagesize="<%= (Integer) session.getAttribute("pageSize") %>"
                                decorator="org.xonix.zlo.web.decorators.SearchResultLineDecorator" requestURI="search">
                     <display:setProperty name="basic.msg.empty_list"><span class="pagebanner">Сообщения, соответствующие введенным критериям поиска не найдены. </span></display:setProperty>
                     <display:setProperty name="paging.banner.one_item_found"><span class="pagebanner">Найдено одно сообщение. </span></display:setProperty>
@@ -75,38 +77,28 @@
                         <span class="pagelinks">[<a href="{1}">Перв</a>/<a href="{2}">Пред</a>] {0} [След/Последн]</span>
                     </display:setProperty>
 
-                    <display:column title="Num"><c:out value="${msg.hitId + 1}" /></display:column>
+                    <display:column title="Num"><c:out value="${msg_rowNum}" /></display:column>
                     <display:column title="Title">
-                        <a href="http://<c:out value="${siteRoot}" />/?read=<c:out value="${msg.num}" />">
-                            <c:if test="${not empty msg.topic and msg.topic != 'Без темы'}">
+                        <% ZloMessageAccessor m = (ZloMessageAccessor) msg; %>
+                        <a href="http://<%= siteRoot %>/?read=<%= m.getNum() %>}">
+<%--                            <c:if test="${not empty msg.topic and msg.topic != 'Без темы'}">
                                 [<c:out value="${msg.topic}" />]
-                            </c:if>
-                            <c:out value="${msg.title}" escapeXml="false" /></a>
+                            </c:if>--%>
+                            <% if (StringUtils.isNotEmpty(siteRoot) && !"Без темы".equals(m.getTopic())) { %>
+                                <%= m.getTopic() %>
+                            <% } %>
+                            <%--<c:out value="${msg.title}" escapeXml="false" /></a>--%>
+                            <%= m.getTitle() %>
                         <small>
-                            <c:if test="${empty msg.body}">(-)</c:if>
+<%--                            <c:if test="${empty msg.body}">(-)</c:if>
                             <c:if test="${msg.hasUrl}">(url)</c:if>
-                            <c:if test="${msg.hasImg}">(pic)</c:if>
+                            <c:if test="${msg.hasImg}">(pic)</c:if>--%>
+                            <% if (StringUtils.isEmpty(m.getBody())) { %>(-)<% } %>
+                            <% if (m.isHasUrl()) { %>(url)<% } %>
+                            <% if (m.isHasImg()) { %>(pic)<% } %>
                         </small>
-                        <a class="search" href="msg?num=<c:out value="${msg.num}" />"><%= HtmlStrings.LINK_SAVED_MSG %></a>
+                        <a class="search" href="msg?num=<%= m.getNum() %>"><%= HtmlStrings.LINK_SAVED_MSG %></a>
                     </display:column>
-                    <display:column title="Nick">
-                        <span class="nick">
-                            <c:choose>
-                                <c:when test="${not msg.reg}">
-                                    <c:out value="${msg.nick}" />
-                                </c:when>
-                                <c:otherwise>
-                                    <a href="http://<c:out value="${siteRoot}" />/?uinfo=<c:out value="${msg.nick}" />"><c:out value="${msg.nick}" /></a>
-                                </c:otherwise>
-                            </c:choose>
-                        </span>
-                        <a class="search" href="search?topic=0&nick=<c:out value="${msg.nick}" />">?</a>
-                    </display:column>
-                    <display:column title="Host">
-                        <c:out value="${msg.host}" />
-                        <a class="search" href="search?topic=0&host=<c:out value="${msg.host}" />">?</a>
-                    </display:column>
-                    <display:column title="Date" property="date" />
                 </display:table>
             </c:if>
         </c:when>

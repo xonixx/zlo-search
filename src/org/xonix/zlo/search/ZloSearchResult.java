@@ -8,6 +8,10 @@ import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.xonix.zlo.search.model.ZloMessage;
+import org.xonix.zlo.search.model.ZloMessageAccessor;
+import org.xonix.zlo.search.model.ZloMessageLazy;
+import org.xonix.zlo.web.ZloPaginatedList;
+import org.displaytag.pagination.PaginatedList;
 
 import java.util.Date;
 import java.util.Iterator;
@@ -33,6 +37,8 @@ public class ZloSearchResult implements Iterable {
     private String host;
     private Date fromDate;
     private Date toDate;
+
+    private PaginatedList paginatedList;
 
     public ZloSearchResult() {
     }
@@ -77,22 +83,23 @@ public class ZloSearchResult implements Iterable {
         return query;
     }
 
-    private class MsgsIterator implements Iterator<ZloMessage> {
+    private class MsgsIterator implements Iterator<ZloMessageAccessor> {
         Iterator hitsIterator = hits.iterator();
 
         public boolean hasNext() {
             return hitsIterator.hasNext();
         }
 
-        public ZloMessage next() {
-            return ZloMessage.fromHit((Hit) hitsIterator.next());
+        public ZloMessageAccessor next() {
+//            return ZloMessage.fromHit((Hit) hitsIterator.next());
+            return new ZloMessageLazy((Hit) hitsIterator.next());
         }
 
         public void remove() {
         }
     }
 
-    public Iterator<ZloMessage> iterator() {
+    public Iterator<ZloMessageAccessor> iterator() {
         return new MsgsIterator();
     }
 
@@ -176,5 +183,11 @@ public class ZloSearchResult implements Iterable {
                                      Date fromDate,
                                      Date toDate) {
         return !isTheSameSearch(topicCode, title, body, nick, host, fromDate, toDate);
+    }
+
+    public PaginatedList getPaginatedList() {
+        if (paginatedList == null)
+            paginatedList = ZloPaginatedList.fromZloSearchResult(this);
+        return paginatedList;
     }
 }

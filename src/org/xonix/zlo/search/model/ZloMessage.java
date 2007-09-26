@@ -24,7 +24,7 @@ import java.io.Serializable;
  * Date: 30.05.2007
  * Time: 20:18:10
  */
-public class ZloMessage implements Serializable {
+public class ZloMessage implements Serializable, ZloMessageAccessor {
     private static final String TRUE = "1";
     private static final String FALSE = "0";
 
@@ -193,6 +193,10 @@ public class ZloMessage implements Serializable {
         return hasImg;
     }
 
+    public ZloMessage getMessage() {
+        return this;
+    }
+
     public String toString() {
         return new StringBuffer("ZloMessage(\n")
                 .append("\t").append("num=").append(num).append(",\n")
@@ -242,6 +246,12 @@ public class ZloMessage implements Serializable {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static ZloMessage fromDocument(Document doc, int hitId) {
+        ZloMessage res = fromDocument(doc);
+        res.setHitId(hitId);
+        return res;
     }
 
     public static ZloMessage fromHit(Hit hit) {
