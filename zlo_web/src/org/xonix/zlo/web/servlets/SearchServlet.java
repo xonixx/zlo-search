@@ -181,6 +181,10 @@ public class SearchServlet extends ForwardingServlet {
 
     private String recallFromCookie(HttpServletRequest request, String fieldname) {
         Cookie [] cookies = request.getCookies();
+
+        if (cookies == null)
+            return StringUtils.EMPTY;
+
         for (Cookie cookie: cookies) {
             if (fieldname.equals(cookie.getName()))
                 return cookie.getValue();
