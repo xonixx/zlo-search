@@ -12,4 +12,21 @@
 <c:out value="${'Без темы' == 'Без темы'}" />
 
 <c:set var="a" value="${'Без темы'}" />
-<c:out value="${a}   ${a == 'Без темы'}   ${a != 'Без темы'}" /> 
+<c:out value="${a}   ${a == 'Без темы'}   ${a != 'Без темы'}" />
+
+<%!
+enum Enum {
+    ONE, TWO
+}
+%>
+
+<c:set var="a" value="<%= Enum.ONE %>"/>
+<c:if test="<%= pageContext.getAttribute("a") == Enum.ONE %>">
+    ONE
+</c:if>
+
+<c:set var="b" value="<%= Enum.TWO %>" />
+
+<c:if test="${not (a == b)}">
+    NOT EQUAL    
+</c:if>
