@@ -145,7 +145,13 @@ public class SearchServlet extends ForwardingServlet {
             }
             zloPaginatedList.setObjectsPerPage(pageSize);
             if (StringUtils.isNotEmpty(request.getParameter(QS_PAGE_NUMBER))) {
-                zloPaginatedList.setPageNumber(Integer.parseInt(request.getParameter(QS_PAGE_NUMBER)));
+                try {
+                    int pageNumber = Integer.parseInt(request.getParameter(QS_PAGE_NUMBER));
+                    pageNumber = pageNumber <= 0 ? 1 : pageNumber;
+                    zloPaginatedList.setPageNumber(pageNumber);
+                } catch (NumberFormatException e) {
+                    zloPaginatedList.setPageNumber(1);
+                }
             }
         } else if (StringUtils.isNotEmpty(request.getParameter(QS_SUBMIT))) {
             request.setAttribute(ERROR, ErrorMessages.MustSelectCriterion);
@@ -157,7 +163,14 @@ public class SearchServlet extends ForwardingServlet {
 
         String siteInCookie;
         if (StringUtils.isNotEmpty(request.getParameter(QS_SITE))){
-            session.setAttribute(SESS_SITE_ROOT, Config.SITES[Integer.parseInt(request.getParameter(QS_SITE))]);
+            String site;
+            try {
+                site = Config.SITES[Integer.parseInt(request.getParameter(QS_SITE))];
+            } catch (Exception e) {
+                site = Config.SITES[0];
+                request.setParameter(QS_SITE, "0");
+            }
+            session.setAttribute(SESS_SITE_ROOT, site);
             rememberInCookie(response, QS_SITE, request.getParameter(QS_SITE));
         } else if (StringUtils.isNotEmpty(siteInCookie = recallFromCookie(request, QS_SITE))){
             request.setParameter(QS_SITE, siteInCookie); // for drop-down
@@ -189,6 +202,6 @@ public class SearchServlet extends ForwardingServlet {
             if (fieldname.equals(cookie.getName()))
                 return cookie.getValue();
         }
-        return null;
+        return StringUtils.EMPTY;
     }
 }
