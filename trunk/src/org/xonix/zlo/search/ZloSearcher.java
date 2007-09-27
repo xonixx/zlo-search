@@ -5,10 +5,7 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.search.Hits;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.*;
 import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.config.Config;
 
@@ -91,7 +88,7 @@ public class ZloSearcher {
             result.setQueryParser(parser);
             result.setQuery(query);
 
-            Hits hits = searcher.search(query, new Sort(ZloMessage.DATE, false));
+            Hits hits = searcher.search(query, new Sort(new SortField(ZloMessage.DATE, SortField.STRING, true)));
             result.setHits(hits);
         } catch (IOException e) {
             e.printStackTrace();
