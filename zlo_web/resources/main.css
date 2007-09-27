@@ -33,7 +33,7 @@ big {
 }
 
 #body {
-    padding: 0 5px;
+    padding: 0 25px;
 }
 
 .nick {
@@ -50,3 +50,13 @@ big {
     color: green;
     font-size: small;
 }
+
+.quote {
+    background-color: #E9E9E9;
+    border: 1px solid #CCCCCC;
+}
+
+.inquote {
+    color: #E9E9E9;
+}
+
