@@ -29,7 +29,7 @@ public class DAO {
     }
 
     public static class Site implements IndexingSource {
-        public static Site SOURCE = new Site();
+        private static Site SOURCE = new Site();
         private Site() {} // not to create
 
         public ZloMessage getMessageByNumber(int num) throws Exception {
@@ -128,19 +128,31 @@ public class DAO {
             return getMessages(from, to, Config.THREADS_NUMBER);
         }
 
-        public static int getLastRootMessageNumber() throws Exception {
+        public int getLastMessageNumber() throws Exception {
             try {
                 return PageRetriever.getLastRootMessageNumber();
             } catch (IOException e) {
                 throw new Exception(e);
             }
         }
+        
+        public static ZloMessage _getMessageByNumber(int num) throws Exception {
+            return SOURCE.getMessageByNumber(num);
+        }
+
+        public static List<ZloMessage> _getMessages(int start, int end) throws Exception {
+            return SOURCE.getMessages(start, end);
+        }
+
+        public static int _getLastMessageNumber() throws Exception {
+            return SOURCE.getLastMessageNumber();
+        }
     }
 
     public static class DB implements IndexingSource {
-        public static DB SOURCE = new DB();
+        private static DB SOURCE = new DB();
 
-        private DB(){}
+        private DB() {}
 
         public static void saveMessages(List<ZloMessage> listZloMessages) throws Exception {
             try {
@@ -166,9 +178,24 @@ public class DAO {
             }
         }
 
-        public static int getLastRootMessageNumber() throws DBException {
-           return DBManager.getLastRootMessageNumber();
+        public int getLastMessageNumber() throws Exception {
+            try {
+                return DBManager.getLastRootMessageNumber();
+            } catch (DBException e) {
+                throw new Exception(e);
+            }
         }
 
+        public static ZloMessage _getMessageByNumber(int num) throws Exception {
+            return SOURCE.getMessageByNumber(num); 
+        }
+
+        public static List<ZloMessage> _getMessages(int start, int end) throws Exception {
+            return SOURCE.getMessages(start, end);
+        }
+
+        public static int _getLastMessageNumber() throws Exception {
+            return SOURCE.getLastMessageNumber();
+        }
     }
 }
