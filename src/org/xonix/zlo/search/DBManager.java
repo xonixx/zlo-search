@@ -39,7 +39,7 @@ public class DBManager {
     private static String deletePreparedStatement = "DELETE FROM messages WHERE num=?";
     private static String selectMessageById = "SELECT * FROM messages WHERE num=?";
     private static String selectMessagesInRange = "SELECT * FROM messages WHERE num>? AND num<?";
-
+    private static String selectLastMessagePreparedStatement = "SELECT MAX(num) FROM messages";
     private static void fillPreparedStatement(PreparedStatement pstmt, ZloMessage zloMessage) throws DBException {
         try {
             if (zloMessage != null) {
@@ -135,4 +135,18 @@ public class DBManager {
             throw new DBException(e);
         }
     }
+
+    public static int getLastRootMessageNumber() throws DBException {
+           try {
+               PreparedStatement st = Config.DB_CONNECTION.prepareStatement(selectLastMessagePreparedStatement);
+               ResultSet rs = st.executeQuery();
+               if (rs.next()) {
+                   return rs.getInt(1);
+               }
+           } catch (SQLException e) {
+               throw new DBException(e);
+           }
+           return -1;
+    }
+
 }

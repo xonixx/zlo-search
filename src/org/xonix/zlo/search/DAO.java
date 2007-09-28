@@ -166,5 +166,9 @@ public class DAO {
             }
         }
 
+        public static int getLastRootMessageNumber() throws DBException {
+           return DBManager.getLastRootMessageNumber();
+        }
+
     }
 }
