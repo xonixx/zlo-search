@@ -13,4 +13,5 @@ public interface IndexingSource {
 
     public ZloMessage getMessageByNumber(int num) throws DAO.Exception;
     public List<ZloMessage> getMessages(int from, int to) throws DAO.Exception;
+    public int getLastMessageNumber() throws DAO.Exception;
 }

@@ -1,15 +1,12 @@
 package org.xonix.zlo.search.test.storage;
 
-import org.xonix.zlo.search.config.Config;
-import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.DAO;
 import org.xonix.zlo.search.IndexingSource;
+import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.model.ZloMessage;
 
 import java.io.*;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Author: gubarkov
@@ -60,7 +57,7 @@ public class ZloStorage implements Serializable, IndexingSource {
     private void retrieveAndSerialize() {
         System.out.println("Retrieving...");
         try {
-            for (ZloMessage m : DAO.Site.SOURCE.getMessages(FROM, TO)) {
+            for (ZloMessage m : DAO.Site._getMessages(FROM, TO)) {
                 if (m != null)
                     storedMsgs.put(m.getNum(), m);
             }
@@ -103,4 +100,10 @@ public class ZloStorage implements Serializable, IndexingSource {
         }
         return msgs;
     }
+
+    public int getLastMessageNumber() throws DAO.Exception {
+        return Collections.max(storedMsgs.keySet());
+    }
+
+    static final long serialVersionUID = 5171735320533619859L; // for deserialization
 }

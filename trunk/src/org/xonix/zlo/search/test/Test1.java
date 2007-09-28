@@ -28,8 +28,16 @@ import java.io.IOException;
  */
 public class Test1 {
     public static void main(String[] args) {
-        m9();
+        m10();
         System.exit(0);
+    }
+
+    public static void m10() {
+        try {
+            System.out.println(new ZloStorage().getLastMessageNumber());
+        } catch (DAO.Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void m1(){
@@ -64,7 +72,7 @@ public class Test1 {
     public static void m5() {
         for (int i=0; i<10; i++){
             try {
-                System.out.println(">"+ DAO.Site.getLastRootMessageNumber());
+                System.out.println(">"+ DAO.Site._getLastMessageNumber());
             } catch (DAO.Exception e) {
                 e.printStackTrace();
             }
@@ -101,7 +109,7 @@ public class Test1 {
 
     public static void m7() {
         try {
-            for (ZloMessage m : DAO.Site.SOURCE.getMessages(10, 110)) {
+            for (ZloMessage m : DAO.Site._getMessages(10, 110)) {
                 System.out.println(m);
             }
         } catch (DAO.Exception e) {
@@ -111,7 +119,7 @@ public class Test1 {
 
     public static void m8() {
         try {
-            System.out.println(DAO.Site.SOURCE.getMessageByNumber(3960198));
+            System.out.println(DAO.Site._getMessageByNumber(3960198));
         } catch (DAO.Exception e) {
             e.printStackTrace();
         }
@@ -164,13 +172,13 @@ public class Test1 {
 
     public static void m9() {
         try {
-            List<ZloMessage> l = DAO.Site.SOURCE.getMessages(3999995, 3999999);
+            List<ZloMessage> l = DAO.Site._getMessages(3999995, 3999999);
 //            Collections.
             for (ZloMessage m : l) {
                 System.out.println(m);
             }
             System.out.println("#############################################");
-            List<ZloMessage> l1 = DAO.Site.SOURCE.getMessages(4000000, 4000005);
+            List<ZloMessage> l1 = DAO.Site._getMessages(4000000, 4000005);
             for (ZloMessage m : l1) {
                 System.out.println(m);
             }

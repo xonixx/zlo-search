@@ -20,21 +20,21 @@ public class Crawler {
         int start;
         int end;
         while (true){
-            start = DAO.DB.getLastRootMessageNumber();
-            end = DAO.Site.getLastRootMessageNumber();
+            start = DAO.DB._getLastMessageNumber();
+            end = DAO.Site._getLastMessageNumber();
             if ( (start + numOfContinuousScan) < end ){
                 end = start + numOfContinuousScan;
             }
             if (start != end ){
-                DAO.DB.saveMessages(DAO.Site.SOURCE.getMessages(start, end));
+                DAO.DB.saveMessages(DAO.Site._getMessages(start, end));
             }
             Thread.sleep(1000 * numOfWaitSeconds);
         }
     }
 
     public static void main(String[] args) throws DAO.Exception, IOException, InterruptedException, DBException {
-        DAO.DB.saveMessages(DAO.Site.SOURCE.getMessages(3999990, 3999999));
-        DAO.DB.saveMessages(DAO.Site.SOURCE.getMessages(4000000, 4000004));
+        DAO.DB.saveMessages(DAO.Site._getMessages(3999990, 3999999));
+        DAO.DB.saveMessages(DAO.Site._getMessages(4000000, 4000004));
         Crawler.processInBackground();
     }
 }
