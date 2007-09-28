@@ -33,7 +33,7 @@ public class DAO {
         private Site() {} // not to create
 
         public ZloMessage getMessageByNumber(int num) throws Exception {
-            logger.info("Reseiving from site: " + num);
+            logger.info("Receiving from site: " + num);
             try {
                 return PageParser.parseMessage(PageRetriever.getPageContentByNumber(num), num);
             } catch (IOException e) {
@@ -50,9 +50,8 @@ public class DAO {
 
             private List<ZloMessage> msgs;
 
-
             public MessageRetriever(int from, int to, List<ZloMessage> msgs) {
-                super("MessageRetriever #" + threadNum++);
+                super("MessageRetriever #" + threadNum);
                 if (MessageRetriever.from == -1)
                     MessageRetriever.from = from;
                 if (MessageRetriever.to == -1)
@@ -60,7 +59,8 @@ public class DAO {
                 if (currentNum == -1)
                     currentNum = from;
                 this.msgs = msgs;
-                logger.info("Born " + currentNum);
+                logger.info("Born #" + threadNum);
+                threadNum++;
             }
 
             private static boolean hasMoreToDownload() {
@@ -73,15 +73,24 @@ public class DAO {
 
             public void run() {
 //                System.out.println("Run " + currentNum + ", " + from + ", " + to);
-                while (hasMoreToDownload()) {
-                    try {
-                        logger.info("Downloading " + currentNum);
-                        msgs.add(SOURCE.getMessageByNumber(getNextNum()));
-                    } catch (Exception e) {
-                        e.printStackTrace(); // todo: need to decide what to do here
+                try {
+                    while (hasMoreToDownload()) {
+                        try {
+                            logger.info("Downloading " + currentNum);
+                            msgs.add(SOURCE.getMessageByNumber(getNextNum()));
+                        } catch (Exception e) {
+                            e.printStackTrace(); // todo: need to decide what to do here
+                        }
+                    }
+                } finally {
+                    logger.info(getName()+" finished.");
+                    threadNum--;
+
+                    if (threadNum == 0) {
+                        // no more to download - making MessageRetriever ready for next requests
+                        from = to = currentNum = -1;
                     }
                 }
-                logger.info(getName()+" finished.");
             }
         }
 

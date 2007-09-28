@@ -4,6 +4,7 @@ import org.apache.lucene.analysis.SimpleAnalyzer;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Query;
+import org.apache.commons.collections.CollectionUtils;
 import org.xonix.zlo.search.ZloSearcher;
 import org.xonix.zlo.search.DAO;
 import org.xonix.zlo.search.PageParser;
@@ -13,6 +14,8 @@ import org.xonix.zlo.search.model.ZloMessage;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Collections;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
@@ -25,7 +28,7 @@ import java.io.IOException;
  */
 public class Test1 {
     public static void main(String[] args) {
-        m8();
+        m9();
         System.exit(0);
     }
 
@@ -157,5 +160,22 @@ public class Test1 {
         } catch (DAO.Exception e) {
             e.printStackTrace();
         }*/
+    }
+
+    public static void m9() {
+        try {
+            List<ZloMessage> l = DAO.Site.SOURCE.getMessages(3999995, 3999999);
+//            Collections.
+            for (ZloMessage m : l) {
+                System.out.println(m);
+            }
+            System.out.println("#############################################");
+            List<ZloMessage> l1 = DAO.Site.SOURCE.getMessages(4000000, 4000005);
+            for (ZloMessage m : l1) {
+                System.out.println(m);
+            }
+        } catch (DAO.Exception e) {
+            e.printStackTrace();
+        }
     }
 }
