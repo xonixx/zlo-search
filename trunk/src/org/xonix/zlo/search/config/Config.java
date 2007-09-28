@@ -75,4 +75,7 @@ public class Config {
         }
         DB_CONNECTION = _a;
     }
+
+    public static final int NUM_OF_CONTINIOUSSCAN = Integer.parseInt(getProp("crawler.max_num_to_scan"));
+    public static final int NUM_OF_WAIT_SECONDS = Integer.parseInt(getProp("crawler.wait_seconds"));
 }
