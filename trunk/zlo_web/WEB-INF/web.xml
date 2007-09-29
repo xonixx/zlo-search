@@ -51,9 +51,4 @@
         <url-pattern>/test2</url-pattern>
     </servlet-mapping>
 
-    <context-param>
-        <description>Whether to display debug info or not.</description>
-        <param-name>debug</param-name>
-        <param-value>true</param-value>
-    </context-param>
 </web-app>

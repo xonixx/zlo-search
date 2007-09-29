@@ -28,6 +28,7 @@ import java.util.GregorianCalendar;
  * Time: 20:31:41
  */
 public class SearchServlet extends ForwardingServlet {
+    public static final String ON = "on";
     // query string params
     public static final String QS_TOPIC = ZloMessage.TOPIC;
     public static final String QS_BODY = ZloMessage.BODY;
@@ -40,6 +41,10 @@ public class SearchServlet extends ForwardingServlet {
     public static final String QS_TO_DATE = "td";
     public static final String QS_PAGE_SIZE = "pageSize";
     public static final String QS_PAGE_NUMBER = "page";
+
+    public static final String QS_IN_TITLE = "inTitle";
+    public static final String QS_IN_BODY = "inBody";
+
     public static final String QS_SUBMIT = "submit";
 
     // session keys
@@ -48,6 +53,7 @@ public class SearchServlet extends ForwardingServlet {
     public static final String SESS_PAGE_SIZE = QS_PAGE_SIZE;
 
     public static final String ERROR = "error";
+    public static final String DEBUG = "debug";
 
     public static final String JSP_SEARCH = "/Search.jsp";
 
@@ -64,6 +70,18 @@ public class SearchServlet extends ForwardingServlet {
         String pageSizeStrInd = request.getParameter(QS_PAGE_SIZE);
 
         HttpSession session = request.getSession(true); // create if session not started
+
+        // set default topic code
+        if (StringUtils.isEmpty(topicCode)) {
+            request.setParameter(QS_TOPIC, "0");
+        }
+
+        // default values for checkboxes
+        if (StringUtils.isEmpty(request.getParameter(QS_SUBMIT))) { // initial load
+            // by default search both in title & body
+            request.setParameter(QS_IN_TITLE, ON);
+            request.setParameter(QS_IN_BODY, ON);
+        }
 
         int pageSize = 100; // default
         if (StringUtils.isNotEmpty(pageSizeStrInd)) {
@@ -159,7 +177,7 @@ public class SearchServlet extends ForwardingServlet {
             session.setAttribute(SESS_SEARCH_RESULT, null);
         }
 
-        request.setAttribute("debug", "true".equalsIgnoreCase(getServletContext().getInitParameter("debug")));
+        request.setAttribute(DEBUG, Config.DEBUG);
 
         String siteInCookie;
         if (StringUtils.isNotEmpty(request.getParameter(QS_SITE))){
