@@ -39,6 +39,8 @@ public class Config {
     public static final int THREADS_NUMBER = Integer.parseInt(getProp("threads"));
     public static final String TRUE = "true";
 
+    public static final boolean DEBUG = TRUE.equals(getProp("debug"));
+
     public static final Analyzer ANALYZER;
     static {
         Analyzer _a = null;
