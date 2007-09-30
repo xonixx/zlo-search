@@ -29,8 +29,9 @@ public class ZloSearchResult implements Iterable {
 
     // search is performed for these criteria:
     private String topicCode;
-    private String title;
     private String text;
+    private boolean inTitle;
+    private boolean inBody;
     private String nick;
     private String host;
     private Date fromDate;
@@ -111,20 +112,28 @@ public class ZloSearchResult implements Iterable {
         this.topicCode = topicCode;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getText() {
         return text;
     }
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public boolean isInTitle() {
+        return inTitle;
+    }
+
+    public void setInTitle(boolean inTitle) {
+        this.inTitle = inTitle;
+    }
+
+    public boolean isInBody() {
+        return inBody;
+    }
+
+    public void setInBody(boolean inBody) {
+        this.inBody = inBody;
     }
 
     public String getNick() {
@@ -160,7 +169,7 @@ public class ZloSearchResult implements Iterable {
     }
 
     public boolean isTheSameSearch(SearchRequest searchRequest) {
-        return searchRequest.isTheSameSearch(topicCode, text, nick, host, fromDate, toDate);
+        return searchRequest.isTheSameSearch(topicCode, text, inTitle, inBody, nick, host, fromDate, toDate);
     }
 
     public boolean isNotTheSameSearch(SearchRequest searchRequest) {

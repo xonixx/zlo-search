@@ -1,6 +1,7 @@
 package org.xonix.zlo.web.servlets;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.lucene.search.BooleanQuery;
 import org.xonix.zlo.search.SearchRequest;
 import org.xonix.zlo.search.ZloSearchResult;
 import org.xonix.zlo.search.config.Config;
@@ -61,6 +62,10 @@ public class SearchServlet extends ForwardingServlet {
     protected void doGet(ForwardingRequest request, HttpServletResponse response) throws ServletException, IOException {
         String topicCode = request.getParameter(QS_TOPIC);
         String text = request.getParameter(QS_TEXT);
+
+        boolean inTitle = StringUtils.isNotEmpty(request.getParameter(QS_IN_TITLE));
+        boolean inBody = StringUtils.isNotEmpty(request.getParameter(QS_IN_BODY));
+
         String nick = request.getParameter(QS_NICK);
         String host = request.getParameter(QS_HOST);
         String fromDateStr = request.getParameter(QS_FROM_DATE);
@@ -140,7 +145,7 @@ public class SearchServlet extends ForwardingServlet {
         session.setAttribute(QS_TO_DATE, FROM_TO_DATE_FORMAT.format(toDate));
         session.setAttribute(QS_FROM_DATE, FROM_TO_DATE_FORMAT.format(fromDate));
 
-        SearchRequest searchRequest = new SearchRequest(text, nick, host, topicCode, fromDate, toDate);
+        SearchRequest searchRequest = new SearchRequest(text, inTitle, inBody, nick, host, topicCode, fromDate, toDate);
 
         if (searchRequest.canBeProcessed()) {
 
@@ -149,25 +154,31 @@ public class SearchServlet extends ForwardingServlet {
                 searchRequest.setToDate(null);
             }
 
-            ZloSearchResult zloSearchResult;
+            ZloSearchResult zloSearchResult = null;
 
             if (session.getAttribute(SESS_SEARCH_RESULT) == null ||
                     ((ZloSearchResult) session.getAttribute(SESS_SEARCH_RESULT)).isNotTheSameSearch(searchRequest)) {
-                zloSearchResult = searchRequest.performSearch();
+                try {
+                    zloSearchResult = searchRequest.performSearch();
+                } catch (BooleanQuery.TooManyClauses e) { // например как в поиске текста +с*
+                    request.setAttribute(ERROR, ErrorMessages.TooComplexSearch);
+                }
                 session.setAttribute(SESS_SEARCH_RESULT, zloSearchResult);
             } else {
                 zloSearchResult = (ZloSearchResult) session.getAttribute(SESS_SEARCH_RESULT);
                 zloSearchResult.setNewSearch(false); // means we use result of previous search
             }
-            ZloPaginatedList zloPaginatedList = (ZloPaginatedList) zloSearchResult.getPaginatedList();
-            zloPaginatedList.setObjectsPerPage(pageSize);
-            if (StringUtils.isNotEmpty(request.getParameter(QS_PAGE_NUMBER))) {
-                try {
-                    int pageNumber = Integer.parseInt(request.getParameter(QS_PAGE_NUMBER));
-                    pageNumber = pageNumber <= 0 ? 1 : pageNumber;
-                    zloPaginatedList.setPageNumber(pageNumber);
-                } catch (NumberFormatException e) {
-                    zloPaginatedList.setPageNumber(1);
+            if (zloSearchResult != null) {
+                ZloPaginatedList zloPaginatedList = (ZloPaginatedList) zloSearchResult.getPaginatedList();
+                zloPaginatedList.setObjectsPerPage(pageSize);
+                if (StringUtils.isNotEmpty(request.getParameter(QS_PAGE_NUMBER))) {
+                    try {
+                        int pageNumber = Integer.parseInt(request.getParameter(QS_PAGE_NUMBER));
+                        pageNumber = pageNumber <= 0 ? 1 : pageNumber;
+                        zloPaginatedList.setPageNumber(pageNumber);
+                    } catch (NumberFormatException e) {
+                        zloPaginatedList.setPageNumber(1);
+                    }
                 }
             }
         } else if (StringUtils.isNotEmpty(request.getParameter(QS_SUBMIT))) {
