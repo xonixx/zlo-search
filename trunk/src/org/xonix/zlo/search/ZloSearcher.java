@@ -29,21 +29,32 @@ public class ZloSearcher {
 
     public static ZloSearchResult search(String topicCode,
                                          String text,
+                                         boolean inTitle,
+                                         boolean inBody,
                                          String nick,
                                          String host,
                                          Date fromDate,
                                          Date toDate) {
         StringBuilder queryStr = new StringBuilder();
 
-        if (StringUtils.isNotEmpty(text))
-            queryStr.append("+body:(").append(text).append(")");
+        if (StringUtils.isNotEmpty(text)) {
+            if (inTitle && !inBody)
+                queryStr.append(" +title:(").append(text).append(")");
+
+            else if (!inTitle && inBody)
+                queryStr.append(" +body:(").append(text).append(")");
+
+            else if (inTitle && inBody)
+                queryStr.append(" +(body:(").append(text).append(") OR (title:(").append(text).append(")))");
+
+            else // !inTitle && !inBody
+                queryStr.append(" +title:(").append(text).append(")")
+                        .append(" +body:(").append(text).append(")");
+        }
 
         if (StringUtils.isNotEmpty(topicCode) && !"0".equals(topicCode)) {
             queryStr.append(" +topic:").append(topicCode);
         }
-
-/*        if (StringUtils.isNotEmpty(title))
-            queryStr.append(" +title:(").append(title).append(")");*/
 
         if (StringUtils.isNotEmpty(nick))
             queryStr.append(" +nick:\"").append(nick).append("\"");
@@ -61,6 +72,8 @@ public class ZloSearcher {
         return search(
                 searchRequest.getTopicCode(),
                 searchRequest.getText(),
+                searchRequest.isInTitle(),
+                searchRequest.isInBody(),
                 searchRequest.getNick(),
                 searchRequest.getHost(),
                 searchRequest.getFromDate(),
@@ -70,9 +83,11 @@ public class ZloSearcher {
 
     public static ZloSearchResult search(String topicCode,
                                          String text,
+                                         boolean inTitle,
+                                         boolean inBody,
                                          String nick,
                                          String host) {
-        return search(topicCode, text, nick, host, null, null);
+        return search(topicCode, text, inTitle, inBody, nick, host, null, null);
     }
 
     private ZloSearchResult search0(String queryStr) {

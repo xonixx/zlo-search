@@ -11,7 +11,10 @@ public enum ErrorMessages {
     MustSelectCriterion("error.must.select.criterion"),
 
     NumParameterInvalid("error.num.param.invalid"),
-    MessageNotFound("error.msg.not.found");
+    MessageNotFound("error.msg.not.found"),
+    TooComplexSearch("error.too.complex.search"),
+    
+    ;
 
     private String val;
 
