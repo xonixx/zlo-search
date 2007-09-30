@@ -26,7 +26,7 @@
                     <td width="33%"></td>
                     <td>
                         <form action="search" method="get">
-                            <%= HtmlStrings.LABEL_TEXT %> <input type="text" name="body" <c:if test="${not empty param['body']}">value="<c:out value="${param['body']}" />" </c:if>style="width:450px;" />
+                            <%= HtmlStrings.LABEL_TEXT %> <input type="text" name="text" <c:if test="${not empty param['text']}">value="<c:out value="${param['text']}" />" </c:if>style="width:450px;" />
                             <%= HtmlStrings.LABEL_TOPIC %> <jsp:getProperty name="backendBean" property="topicSelector" />
                             <br/>
                             <%= HtmlStrings.LABLE_SEARCH %>

@@ -1,13 +1,11 @@
 package org.xonix.zlo.search;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Hit;
 import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
-import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.model.ZloMessageAccessor;
 import org.xonix.zlo.search.model.ZloMessageLazy;
 import org.xonix.zlo.web.ZloPaginatedList;
@@ -32,7 +30,7 @@ public class ZloSearchResult implements Iterable {
     // search is performed for these criteria:
     private String topicCode;
     private String title;
-    private String body;
+    private String text;
     private String nick;
     private String host;
     private Date fromDate;
@@ -121,12 +119,12 @@ public class ZloSearchResult implements Iterable {
         this.title = title;
     }
 
-    public String getBody() {
-        return body;
+    public String getText() {
+        return text;
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public String getNick() {
@@ -162,7 +160,7 @@ public class ZloSearchResult implements Iterable {
     }
 
     public boolean isTheSameSearch(SearchRequest searchRequest) {
-        return searchRequest.isTheSameSearch(topicCode, title, body, nick, host, fromDate, toDate);
+        return searchRequest.isTheSameSearch(topicCode, text, nick, host, fromDate, toDate);
     }
 
     public boolean isNotTheSameSearch(SearchRequest searchRequest) {

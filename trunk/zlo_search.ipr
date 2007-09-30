@@ -91,6 +91,63 @@
       </profile>
     </profiles>
   </component>
+  <component name="IntelliJadProjectConfigComponent">
+    <config>
+      <nolvt type="boolean">false</nolvt>
+      <lnc type="boolean">false</lnc>
+      <space type="boolean">false</space>
+      <safe type="boolean">false</safe>
+      <pm type="string">_mth</pm>
+      <b type="boolean">false</b>
+      <indentation type="integer">4</indentation>
+      <pp type="string">_prm</pp>
+      <pl type="string">_lcl</pl>
+      <pf type="string">_fld</pf>
+      <r type="boolean">false</r>
+      <l type="integer">64</l>
+      <nodos type="boolean">false</nodos>
+      <pc type="string">_cls</pc>
+      <clear-and-close-console-on-success type="boolean">true</clear-and-close-console-on-success>
+      <decompile-to-memory type="boolean">true</decompile-to-memory>
+      <decompile-on-navigation type="string">Always</decompile-on-navigation>
+      <nl type="boolean">false</nl>
+      <noconv type="boolean">false</noconv>
+      <v type="boolean">false</v>
+      <always-exclude-recursively type="boolean">false</always-exclude-recursively>
+      <af type="boolean">false</af>
+      <noinner type="boolean">false</noinner>
+      <jad-path type="string">D:\TEST\JAVA\jad\jadnt158\jad.exe</jad-path>
+      <read-only type="boolean">false</read-only>
+      <nofd type="boolean">false</nofd>
+      <noctor type="boolean">false</noctor>
+      <reformat-according-to-style type="boolean">true</reformat-according-to-style>
+      <use-project-specific-settings type="boolean">true</use-project-specific-settings>
+      <clear type="boolean">false</clear>
+      <pe type="string">_ex</pe>
+      <noclass type="boolean">false</noclass>
+      <nocast type="boolean">false</nocast>
+      <a type="boolean">false</a>
+      <lradix type="integer">10</lradix>
+      <radix type="integer">10</radix>
+      <t type="boolean">false</t>
+      <s type="string">java</s>
+      <nocode type="boolean">false</nocode>
+      <nonlb type="boolean">false</nonlb>
+      <o type="boolean">false</o>
+      <pv type="integer">3</pv>
+      <pa type="string" />
+      <d type="string" />
+      <create-output-directory type="boolean">false</create-output-directory>
+      <ff type="boolean">false</ff>
+      <dis type="boolean">false</dis>
+      <i type="boolean">false</i>
+      <exclusion-table-model type="table-model" model-class="net.stevechaloner.intellijad.config.ExclusionTableModel" content-types="string,boolean,boolean" />
+      <dead type="boolean">false</dead>
+      <f type="boolean">false</f>
+      <sort type="boolean" />
+      <stat type="boolean">false</stat>
+    </config>
+  </component>
   <component name="JavacSettings">
     <option name="DEBUGGING_INFO" value="true" />
     <option name="GENERATE_NO_WARNINGS" value="false" />
@@ -314,7 +371,9 @@
         <root url="jar://D:/TEST/JAVA/ZloSearcher/lib/standard.jar!/" />
       </CLASSES>
       <JAVADOC />
-      <SOURCES />
+      <SOURCES>
+        <root url="intellijad://intellijad" />
+      </SOURCES>
     </library>
     <library name="commons-collections-3.2">
       <CLASSES>
