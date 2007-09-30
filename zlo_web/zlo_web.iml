@@ -17,7 +17,9 @@
           <root url="jar://$APPLICATION_HOME_DIR$/lib/j2ee.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="intellija$MODULE_DIR$/../../../../..//intellijad" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="zlo_search" />

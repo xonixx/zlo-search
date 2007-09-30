@@ -31,8 +31,7 @@ public class SearchServlet extends ForwardingServlet {
     public static final String ON = "on";
     // query string params
     public static final String QS_TOPIC = ZloMessage.TOPIC;
-    public static final String QS_BODY = ZloMessage.BODY;
-    public static final String QS_TITLE = ZloMessage.TITLE;
+    public static final String QS_TEXT = "text";
     public static final String QS_NICK = ZloMessage.NICK;
     public static final String QS_HOST = ZloMessage.HOST;
     public static final String QS_SITE = "site";
@@ -61,8 +60,7 @@ public class SearchServlet extends ForwardingServlet {
 
     protected void doGet(ForwardingRequest request, HttpServletResponse response) throws ServletException, IOException {
         String topicCode = request.getParameter(QS_TOPIC);
-        String title = request.getParameter(QS_TITLE);
-        String body = request.getParameter(QS_BODY);
+        String text = request.getParameter(QS_TEXT);
         String nick = request.getParameter(QS_NICK);
         String host = request.getParameter(QS_HOST);
         String fromDateStr = request.getParameter(QS_FROM_DATE);
@@ -142,7 +140,7 @@ public class SearchServlet extends ForwardingServlet {
         session.setAttribute(QS_TO_DATE, FROM_TO_DATE_FORMAT.format(toDate));
         session.setAttribute(QS_FROM_DATE, FROM_TO_DATE_FORMAT.format(fromDate));
 
-        SearchRequest searchRequest = new SearchRequest(title, body, nick, host, topicCode, fromDate, toDate);
+        SearchRequest searchRequest = new SearchRequest(text, nick, host, topicCode, fromDate, toDate);
 
         if (searchRequest.canBeProcessed()) {
 

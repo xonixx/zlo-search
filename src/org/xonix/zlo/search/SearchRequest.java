@@ -10,8 +10,8 @@ import java.util.Date;
  * Time: 3:08:16
  */
 public class SearchRequest {
-    private String title;
-    private String body;
+
+    private String text;
     private String nick;
     private String host;
     private String topicCode;
@@ -22,9 +22,8 @@ public class SearchRequest {
     public SearchRequest() {
     }
 
-    public SearchRequest(String title, String body, String nick, String host, String topicCode, Date fromDate, Date toDate) {
-        this.title = title;
-        this.body = body;
+    public SearchRequest(String text, String nick, String host, String topicCode, Date fromDate, Date toDate) {
+        this.text = text;
         this.nick = nick;
         this.host = host;
         this.topicCode = topicCode;
@@ -32,20 +31,12 @@ public class SearchRequest {
         this.toDate = toDate;
     }
 
-    public String getTitle() {
-        return title;
+    public String getText() {
+        return text;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public String getNick() {
@@ -89,23 +80,20 @@ public class SearchRequest {
     }
 
     public boolean canBeProcessed() {
-        return StringUtils.isNotEmpty(title) ||
-                StringUtils.isNotEmpty(body) ||
+        return StringUtils.isNotEmpty(text) ||
                 StringUtils.isNotEmpty(nick) ||
                 StringUtils.isNotEmpty(host) ||
                 StringUtils.isNotEmpty(topicCode) && !"0".equals(topicCode);
     }
 
     public boolean isTheSameSearch(String topicCode,
-                                     String title,
-                                     String body,
+                                     String text,
                                      String nick,
                                      String host,
                                      Date fromDate,
                                      Date toDate) {
         return StringUtils.equals(this.topicCode, topicCode) &&
-                StringUtils.equals(this.title, title) &&
-                StringUtils.equals(this.body, body) &&
+                StringUtils.equals(this.text, text) &&
                 StringUtils.equals(this.nick, nick) &&
                 StringUtils.equals(this.host, host) &&
                 (this.fromDate == fromDate || this.fromDate != null && this.fromDate.equals(fromDate)) &&
@@ -113,16 +101,24 @@ public class SearchRequest {
     }
 
     public boolean isNotTheSameSearch(String topicCode,
-                                     String title,
-                                     String body,
+                                     String text,
                                      String nick,
                                      String host,
                                      Date fromDate,
                                      Date toDate) {
-        return !isTheSameSearch(topicCode, title, body, nick, host, fromDate, toDate);
+        return !isTheSameSearch(topicCode, text, nick, host, fromDate, toDate);
     }
 
     public ZloSearchResult performSearch() {
-        return ZloSearcher.search(this);
+        ZloSearchResult result = ZloSearcher.search(this);
+
+        result.setTopicCode(topicCode);
+        result.setText(text);
+        result.setNick(nick);
+        result.setHost(host);
+        result.setFromDate(fromDate);
+        result.setToDate(toDate);
+
+        return result;
     }
 }
