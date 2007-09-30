@@ -1,25 +1,25 @@
 package org.xonix.zlo.web.servlets;
 
 import org.apache.commons.lang.StringUtils;
-import org.xonix.zlo.search.ZloSearcher;
+import org.xonix.zlo.search.SearchRequest;
+import org.xonix.zlo.search.ZloSearchResult;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.config.ErrorMessages;
-import org.xonix.zlo.search.ZloSearchResult;
 import org.xonix.zlo.search.model.ZloMessage;
+import org.xonix.zlo.web.ZloPaginatedList;
 import org.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 import org.xonix.zlo.web.servlets.helpful.ForwardingServlet;
-import org.xonix.zlo.web.ZloPaginatedList;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.text.ParseException;
-import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -142,25 +142,26 @@ public class SearchServlet extends ForwardingServlet {
         session.setAttribute(QS_TO_DATE, FROM_TO_DATE_FORMAT.format(toDate));
         session.setAttribute(QS_FROM_DATE, FROM_TO_DATE_FORMAT.format(fromDate));
 
-        if (StringUtils.isNotEmpty(title) ||
-                StringUtils.isNotEmpty(body) ||
-                StringUtils.isNotEmpty(nick) ||
-                StringUtils.isNotEmpty(host) ||
-                StringUtils.isNotEmpty(topicCode) && !"0".equals(topicCode)) {
+        SearchRequest searchRequest = new SearchRequest(title, body, nick, host, topicCode, fromDate, toDate);
+
+        if (searchRequest.canBeProcessed()) {
 
             if (StringUtils.isEmpty(request.getParameter(QS_DATES))) {
-                fromDate = toDate = null;
+                searchRequest.setFromDate(null);
+                searchRequest.setToDate(null);
             }
 
-            ZloPaginatedList zloPaginatedList;
+            ZloSearchResult zloSearchResult;
+
             if (session.getAttribute(SESS_SEARCH_RESULT) == null ||
-                    ((ZloSearchResult) session.getAttribute(SESS_SEARCH_RESULT)).isNotTheSameSearch(topicCode, title, body, nick, host, fromDate, toDate)) {
-                ZloSearchResult zloSearchResult = ZloSearcher.search(topicCode, title, body, nick, host, fromDate, toDate);
+                    ((ZloSearchResult) session.getAttribute(SESS_SEARCH_RESULT)).isNotTheSameSearch(searchRequest)) {
+                zloSearchResult = searchRequest.performSearch();
                 session.setAttribute(SESS_SEARCH_RESULT, zloSearchResult);
-                zloPaginatedList = (ZloPaginatedList) zloSearchResult.getPaginatedList();
             } else {
-                zloPaginatedList = (ZloPaginatedList) ((ZloSearchResult) session.getAttribute(SESS_SEARCH_RESULT)).getPaginatedList();
+                zloSearchResult = (ZloSearchResult) session.getAttribute(SESS_SEARCH_RESULT);
+                zloSearchResult.setNewSearch(false); // means we use result of previous search
             }
+            ZloPaginatedList zloPaginatedList = (ZloPaginatedList) zloSearchResult.getPaginatedList();
             zloPaginatedList.setObjectsPerPage(pageSize);
             if (StringUtils.isNotEmpty(request.getParameter(QS_PAGE_NUMBER))) {
                 try {

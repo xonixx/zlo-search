@@ -26,9 +26,6 @@
                     <td width="33%"></td>
                     <td>
                         <form action="search" method="get">
-                            <%--<%= HtmlStrings.LABEL_TITLE %> <input type="text" name="title" <c:if test="${not empty param['title']}">value="<c:out value="${param['title']}" />" </c:if>style="width:450px;" />--%>
-                            <%--<%= HtmlStrings.LABEL_TOPIC %> <jsp:getProperty name="backendBean" property="topicSelector" />
-                            <br/>--%>
                             <%= HtmlStrings.LABEL_TEXT %> <input type="text" name="body" <c:if test="${not empty param['body']}">value="<c:out value="${param['body']}" />" </c:if>style="width:450px;" />
                             <%= HtmlStrings.LABEL_TOPIC %> <jsp:getProperty name="backendBean" property="topicSelector" />
                             <br/>
@@ -57,7 +54,8 @@
         <br/>
         <div id="debug">
             <pre>
-                Query: <c:out value="${sessionScope['searchResult'].query}" />
+                Query:          <c:out value="${sessionScope['searchResult'].query}" />
+                isNewSearch:    <c:out value="${sessionScope['searchResult'].newSearch}" />
             </pre>
         </div>
         <br/>
