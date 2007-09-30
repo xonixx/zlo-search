@@ -34,28 +34,28 @@ public class ZloSearcher {
                                          String host,
                                          Date fromDate,
                                          Date toDate) {
-        StringBuilder res = new StringBuilder();
+        StringBuilder queryStr = new StringBuilder();
 
         if (StringUtils.isNotEmpty(body))
-            res.append("+body:(").append(body).append(")");
+            queryStr.append("+body:(").append(body).append(")");
 
         if (StringUtils.isNotEmpty(topicCode) && !"0".equals(topicCode)) {
-            res.append(" +topic:").append(topicCode);
+            queryStr.append(" +topic:").append(topicCode);
         }
 
         if (StringUtils.isNotEmpty(title))
-            res.append(" +title:(").append(title).append(")");
+            queryStr.append(" +title:(").append(title).append(")");
 
         if (StringUtils.isNotEmpty(nick))
-            res.append(" +nick:\"").append(nick).append("\"");
+            queryStr.append(" +nick:\"").append(nick).append("\"");
 
         if (StringUtils.isNotEmpty(host))
-            res.append(" +host:").append(host);
+            queryStr.append(" +host:").append(host);
 
         if (fromDate != null && toDate != null)
-            res.append(" +date:[").append(QUERY_DATEFORMAT.format(fromDate)).append(" TO ").append(QUERY_DATEFORMAT.format(toDate)).append("]");
+            queryStr.append(" +date:[").append(QUERY_DATEFORMAT.format(fromDate)).append(" TO ").append(QUERY_DATEFORMAT.format(toDate)).append("]");
 
-        ZloSearchResult result = ZLO_SEARCHER_INSTANCE.search0(res.toString());
+        ZloSearchResult result = ZLO_SEARCHER_INSTANCE.search0(queryStr.toString());
         result.setTopicCode(topicCode);
         result.setTitle(title);
         result.setBody(body);
@@ -64,6 +64,18 @@ public class ZloSearcher {
         result.setFromDate(fromDate);
         result.setToDate(toDate);
         return result;
+    }
+
+    public static ZloSearchResult search(SearchRequest searchRequest) {
+        return search(
+                searchRequest.getTopicCode(),
+                searchRequest.getTitle(),
+                searchRequest.getBody(),
+                searchRequest.getNick(),
+                searchRequest.getHost(),
+                searchRequest.getFromDate(),
+                searchRequest.getToDate()
+        );
     }
 
     public static ZloSearchResult search(String topicCode,

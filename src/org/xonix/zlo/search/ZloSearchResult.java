@@ -40,6 +40,8 @@ public class ZloSearchResult implements Iterable {
 
     private PaginatedList paginatedList;
 
+    private boolean newSearch = true; // by default after created
+
     public ZloSearchResult() {
     }
 
@@ -159,35 +161,25 @@ public class ZloSearchResult implements Iterable {
         this.toDate = toDate;
     }
 
-    public boolean isTheSameSearch(String topicCode,
-                                     String title,
-                                     String body,
-                                     String nick,
-                                     String host,
-                                     Date fromDate,
-                                     Date toDate) {
-        return StringUtils.equals(this.topicCode, topicCode) &&
-                StringUtils.equals(this.title, title) &&
-                StringUtils.equals(this.body, body) &&
-                StringUtils.equals(this.nick, nick) &&
-                StringUtils.equals(this.host, host) &&
-                (this.fromDate == fromDate || this.fromDate != null && this.fromDate.equals(fromDate)) &&
-                (this.toDate == toDate || this.toDate != null && this.toDate.equals(toDate));
+    public boolean isTheSameSearch(SearchRequest searchRequest) {
+        return searchRequest.isTheSameSearch(topicCode, title, body, nick, host, fromDate, toDate);
     }
 
-    public boolean isNotTheSameSearch(String topicCode,
-                                     String title,
-                                     String body,
-                                     String nick,
-                                     String host,
-                                     Date fromDate,
-                                     Date toDate) {
-        return !isTheSameSearch(topicCode, title, body, nick, host, fromDate, toDate);
+    public boolean isNotTheSameSearch(SearchRequest searchRequest) {
+        return !isTheSameSearch(searchRequest);
     }
 
     public PaginatedList getPaginatedList() {
         if (paginatedList == null)
             paginatedList = ZloPaginatedList.fromZloSearchResult(this);
         return paginatedList;
+    }
+
+    public boolean isNewSearch() {
+        return newSearch;
+    }
+
+    public void setNewSearch(boolean newSearch) {
+        this.newSearch = newSearch;
     }
 }
