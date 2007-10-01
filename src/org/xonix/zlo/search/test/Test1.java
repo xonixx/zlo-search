@@ -4,22 +4,14 @@ import org.apache.lucene.analysis.SimpleAnalyzer;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Query;
-import org.apache.commons.collections.CollectionUtils;
-import org.xonix.zlo.search.ZloSearcher;
 import org.xonix.zlo.search.DAO;
-import org.xonix.zlo.search.PageParser;
-import org.xonix.zlo.search.test.storage.ZloStorage;
+import org.xonix.zlo.search.ZloSearcher;
 import org.xonix.zlo.search.model.ZloMessage;
+import org.xonix.zlo.search.test.storage.ZloStorage;
 
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Collections;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.AbstractQueuedSynchronizer;
-import java.io.IOException;
 
 /**
  * Author: Vovan
@@ -28,7 +20,7 @@ import java.io.IOException;
  */
 public class Test1 {
     public static void main(String[] args) {
-        m10();
+        m9();
         System.exit(0);
     }
 
