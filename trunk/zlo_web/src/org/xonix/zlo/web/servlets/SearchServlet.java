@@ -45,6 +45,10 @@ public class SearchServlet extends ForwardingServlet {
     public static final String QS_IN_TITLE = "inTitle";
     public static final String QS_IN_BODY = "inBody";
 
+    public static final String QS_IN_REG = "reg";
+    public static final String QS_IN_HAS_URL = "hasUrl";
+    public static final String QS_IN_HAS_IMG = "hasImg";
+
     public static final String QS_SUBMIT = "submit";
 
     // session keys
@@ -65,6 +69,10 @@ public class SearchServlet extends ForwardingServlet {
 
         boolean inTitle = StringUtils.isNotEmpty(request.getParameter(QS_IN_TITLE));
         boolean inBody = StringUtils.isNotEmpty(request.getParameter(QS_IN_BODY));
+
+        boolean inReg = StringUtils.isNotEmpty(request.getParameter(QS_IN_REG));
+        boolean inHasUrl = StringUtils.isNotEmpty(request.getParameter(QS_IN_HAS_URL));
+        boolean inHasImg = StringUtils.isNotEmpty(request.getParameter(QS_IN_HAS_IMG));
 
         String nick = request.getParameter(QS_NICK);
         String host = request.getParameter(QS_HOST);
@@ -145,7 +153,8 @@ public class SearchServlet extends ForwardingServlet {
         session.setAttribute(QS_TO_DATE, FROM_TO_DATE_FORMAT.format(toDate));
         session.setAttribute(QS_FROM_DATE, FROM_TO_DATE_FORMAT.format(fromDate));
 
-        SearchRequest searchRequest = new SearchRequest(text, inTitle, inBody, nick, host, topicCode, fromDate, toDate);
+        SearchRequest searchRequest = new SearchRequest(text, inTitle, inBody, 
+                inReg, inHasUrl, inHasImg, nick, host, topicCode, fromDate, toDate);
 
         if (searchRequest.canBeProcessed()) {
 
