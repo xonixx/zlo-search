@@ -31,6 +31,9 @@ public class ZloSearcher {
                                          String text,
                                          boolean inTitle,
                                          boolean inBody,
+                                         boolean inReg,
+                                         boolean inHasUrl,
+                                         boolean inHasImg,
                                          String nick,
                                          String host,
                                          Date fromDate,
@@ -65,6 +68,15 @@ public class ZloSearcher {
         if (fromDate != null && toDate != null)
             queryStr.append(" +date:[").append(QUERY_DATEFORMAT.format(fromDate)).append(" TO ").append(QUERY_DATEFORMAT.format(toDate)).append("]");
 
+        if (inReg)
+            queryStr.append(" +reg:1");
+
+        if (inHasUrl)
+            queryStr.append(" +url:1");
+
+        if (inHasImg)
+            queryStr.append(" +img:1");
+
         return ZLO_SEARCHER_INSTANCE.search0(queryStr.toString());
     }
 
@@ -74,6 +86,9 @@ public class ZloSearcher {
                 searchRequest.getText(),
                 searchRequest.isInTitle(),
                 searchRequest.isInBody(),
+                searchRequest.isInReg(),
+                searchRequest.isInHasUrl(),
+                searchRequest.isInHasImg(),
                 searchRequest.getNick(),
                 searchRequest.getHost(),
                 searchRequest.getFromDate(),
@@ -85,9 +100,13 @@ public class ZloSearcher {
                                          String text,
                                          boolean inTitle,
                                          boolean inBody,
+                                         boolean inReg,
+                                         boolean inHasUrl,
+                                         boolean inHasImg,
                                          String nick,
                                          String host) {
-        return search(topicCode, text, inTitle, inBody, nick, host, null, null);
+        return search(topicCode, text, inTitle, inBody,
+                inReg, inHasUrl, inHasImg, nick, host, null, null);
     }
 
     private ZloSearchResult search0(String queryStr) {

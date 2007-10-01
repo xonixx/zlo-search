@@ -27,15 +27,7 @@ public class ZloSearchResult implements Iterable {
     private QueryParser parser;
     private Query query;
 
-    // search is performed for these criteria:
-    private String topicCode;
-    private String text;
-    private boolean inTitle;
-    private boolean inBody;
-    private String nick;
-    private String host;
-    private Date fromDate;
-    private Date toDate;
+    private SearchRequest lastSearch;
 
     private PaginatedList paginatedList;
 
@@ -104,72 +96,16 @@ public class ZloSearchResult implements Iterable {
         return new MsgsIterator();
     }
 
-    public String getTopicCode() {
-        return topicCode;
+    public SearchRequest getLastSearch() {
+        return lastSearch;
     }
 
-    public void setTopicCode(String topicCode) {
-        this.topicCode = topicCode;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public boolean isInTitle() {
-        return inTitle;
-    }
-
-    public void setInTitle(boolean inTitle) {
-        this.inTitle = inTitle;
-    }
-
-    public boolean isInBody() {
-        return inBody;
-    }
-
-    public void setInBody(boolean inBody) {
-        this.inBody = inBody;
-    }
-
-    public String getNick() {
-        return nick;
-    }
-
-    public void setNick(String nick) {
-        this.nick = nick;
-    }
-
-    public String getHost() {
-        return host;
-    }
-
-    public void setHost(String host) {
-        this.host = host;
-    }
-
-    public Date getFromDate() {
-        return fromDate;
-    }
-
-    public void setFromDate(Date fromDate) {
-        this.fromDate = fromDate;
-    }
-
-    public Date getToDate() {
-        return toDate;
-    }
-
-    public void setToDate(Date toDate) {
-        this.toDate = toDate;
+    public void setLastSearch(SearchRequest lastSearch) {
+        this.lastSearch = lastSearch;
     }
 
     public boolean isTheSameSearch(SearchRequest searchRequest) {
-        return searchRequest.isTheSameSearch(topicCode, text, inTitle, inBody, nick, host, fromDate, toDate);
+        return searchRequest.isTheSameSearch(lastSearch);
     }
 
     public boolean isNotTheSameSearch(SearchRequest searchRequest) {

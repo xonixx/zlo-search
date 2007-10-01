@@ -16,6 +16,10 @@ public class SearchRequest {
     private boolean inTitle;
     private boolean inBody;
 
+    private boolean inReg;
+    private boolean inHasUrl;
+    private boolean inHasImg;
+
     private String nick;
     private String host;
     private String topicCode;
@@ -26,10 +30,15 @@ public class SearchRequest {
     public SearchRequest() {
     }
 
-    public SearchRequest(String text, boolean inTitle, boolean inBody, String nick, String host, String topicCode, Date fromDate, Date toDate) {
+    public SearchRequest(String text, boolean inTitle, boolean inBody,
+                         boolean inReg, boolean inHasUrl, boolean inHasImg,
+                         String nick, String host, String topicCode, Date fromDate, Date toDate) {
         this.text = text;
         this.inTitle = inTitle;
         this.inBody = inBody;
+        this.inReg = inReg;
+        this.inHasUrl = inHasUrl;
+        this.inHasImg = inHasImg;
         this.nick = nick;
         this.host = host;
         this.topicCode = topicCode;
@@ -59,6 +68,30 @@ public class SearchRequest {
 
     public void setInBody(boolean inBody) {
         this.inBody = inBody;
+    }
+
+    public boolean isInReg() {
+        return inReg;
+    }
+
+    public void setInReg(boolean inReg) {
+        this.inReg = inReg;
+    }
+
+    public boolean isInHasUrl() {
+        return inHasUrl;
+    }
+
+    public void setInHasUrl(boolean inHasUrl) {
+        this.inHasUrl = inHasUrl;
+    }
+
+    public boolean isInHasImg() {
+        return inHasImg;
+    }
+
+    public void setInHasImg(boolean inHasImg) {
+        this.inHasImg = inHasImg;
     }
 
     public String getNick() {
@@ -108,47 +141,66 @@ public class SearchRequest {
                 StringUtils.isNotEmpty(topicCode) && !"0".equals(topicCode);
     }
 
+    public boolean equals(Object obj) {
+        if (!(obj instanceof SearchRequest))
+            return false;
+
+        SearchRequest req = (SearchRequest) obj;
+
+        return StringUtils.equals(topicCode, req.getTopicCode()) &&
+                StringUtils.equals(text, req.getText()) &&
+                inTitle == req.isInTitle() &&
+                inBody == req.isInBody() &&
+                inReg == req.isInReg() &&
+                inHasUrl == req.isInHasUrl() &&
+                inHasImg == req.isInHasImg() &&
+                StringUtils.equals(nick, req.getNick()) &&
+                StringUtils.equals(host, req.getHost()) &&
+                (fromDate == req.getFromDate() || fromDate != null && fromDate.equals(req.getFromDate())) &&
+                (toDate == req.getToDate() || toDate != null && toDate.equals(req.getToDate()));
+    }
+
+    public boolean isTheSameSearch(SearchRequest searchRequest) {
+        return this.equals(searchRequest);
+    }
+
+    public boolean isNotTheSameSearch(SearchRequest searchRequest) {
+        return !isTheSameSearch(searchRequest);
+    }
+
     public boolean isTheSameSearch(String topicCode,
                                      String text,
                                      boolean inTitle,
                                      boolean inBody,
+                                     boolean inReg,
+                                     boolean inHasUrl,
+                                     boolean inHasImg,
                                      String nick,
                                      String host,
                                      Date fromDate,
                                      Date toDate) {
-        return StringUtils.equals(this.topicCode, topicCode) &&
-                StringUtils.equals(this.text, text) &&
-                this.inTitle == inTitle &&
-                this.inBody == inBody &&
-                StringUtils.equals(this.nick, nick) &&
-                StringUtils.equals(this.host, host) &&
-                (this.fromDate == fromDate || this.fromDate != null && this.fromDate.equals(fromDate)) &&
-                (this.toDate == toDate || this.toDate != null && this.toDate.equals(toDate));
+        return this.equals(new SearchRequest(text, inTitle, inBody, inReg, inHasUrl, inHasImg,
+                                            nick, host, topicCode, fromDate, toDate));
     }
 
     public boolean isNotTheSameSearch(String topicCode,
                                      String text,
                                      boolean inTitle,
                                      boolean inBody,
+                                     boolean inReg,
+                                     boolean inHasUrl,
+                                     boolean inHasImg,
                                      String nick,
                                      String host,
                                      Date fromDate,
                                      Date toDate) {
-        return !isTheSameSearch(topicCode, text, inTitle, inBody, nick, host, fromDate, toDate);
+        return !isTheSameSearch(topicCode, text, inTitle, inBody, inReg,
+                                inHasUrl, inHasImg, nick, host, fromDate, toDate);
     }
 
     public ZloSearchResult performSearch() {
         ZloSearchResult result = ZloSearcher.search(this);
-
-        result.setTopicCode(topicCode);
-        result.setText(text);
-        result.setInTitle(inTitle);
-        result.setInBody(inBody);
-        result.setNick(nick);
-        result.setHost(host);
-        result.setFromDate(fromDate);
-        result.setToDate(toDate);
-
+        result.setLastSearch(this);
         return result;
     }
 }

@@ -18,9 +18,14 @@ public enum HtmlStrings {
     LABEL_PER_PAGE("label.per.page"),
     LINK_SAVED_MSG("link.saved.msg"),
 
-    LABLE_SEARCH("label.search"),
-    LABLE_IN_TITLE("label.search.in.title"),
-    LABLE_IN_BODY("label.search.in.body"),
+    LABEL_SEARCH("label.search"),
+    LABEL_IN_TITLE("label.search.in.title"),
+    LABEL_IN_BODY("label.search.in.body"),
+
+    LABEL_MESSAGES("label.search.messages"),
+    LABEL_IN_REG("label.search.in.reg"),
+    LABEL_IN_HAS_URL("label.search.in.has.url"),
+    LABEL_IN_HAS_IMG("label.search.in.has.img"),
 
     HEADER_NUM("header.num"),
     HEADER_TITLE("header.title"),
