@@ -6,6 +6,7 @@
 --%>
 
 <%@ include file="import.jsp" %>
+<%@ include file="notDirectlyAccessible.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 
 <jsp:useBean id="savedMsg" scope="request" class="org.xonix.zlo.search.model.ZloMessage" />

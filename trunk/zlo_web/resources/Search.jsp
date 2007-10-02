@@ -5,6 +5,7 @@
   Time: 16:46:12
 --%>
 <%@ include file="import.jsp" %>
+<%@ include file="notDirectlyAccessible.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 
 <jsp:useBean id="backendBean" class="org.xonix.zlo.web.BackendBean" scope="session" />
