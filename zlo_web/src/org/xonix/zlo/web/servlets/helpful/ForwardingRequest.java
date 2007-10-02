@@ -18,6 +18,8 @@ public class ForwardingRequest extends HttpServletRequestWrapper {
     private ForwardingServletAbstract servlet;
     private HttpServletResponse response;
 
+    public static final String FORWARDED_FROM = "forwarded_from";
+
     private Map<String, String> _parameters = new HashMap<String, String>();
 
     public ForwardingRequest(HttpServletRequest request) {
@@ -29,6 +31,7 @@ public class ForwardingRequest extends HttpServletRequestWrapper {
     }
 
     public void forwardTo(String pathToRender) throws IOException, ServletException {
+        setAttribute(FORWARDED_FROM, getServletPath());
         servlet.getServletContext().getRequestDispatcher(pathToRender).forward(this, response);
     }
 
