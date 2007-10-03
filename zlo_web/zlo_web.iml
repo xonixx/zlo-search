@@ -19,6 +19,7 @@
         <JAVADOC />
         <SOURCES>
           <root url="intellija$MODULE_DIR$/../../../../..//intellijad" />
+          <root url="intellija$MODULE_DIR$/../../../../..//intellijad" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -30,7 +31,9 @@
           <root url="jar://$MODULE_DIR$/../../lib/commons-beanutils-bean-collections.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="intellija$MODULE_DIR$/../../../../..//intellijad" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
@@ -56,6 +59,7 @@
     <orderEntry type="library" name="jstl" level="project" />
     <orderEntry type="library" name="commons-collections-3.2" level="project" />
     <orderEntry type="library" name="displaytag-1.1.1" level="project" />
+    <orderEntry type="library" name="junit-4.4" level="project" />
     <orderEntryProperties />
   </component>
   <component name="VcsManagerConfiguration">
@@ -156,6 +160,10 @@
     </containerElement>
     <containerElement type="library" name="jstl" level="project">
       <attribute name="method" value="1" />
+      <attribute name="URI" value="/WEB-INF/lib" />
+    </containerElement>
+    <containerElement type="library" name="junit-4.4" level="project">
+      <attribute name="method" value="0" />
       <attribute name="URI" value="/WEB-INF/lib" />
     </containerElement>
     <containerElement type="library" name="Lucene" level="project">
