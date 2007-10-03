@@ -16,48 +16,57 @@ import java.util.regex.Pattern;
  * Time: 20:17:07
  */
 public class PageParser {
-    private static Pattern MSG_UNREG_RE = Pattern.compile(
+    private static final Pattern MSG_UNREG_RE = Pattern.compile(
         "<DIV ALIGN=CENTER><BIG>\\[(.*?)\\]</BIG>&nbsp;&nbsp;<BIG>(.*?)</BIG>" +
         "<BR>Сообщение было послано:\\s*<b>(.*?)</b><SMALL>\\s*\\(unreg\\)</SMALL>\\s*<small>" +
         "\\((.*?)\\)</small><BR>Дата:\\s*(.*?)</DIV><BR><br\\s*/><div class=\"body\">(.*?)</div>",
         Pattern.DOTALL
     );
 
-    private static Pattern MSG_REG_RE = Pattern.compile(
+    private static final Pattern MSG_REG_RE = Pattern.compile(
         "<DIV ALIGN=CENTER><BIG>\\[(.*?)\\]</BIG>&nbsp;&nbsp;<BIG>(.*?)</BIG>" +
         "<BR>Сообщение было послано:\\s*<a href=\"\\?uinfo=.*?\" class=\"nn\" onclick=\"popup\\('uinfo', '.*?', 700, 600\\); return false;\" title=\"Информация о Пользователе\" target=\"_blank\">(.*?)</a>\\s*" +
         "<small>\\((.*?)\\)</small><BR>Дата:\\s*(.*?)</DIV><BR><br\\s*/><div class=\"body\">(.*?)</div>",
         Pattern.DOTALL
     );
 
+    private static final String MSG_NOT_EXIST_OR_WRONG = "Это сообщение не существует или введено неправильно";
+
     /* pattern to find message number on index page
     * public need as we must use it in PageRetriever to load page until pattern found
     */
-    public static Pattern INDEX_UNREG_RE = Pattern.compile(
+    public static final Pattern INDEX_UNREG_RE = Pattern.compile(
         "<A NAME=(\\d+) HREF=\"\\?read=(\\d+)\">"
     );
 
     public static ZloMessage parseMessage(String msg) {
-        ZloMessage zloMessage = new ZloMessage();
+        ZloMessage message = new ZloMessage();
 
         Matcher m = MSG_UNREG_RE.matcher(msg);
         if (m.find()) {
-            zloMessage.setReg(false);
+            message.setReg(false);
         } else {
             m = MSG_REG_RE.matcher(msg);
-            if (!m.find())
-                return null;
-            zloMessage.setReg(true);
+            if (!m.find()) {
+                if (msg.contains(MSG_NOT_EXIST_OR_WRONG)) {
+                    message.setStatus(ZloMessage.Status.DELETED);
+                } else {
+                    message.setStatus(ZloMessage.Status.UNKNOWN);
+                }
+                return message;
+            }
+            message.setReg(true);
         }
 
-        zloMessage.setTopic(prepareTopic(m.group(1)));
-        zloMessage.setTitle(m.group(2));
-        zloMessage.setNick(m.group(3));
-        zloMessage.setHost(m.group(4));
-        zloMessage.setDate(prepareDate(m.group(5)));
-        zloMessage.setBody(m.group(6));
+        message.setTopic(prepareTopic(m.group(1)));
+        message.setTitle(m.group(2));
+        message.setNick(m.group(3));
+        message.setHost(m.group(4));
+        message.setDate(prepareDate(m.group(5)));
+        message.setBody(m.group(6));
+        message.setStatus(ZloMessage.Status.OK);
 
-        return zloMessage;
+        return message;
     }
 
     public static ZloMessage parseMessage(String msg, int urlNum) {
