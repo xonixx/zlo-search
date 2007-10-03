@@ -30,3 +30,5 @@ enum Enum {
 <c:if test="${not (a == b)}">
     NOT EQUAL    
 </c:if>
+
+<fmt:message key="header.title" />
