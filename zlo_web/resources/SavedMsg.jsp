@@ -1,4 +1,3 @@
-<%@ page import="org.xonix.zlo.search.config.HtmlStrings" %>
 <%--
   User: gubarkov
   Date: 11.09.2007
@@ -14,7 +13,7 @@
 
 <html>
     <head>
-        <title><%= HtmlStrings.PAGE_TITLE %></title>
+        <title><fmt:message key="page.title" /></title>
         <link rel="stylesheet" type="text/css" href="main.css" />
         <script type="text/javascript" src="script.js"></script>
     </head>

@@ -15,7 +15,7 @@
 
 <html>
     <head>
-        <title><%= HtmlStrings.PAGE_TITLE %></title>
+        <title><fmt:message key="page.title" /></title>
         <link rel="stylesheet" type="text/css" href="main.css" />
         <script type="text/javascript" src="script.js"></script>
     </head>
@@ -27,27 +27,27 @@
                     <td width="33%"></td>
                     <td>
                         <form action="search" method="get">
-                            <%= HtmlStrings.LABEL_TEXT %> <input type="text" name="text" <c:if test="${not empty param['text']}">value="<c:out value="${param['text']}" />" </c:if>style="width:450px;" />
-                            <%= HtmlStrings.LABEL_TOPIC %> <jsp:getProperty name="backendBean" property="topicSelector" />
+                            <fmt:message key="label.text" /> <input type="text" name="text" <c:if test="${not empty param['text']}">value="<c:out value="${param['text']}" />" </c:if>style="width:450px;" />
+                            <fmt:message key="label.topic" /> <jsp:getProperty name="backendBean" property="topicSelector" />
                             <br/>
-                            <%= HtmlStrings.LABEL_SEARCH %>
-                            <input type="checkbox" name="inTitle" id="inTitle" <c:if test="${not empty param['inTitle']}">checked="checked"</c:if>/> <label for="inTitle"><%= HtmlStrings.LABEL_IN_TITLE %></label>
-                            <input type="checkbox" name="inBody" id="inBody" <c:if test="${not empty param['inBody']}">checked="checked"</c:if>/> <label for="inBody"><%= HtmlStrings.LABEL_IN_BODY %></label>
+                            <fmt:message key="label.search" />
+                            <input type="checkbox" name="inTitle" id="inTitle" <c:if test="${not empty param['inTitle']}">checked="checked"</c:if>/> <label for="inTitle"><fmt:message key="label.search.in.title" /></label>
+                            <input type="checkbox" name="inBody" id="inBody" <c:if test="${not empty param['inBody']}">checked="checked"</c:if>/> <label for="inBody"><fmt:message key="label.search.in.body" /></label>
                             <br/>
-                            <%= HtmlStrings.LABEL_MESSAGES %>
-                            <input type="checkbox" name="reg" id="reg" <c:if test="${not empty param['reg']}">checked="checked"</c:if>/> <label for="reg"><%= HtmlStrings.LABEL_IN_REG %></label>
-                            <input type="checkbox" name="hasUrl" id="hasUrl" <c:if test="${not empty param['hasUrl']}">checked="checked"</c:if>/> <label for="hasUrl"><%= HtmlStrings.LABEL_IN_HAS_URL %></label>
-                            <input type="checkbox" name="hasImg" id="hasImg" <c:if test="${not empty param['hasImg']}">checked="checked"</c:if>/> <label for="hasImg"><%= HtmlStrings.LABEL_IN_HAS_IMG %></label>
+                            <fmt:message key="label.search.messages" />
+                            <input type="checkbox" name="reg" id="reg" <c:if test="${not empty param['reg']}">checked="checked"</c:if>/> <label for="reg"><fmt:message key="label.search.in.reg" /></label>
+                            <input type="checkbox" name="hasUrl" id="hasUrl" <c:if test="${not empty param['hasUrl']}">checked="checked"</c:if>/> <label for="hasUrl"><fmt:message key="label.search.in.has.url" /></label>
+                            <input type="checkbox" name="hasImg" id="hasImg" <c:if test="${not empty param['hasImg']}">checked="checked"</c:if>/> <label for="hasImg"><fmt:message key="label.search.in.has.img" /></label>
                             <br/>
-                            <%= HtmlStrings.LABEL_NICK %> <input type="text" name="nick" <c:if test="${not empty param['nick']}">value="<c:out value="${param['nick']}" />" </c:if>style="width:200px;" />
-                            <%= HtmlStrings.LABEL_HOST %> <input type="text" name="host" <c:if test="${not empty param['host']}">value="<c:out value="${param['host']}" />" </c:if>style="width:200px;" />
+                            <fmt:message key="label.nick" /> <input type="text" name="nick" <c:if test="${not empty param['nick']}">value="<c:out value="${param['nick']}" />" </c:if>style="width:200px;" />
+                            <fmt:message key="label.host" /> <input type="text" name="host" <c:if test="${not empty param['host']}">value="<c:out value="${param['host']}" />" </c:if>style="width:200px;" />
                             <br/>
-                            <input type="checkbox" name="dates" id="dates" onchange="changedDatesSelector();" <c:if test="${not empty param['dates']}">checked="checked"</c:if>/> <label for="dates"><%= HtmlStrings.LABEL_DATES %></label>
-                            <%= HtmlStrings.LABEL_FROM_DATE %> <input type="text" name="fd" id="fd" value="${sessionScope['fd']}" />
-                            <%= HtmlStrings.LABEL_TO_DATE %> <input type="text" name="td" id="td" value="${sessionScope['td']}" />
+                            <input type="checkbox" name="dates" id="dates" onchange="changedDatesSelector();" <c:if test="${not empty param['dates']}">checked="checked"</c:if>/> <label for="dates"><fmt:message key="label.dates" /></label>
+                            <fmt:message key="label.from.date" /> <input type="text" name="fd" id="fd" value="${sessionScope['fd']}" />
+                            <fmt:message key="label.to.date" /> <input type="text" name="td" id="td" value="${sessionScope['td']}" />
                             <br/>
-                            <%= HtmlStrings.LABEL_SITE %> <jsp:getProperty name="backendBean" property="siteSelector" />
-                            <%= HtmlStrings.LABEL_PER_PAGE %> <jsp:getProperty name="backendBean" property="pageSizeSelector" />
+                            <fmt:message key="label.site" /> <jsp:getProperty name="backendBean" property="siteSelector" />
+                            <fmt:message key="label.per.page" /> <jsp:getProperty name="backendBean" property="pageSizeSelector" />
                             <br/>
                             <input type="submit" name="submit" value="Search"/>
                         </form>
@@ -99,7 +99,7 @@
                             <c:if test="${msg.hasUrl}">(url)</c:if>
                             <c:if test="${msg.hasImg}">(pic)</c:if>
                         </small>
-                        <a class="search" href="msg?num=<c:out value="${msg.num}" />"><%= HtmlStrings.LINK_SAVED_MSG %></a>
+                        <a class="search" href="msg?num=<c:out value="${msg.num}" />"><fmt:message key="link.saved.msg" /></a>
                     </display:column>
                     <display:column title="<%= HtmlStrings.HEADER_NICK.toString() %>">
                         <span class="nick">
