@@ -66,13 +66,15 @@ public class ZloIndexer {
     private void indexMsgs(IndexWriter writer, int startNum, int endNum) throws DAO.Exception{
         for (int i=startNum; i<=endNum; i++) {
             ZloMessage msg = source.getMessageByNumber(i);
-            if (msg != null) {
+            if (msg.getStatus() == ZloMessage.Status.OK) {
                 log.info("Saving: "+msg);
                 try {
                     writer.addDocument(msg.getDocument());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            } else {
+                log.info("Not saving: " + msg);
             }
         }
     }

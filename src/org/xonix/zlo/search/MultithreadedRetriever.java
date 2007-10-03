@@ -2,9 +2,7 @@ package org.xonix.zlo.search;
 
 import org.xonix.zlo.search.model.ZloMessage;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Vector;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -54,7 +52,7 @@ public class MultithreadedRetriever {
             try {
                 while (hasMoreToDownload()) {
                     try {
-                        logger.info("Downloading " + currentNum);
+                        logger.info("Downloading :" + currentNum + " by " + getName());
                         msgs.add(source.getMessageByNumber(getNextNum()));
                     } catch (Exception e) {
                         e.printStackTrace(); // todo: need to decide what to do here
@@ -99,6 +97,13 @@ public class MultithreadedRetriever {
                 e.printStackTrace();
             }
         }
+
+        Collections.sort(msgs, new Comparator<ZloMessage>() {
+            public int compare(ZloMessage m1, ZloMessage m2) {
+                return m1.getNum() > m2.getNum() ? 1 : m1.getNum() < m2.getNum() ? -1 : 0;
+            }
+        });
+        
         return msgs;
     }
 }

@@ -101,7 +101,8 @@ public class DBManager {
                         rs.getBoolean(ZloMessage.REG),
                         rs.getInt(ZloMessage.URL_NUM),
                         null,
-                        null);
+                        null,
+                        null); // todo: need to fix!
             } else
                 return null;
         } catch (SQLException e) {
@@ -128,7 +129,8 @@ public class DBManager {
                                 rs.getBoolean(ZloMessage.REG),
                                 rs.getInt(ZloMessage.URL_NUM),
                                 null,
-                                null));
+                                null,
+                                null)); // todo: need to fix!
             }
             return msgs;
         } catch (SQLException e) {

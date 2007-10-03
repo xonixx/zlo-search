@@ -1,4 +1,4 @@
-package org.xonix.zlo.search.test;
+package org.xonix.zlo.search.test.storage;
 
 import org.xonix.zlo.search.test.storage.ZloStorage;
 import org.xonix.zlo.search.DAO;

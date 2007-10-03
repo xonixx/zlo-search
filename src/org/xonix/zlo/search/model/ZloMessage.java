@@ -10,14 +10,15 @@ import org.apache.lucene.search.Hit;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.utils.HtmlUtils;
 
-import java.text.ParseException;
-import java.text.NumberFormat;
+import java.io.IOException;
+import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.text.MessageFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.io.IOException;
-import java.io.Serializable;
 
 /**
  * Author: gubarkov
@@ -56,8 +57,25 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
     private Boolean hasImg;
 
     private int hitId;
+
+    private Status status;
+
+    public static enum Status {
+        OK,
+        DELETED,
+        UNKNOWN,
+        ;
+    }
+
+    private static final MessageFormat MSG_FORMAT_OK = new MessageFormat("ZloMessage(" +
+            "\n\tnum={0},\n\ttopic={1},\n\ttitle={2},\n\tnick={3},\n\treg={4}," +
+            "\n\thost={5},\n\tdate={6, date,MMMM, d HH:mm:ss yyyy},\n\thasUrl={7},\n\thasImg={8}," +
+            "\n\tbody={9}\n)");
+
+    private static final MessageFormat MSG_FORMAT_NOT_OK = new MessageFormat("ZloMessage(" +
+            "\n\tnum={0},\n\tstatus={1}\n)");
     
-    public static String [] TOPICS = {
+    public static final String [] TOPICS = {
         "Все темы", "Без темы",
         "Учеба", "Работа", "Мурзилка",
         "Обсуждение", "Новости", "Спорт",
@@ -84,7 +102,8 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
 
     public ZloMessage(String userName, String hostName, String msgTopic, String msgTitle, String msgBody, Date msgDate,
                       boolean reg, int urlNum,
-                      Boolean hasUrl, Boolean hasImg) {
+                      Boolean hasUrl, Boolean hasImg,
+                      Status status) {
         this.nick = userName;
         this.host = hostName;
         this.topic = msgTopic;
@@ -95,6 +114,7 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
         this.num = urlNum;
         this.hasUrl = hasUrl;
         this.hasImg = hasImg;
+        this.status = status;
     }
 
     public String getNick() {
@@ -193,25 +213,34 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
         return hasImg;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public ZloMessage getMessage() {
         return this;
     }
 
     public String toString() {
-        return new StringBuffer("ZloMessage(\n")
-                .append("\t").append("num=").append(num).append(",\n")
-                .append("\t").append("topic=").append(topic).append(",\n")
-                .append("\t").append("title=").append(title).append(",\n")
-                .append("\t").append("nick=").append(nick).append(",\n")
-                .append("\t").append("reg=").append(reg).append(",\n")
-                .append("\t").append("host=").append(host).append(",\n")
-                .append("\t").append("date=").append(date).append(",\n")
-                .append("\t").append("hasUrl=").append(isHasUrl() ? TRUE : FALSE).append(",\n")
-                .append("\t").append("hasImg=").append(isHasImg() ? TRUE : FALSE).append(",\n")
-                .append("\t").append("body=").append(body.replaceAll("\n","\n\t\t")).append("\n)").toString();
+        if (status == Status.OK)
+            return MSG_FORMAT_OK.format(new Object[]{
+                    num, topic, title, nick, reg, host, date,
+                    isHasUrl() ? TRUE : FALSE,
+                    isHasImg() ? TRUE : FALSE,
+                    body.replaceAll("\n","\n\t\t")});
+        else
+            return MSG_FORMAT_NOT_OK.format(new Object[] {
+                    num, status});
     }
 
     public Document getDocument() {
+        if (status != Status.OK) // index only OK messages
+            return null;
+
         Document doc = new Document();
         doc.add(new Field(URL_NUM, URL_NUM_FORMAT.format(num), Field.Store.YES, Field.Index.UN_TOKENIZED));
         doc.add(new Field(TOPIC, TOPIC_CODES.get(topic), Field.Store.YES, Field.Index.UN_TOKENIZED));
@@ -240,7 +269,8 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
                 TRUE.equals(doc.get(REG)),
                 Integer.parseInt(doc.get(URL_NUM)),
                 TRUE.equals(doc.get(HAS_URL)),
-                TRUE.equals(doc.get(HAS_IMG))
+                TRUE.equals(doc.get(HAS_IMG)),
+                Status.OK // in index only OK messages are saved
             );
         } catch (ParseException e) {
             e.printStackTrace();
