@@ -17,20 +17,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
-      <change type="DELETED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\daemon\Crawler.java" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/xonix/zlo/search/test/junit" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/config/Config.java" afterPath="$PROJECT_DIR$/src/org/xonix/zlo/search/config/Config.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_search.iml" afterPath="$PROJECT_DIR$/zlo_search.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/xonix/zlo/search/daemon/TimeUtils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/xonix/zlo/search/daemon/DbDaemon.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/config/config.properties" afterPath="$PROJECT_DIR$/src/org/xonix/zlo/search/config/config.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/xonix/zlo/search/test/junit/Tests1.java" />
-    </list>
-    <list name="Project files" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/zlo_web.iml" afterPath="$PROJECT_DIR$/zlo_web/zlo_web.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_search.ipr" afterPath="$PROJECT_DIR$/zlo_search.ipr" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/daemon/DbDaemon.java" afterPath="$PROJECT_DIR$/src/org/xonix/zlo/search/daemon/DbDaemon.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/DBManager.java" afterPath="$PROJECT_DIR$/src/org/xonix/zlo/search/DBManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/Todo.txt" afterPath="$PROJECT_DIR$/zlo_web/Todo.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_search.iws" afterPath="$PROJECT_DIR$/zlo_search.iws" />
     </list>
+    <list name="Project files" comment="" />
   </component>
   <component name="ChangeListSynchronizer" />
   <component name="ChangesViewManager" flattened_view="true" />
@@ -172,16 +164,16 @@
       <file leaf-file-name="Tests1.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/test/junit/Tests1.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="0" selection-start="461" selection-end="461" vertical-scroll-proportion="0.34979424">
+            <state line="17" column="0" selection-start="461" selection-end="461" vertical-scroll-proportion="0.47663552">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TimeUtils.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="TimeUtils.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/daemon/TimeUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="30" selection-start="580" selection-end="580" vertical-scroll-proportion="0.51303154">
+            <state line="23" column="26" selection-start="607" selection-end="607" vertical-scroll-proportion="0.62429905">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -192,7 +184,7 @@
       <file leaf-file-name="PageParser.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/PageParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="13" selection-start="370" selection-end="370" vertical-scroll-proportion="0.21428572">
+            <state line="17" column="13" selection-start="370" selection-end="370" vertical-scroll-proportion="0.29423076">
               <folding />
             </state>
           </provider>
@@ -201,16 +193,61 @@
       <file leaf-file-name="DBManager.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/DBManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="83" column="23" selection-start="3213" selection-end="3213" vertical-scroll-proportion="0.023319615">
+            <state line="33" column="31" selection-start="809" selection-end="809" vertical-scroll-proportion="0.03269231">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.properties" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/config/config.properties">
+      <file leaf-file-name="Todo.txt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/zlo_web/Todo.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="72" column="30" selection-start="1866" selection-end="1866" vertical-scroll-proportion="1.2222222">
+            <state line="38" column="29" selection-start="1257" selection-end="1257" vertical-scroll-proportion="0.51153845">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ZloMessage.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/model/ZloMessage.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="27" column="13" selection-start="783" selection-end="783" vertical-scroll-proportion="-6.276923">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="__log.txt" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/__log.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="18" column="100" selection-start="894" selection-end="894" vertical-scroll-proportion="-0.29423076">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DBCreate.sql" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DB Scripts/DBCreate.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="16" selection-start="138" selection-end="138" vertical-scroll-proportion="0.1588785">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DbDaemon.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/daemon/DbDaemon.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="34" column="24" selection-start="1193" selection-end="1193" vertical-scroll-proportion="0.7846154">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DAO.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/DAO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="75" column="31" selection-start="2286" selection-end="2286" vertical-scroll-proportion="0.40747663">
               <folding />
             </state>
           </provider>
@@ -803,6 +840,32 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\src" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\daemon" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="zlo_search.ipr" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="zlo_search" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
           <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
@@ -1193,15 +1256,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="-4" width="1608" height="1155" extended-state="6" />
-    <editor active="false" />
+    <frame x="-4" y="-4" width="1288" height="979" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="SQL" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="9" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14679644" order="3" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32982457" order="6" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24082421" order="0" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20437956" order="0" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38947368" order="1" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24979724" order="1" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34269005" order="10" />
@@ -1209,13 +1272,13 @@
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="6" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="11" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="4" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="1" />
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2560621" order="12" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24979724" order="1" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30877194" order="12" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3355965" order="2" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25304136" order="2" />
       <window_info id="File View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="5" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37148398" order="3" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="0" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3998378" order="0" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32982457" order="13" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32865497" order="14" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="0" />
@@ -1315,20 +1378,6 @@
     <option name="myLastEditedConfigurable" value="Default" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/zlo_web/WEB-INF/fmt.tld">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="188" column="4" selection-start="5821" selection-end="5821" vertical-scroll-proportion="0.26717559">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/resources/test/test1.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="25" selection-start="88" selection-end="88" vertical-scroll-proportion="0.10545906">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/zlo_web/resources/import.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state line="5" column="56" selection-start="251" selection-end="251" vertical-scroll-proportion="0.10545906">
@@ -1343,23 +1392,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/Todo.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="30" selection-start="1241" selection-end="1241" vertical-scroll-proportion="0.7408344">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DB Scripts/DBDeploy.bat">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DB Scripts/DBCreate.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="16" selection-start="138" selection-end="138" vertical-scroll-proportion="0.11659808">
           <folding />
         </state>
       </provider>
@@ -1427,13 +1462,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/daemon/DbDaemon.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="36" selection-start="1242" selection-end="1242" vertical-scroll-proportion="0.8360656">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/config/Config.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="14" column="13" selection-start="279" selection-end="279" vertical-scroll-proportion="0.027868852">
@@ -1441,23 +1469,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/DAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="31" selection-start="2286" selection-end="2286" vertical-scroll-proportion="0.3180328">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/DBManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="23" selection-start="3213" selection-end="3213" vertical-scroll-proportion="0.023319615">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/config/config.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="30" selection-start="1866" selection-end="1866" vertical-scroll-proportion="1.2222222">
+        <state line="72" column="30" selection-start="1866" selection-end="1866" vertical-scroll-proportion="1.6561338">
           <folding />
         </state>
       </provider>
@@ -1483,13 +1497,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/PageParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="13" selection-start="370" selection-end="370" vertical-scroll-proportion="0.21428572">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.6.0/src.zip!/java/util/IllegalFormatException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="18" column="0" selection-start="517" selection-end="517" vertical-scroll-proportion="0.3733108">
@@ -1504,13 +1511,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/test/junit/Tests1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="0" selection-start="461" selection-end="461" vertical-scroll-proportion="0.34979424">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.6.0/src.zip!/java/lang/RuntimeException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="23" column="0" selection-start="652" selection-end="652" vertical-scroll-proportion="0.3229508">
@@ -1518,12 +1518,75 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/test/junit/Tests1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="0" selection-start="461" selection-end="461" vertical-scroll-proportion="0.47663552">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/daemon/TimeUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="30" selection-start="580" selection-end="580" vertical-scroll-proportion="0.51303154">
+        <state line="23" column="26" selection-start="607" selection-end="607" vertical-scroll-proportion="0.62429905">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/PageParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="13" selection-start="370" selection-end="370" vertical-scroll-proportion="0.29423076">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DB Scripts/DBCreate.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="16" selection-start="138" selection-end="138" vertical-scroll-proportion="0.1588785">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/daemon/DbDaemon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="24" selection-start="1193" selection-end="1193" vertical-scroll-proportion="0.7846154">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/DAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="75" column="31" selection-start="2286" selection-end="2286" vertical-scroll-proportion="0.40747663">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/DBManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="31" selection-start="809" selection-end="809" vertical-scroll-proportion="0.03269231">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/model/ZloMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="13" selection-start="783" selection-end="783" vertical-scroll-proportion="-6.276923">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zlo_web/Todo.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="29" selection-start="1257" selection-end="1257" vertical-scroll-proportion="0.51153845">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/__log.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="100" selection-start="894" selection-end="894" vertical-scroll-proportion="-0.29423076">
+          <folding />
         </state>
       </provider>
     </entry>
