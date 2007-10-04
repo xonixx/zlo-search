@@ -16,7 +16,7 @@ import java.util.Vector;
  * Time: 11:33:31 PM
  */
 public class DBManager {
-    private static String insertPreparedStatement = "INSERT INTO messages(" +
+    private static String SQL_INSERT_MSG = "INSERT INTO messages(" +
         "num, " +
         "host, " +
         "topic, " +
@@ -26,7 +26,7 @@ public class DBManager {
         "reg, "  +
         "body) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-    private static String updatePreparedStatement = "UPDATE messages " +
+    private static String SQL_UPDATE_MSG = "UPDATE messages " +
         "SET num=?, " +
         "host=?, " +
         "topic=?, " +
@@ -36,10 +36,11 @@ public class DBManager {
         "reg=?, "  +
         "body=? WHERE num=?";
 
-    private static String deletePreparedStatement = "DELETE FROM messages WHERE num=?";
-    private static String selectMessageById = "SELECT * FROM messages WHERE num=?";
-    private static String selectMessagesInRange = "SELECT * FROM messages WHERE num>? AND num<?";
-    private static String selectLastMessagePreparedStatement = "SELECT MAX(num) FROM messages";
+    private static String SQL_DELETE_MSG = "DELETE FROM messages WHERE num=?";
+    private static String SQL_SELECT_MSG_BY_ID = "SELECT * FROM messages WHERE num=?";
+    private static String SQL_SELECT_MSG_IN_RANGE = "SELECT * FROM messages WHERE num>? AND num<?";
+    private static String SQL_SELECT_LAST_MSG = "SELECT MAX(num) FROM messages";
+
     private static void fillPreparedStatement(PreparedStatement pstmt, ZloMessage zloMessage) throws DBException {
         try {
             if (zloMessage != null) {
@@ -59,9 +60,9 @@ public class DBManager {
     
     public static void saveMessages(List<ZloMessage> msgs, boolean update) throws DBException {
         try {
-            PreparedStatement chkstmt = Config.DB_CONNECTION.prepareStatement(selectMessageById);
-            PreparedStatement insertPstmt = Config.DB_CONNECTION.prepareStatement(insertPreparedStatement);
-            PreparedStatement updatePstmt = Config.DB_CONNECTION.prepareStatement(updatePreparedStatement);
+            PreparedStatement chkstmt = Config.DB_CONNECTION.prepareStatement(SQL_SELECT_MSG_BY_ID);
+            PreparedStatement insertPstmt = Config.DB_CONNECTION.prepareStatement(SQL_INSERT_MSG);
+            PreparedStatement updatePstmt = Config.DB_CONNECTION.prepareStatement(SQL_UPDATE_MSG);
 
             for (ZloMessage zloMessage : msgs) {
                 chkstmt.setInt(1, zloMessage.getNum());
@@ -87,7 +88,7 @@ public class DBManager {
 
     public static ZloMessage getMessageByNumber(int num) throws DBException {
         try {
-            PreparedStatement st = Config.DB_CONNECTION.prepareStatement(selectMessageById);
+            PreparedStatement st = Config.DB_CONNECTION.prepareStatement(SQL_SELECT_MSG_BY_ID);
             st.setInt(1, num);
             ResultSet rs = st.executeQuery();
             if (!rs.wasNull()) {
@@ -112,7 +113,7 @@ public class DBManager {
 
     public static List<ZloMessage> getMessagesByRange(int start, int end) throws DBException {
         try {
-            PreparedStatement st = Config.DB_CONNECTION.prepareStatement(selectMessagesInRange);
+            PreparedStatement st = Config.DB_CONNECTION.prepareStatement(SQL_SELECT_MSG_IN_RANGE);
             st.setInt(1, start);
             st.setInt(2, end);
             ResultSet rs = st.executeQuery();
@@ -140,7 +141,7 @@ public class DBManager {
 
     public static int getLastRootMessageNumber() throws DBException {
            try {
-               PreparedStatement st = Config.DB_CONNECTION.prepareStatement(selectLastMessagePreparedStatement);
+               PreparedStatement st = Config.DB_CONNECTION.prepareStatement(SQL_SELECT_LAST_MSG);
                ResultSet rs = st.executeQuery();
                if (rs.next()) {
                    return rs.getInt(1);

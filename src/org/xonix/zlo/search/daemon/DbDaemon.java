@@ -12,8 +12,8 @@ import java.io.IOException;
  * Time: 10:35:37
  */
 public class DbDaemon {
-    public static final int NUM_OF_CONTINIOUS_SCAN = Integer.parseInt(Config.getProp("db.daemon.scan.per.time"));
-    public static final int NUM_OF_WAIT_SECONDS = Integer.parseInt(Config.getProp("db.daemon.period.to.scan"));
+    public static final int SCAN_PER_TIME = Integer.parseInt(Config.getProp("db.daemon.scan.per.time"));
+    public static final int SCAN_PERIOD = TimeUtils.parseToMilliSeconds(Config.getProp("db.daemon.period.to.scan"));
 
     private static void processInBackground() throws InterruptedException, IOException, DAO.Exception, DBException {
         int start;
@@ -21,13 +21,13 @@ public class DbDaemon {
         while (true){
             start = DAO.DB._getLastMessageNumber();
             end = DAO.Site._getLastMessageNumber();
-            if ( (start + NUM_OF_CONTINIOUS_SCAN) < end ){
-                end = start + NUM_OF_CONTINIOUS_SCAN;
+            if ( (start + SCAN_PER_TIME) < end ){
+                end = start + SCAN_PER_TIME;
             }
             if (start != end ){
                 DAO.DB.saveMessages(DAO.Site._getMessages(start, end));
             }
-            Thread.sleep(1000 * NUM_OF_WAIT_SECONDS);
+            Thread.sleep(SCAN_PERIOD);
         }
     }
 
