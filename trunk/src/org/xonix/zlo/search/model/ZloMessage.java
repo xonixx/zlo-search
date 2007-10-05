@@ -41,6 +41,7 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
     public static final String REG = "reg";
     public static final String HAS_URL = "url";
     public static final String HAS_IMG = "img";
+    public static final String STATUS = "status";
 
     private String nick;
     private String host;
@@ -58,13 +59,25 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
 
     private int hitId;
 
-    private Status status;
+    private Status status = Status.UNKNOWN; // default
 
     public static enum Status {
         OK,
         DELETED,
         UNKNOWN,
         ;
+
+        public static Status fromInt(int id) {
+            return Status.values()[id];
+        }
+
+        public int getInt() {
+            for(int i=0; i<Status.values().length; i++) {
+                if (this == Status.values()[i])
+                    return i;
+            }
+            return -1;
+        }
     }
 
     private static final MessageFormat MSG_FORMAT_OK = new MessageFormat("ZloMessage(" +

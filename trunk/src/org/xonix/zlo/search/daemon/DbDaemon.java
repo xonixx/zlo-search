@@ -33,7 +33,7 @@ public class DbDaemon {
 
     public static void main(String[] args) throws DAO.Exception, IOException, InterruptedException, DBException {
         DAO.DB.saveMessages(DAO.Site._getMessages(3999990, 3999999));
-        DAO.DB.saveMessages(DAO.Site._getMessages(4000000, 4000004));
-        processInBackground();
+        DAO.DB.saveMessages(DAO.Site._getMessages(4000000, 4000010));
+        //processInBackground();
     }
 }
