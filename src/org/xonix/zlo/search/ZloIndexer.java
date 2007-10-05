@@ -1,8 +1,9 @@
 package org.xonix.zlo.search;
 
 import org.apache.lucene.index.IndexWriter;
-import org.xonix.zlo.search.model.ZloMessage;
+import static org.xonix.zlo.search.DAO.DAOException;
 import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.test.storage.ZloStorage;
 
 import java.io.File;
@@ -58,12 +59,12 @@ public class ZloIndexer {
         } catch (IOException e) {
           System.out.println(" caught a " + e.getClass() +
            "\n with message: " + e.getMessage());
-        } catch (DAO.Exception e) {
+        } catch (DAOException e) {
             e.printStackTrace();
         }
     }
 
-    private void indexMsgs(IndexWriter writer, int startNum, int endNum) throws DAO.Exception{
+    private void indexMsgs(IndexWriter writer, int startNum, int endNum) throws DAOException {
         for (int i=startNum; i<=endNum; i++) {
             ZloMessage msg = source.getMessageByNumber(i);
             if (msg.getStatus() == ZloMessage.Status.OK) {

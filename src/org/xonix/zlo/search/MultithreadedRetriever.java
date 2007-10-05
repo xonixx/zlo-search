@@ -1,5 +1,6 @@
 package org.xonix.zlo.search;
 
+import static org.xonix.zlo.search.DAO.DAOException;
 import org.xonix.zlo.search.model.ZloMessage;
 
 import java.util.*;
@@ -24,8 +25,15 @@ public class MultithreadedRetriever {
         private List<ZloMessage> msgs;
         private IndexingSource source;
 
+        private static Exception exception = null;
+
         public MessageRetriever(IndexingSource source, int from, int to, List<ZloMessage> msgs) {
             super("MessageRetriever #" + threadNum);
+
+            if (threadNum == 0 && exception != null) {
+                // clean the exception of last range retrieve
+                exception = null;
+            }
 
             this.source = source;
 
@@ -41,7 +49,7 @@ public class MultithreadedRetriever {
         }
 
         private static boolean hasMoreToDownload() {
-            return currentNum <= to;
+            return currentNum < to && exception == null;
         }
 
         private int getNextNum() {
@@ -52,10 +60,12 @@ public class MultithreadedRetriever {
             try {
                 while (hasMoreToDownload()) {
                     try {
-                        logger.info("Downloading :" + currentNum + " by " + getName());
+                        logger.info("Downloading: " + currentNum + " by " + getName());
                         msgs.add(source.getMessageByNumber(getNextNum()));
                     } catch (Exception e) {
-                        e.printStackTrace(); // todo: need to decide what to do here
+                        exception = e;
+                        logger.warning(getName() + " exiting because of exception: " + e);
+                        //e.printStackTrace(); // todo: need to decide what to do here
                     }
                 }
             } finally {
@@ -68,14 +78,18 @@ public class MultithreadedRetriever {
                 }
             }
         }
+
+        public static Exception getException() {
+            return exception;
+        }
     }
 
-    public static List<ZloMessage> getMessages(IndexingSource source, final int from, final int to, int threadsNum) throws DAO.Exception {
+    public static List<ZloMessage> getMessages(IndexingSource source, final int from, final int to, int threadsNum) throws DAOException {
         final List<ZloMessage> msgs;
         if (threadsNum == 1) {
             msgs = new ArrayList<ZloMessage>();
 
-            for (int i = from; i <= to; i++) {
+            for (int i = from; i < to; i++) {
                 msgs.add(source.getMessageByNumber(i));
             }
         } else {
@@ -96,6 +110,9 @@ public class MultithreadedRetriever {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+            if (MessageRetriever.getException() != null)
+                throw new DAOException(source, MessageRetriever.getException());
         }
 
         Collections.sort(msgs, new Comparator<ZloMessage>() {

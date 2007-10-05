@@ -30,7 +30,7 @@ public class PageParser {
         Pattern.DOTALL
     );
 
-    private static final String MSG_NOT_EXIST_OR_WRONG = "Это сообщение не существует или введено неправильно";
+    public static final String MSG_NOT_EXIST_OR_WRONG = "Это сообщение не существует или введено неправильно";
 
     /* pattern to find message number on index page
     * public need as we must use it in PageRetriever to load page until pattern found

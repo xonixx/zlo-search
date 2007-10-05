@@ -27,7 +27,7 @@ public class Test1 {
     public static void m10() {
         try {
             System.out.println(new ZloStorage().getLastMessageNumber());
-        } catch (DAO.Exception e) {
+        } catch (DAO.DAOException e) {
             e.printStackTrace();
         }
     }
@@ -65,7 +65,7 @@ public class Test1 {
         for (int i=0; i<10; i++){
             try {
                 System.out.println(">"+ DAO.Site._getLastMessageNumber());
-            } catch (DAO.Exception e) {
+            } catch (DAO.DAOException e) {
                 e.printStackTrace();
             }
         }
@@ -104,7 +104,7 @@ public class Test1 {
             for (ZloMessage m : DAO.Site._getMessages(10, 110)) {
                 System.out.println(m);
             }
-        } catch (DAO.Exception e) {
+        } catch (DAO.DAOException e) {
             e.printStackTrace();
         }
     }
@@ -112,7 +112,7 @@ public class Test1 {
     public static void m8() {
         try {
             System.out.println(DAO.Site._getMessageByNumber(3960198));
-        } catch (DAO.Exception e) {
+        } catch (DAO.DAOException e) {
             e.printStackTrace();
         }
         /*System.out.println(PageParser.parseMessage("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" +
@@ -157,7 +157,7 @@ public class Test1 {
                 "\tKER(2)=ND(2)</PRE><BR><BR>О чём Вы говорите! современный Фортран такое, уверен, не скомпилит даже.</div><P></P><BR><CENTER><BIG>Сообщения в этом потоке</BIG></CENTER><DIV class=w><span id=m3974909"))*/;
 /*        try {
             System.out.println(new ZloStorage().getMessageByNumber(3960198));
-        } catch (DAO.Exception e) {
+        } catch (DAO.DAOException e) {
             e.printStackTrace();
         }*/
     }
@@ -174,7 +174,7 @@ public class Test1 {
             for (ZloMessage m : l1) {
                 System.out.println(m);
             }
-        } catch (DAO.Exception e) {
+        } catch (DAO.DAOException e) {
             e.printStackTrace();
         }
     }

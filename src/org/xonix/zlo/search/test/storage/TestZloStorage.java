@@ -1,6 +1,5 @@
 package org.xonix.zlo.search.test.storage;
 
-import org.xonix.zlo.search.test.storage.ZloStorage;
 import org.xonix.zlo.search.DAO;
 
 /**
@@ -12,8 +11,8 @@ public class TestZloStorage {
     public static void main(String[] args) {
         ZloStorage zs = new ZloStorage();
         try {
-            System.out.println(zs.getMessageByNumber(3975000));
-        } catch (DAO.Exception e) {
+            System.out.println(zs.getMessageByNumber(5000000));
+        } catch (DAO.DAOException e) {
             e.printStackTrace();
         }
         System.exit(0);

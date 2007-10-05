@@ -1,12 +1,12 @@
 package org.xonix.zlo.search;
 
-import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.model.ZloMessage;
 
-import java.sql.SQLException;
 import java.sql.PreparedStatement;
-import java.sql.Timestamp;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Logger;

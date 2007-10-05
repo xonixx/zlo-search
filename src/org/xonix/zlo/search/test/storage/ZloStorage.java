@@ -1,6 +1,7 @@
 package org.xonix.zlo.search.test.storage;
 
 import org.xonix.zlo.search.DAO;
+import static org.xonix.zlo.search.DAO.DAOException;
 import org.xonix.zlo.search.IndexingSource;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.model.ZloMessage;
@@ -67,7 +68,7 @@ public class ZloStorage implements Serializable, IndexingSource {
             oos.close();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (DAO.Exception e) {
+        } catch (DAOException e) {
             e.printStackTrace();
         }
     }
@@ -83,25 +84,33 @@ public class ZloStorage implements Serializable, IndexingSource {
         }
     }
 
-    public ZloMessage getMessageByNumber(int num) throws DAO.Exception {
-        for (int key : storedMsgs.keySet()) {
+    public ZloMessage getMessageByNumber(int num) throws DAOException {
+/*        for (int key : storedMsgs.keySet()) {
             if (key == num)
                 return storedMsgs.get(key);
         }
-        return null;
+        return null;*/
+        ZloMessage zloMessage = storedMsgs.get(FROM + num % (TO - FROM));
+        zloMessage.setNum(num);
+        return zloMessage;
     }
 
-    public List<ZloMessage> getMessages(int from, int to) throws DAO.Exception {
+    public List<ZloMessage> getMessages(int from, int to) throws DAOException {
         List<ZloMessage> msgs = new ArrayList<ZloMessage>(to - from);
-        for (int key : storedMsgs.keySet()) {
+/*        for (int key : storedMsgs.keySet()) {
             if (key >= from && key <= to) {
                 msgs.add(storedMsgs.get(key));
             }
+        }*/
+
+        // hack - just return as many as needed
+        for (int i=from; i<to; i++) {
+            msgs.add(getMessageByNumber(i));
         }
         return msgs;
     }
 
-    public int getLastMessageNumber() throws DAO.Exception {
+    public int getLastMessageNumber() throws DAOException {
         return Collections.max(storedMsgs.keySet());
     }
 

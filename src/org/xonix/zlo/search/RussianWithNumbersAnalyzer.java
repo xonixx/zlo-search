@@ -1,9 +1,9 @@
 package org.xonix.zlo.search;
 
-import org.apache.lucene.analysis.ru.RussianAnalyzer;
-import org.apache.lucene.analysis.ru.RussianCharsets;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.ru.RussianAnalyzer;
+import org.apache.lucene.analysis.ru.RussianCharsets;
 
 import java.io.Reader;
 

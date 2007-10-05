@@ -1,5 +1,6 @@
 package org.xonix.zlo.search;
 
+import static org.xonix.zlo.search.DAO.DAOException;
 import org.xonix.zlo.search.model.ZloMessage;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  */
 public interface IndexingSource {
 
-    public ZloMessage getMessageByNumber(int num) throws DAO.Exception;
-    public List<ZloMessage> getMessages(int from, int to) throws DAO.Exception;
-    public int getLastMessageNumber() throws DAO.Exception;
+    public ZloMessage getMessageByNumber(int num) throws DAOException;
+    public List<ZloMessage> getMessages(int from, int to) throws DAOException;
+    public int getLastMessageNumber() throws DAOException;
 }
