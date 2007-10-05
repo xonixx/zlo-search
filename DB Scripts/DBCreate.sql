@@ -1,15 +1,16 @@
 USE mysql;
 
-DROP DATABASE IF EXISTS zlostorage;
-CREATE DATABASE `zlostorage` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+DROP DATABASE IF EXISTS `zlo_storage`;
+CREATE DATABASE `zlo_storage` DEFAULT CHARACTER SET cp1251; -- COLLATE utf8_bin;
 
-USE zlostorage;
+USE `zlo_storage`;
 
 CREATE TABLE messages (num INT UNIQUE PRIMARY KEY,
-		       host CHAR(255) NOT NULL,
-                       topic CHAR(255) NOT NULL,
-                       title CHAR(255) NOT NULL,
-                       nick CHAR(255) NOT NULL,
-                       date TIMESTAMP NOT NULL,
-		       reg BOOL,
-                       body TEXT);
+                        host CHAR(255),
+                        topic CHAR(255),
+                        title CHAR(255),
+                        nick CHAR(255),
+                        msgDate DATETIME,
+                        reg BOOL,
+                        body TEXT,
+                        status TINYINT);
