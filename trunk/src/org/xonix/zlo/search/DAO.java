@@ -18,100 +18,107 @@ public class DAO {
 
     private static Logger logger = Logger.getLogger(DAO.class.getName());
 
-    public static class Exception extends java.lang.Exception {
-        public Exception(Throwable cause) {
+    public static class DAOException extends java.lang.Exception {
+        private IndexingSource source;
+
+        public DAOException(IndexingSource source, Throwable cause) {
             super(cause);
+            this.source = source;
         }
 
-        public Exception(String message, Throwable cause) {
+        public DAOException(String message, Throwable cause) {
             super(message, cause);
+        }
+
+        public IndexingSource getSource() {
+            return source;
         }
     }
 
     public static class Site implements IndexingSource {
-        private static Site SOURCE = new Site();
+        public static Site SOURCE = new Site();
         private Site() {} // not to create
 
-        public ZloMessage getMessageByNumber(int num) throws Exception {
+        public ZloMessage getMessageByNumber(int num) throws DAOException {
             logger.info("Receiving from site: " + num);
             try {
                 return PageParser.parseMessage(PageRetriever.getPageContentByNumber(num), num);
             } catch (IOException e) {
-                throw new Exception(e);
+                throw new DAOException(SOURCE, e);
             }
         }
 
-        public List<ZloMessage> getMessages(int from, int to) throws Exception {
+        public List<ZloMessage> getMessages(int from, int to) throws DAOException {
             return MultithreadedRetriever.getMessages(SOURCE, from, to, Config.THREADS_NUMBER);
         }
 
-        public int getLastMessageNumber() throws Exception {
+        public int getLastMessageNumber() throws DAOException {
             try {
                 return PageRetriever.getLastRootMessageNumber();
             } catch (IOException e) {
-                throw new Exception(e);
+                throw new DAOException(SOURCE, e);
             }
         }
         
-        public static ZloMessage _getMessageByNumber(int num) throws Exception {
+        public static ZloMessage _getMessageByNumber(int num) throws DAOException {
             return SOURCE.getMessageByNumber(num);
         }
 
-        public static List<ZloMessage> _getMessages(int start, int end) throws Exception {
+        public static List<ZloMessage> _getMessages(int start, int end) throws DAOException {
             return SOURCE.getMessages(start, end);
         }
 
-        public static int _getLastMessageNumber() throws Exception {
+        public static int _getLastMessageNumber() throws DAOException {
             return SOURCE.getLastMessageNumber();
         }
     }
 
     public static class DB implements IndexingSource {
-        private static DB SOURCE = new DB();
+        public static DB SOURCE = new DB();
 
         private DB() {}
 
-        public static void saveMessages(List<ZloMessage> listZloMessages) throws Exception {
+        public static void saveMessages(List<ZloMessage> listZloMessages) throws DAOException {
             try {
                 DBManager.saveMessages(listZloMessages);
             } catch (DBException e) {
-                throw new Exception(e);
+                throw new DAOException(SOURCE, e);
             }
         }
 
-        public ZloMessage getMessageByNumber(int num) throws Exception {
+        public ZloMessage getMessageByNumber(int num) throws DAOException {
             try {
                 return DBManager.getMessageByNumber(num);
             } catch (DBException e) {
-                throw new Exception(e);
+                throw new DAOException(SOURCE, e);
             }
         }
 
-        public List<ZloMessage> getMessages(int start, int end) throws Exception {
+        public List<ZloMessage> getMessages(int start, int end) throws DAOException {
             try {
                 return DBManager.getMessagesByRange(start, end);
             } catch (DBException e) {
-                throw new Exception(e);
+                throw new DAOException(SOURCE, e);
             }
         }
 
-        public int getLastMessageNumber() throws Exception {
+        public int getLastMessageNumber() throws DAOException {
             try {
                 return DBManager.getLastRootMessageNumber();
             } catch (DBException e) {
-                throw new Exception(e);
+                throw new DAOException(SOURCE, e);
             }
         }
 
-        public static ZloMessage _getMessageByNumber(int num) throws Exception {
+        public static ZloMessage _getMessageByNumber(int num) throws DAOException {
             return SOURCE.getMessageByNumber(num); 
         }
 
-        public static List<ZloMessage> _getMessages(int start, int end) throws Exception {
+        public static List<ZloMessage> _getMessages(int start, int end) throws DAOException {
             return SOURCE.getMessages(start, end);
         }
 
-        public static int _getLastMessageNumber() throws Exception {
+        public static int _getLastMessageNumber() throws DAOException {
             return SOURCE.getLastMessageNumber();
         }
     }

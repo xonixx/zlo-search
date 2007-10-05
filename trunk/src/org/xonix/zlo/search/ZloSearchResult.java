@@ -6,12 +6,11 @@ import org.apache.lucene.search.Hit;
 import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
+import org.displaytag.pagination.PaginatedList;
 import org.xonix.zlo.search.model.ZloMessageAccessor;
 import org.xonix.zlo.search.model.ZloMessageLazy;
 import org.xonix.zlo.web.ZloPaginatedList;
-import org.displaytag.pagination.PaginatedList;
 
-import java.util.Date;
 import java.util.Iterator;
 
 /**

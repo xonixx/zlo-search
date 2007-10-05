@@ -6,8 +6,8 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.*;
-import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.model.ZloMessage;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;

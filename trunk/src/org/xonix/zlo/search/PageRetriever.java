@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 
 /**
@@ -17,10 +18,11 @@ import java.util.regex.Matcher;
  * Time: 17:36:44
  */
 public class PageRetriever {
+    private static final Logger logger = Logger.getLogger(PageRetriever.class.getName());
+
     public static final String END_MSG_MARK = "<BIG>Сообщения в этом потоке</BIG>";
     public static final String END_MSG_MARK_SIGN = "<div class=\"sign\">";
 
-    
     private static HttpClient HTTP_CLIENT = new HttpClient(new MultiThreadedHttpConnectionManager());
 
     public static String getPageContentByNumber(int num) throws IOException{
@@ -42,15 +44,19 @@ public class PageRetriever {
                 byte[] buff = new byte[Config.BUFFER];
                 int lenRead = is.read(buff);
 
-                if (lenRead == -1)
-                    break;
+                if (lenRead == -1) {
+                    logger.warning("lenRead = -1");
+                    throw new IOException("lenRead = -1");
+//                    break;
+                }
 
                 stringGroups.add(new String(buff, 0, lenRead, Config.CHARSET_NAME));
                 currSize = stringGroups.size();
                 ending = stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1);
             } while(
                 ending.indexOf(END_MSG_MARK) == -1 &&
-                ending.indexOf(END_MSG_MARK_SIGN) == -1 // if user have sign - won't read it all
+                ending.indexOf(END_MSG_MARK_SIGN) == -1 && // if user have sign - won't read it all
+                ending.indexOf(PageParser.MSG_NOT_EXIST_OR_WRONG) == -1
                 );
         } finally {
             if (is != null)
@@ -84,8 +90,11 @@ public class PageRetriever {
             do {
                 byte[] buff = new byte[Config.BUFFER];
                 int lenRead = is.read(buff);
-                if (lenRead == -1)
-                    break;
+                if (lenRead == -1) {
+                    logger.warning("lenRead = -1");
+                    throw new IOException("lenRead = -1");
+//                    break;
+                }
                 stringGroups.add(new String(buff, 0, lenRead, Config.CHARSET_NAME));
                 currSize = stringGroups.size();
                 m = PageParser.INDEX_UNREG_RE.matcher(stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1));
@@ -96,7 +105,7 @@ public class PageRetriever {
             getMethod.releaseConnection();
         }
 
-        return m != null ? Integer.parseInt(m.group(1)) : -1;
+        return Integer.parseInt(m.group(1));
     }
 
     private static GetMethod formGetMethod(String uri) {
