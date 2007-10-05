@@ -110,7 +110,7 @@ public class DBManager {
             PreparedStatement st = Config.DB_CONNECTION.prepareStatement(SQL_SELECT_MSG_BY_ID);
             st.setInt(1, num);
             ResultSet rs = st.executeQuery();
-            if (!rs.wasNull()) {
+            if (rs.next()) {
                 return new ZloMessage(
                         rs.getString(MSG_NICK),
                         rs.getString(MSG_HOST),
