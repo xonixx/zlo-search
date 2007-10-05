@@ -60,6 +60,7 @@
     <orderEntry type="library" name="commons-collections-3.2" level="project" />
     <orderEntry type="library" name="displaytag-1.1.1" level="project" />
     <orderEntry type="library" name="junit-4.4" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-5.0.7-bin" level="project" />
     <orderEntryProperties />
   </component>
   <component name="VcsManagerConfiguration">
@@ -171,7 +172,7 @@
       <attribute name="URI" value="/WEB-INF/lib" />
     </containerElement>
     <containerElement type="library" name="mysql-connector-java-5.0.7-bin" level="project">
-      <attribute name="method" value="0" />
+      <attribute name="method" value="1" />
       <attribute name="URI" value="/WEB-INF/lib" />
     </containerElement>
     <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/WEB-INF/web.xml" optional="false" version="2.4" />
