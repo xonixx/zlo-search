@@ -47,7 +47,6 @@ public class PageRetriever {
                 if (lenRead == -1) {
                     logger.warning("lenRead = -1");
                     throw new IOException("lenRead = -1");
-//                    break;
                 }
 
                 stringGroups.add(new String(buff, 0, lenRead, Config.CHARSET_NAME));
@@ -93,7 +92,6 @@ public class PageRetriever {
                 if (lenRead == -1) {
                     logger.warning("lenRead = -1");
                     throw new IOException("lenRead = -1");
-//                    break;
                 }
                 stringGroups.add(new String(buff, 0, lenRead, Config.CHARSET_NAME));
                 currSize = stringGroups.size();

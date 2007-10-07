@@ -20,8 +20,18 @@ import java.util.List;
  */
 public class Test1 {
     public static void main(String[] args) {
-        m9();
+        m11();
         System.exit(0);
+    }
+
+    public static void m11() {
+        try {
+            for (int i=0; i<6000; i++) {
+                DAO.DB.SOURCE.getMessageByNumber(i);
+            }
+        } catch (DAO.DAOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void m10() {
