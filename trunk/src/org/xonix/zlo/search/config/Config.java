@@ -1,6 +1,7 @@
 package org.xonix.zlo.search.config;
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.log4j.PropertyConfigurator;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -24,6 +25,11 @@ public class Config {
             System.out.println("Can't load config!");
             e.printStackTrace();
         }
+    }
+
+    // configuring log4j
+    static {
+        PropertyConfigurator.configure(props);
     }
 
     public static String [] SITES = getProp("sites").split("\\|");

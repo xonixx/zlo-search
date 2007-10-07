@@ -106,10 +106,12 @@ public class DBManager {
     }
 
     public static ZloMessage getMessageByNumber(int num) throws DBException {
+        PreparedStatement st = null;
+        ResultSet rs = null;
         try {
-            PreparedStatement st = Config.DB_CONNECTION.prepareStatement(SQL_SELECT_MSG_BY_ID);
+            st = Config.DB_CONNECTION.prepareStatement(SQL_SELECT_MSG_BY_ID);
             st.setInt(1, num);
-            ResultSet rs = st.executeQuery();
+            rs = st.executeQuery();
             if (rs.next()) {
                 return new ZloMessage(
                         rs.getString(MSG_NICK),
@@ -127,6 +129,15 @@ public class DBManager {
                 return null;
         } catch (SQLException e) {
             throw new DBException(e);
+        } finally {
+            try {
+                if (st != null)
+                    st.close();
+                if (rs != null)
+                    rs.close();
+            } catch (SQLException e) {
+                ;
+            }
         }
     }
 
