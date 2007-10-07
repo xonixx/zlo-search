@@ -48,4 +48,13 @@ Todo:
 
 16) Сделать возможность мониторить процесс индексации через веб-интерфейс (RMI?)
 
-17) To use log4j !!!
++17) To use log4j !!!
+    Done:
+
++18) Судя по логам:
+    INFO [08/10/07 02:04:06,298] org.xonix.zlo.search.MultithreadedRetriever - MessageRetriever #0 finished, downloaded: 34
+    INFO [08/10/07 02:04:06,516] org.xonix.zlo.search.MultithreadedRetriever - MessageRetriever #1 finished, downloaded: 34
+    INFO [08/10/07 02:04:06,548] org.xonix.zlo.search.MultithreadedRetriever - MessageRetriever #2 finished, downloaded: 1
+    INFO [08/10/07 02:04:06,673] org.xonix.zlo.search.MultithreadedRetriever - MessageRetriever #3 finished, downloaded: 1
+    сообщения в основном копируюстя 2 тредами вместо 4-х. Вероятно - из-за синхронизаций на векторе. Сделать каждому свой лист?
+    Done: был виноват HttpClient, он ограничивал число конкурентных подключений

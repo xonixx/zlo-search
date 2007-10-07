@@ -2,9 +2,9 @@ package org.xonix.zlo.search;
 
 import static org.xonix.zlo.search.DAO.DAOException;
 import org.xonix.zlo.search.model.ZloMessage;
+import org.apache.log4j.Logger;
 
 import java.util.*;
-import java.util.logging.Logger;
 
 /**
  * Author: gubarkov
@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  */
 public class MultithreadedRetriever {
 
-    private static Logger logger = Logger.getLogger(MultithreadedRetriever.class.getName());
+    private static Logger logger = Logger.getLogger(MultithreadedRetriever.class);
 
     private static class MessageRetriever extends Thread {
         private static int from = -1;
@@ -23,6 +23,7 @@ public class MultithreadedRetriever {
         private static int threadNum = 0;
 
         private List<ZloMessage> msgs;
+        private List<ZloMessage> myMsgs = new ArrayList<ZloMessage>();
         private IndexingSource source;
 
         private static Exception exception = null;
@@ -48,11 +49,11 @@ public class MultithreadedRetriever {
             threadNum++;
         }
 
-        private static boolean hasMoreToDownload() {
+        private synchronized boolean hasMoreToDownload() {
             return currentNum < to && exception == null;
         }
 
-        private int getNextNum() {
+        private synchronized int getNextNum() {
             return currentNum++;
         }
 
@@ -60,16 +61,16 @@ public class MultithreadedRetriever {
             try {
                 while (hasMoreToDownload()) {
                     try {
-                        logger.info("Downloading: " + currentNum + " by " + getName());
-                        msgs.add(source.getMessageByNumber(getNextNum()));
+                        logger.debug("Downloading: " + currentNum + " by " + getName());
+                        myMsgs.add(source.getMessageByNumber(getNextNum()));
                     } catch (Exception e) {
                         exception = e;
-                        logger.warning(getName() + " exiting because of exception: " + e);
-                        //e.printStackTrace(); // todo: need to decide what to do here
+                        logger.warn(getName() + " exiting because of exception: " + e);
                     }
                 }
             } finally {
-                logger.info(getName()+" finished.");
+                msgs.addAll(myMsgs);
+                logger.info(getName() + " finished, downloaded: " + myMsgs.size());
                 threadNum--;
 
                 if (threadNum == 0) {

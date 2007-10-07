@@ -2,10 +2,10 @@ package org.xonix.zlo.search;
 
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.model.ZloMessage;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * Author: gubarkov
@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 // data access object
 public class DAO {
 
-    private static Logger logger = Logger.getLogger(DAO.class.getName());
+    private static Logger logger = Logger.getLogger(DAO.class);
 
     public static class DAOException extends java.lang.Exception {
         private IndexingSource source;
@@ -40,7 +40,7 @@ public class DAO {
         private Site() {} // not to create
 
         public ZloMessage getMessageByNumber(int num) throws DAOException {
-            logger.info("Receiving from site: " + num);
+            logger.debug("Receiving from site: " + num);
             try {
                 return PageParser.parseMessage(PageRetriever.getPageContentByNumber(num), num);
             } catch (IOException e) {
@@ -78,9 +78,11 @@ public class DAO {
 
         private DB() {}
 
-        public static void saveMessages(List<ZloMessage> listZloMessages) throws DAOException {
+        public static void saveMessages(List<ZloMessage> msgs) throws DAOException {
             try {
-                DBManager.saveMessages(listZloMessages);
+                logger.info("Saving (" + msgs.get(0).getNum() + " - " + msgs.get(msgs.size() - 1).getNum() + ") msgs to DB...");
+                DBManager.saveMessages(msgs);
+                logger.info("Successfully saved " + msgs.size() + " msgs to DB.");
             } catch (DBException e) {
                 throw new DAOException(SOURCE, e);
             }

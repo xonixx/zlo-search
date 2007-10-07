@@ -4,11 +4,11 @@ import org.xonix.zlo.search.DAO;
 import org.xonix.zlo.search.IndexingSource;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.model.ZloMessage;
+import org.apache.log4j.Logger;
 import sun.misc.Signal;
 import sun.misc.SignalHandler;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * User: boost
@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  * Time: 10:35:37
  */
 public class DbDaemon {
-    private static Logger logger = Logger.getLogger(DbDaemon.class.getName());
+    private static Logger logger = Logger.getLogger(DbDaemon.class);
 
     public static final int SCAN_PER_TIME = Integer.parseInt(Config.getProp("db.daemon.scan.per.time"));
     public static final int SCAN_PERIOD = TimeUtils.parseToMilliSeconds(Config.getProp("db.daemon.period.to.scan"));
@@ -76,9 +76,9 @@ public class DbDaemon {
                 }
             } catch (DAO.DAOException e) {
                 if (e.getSource() instanceof DAO.DB) {
-                    logger.warning("Problem with db: " + e);
+                    logger.warn("Problem with db: " + e);
                 } else if (e.getSource() instanceof DAO.Site) {
-                    logger.warning("Problem with site: " + e);
+                    logger.warn("Problem with site: " + e);
                 }
                 e.printStackTrace();
                 sleep0(RECONNECT_PERIOD);
@@ -111,7 +111,7 @@ public class DbDaemon {
             // if we are here => thread finished
             // if !exiting => thread was finished by mysterious reason
             if (!exiting) {
-                logger.warning("MainProcess unexpectedly finished, restarting...");
+                logger.warn("MainProcess unexpectedly finished, restarting...");
             } else {
                 logger.info("Gracefully exiting...");
                 break;
