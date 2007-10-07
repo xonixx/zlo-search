@@ -2,14 +2,15 @@ package org.xonix.zlo.search;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
+import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.log4j.Logger;
 import org.xonix.zlo.search.config.Config;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 
 /**
@@ -18,12 +19,19 @@ import java.util.regex.Matcher;
  * Time: 17:36:44
  */
 public class PageRetriever {
-    private static final Logger logger = Logger.getLogger(PageRetriever.class.getName());
+    private static final Logger logger = Logger.getLogger(PageRetriever.class);
 
     public static final String END_MSG_MARK = "<BIG>Сообщения в этом потоке</BIG>";
     public static final String END_MSG_MARK_SIGN = "<div class=\"sign\">";
 
-    private static HttpClient HTTP_CLIENT = new HttpClient(new MultiThreadedHttpConnectionManager());
+    private static HttpClient HTTP_CLIENT;
+
+    static {
+        MultiThreadedHttpConnectionManager connectionManager = new MultiThreadedHttpConnectionManager();
+        // 100 - so many, because we will manage concurrancy ourselves
+        connectionManager.getParams().setMaxConnectionsPerHost(HostConfiguration.ANY_HOST_CONFIGURATION, 100);
+        HTTP_CLIENT = new HttpClient(connectionManager);
+    }
 
     public static String getPageContentByNumber(int num) throws IOException{
         GetMethod getMethod = formGetMethod("http://" + Config.INDEXING_URL + Config.READ_QUERY + num);
@@ -45,7 +53,7 @@ public class PageRetriever {
                 int lenRead = is.read(buff);
 
                 if (lenRead == -1) {
-                    logger.warning("lenRead = -1");
+                    logger.warn("lenRead = -1");
                     throw new IOException("lenRead = -1");
                 }
 
@@ -90,7 +98,7 @@ public class PageRetriever {
                 byte[] buff = new byte[Config.BUFFER];
                 int lenRead = is.read(buff);
                 if (lenRead == -1) {
-                    logger.warning("lenRead = -1");
+                    logger.warn("lenRead = -1");
                     throw new IOException("lenRead = -1");
                 }
                 stringGroups.add(new String(buff, 0, lenRead, Config.CHARSET_NAME));

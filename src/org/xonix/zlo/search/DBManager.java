@@ -2,6 +2,7 @@ package org.xonix.zlo.search;
 
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.model.ZloMessage;
+import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,7 +10,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Vector;
-import java.util.logging.Logger;
 
 /**
  * User: boost
@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  * Time: 11:33:31 PM
  */
 public class DBManager {
-    private static Logger log = Logger.getLogger(DBManager.class.getName());
+    private static Logger logger = Logger.getLogger(DBManager.class);
 
     public static final String MSG_NICK = ZloMessage.NICK;
     public static final String MSG_HOST = ZloMessage.HOST;
@@ -85,11 +85,11 @@ public class DBManager {
                 chkPstmt.setInt(1, msg.getNum());
                 ResultSet rs = chkPstmt.executeQuery();
                 if (!rs.next()) {
-                    log.info("Inserting msg: " + msg.getNum());
+                    logger.debug("Inserting msg: " + msg.getNum());
                     fillPreparedStatement(insertPstmt, msg);
                     insertPstmt.executeUpdate();
                 } else if (update) {
-                    log.info("Updating msg: "+msg.getNum());
+                    logger.debug("Updating msg: "+msg.getNum());
                     fillPreparedStatement(updatePstmt, msg);
                     updatePstmt.setInt(9, msg.getNum());
                     if (updatePstmt.executeUpdate() == 0)
@@ -124,7 +124,7 @@ public class DBManager {
                         rs.getInt(MSG_URL_NUM),
                         null,
                         null,
-                        ZloMessage.Status.fromInt(rs.getInt(MSG_STATUS))); // todo: need to fix!
+                        ZloMessage.Status.fromInt(rs.getInt(MSG_STATUS)));
             } else
                 return null;
         } catch (SQLException e) {
@@ -161,7 +161,7 @@ public class DBManager {
                                 rs.getInt(MSG_URL_NUM),
                                 null,
                                 null,
-                                ZloMessage.Status.fromInt(rs.getInt(MSG_STATUS)))); // todo: need to fix!
+                                ZloMessage.Status.fromInt(rs.getInt(MSG_STATUS))));
             }
             return msgs;
         } catch (SQLException e) {
