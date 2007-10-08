@@ -1,8 +1,8 @@
 package org.xonix.zlo.search;
 
+import org.apache.log4j.Logger;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.model.ZloMessage;
-import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.List;
@@ -49,7 +49,15 @@ public class DAO {
         }
 
         public List<ZloMessage> getMessages(int from, int to) throws DAOException {
-            return MultithreadedRetriever.getMessages(SOURCE, from, to, Config.THREADS_NUMBER);
+            logger.info("Downloading messages from " + from + " to " + to + "...");
+            long begin = System.currentTimeMillis();
+
+            List<ZloMessage> msgs = MultithreadedRetriever.getMessages(SOURCE, from, to, Config.THREADS_NUMBER);
+
+            long durationSecs = (System.currentTimeMillis() - begin) / 1000;
+            logger.info("Downloaded " + msgs.size() + " messages in " + durationSecs + "secs. Rate: " + ((float)msgs.size()) / durationSecs + "mps.");
+
+            return msgs;
         }
 
         public int getLastMessageNumber() throws DAOException {
