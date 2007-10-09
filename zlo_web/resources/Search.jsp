@@ -124,7 +124,7 @@
         </c:when>
         <c:otherwise>
             <div class="error">
-                <c:out value="${requestScope['error']}" />
+                <c:out value="${requestScope['error']}" escapeXml="false" />
             </div>
         </c:otherwise>
     </c:choose>

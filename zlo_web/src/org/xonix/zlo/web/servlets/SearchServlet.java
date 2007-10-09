@@ -4,6 +4,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.search.BooleanQuery;
 import org.xonix.zlo.search.SearchRequest;
 import org.xonix.zlo.search.ZloSearchResult;
+import org.xonix.zlo.search.ZloSearcher;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.config.ErrorMessages;
 import org.xonix.zlo.search.model.ZloMessage;
@@ -171,6 +172,11 @@ public class SearchServlet extends ForwardingServlet {
                     zloSearchResult = searchRequest.performSearch();
                 } catch (BooleanQuery.TooManyClauses e) { // например как в поиске текста +с*
                     request.setAttribute(ERROR, ErrorMessages.TooComplexSearch);
+                } catch (ZloSearcher.ParseException e) {
+                    request.setAttribute(ERROR, ErrorMessages.InvalidQueryString +
+                            (Config.DEBUG
+                            ? ":<br/>" + e.getQuery()
+                            : ""));
                 }
                 session.setAttribute(SESS_SEARCH_RESULT, zloSearchResult);
             } else {

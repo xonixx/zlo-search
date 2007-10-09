@@ -3,7 +3,6 @@ package org.xonix.zlo.search;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.*;
 import org.xonix.zlo.search.config.Config;
@@ -22,6 +21,19 @@ import java.util.NoSuchElementException;
 public class ZloSearcher {
     private final static ZloSearcher ZLO_SEARCHER_INSTANCE = new ZloSearcher();
     public final static SimpleDateFormat QUERY_DATEFORMAT = new SimpleDateFormat("yyyyMMdd"); // because of locale
+
+    public static class ParseException extends RuntimeException {
+        private String query;
+
+        public ParseException(String query, Throwable cause) {
+            super(cause);
+            this.query = query;
+        }
+
+        public String getQuery() {
+            return query;
+        }
+    }
 
     public static ZloSearchResult search(String queryString) {
         return ZLO_SEARCHER_INSTANCE.search0(queryString);
@@ -127,8 +139,8 @@ public class ZloSearcher {
             result.setHits(hits);
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
+        } catch (org.apache.lucene.queryParser.ParseException e) {
+            throw new ParseException(queryStr, e);
         }
         return result;
     }

@@ -13,7 +13,9 @@ public enum ErrorMessages {
     NumParameterInvalid("error.num.param.invalid"),
     MessageNotFound("error.msg.not.found"),
     TooComplexSearch("error.too.complex.search"),
-    
+
+    InvalidQueryString("error.invalid.query.string"),
+
     ;
 
     private String val;
