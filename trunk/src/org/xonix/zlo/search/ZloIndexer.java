@@ -87,7 +87,7 @@ public class ZloIndexer {
 
     public static void main(String[] args) {
 //        new ZloIndexer(DAO.Site.SOURCE).indexRange(3765000, 3765010);
-        new ZloIndexer(DAO.DB.SOURCE, true).indexRange(1, 6850);
+        new ZloIndexer(DAO.DB.SOURCE, true).indexRange(1, 31000);
 //        new ZloIndexer(new ZloStorage(), true).indexRange(ZloStorage.FROM, ZloStorage.TO);
     }
 }
