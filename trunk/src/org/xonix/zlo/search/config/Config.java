@@ -2,10 +2,12 @@ package org.xonix.zlo.search.config;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.log4j.PropertyConfigurator;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
 /**
@@ -14,7 +16,8 @@ import java.util.Properties;
  * Time: 18:06:03
  */
 public class Config {
-    private static Properties props = new Properties();
+    private static final Logger logger = Logger.getLogger(Config.class);
+    private static final Properties props = new Properties();
 
     static {
         try {
@@ -72,15 +75,20 @@ public class Config {
 
     public static final Connection DB_CONNECTION;
     static {
-        Connection _a = null;
+        Connection _conn = null;
         if (TRUE.equals(getProp("db.initialize"))) {
             try {
                  Class.forName(getProp("db.driver"));
-                _a = DriverManager.getConnection(getProp("db.url"), getProp("db.user"), getProp("db.password"));
+                _conn = DriverManager.getConnection(getProp("db.url"), getProp("db.user"), getProp("db.password"));
             } catch (Exception e) {
-                e.printStackTrace();
+                if (e instanceof ClassNotFoundException) {
+                    logger.error("Can't load MySQL drivers...");
+                } else if (e instanceof SQLException) {
+                    logger.error("Can't connect to DB...");
+                }
+                logger.warn("Starting without DB because of exception: " + e.getClass());
             }
         }
-        DB_CONNECTION = _a;
+        DB_CONNECTION = _conn;
     }
 }
