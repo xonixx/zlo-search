@@ -21,6 +21,8 @@ public class ZloIndexer {
     private IndexingSource source;
     private static File INDEX_DIR = new File(Config.INDEX_DIR);
 
+    private static final int INDEX_PER_TIME = 50;
+
 /*    static {
         try {
             FileHandler fileHandler = new FileHandler("__log.txt");
@@ -54,34 +56,42 @@ public class ZloIndexer {
     }
 
     public void indexRange(int startNum, int endNum) {
+        Exception ex = null;
         try {
-          IndexWriter writer = new IndexWriter(INDEX_DIR, ZloMessage.constructAnalyzer(), true);
-          logger.info("Indexing to directory '" +INDEX_DIR+ "'...");
-          indexMsgs(writer, startNum, endNum);
-          logger.info("Optimizing...");
-          writer.optimize();
-          writer.close();
+            IndexWriter writer = new IndexWriter(INDEX_DIR, ZloMessage.constructAnalyzer(), true);
+            logger.info("Indexing to directory '" + INDEX_DIR + "' range (" + startNum + " - " + endNum + ") ...");
+            indexMsgs(writer, startNum, endNum);
+            logger.info("Optimizing...");
+            writer.optimize();
+            writer.close();
         } catch (IOException e) {
-          System.out.println(" caught a " + e.getClass() +
-           "\n with message: " + e.getMessage());
+            ex = e;
         } catch (DAOException e) {
-            e.printStackTrace();
+            ex = e;
+        }
+        if (ex != null) {
+            logger.error("Exception occured: " + ex);
         }
     }
 
-    private void indexMsgs(IndexWriter writer, int startNum, int endNum) throws DAOException {
-        for (int i=startNum; i<=endNum; i++) {
-            ZloMessage msg = source.getMessageByNumber(i);
-            if (msg.getStatus() == ZloMessage.Status.OK) {
-                logger.info("Saving: "+msg);
-                try {
-                    writer.addDocument(msg.getDocument());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+    private void indexMsgs(IndexWriter writer, final int startNum, final int endNum) throws DAOException, IOException {
+        int start = startNum, end;
+        while (start < endNum) {
+            if (start + INDEX_PER_TIME > endNum) {
+                end = endNum;
             } else {
-                logger.info("Not saving: " + msg);
+                end = start + INDEX_PER_TIME;
             }
+            logger.info("Indexing part (" + start + " - " + end + ") ...");
+            for (ZloMessage msg : source.getMessages(start, end)) {
+                if (msg.getStatus() == ZloMessage.Status.OK) {
+                    logger.debug("Addind: " + msg.getNum());
+                    writer.addDocument(msg.getDocument());
+                } else {
+                    logger.debug("Not adding: " + msg.getNum() + " with status: " + msg.getStatus());
+                }
+            }
+            start = end;
         }
     }
 
