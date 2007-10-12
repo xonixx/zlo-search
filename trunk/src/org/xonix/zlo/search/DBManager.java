@@ -54,7 +54,7 @@ public class DBManager {
 
     private static String SQL_DELETE_MSG = "DELETE FROM messages WHERE num=?";
     private static String SQL_SELECT_MSG_BY_ID = "SELECT * FROM messages WHERE num=?";
-    private static String SQL_SELECT_MSG_IN_RANGE = "SELECT * FROM messages WHERE num>? AND num<?";
+    private static String SQL_SELECT_MSG_IN_RANGE = "SELECT * FROM messages WHERE num>=? AND num<?";
     private static String SQL_SELECT_LAST_MSG = "SELECT MAX(num) FROM messages";
 
     private static void fillPreparedStatement(PreparedStatement pstmt, ZloMessage msg) throws DBException {
