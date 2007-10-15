@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
  * Time: 22:31:40
  */
 public class HtmlUtils {
-    private static final String [] BOTH_TAGS = {"a", "b", "i", "p", "blockquote", "span", "pre"};
+    private static final String [] BOTH_TAGS = {"a", "b", "i", "p", "blockquote", "span", "pre", "u", "center"};
     private static final String [] SINGLE_TAGS = {"br", "hr", "img"};
     private final static String SPACE = " ";
     private final static String NEW_LINE = "\n";
