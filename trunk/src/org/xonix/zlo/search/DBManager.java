@@ -4,12 +4,11 @@ import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.model.ZloMessage;
 import org.apache.log4j.Logger;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.List;
 import java.util.Vector;
+import java.io.Closeable;
+import java.io.IOException;
 
 /**
  * User: boost
@@ -76,14 +75,18 @@ public class DBManager {
     }
     
     public static void saveMessages(List<ZloMessage> msgs, boolean update) throws DBException {
+        PreparedStatement chkPstmt = null;
+        PreparedStatement insertPstmt = null;
+        PreparedStatement updatePstmt = null;
+        ResultSet rs = null;
         try {
-            PreparedStatement chkPstmt = Config.DB_CONNECTION.prepareStatement(SQL_SELECT_MSG_BY_ID);
-            PreparedStatement insertPstmt = Config.DB_CONNECTION.prepareStatement(SQL_INSERT_MSG);
-            PreparedStatement updatePstmt = Config.DB_CONNECTION.prepareStatement(SQL_UPDATE_MSG);
+            chkPstmt = Config.DB_CONNECTION.prepareStatement(SQL_SELECT_MSG_BY_ID);
+            insertPstmt = Config.DB_CONNECTION.prepareStatement(SQL_INSERT_MSG);
+            updatePstmt = Config.DB_CONNECTION.prepareStatement(SQL_UPDATE_MSG);
 
             for (ZloMessage msg : msgs) {
                 chkPstmt.setInt(1, msg.getNum());
-                ResultSet rs = chkPstmt.executeQuery();
+                rs = chkPstmt.executeQuery();
                 if (!rs.next()) {
                     logger.debug("Inserting msg: " + msg.getNum());
                     fillPreparedStatement(insertPstmt, msg);
@@ -95,9 +98,12 @@ public class DBManager {
                     if (updatePstmt.executeUpdate() == 0)
                         throw new SQLException("Failed to update record");
                 }
+                rs.close();
             }
         } catch (SQLException e) {
             throw new DBException(e);
+        } finally {
+            close(chkPstmt, insertPstmt, updatePstmt, rs);
         }
     }
 
@@ -130,23 +136,18 @@ public class DBManager {
         } catch (SQLException e) {
             throw new DBException(e);
         } finally {
-            try {
-                if (st != null)
-                    st.close();
-                if (rs != null)
-                    rs.close();
-            } catch (SQLException e) {
-                ;
-            }
+            close(st, rs);
         }
     }
 
     public static List<ZloMessage> getMessagesByRange(int start, int end) throws DBException {
+        PreparedStatement st = null;
+        ResultSet rs = null;
         try {
-            PreparedStatement st = Config.DB_CONNECTION.prepareStatement(SQL_SELECT_MSG_IN_RANGE);
+            st = Config.DB_CONNECTION.prepareStatement(SQL_SELECT_MSG_IN_RANGE);
             st.setInt(1, start);
             st.setInt(2, end);
-            ResultSet rs = st.executeQuery();
+            rs = st.executeQuery();
             List<ZloMessage> msgs = new Vector<ZloMessage>();
             while (rs.next()) {
                 msgs.add(
@@ -166,20 +167,50 @@ public class DBManager {
             return msgs;
         } catch (SQLException e) {
             throw new DBException(e);
+        } finally {
+            close(st, rs);
         }
     }
 
     public static int getLastRootMessageNumber() throws DBException {
-           try {
-               PreparedStatement st = Config.DB_CONNECTION.prepareStatement(SQL_SELECT_LAST_MSG);
-               ResultSet rs = st.executeQuery();
-               if (rs.next()) {
-                   return rs.getInt(1);
-               }
-           } catch (SQLException e) {
-               throw new DBException(e);
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+           st = Config.DB_CONNECTION.prepareStatement(SQL_SELECT_LAST_MSG);
+           rs = st.executeQuery();
+           if (rs.next()) {
+               return rs.getInt(1);
            }
-           return -1;
+        } catch (SQLException e) {
+           throw new DBException(e);
+        } finally {
+            close(st, rs);
+        }
+        return -1;
     }
 
+    private static void close(Object obj) {
+        if (obj == null)
+            return;
+
+        try {
+            if (obj instanceof Statement) {
+                ((Statement) obj).close();
+            } else if (obj instanceof ResultSet) {
+                ((ResultSet) obj).close();
+            } else if (obj instanceof Closeable) {
+                ((Closeable) obj).close();
+            }
+        } catch (SQLException e) {
+            ;
+        } catch(IOException e) {
+            ;
+        }
+    }
+
+    private static void close(Object... all) {
+        for(Object obj : all) {
+            close(obj);
+        }
+    }
 }
