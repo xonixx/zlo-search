@@ -1,6 +1,6 @@
 import junit.framework.TestCase;
 import org.junit.Test;
-import org.xonix.zlo.search.daemon.TimeUtils;
+import org.xonix.zlo.search.utils.TimeUtils;
 import org.xonix.zlo.search.utils.HtmlUtils;
 
 /**

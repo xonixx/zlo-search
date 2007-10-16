@@ -20,8 +20,20 @@ import java.util.List;
  */
 public class Test1 {
     public static void main(String[] args) {
-        m12();
+        m13();
         System.exit(0);
+    }
+
+    public static void m13() throws RuntimeException {
+        try {
+            System.out.println("throwing..");
+            throw new RuntimeException("1");
+        } catch(RuntimeException ex) {
+            System.out.println("catching..");
+            throw ex;
+        } finally {
+            System.out.println("finally");
+        }
     }
 
     public static void m12() {
