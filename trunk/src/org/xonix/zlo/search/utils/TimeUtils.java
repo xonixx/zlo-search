@@ -1,4 +1,4 @@
-package org.xonix.zlo.search.daemon;
+package org.xonix.zlo.search.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
