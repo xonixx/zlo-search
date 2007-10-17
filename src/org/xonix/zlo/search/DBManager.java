@@ -1,14 +1,14 @@
 package org.xonix.zlo.search;
 
+import org.apache.log4j.Logger;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.model.ZloMessage;
-import org.apache.log4j.Logger;
 
-import java.sql.*;
-import java.util.List;
-import java.util.Vector;
 import java.io.Closeable;
 import java.io.IOException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User: boost
@@ -29,25 +29,25 @@ public class DBManager {
     public static final String MSG_STATUS = ZloMessage.STATUS;
 
     private static String SQL_INSERT_MSG = "INSERT INTO messages(" +
-            "num, " +
-            "host, " +
-            "topic, " +
-            "title, " +
-            "nick, "  +
-            "msgDate, "  +
-            "reg, "  +
+            "num," +
+            "host," +
+            "topic," +
+            "title," +
+            "nick," +
+            "msgDate," +
+            "reg," +
             "body," +
             "status)" +
             " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static String SQL_UPDATE_MSG = "UPDATE messages " +
-            "SET num=?, " +
-            "host=?, " +
-            "topic=?, " +
-            "title=?, " +
-            "nick=?, "  +
-            "msgDate=?, "  +
-            "reg=?, "  +
+            "SET num=?," +
+            "host=?," +
+            "topic=?," +
+            "title=?," +
+            "nick=?," +
+            "msgDate=?," +
+            "reg=?," +
             "body=?" +
             "status=? WHERE num=?";
 
@@ -60,7 +60,7 @@ public class DBManager {
         try {
             pstmt.setInt(1, msg.getNum());
             pstmt.setString(2, msg.getHost());
-            pstmt.setString(3, msg.getTopic());
+            pstmt.setInt(3, ZloMessage.TOPIC_CODES.get(msg.getTopic()));
             pstmt.setString(4, msg.getTitle());
             pstmt.setString(5, msg.getNick());
             pstmt.setTimestamp(6, msg.getDate() == null
@@ -80,30 +80,67 @@ public class DBManager {
         PreparedStatement updatePstmt = null;
         ResultSet rs = null;
         try {
-            chkPstmt = Config.DB_CONNECTION.prepareStatement(SQL_SELECT_MSG_BY_ID);
-            insertPstmt = Config.DB_CONNECTION.prepareStatement(SQL_INSERT_MSG);
-            updatePstmt = Config.DB_CONNECTION.prepareStatement(SQL_UPDATE_MSG);
+            Connection conn = Config.DB_CONNECTION;
+            chkPstmt = conn.prepareStatement(SQL_SELECT_MSG_BY_ID);
+            insertPstmt = conn.prepareStatement(SQL_INSERT_MSG);
+            updatePstmt = conn.prepareStatement(SQL_UPDATE_MSG);
 
             for (ZloMessage msg : msgs) {
+                String loggerMsg = "Inserting msg: " + msg.getNum() + "... ";
+
                 chkPstmt.setInt(1, msg.getNum());
                 rs = chkPstmt.executeQuery();
+
                 if (!rs.next()) {
-                    logger.debug("Inserting msg: " + msg.getNum());
                     fillPreparedStatement(insertPstmt, msg);
                     insertPstmt.executeUpdate();
+                    loggerMsg += "inserted.";
                 } else if (update) {
-                    logger.debug("Updating msg: "+msg.getNum());
                     fillPreparedStatement(updatePstmt, msg);
                     updatePstmt.setInt(9, msg.getNum());
                     if (updatePstmt.executeUpdate() == 0)
                         throw new SQLException("Failed to update record");
+                    loggerMsg += "updated.";
+                } else {
+                    loggerMsg += "already exists.";
                 }
+
+                logger.debug(loggerMsg);
                 rs.close();
             }
         } catch (SQLException e) {
             throw new DBException(e);
         } finally {
             close(chkPstmt, insertPstmt, updatePstmt, rs);
+        }
+    }
+
+    public static void saveMessagesFast(List<ZloMessage> msgs) throws DBException {
+        PreparedStatement insertPstmt = null;
+        ResultSet rs = null;
+        Connection conn = Config.DB_CONNECTION;
+        try {
+            conn.setAutoCommit(false);
+            insertPstmt = conn.prepareStatement(SQL_INSERT_MSG);
+
+            for (ZloMessage msg : msgs) {
+                logger.debug("Adding msg: " + msg.getNum() + " to batch... ");
+                fillPreparedStatement(insertPstmt, msg);
+                insertPstmt.addBatch();
+            }
+
+            insertPstmt.executeBatch();
+            conn.commit();
+            conn.setAutoCommit(true);
+        } catch (SQLException e) {
+            try {
+                conn.setAutoCommit(true);
+            } catch (SQLException e1) {
+                throw new DBException(e1);
+            }
+            throw new DBException(e);
+        } finally {
+            close(insertPstmt, rs);
         }
     }
 
@@ -122,7 +159,7 @@ public class DBManager {
                 return new ZloMessage(
                         rs.getString(MSG_NICK),
                         rs.getString(MSG_HOST),
-                        rs.getString(MSG_TOPIC),
+                        rs.getInt(MSG_TOPIC),
                         rs.getString(MSG_TITLE),
                         rs.getString(MSG_BODY),
                         rs.getTimestamp(MSG_DATE),
@@ -148,13 +185,13 @@ public class DBManager {
             st.setInt(1, start);
             st.setInt(2, end);
             rs = st.executeQuery();
-            List<ZloMessage> msgs = new Vector<ZloMessage>();
+            List<ZloMessage> msgs = new ArrayList<ZloMessage>();
             while (rs.next()) {
                 msgs.add(
                         new ZloMessage(
                                 rs.getString(MSG_NICK),
                                 rs.getString(MSG_HOST),
-                                rs.getString(MSG_TOPIC),
+                                rs.getInt(MSG_TOPIC),
                                 rs.getString(MSG_TITLE),
                                 rs.getString(MSG_BODY),
                                 rs.getTimestamp(MSG_DATE),
