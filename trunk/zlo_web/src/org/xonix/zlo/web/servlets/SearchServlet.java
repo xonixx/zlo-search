@@ -65,7 +65,7 @@ public class SearchServlet extends ForwardingServlet {
     public static SimpleDateFormat FROM_TO_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 
     protected void doGet(ForwardingRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String topicCode = request.getParameter(QS_TOPIC);
+        String topicCodeStr = request.getParameter(QS_TOPIC);
         String text = request.getParameter(QS_TEXT);
 
         boolean inTitle = StringUtils.isNotEmpty(request.getParameter(QS_IN_TITLE));
@@ -84,8 +84,15 @@ public class SearchServlet extends ForwardingServlet {
         HttpSession session = request.getSession(true); // create if session not started
 
         // set default topic code
-        if (StringUtils.isEmpty(topicCode)) {
-            request.setParameter(QS_TOPIC, "0");
+        if (StringUtils.isEmpty(topicCodeStr)) {
+            request.setParameter(QS_TOPIC, "-1"); // all
+        }
+
+        int topicCode;
+        try {
+            topicCode = Integer.parseInt(topicCodeStr);
+        } catch (NumberFormatException e) {
+            topicCode = -1; // all
         }
 
         // default values for checkboxes

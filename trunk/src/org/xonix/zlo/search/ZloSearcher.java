@@ -39,7 +39,7 @@ public class ZloSearcher {
         return ZLO_SEARCHER_INSTANCE.search0(queryString);
     }
 
-    public static ZloSearchResult search(String topicCode,
+    public static ZloSearchResult search(int topicCode,
                                          String text,
                                          boolean inTitle,
                                          boolean inBody,
@@ -67,7 +67,7 @@ public class ZloSearcher {
                         .append(" +body:(").append(text).append(")");
         }
 
-        if (StringUtils.isNotEmpty(topicCode) && !"0".equals(topicCode)) {
+        if (-1 != topicCode) {
             queryStr.append(" +topic:").append(topicCode);
         }
 
@@ -108,7 +108,7 @@ public class ZloSearcher {
         );
     }
 
-    public static ZloSearchResult search(String topicCode,
+    public static ZloSearchResult search(int topicCode,
                                          String text,
                                          boolean inTitle,
                                          boolean inBody,

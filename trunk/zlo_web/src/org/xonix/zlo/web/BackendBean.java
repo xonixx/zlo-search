@@ -28,7 +28,7 @@ public class BackendBean {
     }
 
     public String getTopicSelector() {
-        return HtmlConstructor.constructSelector(SN_TOPIC, ZloMessage.TOPICS, topic, true);
+        return HtmlConstructor.constructSelector(SN_TOPIC, ZloMessage.ALL_TOPICS, ZloMessage.TOPICS, topic, true);
     }
 
     public String getSiteSelector() {
