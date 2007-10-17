@@ -32,6 +32,8 @@ public class FileToDb {
 
     public static final DateFormat MSSQL_DATE_FORMAT = new SimpleDateFormat("yyyy-M-d hh:mm:ss");
 
+    public static final String FALSE = "False";
+
     public static final Logger logger = Logger.getLogger(FileToDb.class);
 
     public void main0() {
@@ -63,7 +65,7 @@ public class FileToDb {
                                 columnVals[1],
                                 columnVals[6],
                                 MSSQL_DATE_FORMAT.parse(columnVals[5]),
-                                "0".equals(columnVals[13]),
+                                FALSE.equals(columnVals[13]),
                                 Integer.parseInt(columnVals[0]),
                                 null,
                                 null,

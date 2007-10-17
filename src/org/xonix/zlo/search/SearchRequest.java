@@ -22,7 +22,7 @@ public class SearchRequest {
 
     private String nick;
     private String host;
-    private String topicCode;
+    private int topicCode = -1; // by default - all
 
     private Date fromDate;
     private Date toDate;
@@ -32,7 +32,7 @@ public class SearchRequest {
 
     public SearchRequest(String text, boolean inTitle, boolean inBody,
                          boolean inReg, boolean inHasUrl, boolean inHasImg,
-                         String nick, String host, String topicCode, Date fromDate, Date toDate) {
+                         String nick, String host, int topicCode, Date fromDate, Date toDate) {
         this.text = text;
         this.inTitle = inTitle;
         this.inBody = inBody;
@@ -110,11 +110,11 @@ public class SearchRequest {
         this.host = host;
     }
 
-    public String getTopicCode() {
+    public int getTopicCode() {
         return topicCode;
     }
 
-    public void setTopicCode(String topicCode) {
+    public void setTopicCode(int topicCode) {
         this.topicCode = topicCode;
     }
 
@@ -138,7 +138,7 @@ public class SearchRequest {
         return StringUtils.isNotEmpty(text) ||
                 StringUtils.isNotEmpty(nick) ||
                 StringUtils.isNotEmpty(host) ||
-                StringUtils.isNotEmpty(topicCode) && !"0".equals(topicCode);
+                -1 != topicCode;
     }
 
     public boolean equals(Object obj) {
@@ -147,7 +147,7 @@ public class SearchRequest {
 
         SearchRequest req = (SearchRequest) obj;
 
-        return StringUtils.equals(topicCode, req.getTopicCode()) &&
+        return topicCode == req.getTopicCode() &&
                 StringUtils.equals(text, req.getText()) &&
                 inTitle == req.isInTitle() &&
                 inBody == req.isInBody() &&
@@ -168,7 +168,7 @@ public class SearchRequest {
         return !isTheSameSearch(searchRequest);
     }
 
-    public boolean isTheSameSearch(String topicCode,
+    public boolean isTheSameSearch(int topicCode,
                                      String text,
                                      boolean inTitle,
                                      boolean inBody,
@@ -183,7 +183,7 @@ public class SearchRequest {
                                             nick, host, topicCode, fromDate, toDate));
     }
 
-    public boolean isNotTheSameSearch(String topicCode,
+    public boolean isNotTheSameSearch(int topicCode,
                                      String text,
                                      boolean inTitle,
                                      boolean inBody,
