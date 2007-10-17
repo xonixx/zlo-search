@@ -116,11 +116,7 @@ public class MultithreadedRetriever {
                 throw new DAOException(source, MessageRetriever.getException());
         }
 
-        Collections.sort(msgs, new Comparator<ZloMessage>() {
-            public int compare(ZloMessage m1, ZloMessage m2) {
-                return m1.getNum() > m2.getNum() ? 1 : m1.getNum() < m2.getNum() ? -1 : 0;
-            }
-        });
+        Collections.sort(msgs, ZloMessage.NUM_COMPARATOR);
         
         return msgs;
     }

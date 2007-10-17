@@ -19,6 +19,7 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Comparator;
 
 /**
  * Author: gubarkov
@@ -59,6 +60,12 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
 
     private int hitId;
 
+    public static Comparator<ZloMessage> NUM_COMPARATOR = new Comparator<ZloMessage>() {
+            public int compare(ZloMessage m1, ZloMessage m2) {
+                return m1.getNum() > m2.getNum() ? 1 : m1.getNum() < m2.getNum() ? -1 : 0;
+            }
+        };
+
     private Status status = Status.UNKNOWN; // default
 
     public static enum Status {
@@ -89,7 +96,7 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
             "\n\tnum={0},\n\tstatus={1}\n)");
     
     public static final String [] TOPICS = {
-        "Все темы", "Без темы",
+        "Без темы",
         "Учеба", "Работа", "Мурзилка",
         "Обсуждение", "Новости", "Спорт",
         "Развлечения", "Движок борды", "Программирование",
@@ -97,16 +104,16 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
         "Windows", "BSD/Linux", "Проблемы сети",
         "Голосование", "Потеряно/Найдено", "Temp"
     };
+    public static final String ALL_TOPICS = "Все темы";
 
     public static NumberFormat URL_NUM_FORMAT = new DecimalFormat("0000000000"); // 10 zeros
 
-    public static Map<String, String> TOPIC_CODES = new HashMap<String, String>(TOPIC.length());
+    public static Map<String, Integer> TOPIC_CODES = new HashMap<String, Integer>(TOPIC.length());
 
     static {
-        TOPIC_CODES.put(TOPICS[0], "0"); // all topics ?? 
-        TOPIC_CODES.put("", "1"); // wo topics
-        for (int i=2; i<TOPICS.length; i++) {
-            TOPIC_CODES.put(TOPICS[i], Integer.toString(i));
+        TOPIC_CODES.put(ALL_TOPICS, -1); // all topics
+        for (int i=0; i<TOPICS.length; i++) {
+            TOPIC_CODES.put(TOPICS[i], i);
         }
     }
 
@@ -128,6 +135,19 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
         this.hasUrl = hasUrl;
         this.hasImg = hasImg;
         this.status = status;
+    }
+    
+    public ZloMessage(String userName, String hostName, int msgTopicCode, String msgTitle, String msgBody, Date msgDate,
+                      boolean reg, int urlNum,
+                      Boolean hasUrl, Boolean hasImg,
+                      Status status) {
+        this(userName, hostName,
+                msgTopicCode == -1
+                    ? ALL_TOPICS
+                    : TOPICS[msgTopicCode],
+                msgTitle, msgBody, msgDate, reg, urlNum,
+                hasUrl, hasImg, status
+        );
     }
 
     public String getNick() {
@@ -256,7 +276,7 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
 
         Document doc = new Document();
         doc.add(new Field(URL_NUM, URL_NUM_FORMAT.format(num), Field.Store.YES, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(TOPIC, TOPIC_CODES.get(topic), Field.Store.YES, Field.Index.UN_TOKENIZED));
+        doc.add(new Field(TOPIC, TOPIC_CODES.get(topic).toString(), Field.Store.YES, Field.Index.UN_TOKENIZED));
         doc.add(new Field(TITLE_HTML, title, Field.Store.YES, Field.Index.NO)); // "грязный" - храним, не индексируем
         doc.add(new Field(TITLE, getCleanTitle(), Field.Store.NO, Field.Index.TOKENIZED)); // "чистый" - индексируем, не храним
         doc.add(new Field(NICK, nick, Field.Store.YES, Field.Index.UN_TOKENIZED));
