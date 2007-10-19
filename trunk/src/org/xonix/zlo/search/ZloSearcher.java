@@ -5,6 +5,7 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.*;
+import org.apache.log4j.Logger;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.model.ZloMessage;
 
@@ -19,8 +20,22 @@ import java.util.NoSuchElementException;
  * Time: 2:24:05
  */
 public class ZloSearcher {
+    private static final Logger logger = Logger.getLogger(ZloSearcher.class);
+
     private final static ZloSearcher ZLO_SEARCHER_INSTANCE = new ZloSearcher();
     public final static SimpleDateFormat QUERY_DATEFORMAT = new SimpleDateFormat("yyyyMMdd"); // because of locale
+    private final static IndexReader INDEX_READER;
+
+    static {
+        IndexReader _ir;
+        try {
+            _ir = IndexReader.open(Config.INDEX_DIR);
+        } catch (IOException e) {
+            _ir = null;
+            logger.error("Error while creating index reader: " + e);
+        }
+        INDEX_READER = _ir;
+    }
 
     public static class ParseException extends RuntimeException {
         private String query;
@@ -123,9 +138,9 @@ public class ZloSearcher {
 
     private ZloSearchResult search0(String queryStr) {
         ZloSearchResult result = new ZloSearchResult();
+        IndexSearcher searcher = null;
         try {
-            IndexReader reader = IndexReader.open(Config.INDEX_DIR);
-            IndexSearcher searcher = new IndexSearcher(reader);
+            searcher = new IndexSearcher(INDEX_READER);
             Analyzer analyzer = ZloMessage.constructAnalyzer();
             QueryParser parser = new QueryParser(ZloMessage.BODY, analyzer);
             Query query = parser.parse(queryStr);
@@ -141,6 +156,13 @@ public class ZloSearcher {
             e.printStackTrace();
         } catch (org.apache.lucene.queryParser.ParseException e) {
             throw new ParseException(queryStr, e);
+        } finally {
+            try {
+                if (searcher != null)
+                    searcher.close();
+            } catch (IOException e) {
+                logger.warn("Error while closing searcher: " + e);
+            }
         }
         return result;
     }

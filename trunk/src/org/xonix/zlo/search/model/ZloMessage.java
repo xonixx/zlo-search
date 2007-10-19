@@ -9,6 +9,7 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.search.Hit;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.utils.HtmlUtils;
+import org.xonix.zlo.search.DAO;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -69,9 +70,10 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
     private Status status = Status.UNKNOWN; // default
 
     public static enum Status {
+        UNKNOWN,
         OK,
         DELETED,
-        UNKNOWN,
+        SPAM,
         ;
 
         public static Status fromInt(int id) {
@@ -275,7 +277,7 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
             return null;
 
         Document doc = new Document();
-        doc.add(new Field(URL_NUM, URL_NUM_FORMAT.format(num), Field.Store.YES, Field.Index.UN_TOKENIZED));
+/*        doc.add(new Field(URL_NUM, URL_NUM_FORMAT.format(num), Field.Store.YES, Field.Index.UN_TOKENIZED));
         doc.add(new Field(TOPIC, TOPIC_CODES.get(topic).toString(), Field.Store.YES, Field.Index.UN_TOKENIZED));
         doc.add(new Field(TITLE_HTML, title, Field.Store.YES, Field.Index.NO)); // "грязный" - храним, не индексируем
         doc.add(new Field(TITLE, getCleanTitle(), Field.Store.NO, Field.Index.TOKENIZED)); // "чистый" - индексируем, не храним
@@ -286,11 +288,25 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
         doc.add(new Field(BODY_HTML, body, Field.Store.COMPRESS, Field.Index.NO)); // "грязный" - храним сжатый, не индексируем
         doc.add(new Field(BODY, getCleanBody(), Field.Store.NO, Field.Index.TOKENIZED)); // "чистый" - индексируем, не храним
         doc.add(new Field(HAS_URL, isHasUrl() ? TRUE : FALSE, Field.Store.YES, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(HAS_IMG, isHasImg() ? TRUE : FALSE, Field.Store.YES, Field.Index.UN_TOKENIZED));
+        doc.add(new Field(HAS_IMG, isHasImg() ? TRUE : FALSE, Field.Store.YES, Field.Index.UN_TOKENIZED));*/
+
+        doc.add(new Field(URL_NUM, URL_NUM_FORMAT.format(num), Field.Store.YES, Field.Index.UN_TOKENIZED));
+        doc.add(new Field(TOPIC, TOPIC_CODES.get(topic).toString(), Field.Store.NO, Field.Index.UN_TOKENIZED));
+//        doc.add(new Field(TITLE_HTML, title, Field.Store.YES, Field.Index.NO)); // "грязный" - храним, не индексируем
+        doc.add(new Field(TITLE, getCleanTitle(), Field.Store.NO, Field.Index.TOKENIZED)); // "чистый" - индексируем, не храним
+        doc.add(new Field(NICK, nick, Field.Store.NO, Field.Index.UN_TOKENIZED));
+        doc.add(new Field(REG, reg ? TRUE : FALSE, Field.Store.NO, Field.Index.UN_TOKENIZED));
+        doc.add(new Field(HOST, host, Field.Store.NO, Field.Index.UN_TOKENIZED));
+        doc.add(new Field(DATE, DateTools.dateToString(date, DateTools.Resolution.MINUTE), Field.Store.NO, Field.Index.UN_TOKENIZED));
+//        doc.add(new Field(BODY_HTML, body, Field.Store.COMPRESS, Field.Index.NO)); // "грязный" - храним сжатый, не индексируем
+        doc.add(new Field(BODY, getCleanBody(), Field.Store.NO, Field.Index.TOKENIZED)); // "чистый" - индексируем, не храним
+        doc.add(new Field(HAS_URL, isHasUrl() ? TRUE : FALSE, Field.Store.NO, Field.Index.UN_TOKENIZED));
+        doc.add(new Field(HAS_IMG, isHasImg() ? TRUE : FALSE, Field.Store.NO, Field.Index.UN_TOKENIZED));
+
         return doc;
     }
 
-    public static ZloMessage fromDocument(Document doc) {
+/*    public static ZloMessage fromDocument(Document doc) {
         try {
             return new ZloMessage(
                 doc.get(NICK),
@@ -309,6 +325,18 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
             e.printStackTrace();
         }
         return null;
+    }*/
+
+    public static ZloMessage fromDocument(Document doc) {
+        int num = Integer.parseInt(doc.get(URL_NUM));
+
+        ZloMessage msg = null;
+        try {
+            msg = DAO.DB._getMessageByNumber(num);
+        } catch (DAO.DAOException e) {
+            ;
+        }
+        return msg;
     }
 
     public static ZloMessage fromDocument(Document doc, int hitId) {
