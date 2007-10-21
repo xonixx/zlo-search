@@ -334,7 +334,7 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
         try {
             msg = DAO.DB._getMessageByNumber(num);
         } catch (DAO.DAOException e) {
-            ;
+            throw new RuntimeException(e);
         }
         return msg;
     }

@@ -16,7 +16,7 @@ import java.util.List;
  * Time: 11:33:31 PM
  */
 public class DBManager {
-    private static Logger logger = Logger.getLogger(DBManager.class);
+    private static final Logger logger = Logger.getLogger(DBManager.class);
 
     public static final String MSG_NICK = ZloMessage.NICK;
     public static final String MSG_HOST = ZloMessage.HOST;
@@ -28,7 +28,7 @@ public class DBManager {
     public static final String MSG_URL_NUM = ZloMessage.URL_NUM;
     public static final String MSG_STATUS = ZloMessage.STATUS;
 
-    private static String SQL_INSERT_MSG = "INSERT INTO messages(" +
+    private static final String SQL_INSERT_MSG = "INSERT INTO messages(" +
             "num," +
             "host," +
             "topic," +
@@ -40,7 +40,7 @@ public class DBManager {
             "status)" +
             " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    private static String SQL_UPDATE_MSG = "UPDATE messages " +
+    private static final String SQL_UPDATE_MSG = "UPDATE messages " +
             "SET num=?," +
             "host=?," +
             "topic=?," +
@@ -51,10 +51,11 @@ public class DBManager {
             "body=?" +
             "status=? WHERE num=?";
 
-    private static String SQL_DELETE_MSG = "DELETE FROM messages WHERE num=?";
-    private static String SQL_SELECT_MSG_BY_ID = "SELECT * FROM messages WHERE num=?";
-    private static String SQL_SELECT_MSG_IN_RANGE = "SELECT * FROM messages WHERE num>=? AND num<?";
-    private static String SQL_SELECT_LAST_MSG = "SELECT MAX(num) FROM messages";
+    private static final String SQL_DELETE_MSG = "DELETE FROM messages WHERE num=?";
+    private static final String SQL_SELECT_MSG_BY_ID = "SELECT * FROM messages WHERE num=?";
+    private static final String SQL_SELECT_MSG_IN_RANGE = "SELECT * FROM messages WHERE num>=? AND num<?";
+    private static final String SQL_SELECT_LAST_MSG = "SELECT MAX(num) FROM messages";
+    private static final String SQL_SELECT_CHECK_ALIVE = "SELECT 1;";
 
     private static void fillPreparedStatement(PreparedStatement pstmt, ZloMessage msg) throws DBException {
         try {
@@ -149,6 +150,8 @@ public class DBManager {
     }
 
     public static ZloMessage getMessageByNumber(int num) throws DBException {
+        reopenConnectionIfNeeded();
+
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
@@ -226,6 +229,37 @@ public class DBManager {
         return -1;
     }
 
+    public static void reopenConnectionIfNeeded() throws DBException {
+        Statement checkStmt = null;
+        try {
+            boolean closed = Config.DB_CONNECTION == null;
+
+            if (!closed) {
+                checkStmt = Config.DB_CONNECTION.createStatement();
+
+                try {
+                    checkStmt.executeQuery(SQL_SELECT_CHECK_ALIVE);
+                } catch(SQLException e) {
+                    closed = true;
+                }
+            }
+
+            if (closed) {
+                close(Config.DB_CONNECTION);
+                logger.info("Db connection closed, recreating...");
+                Config.createConnection();
+
+                if (Config.DB_CONNECTION == null)
+                    throw new SQLException("Can't open connection");
+            }
+        } catch (SQLException e) {
+            logger.error("Problem with recreating connection: " + e);
+            throw new DBException(e);
+        } finally {
+            close(checkStmt);
+        }
+    }
+
     private static void close(Object obj) {
         if (obj == null)
             return;
@@ -237,6 +271,8 @@ public class DBManager {
                 ((ResultSet) obj).close();
             } else if (obj instanceof Closeable) {
                 ((Closeable) obj).close();
+            } else if (obj instanceof Connection) {
+                ((Connection) obj).close();
             }
         } catch (SQLException e) {
             ;

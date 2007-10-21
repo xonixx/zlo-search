@@ -135,10 +135,11 @@ public class SearchRequest {
     }
 
     public boolean canBeProcessed() {
-        return StringUtils.isNotEmpty(text) ||
-                StringUtils.isNotEmpty(nick) ||
-                StringUtils.isNotEmpty(host) ||
-                -1 != topicCode;
+        return StringUtils.isNotEmpty(text)
+                || StringUtils.isNotEmpty(nick)
+                || StringUtils.isNotEmpty(host)
+//                || -1 != topicCode
+                ;
     }
 
     public boolean equals(Object obj) {
@@ -198,7 +199,10 @@ public class SearchRequest {
                                 inHasUrl, inHasImg, nick, host, fromDate, toDate);
     }
 
-    public ZloSearchResult performSearch() {
+    public ZloSearchResult performSearch() throws DBException {
+        // just to throw exception if db connection broken and can't be fixed
+        DBManager.reopenConnectionIfNeeded();
+
         ZloSearchResult result = ZloSearcher.search(this);
         result.setLastSearch(this);
         return result;

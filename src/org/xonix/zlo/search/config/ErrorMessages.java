@@ -16,6 +16,8 @@ public enum ErrorMessages {
 
     InvalidQueryString("error.invalid.query.string"),
 
+    DbError("error.db.connection");
+    
     ;
 
     private String val;

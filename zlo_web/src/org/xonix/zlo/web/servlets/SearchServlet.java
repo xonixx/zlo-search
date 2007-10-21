@@ -2,9 +2,7 @@ package org.xonix.zlo.web.servlets;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.search.BooleanQuery;
-import org.xonix.zlo.search.SearchRequest;
-import org.xonix.zlo.search.ZloSearchResult;
-import org.xonix.zlo.search.ZloSearcher;
+import org.xonix.zlo.search.*;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.config.ErrorMessages;
 import org.xonix.zlo.search.model.ZloMessage;
@@ -184,6 +182,8 @@ public class SearchServlet extends ForwardingServlet {
                             (Config.DEBUG
                             ? ":<br/>" + e.getQuery()
                             : ""));
+                } catch(DBException e) {
+                    request.setAttribute(ERROR, ErrorMessages.DbError);
                 }
                 session.setAttribute(SESS_SEARCH_RESULT, zloSearchResult);
             } else {
