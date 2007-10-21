@@ -55,6 +55,8 @@ public class DBManager {
     private static final String SQL_SELECT_MSG_BY_ID = "SELECT * FROM messages WHERE num=?";
     private static final String SQL_SELECT_MSG_IN_RANGE = "SELECT * FROM messages WHERE num>=? AND num<?";
     private static final String SQL_SELECT_LAST_MSG = "SELECT MAX(num) FROM messages";
+
+    private static final String SQL_SELECT_SET = "SELECT * FROM messages WHERE num in (%1s) ORDER BY msgDate DESC;";
     private static final String SQL_SELECT_CHECK_ALIVE = "SELECT 1;";
 
     private static void fillPreparedStatement(PreparedStatement pstmt, ZloMessage msg) throws DBException {
@@ -153,7 +155,7 @@ public class DBManager {
         return getMessageByNumber(num, false);
     }
 
-    public static ZloMessage getMessageByNumber(int num, boolean afterReconnect) throws DBException {
+    private static ZloMessage getMessageByNumber(int num, boolean afterReconnect) throws DBException {
         PreparedStatement st = null;
         ResultSet rs = null;
 
@@ -164,20 +166,9 @@ public class DBManager {
             st = Config.DB_CONNECTION.prepareStatement(SQL_SELECT_MSG_BY_ID);
             st.setInt(1, num);
             rs = st.executeQuery();
-            if (rs.next()) {
-                return new ZloMessage(
-                        rs.getString(MSG_NICK),
-                        rs.getString(MSG_HOST),
-                        rs.getInt(MSG_TOPIC),
-                        rs.getString(MSG_TITLE),
-                        rs.getString(MSG_BODY),
-                        rs.getTimestamp(MSG_DATE),
-                        rs.getBoolean(MSG_REG),
-                        rs.getInt(MSG_URL_NUM),
-                        null,
-                        null,
-                        ZloMessage.Status.fromInt(rs.getInt(MSG_STATUS)));
-            } else
+            if (rs.next())
+                return getMessage(rs);
+            else
                 return null;
         } catch (SQLException e) {
             if (afterReconnect) {
@@ -200,27 +191,56 @@ public class DBManager {
             st.setInt(2, end);
             rs = st.executeQuery();
             List<ZloMessage> msgs = new ArrayList<ZloMessage>();
-            while (rs.next()) {
-                msgs.add(
-                        new ZloMessage(
-                                rs.getString(MSG_NICK),
-                                rs.getString(MSG_HOST),
-                                rs.getInt(MSG_TOPIC),
-                                rs.getString(MSG_TITLE),
-                                rs.getString(MSG_BODY),
-                                rs.getTimestamp(MSG_DATE),
-                                rs.getBoolean(MSG_REG),
-                                rs.getInt(MSG_URL_NUM),
-                                null,
-                                null,
-                                ZloMessage.Status.fromInt(rs.getInt(MSG_STATUS))));
-            }
+
+            while (rs.next())
+                msgs.add(getMessage(rs));
+
             return msgs;
         } catch (SQLException e) {
             throw new DBException(e);
         } finally {
             close(st, rs);
         }
+    }
+
+    public static List<ZloMessage> getMessages(int[] nums, int fromIndex) throws DBException {
+        return getMessages(nums, fromIndex, false);
+    }
+
+    private static List<ZloMessage> getMessages(int[] nums, int fromIndex, boolean afterReconnect) throws DBException {
+        StringBuilder sbNums = new StringBuilder(Integer.toString(nums[0]));
+
+        for(int i=1; i<nums.length; i++) {
+            sbNums.append(",").append(nums[i]);
+        }
+
+        String sql = String.format(SQL_SELECT_SET, sbNums.toString());
+
+        ResultSet rs = null;
+        Statement st = null;
+        try {
+            st = Config.DB_CONNECTION.createStatement();
+            rs = st.executeQuery(sql);
+            List<ZloMessage> msgs = new ArrayList<ZloMessage>();
+
+            while (rs.next()) {
+                ZloMessage msg = getMessage(rs);
+                msg.setHitId(fromIndex++);
+                msgs.add(msg);
+            }
+
+            return msgs;
+        } catch (SQLException e) {
+            if (afterReconnect) {
+                throw new DBException(e);
+            } else {
+                reopenConnectionIfNeeded();
+                return getMessages(nums, fromIndex, true);
+            }
+        } finally {
+            close(st, rs);
+        }
+
     }
 
     public static int getLastRootMessageNumber() throws DBException {
@@ -238,6 +258,21 @@ public class DBManager {
             close(st, rs);
         }
         return -1;
+    }
+
+    private static ZloMessage getMessage(ResultSet rs) throws SQLException {
+        return new ZloMessage(
+                rs.getString(MSG_NICK)
+                , rs.getString(MSG_HOST)
+                , rs.getInt(MSG_TOPIC)
+                , rs.getString(MSG_TITLE)
+                , rs.getString(MSG_BODY)
+                , rs.getTimestamp(MSG_DATE)
+                , rs.getBoolean(MSG_REG)
+                , rs.getInt(MSG_URL_NUM)
+                , null
+                , null
+                , ZloMessage.Status.fromInt(rs.getInt(MSG_STATUS)));
     }
 
     public static void reopenConnectionIfNeeded() throws DBException {

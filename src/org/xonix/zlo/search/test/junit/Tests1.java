@@ -2,6 +2,9 @@ import junit.framework.TestCase;
 import org.junit.Test;
 import org.xonix.zlo.search.utils.TimeUtils;
 import org.xonix.zlo.search.utils.HtmlUtils;
+import org.xonix.zlo.search.model.ZloMessage;
+import org.xonix.zlo.search.DBManager;
+import org.xonix.zlo.search.DBException;
 
 /**
  * Author: gubarkov
@@ -32,5 +35,16 @@ public class Tests1 extends TestCase {
         assertEquals(false, HtmlUtils.hasUrl("234"));
         assertEquals(true, HtmlUtils.hasImg(s));
         assertEquals(true, HtmlUtils.hasUrl(s));        
+    }
+
+    @Test
+    public void testGetMessages() {
+        try {
+            for (ZloMessage m : DBManager.getMessages(new int[] {1,2,3,100,2000,1000050}, -1)) {
+                System.out.println(m);
+            }
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
     }
 }
