@@ -1,13 +1,19 @@
 package org.xonix.zlo.web;
 
 import org.apache.lucene.search.Hits;
+import org.apache.log4j.Logger;
 import org.displaytag.pagination.PaginatedList;
 import org.displaytag.properties.SortOrderEnum;
 import org.xonix.zlo.search.ZloSearchResult;
+import org.xonix.zlo.search.DBManager;
+import org.xonix.zlo.search.DBException;
 import org.xonix.zlo.search.model.ZloMessage;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Author: Vovan
@@ -18,6 +24,8 @@ public class ZloPaginatedList implements PaginatedList {
     private List fullList;
     private int pageNumber;
     private int objectsPerPage;
+
+    private static final Logger logger = Logger.getLogger(ZloPaginatedList.class);
 
     private static class HitsToMessagesList implements List<ZloMessage> {
 
@@ -46,15 +54,21 @@ public class ZloPaginatedList implements PaginatedList {
         }
 
         public List<ZloMessage> subList(int fromIndex, int toIndex) {
-            List<ZloMessage> subList = new ArrayList<ZloMessage>();
+            int[] indexes = new int[toIndex - fromIndex];
             try {
                 for (int i=fromIndex; i<toIndex; i++) {
-                    subList.add(ZloMessage.fromDocument(hits.doc(i), i));
+                    indexes[i-fromIndex] = Integer.parseInt(hits.doc(i).get(ZloMessage.URL_NUM));
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("Error while getting doc from index: " + e);
             }
-            return subList;
+
+            try {
+                return DBManager.getMessages(indexes, fromIndex);
+            } catch (DBException e) {
+                logger.error("DBexception while getting msgs from DB: " + e);
+                throw new RuntimeException(e);
+            }
         }
 
         // затычки ---VVV
