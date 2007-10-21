@@ -150,10 +150,16 @@ public class DBManager {
     }
 
     public static ZloMessage getMessageByNumber(int num) throws DBException {
-        reopenConnectionIfNeeded();
+        return getMessageByNumber(num, false);
+    }
 
+    public static ZloMessage getMessageByNumber(int num, boolean afterReconnect) throws DBException {
         PreparedStatement st = null;
         ResultSet rs = null;
+
+        if (Config.DB_CONNECTION == null)
+            reopenConnectionIfNeeded();
+
         try {
             st = Config.DB_CONNECTION.prepareStatement(SQL_SELECT_MSG_BY_ID);
             st.setInt(1, num);
@@ -174,7 +180,12 @@ public class DBManager {
             } else
                 return null;
         } catch (SQLException e) {
-            throw new DBException(e);
+            if (afterReconnect) {
+                throw new DBException(e);
+            } else {
+                reopenConnectionIfNeeded();
+                return getMessageByNumber(num, true);
+            }
         } finally {
             close(st, rs);
         }
@@ -232,7 +243,7 @@ public class DBManager {
     public static void reopenConnectionIfNeeded() throws DBException {
         Statement checkStmt = null;
         try {
-            boolean closed = Config.DB_CONNECTION == null;
+            boolean closed = Config.DB_CONNECTION == null || Config.DB_CONNECTION.isClosed();
 
             if (!closed) {
                 checkStmt = Config.DB_CONNECTION.createStatement();
