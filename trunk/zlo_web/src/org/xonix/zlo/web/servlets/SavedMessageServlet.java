@@ -1,14 +1,14 @@
 package org.xonix.zlo.web.servlets;
 
-import org.xonix.zlo.web.servlets.helpful.ForwardingServlet;
-import org.xonix.zlo.web.servlets.helpful.ForwardingRequest;
+import org.apache.commons.lang.StringUtils;
+import org.xonix.zlo.search.DAO;
 import org.xonix.zlo.search.config.ErrorMessages;
 import org.xonix.zlo.search.model.ZloMessage;
-import org.xonix.zlo.search.ZloSearcher;
-import org.apache.commons.lang.StringUtils;
+import org.xonix.zlo.web.servlets.helpful.ForwardingRequest;
+import org.xonix.zlo.web.servlets.helpful.ForwardingServlet;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -40,11 +40,16 @@ public class SavedMessageServlet extends ForwardingServlet {
             return;
         }
 
-        ZloMessage msg = ZloSearcher.searchMsgByNum(num);
-        if (msg != null) {
-            request.setAttribute(SAVED_MSG, msg);    
-        } else {
-            request.setAttribute(ERROR, ErrorMessages.MessageNotFound);
+        ZloMessage msg;
+        try {
+            msg = DAO.DB._getMessageByNumber(num);
+            if (msg != null) {
+                request.setAttribute(SAVED_MSG, msg);
+            } else {
+                request.setAttribute(ERROR, ErrorMessages.MessageNotFound);
+            }
+        } catch (DAO.DAOException e) {
+            request.setAttribute(ERROR, ErrorMessages.DbError);
         }
 
         request.forwardTo(JSP_SAVED_MSG);

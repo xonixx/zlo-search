@@ -73,11 +73,12 @@ public class Config {
         return props.getProperty(key, defaultVal);
     }
 
-    public static Connection DB_CONNECTION;
+    public static Connection DB_CONNECTION = null;
     
     public static void createConnection() {
         Connection _conn = null;
         logger.info("Creating db connection...");
+
         if (TRUE.equals(getProp("db.initialize"))) {
             try {
                  Class.forName(getProp("db.driver"));
@@ -93,7 +94,9 @@ public class Config {
         } else {
             logger.info("Starting without db because of config...");
         }
-        DB_CONNECTION = _conn;
+
+        if (_conn != null)
+            DB_CONNECTION = _conn;
     }
     static {
         createConnection();
