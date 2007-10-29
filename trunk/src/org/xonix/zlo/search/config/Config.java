@@ -17,17 +17,19 @@ import java.util.Properties;
  */
 public class Config {
     private static final Logger logger = Logger.getLogger(Config.class);
-    private static final Properties props = new Properties();
+    private static final Properties props = loadProperties("org/xonix/zlo/search/config/config.properties");
 
-    static {
+    public static Properties loadProperties(String path) {
+        Properties pr = new Properties();
         try {
-            props.load(Thread.currentThread()
+            pr.load(Thread.currentThread()
                     .getContextClassLoader()
-                    .getResourceAsStream("org/xonix/zlo/search/config/config.properties"));
+                    .getResourceAsStream(path));
         } catch (IOException e) {
-            System.out.println("Can't load config!");
+            logger.fatal("Can't load config: " + path, e);
             e.printStackTrace();
         }
+        return pr;
     }
 
     // configuring log4j

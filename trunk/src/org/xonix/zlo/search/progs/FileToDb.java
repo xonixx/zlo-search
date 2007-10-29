@@ -1,8 +1,8 @@
 package org.xonix.zlo.search.progs;
 
 import org.xonix.zlo.search.model.ZloMessage;
-import org.xonix.zlo.search.DBManager;
-import org.xonix.zlo.search.DBException;
+import org.xonix.zlo.search.db.DbManager;
+import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.config.Config;
 import org.apache.log4j.Logger;
 
@@ -20,8 +20,8 @@ import java.text.ParseException;
  * Time: 15:19:58
  */
 public class FileToDb {
-    public static final String CSV_FILE_NAME = "c:/zlo/messages_alexzam_1.csv";
-//    public static final String CSV_FILE_NAME = "c:/zlo/out.txt";
+//    public static final String CSV_FILE_NAME = "c:/zlo/messages_alexzam_1.csv";
+    public static final String CSV_FILE_NAME = "c:/zlo/out.txt";
     
     public static final String ENCODING = "UTF-16";
     public static final String COLUMN_DELIMITER = "<cd>";
@@ -36,7 +36,7 @@ public class FileToDb {
 
     public static final Logger logger = Logger.getLogger(FileToDb.class);
 
-    private void start(int start) {
+    private void start(boolean doWork) {
         String lastLine = "";
         int result;
         try {
@@ -77,17 +77,17 @@ public class FileToDb {
                     try {
                         msgs.add(new ZloMessage(
                                 columnVals[2], // userName
+                                columnVals[3], // alt
                                 columnVals[4], // host
-                                Integer.parseInt(columnVals[8]),
+                                formTopic(columnVals[8]),
+                                formTopicCode(columnVals[8]),
                                 columnVals[1],
                                 columnVals[6],
                                 MSSQL_DATE_FORMAT.parse(columnVals[5]),
                                 FALSE.equals(columnVals[13]),
-                                Integer.parseInt(columnVals[0]),
-                                null,
-                                null,
-                                ZloMessage.Status.OK
-                        ));
+                                Integer.parseInt(columnVals[0]), // num
+                                Integer.parseInt(columnVals[7]), // parentNum
+                                0));
                     } catch (ParseException e) {
                         e.printStackTrace();
                     } catch (ArrayIndexOutOfBoundsException e) {
@@ -96,9 +96,6 @@ public class FileToDb {
                     }
                 }
 
-    //            for (ZloMessage m:msgs) {
-    //                System.out.println(m);
-    //            }
                 Collections.sort(msgs, ZloMessage.NUM_COMPARATOR);
                 if (msgs.size() > 0) {
                     int min = msgs.get(0).getNum();
@@ -109,7 +106,13 @@ public class FileToDb {
                     // add read chars to lastLine
                     lastLine = s;
                 }
-                DBManager.saveMessagesFast(msgs);
+                if (doWork)
+                    DbManager.saveMessagesFast(msgs);
+                else {
+                    for (ZloMessage m : msgs) {
+                        System.out.println(m);
+                    }
+                }
             } while (result == BUF.length);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -117,20 +120,69 @@ public class FileToDb {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (DBException e) {
+        } catch (DbException e) {
             e.printStackTrace();
         }
 
         logger.info("Done.");
-
     }
 
-    private void start() {
-        start(0);
+    private int formTopicCode(String category) {
+        int cat = Integer.parseInt(category);
+        switch(cat) {
+            case 0: return 0; // без темы
+            case 1: return 3; // мурзилка
+            case 2: return 9; // программирование
+            case 3: return 2; // работа
+            case 4: return 1; // учеба
+            case 5: return 4; // обсуждение
+            case 6: return 10; // куплю
+            case 7: return 8; // движок борды
+            case 8: return 7; // развлечения
+            case 9: return 11; // продам
+            case 10: return 18; // temp
+            case 11: return 12; // услуги
+            case 12: return -1; //?
+            case 13: return 13; // win
+            case 14: return 15; // проблемы сети
+            case 15: return 5; // новости
+            case 16: return 16; // голосование
+            case 17: return -1; //?
+            case 18: return 6; // спорт
+            // нет 12, 17 <==> -bsd/linux, -Потеряно/Найдено
+        }
+        return -1;
+    }
+
+    private String formTopic(String category) {
+        int cat = Integer.parseInt(category);
+        switch(cat) {
+            case 0: return "Без темы"; // без темы
+            case 1: return "Мурзилка"; // мурзилка
+            case 2: return "Программирование"; // программирование
+            case 3: return "Работа"; // работа
+            case 4: return "Учеба"; // учеба
+            case 5: return "Обсуждение"; // обсуждение
+            case 6: return "Куплю"; // куплю
+            case 7: return "Движок борды"; // движок борды
+            case 8: return "Развлечения"; // развлечения
+            case 9: return "Продам"; // продам
+            case 10: return "Temp"; // temp
+            case 11: return "Услуги"; // услуги
+            case 12: return "?"; //?
+            case 13: return "Windows"; // win
+            case 14: return "Проблемы сети"; // проблемы сети
+            case 15: return "Новости"; // новости
+            case 16: return "Голосование"; // голосование
+            case 17: return "?"; //?
+            case 18: return "Спорт"; // спорт
+            // нет 12, 17 <==> -bsd/linux, -Потеряно/Найдено
+        }
+        return "?";
     }
 
     public static void main(String[] args) {
         new Config(); // call static constractors
-        new FileToDb().start();
+        new FileToDb().start(false);
     }
 }

@@ -2,6 +2,7 @@ package org.xonix.zlo.web;
 
 import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.web.servlets.SearchServlet;
 
 /**
@@ -28,7 +29,7 @@ public class BackendBean {
     }
 
     public String getTopicSelector() {
-        return HtmlConstructor.constructSelector(SN_TOPIC, ZloMessage.ALL_TOPICS, ZloMessage.TOPICS, topic, true);
+        return HtmlConstructor.constructSelector(SN_TOPIC, ZloMessage.ALL_TOPICS, DbManager.getTopics(), topic, true);
     }
 
     public String getSiteSelector() {

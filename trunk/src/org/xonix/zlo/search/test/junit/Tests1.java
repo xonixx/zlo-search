@@ -1,10 +1,13 @@
+package org.xonix.zlo.search.test.junit;
+
 import junit.framework.TestCase;
 import org.junit.Test;
 import org.xonix.zlo.search.utils.TimeUtils;
 import org.xonix.zlo.search.utils.HtmlUtils;
 import org.xonix.zlo.search.model.ZloMessage;
-import org.xonix.zlo.search.DBManager;
-import org.xonix.zlo.search.DBException;
+import org.xonix.zlo.search.db.DbManager;
+import org.xonix.zlo.search.db.DbException;
+import org.xonix.zlo.search.config.Config;
 
 /**
  * Author: gubarkov
@@ -40,11 +43,22 @@ public class Tests1 extends TestCase {
     @Test
     public void testGetMessages() {
         try {
-            for (ZloMessage m : DBManager.getMessages(new int[] {1,2,3,100,2000,1000050}, -1)) {
+            for (ZloMessage m : DbManager.getMessages(new int[] {1,2,3,100,2000,1000050}, -1)) {
                 System.out.println(m);
             }
-        } catch (DBException e) {
+        } catch (DbException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void testGetTopics() {
+        new Config();
+        String[] topics = DbManager.getTopics();
+        assertEquals("Без темы", topics[0]);
+        assertEquals("Учеба", topics[1]);
+        assertEquals("Работа", topics[2]);
+        assertEquals("Temp", topics[18]);
+        assertEquals(19, topics.length);
     }
 }
