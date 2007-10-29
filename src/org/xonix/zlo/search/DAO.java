@@ -3,6 +3,8 @@ package org.xonix.zlo.search;
 import org.apache.log4j.Logger;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.model.ZloMessage;
+import org.xonix.zlo.search.db.DbManager;
+import org.xonix.zlo.search.db.DbException;
 
 import java.io.IOException;
 import java.util.List;
@@ -89,33 +91,33 @@ public class DAO {
         public static void saveMessages(List<ZloMessage> msgs) throws DAOException {
             try {
                 logger.info("Saving (" + msgs.get(0).getNum() + " - " + msgs.get(msgs.size() - 1).getNum() + ") msgs to DB...");
-                DBManager.saveMessages(msgs);
+                DbManager.saveMessages(msgs);
                 logger.info("Successfully saved " + msgs.size() + " msgs to DB.");
-            } catch (DBException e) {
+            } catch (DbException e) {
                 throw new DAOException(SOURCE, e);
             }
         }
 
         public ZloMessage getMessageByNumber(int num) throws DAOException {
             try {
-                return DBManager.getMessageByNumber(num);
-            } catch (DBException e) {
+                return DbManager.getMessageByNumber(num);
+            } catch (DbException e) {
                 throw new DAOException(SOURCE, e);
             }
         }
 
         public List<ZloMessage> getMessages(int start, int end) throws DAOException {
             try {
-                return DBManager.getMessagesByRange(start, end);
-            } catch (DBException e) {
+                return DbManager.getMessagesByRange(start, end);
+            } catch (DbException e) {
                 throw new DAOException(SOURCE, e);
             }
         }
 
         public int getLastMessageNumber() throws DAOException {
             try {
-                return DBManager.getLastRootMessageNumber();
-            } catch (DBException e) {
+                return DbManager.getLastRootMessageNumber();
+            } catch (DbException e) {
                 throw new DAOException(SOURCE, e);
             }
         }

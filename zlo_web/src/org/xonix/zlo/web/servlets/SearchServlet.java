@@ -3,10 +3,11 @@ package org.xonix.zlo.web.servlets;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.search.BooleanQuery;
 import org.xonix.zlo.search.*;
+import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.config.ErrorMessage;
 import org.xonix.zlo.search.model.ZloMessage;
-import org.xonix.zlo.web.ZloPaginatedList;
+import org.xonix.zlo.search.ZloPaginatedList;
 import org.xonix.zlo.web.CookieUtils;
 import org.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 import org.xonix.zlo.web.servlets.helpful.ForwardingServlet;
@@ -180,7 +181,7 @@ public class SearchServlet extends ForwardingServlet {
                     } catch (ZloSearcher.ParseException e) {
                         errorMsg = ErrorMessage.InvalidQueryString;
                         errorMsg.setData(e.getQuery());
-                    } catch (DBException e) {
+                    } catch (DbException e) {
                         errorMsg = ErrorMessage.DbError;
                     }
 

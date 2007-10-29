@@ -1,12 +1,11 @@
-package org.xonix.zlo.web;
+package org.xonix.zlo.search;
 
-import org.apache.lucene.search.Hits;
 import org.apache.log4j.Logger;
+import org.apache.lucene.search.Hits;
 import org.displaytag.pagination.PaginatedList;
 import org.displaytag.properties.SortOrderEnum;
-import org.xonix.zlo.search.ZloSearchResult;
-import org.xonix.zlo.search.DBManager;
-import org.xonix.zlo.search.DBException;
+import org.xonix.zlo.search.db.DbException;
+import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.model.ZloMessage;
 
 import java.io.IOException;
@@ -64,8 +63,8 @@ public class ZloPaginatedList implements PaginatedList {
             }
 
             try {
-                return DBManager.getMessages(indexes, fromIndex);
-            } catch (DBException e) {
+                return DbManager.getMessages(indexes, fromIndex);
+            } catch (DbException e) {
                 logger.error("DBexception while getting msgs from DB: " + e);
                 throw new RuntimeException(e);
             }

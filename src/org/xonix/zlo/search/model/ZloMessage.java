@@ -7,20 +7,17 @@ import org.apache.lucene.document.DateTools;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.search.Hit;
+import org.xonix.zlo.search.DAO;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.utils.HtmlUtils;
-import org.xonix.zlo.search.DAO;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
-import java.text.ParseException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Comparator;
+import java.util.Date;
 
 /**
  * Author: gubarkov
@@ -35,6 +32,7 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
     public static final String NICK = "nick";
     public static final String HOST = "host";
     public static final String TOPIC = "topic";
+    public static final String TOPIC_CODE = "topicCode";
     public static final String TITLE_HTML = "titleHtml";
     public static final String TITLE = "title"; // clean - w/o html
     public static final String BODY_HTML = "bodyHtml";
@@ -46,18 +44,21 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
     public static final String STATUS = "status";
 
     private String nick;
+    private String altName;
     private String host;
     private String topic;
+    private int topicCode;
     private String title;
     private String body;
     private Date date;
     private boolean reg = false;
     private int num = -1; // default
+    private int parentNum = -1; // default
 
     private String titleClean;
     private String bodyClean;
-    private Boolean hasUrl;
-    private Boolean hasImg;
+    private Boolean hasUrl = null;
+    private Boolean hasImg = null;
 
     private int hitId;
 
@@ -70,10 +71,10 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
     private Status status = Status.UNKNOWN; // default
 
     public static enum Status {
-        UNKNOWN,
         OK,
         DELETED,
         SPAM,
+        UNKNOWN,
         ;
 
         public static Status fromInt(int id) {
@@ -90,14 +91,14 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
     }
 
     private static final MessageFormat MSG_FORMAT_OK = new MessageFormat("ZloMessage(" +
-            "\n\tnum={0},\n\ttopic={1},\n\ttitle={2},\n\tnick={3},\n\treg={4}," +
-            "\n\thost={5},\n\tdate={6, date,MMMM, d HH:mm:ss yyyy},\n\thasUrl={7},\n\thasImg={8}," +
-            "\n\tbody={9}\n)");
+            "\n\tnum={0},\n\tparentNum={1},\n\ttopic={2},\n\ttitle={3},\n\tnick={4},\n\taltName={5},\n\treg={6}," +
+            "\n\thost={7},\n\tdate={8, date,MMMM, d HH:mm:ss yyyy},\n\thasUrl={9},\n\thasImg={10}," +
+            "\n\tbody={11}\n)");
 
     private static final MessageFormat MSG_FORMAT_NOT_OK = new MessageFormat("ZloMessage(" +
             "\n\tnum={0},\n\tstatus={1}\n)");
     
-    public static final String [] TOPICS = {
+/*    public static final String [] TOPICS = {
         "Без темы",
         "Учеба", "Работа", "Мурзилка",
         "Обсуждение", "Новости", "Спорт",
@@ -105,41 +106,65 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
         "Куплю", "Продам", "Услуги",
         "Windows", "BSD/Linux", "Проблемы сети",
         "Голосование", "Потеряно/Найдено", "Temp"
-    };
+    };*/
     public static final String ALL_TOPICS = "Все темы";
 
     public static NumberFormat URL_NUM_FORMAT = new DecimalFormat("0000000000"); // 10 zeros
 
-    public static Map<String, Integer> TOPIC_CODES = new HashMap<String, Integer>(TOPIC.length());
+/*    public static Map<String, Integer> TOPIC_CODES = new HashMap<String, Integer>(TOPIC.length());
 
     static {
         TOPIC_CODES.put(ALL_TOPICS, -1); // all topics
         for (int i=0; i<TOPICS.length; i++) {
             TOPIC_CODES.put(TOPICS[i], i);
         }
-    }
+    }*/
 
     public ZloMessage() {
     }
 
-    public ZloMessage(String userName, String hostName, String msgTopic, String msgTitle, String msgBody, Date msgDate,
-                      boolean reg, int urlNum,
+    public ZloMessage(String nick, String altName, String host, String topic, int topicCode,
+                      String title, String body, Date msgDate,
+                      boolean reg, int num, int parentNum,
                       Boolean hasUrl, Boolean hasImg,
                       Status status) {
-        this.nick = userName;
-        this.host = hostName;
-        this.topic = msgTopic;
-        this.title = msgTitle;
-        this.body = msgBody;
+        this.nick = nick;
+        this.altName = altName;
+        this.host = host;
+        this.topic = topic;
+        this.topicCode = topicCode;
+        this.title = title;
+        this.body = body;
         this.date = msgDate;
         this.reg = reg;
-        this.num = urlNum;
+        this.num = num;
+        this.parentNum = parentNum;
         this.hasUrl = hasUrl;
         this.hasImg = hasImg;
         this.status = status;
     }
+
+    public ZloMessage(String nick, String altName, String host, String topic, int topicCode,
+                      String title, String body, Date msgDate,
+                      boolean reg, int num, int parentNum,
+                      int status) {
+        this(nick,
+            altName,
+            host,
+            topic,
+            topicCode,
+            title,
+            body,
+            msgDate,
+            reg,
+            num,
+            parentNum,
+            null,
+            null,
+            Status.fromInt(status));
+    }
     
-    public ZloMessage(String userName, String hostName, int msgTopicCode, String msgTitle, String msgBody, Date msgDate,
+/*    public ZloMessage(String userName, String hostName, int msgTopicCode, String msgTitle, String msgBody, Date msgDate,
                       boolean reg, int urlNum,
                       Boolean hasUrl, Boolean hasImg,
                       Status status) {
@@ -150,7 +175,7 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
                 msgTitle, msgBody, msgDate, reg, urlNum,
                 hasUrl, hasImg, status
         );
-    }
+    }*/
 
     public String getNick() {
         return nick;
@@ -158,6 +183,14 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
 
     public void setNick(String nick) {
         this.nick = nick;
+    }
+
+    public String getAltName() {
+        return altName;
+    }
+
+    public void setAltName(String altName) {
+        this.altName = altName;
     }
 
     public String getHost() {
@@ -174,6 +207,14 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
 
     public void setTopic(String topic) {
         this.topic = topic;
+    }
+
+    public int getTopicCode() {
+        return topicCode;
+    }
+
+    public void setTopicCode(int topicCode) {
+        this.topicCode = topicCode;
     }
 
     public String getTitle() {
@@ -228,6 +269,14 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
         this.num = num;
     }
 
+    public int getParentNum() {
+        return parentNum;
+    }
+
+    public void setParentNum(int parentNum) {
+        this.parentNum = parentNum;
+    }
+
     public int getHitId() {
         return hitId;
     }
@@ -263,7 +312,8 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
     public String toString() {
         if (status == Status.OK)
             return MSG_FORMAT_OK.format(new Object[]{
-                    num, topic, title, nick, reg, host, date,
+                    num, parentNum, topic, title,
+                    nick, altName, reg, host, date,
                     isHasUrl() ? TRUE : FALSE,
                     isHasImg() ? TRUE : FALSE,
                     body.replaceAll("\n","\n\t\t")});
@@ -277,28 +327,14 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
             return null;
 
         Document doc = new Document();
-/*        doc.add(new Field(URL_NUM, URL_NUM_FORMAT.format(num), Field.Store.YES, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(TOPIC, TOPIC_CODES.get(topic).toString(), Field.Store.YES, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(TITLE_HTML, title, Field.Store.YES, Field.Index.NO)); // "грязный" - храним, не индексируем
-        doc.add(new Field(TITLE, getCleanTitle(), Field.Store.NO, Field.Index.TOKENIZED)); // "чистый" - индексируем, не храним
-        doc.add(new Field(NICK, nick, Field.Store.YES, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(REG, reg ? TRUE : FALSE, Field.Store.YES, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(HOST, host, Field.Store.YES, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(DATE, DateTools.dateToString(date, DateTools.Resolution.MINUTE), Field.Store.YES, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(BODY_HTML, body, Field.Store.COMPRESS, Field.Index.NO)); // "грязный" - храним сжатый, не индексируем
-        doc.add(new Field(BODY, getCleanBody(), Field.Store.NO, Field.Index.TOKENIZED)); // "чистый" - индексируем, не храним
-        doc.add(new Field(HAS_URL, isHasUrl() ? TRUE : FALSE, Field.Store.YES, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(HAS_IMG, isHasImg() ? TRUE : FALSE, Field.Store.YES, Field.Index.UN_TOKENIZED));*/
 
         doc.add(new Field(URL_NUM, URL_NUM_FORMAT.format(num), Field.Store.YES, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(TOPIC, TOPIC_CODES.get(topic).toString(), Field.Store.NO, Field.Index.UN_TOKENIZED));
-//        doc.add(new Field(TITLE_HTML, title, Field.Store.YES, Field.Index.NO)); // "грязный" - храним, не индексируем
+        doc.add(new Field(TOPIC_CODE, Integer.toString(topicCode), Field.Store.NO, Field.Index.UN_TOKENIZED));
         doc.add(new Field(TITLE, getCleanTitle(), Field.Store.NO, Field.Index.TOKENIZED)); // "чистый" - индексируем, не храним
         doc.add(new Field(NICK, nick, Field.Store.NO, Field.Index.UN_TOKENIZED));
         doc.add(new Field(REG, reg ? TRUE : FALSE, Field.Store.NO, Field.Index.UN_TOKENIZED));
         doc.add(new Field(HOST, host, Field.Store.NO, Field.Index.UN_TOKENIZED));
         doc.add(new Field(DATE, DateTools.dateToString(date, DateTools.Resolution.MINUTE), Field.Store.NO, Field.Index.UN_TOKENIZED));
-//        doc.add(new Field(BODY_HTML, body, Field.Store.COMPRESS, Field.Index.NO)); // "грязный" - храним сжатый, не индексируем
         doc.add(new Field(BODY, getCleanBody(), Field.Store.NO, Field.Index.TOKENIZED)); // "чистый" - индексируем, не храним
         doc.add(new Field(HAS_URL, isHasUrl() ? TRUE : FALSE, Field.Store.NO, Field.Index.UN_TOKENIZED));
         doc.add(new Field(HAS_IMG, isHasImg() ? TRUE : FALSE, Field.Store.NO, Field.Index.UN_TOKENIZED));
@@ -330,7 +366,7 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
     public static ZloMessage fromDocument(Document doc) {
         int num = Integer.parseInt(doc.get(URL_NUM));
 
-        ZloMessage msg = null;
+        ZloMessage msg;
         try {
             msg = DAO.DB._getMessageByNumber(num);
         } catch (DAO.DAOException e) {
