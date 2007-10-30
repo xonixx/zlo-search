@@ -1,12 +1,10 @@
 package org.xonix.zlo.search;
 
-import org.apache.lucene.index.IndexWriter;
 import org.apache.log4j.Logger;
-import org.apache.log4j.FileAppender;
+import org.apache.lucene.index.IndexWriter;
 import static org.xonix.zlo.search.DAO.DAOException;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.model.ZloMessage;
-import org.xonix.zlo.search.test.storage.ZloStorage;
 
 import java.io.File;
 import java.io.IOException;
@@ -97,7 +95,7 @@ public class ZloIndexer {
 
     public static void main(String[] args) {
 //        new ZloIndexer(DAO.Site.SOURCE).indexRange(3765000, 3765010);
-        new ZloIndexer(DAO.DB.SOURCE, true).indexRange(1, 4030586);
+        new ZloIndexer(DAO.DB.SOURCE, true).indexRange(3000000, 4030586);
 //        new ZloIndexer(new ZloStorage(), true).indexRange(ZloStorage.FROM, ZloStorage.TO);
     }
 }

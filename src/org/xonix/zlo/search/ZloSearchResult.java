@@ -9,7 +9,6 @@ import org.apache.lucene.search.Query;
 import org.displaytag.pagination.PaginatedList;
 import org.xonix.zlo.search.model.ZloMessageAccessor;
 import org.xonix.zlo.search.model.ZloMessageLazy;
-import org.xonix.zlo.web.ZloPaginatedList;
 
 import java.util.Iterator;
 

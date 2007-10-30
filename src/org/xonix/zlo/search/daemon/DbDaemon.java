@@ -1,11 +1,11 @@
 package org.xonix.zlo.search.daemon;
 
+import org.apache.log4j.Logger;
 import org.xonix.zlo.search.DAO;
 import org.xonix.zlo.search.IndexingSource;
-import org.xonix.zlo.search.utils.TimeUtils;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.model.ZloMessage;
-import org.apache.log4j.Logger;
+import org.xonix.zlo.search.utils.TimeUtils;
 import sun.misc.Signal;
 import sun.misc.SignalHandler;
 
