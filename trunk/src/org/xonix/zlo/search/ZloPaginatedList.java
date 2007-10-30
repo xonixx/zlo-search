@@ -53,6 +53,9 @@ public class ZloPaginatedList implements PaginatedList {
         }
 
         public List<ZloMessage> subList(int fromIndex, int toIndex) {
+            if (fromIndex == toIndex)
+                return null;
+
             int[] indexes = new int[toIndex - fromIndex];
             try {
                 for (int i=fromIndex; i<toIndex; i++) {
