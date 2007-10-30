@@ -1,18 +1,18 @@
 package org.xonix.zlo.search.progs;
 
-import org.xonix.zlo.search.model.ZloMessage;
-import org.xonix.zlo.search.db.DbManager;
-import org.xonix.zlo.search.db.DbException;
-import org.xonix.zlo.search.config.Config;
 import org.apache.log4j.Logger;
+import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.db.DbException;
+import org.xonix.zlo.search.db.DbManager;
+import org.xonix.zlo.search.model.ZloMessage;
 
 import java.io.*;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
+import java.util.List;
 
 /**
  * Author: Vovan
@@ -20,8 +20,8 @@ import java.text.ParseException;
  * Time: 15:19:58
  */
 public class FileToDb {
-//    public static final String CSV_FILE_NAME = "c:/zlo/messages_alexzam_1.csv";
-    public static final String CSV_FILE_NAME = "c:/zlo/out.txt";
+    public static final String CSV_FILE_NAME = "c:/zlo/messages_alexzam_1.csv";
+//    public static final String CSV_FILE_NAME = "c:/zlo/out.txt";
     
     public static final String ENCODING = "UTF-16";
     public static final String COLUMN_DELIMITER = "<cd>";
@@ -183,6 +183,6 @@ public class FileToDb {
 
     public static void main(String[] args) {
         new Config(); // call static constractors
-        new FileToDb().start(false);
+        new FileToDb().start(true);
     }
 }

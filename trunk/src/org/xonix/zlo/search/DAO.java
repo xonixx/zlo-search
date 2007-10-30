@@ -2,9 +2,9 @@ package org.xonix.zlo.search;
 
 import org.apache.log4j.Logger;
 import org.xonix.zlo.search.config.Config;
-import org.xonix.zlo.search.model.ZloMessage;
-import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.db.DbException;
+import org.xonix.zlo.search.db.DbManager;
+import org.xonix.zlo.search.model.ZloMessage;
 
 import java.io.IOException;
 import java.util.List;

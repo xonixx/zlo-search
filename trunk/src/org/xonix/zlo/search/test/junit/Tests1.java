@@ -2,12 +2,12 @@ package org.xonix.zlo.search.test.junit;
 
 import junit.framework.TestCase;
 import org.junit.Test;
-import org.xonix.zlo.search.utils.TimeUtils;
-import org.xonix.zlo.search.utils.HtmlUtils;
-import org.xonix.zlo.search.model.ZloMessage;
-import org.xonix.zlo.search.db.DbManager;
-import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.db.DbException;
+import org.xonix.zlo.search.db.DbManager;
+import org.xonix.zlo.search.model.ZloMessage;
+import org.xonix.zlo.search.utils.HtmlUtils;
+import org.xonix.zlo.search.utils.TimeUtils;
 
 /**
  * Author: gubarkov

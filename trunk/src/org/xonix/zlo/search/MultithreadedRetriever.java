@@ -1,10 +1,13 @@
 package org.xonix.zlo.search;
 
+import org.apache.log4j.Logger;
 import static org.xonix.zlo.search.DAO.DAOException;
 import org.xonix.zlo.search.model.ZloMessage;
-import org.apache.log4j.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * Author: gubarkov

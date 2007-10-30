@@ -1,8 +1,8 @@
 package org.xonix.zlo.search.config;
 
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+import org.apache.lucene.analysis.Analyzer;
 
 import java.io.IOException;
 import java.sql.Connection;
