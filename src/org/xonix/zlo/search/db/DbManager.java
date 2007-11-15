@@ -1,6 +1,7 @@
 package org.xonix.zlo.search.db;
 
 import org.apache.log4j.Logger;
+import org.apache.commons.lang.StringUtils;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.model.ZloMessage;
 
@@ -41,6 +42,8 @@ public class DbManager {
     private static final String SQL_SELECT_SET =            props.getProperty("sql.select.set");
     private static final String SQL_SELECT_CHECK_ALIVE =    props.getProperty("sql.select.check.alive");
     private static final String SQL_SELECT_TOPICS =         props.getProperty("sql.select.topics");
+
+    private static final String SQL_LOG_REQUEST =           props.getProperty("sql.log.request");
 
     private static String[] topics;
 
@@ -274,6 +277,27 @@ public class DbManager {
             }
         }
         return topics;
+    }
+
+    public static void logRequest(String host, String userAgent, String reqText, String reqQuery, String referer) throws DbException {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = Config.DB_CONNECTION.prepareStatement(SQL_LOG_REQUEST);
+            st.setString(1, StringUtils.substring(host, 0, 100));
+            st.setString(2, StringUtils.substring(userAgent, 0, 100));
+            st.setString(3, StringUtils.substring(reqText, 0, 200));
+            st.setString(4, StringUtils.substring(reqQuery, 0, 200));
+            st.setString(5, StringUtils.substring(referer, 0, 100));
+
+            int res = st.executeUpdate();
+            if (res != 1)
+                throw new SQLException("logRequest: res=1");
+        } catch (SQLException e) {
+           throw new DbException(e);
+        } finally {
+            close(st, rs);
+        }
     }
 
     private static ZloMessage getMessage(ResultSet rs) throws SQLException {
