@@ -12,6 +12,7 @@ import org.xonix.zlo.search.test.storage.ZloStorage;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
+import java.lang.reflect.Array;
 
 /**
  * Author: Vovan
@@ -25,7 +26,7 @@ public class Test1 {
     }
 
     public static void m14() {
-
+//        System.out.println(new int[2] instanceof Array);
     }
 
     public static void m13() throws RuntimeException {

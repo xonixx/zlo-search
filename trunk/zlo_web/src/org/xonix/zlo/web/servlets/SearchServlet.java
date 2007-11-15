@@ -2,8 +2,10 @@ package org.xonix.zlo.web.servlets;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.search.BooleanQuery;
+import org.apache.log4j.Logger;
 import org.xonix.zlo.search.*;
 import org.xonix.zlo.search.db.DbException;
+import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.config.ErrorMessage;
 import org.xonix.zlo.search.model.ZloMessage;
@@ -28,6 +30,8 @@ import java.util.GregorianCalendar;
  * Time: 20:31:41
  */
 public class SearchServlet extends ForwardingServlet {
+    private static final Logger logger = Logger.getLogger(SearchServlet.class);
+
     public static final String ON = "on";
     // query string params
     public static final String QS_TOPIC = ZloMessage.TOPIC;
@@ -170,12 +174,14 @@ public class SearchServlet extends ForwardingServlet {
                     searchRequest.setToDate(null);
                 }
 
-                ZloSearchResult zloSearchResult = null;
+                ZloSearchResult searchResult = null;
 
                 if (session.getAttribute(SESS_SEARCH_RESULT) == null ||
                         ((ZloSearchResult) session.getAttribute(SESS_SEARCH_RESULT)).isNotTheSameSearch(searchRequest)) {
+
                     try {
-                        zloSearchResult = searchRequest.performSearch();
+                        searchResult = searchRequest.performSearch();
+                        logRequest(request, searchResult.getQuery().toString());
                     } catch (BooleanQuery.TooManyClauses e) { // например как в поиске текста +с*
                         errorMsg = ErrorMessage.TooComplexSearch;
                     } catch (ZloSearcher.ParseException e) {
@@ -188,13 +194,13 @@ public class SearchServlet extends ForwardingServlet {
                     if (errorMsg != null)
                         break processing;
 
-                    session.setAttribute(SESS_SEARCH_RESULT, zloSearchResult);
+                    session.setAttribute(SESS_SEARCH_RESULT, searchResult);
                 } else {
-                    zloSearchResult = (ZloSearchResult) session.getAttribute(SESS_SEARCH_RESULT);
-                    zloSearchResult.setNewSearch(false); // means we use result of previous search
+                    searchResult = (ZloSearchResult) session.getAttribute(SESS_SEARCH_RESULT);
+                    searchResult.setNewSearch(false); // means we use result of previous search
                 }
-                if (zloSearchResult != null) {
-                    ZloPaginatedList zloPaginatedList = (ZloPaginatedList) zloSearchResult.getPaginatedList();
+                if (searchResult != null) {
+                    ZloPaginatedList zloPaginatedList = (ZloPaginatedList) searchResult.getPaginatedList();
                     zloPaginatedList.setObjectsPerPage(pageSize);
                     if (StringUtils.isNotEmpty(request.getParameter(QS_PAGE_NUMBER))) {
                         try {
@@ -236,5 +242,18 @@ public class SearchServlet extends ForwardingServlet {
             request.setAttribute(ERROR, errorMsg);
 
         request.forwardTo(JSP_SEARCH);
+    }
+
+    private void logRequest(ForwardingRequest request, String query) {
+        try {
+            DbManager.logRequest(
+                    request.getRemoteAddr(),
+                    request.getHeader("User-Agent"),
+                    request.getParameter(QS_TEXT),
+                    query,
+                    request.getHeader("Referer"));
+        } catch (DbException e) {
+            logger.error("Can't log user request", e);
+        }
     }
 }
