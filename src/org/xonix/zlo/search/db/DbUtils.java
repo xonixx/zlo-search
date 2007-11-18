@@ -16,6 +16,24 @@ public final class DbUtils {
     private static final Logger logger = Logger.getLogger(DbUtils.class);
     private static final String SQL_SELECT_CHECK_ALIVE = "SELECT 1;";
 
+    public static class Result implements Closeable {
+        private ResultSet resultSet;
+        private Statement statement;
+
+        public Result(ResultSet resultSet, Statement statement) {
+            this.resultSet = resultSet;
+            this.statement = statement;
+        }
+
+        public ResultSet getResultSet() {
+            return resultSet;
+        }
+
+        public void close() {
+            DbUtils.close(resultSet, statement);
+        }
+    }
+
     static void close(Object obj) {
         if (obj == null)
             return;
@@ -29,6 +47,9 @@ public final class DbUtils {
                 ((Closeable) obj).close();
             } else if (obj instanceof Connection) {
                 ((Connection) obj).close();
+            } else {
+                throw new IllegalArgumentException(
+                        String.format("Can't close object: %s of type: %s", obj, obj.getClass()));    
             }
         } catch (SQLException e) {
             ;
@@ -79,11 +100,69 @@ public final class DbUtils {
         }
     }
 
-    /**
-     * Executes insert or update
-     */
-    public static void executeDML() {
+    private static void setParams(PreparedStatement st, Object[] params) throws SQLException {
+        int i=1;
+        for (Object param : params) {
+            if (param instanceof String) {
+                st.setString(i, (String)param);
+            } else if (param instanceof Integer) {
+                st.setInt(i, (Integer) param);
+            } else if (param instanceof Boolean) {
+                st.setBoolean(i, (Boolean) param);
+            } else if (param instanceof Date) {
+                st.setDate(i, (Date) param);
+            } else if (param instanceof Timestamp) {
+                st.setTimestamp(i, (Timestamp) param);
+            } else if (param instanceof Time) {
+                st.setTime(i, (Time) param);
+            }
+            else {
+                throw new IllegalArgumentException(
+                        String.format("Unsupported parameter type: %s of parameter: %s",
+                                param.getClass(), param));
+            }
+            i++;
+        }
+    }
 
+    public static Result executeSelect(String sqlString, Object[] params) throws DbException {
+        PreparedStatement st = null;
+        try {
+           st = Config.getConnection().prepareStatement(sqlString);
+           setParams(st, params);
+           return new Result(st.executeQuery(), st);
+        } catch (SQLException e) {
+           throw new DbException(e);
+        }
+    }
+
+    public static Result executeSelect(String sqlString) throws DbException {
+        return executeSelect(sqlString, new Object[0]);
+    }
+
+    /**
+     * Executes insert, update, delete
+     */
+    public static void executeUpdate(String sqlString, Object[] params, Integer expectedResult) throws DbException {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = Config.getConnection().prepareStatement(sqlString);
+
+            setParams(st, params);
+
+            int res = st.executeUpdate();
+            if (expectedResult != null && res != expectedResult)
+                throw new SQLException(String.format("Expected result: %s, actual result: %s", expectedResult, res));
+        } catch (SQLException e) {
+           throw new DbException(e);
+        } finally {
+            DbUtils.close(st, rs);
+        }
+    }
+
+    public static void executeUpdate(String sqlString, Object[] params) throws DbException {
+        executeUpdate(sqlString, params, null);
     }
 
     public static Connection createConnection() {
