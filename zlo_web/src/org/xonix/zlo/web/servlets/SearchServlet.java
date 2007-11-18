@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.xonix.zlo.search.*;
 import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.db.DbManager;
+import org.xonix.zlo.search.db.DbUtils;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.config.ErrorMessage;
 import org.xonix.zlo.search.model.ZloMessage;
@@ -235,6 +236,15 @@ public class SearchServlet extends ForwardingServlet {
                 session.setAttribute(SESS_SITE_ROOT, Config.SITES[Integer.parseInt(siteInCookie)]); // for search result list
             } else {
                 session.setAttribute(SESS_SITE_ROOT, Config.SITES[0]);
+            }
+        }
+
+        if (errorMsg == null) {
+            try {
+                // ensure the connection is OK
+                DbUtils.reopenConnectionIfNeeded();
+            } catch (DbException e) {
+                errorMsg = ErrorMessage.DbError;
             }
         }
 

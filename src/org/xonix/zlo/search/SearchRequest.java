@@ -2,7 +2,7 @@ package org.xonix.zlo.search;
 
 import org.apache.commons.lang.StringUtils;
 import org.xonix.zlo.search.db.DbException;
-import org.xonix.zlo.search.db.DbManager;
+import org.xonix.zlo.search.db.DbUtils;
 
 import java.util.Date;
 
@@ -203,7 +203,7 @@ public class SearchRequest {
 
     public ZloSearchResult performSearch() throws DbException {
         // just to throw exception if db connection broken and can't be fixed
-        DbManager.reopenConnectionIfNeeded();
+        DbUtils.reopenConnectionIfNeeded();
 
         ZloSearchResult result = ZloSearcher.search(this);
         result.setLastSearch(this);

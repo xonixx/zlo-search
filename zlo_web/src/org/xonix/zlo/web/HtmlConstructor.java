@@ -8,6 +8,9 @@ package org.xonix.zlo.web;
 public class HtmlConstructor {
     public static String constructSelector(String name, String[][] additionalOptions, String[] itemsCollection,
                                            int selected, boolean enumerate) {
+        if (itemsCollection == null)
+            itemsCollection = new String[0];
+        
         StringBuilder res = new StringBuilder("<select name=\"");
         res.append(name).append("\">\n");
 

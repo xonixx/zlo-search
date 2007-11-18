@@ -1,8 +1,8 @@
 package org.xonix.zlo.web;
 
-import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.db.DbManager;
+import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.web.servlets.SearchServlet;
 
 /**
