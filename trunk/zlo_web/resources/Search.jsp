@@ -108,7 +108,7 @@
                                     <c:out value="${msg.nick}" />
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="http://<c:out value="${siteRoot}" />/?uinfo=<c:out value="${msg.nick}" />"><c:out value="${msg.nick}" /></a>
+                                    <a href="http://<c:out value="${siteRoot}" />/?uinfo=<c:out value="${msg.nick}" />"><c:out value="${msg.nick}" escapeXml="false"/></a>
                                 </c:otherwise>
                             </c:choose>
                         </span>

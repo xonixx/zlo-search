@@ -15,4 +15,10 @@ CREATE TABLE messages (num INT UNIQUE PRIMARY KEY,
                         msgDate DATETIME,
                         reg BOOL,
                         body TEXT,
-                        status TINYINT);
+                        status TINYINT,
+                        indexed BOOL DEFAULT 0);
+
+-- if indexed column is absent                        
+-- ALTER TABLE messages
+-- ADD indexed BOOL DEFAULT 0;
+

@@ -5,8 +5,6 @@ import org.apache.commons.lang.StringUtils;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.model.ZloMessage;
 
-import java.io.Closeable;
-import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
@@ -40,10 +38,13 @@ public class DbManager {
     private static final String SQL_SELECT_MSG_IN_RANGE =   props.getProperty("sql.select.msg.in.range");
     private static final String SQL_SELECT_LAST_MSG_NUM =   props.getProperty("sql.select.last.msg.num");
     private static final String SQL_SELECT_SET =            props.getProperty("sql.select.set");
-    private static final String SQL_SELECT_CHECK_ALIVE =    props.getProperty("sql.select.check.alive");
     private static final String SQL_SELECT_TOPICS =         props.getProperty("sql.select.topics");
 
     private static final String SQL_LOG_REQUEST =           props.getProperty("sql.log.request");
+
+    private static final String SQL_MARK_AS_INDEXED =       props.getProperty("sql.indexer.mark.as.indexed");
+    private static final String SQL_MARK_AS_INDEXED_RANGE = props.getProperty("sql.indexer.mark.as.indexed.range");
+    private static final String SQL_SELECT_MAX_INDEXED =    props.getProperty("sql.indexer.select.max.indexed");
 
     private static String[] topics;
 
@@ -74,7 +75,7 @@ public class DbManager {
         PreparedStatement updatePstmt = null;
         ResultSet rs = null;
         try {
-            Connection conn = Config.DB_CONNECTION;
+            Connection conn = Config.getConnection();
             chkPstmt = conn.prepareStatement(SQL_SELECT_MSG_BY_ID);
             insertPstmt = conn.prepareStatement(SQL_INSERT_MSG);
             updatePstmt = conn.prepareStatement(SQL_UPDATE_MSG);
@@ -105,15 +106,16 @@ public class DbManager {
         } catch (SQLException e) {
             throw new DbException(e);
         } finally {
-            close(chkPstmt, insertPstmt, updatePstmt, rs);
+            DbUtils.close(chkPstmt, insertPstmt, updatePstmt, rs);
         }
     }
 
     public static void saveMessagesFast(List<ZloMessage> msgs) throws DbException {
         PreparedStatement insertPstmt = null;
         ResultSet rs = null;
-        Connection conn = Config.DB_CONNECTION;
+        Connection conn = null;
         try {
+            conn = Config.getConnection();
             conn.setAutoCommit(false);
             insertPstmt = conn.prepareStatement(SQL_INSERT_MSG);
 
@@ -128,13 +130,14 @@ public class DbManager {
             conn.setAutoCommit(true);
         } catch (SQLException e) {
             try {
-                conn.setAutoCommit(true);
+                if (conn != null)
+                    conn.setAutoCommit(true);
             } catch (SQLException e1) {
                 throw new DbException(e1);
             }
             throw new DbException(e);
         } finally {
-            close(insertPstmt, rs);
+            DbUtils.close(insertPstmt, rs);
         }
     }
 
@@ -150,11 +153,8 @@ public class DbManager {
         PreparedStatement st = null;
         ResultSet rs = null;
 
-        if (Config.DB_CONNECTION == null)
-            reopenConnectionIfNeeded();
-
         try {
-            st = Config.DB_CONNECTION.prepareStatement(SQL_SELECT_MSG_BY_ID);
+            st = Config.getConnection().prepareStatement(SQL_SELECT_MSG_BY_ID);
             st.setInt(1, num);
             rs = st.executeQuery();
             if (rs.next())
@@ -165,11 +165,11 @@ public class DbManager {
             if (afterReconnect) {
                 throw new DbException(e);
             } else {
-                reopenConnectionIfNeeded();
+                DbUtils.reopenConnectionIfNeeded();
                 return getMessageByNumber(num, true);
             }
         } finally {
-            close(st, rs);
+            DbUtils.close(st, rs);
         }
     }
 
@@ -177,7 +177,7 @@ public class DbManager {
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
-            st = Config.DB_CONNECTION.prepareStatement(SQL_SELECT_MSG_IN_RANGE);
+            st = Config.getConnection().prepareStatement(SQL_SELECT_MSG_IN_RANGE);
             st.setInt(1, start);
             st.setInt(2, end);
             rs = st.executeQuery();
@@ -190,7 +190,7 @@ public class DbManager {
         } catch (SQLException e) {
             throw new DbException(e);
         } finally {
-            close(st, rs);
+            DbUtils.close(st, rs);
         }
     }
 
@@ -210,7 +210,7 @@ public class DbManager {
         ResultSet rs = null;
         Statement st = null;
         try {
-            st = Config.DB_CONNECTION.createStatement();
+            st = Config.getConnection().createStatement();
             rs = st.executeQuery(sql);
             List<ZloMessage> msgs = new ArrayList<ZloMessage>();
 
@@ -225,11 +225,11 @@ public class DbManager {
             if (afterReconnect) {
                 throw new DbException(e);
             } else {
-                reopenConnectionIfNeeded();
+                DbUtils.reopenConnectionIfNeeded();
                 return getMessages(nums, fromIndex, true);
             }
         } finally {
-            close(st, rs);
+            DbUtils.close(st, rs);
         }
 
     }
@@ -238,7 +238,7 @@ public class DbManager {
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
-           st = Config.DB_CONNECTION.prepareStatement(SQL_SELECT_LAST_MSG_NUM);
+           st = Config.getConnection().prepareStatement(SQL_SELECT_LAST_MSG_NUM);
            rs = st.executeQuery();
            if (rs.next()) {
                return rs.getInt(1);
@@ -246,7 +246,7 @@ public class DbManager {
         } catch (SQLException e) {
            throw new DbException(e);
         } finally {
-            close(st, rs);
+            DbUtils.close(st, rs);
         }
         return -1;
     }
@@ -256,7 +256,7 @@ public class DbManager {
             PreparedStatement st = null;
             ResultSet rs = null;
             try {
-                st = Config.DB_CONNECTION.prepareStatement(SQL_SELECT_TOPICS);
+                st = Config.getConnection().prepareStatement(SQL_SELECT_TOPICS);
                 rs = st.executeQuery();
                 Map<Integer, String> topicsMap = new HashMap<Integer, String>();
 
@@ -273,7 +273,7 @@ public class DbManager {
             } catch (SQLException e) {
                 logger.fatal("Can't load topics", e);
             } finally {
-                close(st, rs);
+                DbUtils.close(st, rs);
             }
         }
         return topics;
@@ -283,7 +283,7 @@ public class DbManager {
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
-            st = Config.DB_CONNECTION.prepareStatement(SQL_LOG_REQUEST);
+            st = Config.getConnection().prepareStatement(SQL_LOG_REQUEST);
             st.setString(1, StringUtils.substring(host, 0, 100));
             st.setString(2, StringUtils.substring(userAgent, 0, 100));
             st.setString(3, StringUtils.substring(reqText, 0, 200));
@@ -292,12 +292,29 @@ public class DbManager {
 
             int res = st.executeUpdate();
             if (res != 1)
-                throw new SQLException("logRequest: res=1");
+                throw new SQLException("logRequest: res!=1");
         } catch (SQLException e) {
            throw new DbException(e);
         } finally {
-            close(st, rs);
+            DbUtils.close(st, rs);
         }
+    }
+
+    public static void markAsIndexed(int num) throws DbException {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = Config.getConnection().prepareStatement(SQL_MARK_AS_INDEXED);
+            st.setInt(1, num);
+
+            int res = st.executeUpdate();
+            if (res != 1)
+                throw new SQLException("logRequest: res!=1");
+        } catch (SQLException e) {
+           throw new DbException(e);
+        } finally {
+            DbUtils.close(st, rs);
+        }        
     }
 
     private static ZloMessage getMessage(ResultSet rs) throws SQLException {
@@ -314,63 +331,5 @@ public class DbManager {
                 , rs.getInt(MSG_URL_NUM)
                 , rs.getInt(MSG_PARENT_NUM)
                 , rs.getInt(MSG_STATUS));
-    }
-
-    public static void reopenConnectionIfNeeded() throws DbException {
-        Statement checkStmt = null;
-        try {
-            boolean closed = Config.DB_CONNECTION == null || Config.DB_CONNECTION.isClosed();
-
-            if (!closed) {
-                checkStmt = Config.DB_CONNECTION.createStatement();
-
-                try {
-                    checkStmt.executeQuery(SQL_SELECT_CHECK_ALIVE);
-                } catch(SQLException e) {
-                    closed = true;
-                }
-            }
-
-            if (closed) {
-                close(Config.DB_CONNECTION);
-                logger.info("Db connection closed, recreating...");
-                Config.createConnection();
-
-                if (Config.DB_CONNECTION == null)
-                    throw new SQLException("Can't open connection");
-            }
-        } catch (SQLException e) {
-            logger.error("Problem with recreating connection: " + e);
-            throw new DbException(e);
-        } finally {
-            close(checkStmt);
-        }
-    }
-
-    private static void close(Object obj) {
-        if (obj == null)
-            return;
-
-        try {
-            if (obj instanceof Statement) {
-                ((Statement) obj).close();
-            } else if (obj instanceof ResultSet) {
-                ((ResultSet) obj).close();
-            } else if (obj instanceof Closeable) {
-                ((Closeable) obj).close();
-            } else if (obj instanceof Connection) {
-                ((Connection) obj).close();
-            }
-        } catch (SQLException e) {
-            ;
-        } catch(IOException e) {
-            ;
-        }
-    }
-
-    private static void close(Object... all) {
-        for(Object obj : all) {
-            close(obj);
-        }
     }
 }

@@ -35,7 +35,7 @@
                                 <c:out value="${savedMsg.nick}" />
                             </c:when>
                             <c:otherwise>
-                                <a href="http://<c:out value="${siteRoot}" />/?uinfo=<c:out value="${savedMsg.nick}" />"><c:out value="${savedMsg.nick}" /></a>
+                                <a href="http://<c:out value="${siteRoot}" />/?uinfo=<c:out value="${savedMsg.nick}" />"><c:out value="${savedMsg.nick}" escapeXml="false" /></a>
                             </c:otherwise>
                         </c:choose>
                         <a class="search" href="search?nick=<c:out value="${savedMsg.nick}" />">?</a>

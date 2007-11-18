@@ -3,10 +3,10 @@ package org.xonix.zlo.search.config;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.lucene.analysis.Analyzer;
+import org.xonix.zlo.search.db.DbUtils;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -75,32 +75,16 @@ public class Config {
         return props.getProperty(key, defaultVal);
     }
 
-    public static Connection DB_CONNECTION = null;
-    
-    public static void createConnection() {
-        Connection _conn = null;
-        logger.info("Creating db connection...");
+    private static Connection DB_CONNECTION = DbUtils.createConnection();
 
-        if (TRUE.equals(getProp("db.initialize"))) {
-            try {
-                 Class.forName(getProp("db.driver"));
-                _conn = DriverManager.getConnection(getProp("db.url"), getProp("db.user"), getProp("db.password"));
-            } catch (Exception e) {
-                if (e instanceof ClassNotFoundException) {
-                    logger.error("Can't load MySQL drivers...");
-                } else if (e instanceof SQLException) {
-                    logger.error("Can't connect to DB...");
-                }
-                logger.warn("Starting without DB because of exception: " + e.getClass());
-            }
-        } else {
-            logger.info("Starting without db because of config...");
+    public static Connection getConnection() throws SQLException {
+        if (DB_CONNECTION == null) {
+            throw new SQLException("Connection is null");
         }
-
-        if (_conn != null)
-            DB_CONNECTION = _conn;
+        return DB_CONNECTION;
     }
-    static {
-        createConnection();
+
+    public static void setConnection(Connection con) {
+        DB_CONNECTION = con;        
     }
 }
