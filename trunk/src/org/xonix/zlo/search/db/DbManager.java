@@ -251,18 +251,16 @@ public class DbManager {
         return -1;
     }
 
-    public static String[] getTopics() {
+    public static String[] getTopics() throws DbException {
         if (topics == null) {
-            PreparedStatement st = null;
-            ResultSet rs = null;
+            DbUtils.Result res = null;
             try {
-                st = Config.getConnection().prepareStatement(SQL_SELECT_TOPICS);
-                rs = st.executeQuery();
                 Map<Integer, String> topicsMap = new HashMap<Integer, String>();
-
+                res = DbUtils.executeSelect(SQL_SELECT_TOPICS);
+                ResultSet rs = res.getResultSet();
                 while (rs.next()) {
                     int id = rs.getInt(1);
-                    String  name = rs.getString(2);
+                    String name = rs.getString(2);
                     topicsMap.put(id, name);
                 }
 
@@ -273,48 +271,49 @@ public class DbManager {
             } catch (SQLException e) {
                 logger.fatal("Can't load topics", e);
             } finally {
-                DbUtils.close(st, rs);
+                DbUtils.close(res);
             }
         }
         return topics;
     }
 
     public static void logRequest(String host, String userAgent, String reqText, String reqQuery, String referer) throws DbException {
-        PreparedStatement st = null;
-        ResultSet rs = null;
-        try {
-            st = Config.getConnection().prepareStatement(SQL_LOG_REQUEST);
-            st.setString(1, StringUtils.substring(host, 0, 100));
-            st.setString(2, StringUtils.substring(userAgent, 0, 100));
-            st.setString(3, StringUtils.substring(reqText, 0, 200));
-            st.setString(4, StringUtils.substring(reqQuery, 0, 200));
-            st.setString(5, StringUtils.substring(referer, 0, 100));
-
-            int res = st.executeUpdate();
-            if (res != 1)
-                throw new SQLException("logRequest: res!=1");
-        } catch (SQLException e) {
-           throw new DbException(e);
-        } finally {
-            DbUtils.close(st, rs);
-        }
+        DbUtils.executeUpdate(
+                SQL_LOG_REQUEST
+                , new Object[] {
+                        StringUtils.substring(host, 0, 100),
+                        StringUtils.substring(userAgent, 0, 100),
+                        StringUtils.substring(reqText, 0, 200),
+                        StringUtils.substring(reqQuery, 0, 200),
+                        StringUtils.substring(referer, 0, 100)}
+                , 1);
     }
 
     public static void markAsIndexed(int num) throws DbException {
-        PreparedStatement st = null;
-        ResultSet rs = null;
-        try {
-            st = Config.getConnection().prepareStatement(SQL_MARK_AS_INDEXED);
-            st.setInt(1, num);
+        DbUtils.executeUpdate(
+                SQL_MARK_AS_INDEXED
+                , new Object[] {num}
+                , 1);
+    }
 
-            int res = st.executeUpdate();
-            if (res != 1)
-                throw new SQLException("logRequest: res!=1");
+    public static void markRangeAsIndexed(int from, int to) throws DbException {
+        DbUtils.executeUpdate(
+                SQL_MARK_AS_INDEXED_RANGE
+                , new Object[] {from, to});
+    }
+
+    public static int selectMaxIndexedNumber() throws DbException {
+        DbUtils.Result res = DbUtils.executeSelect(SQL_SELECT_MAX_INDEXED);
+        try {
+            if (res.getResultSet().next()) {
+                return res.getResultSet().getInt(1);
+            }
         } catch (SQLException e) {
-           throw new DbException(e);
+            throw new DbException(e);
         } finally {
-            DbUtils.close(st, rs);
-        }        
+            DbUtils.close(res);
+        }
+        return -1;
     }
 
     private static ZloMessage getMessage(ResultSet rs) throws SQLException {

@@ -54,7 +54,12 @@ public class Tests1 extends TestCase {
     @Test
     public void testGetTopics() {
         new Config();
-        String[] topics = DbManager.getTopics();
+        String[] topics = new String[0];
+        try {
+            topics = DbManager.getTopics();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
         assertEquals("Без темы", topics[0]);
         assertEquals("Учеба", topics[1]);
         assertEquals("Работа", topics[2]);
