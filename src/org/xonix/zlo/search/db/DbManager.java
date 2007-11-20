@@ -207,11 +207,9 @@ public class DbManager {
 
         String sql = String.format(SQL_SELECT_SET, sbNums.toString());
 
-        ResultSet rs = null;
-        Statement st = null;
+        DbUtils.Result res = DbUtils.executeSelect(sql);
+        ResultSet rs = res.getResultSet();
         try {
-            st = Config.getConnection().createStatement();
-            rs = st.executeQuery(sql);
             List<ZloMessage> msgs = new ArrayList<ZloMessage>();
 
             while (rs.next()) {
@@ -229,34 +227,24 @@ public class DbManager {
                 return getMessages(nums, fromIndex, true);
             }
         } finally {
-            DbUtils.close(st, rs);
+            DbUtils.close(res);
         }
-
     }
 
     public static int getLastRootMessageNumber() throws DbException {
-        PreparedStatement st = null;
-        ResultSet rs = null;
+        DbUtils.Result res = DbUtils.executeSelect(SQL_SELECT_LAST_MSG_NUM);
         try {
-           st = Config.getConnection().prepareStatement(SQL_SELECT_LAST_MSG_NUM);
-           rs = st.executeQuery();
-           if (rs.next()) {
-               return rs.getInt(1);
-           }
-        } catch (SQLException e) {
-           throw new DbException(e);
+            return res.getInt1();
         } finally {
-            DbUtils.close(st, rs);
+            DbUtils.close(res);
         }
-        return -1;
     }
 
     public static String[] getTopics() throws DbException {
         if (topics == null) {
-            DbUtils.Result res = null;
+            DbUtils.Result res = DbUtils.executeSelect(SQL_SELECT_TOPICS);
             try {
                 Map<Integer, String> topicsMap = new HashMap<Integer, String>();
-                res = DbUtils.executeSelect(SQL_SELECT_TOPICS);
                 ResultSet rs = res.getResultSet();
                 while (rs.next()) {
                     int id = rs.getInt(1);
@@ -286,6 +274,7 @@ public class DbManager {
                         StringUtils.substring(reqText, 0, 200),
                         StringUtils.substring(reqQuery, 0, 200),
                         StringUtils.substring(referer, 0, 100)}
+                , new int[]{Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR}
                 , 1);
     }
 
@@ -293,27 +282,24 @@ public class DbManager {
         DbUtils.executeUpdate(
                 SQL_MARK_AS_INDEXED
                 , new Object[] {num}
+                , new int[] {Types.INTEGER}
                 , 1);
     }
 
     public static void markRangeAsIndexed(int from, int to) throws DbException {
         DbUtils.executeUpdate(
                 SQL_MARK_AS_INDEXED_RANGE
-                , new Object[] {from, to});
+                , new Object[] {from, to}
+                , new int[] {Types.INTEGER, Types.INTEGER});
     }
 
     public static int selectMaxIndexedNumber() throws DbException {
         DbUtils.Result res = DbUtils.executeSelect(SQL_SELECT_MAX_INDEXED);
         try {
-            if (res.getResultSet().next()) {
-                return res.getResultSet().getInt(1);
-            }
-        } catch (SQLException e) {
-            throw new DbException(e);
+            return res.getInt1();
         } finally {
             DbUtils.close(res);
         }
-        return -1;
     }
 
     private static ZloMessage getMessage(ResultSet rs) throws SQLException {

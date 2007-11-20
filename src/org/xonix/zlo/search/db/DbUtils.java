@@ -29,6 +29,17 @@ public final class DbUtils {
             return resultSet;
         }
 
+        public int getInt1() throws DbException {
+            try {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            } catch (SQLException e) {
+                throw new DbException(e);
+            }
+            return -1;
+        }
+
         public void close() {
             DbUtils.close(resultSet, statement);
         }
@@ -93,43 +104,64 @@ public final class DbUtils {
                 Config.getConnection();
             }
         } catch (SQLException e) {
-            logger.error("Problem with recreating connection: " + e);
+            logger.error("Problem with recreating connection: ", e);
             throw new DbException(e);
         } finally {
             close(checkStmt);
         }
     }
 
-    private static void setParams(PreparedStatement st, Object[] params) throws SQLException {
-        int i=1;
-        for (Object param : params) {
-            if (param instanceof String) {
-                st.setString(i, (String)param);
-            } else if (param instanceof Integer) {
-                st.setInt(i, (Integer) param);
-            } else if (param instanceof Boolean) {
-                st.setBoolean(i, (Boolean) param);
-            } else if (param instanceof Date) {
-                st.setDate(i, (Date) param);
-            } else if (param instanceof Timestamp) {
-                st.setTimestamp(i, (Timestamp) param);
-            } else if (param instanceof Time) {
-                st.setTime(i, (Time) param);
+    private static void setParams(PreparedStatement st, Object[] params, int[] types) throws SQLException {
+        if (params.length != types.length)
+            throw new IllegalArgumentException("Number of params and types does not match");
+
+        for (int i = 0; i < params.length; i++) {
+            Object param = params[i];
+            int type = types[i];
+            int j = i+1;
+
+            switch (type) {
+                case Types.VARCHAR:
+                case Types.CHAR:
+                    st.setString(j, (String) param);
+                    break;
+
+                case Types.INTEGER:
+                case Types.SMALLINT:
+                case Types.TINYINT:
+                case Types.NUMERIC:
+                    st.setInt(j, (Integer) param);
+                    break;
+
+                case Types.BOOLEAN:
+                    st.setBoolean(j, (Boolean) param);
+                    break;
+
+                case Types.DATE:
+                    st.setDate(j, (Date) param);
+                    break;
+
+                case Types.TIMESTAMP:
+                    st.setTimestamp(j, (Timestamp) param);
+                    break;
+
+                case Types.TIME:
+                    st.setTime(j, (Time) param);
+                    break;
+
+                default:
+                    throw new IllegalArgumentException(
+                            String.format("Unsupported parameter type: %s of parameter: %s",
+                                    param.getClass(), param));
             }
-            else {
-                throw new IllegalArgumentException(
-                        String.format("Unsupported parameter type: %s of parameter: %s",
-                                param.getClass(), param));
-            }
-            i++;
         }
     }
 
-    public static Result executeSelect(String sqlString, Object[] params) throws DbException {
-        PreparedStatement st = null;
+    public static Result executeSelect(String sqlString, Object[] params, int[] types) throws DbException {
+        PreparedStatement st;
         try {
            st = Config.getConnection().prepareStatement(sqlString);
-           setParams(st, params);
+           setParams(st, params, types);
            return new Result(st.executeQuery(), st);
         } catch (SQLException e) {
            throw new DbException(e);
@@ -137,19 +169,19 @@ public final class DbUtils {
     }
 
     public static Result executeSelect(String sqlString) throws DbException {
-        return executeSelect(sqlString, new Object[0]);
+        return executeSelect(sqlString, new Object[0], new int[0]);
     }
 
     /**
      * Executes insert, update, delete
      */
-    public static void executeUpdate(String sqlString, Object[] params, Integer expectedResult) throws DbException {
+    public static void executeUpdate(String sqlString, Object[] params, int[] types, Integer expectedResult) throws DbException {
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
             st = Config.getConnection().prepareStatement(sqlString);
 
-            setParams(st, params);
+            setParams(st, params, types);
 
             int res = st.executeUpdate();
             if (expectedResult != null && res != expectedResult)
@@ -161,8 +193,8 @@ public final class DbUtils {
         }
     }
 
-    public static void executeUpdate(String sqlString, Object[] params) throws DbException {
-        executeUpdate(sqlString, params, null);
+    public static void executeUpdate(String sqlString, Object[] params, int[] types) throws DbException {
+        executeUpdate(sqlString, params, types, null);
     }
 
     public static Connection createConnection() {
@@ -179,7 +211,7 @@ public final class DbUtils {
                 } else if (e instanceof SQLException) {
                     logger.error("Can't connect to DB...");
                 }
-                logger.warn("Starting without DB because of exception: " + e.getClass());
+                logger.warn("Starting without DB because of exception: ", e);
             }
         } else {
             logger.info("Starting without db because of config...");
