@@ -21,7 +21,7 @@ import java.lang.reflect.Array;
  */
 public class Test1 {
     public static void main(String[] args) {
-        m14();
+        m10();
         System.exit(0);
     }
 
@@ -63,7 +63,8 @@ public class Test1 {
 
     public static void m10() {
         try {
-            System.out.println(new ZloStorage().getLastMessageNumber());
+//            System.out.println(new ZloStorage().getLastMessageNumber());
+            System.out.println(DAO.DB._getLastMessageNumber());
         } catch (DAO.DAOException e) {
             e.printStackTrace();
         }
