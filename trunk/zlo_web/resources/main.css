@@ -1,5 +1,4 @@
 
-html,
 body {
     padding: 0;
     margin: 0;
@@ -12,16 +11,16 @@ big {
 }
 
 #searchform {
-    background: bisque;
-    /*border: blue dashed 1px;*/
-}
-
-#results {
-    font-family: Verdana serif;
+    background: #e1e1e1;
+	border-bottom: solid 1px #999;
 }
 
 #debug {
-    border: blue solid 1px;
+    background-color: blanchedalmond;
+}
+
+#resultTable {
+    border-collapse: collapse;
 }
 
 #resultTable .odd {
@@ -30,6 +29,15 @@ big {
 
 #resultTable .even {
     background-color: #f0f0f0;
+}
+
+#resultTable .odd,
+#resultTable .even {
+    border-bottom:1px solid #CCC;
+}
+
+#resultTable .head {
+	background-color: #ccc;
 }
 
 #body {
@@ -51,6 +59,15 @@ big {
     font-size: small;
 }
 
+.searchResOuter {
+    position: relative;
+    margin: 0 10px;
+}
+
+.searchRes {
+    width: 100%;
+}
+
 .quote {
     background-color: #E9E9E9;
     border: 1px solid #CCCCCC;
@@ -60,3 +77,10 @@ big {
     color: #E9E9E9;
 }
 
+.small {
+    font-size: small;
+}
+
+.nowrap {
+    white-space: nowrap;
+}

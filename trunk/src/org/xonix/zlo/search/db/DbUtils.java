@@ -226,4 +226,9 @@ public final class DbUtils {
         }
         return _conn;
     }
+
+    public static void clean() {
+        close(DB_CONNECTION);
+        DB_CONNECTION = null;
+    }
 }
