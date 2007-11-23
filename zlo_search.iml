@@ -50,6 +50,7 @@
     <orderEntry type="library" name="displaytag-1.1.1" level="project" />
     <orderEntry type="library" name="junit-4.4" level="project" />
     <orderEntry type="library" name="log4j-1.2.15" level="project" />
+    <orderEntry type="library" name="spring" level="project" />
     <orderEntryProperties />
   </component>
   <component name="VcsManagerConfiguration">

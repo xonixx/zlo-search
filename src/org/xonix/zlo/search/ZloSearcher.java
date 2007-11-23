@@ -24,7 +24,7 @@ public class ZloSearcher {
 
     private final static ZloSearcher ZLO_SEARCHER_INSTANCE = new ZloSearcher();
     public final static SimpleDateFormat QUERY_DATEFORMAT = new SimpleDateFormat("yyyyMMdd"); // because of locale
-    private final static IndexReader INDEX_READER;
+    private static IndexReader INDEX_READER;
 
     static {
         IndexReader _ir;
@@ -35,6 +35,15 @@ public class ZloSearcher {
             logger.error("Error while creating index reader: " + e);
         }
         INDEX_READER = _ir;
+    }
+
+    public static void clean() {
+        try {
+            INDEX_READER.close();
+        } catch (IOException e) {
+            logger.error("Error while closing index reader: " + e.getClass());
+        }
+        INDEX_READER = null;
     }
 
     public static class ParseException extends RuntimeException {

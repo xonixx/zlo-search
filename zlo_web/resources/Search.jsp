@@ -57,21 +57,21 @@
             </table>
         </div>
     <c:if test="${requestScope['debug'] == true}">
-        <br/>
         <div id="debug">
             <pre>
                 Query:          <c:out value="${sessionScope['searchResult'].query}" />
                 isNewSearch:    <c:out value="${sessionScope['searchResult'].newSearch}" />
             </pre>
         </div>
-        <br/>
     </c:if>
-
+    <br/>
     <c:choose>
         <c:when test="${empty requestScope['error']}">
             <c:if test="${not empty sessionScope['searchResult']}">
+                <div class="searchResOuter">
                 <display:table name="sessionScope.searchResult.paginatedList" id="msg" htmlId="resultTable"
-                               decorator="org.xonix.zlo.web.decorators.SearchResultLineDecorator" requestURI="search">
+                               decorator="org.xonix.zlo.web.decorators.SearchResultLineDecorator" requestURI="search"
+                                class="searchRes">
                     <display:setProperty name="basic.msg.empty_list"><span class="pagebanner">Сообщения, соответствующие введенным критериям поиска не найдены. </span></display:setProperty>
                     <display:setProperty name="paging.banner.one_item_found"><span class="pagebanner">Найдено одно сообщение. </span></display:setProperty>
                     <display:setProperty name="paging.banner.all_items_found"><span class="pagebanner">Найдено сообщений: {0}, показаны все. </span></display:setProperty>
@@ -87,8 +87,10 @@
                         <span class="pagelinks">[<a href="{1}">Перв</a>/<a href="{2}">Пред</a>] {0} [След/Последн]</span>
                     </display:setProperty>
 
-                    <display:column title="<%= HtmlStrings.HEADER_NUM.toString() %>"><c:out value="${msg.hitId + 1}" /></display:column>
-                    <display:column title="<%= HtmlStrings.HEADER_TITLE.toString() %>">
+                    <display:column title="<%= HtmlStrings.HEADER_NUM.toString() %>"
+                                    class="small" headerClass="head"
+                                    style="text-align:center;width:1%;"><c:out value="${msg.hitId + 1}" /></display:column>
+                    <display:column title="<%= HtmlStrings.HEADER_TITLE.toString() %>" headerClass="head" style="width:67%">
                         <a href="http://<c:out value="${siteRoot}" />/?read=<c:out value="${msg.num}" />">
                             <c:if test="${not empty msg.topic and msg.topic != 'Без темы'}">
                                 [<c:out value="${msg.topic}" />]
@@ -101,7 +103,7 @@
                         </small>
                         <a class="search" href="msg?num=<c:out value="${msg.num}" />"><fmt:message key="link.saved.msg" /></a>
                     </display:column>
-                    <display:column title="<%= HtmlStrings.HEADER_NICK.toString() %>">
+                    <display:column title="<%= HtmlStrings.HEADER_NICK.toString() %>" headerClass="head">
                         <span class="nick">
                             <c:choose>
                                 <c:when test="${not msg.reg}">
@@ -114,12 +116,14 @@
                         </span>
                         <a class="search" href="search?nick=<c:out value="${msg.nick}" />">?</a>
                     </display:column>
-                    <display:column title="<%= HtmlStrings.HEADER_HOST.toString() %>">
+                    <display:column title="<%= HtmlStrings.HEADER_HOST.toString() %>" class="small" headerClass="head">
                         <c:out value="${msg.host}" />
                         <a class="search" href="search?host=<c:out value="${msg.host}" />">?</a>
                     </display:column>
-                    <display:column title="<%= HtmlStrings.HEADER_DATE.toString() %>" property="date" />
+                    <display:column title="<%= HtmlStrings.HEADER_DATE.toString() %>" property="date"
+                                    class="small nowrap" headerClass="head" />
                 </display:table>
+                </div>
             </c:if>
         </c:when>
         <c:otherwise>

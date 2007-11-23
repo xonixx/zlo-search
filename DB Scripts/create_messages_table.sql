@@ -7,11 +7,11 @@ USE `zlo_storage`;
 
 CREATE TABLE messages (num INT UNIQUE PRIMARY KEY,
                         parentNum INT,
-                        host CHAR(100),
+                        host VARCHAR(100),
                         topicCode TINYINT,
-                        title CHAR(255),
-                        nick CHAR(100),
-                        altName CHAR(100),
+                        title VARCHAR(255),
+                        nick VARCHAR(100),
+                        altName VARCHAR(100),
                         msgDate DATETIME,
                         reg BOOL,
                         body TEXT,
@@ -21,4 +21,10 @@ CREATE TABLE messages (num INT UNIQUE PRIMARY KEY,
 -- if indexed column is absent                        
 -- ALTER TABLE messages
 -- ADD indexed BOOL DEFAULT 0;
+
+--ALTER TABLE `zlo_storage`.`messages` CHANGE `host` host VARCHAR(100),
+--  CHANGE `title` title VARCHAR(255),
+--  CHANGE `nick` nick VARCHAR(100),
+--  CHANGE `altName` altName VARCHAR(100);
+
 

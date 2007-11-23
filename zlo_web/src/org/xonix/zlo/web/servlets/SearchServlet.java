@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.xonix.zlo.search.*;
 import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.db.DbManager;
+import org.xonix.zlo.search.db.DbUtils;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.config.ErrorMessage;
 import org.xonix.zlo.search.model.ZloMessage;
@@ -259,5 +260,15 @@ public class SearchServlet extends ForwardingServlet {
         } catch (DbException e) {
             logger.error("Can't log user request" + e.getClass());
         }
+    }
+
+    public void destroy() {
+        super.destroy();
+        logger.info("Destroying search servlet. Cleaning...");
+        ZloSearcher.clean();
+        DbUtils.clean();
+        logger.info("Collecting garbage...");
+        System.gc();
+        logger.info("Done.");
     }
 }
