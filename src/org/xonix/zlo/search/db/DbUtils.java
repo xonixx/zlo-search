@@ -16,6 +16,17 @@ public final class DbUtils {
     private static final Logger logger = Logger.getLogger(DbUtils.class);
     private static final String SQL_SELECT_CHECK_ALIVE = "SELECT 1;";
 
+    private static Connection DB_CONNECTION = null;
+
+    /*
+    Supposed to return valid connection
+    if can't recreate one -> throws DbException
+     */
+    public static Connection getConnection() throws DbException {
+        reopenConnectionIfNeeded();
+        return DB_CONNECTION;
+    }
+
     public static class Result implements Closeable {
         private ResultSet resultSet;
         private Statement statement;
@@ -75,22 +86,19 @@ public final class DbUtils {
         }
     }
 
-    public static void reopenConnectionIfNeeded() throws DbException {
+    private static void reopenConnectionIfNeeded() throws DbException {
         Statement checkStmt = null;
         try {
-            Connection con = null;
             boolean closed;
             try {
-                con = Config.getConnection();
-                closed = con.isClosed();
+                closed = DB_CONNECTION == null || DB_CONNECTION.isClosed();
             } catch (SQLException e) {
                 closed = true;
             }
 
             if (!closed) {
-                checkStmt = Config.getConnection().createStatement();
-
                 try {
+                    checkStmt = DB_CONNECTION.createStatement();
                     checkStmt.executeQuery(SQL_SELECT_CHECK_ALIVE);
                 } catch(SQLException e) {
                     closed = true;
@@ -98,14 +106,13 @@ public final class DbUtils {
             }
 
             if (closed) {
-                close(con);
+                close(DB_CONNECTION);
                 logger.info("Db connection closed, recreating...");
-                Config.setConnection(createConnection());
-                Config.getConnection();
+                DB_CONNECTION = createConnection();
             }
-        } catch (SQLException e) {
-            logger.error("Problem with recreating connection: ", e);
-            throw new DbException(e);
+        } catch (DbException e) {
+            logger.error("Problem with recreating connection: " + e.getClass());
+            throw e;
         } finally {
             close(checkStmt);
         }
@@ -160,7 +167,7 @@ public final class DbUtils {
     public static Result executeSelect(String sqlString, Object[] params, int[] types) throws DbException {
         PreparedStatement st;
         try {
-           st = Config.getConnection().prepareStatement(sqlString);
+           st = getConnection().prepareStatement(sqlString);
            setParams(st, params, types);
            return new Result(st.executeQuery(), st);
         } catch (SQLException e) {
@@ -179,7 +186,7 @@ public final class DbUtils {
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
-            st = Config.getConnection().prepareStatement(sqlString);
+            st = getConnection().prepareStatement(sqlString);
 
             setParams(st, params, types);
 
@@ -197,7 +204,7 @@ public final class DbUtils {
         executeUpdate(sqlString, params, types, null);
     }
 
-    public static Connection createConnection() {
+    public static Connection createConnection() throws DbException {
         Connection _conn = null;
         logger.info("Creating db connection...");
 
@@ -211,7 +218,8 @@ public final class DbUtils {
                 } else if (e instanceof SQLException) {
                     logger.error("Can't connect to DB...");
                 }
-                logger.warn("Starting without DB because of exception: ", e);
+                logger.warn("Connection not created because of exception: " + e.getClass());
+                throw new DbException(e);
             }
         } else {
             logger.info("Starting without db because of config...");

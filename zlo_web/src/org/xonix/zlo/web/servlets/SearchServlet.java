@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import org.xonix.zlo.search.*;
 import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.db.DbManager;
-import org.xonix.zlo.search.db.DbUtils;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.config.ErrorMessage;
 import org.xonix.zlo.search.model.ZloMessage;
@@ -175,10 +174,10 @@ public class SearchServlet extends ForwardingServlet {
                     searchRequest.setToDate(null);
                 }
 
-                ZloSearchResult searchResult = null;
+                SearchResult searchResult = null;
 
                 if (session.getAttribute(SESS_SEARCH_RESULT) == null ||
-                        ((ZloSearchResult) session.getAttribute(SESS_SEARCH_RESULT)).isNotTheSameSearch(searchRequest)) {
+                        ((SearchResult) session.getAttribute(SESS_SEARCH_RESULT)).isNotTheSameSearch(searchRequest)) {
 
                     try {
                         searchResult = searchRequest.performSearch();
@@ -188,8 +187,6 @@ public class SearchServlet extends ForwardingServlet {
                     } catch (ZloSearcher.ParseException e) {
                         errorMsg = ErrorMessage.InvalidQueryString;
                         errorMsg.setData(e.getQuery());
-                    } catch (DbException e) {
-                        errorMsg = ErrorMessage.DbError;
                     }
 
                     if (errorMsg != null)
@@ -197,20 +194,26 @@ public class SearchServlet extends ForwardingServlet {
 
                     session.setAttribute(SESS_SEARCH_RESULT, searchResult);
                 } else {
-                    searchResult = (ZloSearchResult) session.getAttribute(SESS_SEARCH_RESULT);
+                    searchResult = (SearchResult) session.getAttribute(SESS_SEARCH_RESULT);
                     searchResult.setNewSearch(false); // means we use result of previous search
                 }
                 if (searchResult != null) {
-                    ZloPaginatedList zloPaginatedList = (ZloPaginatedList) searchResult.getPaginatedList();
-                    zloPaginatedList.setObjectsPerPage(pageSize);
+                    ZloPaginatedList paginatedList = (ZloPaginatedList) searchResult.getPaginatedList();
+                    paginatedList.setObjectsPerPage(pageSize);
                     if (StringUtils.isNotEmpty(request.getParameter(QS_PAGE_NUMBER))) {
                         try {
                             int pageNumber = Integer.parseInt(request.getParameter(QS_PAGE_NUMBER));
                             pageNumber = pageNumber <= 0 ? 1 : pageNumber;
-                            zloPaginatedList.setPageNumber(pageNumber);
+                            paginatedList.setPageNumber(pageNumber);
                         } catch (NumberFormatException e) {
-                            zloPaginatedList.setPageNumber(1);
+                            paginatedList.setPageNumber(1);
                         }
+                    }
+                    try {
+                        paginatedList.refreshCurrentList();
+                    } catch (DbException e) {
+                        errorMsg = ErrorMessage.DbError;
+                        break processing;
                     }
                 }
             } else if (StringUtils.isNotEmpty(request.getParameter(QS_SUBMIT))) {
@@ -239,15 +242,6 @@ public class SearchServlet extends ForwardingServlet {
             }
         }
 
-        if (errorMsg == null) {
-            try {
-                // ensure the connection is OK
-                DbUtils.reopenConnectionIfNeeded();
-            } catch (DbException e) {
-                errorMsg = ErrorMessage.DbError;
-            }
-        }
-
         if (errorMsg != null)
             request.setAttribute(ERROR, errorMsg);
 
@@ -263,7 +257,7 @@ public class SearchServlet extends ForwardingServlet {
                     query,
                     request.getHeader("Referer"));
         } catch (DbException e) {
-            logger.error("Can't log user request", e);
+            logger.error("Can't log user request" + e.getClass());
         }
     }
 }

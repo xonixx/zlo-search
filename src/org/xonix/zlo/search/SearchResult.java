@@ -17,7 +17,7 @@ import java.util.Iterator;
  * Date: 31.08.2007
  * Time: 16:59:08
  */
-public class ZloSearchResult implements Iterable {
+public class SearchResult implements Iterable {
 
     private Hits hits;
     private IndexSearcher searcher;
@@ -31,7 +31,7 @@ public class ZloSearchResult implements Iterable {
 
     private boolean newSearch = true; // by default after created
 
-    public ZloSearchResult() {
+    public SearchResult() {
     }
 
     public Hits getHits() {
@@ -111,8 +111,10 @@ public class ZloSearchResult implements Iterable {
     }
 
     public PaginatedList getPaginatedList() {
-        if (paginatedList == null)
-            paginatedList = ZloPaginatedList.fromZloSearchResult(this);
+        if (paginatedList == null) {
+            paginatedList = new ZloPaginatedList(hits);
+            ((ZloPaginatedList) paginatedList).setPageNumber(1);
+        }
         return paginatedList;
     }
 
