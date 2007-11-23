@@ -75,7 +75,7 @@ public class DbManager {
         PreparedStatement updatePstmt = null;
         ResultSet rs = null;
         try {
-            Connection conn = Config.getConnection();
+            Connection conn = DbUtils.getConnection();
             chkPstmt = conn.prepareStatement(SQL_SELECT_MSG_BY_ID);
             insertPstmt = conn.prepareStatement(SQL_INSERT_MSG);
             updatePstmt = conn.prepareStatement(SQL_UPDATE_MSG);
@@ -115,7 +115,7 @@ public class DbManager {
         ResultSet rs = null;
         Connection conn = null;
         try {
-            conn = Config.getConnection();
+            conn = DbUtils.getConnection();
             conn.setAutoCommit(false);
             insertPstmt = conn.prepareStatement(SQL_INSERT_MSG);
 
@@ -130,8 +130,7 @@ public class DbManager {
             conn.setAutoCommit(true);
         } catch (SQLException e) {
             try {
-                if (conn != null)
-                    conn.setAutoCommit(true);
+                conn.setAutoCommit(true);
             } catch (SQLException e1) {
                 throw new DbException(e1);
             }
@@ -146,15 +145,11 @@ public class DbManager {
     }
 
     public static ZloMessage getMessageByNumber(int num) throws DbException {
-        return getMessageByNumber(num, false);
-    }
-
-    private static ZloMessage getMessageByNumber(int num, boolean afterReconnect) throws DbException {
         PreparedStatement st = null;
         ResultSet rs = null;
 
         try {
-            st = Config.getConnection().prepareStatement(SQL_SELECT_MSG_BY_ID);
+            st = DbUtils.getConnection().prepareStatement(SQL_SELECT_MSG_BY_ID);
             st.setInt(1, num);
             rs = st.executeQuery();
             if (rs.next())
@@ -162,12 +157,7 @@ public class DbManager {
             else
                 return null;
         } catch (SQLException e) {
-            if (afterReconnect) {
-                throw new DbException(e);
-            } else {
-                DbUtils.reopenConnectionIfNeeded();
-                return getMessageByNumber(num, true);
-            }
+            throw new DbException(e);
         } finally {
             DbUtils.close(st, rs);
         }
@@ -177,7 +167,7 @@ public class DbManager {
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
-            st = Config.getConnection().prepareStatement(SQL_SELECT_MSG_IN_RANGE);
+            st = DbUtils.getConnection().prepareStatement(SQL_SELECT_MSG_IN_RANGE);
             st.setInt(1, start);
             st.setInt(2, end);
             rs = st.executeQuery();
@@ -195,10 +185,6 @@ public class DbManager {
     }
 
     public static List<ZloMessage> getMessages(int[] nums, int fromIndex) throws DbException {
-        return getMessages(nums, fromIndex, false);
-    }
-
-    private static List<ZloMessage> getMessages(int[] nums, int fromIndex, boolean afterReconnect) throws DbException {
         StringBuilder sbNums = new StringBuilder(Integer.toString(nums[0]));
 
         for(int i=1; i<nums.length; i++) {
@@ -220,12 +206,7 @@ public class DbManager {
 
             return msgs;
         } catch (SQLException e) {
-            if (afterReconnect) {
-                throw new DbException(e);
-            } else {
-                DbUtils.reopenConnectionIfNeeded();
-                return getMessages(nums, fromIndex, true);
-            }
+            throw new DbException(e);
         } finally {
             DbUtils.close(res);
         }

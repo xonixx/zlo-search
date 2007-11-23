@@ -50,11 +50,11 @@ public class ZloSearcher {
         }
     }
 
-    public static ZloSearchResult search(String queryString) {
+    public static SearchResult search(String queryString) {
         return ZLO_SEARCHER_INSTANCE.search0(queryString);
     }
 
-    public static ZloSearchResult search(int topicCode,
+    public static SearchResult search(int topicCode,
                                          String text,
                                          boolean inTitle,
                                          boolean inBody,
@@ -107,7 +107,7 @@ public class ZloSearcher {
         return ZLO_SEARCHER_INSTANCE.search0(queryStr.toString());
     }
 
-    public static ZloSearchResult search(SearchRequest searchRequest) {
+    public static SearchResult search(SearchRequest searchRequest) {
         return search(
                 searchRequest.getTopicCode(),
                 searchRequest.getText(),
@@ -123,7 +123,7 @@ public class ZloSearcher {
         );
     }
 
-    public static ZloSearchResult search(int topicCode,
+    public static SearchResult search(int topicCode,
                                          String text,
                                          boolean inTitle,
                                          boolean inBody,
@@ -136,8 +136,8 @@ public class ZloSearcher {
                 inReg, inHasUrl, inHasImg, nick, host, null, null);
     }
 
-    private ZloSearchResult search0(String queryStr) {
-        ZloSearchResult result = new ZloSearchResult();
+    private SearchResult search0(String queryStr) {
+        SearchResult result = new SearchResult();
         IndexSearcher searcher = null;
         try {
             searcher = new IndexSearcher(INDEX_READER);
@@ -175,7 +175,7 @@ public class ZloSearcher {
         }
     }
 
-    public static ZloSearchResult searchInNumRange(int urlFrom, int urlTo) {
+    public static SearchResult searchInNumRange(int urlFrom, int urlTo) {
         return search("+num:[" + ZloMessage.URL_NUM_FORMAT.format(urlFrom) 
                 + " TO " + ZloMessage.URL_NUM_FORMAT.format(urlTo) + "]");
     }

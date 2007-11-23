@@ -3,11 +3,8 @@ package org.xonix.zlo.search.config;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.lucene.analysis.Analyzer;
-import org.xonix.zlo.search.db.DbUtils;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Properties;
 
 /**
@@ -73,18 +70,5 @@ public class Config {
 
     public static String getProp(String key, String defaultVal) {
         return props.getProperty(key, defaultVal);
-    }
-
-    private static Connection DB_CONNECTION = DbUtils.createConnection();
-
-    public static Connection getConnection() throws SQLException {
-        if (DB_CONNECTION == null) {
-            throw new SQLException("Connection is null");
-        }
-        return DB_CONNECTION;
-    }
-
-    public static void setConnection(Connection con) {
-        DB_CONNECTION = con;        
     }
 }

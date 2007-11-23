@@ -1,8 +1,6 @@
 package org.xonix.zlo.search;
 
 import org.apache.commons.lang.StringUtils;
-import org.xonix.zlo.search.db.DbException;
-import org.xonix.zlo.search.db.DbUtils;
 
 import java.util.Date;
 
@@ -201,11 +199,9 @@ public class SearchRequest {
                                 inHasUrl, inHasImg, nick, host, fromDate, toDate);
     }
 
-    public ZloSearchResult performSearch() throws DbException {
+    public SearchResult performSearch() {
         // just to throw exception if db connection broken and can't be fixed
-        DbUtils.reopenConnectionIfNeeded();
-
-        ZloSearchResult result = ZloSearcher.search(this);
+        SearchResult result = ZloSearcher.search(this);
         result.setLastSearch(this);
         return result;
     }
