@@ -18,16 +18,16 @@ public class DbManager {
 
     private static Properties props = Config.loadProperties("org/xonix/zlo/search/db/sql.properties");
 
-    public static final String MSG_NICK = ZloMessage.NICK;
+    public static final String MSG_NICK = ZloMessage.FIELDS.NICK;
     public static final String MSG_ALT_NAME = "altName";
-    public static final String MSG_HOST = ZloMessage.HOST;
+    public static final String MSG_HOST = ZloMessage.FIELDS.HOST;
     public static final String MSG_TOPIC = "topic";
     public static final String MSG_TOPIC_CODE = "topicCode";
     public static final String MSG_TITLE = "title"; // with html
     public static final String MSG_BODY = "body"; // with html
     public static final String MSG_DATE = "msgDate";
-    public static final String MSG_REG = ZloMessage.REG;
-    public static final String MSG_URL_NUM = ZloMessage.URL_NUM;
+    public static final String MSG_REG = ZloMessage.FIELDS.REG;
+    public static final String MSG_URL_NUM = ZloMessage.FIELDS.URL_NUM;
     public static final String MSG_PARENT_NUM = "parentNum";
     public static final String MSG_STATUS = ZloMessage.STATUS;
 
