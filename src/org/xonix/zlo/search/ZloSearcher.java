@@ -1,6 +1,5 @@
 package org.xonix.zlo.search;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.IndexReader;
@@ -22,7 +21,6 @@ import java.util.NoSuchElementException;
 public class ZloSearcher {
     private static final Logger logger = Logger.getLogger(ZloSearcher.class);
 
-    private final static ZloSearcher ZLO_SEARCHER_INSTANCE = new ZloSearcher();
     public final static SimpleDateFormat QUERY_DATEFORMAT = new SimpleDateFormat("yyyyMMdd"); // because of locale
     private static IndexReader INDEX_READER;
 
@@ -60,7 +58,7 @@ public class ZloSearcher {
     }
 
     public static SearchResult search(String queryString) {
-        return ZLO_SEARCHER_INSTANCE.search0(queryString);
+        return search(INDEX_READER, queryString);
     }
 
     public static SearchResult search(int topicCode,
@@ -74,46 +72,8 @@ public class ZloSearcher {
                                          String host,
                                          Date fromDate,
                                          Date toDate) {
-        StringBuilder queryStr = new StringBuilder();
 
-        if (StringUtils.isNotEmpty(text)) {
-            if (inTitle && !inBody)
-                queryStr.append(" +title:(").append(text).append(")");
-
-            else if (!inTitle && inBody)
-                queryStr.append(" +body:(").append(text).append(")");
-
-            else if (inTitle && inBody)
-                queryStr.append(" +(body:(").append(text).append(") OR (title:(").append(text).append(")))");
-
-            else // !inTitle && !inBody
-                queryStr.append(" +title:(").append(text).append(")")
-                        .append(" +body:(").append(text).append(")");
-        }
-
-        if (-1 != topicCode) {
-            queryStr.append(" +topic:").append(topicCode);
-        }
-
-        if (StringUtils.isNotEmpty(nick))
-            queryStr.append(" +nick:\"").append(nick).append("\"");
-
-        if (StringUtils.isNotEmpty(host))
-            queryStr.append(" +host:").append(host);
-
-        if (fromDate != null && toDate != null)
-            queryStr.append(" +date:[").append(QUERY_DATEFORMAT.format(fromDate)).append(" TO ").append(QUERY_DATEFORMAT.format(toDate)).append("]");
-
-        if (inReg)
-            queryStr.append(" +reg:1");
-
-        if (inHasUrl)
-            queryStr.append(" +url:1");
-
-        if (inHasImg)
-            queryStr.append(" +img:1");
-
-        return ZLO_SEARCHER_INSTANCE.search0(queryStr.toString());
+        return search(INDEX_READER, ZloMessage.formQueryString(text, inTitle, inBody, topicCode, nick, host, fromDate, toDate, inReg, inHasUrl, inHasImg));
     }
 
     public static SearchResult search(SearchRequest searchRequest) {
@@ -145,13 +105,13 @@ public class ZloSearcher {
                 inReg, inHasUrl, inHasImg, nick, host, null, null);
     }
 
-    private SearchResult search0(String queryStr) {
+    public static SearchResult search(IndexReader indexReader, String queryStr) {
         SearchResult result = new SearchResult();
         IndexSearcher searcher = null;
         try {
-            searcher = new IndexSearcher(INDEX_READER);
+            searcher = new IndexSearcher(indexReader);
             Analyzer analyzer = ZloMessage.constructAnalyzer();
-            QueryParser parser = new QueryParser(ZloMessage.BODY, analyzer);
+            QueryParser parser = new QueryParser(ZloMessage.FIELDS.BODY, analyzer);
             Query query = parser.parse(queryStr);
 
             result.setSearcher(searcher);
@@ -159,7 +119,7 @@ public class ZloSearcher {
             result.setQueryParser(parser);
             result.setQuery(query);
 
-            Hits hits = searcher.search(query, new Sort(new SortField(ZloMessage.DATE, SortField.STRING, true)));
+            Hits hits = searcher.search(query, new Sort(new SortField(ZloMessage.FIELDS.DATE, SortField.STRING, true)));
             result.setHits(hits);
         } catch (IOException e) {
             e.printStackTrace();

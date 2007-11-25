@@ -7,15 +7,15 @@ import org.apache.lucene.document.DateTools;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.search.Hit;
+import org.apache.commons.lang.StringUtils;
 import org.xonix.zlo.search.DAO;
+import org.xonix.zlo.search.ZloSearcher;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.utils.HtmlUtils;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.text.DecimalFormat;
-import java.text.MessageFormat;
-import java.text.NumberFormat;
+import java.text.*;
 import java.util.Comparator;
 import java.util.Date;
 
@@ -28,20 +28,23 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
     private static final String TRUE = "1";
     private static final String FALSE = "0";
 
-    public static final String URL_NUM = "num";
-    public static final String NICK = "nick";
-    public static final String HOST = "host";
     public static final String TOPIC = "topic";
-    public static final String TOPIC_CODE = "topicCode";
     public static final String TITLE_HTML = "titleHtml";
-    public static final String TITLE = "title"; // clean - w/o html
     public static final String BODY_HTML = "bodyHtml";
-    public static final String BODY = "body"; // clean - w/o html
-    public static final String DATE = "date";
-    public static final String REG = "reg";
-    public static final String HAS_URL = "url";
-    public static final String HAS_IMG = "img";
     public static final String STATUS = "status";
+
+    public static final class FIELDS {
+        public static final String TITLE = "title"; // clean - w/o html
+        public static final String TOPIC_CODE = "topicCode";
+        public static final String URL_NUM = "num";
+        public static final String NICK = "nick";
+        public static final String REG = "reg";
+        public static final String HOST = "host";
+        public static final String DATE = "date";
+        public static final String BODY = "body"; // clean - w/o html
+        public static final String HAS_URL = "url";
+        public static final String HAS_IMG = "img";
+    }
 
     private String nick;
     private String altName;
@@ -90,35 +93,70 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
         }
     }
 
-    private static final MessageFormat MSG_FORMAT_OK = new MessageFormat("ZloMessage(" +
-            "\n\tnum={0},\n\tparentNum={1},\n\ttopic={2},\n\ttitle={3},\n\tnick={4},\n\taltName={5},\n\treg={6}," +
-            "\n\thost={7},\n\tdate={8, date,MMMM, d HH:mm:ss yyyy},\n\thasUrl={9},\n\thasImg={10}," +
-            "\n\tbody={11}\n)");
+    public static String formQueryString(String text, boolean inTitle, boolean inBody, int topicCode, String nick, String host, Date fromDate, Date toDate, boolean inReg, boolean inHasUrl, boolean inHasImg) {
+        StringBuilder queryStr = new StringBuilder();
 
-    private static final MessageFormat MSG_FORMAT_NOT_OK = new MessageFormat("ZloMessage(" +
-            "\n\tnum={0},\n\tstatus={1}\n)");
+        if (StringUtils.isNotEmpty(text)) {
+            if (inTitle && !inBody)
+                queryStr.append(" +").append(FIELDS.TITLE).append(":(").append(text).append(")");
+
+            else if (!inTitle && inBody)
+                queryStr.append(" +").append(FIELDS.BODY).append(":(").append(text).append(")");
+
+            else if (inTitle && inBody)
+                queryStr.append(" +(")
+                        .append(FIELDS.BODY).append(":(").append(text)
+                        .append(") OR (")
+                        .append(FIELDS.TITLE).append(":(").append(text)
+                        .append(")))");
+
+            else // !inTitle && !inBody
+                queryStr.append(" +").append(FIELDS.TITLE).append(":(").append(text).append(")")
+                        .append(" +").append(FIELDS.BODY).append(":(").append(text).append(")");
+        }
+
+        if (-1 != topicCode) {
+            queryStr.append(" +").append(FIELDS.TOPIC_CODE).append(":").append(topicCode);
+        }
+
+        if (StringUtils.isNotEmpty(nick))
+            queryStr.append(" +").append(FIELDS.NICK).append(":\"").append(nick).append("\"");
+
+        if (StringUtils.isNotEmpty(host))
+            queryStr.append(" +").append(FIELDS.HOST).append(":").append(host);
+
+        if (fromDate != null && toDate != null)
+            queryStr.append(" +").append(FIELDS.DATE).append(":[")
+                    .append(ZloSearcher.QUERY_DATEFORMAT.format(fromDate))
+                    .append(" TO ")
+                    .append(ZloSearcher.QUERY_DATEFORMAT.format(toDate))
+                    .append("]");
+
+        if (inReg)
+            queryStr.append(" +").append(FIELDS.REG).append(":1");
+
+        if (inHasUrl)
+            queryStr.append(" +").append(FIELDS.HAS_URL).append(":1");
+
+        if (inHasImg)
+            queryStr.append(" +").append(FIELDS.HAS_IMG).append(":1");
+        return queryStr.toString();
+    }
+
+    private static DateFormat DATE_FORMAT = new SimpleDateFormat("MMMM, d HH:mm:ss yyyy");
+
+    private static final String MSG_FORMAT_OK = "ZloMessage(" +
+            "\n\tnum=%s,\n\tparentNum=%s,\n\ttopicCode=%s,\n\ttopic=%s," +
+            "\n\ttitle=%s,\n\tnick=%s,\n\taltName=%s,\n\treg=%s," +
+            "\n\thost=%s,\n\tdate=%s,\n\thasUrl=%s,\n\thasImg=%s," +
+            "\n\tbody=%s\n)";
+
+    private static final String MSG_FORMAT_NOT_OK = "ZloMessage(" +
+            "\n\tnum=%s,\n\tstatus=%s\n)";
     
-/*    public static final String [] TOPICS = {
-        "Без темы",
-        "Учеба", "Работа", "Мурзилка",
-        "Обсуждение", "Новости", "Спорт",
-        "Развлечения", "Движок борды", "Программирование",
-        "Куплю", "Продам", "Услуги",
-        "Windows", "BSD/Linux", "Проблемы сети",
-        "Голосование", "Потеряно/Найдено", "Temp"
-    };*/
     public static final String ALL_TOPICS = "Все темы";
 
     public static NumberFormat URL_NUM_FORMAT = new DecimalFormat("0000000000"); // 10 zeros
-
-/*    public static Map<String, Integer> TOPIC_CODES = new HashMap<String, Integer>(TOPIC.length());
-
-    static {
-        TOPIC_CODES.put(ALL_TOPICS, -1); // all topics
-        for (int i=0; i<TOPICS.length; i++) {
-            TOPIC_CODES.put(TOPICS[i], i);
-        }
-    }*/
 
     public ZloMessage() {
     }
@@ -164,19 +202,6 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
             Status.fromInt(status));
     }
     
-/*    public ZloMessage(String userName, String hostName, int msgTopicCode, String msgTitle, String msgBody, Date msgDate,
-                      boolean reg, int urlNum,
-                      Boolean hasUrl, Boolean hasImg,
-                      Status status) {
-        this(userName, hostName,
-                msgTopicCode == -1
-                    ? ALL_TOPICS
-                    : TOPICS[msgTopicCode],
-                msgTitle, msgBody, msgDate, reg, urlNum,
-                hasUrl, hasImg, status
-        );
-    }*/
-
     public String getNick() {
         return nick;
     }
@@ -311,15 +336,15 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
 
     public String toString() {
         if (status == Status.OK)
-            return MSG_FORMAT_OK.format(new Object[]{
-                    num, parentNum, topic, title,
-                    nick, altName, reg, host, date,
+            return String.format(MSG_FORMAT_OK, 
+                    num, parentNum, topicCode, topic, title,
+                    nick, altName, reg, host, DATE_FORMAT.format(date),
                     isHasUrl() ? TRUE : FALSE,
                     isHasImg() ? TRUE : FALSE,
-                    body.replaceAll("\n","\n\t\t")});
+                    body.replaceAll("\n","\n\t\t"));
         else
-            return MSG_FORMAT_NOT_OK.format(new Object[] {
-                    num, status});
+            return String.format(MSG_FORMAT_NOT_OK,
+                    num, status);
     }
 
     public Document getDocument() {
@@ -328,43 +353,22 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
 
         Document doc = new Document();
 
-        doc.add(new Field(URL_NUM, URL_NUM_FORMAT.format(num), Field.Store.YES, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(TOPIC_CODE, Integer.toString(topicCode), Field.Store.NO, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(TITLE, getCleanTitle(), Field.Store.NO, Field.Index.TOKENIZED)); // "чистый" - индексируем, не храним
-        doc.add(new Field(NICK, nick, Field.Store.NO, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(REG, reg ? TRUE : FALSE, Field.Store.NO, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(HOST, host, Field.Store.NO, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(DATE, DateTools.dateToString(date, DateTools.Resolution.MINUTE), Field.Store.NO, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(BODY, getCleanBody(), Field.Store.NO, Field.Index.TOKENIZED)); // "чистый" - индексируем, не храним
-        doc.add(new Field(HAS_URL, isHasUrl() ? TRUE : FALSE, Field.Store.NO, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(HAS_IMG, isHasImg() ? TRUE : FALSE, Field.Store.NO, Field.Index.UN_TOKENIZED));
+        doc.add(new Field(FIELDS.URL_NUM, URL_NUM_FORMAT.format(num), Field.Store.YES, Field.Index.UN_TOKENIZED));
+        doc.add(new Field(FIELDS.TOPIC_CODE, Integer.toString(topicCode), Field.Store.NO, Field.Index.UN_TOKENIZED));
+        doc.add(new Field(FIELDS.TITLE, getCleanTitle(), Field.Store.NO, Field.Index.TOKENIZED)); // "чистый" - индексируем, не храним
+        doc.add(new Field(FIELDS.NICK, nick, Field.Store.NO, Field.Index.UN_TOKENIZED));
+        doc.add(new Field(FIELDS.REG, reg ? TRUE : FALSE, Field.Store.NO, Field.Index.UN_TOKENIZED));
+        doc.add(new Field(FIELDS.HOST, host, Field.Store.NO, Field.Index.UN_TOKENIZED));
+        doc.add(new Field(FIELDS.DATE, DateTools.dateToString(date, DateTools.Resolution.MINUTE), Field.Store.NO, Field.Index.UN_TOKENIZED));
+        doc.add(new Field(FIELDS.BODY, getCleanBody(), Field.Store.NO, Field.Index.TOKENIZED)); // "чистый" - индексируем, не храним
+        doc.add(new Field(FIELDS.HAS_URL, isHasUrl() ? TRUE : FALSE, Field.Store.NO, Field.Index.UN_TOKENIZED));
+        doc.add(new Field(FIELDS.HAS_IMG, isHasImg() ? TRUE : FALSE, Field.Store.NO, Field.Index.UN_TOKENIZED));
 
         return doc;
     }
 
-/*    public static ZloMessage fromDocument(Document doc) {
-        try {
-            return new ZloMessage(
-                doc.get(NICK),
-                doc.get(HOST),
-                TOPICS[Integer.parseInt(doc.get(TOPIC))],
-                doc.get(TITLE_HTML),
-                doc.get(BODY_HTML),
-                DateTools.stringToDate(doc.get(DATE)),
-                TRUE.equals(doc.get(REG)),
-                Integer.parseInt(doc.get(URL_NUM)),
-                TRUE.equals(doc.get(HAS_URL)),
-                TRUE.equals(doc.get(HAS_IMG)),
-                Status.OK // in index only OK messages are saved
-            );
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }*/
-
     public static ZloMessage fromDocument(Document doc) {
-        int num = Integer.parseInt(doc.get(URL_NUM));
+        int num = Integer.parseInt(doc.get(FIELDS.URL_NUM));
 
         ZloMessage msg;
         try {
@@ -394,8 +398,8 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
 
     public static Analyzer constructAnalyzer() {
         PerFieldAnalyzerWrapper analyzer = new PerFieldAnalyzerWrapper(new KeywordAnalyzer());
-        analyzer.addAnalyzer(TITLE, Config.ANALYZER);
-        analyzer.addAnalyzer(BODY, Config.ANALYZER);
+        analyzer.addAnalyzer(FIELDS.TITLE, Config.ANALYZER);
+        analyzer.addAnalyzer(FIELDS.BODY, Config.ANALYZER);
         return analyzer;
     }
 

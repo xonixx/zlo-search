@@ -42,7 +42,7 @@ public class ZloPaginatedList implements PaginatedList {
         int[] indexes = new int[toIndex - fromIndex];
         try {
             for (int i=fromIndex; i<toIndex; i++) {
-                indexes[i-fromIndex] = Integer.parseInt(hits.doc(i).get(ZloMessage.URL_NUM));
+                indexes[i-fromIndex] = Integer.parseInt(hits.doc(i).get(ZloMessage.FIELDS.URL_NUM));
             }
         } catch (IOException e) {
             logger.error("Error while getting doc from index: " + e);

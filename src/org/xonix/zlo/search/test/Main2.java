@@ -12,6 +12,9 @@ import org.apache.lucene.search.Hit;
 import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
+import org.xonix.zlo.search.db.DbManager;
+import org.xonix.zlo.search.db.DbException;
+import org.xonix.zlo.search.ZloSearcher;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -40,7 +43,7 @@ public class Main2 {
             // indexing
             IndexWriter wr = new IndexWriter(TEST_INDEX, ANALYZER, true);
 
-            for (String[] line : DATA) {
+/*            for (String[] line : DATA) {
                 Document d = new Document();
                 d.add(new Field("num", line[0], Field.Store.YES, Field.Index.UN_TOKENIZED));
                 d.add(new Field("title", line[1], Field.Store.YES, Field.Index.TOKENIZED));
@@ -48,6 +51,14 @@ public class Main2 {
 
                 wr.addDocument(d);
             }
+            */
+
+            try {
+                wr.addDocument(DbManager.getMessageByNumber(3001403).getDocument());
+            } catch (DbException e) {
+                e.printStackTrace();
+            }
+
 
             wr.optimize();
             wr.close();
@@ -56,7 +67,7 @@ public class Main2 {
             IndexReader reader = IndexReader.open(TEST_INDEX);
             IndexSearcher searcher = new IndexSearcher(reader);
 
-            QueryParser parser = new QueryParser("body", ANALYZER);
+/*            QueryParser parser = new QueryParser("body", ANALYZER);
 
             String queryStr = "\"Иван\"";
             Query query = parser.parse(queryStr);
@@ -65,11 +76,12 @@ public class Main2 {
             for (Iterator it = hits.iterator(); it.hasNext();) {
                 Document d = ((Hit)it.next()).getDocument();
                 System.out.println("Found: {"+d.get("num")+", "+d.get("title")+", "+d.get("body")+"}");
-            }
+            }*/
+            System.out.println(ZloSearcher.search(reader, "topicCode:4").getHits().length());
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
+        } /*catch (ParseException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

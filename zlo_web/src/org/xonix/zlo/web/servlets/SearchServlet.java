@@ -35,10 +35,10 @@ public class SearchServlet extends ForwardingServlet {
 
     public static final String ON = "on";
     // query string params
-    public static final String QS_TOPIC = ZloMessage.TOPIC;
+    public static final String QS_TOPIC_CODE = "topic";
     public static final String QS_TEXT = "text";
-    public static final String QS_NICK = ZloMessage.NICK;
-    public static final String QS_HOST = ZloMessage.HOST;
+    public static final String QS_NICK = ZloMessage.FIELDS.NICK;
+    public static final String QS_HOST = ZloMessage.FIELDS.HOST;
     public static final String QS_SITE = "site";
     public static final String QS_DATES = "dates";
     public static final String QS_FROM_DATE = "fd";
@@ -68,7 +68,7 @@ public class SearchServlet extends ForwardingServlet {
     public static SimpleDateFormat FROM_TO_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 
     protected void doGet(ForwardingRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String topicCodeStr = request.getParameter(QS_TOPIC);
+        String topicCodeStr = request.getParameter(QS_TOPIC_CODE);
         String text = request.getParameter(QS_TEXT);
 
         boolean inTitle = StringUtils.isNotEmpty(request.getParameter(QS_IN_TITLE));
@@ -92,7 +92,7 @@ public class SearchServlet extends ForwardingServlet {
 
             // set default topic code
             if (StringUtils.isEmpty(topicCodeStr)) {
-                request.setParameter(QS_TOPIC, "-1"); // all
+                request.setParameter(QS_TOPIC_CODE, "-1"); // all
             }
 
             int topicCode;

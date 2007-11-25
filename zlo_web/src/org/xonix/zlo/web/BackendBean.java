@@ -22,7 +22,7 @@ public class BackendBean {
     private int site;
     private int pageSize;
 
-    public static final String SN_TOPIC = SearchServlet.QS_TOPIC;
+    public static final String SN_TOPIC = SearchServlet.QS_TOPIC_CODE;
     public static final String SN_SITE = SearchServlet.QS_SITE;
     public static final String SN_PAGE_SIZE = SearchServlet.QS_PAGE_SIZE;
 

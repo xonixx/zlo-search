@@ -27,6 +27,9 @@ public class Test1 {
 
     public static void m14() {
 //        System.out.println(new int[2] instanceof Array);
+//        System.out.println(ZloSearcher.search(9, null, true, true, false, false, false, null, null, null, null).getHits().length());
+        System.out.println(String.format("%1$tB, %1$td %1$tH:%1$tm:%1$tS %1$tY", new Date()));
+//        System.out.println(String.format("%d{dd/MM/yy HH:mm:ss,SSS}", new Date()));
     }
 
     public static void m13() throws RuntimeException {

@@ -83,7 +83,10 @@ public class ZloIndexer {
             logger.info("Indexing part (" + start + " - " + end + ") ...");
             for (ZloMessage msg : source.getMessages(start, end)) {
                 if (msg.getStatus() == ZloMessage.Status.OK) {
-                    logger.debug("Addind: " + msg.getNum());
+                    logger.debug("Addind: " +
+                            (Config.DEBUG
+                                    ? msg
+                                    : msg.getNum()));
                     writer.addDocument(msg.getDocument());
                 } else {
                     logger.debug("Not adding: " + msg.getNum() + " with status: " + msg.getStatus());
