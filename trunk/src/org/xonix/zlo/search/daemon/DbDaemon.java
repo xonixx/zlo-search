@@ -54,8 +54,8 @@ public class DbDaemon extends Daemon {
 
                 startDb = end;
 
-                while (startDb == endSource) {
-                    sleep0(SCAN_PERIOD);
+                while (startDb >= endSource) {
+                    sleepSafe(SCAN_PERIOD);
                     endSource = source.getLastMessageNumber();
                 }
             } catch (DAO.DAOException e) {
@@ -65,7 +65,7 @@ public class DbDaemon extends Daemon {
                     logger.warn("Problem with site: " + e);
                 }
                 e.printStackTrace();
-                sleep0(RECONNECT_PERIOD);
+                sleepSafe(RECONNECT_PERIOD);
             }
         }
     }

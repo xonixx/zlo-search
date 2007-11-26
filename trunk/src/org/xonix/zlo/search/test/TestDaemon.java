@@ -16,7 +16,7 @@ public class TestDaemon extends Daemon {
         private int i=0;
         protected void doOneIteration() {
             System.out.println("Iteration: " + i);
-            sleep0(5000);
+            sleepSafe(5000);
             i++;
         }
     }

@@ -39,7 +39,7 @@ public abstract class Daemon {
 
         protected abstract void doOneIteration();
 
-        protected void sleep0(long millis) {
+        protected void sleepSafe(long millis) {
             try {
                 sleep(millis);
             } catch (InterruptedException e) {
