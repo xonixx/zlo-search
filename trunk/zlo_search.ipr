@@ -371,9 +371,7 @@
         <root url="jar://D:/TEST/JAVA/ZloSearcher/lib/standard.jar!/" />
       </CLASSES>
       <JAVADOC />
-      <SOURCES>
-        <root url="intellijad://intellijad" />
-      </SOURCES>
+      <SOURCES />
     </library>
     <library name="commons-collections-3.2">
       <CLASSES>

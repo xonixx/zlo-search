@@ -7,6 +7,7 @@ import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.*;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.model.ZloMessage;
+import org.xonix.zlo.search.utils.TimeUtils;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -21,6 +22,9 @@ import java.util.NoSuchElementException;
 public class ZloSearcher {
     private static final Logger logger = Logger.getLogger(ZloSearcher.class);
 
+    public static final int PERIOD_RECREATE_INDEXER = TimeUtils.parseToMilliSeconds(Config.getProp("searcher.period.recreate.indexer"));
+    private static long lastCreateTime = -1;
+
     public final static SimpleDateFormat QUERY_DATEFORMAT = new SimpleDateFormat("yyyyMMdd"); // because of locale
     private static IndexReader indexReader;
 
@@ -31,25 +35,60 @@ public class ZloSearcher {
             } catch (IOException e) {
                 logger.error("Error while creating index reader: " + e);
             }
-        } else try {
-            if (!indexReader.isCurrent()) {
-                clean();
-                logger.info("Reopen index reader...");
-                return getIndexReader();
+        } else {
+            try {
+                if (!indexReader.isCurrent()
+                        && System.currentTimeMillis() - lastCreateTime > PERIOD_RECREATE_INDEXER) {
+                    startReopeningThread();
+                }
+            } catch (IOException e) {
+                logger.error("IndexReader error", e);
             }
-        } catch (IOException e) {
-            logger.error("IndexReader error", e);
         }
         return indexReader;
     }
 
-    public static void clean() {
+    private static void startReopeningThread() {
+        Thread t = new Thread(new Runnable() {
+
+            public void run() {
+                logger.info("Start recreating indexReader in separate thread...");
+                IndexReader _indexReader = null,
+                            oldIndexReader;
+
+                try {
+                    _indexReader = IndexReader.open(Config.INDEX_DIR);
+                } catch (IOException e) {
+                    logger.error("Error while recreating index reader: " + e);
+                }
+
+                // search to form memory caches
+                search(_indexReader, " +nick:абырвалг");
+                oldIndexReader = indexReader;
+
+                indexReader = _indexReader;
+                lastCreateTime = System.currentTimeMillis();
+
+                clean(oldIndexReader);
+                logger.info("Successfuly recreated.");
+            }
+        });
+
+        t.setPriority(Thread.MIN_PRIORITY);
+        t.start();
+    }
+
+    public static void clean(IndexReader ir) {
         try {
-            if (indexReader != null)
-                indexReader.close();
+            if (ir != null)
+                ir.close();
         } catch (IOException e) {
             logger.error("Error while closing index reader: " + e.getClass());
         }
+    }
+
+    public static void clean() {
+        clean(indexReader);
         indexReader = null;
     }
 
