@@ -18,6 +18,9 @@ CREATE TABLE messages (num INT UNIQUE PRIMARY KEY,
                         status TINYINT,
                         indexed BOOL DEFAULT 0);
 
+ALTER TABLE zlo_storage.messages
+  ADD INDEX indexed (indexed);
+
 -- if indexed column is absent                        
 -- ALTER TABLE messages
 -- ADD indexed BOOL DEFAULT 0;

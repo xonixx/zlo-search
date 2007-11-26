@@ -46,6 +46,8 @@ public class SearchServlet extends ForwardingServlet {
     public static final String QS_PAGE_SIZE = "pageSize";
     public static final String QS_PAGE_NUMBER = "page";
 
+    public static final String QS_LAST_MSGS = "lastMsgs";
+
     public static final String QS_IN_TITLE = "inTitle";
     public static final String QS_IN_BODY = "inBody";
 
@@ -87,7 +89,7 @@ public class SearchServlet extends ForwardingServlet {
         ErrorMessage errorMsg = null;
         request.setAttribute(DEBUG, Config.DEBUG);
 
-        processing: {
+        try {
             HttpSession session = request.getSession(true); // create if session not started
 
             // set default topic code
@@ -143,7 +145,7 @@ public class SearchServlet extends ForwardingServlet {
                     toDate = FROM_TO_DATE_FORMAT.parse(toDateStr);
                 } catch (ParseException e) {
                     errorMsg = ErrorMessage.ToDateInvalid;
-                    break processing;
+                    throw e;
                 }
             }
 
@@ -158,7 +160,7 @@ public class SearchServlet extends ForwardingServlet {
                     fromDate = FROM_TO_DATE_FORMAT.parse(fromDateStr);
                 } catch (ParseException e) {
                     errorMsg = ErrorMessage.FromDateInvalid;
-                    break processing;
+                    throw e;
                 }
             }
 
@@ -175,7 +177,7 @@ public class SearchServlet extends ForwardingServlet {
                     searchRequest.setToDate(null);
                 }
 
-                SearchResult searchResult = null;
+                SearchResult searchResult;
 
                 if (session.getAttribute(SESS_SEARCH_RESULT) == null ||
                         ((SearchResult) session.getAttribute(SESS_SEARCH_RESULT)).isNotTheSameSearch(searchRequest)) {
@@ -185,13 +187,12 @@ public class SearchServlet extends ForwardingServlet {
                         logRequest(request, searchResult.getQuery().toString());
                     } catch (BooleanQuery.TooManyClauses e) { // например как в поиске текста +с*
                         errorMsg = ErrorMessage.TooComplexSearch;
+                        throw e;
                     } catch (ZloSearcher.ParseException e) {
                         errorMsg = ErrorMessage.InvalidQueryString;
                         errorMsg.setData(e.getQuery());
+                        throw e;
                     }
-
-                    if (errorMsg != null)
-                        break processing;
 
                     session.setAttribute(SESS_SEARCH_RESULT, searchResult);
                 } else {
@@ -210,18 +211,15 @@ public class SearchServlet extends ForwardingServlet {
                             paginatedList.setPageNumber(1);
                         }
                     }
-                    try {
-                        paginatedList.refreshCurrentList();
-                    } catch (DbException e) {
-                        errorMsg = ErrorMessage.DbError;
-                        break processing;
-                    }
+
+                    paginatedList.refreshCurrentList();
                 }
             } else if (StringUtils.isNotEmpty(request.getParameter(QS_SUBMIT))) {
                 errorMsg = ErrorMessage.MustSelectCriterion;
-                break processing;
+                throw new Exception();
             } else {
                 session.setAttribute(SESS_SEARCH_RESULT, null);
+                showStatistics(request);
             }
 
             String siteInCookie;
@@ -241,12 +239,20 @@ public class SearchServlet extends ForwardingServlet {
             } else {
                 session.setAttribute(SESS_SITE_ROOT, Config.SITES[0]);
             }
+        } catch (DbException e) {
+            errorMsg = ErrorMessage.DbError;
+        } catch (Exception e) {
+            ;
         }
 
         if (errorMsg != null)
             request.setAttribute(ERROR, errorMsg);
 
         request.forwardTo(JSP_SEARCH);
+    }
+
+    private void showStatistics(ForwardingRequest request) throws DbException {
+        request.setAttribute(QS_LAST_MSGS, DbManager.getLastMessageNums());
     }
 
     private void logRequest(ForwardingRequest request, String query) {

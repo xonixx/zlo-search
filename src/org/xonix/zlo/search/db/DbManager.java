@@ -45,6 +45,7 @@ public class DbManager {
     private static final String SQL_MARK_AS_INDEXED =       props.getProperty("sql.indexer.mark.as.indexed");
     private static final String SQL_MARK_AS_INDEXED_RANGE = props.getProperty("sql.indexer.mark.as.indexed.range");
     private static final String SQL_SELECT_MAX_INDEXED =    props.getProperty("sql.indexer.select.max.indexed");
+    private static final String SQL_SELECT_LAST_MSGS =      props.getProperty("sql.web.select.last.msgs");
 
     private static String[] topics;
 
@@ -208,7 +209,7 @@ public class DbManager {
         } catch (SQLException e) {
             throw new DbException(e);
         } finally {
-            DbUtils.close(res);
+            res.close();
         }
     }
 
@@ -217,7 +218,7 @@ public class DbManager {
         try {
             return res.getInt1();
         } finally {
-            DbUtils.close(res);
+            res.close();
         }
     }
 
@@ -240,7 +241,7 @@ public class DbManager {
             } catch (SQLException e) {
                 logger.fatal("Can't load topics", e);
             } finally {
-                DbUtils.close(res);
+                res.close();
             }
         }
         return topics;
@@ -279,8 +280,28 @@ public class DbManager {
         try {
             return res.getInt1();
         } finally {
-            DbUtils.close(res);
+            res.close();
         }
+    }
+
+    /*
+    returns 2 int vals:
+    1. last saved message num or 0 if absent
+    2. last indexed msg num or 0 if absent
+     */
+    public static int[] getLastMessageNums() throws DbException {
+        int[] result = new int[2];
+        DbUtils.Result res = DbUtils.executeSelect(SQL_SELECT_LAST_MSGS);
+        try {
+            ResultSet rs = res.getResultSet();
+            rs.next();
+            result[0] = rs.getInt(1);
+            rs.next();
+            result[1] = rs.getInt(1);
+        } catch(SQLException e) {
+            throw new DbException(e);
+        }
+        return result;
     }
 
     private static ZloMessage getMessage(ResultSet rs) throws SQLException {
