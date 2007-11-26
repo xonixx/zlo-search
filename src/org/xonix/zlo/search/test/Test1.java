@@ -7,12 +7,10 @@ import org.apache.lucene.search.Query;
 import org.xonix.zlo.search.DAO;
 import org.xonix.zlo.search.ZloSearcher;
 import org.xonix.zlo.search.model.ZloMessage;
-import org.xonix.zlo.search.test.storage.ZloStorage;
 
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
-import java.lang.reflect.Array;
 
 /**
  * Author: Vovan
@@ -28,8 +26,16 @@ public class Test1 {
     public static void m14() {
 //        System.out.println(new int[2] instanceof Array);
 //        System.out.println(ZloSearcher.search(9, null, true, true, false, false, false, null, null, null, null).getHits().length());
-        System.out.println(String.format("%1$tB, %1$td %1$tH:%1$tm:%1$tS %1$tY", new Date()));
+//        System.out.println(String.format("%1$tB, %1$td %1$tH:%1$tm:%1$tS %1$tY", new Date()));
 //        System.out.println(String.format("%d{dd/MM/yy HH:mm:ss,SSS}", new Date()));
+        for (int i=0; i<10; i++) {
+            System.out.println("Cleaning...");
+            ZloSearcher.clean();
+            System.out.println("Creating " + i + " ...");
+            ZloSearcher.getIndexReader();
+            System.out.print("Searching... ");
+            System.out.println(ZloSearcher.search(" +nick:Borisych").getHits().length());
+        }
     }
 
     public static void m13() throws RuntimeException {

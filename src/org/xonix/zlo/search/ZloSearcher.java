@@ -24,7 +24,7 @@ public class ZloSearcher {
     public final static SimpleDateFormat QUERY_DATEFORMAT = new SimpleDateFormat("yyyyMMdd"); // because of locale
     private static IndexReader indexReader;
 
-    private static IndexReader getIndexReader() {
+    public static IndexReader getIndexReader() {
         if (indexReader == null) {
             try {
                 indexReader = IndexReader.open(Config.INDEX_DIR);
