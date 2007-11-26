@@ -68,8 +68,8 @@
     <c:choose>
         <c:when test="${empty requestScope['error']}">
             <c:if test="${not empty requestScope['lastMsgs']}">
-                Last saved messsage: <c:out value="${requestScope['lastMsgs'][0]}" /><br />
-                Last indexed messsage: <c:out value="${requestScope['lastMsgs'][1]}" />    
+                <fmt:message key="label.last.saved.msg" /> <c:out value="${requestScope['lastMsgs'][0]}" /><br />
+                <fmt:message key="label.last.indexed.msg" /> <c:out value="${requestScope['lastMsgs'][1]}" />
             </c:if>
             <c:if test="${not empty sessionScope['searchResult']}">
                 <div class="searchResOuter">
