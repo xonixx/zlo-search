@@ -17,10 +17,7 @@
           <root url="jar://$APPLICATION_HOME_DIR$/lib/j2ee.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES>
-          <root url="intellija$MODULE_DIR$/../../../../..//intellijad" />
-          <root url="intellija$MODULE_DIR$/../../../../..//intellijad" />
-        </SOURCES>
+        <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="zlo_search" />
@@ -31,9 +28,7 @@
           <root url="jar://$MODULE_DIR$/../../lib/commons-beanutils-bean-collections.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES>
-          <root url="intellija$MODULE_DIR$/../../../../..//intellijad" />
-        </SOURCES>
+        <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
@@ -178,6 +173,10 @@
     </containerElement>
     <containerElement type="library" name="mysql-connector-java-5.0.7-bin" level="project">
       <attribute name="method" value="1" />
+      <attribute name="URI" value="/WEB-INF/lib" />
+    </containerElement>
+    <containerElement type="library" name="spring" level="project">
+      <attribute name="method" value="0" />
       <attribute name="URI" value="/WEB-INF/lib" />
     </containerElement>
     <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/WEB-INF/web.xml" optional="false" version="2.4" />

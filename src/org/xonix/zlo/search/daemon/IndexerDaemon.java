@@ -48,13 +48,14 @@ public class IndexerDaemon extends Daemon {
                         end = indexTo;
                 }
 
-                if (indexFrom < end) {
-                    indexer.index(indexFrom, end);
+                if (indexFrom <= end) {
+                    indexer.index(indexFrom, end + 1);
                 }
 
-                indexFrom = end;
+                indexFrom = end + 1;
 
-                while (indexFrom >= indexTo) {
+                while (indexFrom > indexTo) {
+                    logger.debug("indexFrom=" + indexFrom + " >= indexTo=" + indexTo + ". Sleeping...");
                     sleepSafe(INDEX_PERIOD);
                     indexTo = DbManager.getLastMessageNumber();
                 }
