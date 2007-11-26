@@ -44,7 +44,8 @@ public class DbManager {
 
     private static final String SQL_MARK_AS_INDEXED =       props.getProperty("sql.indexer.mark.as.indexed");
     private static final String SQL_MARK_AS_INDEXED_RANGE = props.getProperty("sql.indexer.mark.as.indexed.range");
-    private static final String SQL_SELECT_MAX_INDEXED =    props.getProperty("sql.indexer.select.max.indexed");
+    private static final String SQL_SELECT_LAST_INDEXED =   props.getProperty("sql.indexer.select.last.indexed.num");
+
     private static final String SQL_SELECT_LAST_MSGS =      props.getProperty("sql.web.select.last.msgs");
 
     private static String[] topics;
@@ -213,7 +214,7 @@ public class DbManager {
         }
     }
 
-    public static int getLastRootMessageNumber() throws DbException {
+    public static int getLastMessageNumber() throws DbException {
         DbUtils.Result res = DbUtils.executeSelect(SQL_SELECT_LAST_MSG_NUM);
         try {
             return res.getInt1();
@@ -275,8 +276,8 @@ public class DbManager {
                 , new int[] {Types.INTEGER, Types.INTEGER});
     }
 
-    public static int selectMaxIndexedNumber() throws DbException {
-        DbUtils.Result res = DbUtils.executeSelect(SQL_SELECT_MAX_INDEXED);
+    public static int getLastIndexedNumber() throws DbException {
+        DbUtils.Result res = DbUtils.executeSelect(SQL_SELECT_LAST_INDEXED);
         try {
             return res.getInt1();
         } finally {

@@ -116,7 +116,7 @@ public class DAO {
 
         public int getLastMessageNumber() throws DAOException {
             try {
-                return DbManager.getLastRootMessageNumber();
+                return DbManager.getLastMessageNumber();
             } catch (DbException e) {
                 throw new DAOException(SOURCE, e);
             }

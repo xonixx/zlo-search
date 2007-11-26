@@ -22,26 +22,35 @@ public class ZloSearcher {
     private static final Logger logger = Logger.getLogger(ZloSearcher.class);
 
     public final static SimpleDateFormat QUERY_DATEFORMAT = new SimpleDateFormat("yyyyMMdd"); // because of locale
-    private static IndexReader INDEX_READER;
+    private static IndexReader indexReader;
 
-    static {
-        IndexReader _ir;
-        try {
-            _ir = IndexReader.open(Config.INDEX_DIR);
+    private static IndexReader getIndexReader() {
+        if (indexReader == null) {
+            try {
+                indexReader = IndexReader.open(Config.INDEX_DIR);
+            } catch (IOException e) {
+                logger.error("Error while creating index reader: " + e);
+            }
+        } else try {
+            if (!indexReader.isCurrent()) {
+                clean();
+                logger.info("Reopen index reader...");
+                return getIndexReader();
+            }
         } catch (IOException e) {
-            _ir = null;
-            logger.error("Error while creating index reader: " + e);
+            logger.error("IndexReader error", e);
         }
-        INDEX_READER = _ir;
+        return indexReader;
     }
 
     public static void clean() {
         try {
-            INDEX_READER.close();
+            if (indexReader != null)
+                indexReader.close();
         } catch (IOException e) {
             logger.error("Error while closing index reader: " + e.getClass());
         }
-        INDEX_READER = null;
+        indexReader = null;
     }
 
     public static class ParseException extends RuntimeException {
@@ -58,7 +67,7 @@ public class ZloSearcher {
     }
 
     public static SearchResult search(String queryString) {
-        return search(INDEX_READER, queryString);
+        return search(getIndexReader(), queryString);
     }
 
     public static SearchResult search(int topicCode,
@@ -73,7 +82,7 @@ public class ZloSearcher {
                                          Date fromDate,
                                          Date toDate) {
 
-        return search(INDEX_READER, ZloMessage.formQueryString(text, inTitle, inBody, topicCode, nick, host, fromDate, toDate, inReg, inHasUrl, inHasImg));
+        return search(getIndexReader(), ZloMessage.formQueryString(text, inTitle, inBody, topicCode, nick, host, fromDate, toDate, inReg, inHasUrl, inHasImg));
     }
 
     public static SearchResult search(SearchRequest searchRequest) {

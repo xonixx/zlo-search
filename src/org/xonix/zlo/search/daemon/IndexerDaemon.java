@@ -3,11 +3,12 @@ package org.xonix.zlo.search.daemon;
 import org.apache.log4j.Logger;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.utils.TimeUtils;
-import org.xonix.zlo.search.DAO;
 import org.xonix.zlo.search.db.DbManager;
-import org.xonix.zlo.search.model.ZloMessage;
+import org.xonix.zlo.search.db.DbException;
+import org.xonix.zlo.search.ZloIndexer;
+import org.xonix.zlo.search.DAO;
 
-import java.util.List;
+import java.io.IOException;
 
 /**
  * Author: Vovan
@@ -17,56 +18,52 @@ import java.util.List;
 public class IndexerDaemon extends Daemon {
     private static Logger logger = Logger.getLogger(IndexerDaemon.class);
 
-    public static final int SCAN_PER_TIME = Integer.parseInt(Config.getProp("indexer.daemon.index.per.time"));
-    public static final int SCAN_PERIOD = TimeUtils.parseToMilliSeconds(Config.getProp("indexer.daemon.period.to.index"));
+    public static final int INDEX_PER_TIME = Integer.parseInt(Config.getProp("indexer.daemon.index.per.time"));
+    public static final int INDEX_PERIOD = TimeUtils.parseToMilliSeconds(Config.getProp("indexer.daemon.period.to.index"));
     public static final int RECONNECT_PERIOD = TimeUtils.parseToMilliSeconds(Config.getProp("indexer.daemon.period.to.reconnect"));
+
+    private static final ZloIndexer indexer = new ZloIndexer(DAO.DB.SOURCE);
 
     private class IndexingProcess extends Process {
         private int indexFrom = -1;
         private int indexTo = -1;
         
         protected void doOneIteration() {
-/*
             try {
                 if (indexFrom == -1)
-                    indexFrom = DbManager. + 1;
+                    indexFrom = DbManager.getLastIndexedNumber() + 1;
 
-                if (endSource == -1)
-                    endSource = source.getLastMessageNumber();
+                if (indexTo == -1)
+                    indexTo = DbManager.getLastMessageNumber();
 
                 int end;
 
-                if (startDb + SCAN_PER_TIME < endSource) {
-                    end = startDb + SCAN_PER_TIME;
+                if (indexFrom + INDEX_PER_TIME < indexTo) {
+                    end = indexFrom + INDEX_PER_TIME;
                 } else {
-                    endSource = source.getLastMessageNumber();
-                    if (startDb + SCAN_PER_TIME < endSource)
-                        end = startDb + SCAN_PER_TIME;
+                    indexTo = DbManager.getLastMessageNumber();
+                    if (indexFrom + INDEX_PER_TIME < indexTo)
+                        end = indexFrom + INDEX_PER_TIME;
                     else
-                        end = endSource;
+                        end = indexTo;
                 }
 
-                if (startDb < end) {
-                    List<ZloMessage> msgs = source.getMessages(startDb, end);
-                    DAO.DB.saveMessages(msgs);
+                if (indexFrom < end) {
+                    indexer.index(indexFrom, end);
                 }
 
-                startDb = end;
+                indexFrom = end;
 
-                while (startDb == endSource) {
-                    sleep0(SCAN_PERIOD);
-                    endSource = source.getLastMessageNumber();
+                while (indexFrom >= indexTo) {
+                    sleepSafe(INDEX_PERIOD);
+                    indexTo = DbManager.getLastMessageNumber();
                 }
-            } catch (DAO.DAOException e) {
-                if (e.getSource() instanceof DAO.DB) {
-                    logger.warn("Problem with db: " + e);
-                } else if (e.getSource() instanceof DAO.Site) {
-                    logger.warn("Problem with site: " + e);
-                }
-                e.printStackTrace();
-                sleep0(RECONNECT_PERIOD);
+            } catch (DbException e) {
+                logger.warn("Problem with db: " + e.getClass());
+                sleepSafe(RECONNECT_PERIOD);
+            } catch (IOException e) {
+                logger.error("IOException while indexing, probably something with index...");
             }
-*/
         }
     }
 
