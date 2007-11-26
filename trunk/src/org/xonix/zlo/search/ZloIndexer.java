@@ -23,7 +23,8 @@ public class ZloIndexer {
 
     private static final int INDEX_PER_TIME = 50;
 
-    private IndexWriter _writer;
+    private IndexWriter writer;
+    private boolean reindex;
 
     public ZloIndexer(IndexingSource source) {
         this(source, false);
@@ -31,25 +32,21 @@ public class ZloIndexer {
 
     public ZloIndexer(IndexingSource source, boolean reindex) {
         this.source = source;
-        if (reindex) {
-            logger.info("Clearing index dir...");
-            for (File f : INDEX_DIR.listFiles()) {
-                if(!f.delete()) {
-                    logger.warn("Problems with delting file: " + f.getAbsolutePath());
-                }
-            }
-        }
+        this.reindex = reindex;
     }
 
     public IndexWriter getWriter() {
-        if (_writer == null) {
+        if (writer == null) {
             try {
-                _writer = new IndexWriter(INDEX_DIR, ZloMessage.constructAnalyzer(), true);
+                if (INDEX_DIR.list().length == 0)
+                    reindex = true;
+
+                writer = new IndexWriter(INDEX_DIR, ZloMessage.constructAnalyzer(), reindex);
             } catch (IOException e) {
                 logger.error("Can't create writer", e);
             }
         }
-        return _writer;
+        return writer;
     }
 
     private void indexRange(int startNum, int endNum) {

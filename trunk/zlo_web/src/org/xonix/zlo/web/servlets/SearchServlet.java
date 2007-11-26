@@ -181,7 +181,8 @@ public class SearchServlet extends ForwardingServlet {
 
                 if (session.getAttribute(SESS_SEARCH_RESULT) == null
                         || ((SearchResult) session.getAttribute(SESS_SEARCH_RESULT)).isNotTheSameSearch(searchRequest)
-                        || StringUtils.isNotEmpty(request.getParameter(QS_SUBMIT))) {
+                        || StringUtils.isEmpty(request.getParameter(QS_PAGE_NUMBER)) // turning pages
+                        ) {
 
                     try {
                         searchResult = searchRequest.performSearch();
