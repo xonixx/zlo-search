@@ -15,6 +15,12 @@ import org.xonix.zlo.search.utils.TimeUtils;
  * Time: 22:56:24
  */
 public class Tests1 extends TestCase {
+
+    protected void setUp() throws Exception {
+        super.setUp();
+        new Config();
+    }
+
     @Test
     public void testTimeUtils() {
         assertEquals(125000, TimeUtils.parseToMilliSeconds("2m5s"));
@@ -65,5 +71,15 @@ public class Tests1 extends TestCase {
         assertEquals("Работа", topics[2]);
         assertEquals("Temp", topics[18]);
         assertEquals(19, topics.length);
+    }
+
+    @Test
+    public void testLastMessages() {
+        try {
+            int[] nums = DbManager.getLastMessageNums();
+            System.out.println(nums[0] + " " + nums[1]);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
     }
 }
