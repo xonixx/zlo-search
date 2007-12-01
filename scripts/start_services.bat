@@ -1,1 +1,2 @@
-start indexer.bat
+start IndexerDaemon.bat
+start DbDaemon.bat

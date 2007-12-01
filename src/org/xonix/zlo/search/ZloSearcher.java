@@ -23,9 +23,10 @@ public class ZloSearcher {
     private static final Logger logger = Logger.getLogger(ZloSearcher.class);
 
     public static final int PERIOD_RECREATE_INDEXER = TimeUtils.parseToMilliSeconds(Config.getProp("searcher.period.recreate.indexer"));
-    private static long lastCreateTime = -1;
-
     public final static SimpleDateFormat QUERY_DATEFORMAT = new SimpleDateFormat("yyyyMMdd"); // because of locale
+
+    private static long lastCreateTime = -1;
+    private static boolean isReopening = false;
     private static IndexReader indexReader;
 
     public static IndexReader getIndexReader() {
@@ -53,13 +54,16 @@ public class ZloSearcher {
 
     private static boolean needToRecreateReader() throws IOException {
         return !indexReader.isCurrent()
-                        && System.currentTimeMillis() - lastCreateTime > PERIOD_RECREATE_INDEXER;
+                        && System.currentTimeMillis() - lastCreateTime > PERIOD_RECREATE_INDEXER
+                        && !isReopening;
     }
 
     private static void startReopeningThread() {
         Thread t = new Thread(new Runnable() {
 
             public void run() {
+                isReopening = true;
+
                 logger.info("Start recreating indexReader in separate thread...");
                 IndexReader _indexReader = null,
                             oldIndexReader;
@@ -79,6 +83,8 @@ public class ZloSearcher {
 
                 clean(oldIndexReader);
                 logger.info("Successfuly recreated.");
+
+                isReopening = false;
             }
         });
 

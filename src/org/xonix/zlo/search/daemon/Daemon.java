@@ -80,6 +80,7 @@ public abstract class Daemon {
     protected void start() {
         while (true) {
             Process t = createProcess();
+            t.setPriority(Thread.MIN_PRIORITY); // so daemons not slowing search 
             t.start();
             try {
                 t.join();
