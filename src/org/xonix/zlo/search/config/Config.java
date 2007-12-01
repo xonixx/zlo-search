@@ -5,6 +5,7 @@ import org.apache.log4j.PropertyConfigurator;
 import org.apache.lucene.analysis.Analyzer;
 
 import java.io.IOException;
+import java.io.FileReader;
 import java.util.Properties;
 
 /**
@@ -14,7 +15,8 @@ import java.util.Properties;
  */
 public class Config {
     private static final Logger logger = Logger.getLogger(Config.class);
-    private static final Properties props = loadProperties("org/xonix/zlo/search/config/config.properties");
+    private static final Properties props;
+    private static final String CONFIG_PATH_ENV_NAME = "ZLO_CONFIG";
 
     public static Properties loadProperties(String path) {
         Properties pr = new Properties();
@@ -27,6 +29,32 @@ public class Config {
             e.printStackTrace();
         }
         return pr;
+    }
+
+    private static boolean loadPropertiesFromEnv(Properties pr) {
+        String envPath = System.getenv(CONFIG_PATH_ENV_NAME);
+        if (envPath != null) {
+            System.out.println("Loading config from: " + envPath + " ...");
+            try {
+                pr.load(new FileReader(envPath));
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.exit(-1);
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    static {
+        Properties pr = new Properties();
+        if (loadPropertiesFromEnv(pr)) {
+            props = pr;
+        } else {
+            System.out.println("Loading internal config...");
+            props = loadProperties("org/xonix/zlo/search/config/config.properties");
+        }
     }
 
     // configuring log4j
