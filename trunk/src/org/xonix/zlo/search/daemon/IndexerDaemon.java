@@ -66,6 +66,14 @@ public class IndexerDaemon extends Daemon {
                 logger.error("IOException while indexing, probably something with index...");
             }
         }
+
+        protected void cleanUp() {
+            try {
+                indexer.getWriter().close();
+            } catch (IOException e) {
+                logger.warn("Can't close writer: ", e);
+            }
+        }
     }
 
     protected Process createProcess() {

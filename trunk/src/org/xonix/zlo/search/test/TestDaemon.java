@@ -19,6 +19,9 @@ public class TestDaemon extends Daemon {
             sleepSafe(5000);
             i++;
         }
+
+        protected void cleanUp() {
+        }
     }
 
     protected Process createProcess() {

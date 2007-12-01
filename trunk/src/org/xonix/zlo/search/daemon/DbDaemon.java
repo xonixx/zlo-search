@@ -68,6 +68,9 @@ public class DbDaemon extends Daemon {
                 sleepSafe(RECONNECT_PERIOD);
             }
         }
+
+        protected void cleanUp() {
+        }
     }
 
     public DbDaemon(IndexingSource source) {
