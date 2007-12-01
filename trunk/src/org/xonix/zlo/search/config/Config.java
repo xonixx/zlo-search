@@ -44,7 +44,6 @@ public class Config {
     public static final String CHARSET_NAME = "windows-1251";
     public static final String INDEX_DIR = getProp("index.dir");
     public static final String USER_AGENT = getProp("user.agent");
-    public static final int THREADS_NUMBER = Integer.parseInt(getProp("threads"));
     public static final String TRUE = "true";
 
     public static final boolean DEBUG = TRUE.equals(getProp("debug"));
