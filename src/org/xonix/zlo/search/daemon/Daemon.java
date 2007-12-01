@@ -32,12 +32,15 @@ public abstract class Daemon {
             while (true) {
                 doOneIteration();
 
-                if (isExiting())
+                if (isExiting()) {
+                    cleanUp();
                     break;
+                }
             }
         }
 
         protected abstract void doOneIteration();
+        protected abstract void cleanUp();
 
         protected void sleepSafe(long millis) {
             try {

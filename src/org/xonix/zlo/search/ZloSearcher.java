@@ -37,15 +37,23 @@ public class ZloSearcher {
             }
         } else {
             try {
-                if (!indexReader.isCurrent()
-                        && System.currentTimeMillis() - lastCreateTime > PERIOD_RECREATE_INDEXER) {
-                    startReopeningThread();
+                if (needToRecreateReader()) {
+                    synchronized(ZloSearcher.class) {
+                        if (needToRecreateReader()) {
+                            startReopeningThread();
+                        }
+                    }
                 }
             } catch (IOException e) {
                 logger.error("IndexReader error", e);
             }
         }
         return indexReader;
+    }
+
+    private static boolean needToRecreateReader() throws IOException {
+        return !indexReader.isCurrent()
+                        && System.currentTimeMillis() - lastCreateTime > PERIOD_RECREATE_INDEXER;
     }
 
     private static void startReopeningThread() {
