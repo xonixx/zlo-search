@@ -88,9 +88,16 @@ public class DAO {
         private DB() {}
 
         public static void saveMessages(List<ZloMessage> msgs) throws DAOException {
+            saveMessages(msgs, true);
+        }
+
+        public static void saveMessages(List<ZloMessage> msgs, boolean fast) throws DAOException {
             try {
-                logger.info("Saving (" + msgs.get(0).getNum() + " - " + msgs.get(msgs.size() - 1).getNum() + ") msgs to DB...");
-                DbManager.saveMessages(msgs);
+                logger.info((fast ? "Fast " : "") + "Saving (" + msgs.get(0).getNum() + " - " + msgs.get(msgs.size() - 1).getNum() + ") msgs to DB...");
+                if (fast)
+                    DbManager.saveMessagesFast(msgs);
+                else
+                    DbManager.saveMessages(msgs);
                 logger.info("Successfully saved " + msgs.size() + " msgs to DB.");
             } catch (DbException e) {
                 throw new DAOException(SOURCE, e);
