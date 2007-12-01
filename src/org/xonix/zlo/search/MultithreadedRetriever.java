@@ -3,6 +3,7 @@ package org.xonix.zlo.search;
 import org.apache.log4j.Logger;
 import static org.xonix.zlo.search.DAO.DAOException;
 import org.xonix.zlo.search.model.ZloMessage;
+import org.xonix.zlo.search.config.Config;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +18,8 @@ import java.util.Vector;
 public class MultithreadedRetriever {
 
     private static Logger logger = Logger.getLogger(MultithreadedRetriever.class);
+
+    private static final int LIMIT_PER_SECOND = Integer.parseInt(Config.getProp("retriever.limit.per.second"));
 
     private static class MessageRetriever extends Thread {
         private static int from = -1;
@@ -88,13 +91,30 @@ public class MultithreadedRetriever {
         }
     }
 
+    public static List<ZloMessage> getMessages(IndexingSource source, int from, int to) throws DAOException {
+        return getMessages(source, from, to, PageRetriever.THREADS_NUMBER);
+    }
+
     public static List<ZloMessage> getMessages(IndexingSource source, final int from, final int to, int threadsNum) throws DAOException {
         final List<ZloMessage> msgs;
+
         if (threadsNum == 1) {
             msgs = new ArrayList<ZloMessage>();
 
             for (int i = from; i < to; i++) {
+                long t1 = System.currentTimeMillis();
+
                 msgs.add(source.getMessageByNumber(i));
+
+                long delta = System.currentTimeMillis() - t1;
+                long toSleep = 1000/LIMIT_PER_SECOND - delta;
+                if (toSleep > 0) {
+                    try {
+                        Thread.sleep(toSleep);
+                    } catch (InterruptedException e) {
+                        ;
+                    }
+                }
             }
         } else {
             msgs = new Vector<ZloMessage>();

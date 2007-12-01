@@ -21,9 +21,11 @@ import java.util.regex.Matcher;
 public class PageRetriever {
     private static final Logger logger = Logger.getLogger(PageRetriever.class);
 
-    public static final String END_MSG_MARK = "<BIG>Сообщения в этом потоке</BIG>";
-    public static final String END_MSG_MARK_SIGN = "<div class=\"sign\">";
+    public static final int THREADS_NUMBER = Integer.parseInt(Config.getProp("retriever.threads"));
 
+    public static final String END_MSG_MARK = "<BIG>Сообщения в этом потоке</BIG>";
+
+    public static final String END_MSG_MARK_SIGN = "<div class=\"sign\">";
     private static HttpClient HTTP_CLIENT;
 
     static {
