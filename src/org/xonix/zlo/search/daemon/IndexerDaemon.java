@@ -55,7 +55,7 @@ public class IndexerDaemon extends Daemon {
                 indexFrom = end + 1;
 
                 while (indexFrom > indexTo) {
-                    logger.debug("indexFrom=" + indexFrom + " >= indexTo=" + indexTo + ". Sleeping...");
+                    logger.debug("indexFrom=" + indexFrom + " > indexTo=" + indexTo + ". Sleeping...");
                     sleepSafe(INDEX_PERIOD);
                     indexTo = DbManager.getLastMessageNumber();
                 }

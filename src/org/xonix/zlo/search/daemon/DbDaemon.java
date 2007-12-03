@@ -47,14 +47,15 @@ public class DbDaemon extends Daemon {
                         end = endSource;
                 }
 
-                if (startDb < end) {
-                    List<ZloMessage> msgs = source.getMessages(startDb, end);
+                if (startDb <= end) {
+                    List<ZloMessage> msgs = source.getMessages(startDb, end + 1);
                     DAO.DB.saveMessages(msgs);
                 }
 
-                startDb = end;
+                startDb = end + 1;
 
-                while (startDb >= endSource) {
+                while (startDb > endSource) {
+                    logger.debug("Sleeping " + SCAN_PERIOD / 1000 / 60f + " min...");
                     sleepSafe(SCAN_PERIOD);
                     endSource = source.getLastMessageNumber();
                 }
