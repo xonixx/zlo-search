@@ -55,8 +55,8 @@ public class DAO {
 
             List<ZloMessage> msgs = MultithreadedRetriever.getMessages(SOURCE, from, to);
 
-            long durationSecs = (System.currentTimeMillis() - begin) / 1000;
-            logger.info("Downloaded " + msgs.size() + " messages in " + durationSecs + "secs. Rate: " + ((float)msgs.size()) / durationSecs + "mps.");
+            float durationSecs = (System.currentTimeMillis() - begin) / 1000f;
+            logger.info("Downloaded " + msgs.size() + " messages in " + (int)durationSecs + "secs. Rate: " + ((float)msgs.size()) / durationSecs + "mps.");
 
             return msgs;
         }
