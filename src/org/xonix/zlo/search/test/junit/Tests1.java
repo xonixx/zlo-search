@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.db.DbManager;
+import org.xonix.zlo.search.db.DbDict;
+import org.xonix.zlo.search.db.VarType;
 import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.utils.HtmlUtils;
 import org.xonix.zlo.search.utils.TimeUtils;
@@ -78,6 +80,16 @@ public class Tests1 extends TestCase {
         try {
             int[] nums = DbManager.getLastMessageNums();
             System.out.println(nums[0] + " " + nums[1]);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testDbDict() {
+        try {
+            DbDict.setVal("name1", 123, VarType.INTEGER);
+            DbDict.setVal("name1", 246, VarType.INTEGER);
         } catch (DbException e) {
             e.printStackTrace();
         }

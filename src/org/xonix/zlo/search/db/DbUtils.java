@@ -118,53 +118,45 @@ public final class DbUtils {
         }
     }
 
-    private static void setParams(PreparedStatement st, Object[] params, int[] types) throws SQLException {
+    private static void setParams(PreparedStatement st, Object[] params, VarType[] types) throws SQLException {
         if (params.length != types.length)
             throw new IllegalArgumentException("Number of params and types does not match");
 
         for (int i = 0; i < params.length; i++) {
             Object param = params[i];
-            int type = types[i];
+            VarType type = types[i];
             int j = i+1;
 
-            switch (type) {
-                case Types.VARCHAR:
-                case Types.CHAR:
-                    st.setString(j, (String) param);
-                    break;
+            if (param == null) {
+                st.setNull(j, type.getSqlType());
+            } else {
+                switch (type) {
+                    case STRING:
+                        st.setString(j, (String) param);
+                        break;
 
-                case Types.INTEGER:
-                case Types.SMALLINT:
-                case Types.TINYINT:
-                case Types.NUMERIC:
-                    st.setInt(j, (Integer) param);
-                    break;
+                    case INTEGER:
+                        st.setInt(j, (Integer) param);
+                        break;
 
-                case Types.BOOLEAN:
-                    st.setBoolean(j, (Boolean) param);
-                    break;
+                    case BOOLEAN:
+                        st.setBoolean(j, (Boolean) param);
+                        break;
 
-                case Types.DATE:
-                    st.setDate(j, (Date) param);
-                    break;
+                    case DATE:
+                        st.setDate(j, (Date) param);
+                        break;
 
-                case Types.TIMESTAMP:
-                    st.setTimestamp(j, (Timestamp) param);
-                    break;
-
-                case Types.TIME:
-                    st.setTime(j, (Time) param);
-                    break;
-
-                default:
-                    throw new IllegalArgumentException(
-                            String.format("Unsupported parameter type: %s of parameter: %s",
-                                    param.getClass(), param));
+                    default:
+                        throw new IllegalArgumentException(
+                                String.format("Unsupported parameter type: %s of parameter: %s",
+                                        param.getClass(), param));
+                }
             }
         }
     }
 
-    public static Result executeSelect(String sqlString, Object[] params, int[] types) throws DbException {
+    public static Result executeSelect(String sqlString, Object[] params, VarType[] types) throws DbException {
         PreparedStatement st;
         try {
            st = getConnection().prepareStatement(sqlString);
@@ -176,13 +168,13 @@ public final class DbUtils {
     }
 
     public static Result executeSelect(String sqlString) throws DbException {
-        return executeSelect(sqlString, new Object[0], new int[0]);
+        return executeSelect(sqlString, new Object[0], new VarType[0]);
     }
 
     /**
      * Executes insert, update, delete
      */
-    public static void executeUpdate(String sqlString, Object[] params, int[] types, Integer expectedResult) throws DbException {
+    public static void executeUpdate(String sqlString, Object[] params, VarType[] types, Integer expectedResult) throws DbException {
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
@@ -200,7 +192,7 @@ public final class DbUtils {
         }
     }
 
-    public static void executeUpdate(String sqlString, Object[] params, int[] types) throws DbException {
+    public static void executeUpdate(String sqlString, Object[] params, VarType[] types) throws DbException {
         executeUpdate(sqlString, params, types, null);
     }
 
