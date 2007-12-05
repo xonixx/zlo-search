@@ -6,8 +6,7 @@ import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Query;
 import org.xonix.zlo.search.DAO;
 import org.xonix.zlo.search.ZloSearcher;
-import org.xonix.zlo.search.db.DbManager;
-import org.xonix.zlo.search.db.DbException;
+import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.model.ZloMessage;
 
 import java.text.DateFormat;
@@ -21,14 +20,18 @@ import java.util.List;
  */
 public class Test1 {
     public static void main(String[] args) {
+        new Config();
         m15();
         System.exit(0);
     }
 
     public static void m15() {
         try {
-            System.out.println(DbManager.getMessageByNumber(1239878));
-        } catch (DbException e) {
+//            System.out.println(DbManager.getMessageByNumber(4149183));
+            System.out.println(DAO.Site._getMessageByNumber(4149183));
+        } /*catch (DbException e) {
+            e.printStackTrace();
+        } */catch (DAO.DAOException e) {
             e.printStackTrace();
         }
     }

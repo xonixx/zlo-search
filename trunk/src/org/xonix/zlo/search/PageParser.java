@@ -1,6 +1,7 @@
 package org.xonix.zlo.search;
 
 import org.xonix.zlo.search.model.ZloMessage;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -16,6 +17,8 @@ import java.util.regex.Pattern;
  * Time: 20:17:07
  */
 public class PageParser {
+    public static final Logger logger = Logger.getLogger(PageParser.class);
+
     private static final Pattern MSG_UNREG_RE = Pattern.compile(
         "<DIV ALIGN=CENTER><BIG>\\[(.*?)\\]</BIG>&nbsp;&nbsp;<BIG>(.*?)</BIG>" +
         "<BR>Сообщение было послано:\\s*<b>(.*?)</b><SMALL>\\s*\\(unreg\\)</SMALL>\\s*<small>" +
@@ -52,6 +55,7 @@ public class PageParser {
                     message.setStatus(ZloMessage.Status.DELETED);
                 } else {
                     message.setStatus(ZloMessage.Status.UNKNOWN);
+                    logger.warn("Can't parse msg... Possibly format changed!");
                 }
                 return message;
             }
@@ -83,9 +87,11 @@ public class PageParser {
     }
 
     private static Date prepareDate(String s) {
+        // s can be "Среда, Декабрь 5 13:35:25 2007<i>(Изменен: Среда, Декабрь 5 13:40:21 2007)</i>"
         final String[] RUS_MONTHS = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль",
                                     "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
         DateFormat df = new SimpleDateFormat("M d hh:mm:ss yyyy");
+        s = s.split("\\<(i|I)\\>")[0];
         s = s.split(",")[1].trim();
         for (int i=0; i<RUS_MONTHS.length; i++) {
             s = s.replaceFirst(RUS_MONTHS[i], Integer.toString(i+1));
