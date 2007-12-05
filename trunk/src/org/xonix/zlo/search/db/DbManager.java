@@ -8,6 +8,8 @@ import org.xonix.zlo.search.model.ZloMessage;
 import java.sql.*;
 import java.util.*;
 
+import static org.xonix.zlo.search.db.VarType.*;
+
 /**
  * User: boost
  * Date: Sep 13, 2007
@@ -257,7 +259,7 @@ public class DbManager {
                         StringUtils.substring(reqText, 0, 200),
                         StringUtils.substring(reqQuery, 0, 200),
                         StringUtils.substring(referer, 0, 100)}
-                , new int[]{Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR}
+                , new VarType[] {STRING, STRING, STRING, STRING, STRING}
                 , 1);
     }
 
@@ -265,7 +267,7 @@ public class DbManager {
         DbUtils.executeUpdate(
                 SQL_MARK_AS_INDEXED
                 , new Object[] {num}
-                , new int[] {Types.INTEGER}
+                , new VarType[] {INTEGER}
                 , 1);
     }
 
@@ -273,7 +275,7 @@ public class DbManager {
         DbUtils.executeUpdate(
                 SQL_MARK_AS_INDEXED_RANGE
                 , new Object[] {from, to}
-                , new int[] {Types.INTEGER, Types.INTEGER});
+                , new VarType[] {INTEGER, INTEGER});
     }
 
     public static int getLastIndexedNumber() throws DbException {
