@@ -144,7 +144,7 @@ public final class DbUtils {
                         break;
 
                     case DATE:
-                        st.setDate(j, (Date) param);
+                        st.setTimestamp(j, new Timestamp(((java.util.Date) param).getTime()));
                         break;
 
                     default:

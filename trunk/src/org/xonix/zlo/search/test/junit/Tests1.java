@@ -11,6 +11,8 @@ import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.utils.HtmlUtils;
 import org.xonix.zlo.search.utils.TimeUtils;
 
+import java.util.Date;
+
 /**
  * Author: gubarkov
  * Date: 03.10.2007
@@ -90,6 +92,21 @@ public class Tests1 extends TestCase {
         try {
             DbDict.setVal("name1", 123, VarType.INTEGER);
             DbDict.setVal("name1", 246, VarType.INTEGER);
+            assertEquals(246, DbDict.getVal("name1"));
+            DbDict.setInt("name1", null);
+            assertEquals(null, DbDict.getInt("name1"));
+            DbDict.setStr("s", "Hello");
+            assertEquals("Hello", DbDict.getStr("s"));
+            Date d = new Date();
+            DbDict.setDate("d", d);
+            Date dd = DbDict.getDate("d");
+            System.out.println(d + " " + dd + " " + d.getTime() + " " + dd.getTime());
+            assertEquals(true, d.getTime() - dd.getTime() < 1000);
+
+            DbDict.remove("name1");
+            DbDict.remove("s");
+            DbDict.remove("d");
+            assertEquals(null, DbDict.getStr("s"));
         } catch (DbException e) {
             e.printStackTrace();
         }

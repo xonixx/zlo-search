@@ -27,4 +27,8 @@ public enum VarType {
                 return -1;
         }
     }
+
+    public int getInt() {
+        return ordinal();
+    }
 }
