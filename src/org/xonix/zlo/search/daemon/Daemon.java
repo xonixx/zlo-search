@@ -12,9 +12,15 @@ import sun.misc.SignalHandler;
 public abstract class Daemon {
     private static final Logger logger = Logger.getLogger(Daemon.class);
     private boolean exiting;
+    private boolean isSleeping = false;
 
     protected void setExiting(boolean exiting) {
-        this.exiting = exiting;
+        if (isSleeping) {
+            logger.info("Exiting...");
+            System.exit(0);
+        } else {
+            this.exiting = exiting;
+        }
     }
 
     protected boolean isExiting() {
@@ -43,11 +49,13 @@ public abstract class Daemon {
         protected abstract void cleanUp();
 
         protected void sleepSafe(long millis) {
+            isSleeping = true;
             try {
                 sleep(millis);
             } catch (InterruptedException e) {
                 logger.info("MainProcess interrupted???");
             }
+            isSleeping = false;
         }
     }
 
@@ -68,13 +76,6 @@ public abstract class Daemon {
 
         Signal.handle(new Signal("INT"), exitHandler);
         Signal.handle(new Signal("TERM"), exitHandler);
-
-        Runtime.getRuntime().addShutdownHook(new Thread(){
-            public void run() {
-                logger.debug("Exiting...");
-                setExiting(true);
-            }
-        });
     }
 
     protected void start() {
