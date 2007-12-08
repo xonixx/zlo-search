@@ -16,7 +16,9 @@ public enum ErrorMessage {
 
     InvalidQueryString("error.invalid.query.string"),
 
-    DbError("error.db.connection");
+    DbError("error.db.connection"),
+
+    UnknownError("error.unknown"),
     
     ;
 

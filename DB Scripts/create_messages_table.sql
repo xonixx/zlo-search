@@ -15,15 +15,7 @@ CREATE TABLE messages (num INT UNIQUE PRIMARY KEY,
                         msgDate DATETIME,
                         reg BOOL,
                         body TEXT,
-                        status TINYINT,
-                        indexed BOOL DEFAULT 0);
-
-ALTER TABLE zlo_storage.messages
-  ADD INDEX indexed (indexed);
-
--- if indexed column is absent                        
--- ALTER TABLE messages
--- ADD indexed BOOL DEFAULT 0;
+                        status TINYINT);
 
 --ALTER TABLE `zlo_storage`.`messages` CHANGE `host` host VARCHAR(100),
 --  CHANGE `title` title VARCHAR(255),

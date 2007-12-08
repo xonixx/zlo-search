@@ -26,38 +26,38 @@ public class IndexerDaemon extends Daemon {
 
     private class IndexingProcess extends Process {
         private int indexFrom = -1;
-        private int indexTo = -1;
+        private int end = -1;
         
         protected void doOneIteration() {
             try {
                 if (indexFrom == -1)
                     indexFrom = DbManager.getLastIndexedNumber() + 1;
 
-                if (indexTo == -1)
-                    indexTo = DbManager.getLastMessageNumber();
+                if (end == -1)
+                    end = DbManager.getLastMessageNumber();
 
-                int end;
+                int indexTo;
 
-                if (indexFrom + INDEX_PER_TIME < indexTo) {
-                    end = indexFrom + INDEX_PER_TIME;
+                if (indexFrom + INDEX_PER_TIME - 1 < end) {
+                    indexTo = indexFrom + INDEX_PER_TIME - 1;
                 } else {
-                    indexTo = DbManager.getLastMessageNumber();
-                    if (indexFrom + INDEX_PER_TIME < indexTo)
-                        end = indexFrom + INDEX_PER_TIME;
+                    end = DbManager.getLastMessageNumber();
+                    if (indexFrom + INDEX_PER_TIME - 1 < end)
+                        indexTo = indexFrom + INDEX_PER_TIME - 1;
                     else
-                        end = indexTo;
+                        indexTo = end;
                 }
 
-                if (indexFrom <= end) {
-                    indexer.index(indexFrom, end + 1);
+                if (indexFrom <= indexTo) {
+                    indexer.index(indexFrom, indexTo);
                 }
 
-                indexFrom = end + 1;
+                indexFrom = indexTo + 1;
 
-                while (indexFrom > indexTo) {
-                    logger.debug("indexFrom=" + indexFrom + " > indexTo=" + indexTo + ". Sleeping...");
+                while (indexFrom > end) {
+                    logger.debug("indexFrom=" + indexFrom + " > end=" + end + ". Sleeping...");
                     sleepSafe(INDEX_PERIOD);
-                    indexTo = DbManager.getLastMessageNumber();
+                    end = DbManager.getLastMessageNumber();
                 }
             } catch (DbException e) {
                 logger.warn("Problem with db: " + e.getClass());

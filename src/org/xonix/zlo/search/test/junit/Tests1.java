@@ -78,16 +78,6 @@ public class Tests1 extends TestCase {
     }
 
     @Test
-    public void testLastMessages() {
-        try {
-            int[] nums = DbManager.getLastMessageNums();
-            System.out.println(nums[0] + " " + nums[1]);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
     public void testDbDict() {
         try {
             DbDict.setVal("name1", 123, VarType.INTEGER);
