@@ -37,12 +37,12 @@ public class DbDaemon extends Daemon {
 
                 int end;
 
-                if (startDb + SCAN_PER_TIME < endSource) {
-                    end = startDb + SCAN_PER_TIME;
+                if (startDb + SCAN_PER_TIME - 1 < endSource) {
+                    end = startDb + SCAN_PER_TIME - 1;
                 } else {
                     endSource = source.getLastMessageNumber();
-                    if (startDb + SCAN_PER_TIME < endSource)
-                        end = startDb + SCAN_PER_TIME;
+                    if (startDb + SCAN_PER_TIME - 1 < endSource)
+                        end = startDb + SCAN_PER_TIME - 1;
                     else
                         end = endSource;
                 }
