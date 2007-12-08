@@ -1,5 +1,6 @@
 package org.xonix.zlo.search.model;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.KeywordAnalyzer;
 import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
@@ -7,15 +8,15 @@ import org.apache.lucene.document.DateTools;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.search.Hit;
-import org.apache.commons.lang.StringUtils;
 import org.xonix.zlo.search.DAO;
-import org.xonix.zlo.search.ZloSearcher;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.utils.HtmlUtils;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.text.*;
+import java.text.DecimalFormat;
+import java.text.MessageFormat;
+import java.text.NumberFormat;
 import java.util.Comparator;
 import java.util.Date;
 
@@ -93,11 +94,11 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
         }
     }
 
-    public static String formQueryString(String text, boolean inTitle, boolean inBody, int topicCode, String _nick, String _host, Date fromDate, Date toDate, boolean inReg, boolean inHasUrl, boolean inHasImg) {
+    public static String formQueryString(String text, boolean inTitle, boolean inBody, int topicCode, String nick, String host, Date fromDate, Date toDate, boolean inReg, boolean inHasUrl, boolean inHasImg) {
         StringBuilder queryStr = new StringBuilder();
 
-        String nick = _nick.toLowerCase();
-        String host = _host.toLowerCase();
+        nick = StringUtils.lowerCase(nick);
+        host = StringUtils.lowerCase(host);
 
         if (StringUtils.isNotEmpty(text)) {
             if (inTitle && !inBody)

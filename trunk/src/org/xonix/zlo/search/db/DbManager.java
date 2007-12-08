@@ -33,6 +33,8 @@ public class DbManager {
     public static final String MSG_PARENT_NUM = "parentNum";
     public static final String MSG_STATUS = ZloMessage.STATUS;
 
+    public static final String DB_DICT_LAST_INDEXED = "lastIndexed";
+
     private static final String SQL_INSERT_MSG =            props.getProperty("sql.insert.msg");
     private static final String SQL_UPDATE_MSG =            props.getProperty("sql.update.msg");
     private static final String SQL_DELETE_MSG =            props.getProperty("sql.delete.msg");
@@ -43,12 +45,6 @@ public class DbManager {
     private static final String SQL_SELECT_TOPICS =         props.getProperty("sql.select.topics");
 
     private static final String SQL_LOG_REQUEST =           props.getProperty("sql.log.request");
-
-    private static final String SQL_MARK_AS_INDEXED =       props.getProperty("sql.indexer.mark.as.indexed");
-    private static final String SQL_MARK_AS_INDEXED_RANGE = props.getProperty("sql.indexer.mark.as.indexed.range");
-    private static final String SQL_SELECT_LAST_INDEXED =   props.getProperty("sql.indexer.select.last.indexed.num");
-
-    private static final String SQL_SELECT_LAST_MSGS =      props.getProperty("sql.web.select.last.msgs");
 
     private static String[] topics;
 
@@ -263,48 +259,13 @@ public class DbManager {
                 , 1);
     }
 
-    public static void markAsIndexed(int num) throws DbException {
-        DbUtils.executeUpdate(
-                SQL_MARK_AS_INDEXED
-                , new Object[] {num}
-                , new VarType[] {INTEGER}
-                , 1);
-    }
-
-    public static void markRangeAsIndexed(int from, int to) throws DbException {
-        DbUtils.executeUpdate(
-                SQL_MARK_AS_INDEXED_RANGE
-                , new Object[] {from, to}
-                , new VarType[] {INTEGER, INTEGER});
+    public static void setLastIndexedNumber(int num) throws DbException {
+        DbDict.setInt(DB_DICT_LAST_INDEXED, num);
     }
 
     public static int getLastIndexedNumber() throws DbException {
-        DbUtils.Result res = DbUtils.executeSelect(SQL_SELECT_LAST_INDEXED);
-        try {
-            return res.getInt1();
-        } finally {
-            res.close();
-        }
-    }
-
-    /*
-    returns 2 int vals:
-    1. last saved message num or 0 if absent
-    2. last indexed msg num or 0 if absent
-     */
-    public static int[] getLastMessageNums() throws DbException {
-        int[] result = new int[2];
-        DbUtils.Result res = DbUtils.executeSelect(SQL_SELECT_LAST_MSGS);
-        try {
-            ResultSet rs = res.getResultSet();
-            rs.next();
-            result[0] = rs.getInt(1);
-            rs.next();
-            result[1] = rs.getInt(1);
-        } catch(SQLException e) {
-            throw new DbException(e);
-        }
-        return result;
+        Integer lastIndexed = DbDict.getInt(DB_DICT_LAST_INDEXED);
+        return lastIndexed == null ? 0 : lastIndexed;
     }
 
     private static ZloMessage getMessage(ResultSet rs) throws SQLException {

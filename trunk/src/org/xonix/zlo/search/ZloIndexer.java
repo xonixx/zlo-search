@@ -100,16 +100,17 @@ public class ZloIndexer {
     /*
     for use in indexing daemon
     indexes end marks msgs in db as indexed
+    indexes [from, to] including...
      */
     public void index(int from, int to) throws IOException, DbException {
-        logger.info("Adding msgs (" + from + "-" + to + ") to index...");
+        logger.info("Adding msgs [" + from + "-" + to + "] to index...");
         try {
-            addMessagesToIndex(from, to);
+            addMessagesToIndex(from, to + 1);
         } catch (DAOException e) {
             throw new DbException(e.getCause());
         }
-        logger.info("Marking msgs (" + from + "-" + to + ") as indexed...");
-        DbManager.markRangeAsIndexed(from, to);
+        logger.info("Setting last indexed: " + to);
+        DbManager.setLastIndexedNumber(to);
     }
 
     public static void main(String[] args) {

@@ -244,7 +244,10 @@ public class SearchServlet extends ForwardingServlet {
         } catch (DbException e) {
             errorMsg = ErrorMessage.DbError;
         } catch (Exception e) {
-            ;
+            if (errorMsg == null) {
+                // unknown error
+                throw new ServletException(e);
+            }
         }
 
         if (errorMsg != null)
@@ -254,7 +257,7 @@ public class SearchServlet extends ForwardingServlet {
     }
 
     private void showStatistics(ForwardingRequest request) throws DbException {
-        request.setAttribute(QS_LAST_MSGS, DbManager.getLastMessageNums());
+        request.setAttribute(QS_LAST_MSGS, new int[] {DbManager.getLastMessageNumber(), DbManager.getLastIndexedNumber()});
     }
 
     private void logRequest(ForwardingRequest request, String query) {
