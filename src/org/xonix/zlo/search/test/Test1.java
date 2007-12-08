@@ -10,6 +10,7 @@ import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.model.ZloMessage;
 
 import java.text.DateFormat;
+import java.text.MessageFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -25,13 +26,34 @@ public class Test1 {
         System.exit(0);
     }
 
+    public static void m16() {
+        int N = 10000;
+        String d = new Date().toString();
+        String s = null;
+        long t0 = System.currentTimeMillis();
+        for (int i = 0; i < N; i++) {
+            s = String.format("asdasd %s %saaaa%s %s", 123, "Hello", d, " World ");
+        }
+        System.out.println(s);
+        long t1 = System.currentTimeMillis();
+        long dt1 = t1 - t0;
+        for (int i = 0; i < N; i++) {
+            s = MessageFormat.format("asdasd {0} {1}aaaa{2} {3}", 123, "Hello", d, " World ");
+        }
+        System.out.println(s);
+        long t2 = System.currentTimeMillis();
+        long dt2 = t2 - t1;
+        System.out.println("dt1=" + dt1);
+        System.out.println("dt2=" + dt2);
+    }
+
     public static void m15() {
         try {
 //            System.out.println(DbManager.getMessageByNumber(4149183));
-            System.out.println(DAO.Site._getMessageByNumber(4149183));
+            System.out.println(DAO.Site._getMessageByNumber(4141294));
         } /*catch (DbException e) {
             e.printStackTrace();
-        } */catch (DAO.DAOException e) {
+        } */ catch (DAO.DAOException e) {
             e.printStackTrace();
         }
     }
@@ -41,7 +63,7 @@ public class Test1 {
 //        System.out.println(ZloSearcher.search(9, null, true, true, false, false, false, null, null, null, null).getHits().length());
 //        System.out.println(String.format("%1$tB, %1$td %1$tH:%1$tm:%1$tS %1$tY", new Date()));
 //        System.out.println(String.format("%d{dd/MM/yy HH:mm:ss,SSS}", new Date()));
-        for (int i=0; i<10; i++) {
+        for (int i = 0; i < 10; i++) {
             System.out.println("Cleaning...");
             ZloSearcher.clean();
             System.out.println("Creating " + i + " ...");
@@ -55,7 +77,7 @@ public class Test1 {
         try {
             System.out.println("throwing..");
             throw new RuntimeException("1");
-        } catch(RuntimeException ex) {
+        } catch (RuntimeException ex) {
             System.out.println("catching..");
             throw ex;
         } finally {
@@ -65,7 +87,7 @@ public class Test1 {
 
     public static void m12() {
         try {
-            for(ZloMessage m : DAO.Site._getMessages(10000, 10042)) {
+            for (ZloMessage m : DAO.Site._getMessages(10000, 10042)) {
                 System.out.println(m);
             }
         } catch (DAO.DAOException e) {
@@ -75,7 +97,7 @@ public class Test1 {
 
     public static void m11() {
         try {
-            for (int i=0; i<6000; i++) {
+            for (int i = 0; i < 6000; i++) {
                 DAO.DB.SOURCE.getMessageByNumber(i);
             }
         } catch (DAO.DAOException e) {
@@ -92,7 +114,7 @@ public class Test1 {
         }
     }
 
-    public static void m1(){
+    public static void m1() {
         QueryParser qp = new QueryParser("field1", new SimpleAnalyzer());
         try {
             Query q = qp.parse("[1.1.04 TO 5.30.05]");
@@ -121,10 +143,11 @@ public class Test1 {
             System.out.println(o);
         }
     }
+
     public static void m5() {
-        for (int i=0; i<10; i++){
+        for (int i = 0; i < 10; i++) {
             try {
-                System.out.println(">"+ DAO.Site._getLastMessageNumber());
+                System.out.println(">" + DAO.Site._getLastMessageNumber());
             } catch (DAO.DAOException e) {
                 e.printStackTrace();
             }
@@ -132,13 +155,13 @@ public class Test1 {
     }
 
     private static class T extends Thread {
-        private int i=0;
+        private int i = 0;
 
         public T() {
         }
 
         public void run() {
-            for (;i <= 10; i++) {
+            for (; i <= 10; i++) {
                 System.out.println(">" + i);
             }
         }
@@ -214,7 +237,8 @@ public class Test1 {
                 "\t  NR=IABS(INDX(1,NK))+INDX(2,NK)+2\n" +
                 "\tENDIF\n" +
                 "\tKER(1)=ND(1)\n" +
-                "\tKER(2)=ND(2)</PRE><BR><BR>О чём Вы говорите! современный Фортран такое, уверен, не скомпилит даже.</div><P></P><BR><CENTER><BIG>Сообщения в этом потоке</BIG></CENTER><DIV class=w><span id=m3974909"))*/;
+                "\tKER(2)=ND(2)</PRE><BR><BR>О чём Вы говорите! современный Фортран такое, уверен, не скомпилит даже.</div><P></P><BR><CENTER><BIG>Сообщения в этом потоке</BIG></CENTER><DIV class=w><span id=m3974909"))*/
+        ;
 /*        try {
             System.out.println(new ZloStorage().getMessageByNumber(3960198));
         } catch (DAO.DAOException e) {
