@@ -93,67 +93,51 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
         }
     }
 
-    public static String formQueryString(String text, boolean inTitle, boolean inBody, int topicCode, String nick, String host, Date fromDate, Date toDate, boolean inReg, boolean inHasUrl, boolean inHasImg) {
+    public static String formQueryString(String text, boolean inTitle, boolean inBody, int topicCode, String _nick, String _host, Date fromDate, Date toDate, boolean inReg, boolean inHasUrl, boolean inHasImg) {
         StringBuilder queryStr = new StringBuilder();
+
+        String nick = _nick.toLowerCase();
+        String host = _host.toLowerCase();
 
         if (StringUtils.isNotEmpty(text)) {
             if (inTitle && !inBody)
-                queryStr.append(" +").append(FIELDS.TITLE).append(":(").append(text).append(")");
+                queryStr.append(MessageFormat.format(" +{0}:({1})", FIELDS.TITLE, text));
 
             else if (!inTitle && inBody)
-                queryStr.append(" +").append(FIELDS.BODY).append(":(").append(text).append(")");
+                queryStr.append(MessageFormat.format(" +{0}:({1})", FIELDS.BODY, text));
 
             else if (inTitle && inBody)
-                queryStr.append(" +(")
-                        .append(FIELDS.BODY).append(":(").append(text)
-                        .append(") OR (")
-                        .append(FIELDS.TITLE).append(":(").append(text)
-                        .append(")))");
+                queryStr.append(MessageFormat.format(" +({0}:({2}) OR {1}:({2}))", FIELDS.TITLE, FIELDS.BODY, text));
 
             else // !inTitle && !inBody
-                queryStr.append(" +").append(FIELDS.TITLE).append(":(").append(text).append(")")
-                        .append(" +").append(FIELDS.BODY).append(":(").append(text).append(")");
+                queryStr.append(MessageFormat.format(" +{0}:({2}) +{1}:({2})", FIELDS.TITLE, FIELDS.BODY, text));
         }
 
         if (-1 != topicCode) {
-            queryStr.append(" +").append(FIELDS.TOPIC_CODE).append(":").append(topicCode);
+            queryStr.append(MessageFormat.format(" +{0}:{1}", FIELDS.TOPIC_CODE, topicCode));
         }
 
         if (StringUtils.isNotEmpty(nick))
-            queryStr.append(" +").append(FIELDS.NICK).append(":\"").append(nick).append("\"");
+            queryStr.append(MessageFormat.format(" +{0}:\"{1}\"", FIELDS.NICK, nick));
 
         if (StringUtils.isNotEmpty(host))
-            queryStr.append(" +").append(FIELDS.HOST).append(":").append(host);
+            queryStr.append(MessageFormat.format(" +{0}:{1}", FIELDS.HOST, host));
 
         if (fromDate != null && toDate != null)
-            queryStr.append(" +").append(FIELDS.DATE).append(":[")
-                    .append(ZloSearcher.QUERY_DATEFORMAT.format(fromDate))
-                    .append(" TO ")
-                    .append(ZloSearcher.QUERY_DATEFORMAT.format(toDate))
-                    .append("]");
+            queryStr.append(MessageFormat.format(" +{0}:[{1,date,yyyyMMdd} TO {2,date,yyyyMMdd}]", FIELDS.DATE, fromDate, toDate));
 
         if (inReg)
-            queryStr.append(" +").append(FIELDS.REG).append(":1");
+            queryStr.append(MessageFormat.format(" +{0}:1", FIELDS.REG));
 
         if (inHasUrl)
-            queryStr.append(" +").append(FIELDS.HAS_URL).append(":1");
+            queryStr.append(MessageFormat.format(" +{0}:1", FIELDS.HAS_URL));
 
         if (inHasImg)
-            queryStr.append(" +").append(FIELDS.HAS_IMG).append(":1");
+            queryStr.append(MessageFormat.format(" +{0}:1", FIELDS.HAS_IMG));
+
         return queryStr.toString();
     }
 
-    private static DateFormat DATE_FORMAT = new SimpleDateFormat("MMMM, d HH:mm:ss yyyy");
-
-    private static final String MSG_FORMAT_OK = "ZloMessage(" +
-            "\n\tnum=%s,\n\tparentNum=%s,\n\ttopicCode=%s,\n\ttopic=%s," +
-            "\n\ttitle=%s,\n\tnick=%s,\n\taltName=%s,\n\treg=%s," +
-            "\n\thost=%s,\n\tdate=%s,\n\thasUrl=%s,\n\thasImg=%s," +
-            "\n\tbody=%s\n)";
-
-    private static final String MSG_FORMAT_NOT_OK = "ZloMessage(" +
-            "\n\tnum=%s,\n\tstatus=%s\n)";
-    
     public static final String ALL_TOPICS = "Все темы";
 
     public static NumberFormat URL_NUM_FORMAT = new DecimalFormat("0000000000"); // 10 zeros
@@ -336,14 +320,21 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
 
     public String toString() {
         if (status == Status.OK)
-            return String.format(MSG_FORMAT_OK, 
+            return MessageFormat.format(
+                    "ZloMessage(" +
+                    "\n\tnum={0},\n\tparentNum={1},\n\ttopicCode={2},\n\ttopic={3}," +
+                    "\n\ttitle={4},\n\tnick={5},\n\taltName={6},\n\treg={7}," +
+                    "\n\thost={8},\n\tdate={9,date,MMMM, d HH:mm:ss yyyy},\n\thasUrl={10},\n\thasImg={11}," +
+                    "\n\tbody={12}\n)",
                     num, parentNum, topicCode, topic, title,
-                    nick, altName, reg, host, DATE_FORMAT.format(date),
+                    nick, altName, reg, host, date,
                     isHasUrl() ? TRUE : FALSE,
                     isHasImg() ? TRUE : FALSE,
                     body.replaceAll("\n","\n\t\t"));
         else
-            return String.format(MSG_FORMAT_NOT_OK,
+            return MessageFormat.format(
+                    "ZloMessage(" +
+                    "\n\tnum={0},\n\tstatus={1}\n)",
                     num, status);
     }
 
@@ -356,9 +347,9 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
         doc.add(new Field(FIELDS.URL_NUM, URL_NUM_FORMAT.format(num), Field.Store.YES, Field.Index.UN_TOKENIZED));
         doc.add(new Field(FIELDS.TOPIC_CODE, Integer.toString(topicCode), Field.Store.NO, Field.Index.UN_TOKENIZED));
         doc.add(new Field(FIELDS.TITLE, getCleanTitle(), Field.Store.NO, Field.Index.TOKENIZED)); // "чистый" - индексируем, не храним
-        doc.add(new Field(FIELDS.NICK, nick, Field.Store.NO, Field.Index.UN_TOKENIZED));
+        doc.add(new Field(FIELDS.NICK, nick.toLowerCase(), Field.Store.NO, Field.Index.UN_TOKENIZED));
         doc.add(new Field(FIELDS.REG, reg ? TRUE : FALSE, Field.Store.NO, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(FIELDS.HOST, host, Field.Store.NO, Field.Index.UN_TOKENIZED));
+        doc.add(new Field(FIELDS.HOST, host.toLowerCase(), Field.Store.NO, Field.Index.UN_TOKENIZED));
         doc.add(new Field(FIELDS.DATE, DateTools.dateToString(date, DateTools.Resolution.MINUTE), Field.Store.NO, Field.Index.UN_TOKENIZED));
         doc.add(new Field(FIELDS.BODY, getCleanBody(), Field.Store.NO, Field.Index.TOKENIZED)); // "чистый" - индексируем, не храним
         doc.add(new Field(FIELDS.HAS_URL, isHasUrl() ? TRUE : FALSE, Field.Store.NO, Field.Index.UN_TOKENIZED));

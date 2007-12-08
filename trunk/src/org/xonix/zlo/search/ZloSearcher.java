@@ -23,7 +23,6 @@ public class ZloSearcher {
     private static final Logger logger = Logger.getLogger(ZloSearcher.class);
 
     public static final int PERIOD_RECREATE_INDEXER = TimeUtils.parseToMilliSeconds(Config.getProp("searcher.period.recreate.indexer"));
-    public final static SimpleDateFormat QUERY_DATEFORMAT = new SimpleDateFormat("yyyyMMdd"); // because of locale
 
     private static long lastCreateTime = -1;
     private static boolean isReopening = false;
@@ -209,21 +208,5 @@ public class ZloSearcher {
     public static SearchResult searchInNumRange(int urlFrom, int urlTo) {
         return search("+num:[" + ZloMessage.URL_NUM_FORMAT.format(urlFrom) 
                 + " TO " + ZloMessage.URL_NUM_FORMAT.format(urlTo) + "]");
-    }
-
-    public static void main(String[] args) {
-        String query = "title:днем OR title:день AND nick:jaga";
-//        query = "num:3675166";
-//        query = "title:\"анонсы\"";
-//        query = "nick:голодный OR title:батьку";
-//        query = "nick:\"downtube 4130 chromoly\"";
-//        query = "num:3765293";
-//        query = "1946";
-        query="topic:–азвлечени€";
-        System.out.println(query);
-        ZloSearcher searcher = new ZloSearcher();
-/*        for (ZloMessage msg: ZloSearcher.search(query).iterator()) {
-            System.out.println(msg);
-        }*/
     }
 }
