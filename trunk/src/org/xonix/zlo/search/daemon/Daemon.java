@@ -13,10 +13,12 @@ public abstract class Daemon {
     private static final Logger logger = Logger.getLogger(Daemon.class);
     private boolean exiting;
     private boolean isSleeping = false;
+    private Process process;
 
     protected void setExiting(boolean exiting) {
         if (isSleeping) {
             logger.info("Exiting...");
+            getProcess().cleanUp();
             System.exit(0);
         } else {
             this.exiting = exiting;
@@ -28,6 +30,13 @@ public abstract class Daemon {
     }
 
     protected abstract Process createProcess();
+
+    private Process getProcess() {
+        if (process == null) {
+            process = createProcess();
+        }
+        return process;
+    }
 
     protected abstract class Process extends Thread {
         public Process() {
@@ -80,7 +89,7 @@ public abstract class Daemon {
 
     protected void start() {
         while (true) {
-            Process t = createProcess();
+            Process t = getProcess();
             t.setPriority(Thread.MIN_PRIORITY); // so daemons not slowing search 
             t.start();
             try {
