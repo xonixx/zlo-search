@@ -95,6 +95,7 @@ public class ZloIndexer {
                 logger.debug("Not adding: " + msg.getNum() + " with status: " + msg.getStatus());
             }
         }
+        writer.flush();
     }
 
     /*

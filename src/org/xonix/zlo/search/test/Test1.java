@@ -4,6 +4,8 @@ import org.apache.lucene.analysis.SimpleAnalyzer;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.SortField;
 import org.xonix.zlo.search.DAO;
 import org.xonix.zlo.search.ZloSearcher;
 import org.xonix.zlo.search.config.Config;
@@ -13,6 +15,7 @@ import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.util.Date;
 import java.util.List;
+import java.io.IOException;
 
 /**
  * Author: Vovan
@@ -22,8 +25,12 @@ import java.util.List;
 public class Test1 {
     public static void main(String[] args) {
         new Config();
-        m15();
+        m17();
         System.exit(0);
+    }
+
+    public static void m17() {
+        System.out.println(ZloSearcher.getLastIndexedNumber());
     }
 
     public static void m16() {

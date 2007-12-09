@@ -10,9 +10,9 @@ import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.utils.TimeUtils;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.NoSuchElementException;
+import java.text.MessageFormat;
 
 /**
  * Author: gubarkov
@@ -74,7 +74,7 @@ public class ZloSearcher {
                 }
 
                 // search to form memory caches
-                search(_indexReader, " +nick:абырвалг");
+                search(_indexReader, " +nick:абырвалг", null);
                 oldIndexReader = indexReader;
 
                 indexReader = _indexReader;
@@ -119,7 +119,7 @@ public class ZloSearcher {
     }
 
     public static SearchResult search(String queryString) {
-        return search(getIndexReader(), queryString);
+        return search(null, queryString, null);
     }
 
     public static SearchResult search(int topicCode,
@@ -134,7 +134,7 @@ public class ZloSearcher {
                                          Date fromDate,
                                          Date toDate) {
 
-        return search(getIndexReader(), ZloMessage.formQueryString(text, inTitle, inBody, topicCode, nick, host, fromDate, toDate, inReg, inHasUrl, inHasImg));
+        return search(null, ZloMessage.formQueryString(text, inTitle, inBody, topicCode, nick, host, fromDate, toDate, inReg, inHasUrl, inHasImg), null);
     }
 
     public static SearchResult search(SearchRequest searchRequest) {
@@ -166,7 +166,13 @@ public class ZloSearcher {
                 inReg, inHasUrl, inHasImg, nick, host, null, null);
     }
 
-    public static SearchResult search(IndexReader indexReader, String queryStr) {
+    public static SearchResult search(IndexReader indexReader, String queryStr, Sort sort) {
+        if (sort == null)
+            sort = new Sort(new SortField(ZloMessage.FIELDS.DATE, SortField.STRING, true));
+
+        if (indexReader == null)
+            indexReader = getIndexReader();
+
         SearchResult result = new SearchResult();
         IndexSearcher searcher = null;
         try {
@@ -180,7 +186,7 @@ public class ZloSearcher {
             result.setQueryParser(parser);
             result.setQuery(query);
 
-            Hits hits = searcher.search(query, new Sort(new SortField(ZloMessage.FIELDS.DATE, SortField.STRING, true)));
+            Hits hits = searcher.search(query, sort);
             result.setHits(hits);
         } catch (IOException e) {
             e.printStackTrace();
@@ -206,7 +212,20 @@ public class ZloSearcher {
     }
 
     public static SearchResult searchInNumRange(int urlFrom, int urlTo) {
-        return search("+num:[" + ZloMessage.URL_NUM_FORMAT.format(urlFrom) 
-                + " TO " + ZloMessage.URL_NUM_FORMAT.format(urlTo) + "]");
+        return search(MessageFormat.format(" +num:[{0} TO {1}]", urlFrom, urlTo));
+    }
+
+    public static int getLastIndexedNumber() {
+        String searchStr = MessageFormat.format(" +num:[{0} TO {1}]",
+                ZloMessage.URL_NUM_FORMAT.format(0),
+                ZloMessage.URL_NUM_FORMAT.format(999999999));
+        try {
+            return Integer.parseInt(
+                    ZloSearcher.search(null, searchStr,
+                            new Sort(new SortField(ZloMessage.FIELDS.URL_NUM, SortField.STRING, true))).getHits().doc(0).get(ZloMessage.FIELDS.URL_NUM));
+        } catch (IOException e) {
+            logger.error(e);
+            return -1;
+        }
     }
 }

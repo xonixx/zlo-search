@@ -2,22 +2,14 @@ package org.xonix.zlo.search.test;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.ru.RussianAnalyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.search.Hit;
-import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
 import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.ZloSearcher;
 
 import java.io.IOException;
-import java.util.Iterator;
 
 /**
  * Author: gubarkov
@@ -77,7 +69,7 @@ public class Main2 {
                 Document d = ((Hit)it.next()).getDocument();
                 System.out.println("Found: {"+d.get("num")+", "+d.get("title")+", "+d.get("body")+"}");
             }*/
-            System.out.println(ZloSearcher.search(reader, "topicCode:4").getHits().length());
+            System.out.println(ZloSearcher.search(reader, "topicCode:4", null).getHits().length());
         } catch (IOException e) {
             e.printStackTrace();
         } /*catch (ParseException e) {
