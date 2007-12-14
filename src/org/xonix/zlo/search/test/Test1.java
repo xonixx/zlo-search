@@ -4,17 +4,16 @@ import org.apache.lucene.analysis.SimpleAnalyzer;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.*;
-import org.apache.lucene.index.Term;
 import org.xonix.zlo.search.DAO;
 import org.xonix.zlo.search.ZloSearcher;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.model.ZloMessage;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.util.Date;
 import java.util.List;
-import java.io.IOException;
 
 /**
  * Author: Vovan
@@ -39,8 +38,27 @@ class B extends A {
 public class Test1 {
     public static void main(String[] args) {
         new Config();
-        m18();
+        m19();
         System.exit(0);
+    }
+
+    public static void m19() {
+       /* try {
+            String queryStr = "body:(+(Привет медведь) +Путин -извращенец педофил)";
+            Analyzer analyzer = ZloMessage.constructAnalyzer();
+            QueryParser parser = new QueryParser(ZloMessage.FIELDS.BODY, analyzer);
+            Query query = parser.parse(queryStr);
+            Set set = new HashSet();
+            query.extractTerms(set);
+            for(Object t: set) {
+                System.out.println(((Term) t).text() + " " + t.getClass());
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }*/
+        for (String s : ZloSearcher.formHighlightedWords("унылый")) {
+            System.out.println(s);
+        }
     }
 
     public static void m18() {

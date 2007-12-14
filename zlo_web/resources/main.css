@@ -84,3 +84,5 @@ big {
 .nowrap {
     white-space: nowrap;
 }
+
+.hl { color: red; }

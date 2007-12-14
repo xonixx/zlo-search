@@ -3,6 +3,7 @@ package org.xonix.zlo.search;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.*;
 import org.xonix.zlo.search.config.Config;
@@ -10,9 +11,11 @@ import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.utils.TimeUtils;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.NoSuchElementException;
 import java.text.MessageFormat;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.NoSuchElementException;
+import java.util.Set;
 
 /**
  * Author: gubarkov
@@ -103,6 +106,25 @@ public class ZloSearcher {
     public static void clean() {
         clean(indexReader);
         indexReader = null;
+    }
+
+    public static String[] formHighlightedWords(String txt) {
+        try {
+            String queryStr = MessageFormat.format("{0}:({1})", ZloMessage.FIELDS.BODY, txt);
+            QueryParser parser = new QueryParser(ZloMessage.FIELDS.BODY, ZloMessage.constructAnalyzer());
+            Query query = parser.parse(queryStr);
+            Set<Term> set = new HashSet<Term>();
+            query.extractTerms(set);
+            String[] res = new String[set.size()];
+            int i=0;
+            for (Term t : set) {
+                res[i++] = t.text();
+            }
+            return res;
+        } catch (org.apache.lucene.queryParser.ParseException e) {
+            logger.error(e);
+            return new String[0];
+        }
     }
 
     public static class ParseException extends RuntimeException {

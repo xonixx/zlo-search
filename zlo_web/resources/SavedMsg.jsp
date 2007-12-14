@@ -11,6 +11,9 @@
 <jsp:useBean id="savedMsg" scope="request" class="org.xonix.zlo.search.model.ZloMessage" />
 <jsp:useBean id="siteRoot" class="java.lang.String" scope="session" />
 
+<jsp:useBean id="hl" class="org.xonix.zlo.web.FoundTextHighlighter" scope="session" />
+<jsp:setProperty name="hl" property="wordsStr" value="<%= request.getParameter("hw") %>" />
+
 <html>
     <head>
         <title><fmt:message key="page.title" /></title>
@@ -25,7 +28,8 @@
                         <c:if test="${not empty savedMsg.topic}">
                             [<c:out value="${savedMsg.topic}" />]
                         </c:if>
-                        <c:out value="${savedMsg.title}" escapeXml="false" />
+                        <jsp:setProperty name="hl" property="text" value="${savedMsg.title}" />
+                        <c:out value="${hl.highlightedText}" escapeXml="false" />
                         <a href="http://<c:out value="${siteRoot}" />/?read=<c:out value="${savedMsg.num}" />">?</a>
                     </big>
                     <br />Сообщение было послано:
@@ -47,7 +51,8 @@
                 </div>
                 <br />
                 <div id="body">
-                    <c:out value="${savedMsg.body}" escapeXml="false"/>
+                    <jsp:setProperty name="hl" property="text" value="${savedMsg.body}" />
+                    <c:out value="${hl.highlightedText}" escapeXml="false"/>
                 </div>
             </c:when>
             <c:otherwise>
