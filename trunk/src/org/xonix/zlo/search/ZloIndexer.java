@@ -10,6 +10,7 @@ import org.xonix.zlo.search.db.DbException;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.MessageFormat;
 
 /**
  * Author: gubarkov
@@ -104,7 +105,7 @@ public class ZloIndexer {
     indexes [from, to] including...
      */
     public void index(int from, int to) throws IOException, DbException {
-        logger.info("Adding msgs [" + from + "-" + to + "] to index...");
+        logger.info(MessageFormat.format("Adding {0} msgs [{1,number}-{2,number}] to index...", to - from + 1, from, to));
         try {
             addMessagesToIndex(from, to + 1);
         } catch (DAOException e) {

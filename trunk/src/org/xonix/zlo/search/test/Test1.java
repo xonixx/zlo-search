@@ -3,9 +3,8 @@ package org.xonix.zlo.search.test;
 import org.apache.lucene.analysis.SimpleAnalyzer;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.Sort;
-import org.apache.lucene.search.SortField;
+import org.apache.lucene.search.*;
+import org.apache.lucene.index.Term;
 import org.xonix.zlo.search.DAO;
 import org.xonix.zlo.search.ZloSearcher;
 import org.xonix.zlo.search.config.Config;
@@ -22,15 +21,45 @@ import java.io.IOException;
  * Date: 06.09.2007
  * Time: 0:48:24
  */
+
+class A {
+
+    public A(int a) {
+        System.out.println(a);
+    }
+}
+
+class B extends A {
+
+    public B() {
+        super(123);
+    }
+}
+
 public class Test1 {
     public static void main(String[] args) {
         new Config();
-        m17();
+        m18();
         System.exit(0);
     }
 
+    public static void m18() {
+        try {
+//            System.out.println(new IndexSearcher(ZloSearcher.getIndexReader()).search(new TermQuery(new Term("nick", "abcdef"))).length());
+//            System.out.println(new IndexSearcher(ZloSearcher.getIndexReader()).search(new TermQuery(new Term("nick", "abcdef")), new Sort(new SortField(ZloMessage.FIELDS.DATE, SortField.STRING, true))).length());
+//            System.out.println(ZloSearcher.search("nick:abcdef").getHits().length());
+            System.out.println(new IndexSearcher(ZloSearcher.getIndexReader()).search(new MatchAllDocsQuery(), new Sort(new SortField(ZloMessage.FIELDS.DATE, SortField.STRING, true))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void m17() {
-        System.out.println(ZloSearcher.getLastIndexedNumber());
+//        System.out.println(ZloSearcher.getLastIndexedNumber());
+        int from =4000000;
+        int to=4000019;
+        System.out.println((int)MessageFormat.format("{0}", 4000).charAt(1));
+        System.out.println((int)' ');
     }
 
     public static void m16() {
