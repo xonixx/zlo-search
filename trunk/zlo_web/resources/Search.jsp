@@ -13,6 +13,9 @@
 
 <jsp:useBean id="siteRoot" class="java.lang.String" scope="session" />
 
+<jsp:useBean id="hl" class="org.xonix.zlo.web.FoundTextHighlighter" scope="session" />
+<jsp:setProperty name="hl" property="highlightWords" value="${requestScope['hw']}"/>
+
 <html>
     <head>
         <title><fmt:message key="page.title" /></title>
@@ -99,13 +102,14 @@
                             <c:if test="${not empty msg.topic and msg.topic != 'Без темы'}">
                                 [<c:out value="${msg.topic}" />]
                             </c:if>
-                            <c:out value="${msg.title}" escapeXml="false" /></a>
+                            <jsp:setProperty name="hl" property="text" value="${msg.title}" />
+                            <c:out value="${hl.highlightedText}" escapeXml="false" /></a>
                         <small>
                             <c:if test="${empty msg.body}">(-)</c:if>
                             <c:if test="${msg.hasUrl}">(url)</c:if>
                             <c:if test="${msg.hasImg}">(pic)</c:if>
                         </small>
-                        <a class="search" href="msg?num=<c:out value="${msg.num}" />"><fmt:message key="link.saved.msg" /></a>
+                        <a class="search" href="msg?num=<c:out value="${msg.num}" />&hw=<c:out value="${hl.wordsStr}" />"><fmt:message key="link.saved.msg" /></a>
                     </display:column>
                     <display:column title="<%= HtmlStrings.HEADER_NICK.toString() %>" headerClass="head">
                         <span class="nick">

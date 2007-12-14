@@ -388,10 +388,14 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
         return null;
     }
 
+    private static Analyzer analyzer;
     public static Analyzer constructAnalyzer() {
-        PerFieldAnalyzerWrapper analyzer = new PerFieldAnalyzerWrapper(new KeywordAnalyzer());
-        analyzer.addAnalyzer(FIELDS.TITLE, Config.ANALYZER);
-        analyzer.addAnalyzer(FIELDS.BODY, Config.ANALYZER);
+        if (analyzer == null) {
+            PerFieldAnalyzerWrapper a = new PerFieldAnalyzerWrapper(new KeywordAnalyzer());
+            a.addAnalyzer(FIELDS.TITLE, Config.ANALYZER);
+            a.addAnalyzer(FIELDS.BODY, Config.ANALYZER);
+            analyzer = a;
+        }
         return analyzer;
     }
 

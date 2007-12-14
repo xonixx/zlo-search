@@ -57,6 +57,8 @@ public class SearchServlet extends ForwardingServlet {
 
     public static final String QS_SUBMIT = "submit";
 
+    public static final String REQ_HIGHLIGHT_WORDS = "hw";
+
     // session keys
     public static final String SESS_SEARCH_RESULT = "searchResult";
     public static final String SESS_SITE_ROOT = "siteRoot";
@@ -171,6 +173,8 @@ public class SearchServlet extends ForwardingServlet {
                     inReg, inHasUrl, inHasImg, nick, host, topicCode, fromDate, toDate);
 
             if (searchRequest.canBeProcessed()) {
+
+                request.setAttribute(REQ_HIGHLIGHT_WORDS, ZloSearcher.formHighlightedWords(text));
 
                 if (StringUtils.isEmpty(request.getParameter(QS_DATES))) {
                     searchRequest.setFromDate(null);
