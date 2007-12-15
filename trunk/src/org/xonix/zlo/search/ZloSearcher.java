@@ -109,10 +109,11 @@ public class ZloSearcher {
     }
 
     public static String[] formHighlightedWords(String txt) {
+        Query query = null;
         try {
             String queryStr = MessageFormat.format("{0}:({1})", ZloMessage.FIELDS.BODY, txt);
             QueryParser parser = new QueryParser(ZloMessage.FIELDS.BODY, ZloMessage.constructAnalyzer());
-            Query query = parser.parse(queryStr);
+            query = parser.parse(queryStr);
             Set<Term> set = new HashSet<Term>();
             query.extractTerms(set);
             String[] res = new String[set.size()];
@@ -123,8 +124,13 @@ public class ZloSearcher {
             return res;
         } catch (org.apache.lucene.queryParser.ParseException e) {
             logger.error(e);
-            return new String[0];
+        } catch (UnsupportedOperationException e) {
+            // for wildcard query
+            String qs = query.toString(ZloMessage.FIELDS.BODY);
+            qs = qs.replaceAll("-\\b.+?\\b", " ").replaceAll("\\(|\\)|\\+", " ");
+            return qs.trim().split("\\s+");
         }
+        return new String[0];
     }
 
     public static class ParseException extends RuntimeException {
@@ -189,8 +195,11 @@ public class ZloSearcher {
     }
 
     public static SearchResult search(IndexReader indexReader, String queryStr, Sort sort) {
-        if (sort == null)
-            sort = new Sort(new SortField(ZloMessage.FIELDS.DATE, SortField.STRING, true));
+        if (sort == null) {
+            // sort causes slow first search & lot memory used!
+            if (Config.SEARCH_PERFORM_SORT)
+                sort = new Sort(new SortField(ZloMessage.FIELDS.DATE, SortField.STRING, true));
+        }
 
         if (indexReader == null)
             indexReader = getIndexReader();
