@@ -3,8 +3,10 @@ package org.xonix.zlo.search.test;
 import org.xonix.zlo.search.DoubleIndexSearcher;
 import org.xonix.zlo.search.ZloSearcher;
 import org.xonix.zlo.search.DoubleHits;
+import org.xonix.zlo.search.model.ZloMessage;
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.Sort;
+import org.apache.lucene.index.IndexWriter;
 
 import java.io.IOException;
 
@@ -15,10 +17,38 @@ import java.io.IOException;
  */
 public class DoubleIndexTest {
     public static void main(String[] args) {
-        DoubleIndexSearcher dis = new DoubleIndexSearcher("D:\\TEST\\JAVA\\ZloSearcher\\__test", ZloSearcher.getDateSort());
+        m1();
+        System.exit(0);
+    }
+
+    private static void m3() {
+        DoubleIndexSearcher dis = getDIS();
+        System.out.println(dis.getBigReader().isOptimized());
+        try {
+            System.out.println(new IndexWriter("D:\\TEST\\JAVA\\ZloSearcher\\__test\\1", ZloMessage.constructAnalyzer()).getUseCompoundFile());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static DoubleIndexSearcher getDIS() {
+        return new DoubleIndexSearcher("D:\\TEST\\JAVA\\ZloSearcher\\__test", ZloSearcher.getDateSort());
+    }
+
+    public static void m1() {
+        DoubleIndexSearcher dis = getDIS();
         try {
             DoubleHits dh = dis.search(new MatchAllDocsQuery(), new Sort());
             System.out.println(dh.length());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void m2() {
+        DoubleIndexSearcher dis = getDIS();
+        try {
+            dis.moveSmallToBig();
         } catch (IOException e) {
             e.printStackTrace();
         }
