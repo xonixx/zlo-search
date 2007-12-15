@@ -6,6 +6,8 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.MatchAllDocsQuery;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
 import org.apache.log4j.Logger;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.utils.TimeUtils;
@@ -61,8 +63,6 @@ public class DoubleIndexSearcher {
             if (!f.mkdirs()) {
                 logger.warn("Error creating dir...");
             }
-        } else {
-            //tre
         }
     }
 
@@ -72,7 +72,13 @@ public class DoubleIndexSearcher {
             try {
                 bigReader = IndexReader.open(getBigPath());
             } catch (IOException e) {
-                logger.error("Can't create bigReader!");
+                logger.error("Can't create bigReader... Creating empty one...");
+                try {
+                    createEmptyIndex(getBigPath());
+                    bigReader = IndexReader.open(getBigPath());
+                } catch (IOException e1) {
+                    logger.error("Can't create empty big reader: ", e1);
+                }
             }
         } else {
             startRecreatingReaderIfNeeded(bigReader);
@@ -95,7 +101,7 @@ public class DoubleIndexSearcher {
                     createEmptyIndex(getSmallPath());
                     smallReader = IndexReader.open(getSmallPath());
                 } catch (IOException e1) {
-                    logger.error("Can't create small reader: ", e1);
+                    logger.error("Can't create empty small reader: ", e1);
                 }
             }
         } else {
@@ -207,18 +213,29 @@ public class DoubleIndexSearcher {
         clean(smallReader);
     }
 
-    public void optimize() throws IOException {
+    public void moveSmallToBig() throws IOException {
+        logger.info("Start moving small to big...");
+
         IndexWriter bigIndexWriter = new IndexWriter(getBigPath(), ZloMessage.constructAnalyzer());
         IndexReader smlR = getSmallReader();
-        bigIndexWriter.addIndexes(new IndexReader[] {smlR}); // add small to big, optimize big
+        logger.info("Moving small to big...");
+        bigIndexWriter.addIndexesNoOptimize(new Directory[]{FSDirectory.getDirectory(getSmallPath())}); // add small to big, w/o optimize
 
         smlR.close();
         bigIndexWriter.close();
 
+        logger.info("Cleaning small index...");
         createEmptyIndex(getSmallPath()); // empty small index
     }
 
+    public void optimize() throws IOException {
+        new IndexWriter(getBigPath(), ZloMessage.constructAnalyzer()).optimize();
+        new IndexWriter(getSmallPath(), ZloMessage.constructAnalyzer()).optimize();
+    }
+
     private void createEmptyIndex(String path) throws IOException {
-        new IndexWriter(path, ZloMessage.constructAnalyzer(), true).close();
+        IndexWriter indexWriter = new IndexWriter(path, ZloMessage.constructAnalyzer(), true);
+        indexWriter.setUseCompoundFile(true);
+        indexWriter.close();
     }
 }
