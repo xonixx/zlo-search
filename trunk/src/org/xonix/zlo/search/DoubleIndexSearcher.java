@@ -1,6 +1,7 @@
 package org.xonix.zlo.search;
 
 import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.IndexSearcher;
@@ -8,8 +9,11 @@ import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.log4j.Logger;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.utils.TimeUtils;
+import org.xonix.zlo.search.model.ZloMessage;
 
 import java.io.IOException;
+import java.io.File;
+import java.text.MessageFormat;
 
 /**
  * Author: Vovan
@@ -26,12 +30,11 @@ public class DoubleIndexSearcher {
 
     private String indexesDir;
 
-    private IndexReader bigReader;
-    private IndexReader smallReader;
-
     private Sort renewingSort;
 
-    private boolean isReopening = false;
+    private boolean isReopeningSmall = false;
+    private boolean isReopeningBig = false;
+
     private long lastCreateTime = -1;
 
     public DoubleIndexSearcher(String dir, Sort renewingSort) {
@@ -39,36 +42,78 @@ public class DoubleIndexSearcher {
         this.indexesDir = dir;
     }
 
+    private String getBigPath() {
+        String path = indexesDir + "/" + BIG_INDEX_DIR;
+        createDirIfAbsent(path);
+        return path;
+    }
+
+    private String getSmallPath() {
+        String path = indexesDir + "/" + SMALL_INDEX_DIR;
+        createDirIfAbsent(path);
+        return path;
+    }
+
+    private void createDirIfAbsent(String path) {
+        File f = new File(path);
+        if (!f.exists()) {
+            logger.info("Creating dir: " + path);
+            if (!f.mkdirs()) {
+                logger.warn("Error creating dir...");
+            }
+        } else {
+            //tre
+        }
+    }
+
+    private IndexReader bigReader;
     public IndexReader getBigReader() {
         if (bigReader == null) {
             try {
-                bigReader = IndexReader.open(indexesDir + "/" + BIG_INDEX_DIR);
+                bigReader = IndexReader.open(getBigPath());
             } catch (IOException e) {
                 logger.error("Can't create bigReader!");
             }
+        } else {
+            startRecreatingReaderIfNeeded(bigReader);
         }
         return bigReader;
     }
 
+    public void setBigReader(IndexReader bigReader) {
+        this.bigReader = bigReader;
+    }
+
+    private IndexReader smallReader;
     public IndexReader getSmallReader() {
         if (smallReader == null) {
             try {
-                smallReader = IndexReader.open(indexesDir + "/" + SMALL_INDEX_DIR);
+                smallReader = IndexReader.open(getSmallPath());
             } catch (IOException e) {
-                logger.error("Can't create smallReader!");
+                logger.error("Can't create smallReader... Creating empty one...");
+                try {
+                    createEmptyIndex(getSmallPath());
+                    smallReader = IndexReader.open(getSmallPath());
+                } catch (IOException e1) {
+                    logger.error("Can't create small reader: ", e1);
+                }
             }
         } else {
-            startRecreatingSmallReaderIfNeeded();
+            startRecreatingReaderIfNeeded(smallReader);
         }
         return smallReader;
     }
 
-    private void startRecreatingSmallReaderIfNeeded() {
+    public void setSmallReader(IndexReader smallReader) {
+        this.smallReader = smallReader;
+    }
+
+    private void startRecreatingReaderIfNeeded(IndexReader r) {
         try {
-            if (needToRecreateReader()) {
+            if (needToRecreateReader(r)) {
                 synchronized(this) {
-                    if (needToRecreateReader()) {
-                        startReopeningThread();
+                    if (needToRecreateReader(r)) {
+                        startReopeningThread(r);
                     }
                 }
             }
@@ -77,23 +122,37 @@ public class DoubleIndexSearcher {
         }
     }
 
-    private boolean needToRecreateReader() throws IOException {
-        return !smallReader.isCurrent()
-                        && System.currentTimeMillis() - lastCreateTime > PERIOD_RECREATE_INDEXER
-                        && !isReopening;
+    private boolean needToRecreateReader(IndexReader r) throws IOException {
+        boolean isSmall = r == smallReader;
+        if (isSmall)
+            return !smallReader.isCurrent()
+                    && !isReopeningSmall
+                    && System.currentTimeMillis() - lastCreateTime > PERIOD_RECREATE_INDEXER;
+        else // big
+            return !bigReader.isCurrent()
+                    && !isReopeningBig;
     }
 
-    private void startReopeningThread() {
+    private void startReopeningThread(IndexReader r) {
+        final boolean isSmall = r == smallReader;
+
         Thread t = new Thread(new Runnable() {
             public void run() {
-                isReopening = true;
+                logger.debug(MessageFormat.format("Renewing {0} index reader...", isSmall ? "small" : "big"));
+                if (isSmall)
+                    isReopeningSmall = true;
+                else
+                    isReopeningBig = true;
 
                 logger.info("Start recreating indexReader in separate thread...");
                 IndexReader ir = null,
-                            oldIndexReader = smallReader;
+                            oldIndexReader = isSmall ? smallReader : bigReader;
 
                 try {
-                    ir = IndexReader.open(Config.INDEX_DIR);
+                    ir = IndexReader.open(
+                            isSmall
+                                    ? getSmallPath()
+                                    : getBigPath());
                 } catch (IOException e) {
                     logger.error("Error while recreating index reader: " + e);
                 }
@@ -106,13 +165,20 @@ public class DoubleIndexSearcher {
                     return;
                 }
 
-                smallReader = ir;
-                lastCreateTime = System.currentTimeMillis();
+                if (isSmall) {
+                    smallReader = ir;
+                    lastCreateTime = System.currentTimeMillis();
+                } else { // big
+                    bigReader = ir;
+                }
 
                 clean(oldIndexReader);
                 logger.info("Successfuly recreated.");
 
-                isReopening = false;
+                if (isSmall)
+                    isReopeningSmall = false;
+                else
+                    isReopeningBig = false;
             }
         });
 
@@ -137,11 +203,22 @@ public class DoubleIndexSearcher {
     }
 
     public void close() {
-        try {
-            bigReader.close();
-            smallReader.close();
-        } catch (IOException e) {
-            logger.error(e);
-        }
+        clean(bigReader);
+        clean(smallReader);
+    }
+
+    public void optimize() throws IOException {
+        IndexWriter bigIndexWriter = new IndexWriter(getBigPath(), ZloMessage.constructAnalyzer());
+        IndexReader smlR = getSmallReader();
+        bigIndexWriter.addIndexes(new IndexReader[] {smlR}); // add small to big, optimize big
+
+        smlR.close();
+        bigIndexWriter.close();
+
+        createEmptyIndex(getSmallPath()); // empty small index
+    }
+
+    private void createEmptyIndex(String path) throws IOException {
+        new IndexWriter(path, ZloMessage.constructAnalyzer(), true).close();
     }
 }
