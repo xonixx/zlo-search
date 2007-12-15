@@ -75,6 +75,7 @@ public class Config {
     public static final String TRUE = "true";
 
     public static final boolean DEBUG = TRUE.equals(getProp("debug"));
+    public static final boolean SEARCH_PERFORM_SORT = TRUE.equals(getProp("search.performSort"));
 
     public static final Analyzer ANALYZER;
     static {

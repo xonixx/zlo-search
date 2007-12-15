@@ -38,6 +38,7 @@ public class FoundTextHighlighter {
     public String getHighlightedText() {
         String txt = text;
         for (String w : highlightWords) {
+            w = w.replaceAll("\\?", ".{1}").replaceAll("\\*", ".*?");
             txt = txt.replaceAll("(?iu)(" + w + ".*?)\\b", "<span class=\"hl\">$1</span>");
         }
         return txt;

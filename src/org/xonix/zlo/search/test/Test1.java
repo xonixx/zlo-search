@@ -1,9 +1,11 @@
 package org.xonix.zlo.search.test;
 
 import org.apache.lucene.analysis.SimpleAnalyzer;
+import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.*;
+import org.apache.lucene.index.Term;
 import org.xonix.zlo.search.DAO;
 import org.xonix.zlo.search.ZloSearcher;
 import org.xonix.zlo.search.config.Config;
@@ -14,6 +16,8 @@ import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Author: Vovan
@@ -43,8 +47,8 @@ public class Test1 {
     }
 
     public static void m19() {
-       /* try {
-            String queryStr = "body:(+(Привет медведь) +Путин -извращенец педофил)";
+        /*try {
+            String queryStr = "body:(+(Привет медведь т?ст) +Путин -извращенец педофил)";
             Analyzer analyzer = ZloMessage.constructAnalyzer();
             QueryParser parser = new QueryParser(ZloMessage.FIELDS.BODY, analyzer);
             Query query = parser.parse(queryStr);
@@ -56,7 +60,8 @@ public class Test1 {
         } catch (ParseException e) {
             e.printStackTrace();
         }*/
-        for (String s : ZloSearcher.formHighlightedWords("унылый")) {
+        String st = "+(Привет медведь т?ст) +Путин -извращенец педофил";
+        for (String s : ZloSearcher.formHighlightedWords(st)) {
             System.out.println(s);
         }
     }

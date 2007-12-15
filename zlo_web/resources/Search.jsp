@@ -109,7 +109,7 @@
                             <c:if test="${msg.hasUrl}">(url)</c:if>
                             <c:if test="${msg.hasImg}">(pic)</c:if>
                         </small>
-                        <a class="search" href="msg?num=<c:out value="${msg.num}" />&hw=<c:out value="${hl.wordsStr}" />"><fmt:message key="link.saved.msg" /></a>
+                        <a class="search" href="msg?num=<c:out value="${msg.num}" /><c:if test="${not empty hl.wordsStr}">&hw=<c:out value="${hl.wordsStr}" /></c:if>"><fmt:message key="link.saved.msg" /></a>
                     </display:column>
                     <display:column title="<%= HtmlStrings.HEADER_NICK.toString() %>" headerClass="head">
                         <span class="nick">
