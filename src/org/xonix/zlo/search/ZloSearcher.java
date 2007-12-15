@@ -194,11 +194,15 @@ public class ZloSearcher {
                 inReg, inHasUrl, inHasImg, nick, host, null, null);
     }
 
+    public static Sort getDateSort() {
+        return new Sort(new SortField(ZloMessage.FIELDS.DATE, SortField.STRING, true));    
+    }
+
     public static SearchResult search(IndexReader indexReader, String queryStr, Sort sort) {
         if (sort == null) {
             // sort causes slow first search & lot memory used!
             if (Config.SEARCH_PERFORM_SORT)
-                sort = new Sort(new SortField(ZloMessage.FIELDS.DATE, SortField.STRING, true));
+                sort = getDateSort();
         }
 
         if (indexReader == null)
