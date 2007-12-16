@@ -2,15 +2,17 @@ package org.xonix.zlo.search;
 
 import org.apache.lucene.search.Hits;
 import org.apache.lucene.document.Document;
+import org.apache.commons.collections.IteratorUtils;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 /**
  * Author: Vovan
  * Date: 14.12.2007
  * Time: 3:51:51
  */
-public class DoubleHits {
+public class DoubleHits implements Iterable {
     private Hits smallHits;
     private Hits bigHits;
 
@@ -19,16 +21,32 @@ public class DoubleHits {
         this.smallHits = smallHits;
     }
 
+    public DoubleHits(Hits hits) {
+        this(hits, null);
+    }
+
     public int length() {
-        return bigHits.length() + smallHits.length();
+        return smallHits == null
+                ? bigHits.length()
+                : bigHits.length() + smallHits.length();
     }
 
     public Document doc(int n) throws IOException {
-        int bl = bigHits.length();
-
-        if (n <= bl)
+        if (smallHits == null)
             return bigHits.doc(n);
+
+        int sl = smallHits.length();
+
+        if (n < sl)
+            return smallHits.doc(n);
         else
-            return smallHits.doc(n - bl);
+            return bigHits.doc(n - sl);
+    }
+
+    public Iterator iterator() {
+        if (smallHits == null) {
+            return bigHits.iterator();
+        }
+        return IteratorUtils.chainedIterator(bigHits.iterator(), smallHits.iterator());
     }
 }

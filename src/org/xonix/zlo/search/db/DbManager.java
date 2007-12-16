@@ -33,7 +33,8 @@ public class DbManager {
     public static final String MSG_PARENT_NUM = "parentNum";
     public static final String MSG_STATUS = ZloMessage.STATUS;
 
-    public static final String DB_DICT_LAST_INDEXED = "lastIndexed";
+    private static final String DB_DICT_LAST_INDEXED =          "lastIndexed";
+    private static final String DB_DICT_LAST_INDEXED_DOUBLE =   "lastIndexedDouble";
 
     private static final String SQL_INSERT_MSG =            props.getProperty("sql.insert.msg");
     private static final String SQL_UPDATE_MSG =            props.getProperty("sql.update.msg");
@@ -260,11 +261,14 @@ public class DbManager {
     }
 
     public static void setLastIndexedNumber(int num) throws DbException {
-        DbDict.setInt(DB_DICT_LAST_INDEXED, num);
+        if (Config.USE_DOUBLE_INDEX)
+            DbDict.setInt(DB_DICT_LAST_INDEXED_DOUBLE, num);
+        else
+            DbDict.setInt(DB_DICT_LAST_INDEXED, num);
     }
 
     public static int getLastIndexedNumber() throws DbException {
-        Integer lastIndexed = DbDict.getInt(DB_DICT_LAST_INDEXED);
+        Integer lastIndexed = DbDict.getInt(Config.USE_DOUBLE_INDEX ? DB_DICT_LAST_INDEXED_DOUBLE : DB_DICT_LAST_INDEXED);
         return lastIndexed == null ? 0 : lastIndexed;
     }
 
