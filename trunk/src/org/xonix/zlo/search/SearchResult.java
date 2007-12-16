@@ -19,7 +19,8 @@ import java.util.Iterator;
  */
 public class SearchResult implements Iterable {
 
-    private Hits hits;
+//    private Hits hits;
+    private DoubleHits doubleHits;
     private IndexSearcher searcher;
     private Analyzer analyzer;
     private QueryParser parser;
@@ -34,12 +35,24 @@ public class SearchResult implements Iterable {
     public SearchResult() {
     }
 
-    public Hits getHits() {
+/*    public Hits getHits() {
         return hits;
     }
 
     public void setHits(Hits hits) {
         this.hits = hits;
+    }*/
+
+    public DoubleHits getHits() {
+        return doubleHits;
+    }
+
+    public void setHits(DoubleHits doubleHits) {
+        this.doubleHits = doubleHits;
+    }
+
+    public void setHits(Hits hits) {
+        setHits(new DoubleHits(hits));
     }
 
     public void setSearcher(IndexSearcher searcher) {
@@ -75,7 +88,7 @@ public class SearchResult implements Iterable {
     }
 
     private class MsgsIterator implements Iterator<ZloMessageAccessor> {
-        Iterator hitsIterator = hits.iterator();
+        Iterator hitsIterator = doubleHits.iterator();
 
         public boolean hasNext() {
             return hitsIterator.hasNext();
@@ -112,7 +125,7 @@ public class SearchResult implements Iterable {
 
     public PaginatedList getPaginatedList() {
         if (paginatedList == null) {
-            paginatedList = new ZloPaginatedList(hits);
+            paginatedList = new ZloPaginatedList(doubleHits);
             ((ZloPaginatedList) paginatedList).setPageNumber(1);
         }
         return paginatedList;

@@ -9,6 +9,7 @@ import org.xonix.zlo.search.ZloIndexer;
 import org.xonix.zlo.search.DAO;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 
 /**
  * Author: Vovan
@@ -81,6 +82,7 @@ public class IndexerDaemon extends Daemon {
     }
 
     public static void main(String[] args) {
+        logger.info(MessageFormat.format("Starting indexing to {0} index...", Config.USE_DOUBLE_INDEX ? "double" : "simple"));
         new IndexerDaemon().start();
     }
 }

@@ -71,11 +71,13 @@ public class Config {
 
     public static final String CHARSET_NAME = "windows-1251";
     public static final String INDEX_DIR = getProp("index.dir");
+    public static final String INDEX_DIR_DOUBLE = getProp("index.dir.double");
     public static final String USER_AGENT = getProp("user.agent");
     public static final String TRUE = "true";
 
     public static final boolean DEBUG = TRUE.equals(getProp("debug"));
-    public static final boolean SEARCH_PERFORM_SORT = TRUE.equals(getProp("search.performSort"));
+    public static final boolean SEARCH_PERFORM_SORT = TRUE.equals(getProp("search.perform.sort"));
+    public static boolean USE_DOUBLE_INDEX = TRUE.equals(getProp("search.use.double.index"));
 
     public static final Analyzer ANALYZER;
     static {

@@ -1,7 +1,6 @@
 package org.xonix.zlo.search;
 
 import org.apache.log4j.Logger;
-import org.apache.lucene.search.Hits;
 import org.displaytag.pagination.PaginatedList;
 import org.displaytag.properties.SortOrderEnum;
 import org.xonix.zlo.search.db.DbException;
@@ -20,14 +19,14 @@ public class ZloPaginatedList implements PaginatedList {
     private List currentList;
     private int pageNumber;
     private int objectsPerPage;
-    private Hits hits;
+    private DoubleHits hits;
 
     private static final Logger logger = Logger.getLogger(ZloPaginatedList.class);
 
     public ZloPaginatedList() {
     }
 
-    public ZloPaginatedList(Hits hits) {
+    public ZloPaginatedList(DoubleHits hits) {
         this.hits = hits;
     }
 
@@ -86,13 +85,5 @@ public class ZloPaginatedList implements PaginatedList {
 
     public String getSearchId() {
         return null;
-    }
-
-    public Hits getHits() {
-        return hits;
-    }
-
-    public void setHits(Hits hits) {
-        this.hits = hits;
     }
 }

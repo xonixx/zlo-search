@@ -128,7 +128,7 @@ public class Test1 {
             System.out.println("Creating " + i + " ...");
             ZloSearcher.getIndexReader();
             System.out.print("Searching... ");
-            System.out.println(ZloSearcher.search(" +nick:Borisych").getHits().length());
+            System.out.println(ZloSearcher.searchIndexReader(null, " +nick:Borisych", null).getHits().length());
         }
     }
 

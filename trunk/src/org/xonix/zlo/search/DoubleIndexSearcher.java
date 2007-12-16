@@ -44,13 +44,13 @@ public class DoubleIndexSearcher {
         this.indexesDir = dir;
     }
 
-    private String getBigPath() {
+    public String getBigPath() {
         String path = indexesDir + "/" + BIG_INDEX_DIR;
         createDirIfAbsent(path);
         return path;
     }
 
-    private String getSmallPath() {
+    public String getSmallPath() {
         String path = indexesDir + "/" + SMALL_INDEX_DIR;
         createDirIfAbsent(path);
         return path;
@@ -144,13 +144,12 @@ public class DoubleIndexSearcher {
 
         Thread t = new Thread(new Runnable() {
             public void run() {
-                logger.debug(MessageFormat.format("Renewing {0} index reader...", isSmall ? "small" : "big"));
+                logger.debug(MessageFormat.format("Start recreating {0} indexReader in separate thread...", isSmall ? "small" : "big"));
                 if (isSmall)
                     isReopeningSmall = true;
                 else
                     isReopeningBig = true;
 
-                logger.info("Start recreating indexReader in separate thread...");
                 IndexReader ir = null,
                             oldIndexReader = isSmall ? smallReader : bigReader;
 

@@ -6,6 +6,7 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.*;
+import org.apache.commons.lang.StringUtils;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.utils.TimeUtils;
@@ -77,7 +78,7 @@ public class ZloSearcher {
                 }
 
                 // search to form memory caches
-                search(_indexReader, " +nick:абырвалг", null);
+                searchIndexReader(_indexReader, " +nick:абырвалг", null);
                 oldIndexReader = indexReader;
 
                 indexReader = _indexReader;
@@ -109,6 +110,9 @@ public class ZloSearcher {
     }
 
     public static String[] formHighlightedWords(String txt) {
+        if (StringUtils.isEmpty(txt))
+            return new String[0];
+
         Query query = null;
         try {
             String queryStr = MessageFormat.format("{0}:({1})", ZloMessage.FIELDS.BODY, txt);
@@ -146,10 +150,6 @@ public class ZloSearcher {
         }
     }
 
-    public static SearchResult search(String queryString) {
-        return search(null, queryString, null);
-    }
-
     public static SearchResult search(int topicCode,
                                          String text,
                                          boolean inTitle,
@@ -162,7 +162,7 @@ public class ZloSearcher {
                                          Date fromDate,
                                          Date toDate) {
 
-        return search(null, ZloMessage.formQueryString(text, inTitle, inBody, topicCode, nick, host, fromDate, toDate, inReg, inHasUrl, inHasImg), null);
+        return search(ZloMessage.formQueryString(text, inTitle, inBody, topicCode, nick, host, fromDate, toDate, inReg, inHasUrl, inHasImg));
     }
 
     public static SearchResult search(SearchRequest searchRequest) {
@@ -195,15 +195,48 @@ public class ZloSearcher {
     }
 
     public static Sort getDateSort() {
-        return new Sort(new SortField(ZloMessage.FIELDS.DATE, SortField.STRING, true));    
+        // sort causes slow first search & lot memory used!
+        return Config.SEARCH_PERFORM_SORT
+                ? new Sort(new SortField(ZloMessage.FIELDS.DATE, SortField.STRING, true))
+                : null;
     }
 
-    public static SearchResult search(IndexReader indexReader, String queryStr, Sort sort) {
-        if (sort == null) {
-            // sort causes slow first search & lot memory used!
-            if (Config.SEARCH_PERFORM_SORT)
-                sort = getDateSort();
+    private static SearchResult search(String queryStr) {
+        if (!Config.USE_DOUBLE_INDEX) {
+            return searchIndexReader(null, queryStr, null);
+        } else {
+            return searchDoubleIndex(queryStr, null);
         }
+    }
+
+    private static SearchResult searchDoubleIndex(String queryStr, Sort sort) {
+        if (sort == null)
+            sort = getDateSort();
+
+        SearchResult result = new SearchResult();
+        try {
+            Query query = setQuery(result, queryStr);
+            DoubleIndexSearcher dis = getDoubleIndexSearcher();
+            result.setHits(dis.search(query, sort));
+        } catch (org.apache.lucene.queryParser.ParseException e) {
+            throw new ParseException(queryStr, e);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        return result;
+    }
+
+    private static DoubleIndexSearcher doubleIndexSearcher;
+    private static DoubleIndexSearcher getDoubleIndexSearcher() {
+        if (doubleIndexSearcher == null) {
+            doubleIndexSearcher = new DoubleIndexSearcher(Config.INDEX_DIR_DOUBLE, getDateSort());
+        }
+        return doubleIndexSearcher;
+    }
+
+    public static SearchResult searchIndexReader(IndexReader indexReader, String queryStr, Sort sort) {
+        if (sort == null)
+            sort = getDateSort();
 
         if (indexReader == null)
             indexReader = getIndexReader();
@@ -212,19 +245,12 @@ public class ZloSearcher {
         IndexSearcher searcher = null;
         try {
             searcher = new IndexSearcher(indexReader);
-            Analyzer analyzer = ZloMessage.constructAnalyzer();
-            QueryParser parser = new QueryParser(ZloMessage.FIELDS.BODY, analyzer);
-            Query query = parser.parse(queryStr);
-
             result.setSearcher(searcher);
-            result.setAnalyzer(analyzer);
-            result.setQueryParser(parser);
-            result.setQuery(query);
-
+            Query query = setQuery(result, queryStr);
             Hits hits = searcher.search(query, sort);
             result.setHits(hits);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e);
         } catch (org.apache.lucene.queryParser.ParseException e) {
             throw new ParseException(queryStr, e);
         } finally {
@@ -236,6 +262,17 @@ public class ZloSearcher {
             }
         }
         return result;
+    }
+
+    private static Query setQuery(SearchResult result, String queryStr) throws org.apache.lucene.queryParser.ParseException {
+        Analyzer analyzer = ZloMessage.constructAnalyzer();
+        QueryParser parser = new QueryParser(ZloMessage.FIELDS.BODY, analyzer);
+        Query query = parser.parse(queryStr);
+
+        result.setAnalyzer(analyzer);
+        result.setQueryParser(parser);
+        result.setQuery(query);
+        return query;
     }
 
     public static ZloMessage searchMsgByNum(int urlNum) {
@@ -256,7 +293,7 @@ public class ZloSearcher {
                 ZloMessage.URL_NUM_FORMAT.format(999999999));
         try {
             return Integer.parseInt(
-                    ZloSearcher.search(null, searchStr,
+                    ZloSearcher.searchIndexReader(null, searchStr,
                             new Sort(new SortField(ZloMessage.FIELDS.URL_NUM, SortField.STRING, true))).getHits().doc(0).get(ZloMessage.FIELDS.URL_NUM));
         } catch (IOException e) {
             logger.error(e);

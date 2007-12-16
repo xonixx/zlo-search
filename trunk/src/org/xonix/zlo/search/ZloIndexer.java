@@ -4,13 +4,12 @@ import org.apache.log4j.Logger;
 import org.apache.lucene.index.IndexWriter;
 import static org.xonix.zlo.search.DAO.DAOException;
 import org.xonix.zlo.search.config.Config;
-import org.xonix.zlo.search.model.ZloMessage;
-import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.db.DbException;
+import org.xonix.zlo.search.db.DbManager;
+import org.xonix.zlo.search.model.ZloMessage;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.MessageFormat;
 
 /**
  * Author: gubarkov
@@ -20,7 +19,9 @@ import java.text.MessageFormat;
 public class ZloIndexer {
     private static Logger logger = Logger.getLogger(ZloIndexer.class);
     private IndexingSource source;
-    private static File INDEX_DIR = new File(Config.INDEX_DIR);
+    private static File INDEX_DIR = Config.USE_DOUBLE_INDEX
+            ? new File(Config.INDEX_DIR_DOUBLE + "/" + 2) // small
+            : new File(Config.INDEX_DIR);
 
     private static final int INDEX_PER_TIME = 50;
 
@@ -105,7 +106,7 @@ public class ZloIndexer {
     indexes [from, to] including...
      */
     public void index(int from, int to) throws IOException, DbException {
-        logger.info(MessageFormat.format("Adding {0} msgs [{1,number}-{2,number}] to index...", to - from + 1, from, to));
+        logger.info(String.format("Adding %s msgs [%s-%s] to index...", to - from + 1, from, to));
         try {
             addMessagesToIndex(from, to + 1);
         } catch (DAOException e) {
