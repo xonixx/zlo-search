@@ -5,10 +5,7 @@ import static org.xonix.zlo.search.DAO.DAOException;
 import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.config.Config;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * Author: gubarkov
@@ -21,11 +18,8 @@ public class MultithreadedRetriever {
 
     private static final int LIMIT_PER_SECOND = Integer.parseInt(Config.getProp("retriever.limit.per.second"));
 
+    // todo: not tested
     private static class MessageRetriever extends Thread {
-        private static int from = -1;
-        private static int to = -1;
-        private static int currentNum = -1;
-
         private static int threadNum = 0;
 
         private List<ZloMessage> msgs;
@@ -34,7 +28,9 @@ public class MultithreadedRetriever {
 
         private static Exception exception = null;
 
-        public MessageRetriever(IndexingSource source, int from, int to, List<ZloMessage> msgs) {
+        private static Iterator<Integer> numsIterator = null;
+
+        public MessageRetriever(IndexingSource source, Iterable<Integer> numsToSave, List<ZloMessage> msgs) {
             super("MessageRetriever #" + threadNum);
 
             if (threadNum == 0 && exception != null) {
@@ -44,31 +40,28 @@ public class MultithreadedRetriever {
 
             this.source = source;
 
-            if (MessageRetriever.from == -1)
-                MessageRetriever.from = from;
-            if (MessageRetriever.to == -1)
-                MessageRetriever.to = to;
-            if (currentNum == -1)
-                currentNum = from;
+            if (numsIterator == null)
+                numsIterator = numsToSave.iterator();
+
             this.msgs = msgs;
             logger.info("Born #" + threadNum);
             threadNum++;
         }
 
-        private synchronized boolean hasMoreToDownload() {
-            return currentNum < to && exception == null;
-        }
-
         private synchronized int getNextNum() {
-            return currentNum++;
+            if (numsIterator.hasNext() && exception == null)
+                return numsIterator.next();
+            else
+                return -1;
         }
 
         public void run() {
             try {
-                while (hasMoreToDownload()) {
+                int nextNum;
+                while ((nextNum = getNextNum()) != -1) {
                     try {
-                        logger.debug("Downloading: " + currentNum + " by " + getName());
-                        myMsgs.add(source.getMessageByNumber(getNextNum()));
+                        logger.debug("Downloading: " + nextNum + " by " + getName());
+                        myMsgs.add(source.getMessageByNumber(nextNum));
                     } catch (Exception e) {
                         exception = e;
                         logger.warn(getName() + " exiting because of exception: " + e);
@@ -81,7 +74,7 @@ public class MultithreadedRetriever {
 
                 if (threadNum == 0) {
                     // no more to download - making MessageRetriever ready for next requests
-                    from = to = currentNum = -1;
+                    numsIterator = null;
                 }
             }
         }
@@ -92,16 +85,24 @@ public class MultithreadedRetriever {
     }
 
     public static List<ZloMessage> getMessages(IndexingSource source, int from, int to) throws DAOException {
-        return getMessages(source, from, to, PageRetriever.THREADS_NUMBER);
+        Set<Integer> nums = new HashSet<Integer>(to - from);
+        for(int i=from; i<=to; i++) {
+            nums.add(i);
+        }
+        return getMessages(source, nums);
     }
 
-    public static List<ZloMessage> getMessages(IndexingSource source, final int from, final int to, int threadsNum) throws DAOException {
+    public static List<ZloMessage> getMessages(IndexingSource source, Iterable<Integer> numsToSave) throws DAOException {
+        return getMessages(source, numsToSave, PageRetriever.THREADS_NUMBER);
+    }
+
+    public static List<ZloMessage> getMessages(IndexingSource source, Iterable<Integer> numsToSave, int threadsNum) throws DAOException {
         final List<ZloMessage> msgs;
 
         if (threadsNum == 1) {
             msgs = new ArrayList<ZloMessage>();
 
-            for (int i = from; i < to; i++) {
+            for (int i : numsToSave) {
                 long t1 = System.currentTimeMillis();
 
                 msgs.add(source.getMessageByNumber(i));
@@ -122,7 +123,7 @@ public class MultithreadedRetriever {
 
             // starting all threads
             for (int i = 0; i < threadsNum; i++) {
-                Thread t = new MessageRetriever(source, from, to, msgs);
+                Thread t = new MessageRetriever(source, numsToSave, msgs);
                 t.start();
                 threads.add(t);
             }
