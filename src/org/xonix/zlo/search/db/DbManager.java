@@ -47,7 +47,7 @@ public class DbManager {
 
     private static final String SQL_LOG_REQUEST =           props.getProperty("sql.log.request");
 
-    private static String[] topics;
+    private static HashMap<String, Integer> topicsHashMap;
 
     private static void fillPreparedStatement(PreparedStatement pstmt, ZloMessage msg) throws DbException {
         try {
@@ -222,27 +222,29 @@ public class DbManager {
         }
     }
 
-    public static String[] getTopics() throws DbException {
-        if (topics == null) {
+    public static HashMap<String, Integer> getTopicsHashMap() throws DbException {
+        if (topicsHashMap == null) {
             DbUtils.Result res = DbUtils.executeSelect(SQL_SELECT_TOPICS);
             try {
-                Map<Integer, String> topicsMap = new HashMap<Integer, String>();
+                topicsHashMap = new HashMap<String, Integer>();
                 ResultSet rs = res.getResultSet();
                 while (rs.next()) {
-                    int id = rs.getInt(1);
-                    String name = rs.getString(2);
-                    topicsMap.put(id, name);
-                }
-
-                topics = new String[topicsMap.size()];
-                for(int i=0; i<topicsMap.size(); i++) {
-                    topics[i] = topicsMap.get(i);
+                    topicsHashMap.put(rs.getString(2), rs.getInt(1));
                 }
             } catch (SQLException e) {
                 logger.fatal("Can't load topics", e);
             } finally {
                 res.close();
             }
+        }
+        return topicsHashMap;
+    }
+
+    public static String[] getTopics() throws DbException {
+        HashMap<String, Integer> thm = getTopicsHashMap();
+        String[] topics = new String[thm.size()];
+        for (String topic : thm.keySet()) {
+            topics[thm.get(topic)] = topic;
         }
         return topics;
     }

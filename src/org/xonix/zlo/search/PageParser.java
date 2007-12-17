@@ -1,6 +1,8 @@
 package org.xonix.zlo.search;
 
 import org.xonix.zlo.search.model.ZloMessage;
+import org.xonix.zlo.search.db.DbManager;
+import org.xonix.zlo.search.db.DbException;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -34,6 +36,7 @@ public class PageParser {
     );
 
     public static final String MSG_NOT_EXIST_OR_WRONG = "Это сообщение не существует или введено неправильно";
+    public static final String WITHOUT_TOPIC = "без темы";
 
     /* pattern to find message number on index page
     * public need as we must use it in PageRetriever to load page until pattern found
@@ -62,7 +65,12 @@ public class PageParser {
             message.setReg(true);
         }
 
-        message.setTopic(prepareTopic(m.group(1)));
+        message.setTopic(m.group(1));
+        try {
+            message.setTopicCode(DbManager.getTopicsHashMap().get(m.group(1)));
+        } catch (DbException e) {
+            logger.error(e);
+        }
         message.setTitle(m.group(2));
         message.setNick(m.group(3));
         message.setHost(m.group(4));
@@ -83,7 +91,7 @@ public class PageParser {
     }
 
     private static String prepareTopic(String topic) {
-        return "без темы".equals(topic) ? "" : topic;
+        return WITHOUT_TOPIC.equals(topic) ? "" : topic;
     }
 
     private static Date prepareDate(String s) {
