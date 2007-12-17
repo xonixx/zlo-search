@@ -14,10 +14,7 @@ import org.xonix.zlo.search.model.ZloMessage;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.MessageFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Author: Vovan
@@ -42,8 +39,12 @@ class B extends A {
 public class Test1 {
     public static void main(String[] args) {
         new Config();
-        m15();
+        m20();
         System.exit(0);
+    }
+
+    public static void m20() {
+        System.out.println(new ArrayList<Integer>(Arrays.asList(1,2,3,4,5)).contains(6));    
     }
 
     public static void m19() {

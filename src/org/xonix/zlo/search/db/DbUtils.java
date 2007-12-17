@@ -118,7 +118,7 @@ public final class DbUtils {
         }
     }
 
-    private static void setParams(PreparedStatement st, Object[] params, VarType[] types) throws SQLException {
+    public static void setParams(PreparedStatement st, Object[] params, VarType[] types) throws SQLException {
         if (params.length != types.length)
             throw new IllegalArgumentException("Number of params and types does not match");
 
