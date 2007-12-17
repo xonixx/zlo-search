@@ -37,6 +37,7 @@ public class DbManager {
     private static final String DB_DICT_LAST_INDEXED_DOUBLE =   "lastIndexedDouble";
 
     private static final String SQL_INSERT_MSG =            props.getProperty("sql.insert.msg");
+    private static final String SQL_INSERT_UPDATE_MSG =     props.getProperty("sql.insert.update.msg");
     private static final String SQL_UPDATE_MSG =            props.getProperty("sql.update.msg");
     private static final String SQL_DELETE_MSG =            props.getProperty("sql.delete.msg");
     private static final String SQL_SELECT_MSG_BY_ID =      props.getProperty("sql.select.msg.by.id");
@@ -59,9 +60,7 @@ public class DbManager {
             pstmt.setString(++i, msg.getTitle());
             pstmt.setString(++i, msg.getNick());
             pstmt.setString(++i, msg.getAltName());
-            pstmt.setTimestamp(++i, msg.getDate() == null
-                    ? null
-                    : new Timestamp(msg.getDate().getTime()));
+            pstmt.setTimestamp(++i, msg.getTimestamp());
             pstmt.setBoolean(++i, msg.isReg());
             pstmt.setString(++i, msg.getBody());
             pstmt.setInt(++i, msg.getStatus().getInt());
@@ -112,17 +111,31 @@ public class DbManager {
     }
 
     public static void saveMessagesFast(List<ZloMessage> msgs) throws DbException {
+        saveMessagesFast(msgs, false);
+    }
+
+    public static void saveMessagesFast(List<ZloMessage> msgs, boolean updateIfExists) throws DbException {
         PreparedStatement insertPstmt = null;
         ResultSet rs = null;
         Connection conn = null;
         try {
             conn = DbUtils.getConnection();
             conn.setAutoCommit(false);
-            insertPstmt = conn.prepareStatement(SQL_INSERT_MSG);
+            insertPstmt = conn.prepareStatement(updateIfExists ? SQL_INSERT_UPDATE_MSG : SQL_INSERT_MSG);
 
             for (ZloMessage msg : msgs) {
                 logger.debug("Adding msg: " + msg.getNum() + " to batch... ");
-                fillPreparedStatement(insertPstmt, msg);
+
+                if (!updateIfExists)
+                    fillPreparedStatement(insertPstmt, msg);
+                else {
+                    DbUtils.setParams(insertPstmt,
+                            new Object[] {msg.getNum(), msg.getParentNum(), msg.getHost(), msg.getTopicCode(), msg.getTitle(), msg.getNick(), msg.getAltName(), msg.getTimestamp(), msg.isReg(), msg.getBody(), msg.getStatus().getInt(),
+                                                        msg.getParentNum(), msg.getHost(), msg.getTopicCode(), msg.getTitle(), msg.getNick(), msg.getAltName(), msg.getTimestamp(), msg.isReg(), msg.getBody(), msg.getStatus().getInt() },
+                            new VarType[] {INTEGER,     INTEGER,            STRING,         INTEGER,            STRING,         STRING,         STRING,         DATE,               BOOLEAN,     STRING,        INTEGER,
+                                                        INTEGER,            STRING,         INTEGER,            STRING,         STRING,         STRING,         DATE,               BOOLEAN,     STRING,        INTEGER});
+                }
+
                 insertPstmt.addBatch();
             }
 

@@ -19,6 +19,7 @@ import java.text.MessageFormat;
 import java.text.NumberFormat;
 import java.util.Comparator;
 import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  * Author: gubarkov
@@ -261,6 +262,12 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Timestamp getTimestamp() {
+        return getDate() == null
+                ? null
+                : new Timestamp(getDate().getTime());
     }
 
     public boolean isReg() {
