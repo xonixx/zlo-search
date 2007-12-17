@@ -35,7 +35,7 @@ public class PageRetriever {
         HTTP_CLIENT = new HttpClient(connectionManager);
     }
 
-    public static String getPageContentByNumber(int num) throws IOException{
+    public static String getPageContentByNumber(int num) throws IOException {
         GetMethod getMethod = formGetMethod("http://" + Config.INDEXING_URL + Config.READ_QUERY + num);
 
         List<String> stringGroups = new ArrayList<String>();
@@ -55,8 +55,8 @@ public class PageRetriever {
                 int lenRead = is.read(buff);
 
                 if (lenRead == -1) {
-                    logger.warn("lenRead = -1");
-                    throw new IOException("lenRead = -1");
+                    logger.warn("lenRead = -1 while receiving " + num + ". It means that message can't be parsed correctly...");
+                    break;
                 }
 
                 stringGroups.add(new String(buff, 0, lenRead, Config.CHARSET_NAME));
@@ -106,7 +106,7 @@ public class PageRetriever {
                 stringGroups.add(new String(buff, 0, lenRead, Config.CHARSET_NAME));
                 currSize = stringGroups.size();
                 m = PageParser.INDEX_UNREG_RE.matcher(stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1));
-            } while(!m.find());
+            } while (!m.find());
         } finally {
             if (is != null)
                 is.close();
@@ -123,7 +123,7 @@ public class PageRetriever {
         return getMethod;
     }
 
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         try {
             String pageS = getPageContentByNumber(3982207);
             System.out.println(pageS);
@@ -131,5 +131,5 @@ public class PageRetriever {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }
