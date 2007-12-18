@@ -23,7 +23,7 @@ public class RescanUndefStatusMsgs {
 
     public static void main(String[] args) throws DbException, DAO.DAOException {
         new Config();
-        int n=110000;
+        int n=420000;
 
         int addedEmpty = 0;
         while (n <= MAX_ALEXZAM + N) {

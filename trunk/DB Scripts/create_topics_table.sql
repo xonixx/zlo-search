@@ -3,27 +3,34 @@
 USE zlo_storage;
 
 -- create
-CREATE TABLE topics (id INT UNIQUE PRIMARY KEY,
-                        name CHAR(50)
+CREATE TABLE topics (id INT,
+                        name CHAR(50),
+                        isNew BOOL
                     );
 
+-- index
+ALTER TABLE zlo_storage.topics
+  ADD INDEX (id);
+
 -- insert
-INSERT INTO topics (id, name) VALUES (0, 'Без темы');
-INSERT INTO topics (id, name) VALUES (1, 'Учеба');
-INSERT INTO topics (id, name) VALUES (2, 'Работа');
-INSERT INTO topics (id, name) VALUES (3, 'Мурзилка');
-INSERT INTO topics (id, name) VALUES (4, 'Обсуждение');
-INSERT INTO topics (id, name) VALUES (5, 'Новости');
-INSERT INTO topics (id, name) VALUES (6, 'Спорт');
-INSERT INTO topics (id, name) VALUES (7, 'Развлечения');
-INSERT INTO topics (id, name) VALUES (8, 'Движок борды');
-INSERT INTO topics (id, name) VALUES (9, 'Программирование');
-INSERT INTO topics (id, name) VALUES (10, 'Куплю');
-INSERT INTO topics (id, name) VALUES (11, 'Продам');
-INSERT INTO topics (id, name) VALUES (12, 'Услуги');
-INSERT INTO topics (id, name) VALUES (13, 'Windows');
-INSERT INTO topics (id, name) VALUES (14, 'BSD/Linux');
-INSERT INTO topics (id, name) VALUES (15, 'Проблемы сети');
-INSERT INTO topics (id, name) VALUES (16, 'Голосование');
-INSERT INTO topics (id, name) VALUES (17, 'Потеряно/Найдено');
-INSERT INTO topics (id, name) VALUES (18, 'Temp');
+INSERT INTO topics (id, name, isNew) VALUES (0, 'без темы',         1);
+INSERT INTO topics (id, name, isNew) VALUES (1, 'Учеба',            1);
+INSERT INTO topics (id, name, isNew) VALUES (2, 'Работа',           1);
+INSERT INTO topics (id, name, isNew) VALUES (3, 'Мурзилка',         1);
+INSERT INTO topics (id, name, isNew) VALUES (4, 'Обсуждение',       1);
+INSERT INTO topics (id, name, isNew) VALUES (5, 'Новости',          1);
+INSERT INTO topics (id, name, isNew) VALUES (6, 'Спорт',            1);
+INSERT INTO topics (id, name, isNew) VALUES (7, 'Развлечения',      1);
+INSERT INTO topics (id, name, isNew) VALUES (8, 'Движок борды',     1);
+INSERT INTO topics (id, name, isNew) VALUES (9, 'Программирование', 1);
+INSERT INTO topics (id, name, isNew) VALUES (10, 'Куплю',           1);
+INSERT INTO topics (id, name, isNew) VALUES (11, 'Продам',          1);
+INSERT INTO topics (id, name, isNew) VALUES (12, 'Услуги',          1);
+INSERT INTO topics (id, name, isNew) VALUES (13, 'Windows',         1);
+INSERT INTO topics (id, name, isNew) VALUES (14, 'BSD/Linux',       1);
+INSERT INTO topics (id, name, isNew) VALUES (15, 'Проблемы сети',   1);
+INSERT INTO topics (id, name, isNew) VALUES (16, 'Голосование',     1);
+INSERT INTO topics (id, name, isNew) VALUES (17, 'Потеряно/Найдено',1);
+INSERT INTO topics (id, name, isNew) VALUES (18, 'Temp',            1);
+-- old
+INSERT INTO topics (id, name, isNew) VALUES (11, 'Продам/Обменяю',  0);

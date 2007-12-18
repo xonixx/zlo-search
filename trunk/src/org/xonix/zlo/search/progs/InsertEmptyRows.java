@@ -33,7 +33,7 @@ public class InsertEmptyRows {
             DbUtils.Result r = DbUtils.executeSelect("select num from messages where num>=? and num<?;",
                     new Object[] {n, n+N}, new VarType[] {VarType.INTEGER, VarType.INTEGER});
             int num;
-            while((num = r.getInt1()) != -1) {
+            while((num = r.getOneInt()) != -1) {
                 nums_n_N.add(num);
             }
 

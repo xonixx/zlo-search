@@ -4,10 +4,8 @@ import org.apache.log4j.Logger;
 import org.xonix.zlo.search.config.Config;
 import static org.xonix.zlo.search.db.VarType.*;
 
-import java.util.Properties;
 import java.util.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.Properties;
 
 /**
  * Author: Vovan
@@ -55,15 +53,12 @@ public class DbDict {
     public static Object getVal(String name) throws DbException {
         DbUtils.Result res = DbUtils.executeSelect(SQL_GET_VAL, new Object[]{name}, new VarType[]{STRING});
         try {
-            ResultSet rs = res.getResultSet();
-            if (rs.next()) {
-                int type = rs.getInt(1);
-                return rs.getObject(2 + type);
+            if (res.next()) {
+                int type = res.getInt(1);
+                return res.getObject(2 + type);
             } else {
                 return null;
             }
-        } catch (SQLException e) {
-            throw new DbException(e);
         } finally {
             res.close();
         }

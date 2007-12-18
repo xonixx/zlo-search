@@ -44,7 +44,8 @@ public class DbManager {
     private static final String SQL_SELECT_MSG_IN_RANGE =   props.getProperty("sql.select.msg.in.range");
     private static final String SQL_SELECT_LAST_MSG_NUM =   props.getProperty("sql.select.last.msg.num");
     private static final String SQL_SELECT_SET =            props.getProperty("sql.select.set");
-    private static final String SQL_SELECT_TOPICS =         props.getProperty("sql.select.topics");
+    private static final String SQL_SELECT_ALL_TOPICS =     props.getProperty("sql.select.all.topics");
+    private static final String SQL_SELECT_NEW_TOPICS =     props.getProperty("sql.select.new.topics");
 
     private static final String SQL_LOG_REQUEST =           props.getProperty("sql.log.request");
 
@@ -158,43 +159,37 @@ public class DbManager {
         saveMessages(msgs, false);
     }
 
+    // todo: test
     public static ZloMessage getMessageByNumber(int num) throws DbException {
-        PreparedStatement st = null;
-        ResultSet rs = null;
+        DbUtils.Result res = DbUtils.executeSelect(
+                SQL_SELECT_MSG_BY_ID,
+                new Object[] {num},
+                new VarType[] {INTEGER});
 
         try {
-            st = DbUtils.getConnection().prepareStatement(SQL_SELECT_MSG_BY_ID);
-            st.setInt(1, num);
-            rs = st.executeQuery();
-            if (rs.next())
-                return getMessage(rs);
+            if (res.next())
+                return getMessage(res);
             else
                 return null;
-        } catch (SQLException e) {
-            throw new DbException(e);
         } finally {
-            DbUtils.close(st, rs);
+            res.close();
         }
     }
 
     public static List<ZloMessage> getMessagesByRange(int start, int end) throws DbException {
-        PreparedStatement st = null;
-        ResultSet rs = null;
+        DbUtils.Result res = DbUtils.executeSelect(
+                SQL_SELECT_MSG_IN_RANGE,
+                new Object[] {start, end},
+                new VarType[] {INTEGER, INTEGER});
         try {
-            st = DbUtils.getConnection().prepareStatement(SQL_SELECT_MSG_IN_RANGE);
-            st.setInt(1, start);
-            st.setInt(2, end);
-            rs = st.executeQuery();
             List<ZloMessage> msgs = new ArrayList<ZloMessage>();
 
-            while (rs.next())
-                msgs.add(getMessage(rs));
+            while (res.next())
+                msgs.add(getMessage(res));
 
             return msgs;
-        } catch (SQLException e) {
-            throw new DbException(e);
         } finally {
-            DbUtils.close(st, rs);
+            res.close();
         }
     }
 
@@ -208,19 +203,16 @@ public class DbManager {
         String sql = String.format(SQL_SELECT_SET, sbNums.toString());
 
         DbUtils.Result res = DbUtils.executeSelect(sql);
-        ResultSet rs = res.getResultSet();
         try {
             List<ZloMessage> msgs = new ArrayList<ZloMessage>();
 
-            while (rs.next()) {
-                ZloMessage msg = getMessage(rs);
+            while (res.next()) {
+                ZloMessage msg = getMessage(res);
                 msg.setHitId(fromIndex++);
                 msgs.add(msg);
             }
 
             return msgs;
-        } catch (SQLException e) {
-            throw new DbException(e);
         } finally {
             res.close();
         }
@@ -229,23 +221,21 @@ public class DbManager {
     public static int getLastMessageNumber() throws DbException {
         DbUtils.Result res = DbUtils.executeSelect(SQL_SELECT_LAST_MSG_NUM);
         try {
-            return res.getInt1();
+            return res.getOneInt();
         } finally {
             res.close();
         }
     }
 
+    // returns <topic name, topic code> where "topic name"s also includes old codes
     public static HashMap<String, Integer> getTopicsHashMap() throws DbException {
         if (topicsHashMap == null) {
-            DbUtils.Result res = DbUtils.executeSelect(SQL_SELECT_TOPICS);
+            DbUtils.Result res = DbUtils.executeSelect(SQL_SELECT_ALL_TOPICS);
             try {
                 topicsHashMap = new HashMap<String, Integer>();
-                ResultSet rs = res.getResultSet();
-                while (rs.next()) {
-                    topicsHashMap.put(rs.getString(2), rs.getInt(1));
+                while (res.next()) {
+                    topicsHashMap.put(res.getString(2), res.getInt(1));
                 }
-            } catch (SQLException e) {
-                logger.fatal("Can't load topics", e);
             } finally {
                 res.close();
             }
@@ -253,11 +243,16 @@ public class DbManager {
         return topicsHashMap;
     }
 
+    // returns only "new" topics - current posible topics on site
     public static String[] getTopics() throws DbException {
-        HashMap<String, Integer> thm = getTopicsHashMap();
-        String[] topics = new String[thm.size()];
-        for (String topic : thm.keySet()) {
-            topics[thm.get(topic)] = topic;
+        Map<Integer, String> topicsMap = new HashMap<Integer, String>();
+        DbUtils.Result res = DbUtils.executeSelect(SQL_SELECT_NEW_TOPICS);
+        while (res.next()) {
+            topicsMap.put(res.getInt(1), res.getString(2));
+        }
+        String[] topics = new String[topicsMap.size()];
+        for (int id : topicsMap.keySet()) {
+            topics[id] = topicsMap.get(id);
         }
         return topics;
     }
@@ -287,7 +282,7 @@ public class DbManager {
         return lastIndexed == null ? 0 : lastIndexed;
     }
 
-    private static ZloMessage getMessage(ResultSet rs) throws SQLException {
+    private static ZloMessage getMessage(DbUtils.Result rs) throws DbException {
         return new ZloMessage(
                 rs.getString(MSG_NICK)
                 , rs.getString(MSG_ALT_NAME)

@@ -67,7 +67,13 @@ public class PageParser {
 
         message.setTopic(m.group(1));
         try {
-            message.setTopicCode(DbManager.getTopicsHashMap().get(m.group(1)));
+            Integer topicCode = DbManager.getTopicsHashMap().get(m.group(1));
+            if (topicCode == null) {
+                logger.error("Unknown topic: " + m.group(1));
+                // todo: tmp
+                System.exit(-1);
+            }
+            message.setTopicCode(topicCode != null ? topicCode : -1);
         } catch (DbException e) {
             logger.error(e);
         }
