@@ -17,7 +17,7 @@ import java.io.IOException;
  */
 public class DoubleIndexTest {
     public static void main(String[] args) {
-        m1();
+        m2();
         System.exit(0);
     }
 
@@ -48,7 +48,9 @@ public class DoubleIndexTest {
     public static void m2() {
         DoubleIndexSearcher dis = getDIS();
         try {
-            dis.moveSmallToBig();
+            //dis.moveSmallToBig();
+            dis.optimize();
+            dis.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
