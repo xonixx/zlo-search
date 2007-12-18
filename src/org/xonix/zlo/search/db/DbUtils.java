@@ -36,11 +36,15 @@ public final class DbUtils {
             this.statement = statement;
         }
 
-        public ResultSet getResultSet() {
-            return resultSet;
+        public boolean next() throws DbException {
+            try {
+                return resultSet.next();
+            } catch (SQLException e) {
+                throw new DbException(e);
+            }
         }
 
-        public int getInt1() throws DbException {
+        public int getOneInt() throws DbException {
             try {
                 if (resultSet.next()) {
                     return resultSet.getInt(1);
@@ -49,6 +53,58 @@ public final class DbUtils {
                 throw new DbException(e);
             }
             return -1;
+        }
+
+        // by columnIndex
+        public Integer getInt(int n) throws DbException {
+            try { return resultSet.getInt(n); }
+            catch (SQLException e) { throw new DbException(e); }
+        }
+
+        public String getString(int n) throws DbException {
+            try { return resultSet.getString(n); }
+            catch (SQLException e) { throw new DbException(e); }
+        }
+
+        public Boolean getBoolean(int n) throws DbException {
+            try { return resultSet.getBoolean(n); }
+            catch (SQLException e) { throw new DbException(e); }
+        }
+
+        public Timestamp getTimestamp(int n) throws DbException {
+            try { return resultSet.getTimestamp(n); }
+            catch (SQLException e) { throw new DbException(e); }
+        }
+
+        public Object getObject(int n) throws DbException {
+            try { return resultSet.getObject(n); }
+            catch (SQLException e) { throw new DbException(e); }
+        }
+
+        // by columnName
+        public Integer getInt(String s) throws DbException {
+            try { return resultSet.getInt(s); }
+            catch (SQLException e) { throw new DbException(e); }
+        }
+
+        public String getString(String s) throws DbException {
+            try { return resultSet.getString(s); }
+            catch (SQLException e) { throw new DbException(e); }
+        }
+
+        public Boolean getBoolean(String s) throws DbException {
+            try { return resultSet.getBoolean(s); }
+            catch (SQLException e) { throw new DbException(e); }
+        }
+
+        public Timestamp getTimestamp(String s) throws DbException {
+            try { return resultSet.getTimestamp(s); }
+            catch (SQLException e) { throw new DbException(e); }
+        }
+
+        public Object getObject(String s) throws DbException {
+            try { return resultSet.getObject(s); }
+            catch (SQLException e) { throw new DbException(e); }
         }
 
         public void close() {
@@ -171,8 +227,8 @@ public final class DbUtils {
         return executeSelect(sqlString, new Object[0], new VarType[0]);
     }
 
-    /**
-     * Executes insert, update, delete
+    /*
+     Executes insert, update, delete
      */
     public static void executeUpdate(String sqlString, Object[] params, VarType[] types, Integer expectedResult) throws DbException {
         PreparedStatement st = null;

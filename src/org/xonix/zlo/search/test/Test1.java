@@ -39,7 +39,7 @@ class B extends A {
 public class Test1 {
     public static void main(String[] args) {
         new Config();
-        m20();
+        m15();
         System.exit(0);
     }
 
@@ -110,7 +110,7 @@ public class Test1 {
     public static void m15() {
         try {
 //            System.out.println(DbManager.getMessageByNumber(4149183));
-            System.out.println(DAO.Site._getMessageByNumber(4177504));
+            System.out.println(DAO.Site._getMessageByNumber(648064));
         } /*catch (DbException e) {
             e.printStackTrace();
         } */ catch (DAO.DAOException e) {

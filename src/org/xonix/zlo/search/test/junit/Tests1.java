@@ -70,7 +70,7 @@ public class Tests1 extends TestCase {
         } catch (DbException e) {
             e.printStackTrace();
         }
-        assertEquals("Без темы", topics[0]);
+        assertEquals("без темы", topics[0]);
         assertEquals("Учеба", topics[1]);
         assertEquals("Работа", topics[2]);
         assertEquals("Temp", topics[18]);
