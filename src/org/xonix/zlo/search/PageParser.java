@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.text.MessageFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -69,7 +70,7 @@ public class PageParser {
         try {
             Integer topicCode = DbManager.getTopicsHashMap().get(m.group(1));
             if (topicCode == null) {
-                logger.error("Unknown topic: " + m.group(1));
+                logger.error(MessageFormat.format("Unknown topic: {0} while parsing msg:\n {1}", m.group(0), msg));
                 // todo: tmp
                 System.exit(-1);
             }

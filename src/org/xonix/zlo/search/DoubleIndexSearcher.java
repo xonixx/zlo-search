@@ -228,8 +228,12 @@ public class DoubleIndexSearcher {
     }
 
     public void optimize() throws IOException {
-        new IndexWriter(getBigPath(), ZloMessage.constructAnalyzer()).optimize();
-        new IndexWriter(getSmallPath(), ZloMessage.constructAnalyzer()).optimize();
+        IndexWriter iw = new IndexWriter(getBigPath(), ZloMessage.constructAnalyzer());
+        iw.optimize();
+        iw.close();
+        iw = new IndexWriter(getSmallPath(), ZloMessage.constructAnalyzer());
+        iw.optimize();
+        iw.close();
     }
 
     private void createEmptyIndex(String path) throws IOException {

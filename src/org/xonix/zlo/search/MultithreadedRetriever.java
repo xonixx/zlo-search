@@ -86,7 +86,7 @@ public class MultithreadedRetriever {
 
     public static List<ZloMessage> getMessages(IndexingSource source, int from, int to) throws DAOException {
         Set<Integer> nums = new HashSet<Integer>(to - from);
-        for(int i=from; i<=to; i++) {
+        for(int i=from; i<to; i++) {
             nums.add(i);
         }
         return getMessages(source, nums);
