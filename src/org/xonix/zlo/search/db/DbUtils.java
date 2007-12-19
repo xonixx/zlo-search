@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.io.Closeable;
-import java.io.IOException;
 
 /**
  * Author: Vovan
@@ -14,18 +13,6 @@ import java.io.IOException;
  */
 public final class DbUtils {
     private static final Logger logger = Logger.getLogger(DbUtils.class);
-    private static final String SQL_SELECT_CHECK_ALIVE = "SELECT 1;";
-
-    private static Connection DB_CONNECTION = null;
-
-    /*
-    Supposed to return valid connection
-    if can't recreate one -> throws DbException
-     */
-    public static Connection getConnection() throws DbException {
-        reopenConnectionIfNeeded();
-        return DB_CONNECTION;
-    }
 
     public static class Result implements Closeable {
         private ResultSet resultSet;
@@ -108,114 +95,56 @@ public final class DbUtils {
         }
 
         public void close() {
-            DbUtils.close(resultSet, statement);
+            CloseUtils.close(resultSet, statement);
         }
     }
 
-    static void close(Object obj) {
-        if (obj == null)
-            return;
-
-        try {
-            if (obj instanceof Statement) {
-                ((Statement) obj).close();
-            } else if (obj instanceof ResultSet) {
-                ((ResultSet) obj).close();
-            } else if (obj instanceof Closeable) {
-                ((Closeable) obj).close();
-            } else if (obj instanceof Connection) {
-                ((Connection) obj).close();
-            } else {
-                throw new IllegalArgumentException(
-                        String.format("Can't close object: %s of type: %s", obj, obj.getClass()));    
-            }
-        } catch (SQLException e) {
-            ;
-        } catch(IOException e) {
-            ;
-        }
-    }
-
-    static void close(Object... all) {
-        for(Object obj : all) {
-            close(obj);
-        }
-    }
-
-    private static void reopenConnectionIfNeeded() throws DbException {
-        Statement checkStmt = null;
-        try {
-            boolean closed;
-            try {
-                closed = DB_CONNECTION == null || DB_CONNECTION.isClosed();
-            } catch (SQLException e) {
-                closed = true;
-            }
-
-            if (!closed) {
-                try {
-                    checkStmt = DB_CONNECTION.createStatement();
-                    checkStmt.executeQuery(SQL_SELECT_CHECK_ALIVE);
-                } catch(SQLException e) {
-                    closed = true;
-                }
-            }
-
-            if (closed) {
-                close(DB_CONNECTION);
-                logger.info("Db connection closed, recreating...");
-                DB_CONNECTION = createConnection();
-            }
-        } catch (DbException e) {
-            logger.error("Problem with recreating connection: " + e.getClass());
-            throw e;
-        } finally {
-            close(checkStmt);
-        }
-    }
-
-    public static void setParams(PreparedStatement st, Object[] params, VarType[] types) throws SQLException {
+    public static void setParams(PreparedStatement st, Object[] params, VarType[] types) throws DbException {
         if (params.length != types.length)
             throw new IllegalArgumentException("Number of params and types does not match");
 
-        for (int i = 0; i < params.length; i++) {
-            Object param = params[i];
-            VarType type = types[i];
-            int j = i+1;
+        try {
+            for (int i = 0; i < params.length; i++) {
+                Object param = params[i];
+                VarType type = types[i];
+                int j = i+1;
 
-            if (param == null) {
-                st.setNull(j, type.getSqlType());
-            } else {
-                switch (type) {
-                    case STRING:
-                        st.setString(j, (String) param);
-                        break;
+                if (param == null) {
+                    st.setNull(j, type.getSqlType());
+                } else {
+                    switch (type) {
+                        case STRING:
+                            st.setString(j, (String) param);
+                            break;
 
-                    case INTEGER:
-                        st.setInt(j, (Integer) param);
-                        break;
+                        case INTEGER:
+                            st.setInt(j, (Integer) param);
+                            break;
 
-                    case BOOLEAN:
-                        st.setBoolean(j, (Boolean) param);
-                        break;
+                        case BOOLEAN:
+                            st.setBoolean(j, (Boolean) param);
+                            break;
 
-                    case DATE:
-                        st.setTimestamp(j, new Timestamp(((java.util.Date) param).getTime()));
-                        break;
+                        case DATE:
+                            st.setTimestamp(j, new Timestamp(((java.util.Date) param).getTime()));
+                            break;
 
-                    default:
-                        throw new IllegalArgumentException(
-                                String.format("Unsupported parameter type: %s of parameter: %s",
-                                        param.getClass(), param));
+                        default:
+                            throw new IllegalArgumentException(
+                                    String.format("Unsupported parameter type: %s of parameter: %s",
+                                            param.getClass(), param));
+                    }
                 }
             }
+        } catch (SQLException e) {
+            throw new DbException(e);
         }
     }
 
     public static Result executeSelect(String sqlString, Object[] params, VarType[] types) throws DbException {
         PreparedStatement st;
         try {
-           st = getConnection().prepareStatement(sqlString);
+           st = ConnectionUtils.getConnection().prepareStatement(sqlString);
            setParams(st, params, types);
            return new Result(st.executeQuery(), st);
         } catch (SQLException e) {
@@ -234,7 +163,7 @@ public final class DbUtils {
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
-            st = getConnection().prepareStatement(sqlString);
+            st = ConnectionUtils.getConnection().prepareStatement(sqlString);
 
             setParams(st, params, types);
 
@@ -244,7 +173,7 @@ public final class DbUtils {
         } catch (SQLException e) {
            throw new DbException(e);
         } finally {
-            DbUtils.close(st, rs);
+            CloseUtils.close(st, rs);
         }
     }
 
@@ -273,10 +202,5 @@ public final class DbUtils {
             logger.info("Starting without db because of config...");
         }
         return _conn;
-    }
-
-    public static void clean() {
-        close(DB_CONNECTION);
-        DB_CONNECTION = null;
     }
 }
