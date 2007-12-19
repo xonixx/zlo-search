@@ -64,7 +64,8 @@ public class IndexerDaemon extends Daemon {
                 logger.warn("Problem with db: " + e.getClass());
                 sleepSafe(RECONNECT_PERIOD);
             } catch (IOException e) {
-                logger.error("IOException while indexing, probably something with index...");
+                logger.error("IOException while indexing, probably something with index...", e);
+                sleepSafe(RECONNECT_PERIOD);
             }
         }
 

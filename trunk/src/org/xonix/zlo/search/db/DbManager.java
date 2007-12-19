@@ -52,22 +52,11 @@ public class DbManager {
     private static HashMap<String, Integer> topicsHashMap;
 
     private static void fillPreparedStatement(PreparedStatement pstmt, ZloMessage msg) throws DbException {
-        try {
-            int i=0;
-            pstmt.setInt(++i, msg.getNum());
-            pstmt.setInt(++i, msg.getParentNum());
-            pstmt.setString(++i, msg.getHost());
-            pstmt.setInt(++i, msg.getTopicCode());
-            pstmt.setString(++i, msg.getTitle());
-            pstmt.setString(++i, msg.getNick());
-            pstmt.setString(++i, msg.getAltName());
-            pstmt.setTimestamp(++i, msg.getTimestamp());
-            pstmt.setBoolean(++i, msg.isReg());
-            pstmt.setString(++i, msg.getBody());
-            pstmt.setInt(++i, msg.getStatus().getInt());
-        } catch (SQLException e) {
-            throw new DbException(e);
-        }
+        DbUtils.setParams(pstmt,
+                new Object[] {msg.getNum(), msg.getParentNum(), msg.getHost(), msg.getTopicCode(), msg.getTitle(), msg.getNick(),
+                                msg.getAltName(), msg.getTimestamp(), msg.isReg(), msg.getBody(), msg.getStatus().getInt()},
+                new VarType[] {INTEGER,     INTEGER,            STRING,         INTEGER,            STRING,         STRING,
+                                STRING,             DATE,               BOOLEAN,   STRING,          INTEGER});
     }
     
     public static void saveMessages(List<ZloMessage> msgs, boolean update) throws DbException {
@@ -76,7 +65,7 @@ public class DbManager {
         PreparedStatement updatePstmt = null;
         ResultSet rs = null;
         try {
-            Connection conn = DbUtils.getConnection();
+            Connection conn = ConnectionUtils.getConnection();
             chkPstmt = conn.prepareStatement(SQL_SELECT_MSG_BY_ID);
             insertPstmt = conn.prepareStatement(SQL_INSERT_MSG);
             updatePstmt = conn.prepareStatement(SQL_UPDATE_MSG);
@@ -107,7 +96,7 @@ public class DbManager {
         } catch (SQLException e) {
             throw new DbException(e);
         } finally {
-            DbUtils.close(chkPstmt, insertPstmt, updatePstmt, rs);
+            CloseUtils.close(chkPstmt, insertPstmt, updatePstmt, rs);
         }
     }
 
@@ -120,7 +109,7 @@ public class DbManager {
         ResultSet rs = null;
         Connection conn = null;
         try {
-            conn = DbUtils.getConnection();
+            conn = ConnectionUtils.getConnection();
             conn.setAutoCommit(false);
             insertPstmt = conn.prepareStatement(updateIfExists ? SQL_INSERT_UPDATE_MSG : SQL_INSERT_MSG);
 
@@ -151,7 +140,7 @@ public class DbManager {
             }
             throw new DbException(e);
         } finally {
-            DbUtils.close(insertPstmt, rs);
+            CloseUtils.close(insertPstmt, rs);
         }
     }
 

@@ -2,6 +2,7 @@ package org.xonix.zlo.search;
 
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.MultiReader;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.IndexSearcher;
@@ -38,6 +39,8 @@ public class DoubleIndexSearcher {
     private boolean isReopeningBig = false;
 
     private long lastCreateTime = -1;
+
+    private final Object closeLock = new Object();
 
     public DoubleIndexSearcher(String dir, Sort renewingSort) {
         this.renewingSort = renewingSort;
@@ -177,7 +180,10 @@ public class DoubleIndexSearcher {
                     bigReader = ir;
                 }
 
-                clean(oldIndexReader);
+                synchronized(closeLock) { // to give ability to perform searh if oldReader already used
+                    clean(oldIndexReader);
+                }
+
                 logger.info("Successfuly recreated.");
 
                 if (isSmall)
