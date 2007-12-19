@@ -83,7 +83,8 @@
                     <display:setProperty name="paging.banner.one_item_found"><span class="pagebanner">Найдено одно сообщение. </span></display:setProperty>
                     <display:setProperty name="paging.banner.all_items_found"><span class="pagebanner">Найдено сообщений: {0}, показаны все. </span></display:setProperty>
                     <display:setProperty name="paging.banner.some_items_found"><span class="pagebanner">Найдено сообщений: {0}, показаны с {2} по {3}. </span></display:setProperty>
-                    <display:setProperty name="paging.banner.group_size">15</display:setProperty>
+                    <display:setProperty name="paging.banner.group_size" value="15" />
+                    <display:setProperty name="paging.banner.placement" value="both" />
                     <display:setProperty name="paging.banner.full">
                         <span class="pagelinks">[<a href="{1}">Перв</a>/<a href="{2}">Пред</a>] {0} [<a href="{3}">След</a>/<a href="{4}">Последн</a>]</span>
                     </display:setProperty>
