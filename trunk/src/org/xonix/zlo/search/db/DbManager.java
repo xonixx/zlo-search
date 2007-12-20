@@ -155,14 +155,12 @@ public class DbManager {
                 new Object[] {num},
                 new VarType[] {INTEGER});
 
-        try {
-            if (res.next())
-                return getMessage(res);
-            else
-                return null;
-        } finally {
-            res.close();
-        }
+        ZloMessage zm = null;
+        if (res.next())
+            zm = getMessage(res);
+
+        res.close();
+        return zm;
     }
 
     public static List<ZloMessage> getMessagesByRange(int start, int end) throws DbException {
@@ -192,19 +190,17 @@ public class DbManager {
         String sql = String.format(SQL_SELECT_SET, sbNums.toString());
 
         DbUtils.Result res = DbUtils.executeSelect(sql);
-        try {
-            List<ZloMessage> msgs = new ArrayList<ZloMessage>();
 
-            while (res.next()) {
-                ZloMessage msg = getMessage(res);
-                msg.setHitId(fromIndex++);
-                msgs.add(msg);
-            }
+        List<ZloMessage> msgs = new ArrayList<ZloMessage>();
 
-            return msgs;
-        } finally {
-            res.close();
+        while (res.next()) {
+            ZloMessage msg = getMessage(res);
+            msg.setHitId(fromIndex++);
+            msgs.add(msg);
         }
+
+        res.close();
+        return msgs;
     }
 
     public static int getLastMessageNumber() throws DbException {
@@ -233,15 +229,19 @@ public class DbManager {
     }
 
     // returns only "new" topics - current posible topics on site
+    private static String[] topics = null;
     public static String[] getTopics() throws DbException {
-        Map<Integer, String> topicsMap = new HashMap<Integer, String>();
-        DbUtils.Result res = DbUtils.executeSelect(SQL_SELECT_NEW_TOPICS);
-        while (res.next()) {
-            topicsMap.put(res.getInt(1), res.getString(2));
-        }
-        String[] topics = new String[topicsMap.size()];
-        for (int id : topicsMap.keySet()) {
-            topics[id] = topicsMap.get(id);
+        if (topics == null) {
+            Map<Integer, String> topicsMap = new HashMap<Integer, String>();
+            DbUtils.Result res = DbUtils.executeSelect(SQL_SELECT_NEW_TOPICS);
+            while (res.next()) {
+                topicsMap.put(res.getInt(1), res.getString(2));
+            }
+            topics = new String[topicsMap.size()];
+            for (int id : topicsMap.keySet()) {
+                topics[id] = topicsMap.get(id);
+            }
+            res.close();
         }
         return topics;
     }
