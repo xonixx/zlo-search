@@ -17,8 +17,10 @@ public final class DbUtils {
     public static class Result implements Closeable {
         private ResultSet resultSet;
         private Statement statement;
+        private Connection connection;
 
-        public Result(ResultSet resultSet, Statement statement) {
+        public Result(Connection connection, ResultSet resultSet, Statement statement) {
+            this.connection = connection;
             this.resultSet = resultSet;
             this.statement = statement;
         }
@@ -96,6 +98,9 @@ public final class DbUtils {
 
         public void close() {
             CloseUtils.close(resultSet, statement);
+            if (Config.USE_CONTAINER_POOL) {
+                CloseUtils.close(connection);
+            }
         }
     }
 
@@ -144,9 +149,10 @@ public final class DbUtils {
     public static Result executeSelect(String sqlString, Object[] params, VarType[] types) throws DbException {
         PreparedStatement st;
         try {
-           st = ConnectionUtils.getConnection().prepareStatement(sqlString);
+            Connection connection = ConnectionUtils.getConnection();
+            st = connection.prepareStatement(sqlString);
            setParams(st, params, types);
-           return new Result(st.executeQuery(), st);
+           return new Result(connection, st.executeQuery(), st);
         } catch (SQLException e) {
            throw new DbException(e);
         }

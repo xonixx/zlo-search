@@ -79,6 +79,8 @@ public class Config {
     public static final boolean SEARCH_PERFORM_SORT = TRUE.equals(getProp("search.perform.sort"));
     public static boolean USE_DOUBLE_INDEX = TRUE.equals(getProp("search.use.double.index"));
 
+    public static boolean USE_CONTAINER_POOL = TRUE.equals(getProp("db.use.container.pull"));
+
     public static final Analyzer ANALYZER;
     static {
         Analyzer _a = null;

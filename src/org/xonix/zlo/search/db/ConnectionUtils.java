@@ -18,8 +18,6 @@ import java.sql.SQLException;
 public class ConnectionUtils {
     private static final Logger logger = Logger.getLogger(ConnectionUtils.class);
 
-    private static boolean USE_CONTAINER_POOL = Config.TRUE.equals(Config.getProp("db.use.container.pull"));
-
     static final String SQL_SELECT_CHECK_ALIVE = "SELECT 1;";
     static Connection DB_CONNECTION = null;
 
@@ -28,7 +26,7 @@ public class ConnectionUtils {
     if can't recreate one -> throws DbException
      */
     public static Connection getConnection() throws DbException {
-        if (USE_CONTAINER_POOL) {
+        if (Config.USE_CONTAINER_POOL) {
             try {
                 return getDataSource().getConnection();
             } catch (SQLException e) {
