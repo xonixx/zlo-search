@@ -35,13 +35,14 @@ public class FoundTextHighlighter {
         this.text = text;
     }
 
+    // todo: works, but very slow
     public String getHighlightedText() {
         String txt = text;
         for (String w : highlightWords) {
             w = w.replaceAll("\\?", ".{1}").replaceAll("\\*", ".*?");
             txt = txt.replaceAll("(?iu)" +                                              // case insensetive, unicode
-                    "(?<!\\<a href=\"http://[a-zA-Z0-9_.]{0,30})" +                     // not to break links
-                    "(?<!\\<img class=\"imgtag\" src=\"http://[a-zA-Z0-9_.]{0,30})" +   // not to break pics
+                    "(?<!\\<a href=\"http(?:s?)://[^\"<>]{0,300})" +                     // not to break links
+                    "(?<!\\<img class=\"imgtag\" src=\"http(?:s?)://[^\"<>]{0,300})" +   // not to break pics
                     "(" + w + ".*?)\\b", "<span class=\"hl\">$1</span>");               // highlight
         }
         return txt;
