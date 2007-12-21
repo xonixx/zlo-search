@@ -1,19 +1,20 @@
 package org.xonix.zlo.web.servlets;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.lucene.search.BooleanQuery;
 import org.apache.log4j.Logger;
-import org.xonix.zlo.search.*;
-import org.xonix.zlo.search.db.DbException;
-import org.xonix.zlo.search.db.DbManager;
-import org.xonix.zlo.search.db.ConnectionUtils;
+import org.apache.lucene.search.BooleanQuery;
+import org.xonix.zlo.search.SearchRequest;
+import org.xonix.zlo.search.SearchResult;
+import org.xonix.zlo.search.ZloPaginatedList;
+import org.xonix.zlo.search.ZloSearcher;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.config.ErrorMessage;
+import org.xonix.zlo.search.db.ConnectionUtils;
+import org.xonix.zlo.search.db.DbException;
+import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.model.ZloMessage;
-import org.xonix.zlo.search.ZloPaginatedList;
 import org.xonix.zlo.web.CookieUtils;
 import org.xonix.zlo.web.servlets.helpful.ForwardingRequest;
-import org.xonix.zlo.web.servlets.helpful.ForwardingServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
@@ -30,7 +31,7 @@ import java.util.GregorianCalendar;
  * Date: 30.08.2007
  * Time: 20:31:41
  */
-public class SearchServlet extends ForwardingServlet {
+public class SearchServlet extends BaseServlet {
     private static final Logger logger = Logger.getLogger(SearchServlet.class);
 
     public static final String ON = "on";
@@ -228,23 +229,7 @@ public class SearchServlet extends ForwardingServlet {
                 showStatistics(request);
             }
 
-            String siteInCookie;
-            if (StringUtils.isNotEmpty(request.getParameter(QS_SITE))) {
-                String site;
-                try {
-                    site = Config.SITES[Integer.parseInt(request.getParameter(QS_SITE))];
-                } catch (Exception e) {
-                    site = Config.SITES[0];
-                    request.setParameter(QS_SITE, "0");
-                }
-                session.setAttribute(SESS_SITE_ROOT, site);
-                CookieUtils.rememberInCookie(response, QS_SITE, request.getParameter(QS_SITE));
-            } else if (StringUtils.isNotEmpty(siteInCookie = CookieUtils.recallFromCookie(request, QS_SITE))) {
-                request.setParameter(QS_SITE, siteInCookie); // for drop-down
-                session.setAttribute(SESS_SITE_ROOT, Config.SITES[Integer.parseInt(siteInCookie)]); // for search result list
-            } else {
-                session.setAttribute(SESS_SITE_ROOT, Config.SITES[0]);
-            }
+            setSiteInSession(request, response);
         } catch (DbException e) {
             errorMsg = ErrorMessage.DbError;
         } catch (Exception e) {
