@@ -35,19 +35,42 @@ public class DbManager {
 
     private static final String DB_DICT_LAST_INDEXED =          "lastIndexed";
     private static final String DB_DICT_LAST_INDEXED_DOUBLE =   "lastIndexedDouble";
+    private static final String TABLES_KEY_PREFIX = "db.tables.";
 
-    private static final String SQL_INSERT_MSG =            props.getProperty("sql.insert.msg");
-    private static final String SQL_INSERT_UPDATE_MSG =     props.getProperty("sql.insert.update.msg");
-    private static final String SQL_UPDATE_MSG =            props.getProperty("sql.update.msg");
-    private static final String SQL_DELETE_MSG =            props.getProperty("sql.delete.msg");
-    private static final String SQL_SELECT_MSG_BY_ID =      props.getProperty("sql.select.msg.by.id");
-    private static final String SQL_SELECT_MSG_IN_RANGE =   props.getProperty("sql.select.msg.in.range");
-    private static final String SQL_SELECT_LAST_MSG_NUM =   props.getProperty("sql.select.last.msg.num");
-    private static final String SQL_SELECT_SET =            props.getProperty("sql.select.set");
-    private static final String SQL_SELECT_ALL_TOPICS =     props.getProperty("sql.select.all.topics");
-    private static final String SQL_SELECT_NEW_TOPICS =     props.getProperty("sql.select.new.topics");
+    private static List<String> tables = null;
+    private static List<String> getTableNames() {
+        if (tables == null) {
+            tables = new ArrayList<String>();
+            for (Object key : Config.getAppProperties().keySet()) {
+                String k = (String) key;
+                if (k.startsWith(TABLES_KEY_PREFIX)) {
+                    tables.add(k.replaceFirst(TABLES_KEY_PREFIX, ""));
+                }
+            }
+        }
+        return tables;
+    }
 
-    private static final String SQL_LOG_REQUEST =           props.getProperty("sql.log.request");
+    private static String prepareSql(String sqlName) {
+        String sql = props.getProperty(sqlName);
+        for (String tab : getTableNames()) {
+            sql = sql.replaceAll("\\{" + tab + "\\}", Config.getProp(TABLES_KEY_PREFIX + tab));
+        }
+        return sql;
+    }
+
+    private static final String SQL_INSERT_MSG =            prepareSql("sql.insert.msg");
+    private static final String SQL_INSERT_UPDATE_MSG =     prepareSql("sql.insert.update.msg");
+    private static final String SQL_UPDATE_MSG =            prepareSql("sql.update.msg");
+    private static final String SQL_DELETE_MSG =            prepareSql("sql.delete.msg");
+    private static final String SQL_SELECT_MSG_BY_ID =      prepareSql("sql.select.msg.by.id");
+    private static final String SQL_SELECT_MSG_IN_RANGE =   prepareSql("sql.select.msg.in.range");
+    private static final String SQL_SELECT_LAST_MSG_NUM =   prepareSql("sql.select.last.msg.num");
+    private static final String SQL_SELECT_SET =            prepareSql("sql.select.set");
+    private static final String SQL_SELECT_ALL_TOPICS =     prepareSql("sql.select.all.topics");
+    private static final String SQL_SELECT_NEW_TOPICS =     prepareSql("sql.select.new.topics");
+
+    private static final String SQL_LOG_REQUEST =           prepareSql("sql.log.request");
 
     private static HashMap<String, Integer> topicsHashMap;
 
@@ -58,7 +81,7 @@ public class DbManager {
                 new VarType[] {INTEGER,     INTEGER,            STRING,         INTEGER,            STRING,         STRING,
                                 STRING,             DATE,               BOOLEAN,   STRING,          INTEGER});
     }
-    
+
     public static void saveMessages(List<ZloMessage> msgs, boolean update) throws DbException {
         PreparedStatement chkPstmt = null;
         PreparedStatement insertPstmt = null;

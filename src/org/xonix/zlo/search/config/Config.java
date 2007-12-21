@@ -31,6 +31,10 @@ public class Config {
         return pr;
     }
 
+    public static Properties getAppProperties() {
+        return props;
+    }
+
     private static boolean loadPropertiesFromEnv(Properties pr) {
         String envPath = System.getenv(CONFIG_PATH_ENV_NAME);
         if (envPath != null) {
