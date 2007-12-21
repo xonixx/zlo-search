@@ -232,6 +232,7 @@ public class SearchServlet extends BaseServlet {
             setSiteInSession(request, response);
         } catch (DbException e) {
             errorMsg = ErrorMessage.DbError;
+            logger.error(e);
         } catch (Exception e) {
             if (errorMsg == null) {
                 // unknown error
