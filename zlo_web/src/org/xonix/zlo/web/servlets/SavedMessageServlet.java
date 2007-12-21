@@ -5,7 +5,6 @@ import org.xonix.zlo.search.DAO;
 import org.xonix.zlo.search.config.ErrorMessage;
 import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.web.servlets.helpful.ForwardingRequest;
-import org.xonix.zlo.web.servlets.helpful.ForwardingServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +15,7 @@ import java.io.IOException;
  * Date: 11.09.2007
  * Time: 17:23:38
  */
-public class SavedMessageServlet extends ForwardingServlet {
+public class SavedMessageServlet extends BaseServlet {
     public static final String QS_NUM = "num";
     public static final String ERROR = "error";
     public static final String SAVED_MSG = "savedMsg";
@@ -39,6 +38,8 @@ public class SavedMessageServlet extends ForwardingServlet {
             request.forwardTo(JSP_SAVED_MSG);
             return;
         }
+
+        setSiteInSession(request, response);
 
         ZloMessage msg;
         try {
