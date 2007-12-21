@@ -39,7 +39,7 @@ class B extends A {
 public class Test1 {
     public static void main(String[] args) {
         new Config();
-        m15();
+        m17();
         System.exit(0);
     }
 
@@ -79,11 +79,11 @@ public class Test1 {
     }
 
     public static void m17() {
-//        System.out.println(ZloSearcher.getLastIndexedNumber());
-        int from =4000000;
+        System.out.println(ZloSearcher.getLastIndexedNumber());
+/*        int from =4000000;
         int to=4000019;
         System.out.println((int)MessageFormat.format("{0}", 4000).charAt(1));
-        System.out.println((int)' ');
+        System.out.println((int)' ');*/
     }
 
     public static void m16() {
