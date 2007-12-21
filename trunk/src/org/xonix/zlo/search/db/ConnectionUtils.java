@@ -7,8 +7,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.Statement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Author: Vovan
@@ -28,15 +28,18 @@ public class ConnectionUtils {
     public static Connection getConnection() throws DbException {
         if (Config.USE_CONTAINER_POOL) {
             try {
-                return getDataSource().getConnection();
+                DataSource connection = getDataSource();
+                if (connection != null)
+                    return connection.getConnection();
             } catch (SQLException e) {
                 logger.error(e);
                 throw new DbException(e);
             }
-        } else {
-            reopenConnectionIfNeeded();
-            return DB_CONNECTION;
         }
+
+        // if not container pool or not in container environment
+        reopenConnectionIfNeeded();
+        return DB_CONNECTION;
     }
 
     private static DataSource dataSource = null;

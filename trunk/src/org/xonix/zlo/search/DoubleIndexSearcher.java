@@ -28,8 +28,8 @@ public class DoubleIndexSearcher {
 
     public static final int PERIOD_RECREATE_INDEXER = TimeUtils.parseToMilliSeconds(Config.getProp("searcher.period.recreate.indexer"));
 
-    public static final String BIG_INDEX_DIR = "1";
-    public static final String SMALL_INDEX_DIR = "2";
+    public static final String BIG_INDEX_DIR =      "1";
+    public static final String SMALL_INDEX_DIR =    "2";
 
     private String indexesDir;
 
@@ -108,7 +108,10 @@ public class DoubleIndexSearcher {
                 }
             }
         } else {
-            startRecreatingReaderIfNeeded(smallReader);
+            // not in separate thread because it is fast && with thread -> AlreadyClosedException on reader can happen
+            if (needToRecreateReader(smallReader)) {
+                performReopen(smallReader);
+            }
         }
         return smallReader;
     }
@@ -118,78 +121,83 @@ public class DoubleIndexSearcher {
     }
 
     private void startRecreatingReaderIfNeeded(IndexReader r) {
-        try {
-            if (needToRecreateReader(r)) {
-                synchronized(this) {
-                    if (needToRecreateReader(r)) {
-                        startReopeningThread(r);
-                    }
+        if (needToRecreateReader(r)) {
+            synchronized(this) {
+                if (needToRecreateReader(r)) {
+                    startReopeningThread(r);
                 }
             }
-        } catch (IOException e) {
-            logger.error(e);
         }
     }
 
-    private boolean needToRecreateReader(IndexReader r) throws IOException {
+    private boolean needToRecreateReader(IndexReader r) {
         boolean isSmall = r == smallReader;
-        if (isSmall)
-            return !smallReader.isCurrent()
-                    && !isReopeningSmall
-                    && System.currentTimeMillis() - lastCreateTime > PERIOD_RECREATE_INDEXER;
-        else // big
-            return !bigReader.isCurrent()
-                    && !isReopeningBig;
+        try {
+            if (isSmall)
+                return !smallReader.isCurrent()
+                        && !isReopeningSmall
+                        && System.currentTimeMillis() - lastCreateTime > PERIOD_RECREATE_INDEXER;
+            else // big
+                return !bigReader.isCurrent()
+                        && !isReopeningBig;
+        } catch (IOException e) {
+            logger.error(e);
+            return true;
+        }
     }
 
-    private void startReopeningThread(IndexReader r) {
-        final boolean isSmall = r == smallReader;
+    private void performReopen(IndexReader r) {
+        boolean isSmall = r == smallReader;
+        logger.debug(MessageFormat.format("Start recreating {0} indexReader in separate thread...", isSmall ? "small" : "big"));
+        if (isSmall)
+            isReopeningSmall = true;
+        else
+            isReopeningBig = true;
+
+        IndexReader ir = null,
+                    oldIndexReader = isSmall ? smallReader : bigReader;
+
+        try {
+            ir = IndexReader.open(
+                    isSmall
+                            ? getSmallPath()
+                            : getBigPath());
+        } catch (IOException e) {
+            logger.error("Error while recreating index reader: " + e);
+        }
+
+        // search to form memory caches
+        try {
+            new IndexSearcher(ir).search(new MatchAllDocsQuery(), renewingSort);
+        } catch (IOException e) {
+            logger.error("Problems recreating smallReader: ", e);
+            return;
+        }
+
+        if (isSmall) {
+            smallReader = ir;
+            lastCreateTime = System.currentTimeMillis();
+        } else { // big
+            bigReader = ir;
+        }
+
+        synchronized(closeLock) { // to give ability to perform searh if oldReader already used
+            clean(oldIndexReader);
+        }
+
+        logger.info("Successfuly recreated.");
+
+        if (isSmall)
+            isReopeningSmall = false;
+        else
+            isReopeningBig = false;
+    }
+
+    private void startReopeningThread(final IndexReader r) {
 
         Thread t = new Thread(new Runnable() {
             public void run() {
-                logger.debug(MessageFormat.format("Start recreating {0} indexReader in separate thread...", isSmall ? "small" : "big"));
-                if (isSmall)
-                    isReopeningSmall = true;
-                else
-                    isReopeningBig = true;
-
-                IndexReader ir = null,
-                            oldIndexReader = isSmall ? smallReader : bigReader;
-
-                try {
-                    ir = IndexReader.open(
-                            isSmall
-                                    ? getSmallPath()
-                                    : getBigPath());
-                } catch (IOException e) {
-                    logger.error("Error while recreating index reader: " + e);
-                }
-
-                // search to form memory caches
-                try {
-                    new IndexSearcher(ir).search(new MatchAllDocsQuery(), renewingSort);
-                } catch (IOException e) {
-                    logger.error("Problems recreating smallReader: ", e);
-                    return;
-                }
-
-                if (isSmall) {
-                    smallReader = ir;
-                    lastCreateTime = System.currentTimeMillis();
-                } else { // big
-                    bigReader = ir;
-                }
-
-                synchronized(closeLock) { // to give ability to perform searh if oldReader already used
-                    clean(oldIndexReader);
-                }
-
-                logger.info("Successfuly recreated.");
-
-                if (isSmall)
-                    isReopeningSmall = false;
-                else
-                    isReopeningBig = false;
+                performReopen(r);
             }
         });
 
@@ -231,15 +239,18 @@ public class DoubleIndexSearcher {
 
         logger.info("Cleaning small index...");
         createEmptyIndex(getSmallPath()); // empty small index
+        logger.info("Done moving small to big.");
     }
 
     public void optimize() throws IOException {
+        logger.info("Optimizing...");
         IndexWriter iw = new IndexWriter(getBigPath(), ZloMessage.constructAnalyzer());
         iw.optimize();
         iw.close();
         iw = new IndexWriter(getSmallPath(), ZloMessage.constructAnalyzer());
         iw.optimize();
         iw.close();
+        logger.info("Done.");
     }
 
     private void createEmptyIndex(String path) throws IOException {

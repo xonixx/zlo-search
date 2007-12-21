@@ -227,7 +227,7 @@ public class ZloSearcher {
     }
 
     private static DoubleIndexSearcher doubleIndexSearcher;
-    private static DoubleIndexSearcher getDoubleIndexSearcher() {
+    public static DoubleIndexSearcher getDoubleIndexSearcher() {
         if (doubleIndexSearcher == null) {
             doubleIndexSearcher = new DoubleIndexSearcher(Config.INDEX_DIR_DOUBLE, getDateSort());
         }
@@ -293,7 +293,9 @@ public class ZloSearcher {
                 ZloMessage.URL_NUM_FORMAT.format(999999999));
         try {
             return Integer.parseInt(
-                    ZloSearcher.searchIndexReader(null, searchStr,
+                    ZloSearcher.searchIndexReader(
+                            Config.USE_DOUBLE_INDEX ? getDoubleIndexSearcher().getSmallReader() : null,
+                            searchStr,
                             new Sort(new SortField(ZloMessage.FIELDS.URL_NUM, SortField.STRING, true))).getHits().doc(0).get(ZloMessage.FIELDS.URL_NUM));
         } catch (IOException e) {
             logger.error(e);
