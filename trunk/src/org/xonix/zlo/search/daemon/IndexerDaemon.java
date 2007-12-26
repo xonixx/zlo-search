@@ -1,12 +1,16 @@
 package org.xonix.zlo.search.daemon;
 
 import org.apache.log4j.Logger;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.utils.TimeUtils;
 import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.ZloIndexer;
 import org.xonix.zlo.search.DAO;
+import org.xonix.zlo.search.ZloSearcher;
+import org.xonix.zlo.search.DoubleIndexSearcher;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -31,8 +35,14 @@ public class IndexerDaemon extends Daemon {
         
         protected void doOneIteration() {
             try {
-                if (indexFrom == -1)
-                    indexFrom = DbManager.getLastIndexedNumber() + 1;
+                if (indexFrom == -1) {
+                    int inIndex = ZloSearcher.getLastIndexedNumber();
+                    indexFrom = (Config.USE_DOUBLE_INDEX
+                            ? (inIndex != -1 
+                                ? inIndex  // more reliable
+                                : DbManager.getLastIndexedNumber() + 1)
+                            : DbManager.getLastIndexedNumber()) + 1;
+                }
 
                 if (end == -1)
                     end = DbManager.getLastMessageNumber();
@@ -84,6 +94,15 @@ public class IndexerDaemon extends Daemon {
 
     public static void main(String[] args) {
         logger.info(MessageFormat.format("Starting indexing to {0} index...", Config.USE_DOUBLE_INDEX ? "double" : "simple"));
+        if (Config.USE_DOUBLE_INDEX) {
+            logger.info("Clearing lock...");
+            try {
+                Directory d = FSDirectory.getDirectory(new DoubleIndexSearcher(null).getSmallPath());
+                d.clearLock("write.lock");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         new IndexerDaemon().start();
     }
 }

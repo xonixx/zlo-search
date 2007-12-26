@@ -47,6 +47,10 @@ public class DoubleIndexSearcher {
         this.indexesDir = dir;
     }
 
+    public DoubleIndexSearcher(Sort renewingSort) {
+        this(Config.INDEX_DIR_DOUBLE, renewingSort);
+    }
+
     public String getBigPath() {
         String path = indexesDir + "/" + BIG_INDEX_DIR;
         createDirIfAbsent(path);
