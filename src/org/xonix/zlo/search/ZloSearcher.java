@@ -229,7 +229,7 @@ public class ZloSearcher {
     private static DoubleIndexSearcher doubleIndexSearcher;
     public static DoubleIndexSearcher getDoubleIndexSearcher() {
         if (doubleIndexSearcher == null) {
-            doubleIndexSearcher = new DoubleIndexSearcher(Config.INDEX_DIR_DOUBLE, getDateSort());
+            doubleIndexSearcher = new DoubleIndexSearcher(getDateSort());
         }
         return doubleIndexSearcher;
     }
@@ -292,11 +292,13 @@ public class ZloSearcher {
                 ZloMessage.URL_NUM_FORMAT.format(0),
                 ZloMessage.URL_NUM_FORMAT.format(999999999));
         try {
-            return Integer.parseInt(
-                    ZloSearcher.searchIndexReader(
-                            Config.USE_DOUBLE_INDEX ? getDoubleIndexSearcher().getSmallReader() : null,
-                            searchStr,
-                            new Sort(new SortField(ZloMessage.FIELDS.URL_NUM, SortField.STRING, true))).getHits().doc(0).get(ZloMessage.FIELDS.URL_NUM));
+            DoubleHits hits = ZloSearcher.searchIndexReader(
+                    Config.USE_DOUBLE_INDEX ? getDoubleIndexSearcher().getSmallReader() : null,
+                    searchStr,
+                    new Sort(new SortField(ZloMessage.FIELDS.URL_NUM, SortField.STRING, true))).getHits();
+            return hits.length() > 0
+                    ? Integer.parseInt(hits.doc(0).get(ZloMessage.FIELDS.URL_NUM))
+                    : -1;
         } catch (IOException e) {
             logger.error(e);
             return -1;

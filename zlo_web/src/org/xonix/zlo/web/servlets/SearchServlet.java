@@ -12,7 +12,6 @@ import org.xonix.zlo.search.config.ErrorMessage;
 import org.xonix.zlo.search.db.ConnectionUtils;
 import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.db.DbManager;
-import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.web.CookieUtils;
 import org.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 
@@ -20,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -38,8 +38,8 @@ public class SearchServlet extends BaseServlet {
     // query string params
     public static final String QS_TOPIC_CODE = "topic";
     public static final String QS_TEXT = "text";
-    public static final String QS_NICK = ZloMessage.FIELDS.NICK;
-    public static final String QS_HOST = ZloMessage.FIELDS.HOST;
+    public static final String QS_NICK = "nick";
+    public static final String QS_HOST = "host";
     public static final String QS_SITE = "site";
     public static final String QS_DATES = "dates";
     public static final String QS_FROM_DATE = "fd";
@@ -55,6 +55,11 @@ public class SearchServlet extends BaseServlet {
     public static final String QS_IN_REG = "reg";
     public static final String QS_IN_HAS_URL = "hasUrl";
     public static final String QS_IN_HAS_IMG = "hasImg";
+
+    public static final String QS_SEARCH_TYPE = "st";
+    public static final String SEARCH_TYPE_ALL = "all";
+    public static final String SEARCH_TYPE_ADVANCED = "adv";
+    public static final String SEARCH_TYPE_EXACT_PHRASE = "exct";
 
     public static final String QS_SUBMIT = "submit";
 
@@ -98,6 +103,11 @@ public class SearchServlet extends BaseServlet {
             // set default topic code
             if (StringUtils.isEmpty(topicCodeStr)) {
                 request.setParameter(QS_TOPIC_CODE, "-1"); // all
+            }
+
+            // set default search type
+            if (StringUtils.isEmpty(request.getParameter(QS_SEARCH_TYPE))) {
+                request.setParameter(QS_SEARCH_TYPE, SEARCH_TYPE_ALL);
             }
 
             int topicCode;
@@ -170,8 +180,15 @@ public class SearchServlet extends BaseServlet {
             session.setAttribute(QS_TO_DATE, FROM_TO_DATE_FORMAT.format(toDate));
             session.setAttribute(QS_FROM_DATE, FROM_TO_DATE_FORMAT.format(fromDate));
 
-            SearchRequest searchRequest = new SearchRequest(text, inTitle, inBody,
-                    inReg, inHasUrl, inHasImg, nick, host, topicCode, fromDate, toDate);
+            if (StringUtils.isNotEmpty(text)) {
+                if(SEARCH_TYPE_ALL.equals(request.getParameter(QS_SEARCH_TYPE))) {
+                    text = text.replaceAll("\\b([^\\s]+?)\\b", "+$1");
+                } else if (SEARCH_TYPE_EXACT_PHRASE.equals(request.getParameter(QS_SEARCH_TYPE))) {
+                    text = MessageFormat.format("\"{0}\"", text);
+                }
+            }
+
+            SearchRequest searchRequest = new SearchRequest(text, inTitle, inBody, inReg, inHasUrl, inHasImg, nick, host, topicCode, fromDate, toDate);
 
             if (searchRequest.canBeProcessed()) {
 
