@@ -182,7 +182,7 @@ public class SearchServlet extends BaseServlet {
 
             if (StringUtils.isNotEmpty(text)) {
                 if(SEARCH_TYPE_ALL.equals(request.getParameter(QS_SEARCH_TYPE))) {
-                    text = text.replaceAll("\\b([^\\s]+?)\\b", "+$1");
+                    text = text.replaceAll("\\b([^\\s]+)\\b", "+$1");
                 } else if (SEARCH_TYPE_EXACT_PHRASE.equals(request.getParameter(QS_SEARCH_TYPE))) {
                     text = MessageFormat.format("\"{0}\"", text);
                 }
