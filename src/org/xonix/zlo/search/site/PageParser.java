@@ -1,4 +1,4 @@
-package org.xonix.zlo.search;
+package org.xonix.zlo.search.site;
 
 import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.db.DbManager;
@@ -22,31 +22,41 @@ import java.util.regex.Pattern;
 public class PageParser {
     public static final Logger logger = Logger.getLogger(PageParser.class);
 
-    private static final Pattern MSG_UNREG_RE = Pattern.compile(
-        "<DIV ALIGN=CENTER><BIG>\\[(.*?)\\]</BIG>&nbsp;&nbsp;<BIG>(.*?)</BIG>" +
-        "<BR>Сообщение было послано:\\s*<b>(.*?)</b><SMALL>\\s*\\(unreg\\)</SMALL>\\s*<small>" +
-        "\\((.*?)\\)</small><BR>Дата:\\s*(.*?)</DIV><BR><br\\s*/><div class=\"body\">(.*?)</div>",
-        Pattern.DOTALL
-    );
+//    private static final Pattern MSG_UNREG_RE = Pattern.compile(
+//        "<DIV ALIGN=CENTER><BIG>\\[(.*?)\\]</BIG>&nbsp;&nbsp;<BIG>(.*?)</BIG>" +
+//        "<BR>Сообщение было послано:\\s*<b>(.*?)</b><SMALL>\\s*\\(unreg\\)</SMALL>\\s*<small>" +
+//        "\\((.*?)\\)</small><BR>Дата:\\s*(.*?)</DIV><BR><br\\s*/><div class=\"body\">(.*?)</div>",
+//        Pattern.DOTALL
+//    );
+//
+//    private static final Pattern MSG_REG_RE = Pattern.compile(
+//        "<DIV ALIGN=CENTER><BIG>\\[(.*?)\\]</BIG>&nbsp;&nbsp;<BIG>(.*?)</BIG>" +
+//        "<BR>Сообщение было послано:\\s*<a href=\"\\?uinfo=.*?\" class=\"nn\" onclick=\"popup\\('uinfo', '.*?', 700, 600\\); return false;\" title=\"Информация о Пользователе\" target=\"_blank\">(.*?)</a>\\s*" +
+//        "<small>\\((.*?)\\)</small><BR>Дата:\\s*(.*?)</DIV><BR><br\\s*/><div class=\"body\">(.*?)</div>",
+//        Pattern.DOTALL
+//    );
+//
+//    public static final String MSG_NOT_EXIST_OR_WRONG = "Это сообщение не существует или введено неправильно";
+//    public static final String WITHOUT_TOPIC = "без темы";
+//
+//    /* pattern to find message number on index page
+//    * public need as we must use it in PageRetriever to load page until pattern found
+//    */
+//    public static final Pattern INDEX_UNREG_RE = Pattern.compile(
+//        "<A NAME=(\\d+) HREF=\"\\?read=(\\d+)\">"
+//    );
+    private SiteAccessor siteAccessor;
 
-    private static final Pattern MSG_REG_RE = Pattern.compile(
-        "<DIV ALIGN=CENTER><BIG>\\[(.*?)\\]</BIG>&nbsp;&nbsp;<BIG>(.*?)</BIG>" +
-        "<BR>Сообщение было послано:\\s*<a href=\"\\?uinfo=.*?\" class=\"nn\" onclick=\"popup\\('uinfo', '.*?', 700, 600\\); return false;\" title=\"Информация о Пользователе\" target=\"_blank\">(.*?)</a>\\s*" +
-        "<small>\\((.*?)\\)</small><BR>Дата:\\s*(.*?)</DIV><BR><br\\s*/><div class=\"body\">(.*?)</div>",
-        Pattern.DOTALL
-    );
+    private Pattern MSG_REG_RE;
+    private Pattern MSG_UNREG_RE;
 
-    public static final String MSG_NOT_EXIST_OR_WRONG = "Это сообщение не существует или введено неправильно";
-    public static final String WITHOUT_TOPIC = "без темы";
+    public PageParser(SiteAccessor siteAccessor) {
+        this.siteAccessor = siteAccessor;
+        MSG_REG_RE = Pattern.compile(siteAccessor.MSG_REG_RE_STR, Pattern.DOTALL);
+        MSG_UNREG_RE = Pattern.compile(siteAccessor.MSG_UNREG_RE_STR, Pattern.DOTALL);
+    }
 
-    /* pattern to find message number on index page
-    * public need as we must use it in PageRetriever to load page until pattern found
-    */
-    public static final Pattern INDEX_UNREG_RE = Pattern.compile(
-        "<A NAME=(\\d+) HREF=\"\\?read=(\\d+)\">"
-    );
-
-    public static ZloMessage parseMessage(String msg) {
+    public ZloMessage parseMessage(String msg) {
         ZloMessage message = new ZloMessage();
 
         Matcher m = MSG_UNREG_RE.matcher(msg);
@@ -55,7 +65,7 @@ public class PageParser {
         } else {
             m = MSG_REG_RE.matcher(msg);
             if (!m.find()) {
-                if (msg.contains(MSG_NOT_EXIST_OR_WRONG)) {
+                if (msg.contains(siteAccessor.MSG_NOT_EXIST_OR_WRONG)) {
                     message.setStatus(ZloMessage.Status.DELETED);
                 } else {
                     message.setStatus(ZloMessage.Status.UNKNOWN);
@@ -74,7 +84,7 @@ public class PageParser {
                 // todo: tmp
                 System.exit(-1);
             }
-            message.setTopicCode(topicCode != null ? topicCode : -1);
+            message.setTopicCode(topicCode);
         } catch (DbException e) {
             logger.error(e);
         }
@@ -88,7 +98,7 @@ public class PageParser {
         return message;
     }
 
-    public static ZloMessage parseMessage(String msg, int urlNum) {
+    public ZloMessage parseMessage(String msg, int urlNum) {
         ZloMessage zm = parseMessage(msg);
         if (zm == null)
             return null;
@@ -97,9 +107,9 @@ public class PageParser {
         return zm;
     }
 
-    private static String prepareTopic(String topic) {
-        return WITHOUT_TOPIC.equals(topic) ? "" : topic;
-    }
+//    private String prepareTopic(String topic) {
+//        return siteAccessor.WITHOUT_TOPIC.equals(topic) ? "" : topic;
+//    }
 
     private static Date prepareDate(String s) {
         // s can be "Среда, Декабрь 5 13:35:25 2007<i>(Изменен: Среда, Декабрь 5 13:40:21 2007)</i>"
