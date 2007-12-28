@@ -39,7 +39,7 @@ class B extends A {
 public class Test1 {
     public static void main(String[] args) {
         new Config();
-        m17();
+        m15();
         System.exit(0);
     }
 
@@ -110,7 +110,9 @@ public class Test1 {
     public static void m15() {
         try {
 //            System.out.println(DbManager.getMessageByNumber(4149183));
-            System.out.println(DAO.Site._getMessageByNumber(648064));
+            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(648064));
+            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(4199196));
+            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(4199189));
         } /*catch (DbException e) {
             e.printStackTrace();
         } */ catch (DAO.DAOException e) {
@@ -147,7 +149,7 @@ public class Test1 {
 
     public static void m12() {
         try {
-            for (ZloMessage m : DAO.Site._getMessages(10000, 10042)) {
+            for (ZloMessage m : DAO.Site.getSite("zlo").getMessages(10000, 10042)) {
                 System.out.println(m);
             }
         } catch (DAO.DAOException e) {
@@ -207,7 +209,7 @@ public class Test1 {
     public static void m5() {
         for (int i = 0; i < 10; i++) {
             try {
-                System.out.println(">" + DAO.Site._getLastMessageNumber());
+                System.out.println(">" + DAO.Site.getSite("zlo").getLastMessageNumber());
             } catch (DAO.DAOException e) {
                 e.printStackTrace();
             }
@@ -244,7 +246,7 @@ public class Test1 {
 
     public static void m7() {
         try {
-            for (ZloMessage m : DAO.Site._getMessages(10, 110)) {
+            for (ZloMessage m : DAO.Site.getSite("zlo").getMessages(10, 110)) {
                 System.out.println(m);
             }
         } catch (DAO.DAOException e) {
@@ -254,7 +256,7 @@ public class Test1 {
 
     public static void m8() {
         try {
-            System.out.println(DAO.Site._getMessageByNumber(3960198));
+            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(3960198));
         } catch (DAO.DAOException e) {
             e.printStackTrace();
         }
@@ -308,13 +310,13 @@ public class Test1 {
 
     public static void m9() {
         try {
-            List<ZloMessage> l = DAO.Site._getMessages(3999995, 3999999);
+            List<ZloMessage> l = DAO.Site.getSite("zlo").getMessages(3999995, 3999999);
 //            Collections.
             for (ZloMessage m : l) {
                 System.out.println(m);
             }
             System.out.println("#############################################");
-            List<ZloMessage> l1 = DAO.Site._getMessages(4000000, 4000005);
+            List<ZloMessage> l1 = DAO.Site.getSite("zlo").getMessages(4000000, 4000005);
             for (ZloMessage m : l1) {
                 System.out.println(m);
             }

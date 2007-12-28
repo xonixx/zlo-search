@@ -58,7 +58,7 @@ public class ZloStorage implements Serializable, IndexingSource {
     private void retrieveAndSerialize() {
         System.out.println("Retrieving...");
         try {
-            for (ZloMessage m : DAO.Site._getMessages(FROM, TO)) {
+            for (ZloMessage m : DAO.Site.getSite("zlo").getMessages(FROM, TO)) {
                 if (m != null)
                     storedMsgs.put(m.getNum(), m);
             }

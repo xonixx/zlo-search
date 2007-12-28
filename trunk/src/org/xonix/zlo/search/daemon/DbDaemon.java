@@ -87,7 +87,7 @@ public class DbDaemon extends Daemon {
 //        DAO.DB.saveMessages(DAO.Site._getMessages(3999990, 3999999));
 //        DAO.DB.saveMessages(DAO.Site._getMessages(4000000, 4000010));
 
-        new DbDaemon(DAO.Site.SOURCE).start();
+        new DbDaemon(DAO.Site.getSite("zlo")).start();
 //        new DbDaemon(new ZloStorage()).start();
     }
 }

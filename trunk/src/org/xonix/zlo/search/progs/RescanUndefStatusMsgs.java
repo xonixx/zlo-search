@@ -41,7 +41,7 @@ public class RescanUndefStatusMsgs {
 
             if (newNums.size() > 0) {
                 System.out.print("Getting from site... ");
-                List<ZloMessage> newMsgs = MultithreadedRetriever.getMessages(DAO.Site.SOURCE, newNums);
+                List<ZloMessage> newMsgs = MultithreadedRetriever.getMessages(DAO.Site.getSite("zlo"), newNums);
 
                 System.out.print("Saving... ");
                 DbManager.saveMessagesFast(newMsgs, true);

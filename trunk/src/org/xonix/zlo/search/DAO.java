@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.model.ZloMessage;
+import org.xonix.zlo.search.site.SiteAccessor;
 
 import java.io.IOException;
 import java.util.List;
@@ -37,15 +38,23 @@ public class DAO {
     }
 
     public static class Site implements IndexingSource {
-        public static Site SOURCE = new Site();
+        private SiteAccessor siteAccessor = null;
         private Site() {} // not to create
+
+        private Site(String siteName) {
+            siteAccessor = SiteAccessor.forSite(siteName);
+        }
+
+        public static Site getSite(String siteName) {
+            return new Site(siteName);
+        }
 
         public ZloMessage getMessageByNumber(int num) throws DAOException {
             logger.debug("Receiving from site: " + num);
             try {
-                return PageParser.parseMessage(PageRetriever.getPageContentByNumber(num), num);
+                return siteAccessor.getMessage(num);
             } catch (IOException e) {
-                throw new DAOException(SOURCE, e);
+                throw new DAOException(this, e);
             }
         }
 
@@ -53,7 +62,7 @@ public class DAO {
             logger.info("Downloading messages from " + from + " to " + to + "...");
             long begin = System.currentTimeMillis();
 
-            List<ZloMessage> msgs = MultithreadedRetriever.getMessages(SOURCE, from, to);
+            List<ZloMessage> msgs = MultithreadedRetriever.getMessages(this, from, to);
 
             float durationSecs = (System.currentTimeMillis() - begin) / 1000f;
             logger.info("Downloaded " + msgs.size() + " messages in " + (int)durationSecs + "secs. Rate: " + ((float)msgs.size()) / durationSecs + "mps.");
@@ -63,13 +72,13 @@ public class DAO {
 
         public int getLastMessageNumber() throws DAOException {
             try {
-                return PageRetriever.getLastRootMessageNumber();
+                return siteAccessor.getLastRootMessageNumber();
             } catch (IOException e) {
-                throw new DAOException(SOURCE, e);
+                throw new DAOException(this, e);
             }
         }
         
-        public static ZloMessage _getMessageByNumber(int num) throws DAOException {
+/*        public static ZloMessage _getMessageByNumber(int num) throws DAOException {
             return SOURCE.getMessageByNumber(num);
         }
 
@@ -79,7 +88,7 @@ public class DAO {
 
         public static int _getLastMessageNumber() throws DAOException {
             return SOURCE.getLastMessageNumber();
-        }
+        }*/
     }
 
     public static class DB implements IndexingSource {

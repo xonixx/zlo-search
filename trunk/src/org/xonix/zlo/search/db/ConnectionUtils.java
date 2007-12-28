@@ -49,7 +49,7 @@ public class ConnectionUtils {
                 InitialContext ctx = new InitialContext();
                 dataSource = (DataSource) ctx.lookup("java:comp/env/jdbc/zlo_storage");
             } catch (NamingException e) {
-                logger.error("Error while creating DataSource: ", e);
+                logger.error("Error while creating DataSource: " + e.getClass().getName() + ", Starting using single db connection!");
             }
         }
         return dataSource;

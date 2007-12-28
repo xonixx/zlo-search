@@ -1,4 +1,4 @@
-package org.xonix.zlo.search;
+package org.xonix.zlo.search.site;
 
 import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpClient;
@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Author: gubarkov
@@ -23,10 +24,13 @@ public class PageRetriever {
 
     public static final int THREADS_NUMBER = Integer.parseInt(Config.getProp("retriever.threads"));
 
-    public static final String END_MSG_MARK = "<BIG>Сообщения в этом потоке</BIG>";
-
-    public static final String END_MSG_MARK_SIGN = "<div class=\"sign\">";
+//    public static final String END_MSG_MARK = "<BIG>Сообщения в этом потоке</BIG>";
+//
+//    public static final String END_MSG_MARK_SIGN = "<div class=\"sign\">";
     private static HttpClient HTTP_CLIENT;
+
+    private SiteAccessor siteAccessor;
+    private Pattern INDEX_UNREG_RE;
 
     static {
         MultiThreadedHttpConnectionManager connectionManager = new MultiThreadedHttpConnectionManager();
@@ -35,8 +39,13 @@ public class PageRetriever {
         HTTP_CLIENT = new HttpClient(connectionManager);
     }
 
-    public static String getPageContentByNumber(int num) throws IOException {
-        GetMethod getMethod = formGetMethod("http://" + Config.INDEXING_URL + Config.READ_QUERY + num);
+    public PageRetriever(SiteAccessor siteAccessor) {
+        this.siteAccessor = siteAccessor;
+        INDEX_UNREG_RE = Pattern.compile(siteAccessor.INDEX_UNREG_RE_STR);
+    }
+
+    public String getPageContentByNumber(int num) throws IOException {
+        GetMethod getMethod = formGetMethod("http://" + siteAccessor.INDEXING_URL + siteAccessor.READ_QUERY + num);
 
         List<String> stringGroups = new ArrayList<String>();
         InputStream is = null;
@@ -63,9 +72,9 @@ public class PageRetriever {
                 currSize = stringGroups.size();
                 ending = stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1);
             } while(
-                ending.indexOf(END_MSG_MARK) == -1 &&
-                ending.indexOf(END_MSG_MARK_SIGN) == -1 && // if user have sign - won't read it all
-                ending.indexOf(PageParser.MSG_NOT_EXIST_OR_WRONG) == -1
+                ending.indexOf(siteAccessor.END_MSG_MARK) == -1 &&
+                ending.indexOf(siteAccessor.END_MSG_MARK_SIGN) == -1 && // if user have sign - won't read it all
+                ending.indexOf(siteAccessor.MSG_NOT_EXIST_OR_WRONG) == -1
                 );
         } finally {
             if (is != null)
@@ -82,8 +91,8 @@ public class PageRetriever {
     /* load page until first root-message found
     *  returns last number of root-message or -1 if not found
      */
-    public static int getLastRootMessageNumber() throws IOException {
-        GetMethod getMethod = formGetMethod("http://" + Config.INDEXING_URL);
+    public int getLastRootMessageNumber() throws IOException {
+        GetMethod getMethod = formGetMethod("http://" + siteAccessor.INDEXING_URL);
 
         InputStream is = null;
         Matcher m = null;
@@ -105,7 +114,7 @@ public class PageRetriever {
                 }
                 stringGroups.add(new String(buff, 0, lenRead, Config.CHARSET_NAME));
                 currSize = stringGroups.size();
-                m = PageParser.INDEX_UNREG_RE.matcher(stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1));
+                m = INDEX_UNREG_RE.matcher(stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1));
             } while (!m.find());
         } finally {
             if (is != null)
@@ -116,20 +125,10 @@ public class PageRetriever {
         return Integer.parseInt(m.group(1));
     }
 
-    private static GetMethod formGetMethod(String uri) {
+    private GetMethod formGetMethod(String uri) {
         GetMethod getMethod = new GetMethod(uri);
-        getMethod.addRequestHeader("Host", Config.INDEXING_URL);
+        getMethod.addRequestHeader("Host", siteAccessor.INDEXING_URL);
         getMethod.addRequestHeader("User-Agent", Config.USER_AGENT);
         return getMethod;
     }
-
-/*    public static void main(String[] args) {
-        try {
-            String pageS = getPageContentByNumber(3982207);
-            System.out.println(pageS);
-            System.out.println(PageParser.parseMessage(pageS));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
 }
