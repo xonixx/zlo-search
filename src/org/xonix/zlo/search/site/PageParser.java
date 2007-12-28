@@ -22,29 +22,6 @@ import java.util.regex.Pattern;
 public class PageParser {
     public static final Logger logger = Logger.getLogger(PageParser.class);
 
-//    private static final Pattern MSG_UNREG_RE = Pattern.compile(
-//        "<DIV ALIGN=CENTER><BIG>\\[(.*?)\\]</BIG>&nbsp;&nbsp;<BIG>(.*?)</BIG>" +
-//        "<BR>Сообщение было послано:\\s*<b>(.*?)</b><SMALL>\\s*\\(unreg\\)</SMALL>\\s*<small>" +
-//        "\\((.*?)\\)</small><BR>Дата:\\s*(.*?)</DIV><BR><br\\s*/><div class=\"body\">(.*?)</div>",
-//        Pattern.DOTALL
-//    );
-//
-//    private static final Pattern MSG_REG_RE = Pattern.compile(
-//        "<DIV ALIGN=CENTER><BIG>\\[(.*?)\\]</BIG>&nbsp;&nbsp;<BIG>(.*?)</BIG>" +
-//        "<BR>Сообщение было послано:\\s*<a href=\"\\?uinfo=.*?\" class=\"nn\" onclick=\"popup\\('uinfo', '.*?', 700, 600\\); return false;\" title=\"Информация о Пользователе\" target=\"_blank\">(.*?)</a>\\s*" +
-//        "<small>\\((.*?)\\)</small><BR>Дата:\\s*(.*?)</DIV><BR><br\\s*/><div class=\"body\">(.*?)</div>",
-//        Pattern.DOTALL
-//    );
-//
-//    public static final String MSG_NOT_EXIST_OR_WRONG = "Это сообщение не существует или введено неправильно";
-//    public static final String WITHOUT_TOPIC = "без темы";
-//
-//    /* pattern to find message number on index page
-//    * public need as we must use it in PageRetriever to load page until pattern found
-//    */
-//    public static final Pattern INDEX_UNREG_RE = Pattern.compile(
-//        "<A NAME=(\\d+) HREF=\"\\?read=(\\d+)\">"
-//    );
     private SiteAccessor siteAccessor;
 
     private Pattern MSG_REG_RE;

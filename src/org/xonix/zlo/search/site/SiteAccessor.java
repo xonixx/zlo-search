@@ -24,7 +24,7 @@ public abstract class SiteAccessor {
     public String MSG_UNREG_RE_STR;
     public String INDEX_UNREG_RE_STR;
 
-    public String INDEXING_URL;
+    public String SITE_URL;
     public String READ_QUERY;
 
 

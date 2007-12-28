@@ -24,9 +24,6 @@ public class PageRetriever {
 
     public static final int THREADS_NUMBER = Integer.parseInt(Config.getProp("retriever.threads"));
 
-//    public static final String END_MSG_MARK = "<BIG>Сообщения в этом потоке</BIG>";
-//
-//    public static final String END_MSG_MARK_SIGN = "<div class=\"sign\">";
     private static HttpClient HTTP_CLIENT;
 
     private SiteAccessor siteAccessor;
@@ -45,7 +42,7 @@ public class PageRetriever {
     }
 
     public String getPageContentByNumber(int num) throws IOException {
-        GetMethod getMethod = formGetMethod("http://" + siteAccessor.INDEXING_URL + siteAccessor.READ_QUERY + num);
+        GetMethod getMethod = formGetMethod("http://" + siteAccessor.SITE_URL + siteAccessor.READ_QUERY + num);
 
         List<String> stringGroups = new ArrayList<String>();
         InputStream is = null;
@@ -92,7 +89,7 @@ public class PageRetriever {
     *  returns last number of root-message or -1 if not found
      */
     public int getLastRootMessageNumber() throws IOException {
-        GetMethod getMethod = formGetMethod("http://" + siteAccessor.INDEXING_URL);
+        GetMethod getMethod = formGetMethod("http://" + siteAccessor.SITE_URL);
 
         InputStream is = null;
         Matcher m = null;
@@ -127,7 +124,7 @@ public class PageRetriever {
 
     private GetMethod formGetMethod(String uri) {
         GetMethod getMethod = new GetMethod(uri);
-        getMethod.addRequestHeader("Host", siteAccessor.INDEXING_URL);
+        getMethod.addRequestHeader("Host", siteAccessor.SITE_URL);
         getMethod.addRequestHeader("User-Agent", Config.USER_AGENT);
         return getMethod;
     }
