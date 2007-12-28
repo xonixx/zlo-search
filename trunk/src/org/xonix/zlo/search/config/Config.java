@@ -69,9 +69,6 @@ public class Config {
     public static String [] SITES = getProp("sites").split("\\|");
     public static String [] NUMS_PER_PAGE = getProp("nums.per.page").split("\\|");
 
-//    public static String INDEXING_URL = getProp("indexing.url");
-//    public static String READ_QUERY = getProp("query.read");
-    
     public static final int BUFFER = Integer.parseInt(getProp("buffer", "512"));
 
     public static final String CHARSET_NAME = "windows-1251";

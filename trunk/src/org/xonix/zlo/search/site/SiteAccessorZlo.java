@@ -23,7 +23,7 @@ public class SiteAccessorZlo extends SiteAccessor {
 
         INDEX_UNREG_RE_STR =    "<A NAME=(\\d+) HREF=\"\\?read=(\\d+)\">";
 
-        INDEXING_URL =          "zlo.rt.mipt.ru";
+        SITE_URL =              "zlo.rt.mipt.ru";
         READ_QUERY =            "/?read=";
     }
 }

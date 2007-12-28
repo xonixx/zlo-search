@@ -77,18 +77,6 @@ public class DAO {
                 throw new DAOException(this, e);
             }
         }
-        
-/*        public static ZloMessage _getMessageByNumber(int num) throws DAOException {
-            return SOURCE.getMessageByNumber(num);
-        }
-
-        public static List<ZloMessage> _getMessages(int start, int end) throws DAOException {
-            return SOURCE.getMessages(start, end);
-        }
-
-        public static int _getLastMessageNumber() throws DAOException {
-            return SOURCE.getLastMessageNumber();
-        }*/
     }
 
     public static class DB implements IndexingSource {
