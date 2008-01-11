@@ -13,8 +13,9 @@ public class HtmlUtils {
     private final static String SPACE = " ";
     private final static String NEW_LINE = "\n";
 
-    private static final Pattern IMG = Pattern.compile("<img\\s+.*?src=(\"?|\'?)http://.*(\\1).+?>", Pattern.CASE_INSENSITIVE);
-    private static final Pattern URL = Pattern.compile("<a\\s.+?>", Pattern.CASE_INSENSITIVE);
+    // суть в том, чтоб не считать смайлы за картинки, потому важно http
+    private static final Pattern IMG = Pattern.compile("(?i)<img.*?src=(\"?|\'?)http://.*(\\1).*?>", Pattern.CASE_INSENSITIVE);
+    private static final Pattern URL = Pattern.compile("(?i)<a\\s.+?>", Pattern.CASE_INSENSITIVE);
 
     public static String cleanHtml(String s) {
         final String POSIBLE_SPACE_AND_ATTRIBS = "(\\s*?|\\s+.*?)";

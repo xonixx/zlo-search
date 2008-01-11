@@ -1,21 +1,20 @@
 package org.xonix.zlo.search;
 
+import org.apache.log4j.Logger;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.MultiReader;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.MatchAllDocsQuery;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.Sort;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.apache.log4j.Logger;
 import org.xonix.zlo.search.config.Config;
-import org.xonix.zlo.search.utils.TimeUtils;
 import org.xonix.zlo.search.model.ZloMessage;
+import org.xonix.zlo.search.utils.TimeUtils;
 
-import java.io.IOException;
 import java.io.File;
+import java.io.IOException;
 import java.text.MessageFormat;
 
 /**
@@ -223,6 +222,11 @@ public class DoubleIndexSearcher {
                 new IndexSearcher(getBigReader()).search(query, sort),
                 new IndexSearcher(getSmallReader()).search(query, sort)
         );
+    }
+
+    public void drop() throws IOException {
+        createEmptyIndex(getBigPath());    
+        createEmptyIndex(getSmallPath());
     }
 
     public void close() {
