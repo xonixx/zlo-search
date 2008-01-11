@@ -31,19 +31,17 @@ public class OptimizeIndex {
                 logger.info("Done.");
             } else {
                 DoubleIndexSearcher dis = ZloSearcher.getDoubleIndexSearcher();
-                int lastIndexedInDb = DbManager.getLastIndexedNumber();
+/*                int lastIndexedInDb = DbManager.getLastIndexedNumber();
                 int lastIndexedInIndex = ZloSearcher.getLastIndexedNumber();
                 if (lastIndexedInIndex != lastIndexedInDb) {
                     logger.warn(MessageFormat.format("Last indexed nums not equal! db={0}, index={1}", lastIndexedInDb, lastIndexedInIndex));
                     DbManager.setLastIndexedNumber(lastIndexedInIndex);
-                }
+                }*/
                 dis.moveSmallToBig();
                 dis.optimize();
                 dis.close();
             }
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (DbException e) {
             e.printStackTrace();
         }
     }

@@ -2,7 +2,6 @@ package org.xonix.zlo.search.progs;
 
 import org.apache.log4j.Logger;
 import org.xonix.zlo.search.config.Config;
-import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.model.ZloMessage;
 
@@ -119,8 +118,6 @@ public class FileToDb {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (DbException e) {
             e.printStackTrace();
         }
 

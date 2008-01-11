@@ -110,9 +110,9 @@ public class Test1 {
     public static void m15() {
         try {
 //            System.out.println(DbManager.getMessageByNumber(4149183));
-            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(648064));
-            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(4199196));
-            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(4199189));
+//            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(648064));
+//            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(4199196));
+            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(4166588));
         } /*catch (DbException e) {
             e.printStackTrace();
         } */ catch (DAO.DAOException e) {
