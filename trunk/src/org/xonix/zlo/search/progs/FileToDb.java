@@ -76,6 +76,7 @@ public class FileToDb {
 
                     try {
                         msgs.add(new ZloMessage(
+                                dbm.getSite(),
                                 columnVals[2], // userName
                                 columnVals[3], // alt
                                 columnVals[4], // host

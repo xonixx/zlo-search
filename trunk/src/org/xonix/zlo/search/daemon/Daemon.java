@@ -48,7 +48,9 @@ public abstract class Daemon {
 
         public Process(String siteName) {
             super(siteName);
-            dbms = new DbManagerSource(new Site(siteName));
+            Site site = new Site(siteName);
+            site.DB_VIA_CONTAINER = false;
+            dbms = new DbManagerSource(site);
         }
 
         protected DbManager getDbManager() {

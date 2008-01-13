@@ -147,11 +147,12 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
     public ZloMessage() {
     }
 
-    public ZloMessage(String nick, String altName, String host, String topic, int topicCode,
+    public ZloMessage(Site site, String nick, String altName, String host, String topic, int topicCode,
                       String title, String body, Date msgDate,
                       boolean reg, int num, int parentNum,
                       Boolean hasUrl, Boolean hasImg,
                       Status status) {
+        this.site = site;
         this.nick = nick;
         this.altName = altName;
         this.host = host;
@@ -168,11 +169,12 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
         this.status = status;
     }
 
-    public ZloMessage(String nick, String altName, String host, String topic, int topicCode,
+    public ZloMessage(Site site, String nick, String altName, String host, String topic, int topicCode,
                       String title, String body, Date msgDate,
                       boolean reg, int num, int parentNum,
                       int status) {
-        this(nick,
+        this(site,
+            nick,
             altName,
             host,
             topic,
