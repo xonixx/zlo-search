@@ -16,18 +16,17 @@ import java.util.Properties;
  */
 public class SiteAccessor {
 
-//    public static final String SITE_ACCESSOR_PREFIX = "site.accessor.";
     public static final String SITE_CONFIG_PREFIX = "site.config.";
 
-    public String END_MSG_MARK_END;
-    public String END_MSG_MARK_SIGN;
+    public String MARK_END_MSG_1;
+    public String MARK_END_MSG_2;
     public String MSG_NOT_EXIST_OR_WRONG;
     public String WITHOUT_TOPIC;
 
     // regexes
     public String MSG_REG_RE_STR;
     public String MSG_UNREG_RE_STR;
-    public String INDEX_UNREG_RE_STR;
+    public String LINK_INDEX_REGEX;
 
     public String SITE_URL;
     public String READ_QUERY;
@@ -42,29 +41,34 @@ public class SiteAccessor {
 
     private String siteName;
 
-//    private SiteAccessor() {}
 
     public SiteAccessor(String siteName) {
-//        try {
-//            return (SiteAccessor) Class.forName(Config.getProp(SITE_ACCESSOR_PREFIX + siteName)).newInstance();
-
         Properties p = Config.loadProperties("org/xonix/zlo/search/config/" + Config.getProp(SITE_CONFIG_PREFIX + siteName));
-//        SiteAccessor sa = new SiteAccessor();
 
         setSiteName(siteName);
-        MSG_REG_RE_STR = p.getProperty("regex.msg.reg");
-        //todo:...
 
-        DB_DRIVER = p.getProperty("db.driver");
-        DB_URL = p.getProperty("db.url");
-        DB_USER = p.getProperty("db.user");
-        DB_PASSWORD = p.getProperty("db.password");
+        MARK_END_MSG_1 =        p.getProperty("str.mark.end.1");
+        MARK_END_MSG_2 =        p.getProperty("str.mark.end.2");
+
+        MSG_NOT_EXIST_OR_WRONG = p.getProperty("str.msg.not.exists");
+        WITHOUT_TOPIC =         p.getProperty("str.without.topic");
+
+        MSG_REG_RE_STR =        p.getProperty("regex.msg.reg");
+        MSG_UNREG_RE_STR =      p.getProperty("regex.msg.unreg");
+
+        LINK_INDEX_REGEX =      p.getProperty("regex.link.index");
+
+        SITE_URL =              p.getProperty("site.url");
+        READ_QUERY =            p.getProperty("site.read.query");
+        // db -----
+        JNDI_DS_NAME =          p.getProperty("db.jndi.ds.name");
+
+        DB_DRIVER =             p.getProperty("db.driver");
+        DB_URL =                p.getProperty("db.url");
+        DB_USER =               p.getProperty("db.user");
+        DB_PASSWORD =           p.getProperty("db.password");
 
         DB_VIA_CONTAINER = Config.TRUE.equals(p.getProperty("db.use.container.pull"));
-
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
     }
 
     public String getSiteName() {
@@ -99,13 +103,15 @@ public class SiteAccessor {
         return getRetriever().getLastRootMessageNumber(); 
     }
 
-
+    private DriverManagerDataSource ds;
     public DataSource getDataSource() {
-        DriverManagerDataSource ds = new DriverManagerDataSource();
-        ds.setDriverClassName(DB_DRIVER);
-        ds.setUrl(DB_URL);
-        ds.setUsername(DB_USER);
-        ds.setPassword(DB_PASSWORD);
+        if (ds == null) {
+            ds = new DriverManagerDataSource();
+            ds.setDriverClassName(DB_DRIVER);
+            ds.setUrl(DB_URL);
+            ds.setUsername(DB_USER);
+            ds.setPassword(DB_PASSWORD);
+        }
         return ds;
     }
 }

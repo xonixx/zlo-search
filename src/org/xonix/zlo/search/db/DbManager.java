@@ -36,25 +36,12 @@ public class DbManager {
 
     private static final String DB_DICT_LAST_INDEXED =          "lastIndexed";
     private static final String DB_DICT_LAST_INDEXED_DOUBLE =   "lastIndexedDouble";
-//    private static final String TABLES_KEY_PREFIX = "db.tables.";
-
-//    private static List<String> tables = null;
-
-//    private String jndiDsName;
-//    public DbManager(String jndiDsName) {
-//        this.jndiDsName = jndiDsName;
-//    }
 
     private Site site;
 
     private DbManager(Site site) {
-//        this(site.getSiteAccessor().JNDI_DS_NAME);
         this.site = site;
     }
-
-//    private DbManager(String siteName) {
-//        this(new Site(siteName));
-//    }
 
     private static HashMap<String, DbManager> dbms = new HashMap<String, DbManager>();
     public static DbManager forSite(Site site) {
@@ -69,26 +56,13 @@ public class DbManager {
         return forSite(new Site(siteName));
     }
 
-/*    private static List<String> getTableNames() {
-        if (tables == null) {
-            tables = new ArrayList<String>();
-            for (Object key : Config.getAppProperties().keySet()) {
-                String k = (String) key;
-                if (k.startsWith(TABLES_KEY_PREFIX)) {
-                    tables.add(k.replaceFirst(TABLES_KEY_PREFIX, ""));
-                }
-            }
-        }
-        return tables;
+    public Site getSite() {
+        return site;
     }
 
-    private static String prepareSql(String sqlName) {
-        String sql = props.getProperty(sqlName);
-        for (String tab : getTableNames()) {
-            sql = sql.replaceAll("\\{" + tab + "\\}", Config.getProp(TABLES_KEY_PREFIX + tab));
-        }
-        return sql;
-    }*/
+    public void setSite(Site site) {
+        this.site = site;
+    }
 
     private static final String SQL_INSERT_MSG =            props.getProperty("sql.insert.msg");
     private static final String SQL_INSERT_UPDATE_MSG =     props.getProperty("sql.insert.update.msg");
@@ -267,7 +241,7 @@ public class DbManager {
     }
 
     private HashMap<String, Integer> topicsHashMap;
-    // returns <topic name, topic code> where "topic name"s also includes old codes
+    // returns <topic name, topic code> where "topic name"s also include old codes
     public HashMap<String, Integer> getTopicsHashMap() throws DbException {
         if (topicsHashMap == null) {
             DbUtils.Result res = DbUtils.executeSelect(site, SQL_SELECT_ALL_TOPICS);
@@ -333,6 +307,7 @@ public class DbManager {
 
     private ZloMessage getMessage(DbUtils.Result rs) throws DbException {
         return new ZloMessage(
+                site,
                 rs.getString(MSG_NICK)
                 , rs.getString(MSG_ALT_NAME)
                 , rs.getString(MSG_HOST)

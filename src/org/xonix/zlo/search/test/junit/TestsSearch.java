@@ -18,7 +18,7 @@ import java.util.Date;
  * Date: 03.10.2007
  * Time: 22:56:24
  */
-public class Tests1 extends TestCase {
+public class TestsSearch extends TestCase {
 
     DbManager dbm;
     DbDict dbDict;

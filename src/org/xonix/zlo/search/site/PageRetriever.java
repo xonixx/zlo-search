@@ -38,7 +38,7 @@ public class PageRetriever {
 
     public PageRetriever(SiteAccessor siteAccessor) {
         this.siteAccessor = siteAccessor;
-        INDEX_UNREG_RE = Pattern.compile(siteAccessor.INDEX_UNREG_RE_STR);
+        INDEX_UNREG_RE = Pattern.compile(siteAccessor.LINK_INDEX_REGEX);
     }
 
     public String getPageContentByNumber(int num) throws IOException {
@@ -69,8 +69,8 @@ public class PageRetriever {
                 currSize = stringGroups.size();
                 ending = stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1);
             } while(
-                ending.indexOf(siteAccessor.END_MSG_MARK_END) == -1 &&
-                ending.indexOf(siteAccessor.END_MSG_MARK_SIGN) == -1 && // if user have sign - won't read it all
+                ending.indexOf(siteAccessor.MARK_END_MSG_1) == -1 &&
+                ending.indexOf(siteAccessor.MARK_END_MSG_2) == -1 && // if user have sign - won't read it all
                 ending.indexOf(siteAccessor.MSG_NOT_EXIST_OR_WRONG) == -1
                 );
         } finally {

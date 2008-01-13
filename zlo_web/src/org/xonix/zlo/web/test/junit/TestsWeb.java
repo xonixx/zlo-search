@@ -9,7 +9,7 @@ import org.xonix.zlo.web.HtmlConstructor;
  * Date: 16.10.2007
  * Time: 23:31:05
  */
-public class Tests1 extends TestCase {
+public class TestsWeb extends TestCase {
     @Test
     public void testHtmlConstructor() {
         assertEquals("<select name=\"selId\">\n" +
