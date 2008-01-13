@@ -69,7 +69,7 @@ public class PageRetriever {
                 currSize = stringGroups.size();
                 ending = stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1);
             } while(
-                ending.indexOf(siteAccessor.END_MSG_MARK) == -1 &&
+                ending.indexOf(siteAccessor.END_MSG_MARK_END) == -1 &&
                 ending.indexOf(siteAccessor.END_MSG_MARK_SIGN) == -1 && // if user have sign - won't read it all
                 ending.indexOf(siteAccessor.MSG_NOT_EXIST_OR_WRONG) == -1
                 );

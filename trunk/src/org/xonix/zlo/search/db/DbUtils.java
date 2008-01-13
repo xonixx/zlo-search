@@ -1,10 +1,13 @@
 package org.xonix.zlo.search.db;
 
-import org.xonix.zlo.search.config.Config;
 import org.apache.log4j.Logger;
+import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.dao.Site;
 
-import java.sql.*;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.io.Closeable;
+import java.sql.*;
 
 /**
  * Author: Vovan
@@ -146,30 +149,63 @@ public final class DbUtils {
         }
     }
 
-    public static Result executeSelect(String sqlString, Object[] params, VarType[] types) throws DbException {
+    //======================================
+    public static Result executeSelect(Connection connection, String sqlString, Object[] params, VarType[] types) throws DbException {
         PreparedStatement st;
         try {
-            Connection connection = ConnectionUtils.getConnection();
             st = connection.prepareStatement(sqlString);
-           setParams(st, params, types);
-           return new Result(connection, st.executeQuery(), st);
+            setParams(st, params, types);
+            return new Result(connection, st.executeQuery(), st);
         } catch (SQLException e) {
-           throw new DbException(e);
+            throw new DbException(e);
         }
     }
 
-    public static Result executeSelect(String sqlString) throws DbException {
-        return executeSelect(sqlString, new Object[0], new VarType[0]);
+    public static Result executeSelect(String jndiDsName, String sqlString, Object[] params, VarType[] types) throws DbException {
+        try {
+            return executeSelect(ConnectionUtils.getConnection(jndiDsName), sqlString, params, types);
+        } catch (NamingException e) {
+            throw new DbException(e);
+        }
     }
 
+    public static Result executeSelect(DataSource ds, String sqlString, Object[] params, VarType[] types) throws DbException {
+        return executeSelect(ConnectionUtils.getConnection(ds), sqlString, params, types);
+    }
+
+    public static Result executeSelect(Site site, String sqlString, Object[] params, VarType[] types) throws DbException {
+        if (site.DB_VIA_CONTAINER) {
+            return executeSelect(site.JNDI_DS_NAME, sqlString, params, types);
+        } else {
+            return executeSelect(site.getDataSource(), sqlString, params, types);
+        }
+    }
+
+    //--------------------------------------
+    public static Result executeSelect(String jndiDsName, String sqlString) throws DbException {
+        return executeSelect(jndiDsName, sqlString, new Object[0], new VarType[0]);
+    }
+
+    public static Result executeSelect(DataSource ds, String sqlString) throws DbException {
+        return executeSelect(ds, sqlString, new Object[0], new VarType[0]);
+    }
+
+    public static Result executeSelect(Site site, String sqlString) throws DbException {
+        if (site.DB_VIA_CONTAINER) {
+            return executeSelect(site.JNDI_DS_NAME, sqlString, new Object[0], new VarType[0]);
+        } else {
+            return executeSelect(site.getDataSource(), sqlString, new Object[0], new VarType[0]);
+        }
+    }
     /*
      Executes insert, update, delete
      */
-    public static void executeUpdate(String sqlString, Object[] params, VarType[] types, Integer expectedResult) throws DbException {
+    //======================================
+    public static void executeUpdate(Connection connection, String sqlString, Object[] params, VarType[] types, Integer expectedResult) throws DbException {
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
-            st = ConnectionUtils.getConnection().prepareStatement(sqlString);
+            st = connection.prepareStatement(sqlString);
 
             setParams(st, params, types);
 
@@ -183,30 +219,39 @@ public final class DbUtils {
         }
     }
 
-    public static void executeUpdate(String sqlString, Object[] params, VarType[] types) throws DbException {
-        executeUpdate(sqlString, params, types, null);
+    public static void executeUpdate(String jndiDsName, String sqlString, Object[] params, VarType[] types, Integer expectedResult) throws DbException {
+        try {
+            executeUpdate(ConnectionUtils.getConnection(jndiDsName), sqlString, params, types, expectedResult);
+        } catch (NamingException e) {
+            throw new DbException(e);
+        }
     }
 
-    public static Connection createConnection() throws DbException {
-        Connection _conn = null;
-        logger.info("Creating db connection...");
+    public static void executeUpdate(DataSource ds, String sqlString, Object[] params, VarType[] types, Integer expectedResult) throws DbException {
+        executeUpdate(ConnectionUtils.getConnection(ds), sqlString, params, types, expectedResult);
+    }
 
-        if (Config.TRUE.equals(Config.getProp("db.initialize"))) {
-            try {
-                 Class.forName(Config.getProp("db.driver"));
-                _conn = DriverManager.getConnection(Config.getProp("db.url"), Config.getProp("db.user"), Config.getProp("db.password"));
-            } catch (Exception e) {
-                if (e instanceof ClassNotFoundException) {
-                    logger.error("Can't load MySQL drivers...");
-                } else if (e instanceof SQLException) {
-                    logger.error("Can't connect to DB...");
-                }
-                logger.warn("Connection not created because of exception: " + e.getClass());
-                throw new DbException(e);
-            }
+    public static void executeUpdate(Site site, String sqlString, Object[] params, VarType[] types, Integer expectedResult) throws DbException {
+        if (site.DB_VIA_CONTAINER) {
+            executeUpdate(site.JNDI_DS_NAME, sqlString, params, types, expectedResult);
         } else {
-            logger.info("Starting without db because of config...");
+            executeUpdate(site.getDataSource(), sqlString, params, types, expectedResult);
         }
-        return _conn;
+    }
+    //--------------------------------------
+    public static void executeUpdate(String jndiDsName, String sqlString, Object[] params, VarType[] types) throws DbException {
+        executeUpdate(jndiDsName, sqlString, params, types, null);
+    }
+
+    public static void executeUpdate(DataSource ds, String sqlString, Object[] params, VarType[] types) throws DbException {
+        executeUpdate(ds, sqlString, params, types, null);
+    }
+
+    public static void executeUpdate(Site site, String sqlString, Object[] params, VarType[] types) throws DbException {
+        if (site.DB_VIA_CONTAINER) {
+            executeUpdate(site.JNDI_DS_NAME, sqlString, params, types, null);
+        } else {
+            executeUpdate(site.getDataSource(), sqlString, params, types, null);
+        }
     }
 }

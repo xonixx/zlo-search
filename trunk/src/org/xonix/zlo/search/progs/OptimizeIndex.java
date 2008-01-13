@@ -1,17 +1,15 @@
 package org.xonix.zlo.search.progs;
 
 import org.xonix.zlo.search.ZloIndexer;
-import org.xonix.zlo.search.DAO;
+import org.xonix.zlo.search.dao.DB;
+import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.search.DoubleIndexSearcher;
 import org.xonix.zlo.search.ZloSearcher;
-import org.xonix.zlo.search.db.DbManager;
-import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.config.Config;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import java.text.MessageFormat;
 
 /**
  * Author: Vovan
@@ -24,7 +22,7 @@ public class OptimizeIndex {
     public static void main(String[] args) {
         try {
             if (!Config.USE_DOUBLE_INDEX) {
-                IndexWriter w = new ZloIndexer(DAO.DB.SOURCE).getWriter();
+                IndexWriter w = new ZloIndexer(new DB(new Site("zlo"))).getWriter();
                 logger.info("Optimizing index...");
                 w.optimize();
                 w.close();

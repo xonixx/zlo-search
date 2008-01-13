@@ -11,9 +11,19 @@ import org.apache.log4j.Logger;
  */
 public class TestDaemon extends Daemon {
     private static final Logger logger = Logger.getLogger(TestDaemon.class);
+
+    protected Process createProcess(String siteName) {
+        return null;
+    }
+
     private class MyProcess extends Process {
 
         private int i=0;
+
+        public MyProcess(String siteName) {
+            super(siteName);
+        }
+
         protected void doOneIteration() {
             System.out.println("Iteration: " + i);
             sleepSafe(5000);
@@ -22,10 +32,6 @@ public class TestDaemon extends Daemon {
 
         protected void cleanUp() {
         }
-    }
-
-    protected Process createProcess() {
-        return new MyProcess();
     }
 
     public static void main(String[] args) {

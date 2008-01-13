@@ -2,13 +2,11 @@ package org.xonix.zlo.search;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.search.Hit;
 import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.displaytag.pagination.PaginatedList;
 import org.xonix.zlo.search.model.ZloMessageAccessor;
-import org.xonix.zlo.search.model.ZloMessageLazy;
 
 import java.util.Iterator;
 
@@ -87,7 +85,7 @@ public class SearchResult implements Iterable {
         return query;
     }
 
-    private class MsgsIterator implements Iterator<ZloMessageAccessor> {
+/*    private class MsgsIterator implements Iterator<ZloMessageAccessor> {
         Iterator hitsIterator = doubleHits.iterator();
 
         public boolean hasNext() {
@@ -101,10 +99,11 @@ public class SearchResult implements Iterable {
 
         public void remove() {
         }
-    }
+    }*/
 
     public Iterator<ZloMessageAccessor> iterator() {
-        return new MsgsIterator();
+//        return new MsgsIterator();
+        return null;
     }
 
     public SearchRequest getLastSearch() {

@@ -1,7 +1,7 @@
 package org.xonix.zlo.search;
 
 import org.apache.log4j.Logger;
-import static org.xonix.zlo.search.DAO.DAOException;
+import org.xonix.zlo.search.dao.DAOException;
 import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.site.PageRetriever;

@@ -1,6 +1,11 @@
 package org.xonix.zlo.search.daemon;
 
 import org.apache.log4j.Logger;
+import org.xonix.zlo.search.dao.Site;
+import org.xonix.zlo.search.dao.DB;
+import org.xonix.zlo.search.db.DbManagerSource;
+import org.xonix.zlo.search.db.DbManager;
+import org.xonix.zlo.search.ZloIndexer;
 import sun.misc.Signal;
 import sun.misc.SignalHandler;
 
@@ -18,7 +23,7 @@ public abstract class Daemon {
     protected void setExiting(boolean exiting) {
         if (isSleeping) {
             logger.info("Exiting...");
-            getProcess().cleanUp();
+            getProcess(getSiteName()).cleanUp();
             System.exit(0);
         } else {
             this.exiting = exiting;
@@ -29,18 +34,37 @@ public abstract class Daemon {
         return exiting;
     }
 
-    protected abstract Process createProcess();
+    protected abstract Process createProcess(String siteName);
 
-    private Process getProcess() {
+    private Process getProcess(String siteName) {
         if (process == null) {
-            process = createProcess();
+            process = createProcess(siteName);
         }
         return process;
     }
 
     protected abstract class Process extends Thread {
-        public Process() {
-            super();
+        private DbManagerSource dbms;
+
+        public Process(String siteName) {
+            super(siteName);
+            dbms = new DbManagerSource(new Site(siteName));
+        }
+
+        protected DbManager getDbManager() {
+            return dbms.getDbManager();
+        }
+
+        private ZloIndexer zloIndexer;
+        protected ZloIndexer getIndexer() {
+            if (zloIndexer == null) {
+                zloIndexer = new ZloIndexer(getDB());
+            }
+            return zloIndexer;
+        }
+
+        protected DB getDB() {
+            return dbms.getDB();
         }
 
         public void run() {
@@ -89,7 +113,7 @@ public abstract class Daemon {
 
     protected void start() {
         while (true) {
-            Process t = getProcess();
+            Process t = getProcess(getSiteName());
             t.setPriority(Thread.MIN_PRIORITY); // so daemons not slowing search 
             t.start();
             try {
@@ -105,6 +129,17 @@ public abstract class Daemon {
                 logger.info("Gracefully exiting...");
                 break;
             }
+        }
+    }
+
+    private String getSiteName() {
+        String sn = System.getenv("SITE_NAME");
+        if (sn == null) {
+            logger.error("Must set SITE_NAME environment variable!");
+            System.exit(-1);
+            return null;
+        } else {
+            return sn;
         }
     }
 }

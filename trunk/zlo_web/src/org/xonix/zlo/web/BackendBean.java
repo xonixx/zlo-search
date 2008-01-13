@@ -4,7 +4,9 @@ import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.model.ZloMessage;
+import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.web.servlets.SearchServlet;
+import org.xonix.zlo.web.servlets.BaseServlet;
 
 /**
  * Author: Vovan
@@ -23,7 +25,7 @@ public class BackendBean {
     private int pageSize;
 
     public static final String SN_TOPIC = SearchServlet.QS_TOPIC_CODE;
-    public static final String SN_SITE = SearchServlet.QS_SITE;
+    public static final String SN_SITE = BaseServlet.QS_SITE;
     public static final String SN_PAGE_SIZE = SearchServlet.QS_PAGE_SIZE;
 
     public BackendBean() {
@@ -32,7 +34,8 @@ public class BackendBean {
     public String getTopicSelector() {
         String[] topics = new String[0];
         try {
-            topics = DbManager.getTopics();
+            // todo: check
+            topics = DbManager.forSite(Site.getSites().get(getSite()).getSiteName()).getTopics();
         } catch (DbException e) {
             ;
         }

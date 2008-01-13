@@ -19,7 +19,7 @@ public class ZloMessageLazy implements ZloMessageAccessor {
 
     private void init() {
         if (msg == null) {
-            msg = ZloMessage.fromHit(hit);
+            //msg = ZloMessage.fromHit(hit);
         }
     }
 

@@ -1,8 +1,9 @@
 package org.xonix.zlo.web.servlets;
 
 import org.apache.commons.lang.StringUtils;
-import org.xonix.zlo.search.DAO;
 import org.xonix.zlo.search.config.ErrorMessage;
+import org.xonix.zlo.search.dao.DAOException;
+import org.xonix.zlo.search.dao.DB;
 import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 
@@ -43,13 +44,13 @@ public class SavedMessageServlet extends BaseServlet {
 
         ZloMessage msg;
         try {
-            msg = DAO.DB._getMessageByNumber(num);
+            msg = new DB(getSite()).getMessageByNumber(num);
             if (msg != null) {
                 request.setAttribute(SAVED_MSG, msg);
             } else {
                 request.setAttribute(ERROR, ErrorMessage.MessageNotFound);
             }
-        } catch (DAO.DAOException e) {
+        } catch (DAOException e) {
             request.setAttribute(ERROR, ErrorMessage.DbError);
         }
 

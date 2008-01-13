@@ -1,6 +1,6 @@
 package org.xonix.zlo.search;
 
-import static org.xonix.zlo.search.DAO.DAOException;
+import org.xonix.zlo.search.dao.DAOException;
 import org.xonix.zlo.search.model.ZloMessage;
 
 import java.util.List;
