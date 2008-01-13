@@ -47,7 +47,8 @@ public class ZloPaginatedList implements PaginatedList {
             logger.error("Error while getting doc from index: " + e);
         }
 
-        return DbManager.getMessages(indexes, fromIndex);
+        // todo: VVVVVVVVVVVVVVVVV
+        return DbManager.forSite("zlo").getMessages(indexes, fromIndex);
     }
 
     public void refreshCurrentList() throws DbException {

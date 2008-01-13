@@ -1,9 +1,11 @@
 package org.xonix.zlo.search.daemon;
 
 import org.apache.log4j.Logger;
-import org.xonix.zlo.search.DAO;
 import org.xonix.zlo.search.IndexingSource;
 import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.dao.DAOException;
+import org.xonix.zlo.search.dao.DB;
+import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.utils.TimeUtils;
 
@@ -27,10 +29,14 @@ public class DbDaemon extends Daemon {
         private int endSource = -1;
         private int startDb = -1;
 
+        public MainProcess(String siteName) {
+            super(siteName);
+        }
+
         protected void doOneIteration() {
             try {
                 if (startDb == -1)
-                    startDb = DAO.DB._getLastMessageNumber() + 1;
+                    startDb = getDB().getLastMessageNumber() + 1;
 
                 if (endSource == -1)
                     endSource = source.getLastMessageNumber();
@@ -49,7 +55,7 @@ public class DbDaemon extends Daemon {
 
                 if (startDb <= end) {
                     List<ZloMessage> msgs = source.getMessages(startDb, end + 1);
-                    DAO.DB.saveMessages(msgs);
+                    getDB().saveMessages(msgs);
                 }
 
                 startDb = end + 1;
@@ -59,10 +65,10 @@ public class DbDaemon extends Daemon {
                     sleepSafe(SCAN_PERIOD);
                     endSource = source.getLastMessageNumber();
                 }
-            } catch (DAO.DAOException e) {
-                if (e.getSource() instanceof DAO.DB) {
+            } catch (DAOException e) {
+                if (e.getSource() instanceof DB) {
                     logger.warn("Problem with db: " + e);
-                } else if (e.getSource() instanceof DAO.Site) {
+                } else if (e.getSource() instanceof Site) {
                     logger.warn("Problem with site: " + e);
                 }
                 e.printStackTrace();
@@ -79,15 +85,15 @@ public class DbDaemon extends Daemon {
         this.source = source;
     }
 
-    protected Process createProcess() {
-        return new MainProcess();
+    protected Process createProcess(String siteName) {
+        return new MainProcess(siteName);
     }
 
     public static void main(String[] args) {
 //        DAO.DB.saveMessages(DAO.Site._getMessages(3999990, 3999999));
 //        DAO.DB.saveMessages(DAO.Site._getMessages(4000000, 4000010));
 
-        new DbDaemon(DAO.Site.getSite("zlo")).start();
+        new DbDaemon(new Site("zlo")).start();
 //        new DbDaemon(new ZloStorage()).start();
     }
 }

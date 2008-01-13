@@ -3,14 +3,11 @@ package org.xonix.zlo.search.daemon;
 import org.apache.log4j.Logger;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.xonix.zlo.search.config.Config;
-import org.xonix.zlo.search.utils.TimeUtils;
-import org.xonix.zlo.search.db.DbManager;
-import org.xonix.zlo.search.db.DbException;
-import org.xonix.zlo.search.ZloIndexer;
-import org.xonix.zlo.search.DAO;
-import org.xonix.zlo.search.ZloSearcher;
 import org.xonix.zlo.search.DoubleIndexSearcher;
+import org.xonix.zlo.search.ZloSearcher;
+import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.db.DbException;
+import org.xonix.zlo.search.utils.TimeUtils;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -27,12 +24,16 @@ public class IndexerDaemon extends Daemon {
     public static final int INDEX_PERIOD = TimeUtils.parseToMilliSeconds(Config.getProp("indexer.daemon.period.to.index"));
     public static final int RECONNECT_PERIOD = TimeUtils.parseToMilliSeconds(Config.getProp("indexer.daemon.period.to.reconnect"));
 
-    private static final ZloIndexer indexer = new ZloIndexer(DAO.DB.SOURCE);
+//    private static final ZloIndexer indexer = new ZloIndexer(DB.SOURCE);
 
     private class IndexingProcess extends Process {
         private int indexFrom = -1;
         private int end = -1;
-        
+
+        public IndexingProcess(String siteName) {
+            super(siteName);
+        }
+
         protected void doOneIteration() {
             try {
                 if (indexFrom == -1) {
@@ -40,19 +41,19 @@ public class IndexerDaemon extends Daemon {
                     indexFrom = (Config.USE_DOUBLE_INDEX
                             ? (inIndex != -1 
                                 ? inIndex  // more reliable
-                                : DbManager.getLastIndexedNumber() + 1)
-                            : DbManager.getLastIndexedNumber()) + 1;
+                                : getDbManager().getLastIndexedNumber() + 1)
+                            : getDbManager().getLastIndexedNumber()) + 1;
                 }
 
                 if (end == -1)
-                    end = DbManager.getLastMessageNumber();
+                    end = getDbManager().getLastMessageNumber();
 
                 int indexTo;
 
                 if (indexFrom + INDEX_PER_TIME - 1 < end) {
                     indexTo = indexFrom + INDEX_PER_TIME - 1;
                 } else {
-                    end = DbManager.getLastMessageNumber();
+                    end = getDbManager().getLastMessageNumber();
                     if (indexFrom + INDEX_PER_TIME - 1 < end)
                         indexTo = indexFrom + INDEX_PER_TIME - 1;
                     else
@@ -60,7 +61,7 @@ public class IndexerDaemon extends Daemon {
                 }
 
                 if (indexFrom <= indexTo) {
-                    indexer.index(indexFrom, indexTo);
+                    getIndexer().index(indexFrom, indexTo);
                 }
 
                 indexFrom = indexTo + 1;
@@ -68,7 +69,7 @@ public class IndexerDaemon extends Daemon {
                 while (indexFrom > end) {
                     logger.debug("Sleeping " + INDEX_PERIOD / 1000 / 60f + " min...");
                     sleepSafe(INDEX_PERIOD);
-                    end = DbManager.getLastMessageNumber();
+                    end = getDbManager().getLastMessageNumber();
                 }
             } catch (DbException e) {
                 logger.warn("Problem with db: " + e.getClass());
@@ -81,15 +82,15 @@ public class IndexerDaemon extends Daemon {
 
         protected void cleanUp() {
             try {
-                indexer.getWriter().close();
+                getIndexer().getWriter().close();
             } catch (IOException e) {
                 logger.warn("Can't close writer: ", e);
             }
         }
     }
 
-    protected Process createProcess() {
-        return new IndexingProcess();
+    protected Process createProcess(String siteName) {
+        return new IndexingProcess(siteName);
     }
 
     public static void main(String[] args) {

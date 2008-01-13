@@ -1,8 +1,9 @@
 package org.xonix.zlo.search.progs;
 
-import org.xonix.zlo.search.DAO;
 import org.xonix.zlo.search.MultithreadedRetriever;
 import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.dao.DAOException;
+import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.model.ZloMessage;
@@ -21,13 +22,16 @@ public class RescanUndefStatusMsgs {
     private static int MAX_ALEXZAM = 4030808; // 4 030 808 - max alexzam db row
     private static int N = 10000;
 
-    public static void main(String[] args) throws DbException, DAO.DAOException {
+    public static void main(String[] args) throws DbException, DAOException {
         new Config();
+
+        DbManager dbm = DbManager.forSite("zlo");
+
         int n=420000;
 
         int addedEmpty = 0;
         while (n <= MAX_ALEXZAM + N) {
-            List<ZloMessage> msgs_n_N = DbManager.getMessagesByRange(n, n+N);
+            List<ZloMessage> msgs_n_N = dbm.getMessagesByRange(n, n+N);
 
             Set<Integer> newNums = new HashSet<Integer>();
             for (ZloMessage m : msgs_n_N) {
@@ -41,10 +45,10 @@ public class RescanUndefStatusMsgs {
 
             if (newNums.size() > 0) {
                 System.out.print("Getting from site... ");
-                List<ZloMessage> newMsgs = MultithreadedRetriever.getMessages(DAO.Site.getSite("zlo"), newNums);
+                List<ZloMessage> newMsgs = MultithreadedRetriever.getMessages(new Site("zlo"), newNums);
 
                 System.out.print("Saving... ");
-                DbManager.saveMessagesFast(newMsgs, true);
+                dbm.saveMessagesFast(newMsgs, true);
 
                 System.out.println("Done.");
             }

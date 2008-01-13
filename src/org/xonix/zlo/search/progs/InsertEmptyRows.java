@@ -6,6 +6,7 @@ import org.xonix.zlo.search.db.VarType;
 import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.dao.Site;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +27,16 @@ public class InsertEmptyRows {
         new Config();
         int n=0;
 
+        Site site = new Site("zlo");
+        DbManager dbm = DbManager.forSite(site);
+
         int addedEmpty = 0;
         while (n <= MAX_ALEXZAM + N) {
             ArrayList<Integer> nums_n_N = new ArrayList<Integer>();
 
-            DbUtils.Result r = DbUtils.executeSelect("select num from messages where num>=? and num<?;",
+            DbUtils.Result r = DbUtils.executeSelect(
+                    site,
+                    "select num from messages where num>=? and num<?;",
                     new Object[] {n, n+N}, new VarType[] {VarType.INTEGER, VarType.INTEGER});
             int num;
             while((num = r.getOneInt()) != -1) {
@@ -50,7 +56,7 @@ public class InsertEmptyRows {
             System.out.println(MessageFormat.format("Need to add {0} empty messages from {1} to {2} ", needToAdd.size(), n, n+N ));
 
             if (needToAdd.size() > 0)
-                DbManager.saveMessagesFast(needToAdd);
+                dbm.saveMessagesFast(needToAdd);
 
             addedEmpty += needToAdd.size();
             n = n + N;

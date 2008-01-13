@@ -40,7 +40,6 @@ public class SearchServlet extends BaseServlet {
     public static final String QS_TEXT = "text";
     public static final String QS_NICK = "nick";
     public static final String QS_HOST = "host";
-    public static final String QS_SITE = "site";
     public static final String QS_DATES = "dates";
     public static final String QS_FROM_DATE = "fd";
     public static final String QS_TO_DATE = "td";
@@ -67,7 +66,6 @@ public class SearchServlet extends BaseServlet {
 
     // session keys
     public static final String SESS_SEARCH_RESULT = "searchResult";
-    public static final String SESS_SITE_ROOT = "siteRoot";
     public static final String SESS_PAGE_SIZE = QS_PAGE_SIZE;
 
     public static final String ERROR = "error";
@@ -264,12 +262,13 @@ public class SearchServlet extends BaseServlet {
     }
 
     private void showStatistics(ForwardingRequest request) throws DbException {
-        request.setAttribute(QS_LAST_MSGS, new int[] {DbManager.getLastMessageNumber(), DbManager.getLastIndexedNumber()});
+        DbManager dbm = DbManager.forSite(getSite());
+        request.setAttribute(QS_LAST_MSGS, new int[]{dbm.getLastMessageNumber(), dbm.getLastIndexedNumber()});
     }
 
     private void logRequest(ForwardingRequest request, String query) {
         try {
-            DbManager.logRequest(
+            DbManager.forSite(getSite()).logRequest(
                     request.getRemoteAddr(),
                     request.getHeader("User-Agent"),
                     request.getParameter(QS_TEXT),

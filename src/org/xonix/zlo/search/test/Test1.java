@@ -1,14 +1,14 @@
 package org.xonix.zlo.search.test;
 
 import org.apache.lucene.analysis.SimpleAnalyzer;
-import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.*;
-import org.apache.lucene.index.Term;
-import org.xonix.zlo.search.DAO;
 import org.xonix.zlo.search.ZloSearcher;
 import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.dao.DAOException;
+import org.xonix.zlo.search.dao.DB;
+import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.search.model.ZloMessage;
 
 import java.io.IOException;
@@ -39,8 +39,14 @@ class B extends A {
 public class Test1 {
     public static void main(String[] args) {
         new Config();
-        m15();
+//        m15();
+        m21();
         System.exit(0);
+    }
+
+    public static void m21() {
+        Properties p = Config.loadProperties("org/xonix/zlo/search/config/zlo.properties");
+        System.out.println(p.getProperty("regex.msg.reg"));
     }
 
     public static void m20() {
@@ -112,10 +118,10 @@ public class Test1 {
 //            System.out.println(DbManager.getMessageByNumber(4149183));
 //            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(648064));
 //            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(4199196));
-            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(4166588));
+            System.out.println(new Site("zlo").getMessageByNumber(4166588));
         } /*catch (DbException e) {
             e.printStackTrace();
-        } */ catch (DAO.DAOException e) {
+        } */ catch (DAOException e) {
             e.printStackTrace();
         }
     }
@@ -149,20 +155,21 @@ public class Test1 {
 
     public static void m12() {
         try {
-            for (ZloMessage m : DAO.Site.getSite("zlo").getMessages(10000, 10042)) {
+            for (ZloMessage m : new Site("zlo").getMessages(10000, 10042)) {
                 System.out.println(m);
             }
-        } catch (DAO.DAOException e) {
+        } catch (DAOException e) {
             e.printStackTrace();
         }
     }
 
     public static void m11() {
+        Site site = new Site("zlo");
         try {
             for (int i = 0; i < 6000; i++) {
-                DAO.DB.SOURCE.getMessageByNumber(i);
+                site.getMessageByNumber(i);
             }
-        } catch (DAO.DAOException e) {
+        } catch (DAOException e) {
             e.printStackTrace();
         }
     }
@@ -170,8 +177,8 @@ public class Test1 {
     public static void m10() {
         try {
 //            System.out.println(new ZloStorage().getLastMessageNumber());
-            System.out.println(DAO.DB._getLastMessageNumber());
-        } catch (DAO.DAOException e) {
+            System.out.println(new DB(new Site("zlo")).getLastMessageNumber());
+        } catch (DAOException e) {
             e.printStackTrace();
         }
     }
@@ -209,8 +216,8 @@ public class Test1 {
     public static void m5() {
         for (int i = 0; i < 10; i++) {
             try {
-                System.out.println(">" + DAO.Site.getSite("zlo").getLastMessageNumber());
-            } catch (DAO.DAOException e) {
+                System.out.println(">" + new Site("zlo").getLastMessageNumber());
+            } catch (DAOException e) {
                 e.printStackTrace();
             }
         }
@@ -246,18 +253,18 @@ public class Test1 {
 
     public static void m7() {
         try {
-            for (ZloMessage m : DAO.Site.getSite("zlo").getMessages(10, 110)) {
+            for (ZloMessage m : new Site("zlo").getMessages(10, 110)) {
                 System.out.println(m);
             }
-        } catch (DAO.DAOException e) {
+        } catch (DAOException e) {
             e.printStackTrace();
         }
     }
 
     public static void m8() {
         try {
-            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(3960198));
-        } catch (DAO.DAOException e) {
+            System.out.println(new Site("zlo").getMessageByNumber(3960198));
+        } catch (DAOException e) {
             e.printStackTrace();
         }
         /*System.out.println(PageParser.parseMessage("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" +
@@ -310,17 +317,17 @@ public class Test1 {
 
     public static void m9() {
         try {
-            List<ZloMessage> l = DAO.Site.getSite("zlo").getMessages(3999995, 3999999);
+            List<ZloMessage> l = new Site("zlo").getMessages(3999995, 3999999);
 //            Collections.
             for (ZloMessage m : l) {
                 System.out.println(m);
             }
             System.out.println("#############################################");
-            List<ZloMessage> l1 = DAO.Site.getSite("zlo").getMessages(4000000, 4000005);
+            List<ZloMessage> l1 = new Site("zlo").getMessages(4000000, 4000005);
             for (ZloMessage m : l1) {
                 System.out.println(m);
             }
-        } catch (DAO.DAOException e) {
+        } catch (DAOException e) {
             e.printStackTrace();
         }
     }

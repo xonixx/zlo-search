@@ -36,6 +36,7 @@ public class FileToDb {
     public static final Logger logger = Logger.getLogger(FileToDb.class);
 
     private void start(boolean doWork) {
+        DbManager dbm = DbManager.forSite("zlo");
         String lastLine = "";
         int result;
         try {
@@ -91,14 +92,14 @@ public class FileToDb {
                         e.printStackTrace();
                     } catch (ArrayIndexOutOfBoundsException e) {
                         e.printStackTrace();
-                        logger.error("Problem with line:\n"+lines[i]);
+                        logger.error("Problem with line:\n" + lines[i]);
                     }
                 }
 
                 Collections.sort(msgs, ZloMessage.NUM_COMPARATOR);
                 if (msgs.size() > 0) {
                     int min = msgs.get(0).getNum();
-                    int max = msgs.get(msgs.size()-1).getNum();
+                    int max = msgs.get(msgs.size() - 1).getNum();
                     logger.info("Saving msgs (" + min + " - " + max + ")...");
                 } else {
                     logger.info("Nothing to save");
@@ -106,7 +107,7 @@ public class FileToDb {
                     lastLine = s;
                 }
                 if (doWork)
-                    DbManager.saveMessagesFast(msgs);
+                    dbm.saveMessagesFast(msgs);
                 else {
                     for (ZloMessage m : msgs) {
                         System.out.println(m);

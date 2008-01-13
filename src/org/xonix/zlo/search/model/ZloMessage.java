@@ -7,19 +7,17 @@ import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
 import org.apache.lucene.document.DateTools;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.search.Hit;
-import org.xonix.zlo.search.DAO;
 import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.search.utils.HtmlUtils;
 
-import java.io.IOException;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
 import java.util.Comparator;
 import java.util.Date;
-import java.sql.Timestamp;
 
 /**
  * Author: gubarkov
@@ -66,6 +64,8 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
     private Boolean hasImg = null;
 
     private int hitId;
+
+    private Site site;
 
     public static Comparator<ZloMessage> NUM_COMPARATOR = new Comparator<ZloMessage>() {
             public int compare(ZloMessage m1, ZloMessage m2) {
@@ -322,6 +322,14 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
         this.status = status;
     }
 
+    public Site getSite() {
+        return site;
+    }
+
+    public void setSite(Site site) {
+        this.site = site;
+    }
+
     public ZloMessage getMessage() {
         return this;
     }
@@ -366,25 +374,25 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
         return doc;
     }
 
-    public static ZloMessage fromDocument(Document doc) {
+/*    public static ZloMessage fromDocument(Document doc) {
         int num = Integer.parseInt(doc.get(FIELDS.URL_NUM));
 
         ZloMessage msg;
         try {
-            msg = DAO.DB._getMessageByNumber(num);
-        } catch (DAO.DAOException e) {
+            msg = DB._getMessageByNumber(num);
+        } catch (DAOException e) {
             throw new RuntimeException(e);
         }
         return msg;
-    }
+    }*/
 
-    public static ZloMessage fromDocument(Document doc, int hitId) {
+/*    public static ZloMessage fromDocument(Document doc, int hitId) {
         ZloMessage res = fromDocument(doc);
         res.setHitId(hitId);
         return res;
-    }
+    }*/
 
-    public static ZloMessage fromHit(Hit hit) {
+/*    public static ZloMessage fromHit(Hit hit) {
         try {
             ZloMessage res = fromDocument(hit.getDocument());
             res.setHitId(hit.getId()); // to be adle to determine hit by msg
@@ -393,7 +401,7 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
             e.printStackTrace();
         }
         return null;
-    }
+    }*/
 
     private static Analyzer analyzer;
     public static Analyzer constructAnalyzer() {

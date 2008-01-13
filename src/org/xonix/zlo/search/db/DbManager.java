@@ -9,6 +9,7 @@ import java.sql.*;
 import java.util.*;
 
 import static org.xonix.zlo.search.db.VarType.*;
+import org.xonix.zlo.search.dao.Site;
 
 /**
  * User: boost
@@ -35,10 +36,40 @@ public class DbManager {
 
     private static final String DB_DICT_LAST_INDEXED =          "lastIndexed";
     private static final String DB_DICT_LAST_INDEXED_DOUBLE =   "lastIndexedDouble";
-    private static final String TABLES_KEY_PREFIX = "db.tables.";
+//    private static final String TABLES_KEY_PREFIX = "db.tables.";
 
-    private static List<String> tables = null;
-    private static List<String> getTableNames() {
+//    private static List<String> tables = null;
+
+//    private String jndiDsName;
+//    public DbManager(String jndiDsName) {
+//        this.jndiDsName = jndiDsName;
+//    }
+
+    private Site site;
+
+    private DbManager(Site site) {
+//        this(site.getSiteAccessor().JNDI_DS_NAME);
+        this.site = site;
+    }
+
+//    private DbManager(String siteName) {
+//        this(new Site(siteName));
+//    }
+
+    private static HashMap<String, DbManager> dbms = new HashMap<String, DbManager>();
+    public static DbManager forSite(Site site) {
+        String siteName = site.getSiteName();
+        if (!dbms.containsKey(siteName)) {
+            dbms.put(siteName, new DbManager(site));
+        }
+        return dbms.get(siteName);
+    }
+
+    public static DbManager forSite(String siteName) {
+        return forSite(new Site(siteName));
+    }
+
+/*    private static List<String> getTableNames() {
         if (tables == null) {
             tables = new ArrayList<String>();
             for (Object key : Config.getAppProperties().keySet()) {
@@ -57,24 +88,22 @@ public class DbManager {
             sql = sql.replaceAll("\\{" + tab + "\\}", Config.getProp(TABLES_KEY_PREFIX + tab));
         }
         return sql;
-    }
+    }*/
 
-    private static final String SQL_INSERT_MSG =            prepareSql("sql.insert.msg");
-    private static final String SQL_INSERT_UPDATE_MSG =     prepareSql("sql.insert.update.msg");
-    private static final String SQL_UPDATE_MSG =            prepareSql("sql.update.msg");
-    private static final String SQL_DELETE_MSG =            prepareSql("sql.delete.msg");
-    private static final String SQL_SELECT_MSG_BY_ID =      prepareSql("sql.select.msg.by.id");
-    private static final String SQL_SELECT_MSG_IN_RANGE =   prepareSql("sql.select.msg.in.range");
-    private static final String SQL_SELECT_LAST_MSG_NUM =   prepareSql("sql.select.last.msg.num");
-    private static final String SQL_SELECT_SET =            prepareSql("sql.select.set");
-    private static final String SQL_SELECT_ALL_TOPICS =     prepareSql("sql.select.all.topics");
-    private static final String SQL_SELECT_NEW_TOPICS =     prepareSql("sql.select.new.topics");
+    private static final String SQL_INSERT_MSG =            props.getProperty("sql.insert.msg");
+    private static final String SQL_INSERT_UPDATE_MSG =     props.getProperty("sql.insert.update.msg");
+    private static final String SQL_UPDATE_MSG =            props.getProperty("sql.update.msg");
+    private static final String SQL_DELETE_MSG =            props.getProperty("sql.delete.msg");
+    private static final String SQL_SELECT_MSG_BY_ID =      props.getProperty("sql.select.msg.by.id");
+    private static final String SQL_SELECT_MSG_IN_RANGE =   props.getProperty("sql.select.msg.in.range");
+    private static final String SQL_SELECT_LAST_MSG_NUM =   props.getProperty("sql.select.last.msg.num");
+    private static final String SQL_SELECT_SET =            props.getProperty("sql.select.set");
+    private static final String SQL_SELECT_ALL_TOPICS =     props.getProperty("sql.select.all.topics");
+    private static final String SQL_SELECT_NEW_TOPICS =     props.getProperty("sql.select.new.topics");
 
-    private static final String SQL_LOG_REQUEST =           prepareSql("sql.log.request");
+    private static final String SQL_LOG_REQUEST =           props.getProperty("sql.log.request");
 
-    private static HashMap<String, Integer> topicsHashMap;
-
-    private static void fillPreparedStatement(PreparedStatement pstmt, ZloMessage msg) throws DbException {
+    private void fillPreparedStatement(PreparedStatement pstmt, ZloMessage msg) throws DbException {
         DbUtils.setParams(pstmt,
                 new Object[] {msg.getNum(), msg.getParentNum(), msg.getHost(), msg.getTopicCode(), msg.getTitle(), msg.getNick(),
                                 msg.getAltName(), msg.getTimestamp(), msg.isReg(), msg.getBody(), msg.getStatus().getInt()},
@@ -82,7 +111,7 @@ public class DbManager {
                                 STRING,             DATE,               BOOLEAN,   STRING,          INTEGER});
     }
 
-    public static void saveMessages(List<ZloMessage> msgs, boolean update) throws DbException {
+    public void saveMessages(List<ZloMessage> msgs, boolean update) throws DbException {
         PreparedStatement chkPstmt = null;
         PreparedStatement insertPstmt = null;
         PreparedStatement updatePstmt = null;
@@ -123,11 +152,11 @@ public class DbManager {
         }
     }
 
-    public static void saveMessagesFast(List<ZloMessage> msgs) throws DbException {
+    public void saveMessagesFast(List<ZloMessage> msgs) throws DbException {
         saveMessagesFast(msgs, false);
     }
 
-    public static void saveMessagesFast(List<ZloMessage> msgs, boolean updateIfExists) throws DbException {
+    public void saveMessagesFast(List<ZloMessage> msgs, boolean updateIfExists) throws DbException {
         PreparedStatement insertPstmt = null;
         ResultSet rs = null;
         Connection conn = null;
@@ -167,13 +196,14 @@ public class DbManager {
         }
     }
 
-    public static void saveMessages(List<ZloMessage> msgs) throws DbException {
+    public void saveMessages(List<ZloMessage> msgs) throws DbException {
         saveMessages(msgs, false);
     }
 
     // todo: test
-    public static ZloMessage getMessageByNumber(int num) throws DbException {
+    public ZloMessage getMessageByNumber(int num) throws DbException {
         DbUtils.Result res = DbUtils.executeSelect(
+                site,
                 SQL_SELECT_MSG_BY_ID,
                 new Object[] {num},
                 new VarType[] {INTEGER});
@@ -186,8 +216,9 @@ public class DbManager {
         return zm;
     }
 
-    public static List<ZloMessage> getMessagesByRange(int start, int end) throws DbException {
+    public List<ZloMessage> getMessagesByRange(int start, int end) throws DbException {
         DbUtils.Result res = DbUtils.executeSelect(
+                site,
                 SQL_SELECT_MSG_IN_RANGE,
                 new Object[] {start, end},
                 new VarType[] {INTEGER, INTEGER});
@@ -203,7 +234,7 @@ public class DbManager {
         }
     }
 
-    public static List<ZloMessage> getMessages(int[] nums, int fromIndex) throws DbException {
+    public List<ZloMessage> getMessages(int[] nums, int fromIndex) throws DbException {
         StringBuilder sbNums = new StringBuilder(Integer.toString(nums[0]));
 
         for(int i=1; i<nums.length; i++) {
@@ -212,7 +243,7 @@ public class DbManager {
 
         String sql = String.format(SQL_SELECT_SET, sbNums.toString());
 
-        DbUtils.Result res = DbUtils.executeSelect(sql);
+        DbUtils.Result res = DbUtils.executeSelect(site, sql);
 
         List<ZloMessage> msgs = new ArrayList<ZloMessage>();
 
@@ -226,8 +257,8 @@ public class DbManager {
         return msgs;
     }
 
-    public static int getLastMessageNumber() throws DbException {
-        DbUtils.Result res = DbUtils.executeSelect(SQL_SELECT_LAST_MSG_NUM);
+    public int getLastMessageNumber() throws DbException {
+        DbUtils.Result res = DbUtils.executeSelect(site, SQL_SELECT_LAST_MSG_NUM);
         try {
             return res.getOneInt();
         } finally {
@@ -235,10 +266,11 @@ public class DbManager {
         }
     }
 
+    private HashMap<String, Integer> topicsHashMap;
     // returns <topic name, topic code> where "topic name"s also includes old codes
-    public static HashMap<String, Integer> getTopicsHashMap() throws DbException {
+    public HashMap<String, Integer> getTopicsHashMap() throws DbException {
         if (topicsHashMap == null) {
-            DbUtils.Result res = DbUtils.executeSelect(SQL_SELECT_ALL_TOPICS);
+            DbUtils.Result res = DbUtils.executeSelect(site, SQL_SELECT_ALL_TOPICS);
             try {
                 topicsHashMap = new HashMap<String, Integer>();
                 while (res.next()) {
@@ -252,11 +284,11 @@ public class DbManager {
     }
 
     // returns only "new" topics - current posible topics on site
-    private static String[] topics = null;
-    public static String[] getTopics() throws DbException {
+    private String[] topics = null;
+    public String[] getTopics() throws DbException {
         if (topics == null) {
             Map<Integer, String> topicsMap = new HashMap<Integer, String>();
-            DbUtils.Result res = DbUtils.executeSelect(SQL_SELECT_NEW_TOPICS);
+            DbUtils.Result res = DbUtils.executeSelect(site, SQL_SELECT_NEW_TOPICS);
             while (res.next()) {
                 topicsMap.put(res.getInt(1), res.getString(2));
             }
@@ -269,8 +301,9 @@ public class DbManager {
         return topics;
     }
 
-    public static void logRequest(String host, String userAgent, String reqText, String reqQuery, String referer) throws DbException {
+    public void logRequest(String host, String userAgent, String reqText, String reqQuery, String referer) throws DbException {
         DbUtils.executeUpdate(
+                site,
                 SQL_LOG_REQUEST
                 , new Object[] {
                         StringUtils.substring(host, 0, 100),
@@ -282,19 +315,23 @@ public class DbManager {
                 , 1);
     }
 
-    public static void setLastIndexedNumber(int num) throws DbException {
-        if (Config.USE_DOUBLE_INDEX)
-            DbDict.setInt(DB_DICT_LAST_INDEXED_DOUBLE, num);
-        else
-            DbDict.setInt(DB_DICT_LAST_INDEXED, num);
+    private DbDict getDbDict() {
+        return new DbDict(site);
     }
 
-    public static int getLastIndexedNumber() throws DbException {
-        Integer lastIndexed = DbDict.getInt(Config.USE_DOUBLE_INDEX ? DB_DICT_LAST_INDEXED_DOUBLE : DB_DICT_LAST_INDEXED);
+    public void setLastIndexedNumber(int num) throws DbException {
+        if (Config.USE_DOUBLE_INDEX)
+            getDbDict().setInt(DB_DICT_LAST_INDEXED_DOUBLE, num);
+        else
+            getDbDict().setInt(DB_DICT_LAST_INDEXED, num);
+    }
+
+    public int getLastIndexedNumber() throws DbException {
+        Integer lastIndexed = getDbDict().getInt(Config.USE_DOUBLE_INDEX ? DB_DICT_LAST_INDEXED_DOUBLE : DB_DICT_LAST_INDEXED);
         return lastIndexed == null ? 0 : lastIndexed;
     }
 
-    private static ZloMessage getMessage(DbUtils.Result rs) throws DbException {
+    private ZloMessage getMessage(DbUtils.Result rs) throws DbException {
         return new ZloMessage(
                 rs.getString(MSG_NICK)
                 , rs.getString(MSG_ALT_NAME)

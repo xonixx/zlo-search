@@ -1,9 +1,9 @@
 package org.xonix.zlo.search.test.storage;
 
-import org.xonix.zlo.search.DAO;
-import static org.xonix.zlo.search.DAO.DAOException;
 import org.xonix.zlo.search.IndexingSource;
 import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.dao.DAOException;
+import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.search.model.ZloMessage;
 
 import java.io.*;
@@ -58,7 +58,7 @@ public class ZloStorage implements Serializable, IndexingSource {
     private void retrieveAndSerialize() {
         System.out.println("Retrieving...");
         try {
-            for (ZloMessage m : DAO.Site.getSite("zlo").getMessages(FROM, TO)) {
+            for (ZloMessage m : new Site("zlo").getMessages(FROM, TO)) {
                 if (m != null)
                     storedMsgs.put(m.getNum(), m);
             }

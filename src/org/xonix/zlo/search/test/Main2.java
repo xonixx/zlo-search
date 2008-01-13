@@ -44,9 +44,9 @@ public class Main2 {
                 wr.addDocument(d);
             }
             */
-
+            DbManager dbm = DbManager.forSite("zlo");
             try {
-                wr.addDocument(DbManager.getMessageByNumber(3001403).getDocument());
+                wr.addDocument(dbm.getMessageByNumber(3001403).getDocument());
             } catch (DbException e) {
                 e.printStackTrace();
             }

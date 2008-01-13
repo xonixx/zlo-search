@@ -25,7 +25,7 @@ public class DropIndex {
                     DoubleIndexSearcher dis = ZloSearcher.getDoubleIndexSearcher();
                     dis.drop();
                     dis.close();
-                    DbManager.setLastIndexedNumber(-1);
+                    DbManager.forSite("zlo").setLastIndexedNumber(-1);
                 }
             }
         } catch (IOException e) {

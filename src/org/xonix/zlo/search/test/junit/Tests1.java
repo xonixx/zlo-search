@@ -3,11 +3,11 @@ package org.xonix.zlo.search.test.junit;
 import junit.framework.TestCase;
 import org.junit.Test;
 import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.dao.Site;
+import org.xonix.zlo.search.db.DbDict;
 import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.db.DbManager;
-import org.xonix.zlo.search.db.DbDict;
 import org.xonix.zlo.search.db.VarType;
-import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.utils.HtmlUtils;
 import org.xonix.zlo.search.utils.TimeUtils;
 
@@ -20,9 +20,17 @@ import java.util.Date;
  */
 public class Tests1 extends TestCase {
 
+    DbManager dbm;
+    DbDict dbDict;
+
     protected void setUp() throws Exception {
         super.setUp();
         new Config();
+
+        Site site = new Site("zlo");
+        site.DB_VIA_CONTAINER = false;
+        dbm = DbManager.forSite(site);
+        dbDict = new DbDict(site);
     }
 
     @Test
@@ -52,13 +60,13 @@ public class Tests1 extends TestCase {
 
     @Test
     public void testGetMessages() {
-        try {
-            for (ZloMessage m : DbManager.getMessages(new int[] {1,2,3,100,2000,1000050}, -1)) {
+/*        try {
+            for (ZloMessage m : dbm.getMessages(new int[] {1,2,3,100,2000,1000050}, -1)) {
                 System.out.println(m);
             }
         } catch (DbException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     @Test
@@ -66,7 +74,7 @@ public class Tests1 extends TestCase {
         new Config();
         String[] topics = new String[0];
         try {
-            topics = DbManager.getTopics();
+            topics = dbm.getTopics();
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -80,23 +88,23 @@ public class Tests1 extends TestCase {
     @Test
     public void testDbDict() {
         try {
-            DbDict.setVal("name1", 123, VarType.INTEGER);
-            DbDict.setVal("name1", 246, VarType.INTEGER);
-            assertEquals(246, DbDict.getVal("name1"));
-            DbDict.setInt("name1", null);
-            assertEquals(null, DbDict.getInt("name1"));
-            DbDict.setStr("s", "Hello");
-            assertEquals("Hello", DbDict.getStr("s"));
+            dbDict.setVal("name1", 123, VarType.INTEGER);
+            dbDict.setVal("name1", 246, VarType.INTEGER);
+            assertEquals(246, dbDict.getVal("name1"));
+            dbDict.setInt("name1", null);
+            assertEquals(null, dbDict.getInt("name1"));
+            dbDict.setStr("s", "Hello");
+            assertEquals("Hello", dbDict.getStr("s"));
             Date d = new Date();
-            DbDict.setDate("d", d);
-            Date dd = DbDict.getDate("d");
+            dbDict.setDate("d", d);
+            Date dd = dbDict.getDate("d");
             System.out.println(d + " " + dd + " " + d.getTime() + " " + dd.getTime());
             assertEquals(true, d.getTime() - dd.getTime() < 1000);
 
-            DbDict.remove("name1");
-            DbDict.remove("s");
-            DbDict.remove("d");
-            assertEquals(null, DbDict.getStr("s"));
+            dbDict.remove("name1");
+            dbDict.remove("s");
+            dbDict.remove("d");
+            assertEquals(null, dbDict.getStr("s"));
         } catch (DbException e) {
             e.printStackTrace();
         }
