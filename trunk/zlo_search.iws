@@ -17,25 +17,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/j.bat" afterPath="$PROJECT_DIR$/scripts/j.bat" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/DbDaemon-zlo.bat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/site/PageRetriever.java" afterPath="$PROJECT_DIR$/src/org/xonix/zlo/search/site/PageRetriever.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/zlo_web/src/org/xonix/zlo/web/test/junit/TestsWeb.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/DbDaemonDebug-zlo.lnk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/site/SiteAccessor.java" afterPath="$PROJECT_DIR$/src/org/xonix/zlo/search/site/SiteAccessor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/model/ZloMessage.java" afterPath="$PROJECT_DIR$/src/org/xonix/zlo/search/model/ZloMessage.java" />
-      <change type="DELETED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\test\junit\Tests1.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/progs/FileToDb.java" afterPath="$PROJECT_DIR$/src/org/xonix/zlo/search/progs/FileToDb.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/IndexerDaemonDebug-zlo.lnk" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/IndexerDaemonStart-zlo.lnk" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/IndexerDaemon.bat" afterPath="$PROJECT_DIR$/scripts/IndexerDaemon.bat" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_search.iws" afterPath="$PROJECT_DIR$/zlo_search.iws" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/xonix/zlo/search/test/junit/TestsSearch.java" />
-      <change type="DELETED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\site\SiteAccessorZlo.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\org\xonix\zlo\web\test\junit\Tests1.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/config/zlo.properties" afterPath="$PROJECT_DIR$/src/org/xonix/zlo/search/config/zlo.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/daemon/Daemon.java" afterPath="$PROJECT_DIR$/src/org/xonix/zlo/search/daemon/Daemon.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/DbDaemonStart-zlo.lnk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/db/DbManager.java" afterPath="$PROJECT_DIR$/src/org/xonix/zlo/search/db/DbManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/daemons_config.properties" afterPath="$PROJECT_DIR$/scripts/daemons_config.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/config/config.properties" afterPath="$PROJECT_DIR$/src/org/xonix/zlo/search/config/config.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/DbDaemon.bat" afterPath="$PROJECT_DIR$/scripts/DbDaemon.bat" />
+      <change type="DELETED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\IndexerDaemonStart.lnk" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/IndexerDaemon-zlo.bat" />
+      <change type="DELETED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\IndexerDaemonDebug.lnk" afterPath="" />
     </list>
     <list name="Project files" comment="" />
   </component>
@@ -254,73 +243,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="daemons_config.properties" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts/daemons_config.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="81" column="64" selection-start="2365" selection-end="2365" vertical-scroll-proportion="1.2210145">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DbDaemon.bat" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts/DbDaemon.bat">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Daemon.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/daemon/Daemon.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="67" selection-start="1248" selection-end="1248" vertical-scroll-proportion="1.0217391">
+            <state line="60" column="35" selection-start="1635" selection-end="1635" vertical-scroll-proportion="0.435">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="j.bat" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/scripts/j.bat">
+      <file leaf-file-name="DbManagerSource.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/db/DbManagerSource.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="j_d.bat" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts/j_d.bat">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DbDaemon.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/daemon/DbDaemon.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="14" selection-start="1128" selection-end="1128" vertical-scroll-proportion="1.268116">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DbDaemon-zlo.bat" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts/DbDaemon-zlo.bat">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="20" selection-start="48" selection-end="48" vertical-scroll-proportion="0.123188406">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Config.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/config/Config.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="0" selection-start="621" selection-end="621" vertical-scroll-proportion="0.98550725">
+            <state line="26" column="14" selection-start="473" selection-end="473" vertical-scroll-proportion="0.425">
               <folding />
             </state>
           </provider>
@@ -329,7 +264,70 @@
       <file leaf-file-name="config.properties" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/config/config.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="109" column="0" selection-start="3196" selection-end="3240" vertical-scroll-proportion="3.192029">
+            <state line="62" column="57" selection-start="1883" selection-end="1883" vertical-scroll-proportion="0.082">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IndexerDaemon.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/daemon/IndexerDaemon.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="63" column="35" selection-start="2407" selection-end="2407" vertical-scroll-proportion="0.901">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IndexerDaemon.bat" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scripts/IndexerDaemon.bat">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="31" selection-start="149" selection-end="161" vertical-scroll-proportion="0.17">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DbDaemon.bat" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/scripts/DbDaemon.bat">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="26" selection-start="156" selection-end="156" vertical-scroll-proportion="0.17">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IndexerDaemon-zlo.bat" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scripts/IndexerDaemon-zlo.bat">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2" column="0" selection-start="28" selection-end="28" vertical-scroll-proportion="0.034">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DbDaemon-zlo.bat" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scripts/DbDaemon-zlo.bat">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="48" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OptimizeIndex.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/progs/OptimizeIndex.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="18" column="13" selection-start="466" selection-end="466" vertical-scroll-proportion="0.153">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ZloIndexer.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/ZloIndexer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="108" column="16" selection-start="3363" selection-end="3363" vertical-scroll-proportion="0.609">
               <folding />
             </state>
           </provider>
@@ -2035,7 +2033,7 @@
     </key>
   </component>
   <component name="RestoreUpdateTree" />
-  <component name="RunManager" selected="Application.DbDaemon">
+  <component name="RunManager" selected="Application.OptimizeIndex">
     <tempConfiguration default="false" name="TestsSearch" type="JUnit" factoryName="JUnit" enabled="false" merge="false">
       <pattern value="org.xonix.zlo.search.test.junit.*" />
       <module name="zlo_search" />
@@ -2480,14 +2478,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-4" y="-4" width="1608" height="1155" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="SQL" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32783705" order="8" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="10" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14616871" order="3" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32783705" order="6" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15647134" order="0" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15647134" order="0" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38700292" order="1" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2491951" order="1" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.60523766" order="11" />
@@ -2496,7 +2494,7 @@
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="12" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="4" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2491951" order="1" />
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.6954413" order="13" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6954413" order="13" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4898157" order="2" x="23" y="296" width="1553" height="555" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28847393" order="2" />
       <window_info id="File View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="5" />
@@ -2601,37 +2599,30 @@
     <option name="myLastEditedConfigurable" value="Default" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/db/DbManagerSource.java">
+    <entry file="file://$PROJECT_DIR$/scripts/j_d.bat">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="16" selection-start="315" selection-end="315" vertical-scroll-proportion="0.27698573">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/db/DbManager.java">
+    <entry file="file://$PROJECT_DIR$/scripts/j.bat">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="27" selection-start="2064" selection-end="2064" vertical-scroll-proportion="0.48324874">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/config/zlo.properties">
+    <entry file="file://$PROJECT_DIR$/scripts/daemons_config.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="0" selection-start="1060" selection-end="1060" vertical-scroll-proportion="0.4395036">
+        <state line="81" column="64" selection-start="2365" selection-end="2365" vertical-scroll-proportion="0.337">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/site/PageRetriever.java">
+    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/daemon/DbDaemon.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="113" column="20" selection-start="4309" selection-end="4309" vertical-scroll-proportion="0.592">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/site/SiteAccessor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="80" selection-start="1318" selection-end="1318" vertical-scroll-proportion="0.11231884">
+        <state line="32" column="14" selection-start="1128" selection-end="1128" vertical-scroll-proportion="0.35">
           <folding />
         </state>
       </provider>
@@ -2643,58 +2634,72 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/config/config.properties">
+    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/db/DbManagerSource.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="109" column="0" selection-start="3196" selection-end="3240" vertical-scroll-proportion="3.192029">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/daemons_config.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="81" column="64" selection-start="2365" selection-end="2365" vertical-scroll-proportion="1.2210145">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/DbDaemon-zlo.bat">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="20" selection-start="48" selection-end="48" vertical-scroll-proportion="0.123188406">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/daemon/DbDaemon.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="14" selection-start="1128" selection-end="1128" vertical-scroll-proportion="1.268116">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/DbDaemon.bat">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/j_d.bat">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="26" column="14" selection-start="473" selection-end="473" vertical-scroll-proportion="0.425">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/daemon/Daemon.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="67" selection-start="1248" selection-end="1248" vertical-scroll-proportion="1.0217391">
+        <state line="60" column="35" selection-start="1635" selection-end="1635" vertical-scroll-proportion="0.435">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/j.bat">
+    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/ZloIndexer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="108" column="16" selection-start="3363" selection-end="3363" vertical-scroll-proportion="0.609">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/progs/OptimizeIndex.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="13" selection-start="466" selection-end="466" vertical-scroll-proportion="0.153">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/config/config.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="57" selection-start="1883" selection-end="1883" vertical-scroll-proportion="0.082">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/DbDaemon-zlo.bat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="48" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/IndexerDaemon-zlo.bat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="0" selection-start="28" selection-end="28" vertical-scroll-proportion="0.034">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/xonix/zlo/search/daemon/IndexerDaemon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="63" column="35" selection-start="2407" selection-end="2407" vertical-scroll-proportion="0.901">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/IndexerDaemon.bat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="31" selection-start="149" selection-end="161" vertical-scroll-proportion="0.17">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/DbDaemon.bat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="26" selection-start="156" selection-end="156" vertical-scroll-proportion="0.17">
           <folding />
         </state>
       </provider>
