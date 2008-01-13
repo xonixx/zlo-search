@@ -8,7 +8,7 @@ if "%1"=="d" (
     echo Starting normal...
 )
 
-title IndexerDaemon
+title IndexerDaemon-%SITE_NAME%
 call set_env.bat
 call %J% org.xonix.zlo.search.daemon.IndexerDaemon
 pause
