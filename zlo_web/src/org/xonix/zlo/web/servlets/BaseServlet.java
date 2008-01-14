@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Author: Vovan
@@ -40,8 +41,16 @@ public class BaseServlet extends ForwardingServlet {
         }
     }
 
-    protected Site getSite() {
+    protected Site getSite(HttpServletRequest req) {
         // todo: tmp
-        return new Site("zlo");
+        String sn = req.getParameter(QS_SITE);
+        int siteId;
+        if (StringUtils.isNotEmpty(sn)) {
+            siteId = Integer.parseInt(sn);
+        } else {
+            siteId = 0;
+        }
+
+        return Site.getSite(siteId);
     }
 }

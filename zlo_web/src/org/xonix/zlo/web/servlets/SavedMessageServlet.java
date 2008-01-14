@@ -44,7 +44,7 @@ public class SavedMessageServlet extends BaseServlet {
 
         ZloMessage msg;
         try {
-            msg = new DB(getSite()).getMessageByNumber(num);
+            msg = new DB(getSite(request)).getMessageByNumber(num);
             if (msg != null) {
                 request.setAttribute(SAVED_MSG, msg);
             } else {

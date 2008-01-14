@@ -1,6 +1,7 @@
 package org.xonix.zlo.search;
 
 import org.apache.commons.lang.StringUtils;
+import org.xonix.zlo.search.dao.Site;
 
 import java.util.Date;
 
@@ -27,12 +28,15 @@ public class SearchRequest {
     private Date fromDate;
     private Date toDate;
 
+    private Site site;
+
     public SearchRequest() {
     }
 
-    public SearchRequest(String text, boolean inTitle, boolean inBody,
+    public SearchRequest(Site site, String text, boolean inTitle, boolean inBody,
                          boolean inReg, boolean inHasUrl, boolean inHasImg,
                          String nick, String host, int topicCode, Date fromDate, Date toDate) {
+        this.site = site;
         this.text = text;
         this.inTitle = inTitle;
         this.inBody = inBody;
@@ -180,7 +184,8 @@ public class SearchRequest {
                                      String host,
                                      Date fromDate,
                                      Date toDate) {
-        return this.equals(new SearchRequest(text, inTitle, inBody, inReg, inHasUrl, inHasImg,
+        // todo: tmp
+        return this.equals(new SearchRequest(null, text, inTitle, inBody, inReg, inHasUrl, inHasImg,
                                             nick, host, topicCode, fromDate, toDate));
     }
 
@@ -201,7 +206,7 @@ public class SearchRequest {
 
     public SearchResult performSearch() {
         // just to throw exception if db connection broken and can't be fixed
-        SearchResult result = ZloSearcher.search(this);
+        SearchResult result = ZloSearcher.forSite(site).search(this);
         result.setLastSearch(this);
         return result;
     }

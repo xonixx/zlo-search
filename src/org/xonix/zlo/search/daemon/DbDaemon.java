@@ -29,8 +29,8 @@ public class DbDaemon extends Daemon {
         private int endSource = -1;
         private int startDb = -1;
 
-        public MainProcess(String siteName) {
-            super(siteName);
+        public MainProcess() {
+            super();
         }
 
         protected void doOneIteration() {
@@ -85,8 +85,8 @@ public class DbDaemon extends Daemon {
         this.source = source;
     }
 
-    protected Process createProcess(String siteName) {
-        return new MainProcess(siteName);
+    protected Process createProcess() {
+        return new MainProcess();
     }
 
     public static void main(String[] args) {

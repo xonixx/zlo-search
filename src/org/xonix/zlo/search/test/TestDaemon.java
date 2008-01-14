@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 public class TestDaemon extends Daemon {
     private static final Logger logger = Logger.getLogger(TestDaemon.class);
 
-    protected Process createProcess(String siteName) {
+    protected Process createProcess() {
         return null;
     }
 
@@ -20,8 +20,8 @@ public class TestDaemon extends Daemon {
 
         private int i=0;
 
-        public MyProcess(String siteName) {
-            super(siteName);
+        public MyProcess() {
+            super();
         }
 
         protected void doOneIteration() {

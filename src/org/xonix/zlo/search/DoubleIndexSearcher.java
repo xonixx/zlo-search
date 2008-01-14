@@ -11,6 +11,7 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.model.ZloMessage;
+import org.xonix.zlo.search.site.SiteAccessor;
 import org.xonix.zlo.search.utils.TimeUtils;
 
 import java.io.File;
@@ -46,8 +47,12 @@ public class DoubleIndexSearcher {
         this.indexesDir = dir;
     }
 
-    public DoubleIndexSearcher(Sort renewingSort) {
+/*    public DoubleIndexSearcher(Sort renewingSort) {
         this(Config.INDEX_DIR_DOUBLE, renewingSort);
+    }*/
+
+    public DoubleIndexSearcher(SiteAccessor site, Sort renewingSort) {
+        this(site.INDEX_DIR_DOUBLE, renewingSort);
     }
 
     public String getBigPath() {
@@ -265,5 +270,19 @@ public class DoubleIndexSearcher {
         IndexWriter indexWriter = new IndexWriter(path, ZloMessage.constructAnalyzer(), true);
         indexWriter.setUseCompoundFile(true);
         indexWriter.close();
+    }
+
+    public void clearLocks() {
+        try {
+            Directory d = FSDirectory.getDirectory(getSmallPath());
+            d.clearLock("write.lock");
+            d.close();
+
+            d = FSDirectory.getDirectory(getBigPath());
+            d.clearLock("write.lock");
+            d.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

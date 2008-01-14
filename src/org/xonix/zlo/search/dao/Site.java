@@ -16,20 +16,10 @@ import java.util.ArrayList;
 * Time: 22:30:46
 */
 public class Site extends SiteAccessor implements IndexingSource {
-//    private SiteAccessor siteAccessor = null;
 
     public Site(String siteName) {
         super(siteName);
-//        siteAccessor = SiteAccessor.forSite(siteName);
     }
-
-//    public static Site getSite(String siteName) {
-//        return new Site(siteName);
-//    }
-
-/*    public SiteAccessor getSiteAccessor() {
-        return siteAccessor;
-    }*/
 
     public ZloMessage getMessageByNumber(int num) throws DAOException {
         DAO.logger.debug("Receiving from site: " + num);
@@ -73,5 +63,9 @@ public class Site extends SiteAccessor implements IndexingSource {
             }
         }
         return sites;
+    }
+
+    public static Site getSite(int num) {
+        return getSites().get(num);
     }
 }

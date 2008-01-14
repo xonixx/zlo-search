@@ -85,7 +85,7 @@ public class Test1 {
     }
 
     public static void m17() {
-        System.out.println(ZloSearcher.getLastIndexedNumber());
+        System.out.println(ZloSearcher.forSite(new Site("zlo")).getLastIndexedNumber());
 /*        int from =4000000;
         int to=4000019;
         System.out.println((int)MessageFormat.format("{0}", 4000).charAt(1));
@@ -208,7 +208,7 @@ public class Test1 {
 //        System.out.println(f.format(-123));
 //        System.out.println(Integer.parseInt(f.format(-123)));
 //        System.out.println(ZloSearcher.searchMsgByNum(3765011));
-        for (Object o : ZloSearcher.searchInNumRange(3765002, 3765007)) {
+        for (Object o : ZloSearcher.forSite(new Site("zlo")).searchInNumRange(3765002, 3765007)) {
             System.out.println(o);
         }
     }

@@ -28,7 +28,7 @@ public class OptimizeIndex {
                 w.close();
                 logger.info("Done.");
             } else {
-                DoubleIndexSearcher dis = ZloSearcher.getDoubleIndexSearcher();
+                DoubleIndexSearcher dis = ZloSearcher.forSite(new Site("zlo")).getDoubleIndexSearcher();
 /*                int lastIndexedInDb = DbManager.getLastIndexedNumber();
                 int lastIndexedInIndex = ZloSearcher.getLastIndexedNumber();
                 if (lastIndexedInIndex != lastIndexedInDb) {

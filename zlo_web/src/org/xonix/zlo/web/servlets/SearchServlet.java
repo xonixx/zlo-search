@@ -186,7 +186,7 @@ public class SearchServlet extends BaseServlet {
                 }
             }
 
-            SearchRequest searchRequest = new SearchRequest(text, inTitle, inBody, inReg, inHasUrl, inHasImg, nick, host, topicCode, fromDate, toDate);
+            SearchRequest searchRequest = new SearchRequest(getSite(request), text, inTitle, inBody, inReg, inHasUrl, inHasImg, nick, host, topicCode, fromDate, toDate);
 
             if (searchRequest.canBeProcessed()) {
 
@@ -262,13 +262,13 @@ public class SearchServlet extends BaseServlet {
     }
 
     private void showStatistics(ForwardingRequest request) throws DbException {
-        DbManager dbm = DbManager.forSite(getSite());
+        DbManager dbm = DbManager.forSite(getSite(request));
         request.setAttribute(QS_LAST_MSGS, new int[]{dbm.getLastMessageNumber(), dbm.getLastIndexedNumber()});
     }
 
     private void logRequest(ForwardingRequest request, String query) {
         try {
-            DbManager.forSite(getSite()).logRequest(
+            DbManager.forSite(getSite(request)).logRequest(
                     request.getRemoteAddr(),
                     request.getHeader("User-Agent"),
                     request.getParameter(QS_TEXT),
