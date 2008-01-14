@@ -1,10 +1,9 @@
 package org.xonix.zlo.search.daemon;
 
 import org.apache.log4j.Logger;
-import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.FSDirectory;
 import org.xonix.zlo.search.DoubleIndexSearcher;
 import org.xonix.zlo.search.ZloSearcher;
+import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.utils.TimeUtils;
@@ -24,20 +23,18 @@ public class IndexerDaemon extends Daemon {
     public static final int INDEX_PERIOD = TimeUtils.parseToMilliSeconds(Config.getProp("indexer.daemon.period.to.index"));
     public static final int RECONNECT_PERIOD = TimeUtils.parseToMilliSeconds(Config.getProp("indexer.daemon.period.to.reconnect"));
 
-//    private static final ZloIndexer indexer = new ZloIndexer(DB.SOURCE);
-
     private class IndexingProcess extends Process {
         private int indexFrom = -1;
         private int end = -1;
 
-        public IndexingProcess(String siteName) {
-            super(siteName);
+        public IndexingProcess() {
+            super();
         }
 
         protected void doOneIteration() {
             try {
                 if (indexFrom == -1) {
-                    int inIndex = ZloSearcher.getLastIndexedNumber();
+                    int inIndex = ZloSearcher.forSite(getSite()).getLastIndexedNumber();
                     indexFrom = (Config.USE_DOUBLE_INDEX
                             ? (inIndex != -1 
                                 ? inIndex  // more reliable
@@ -89,20 +86,15 @@ public class IndexerDaemon extends Daemon {
         }
     }
 
-    protected Process createProcess(String siteName) {
-        return new IndexingProcess(siteName);
+    protected Process createProcess() {
+        return new IndexingProcess();
     }
 
     public static void main(String[] args) {
         logger.info(MessageFormat.format("Starting indexing to {0} index...", Config.USE_DOUBLE_INDEX ? "double" : "simple"));
         if (Config.USE_DOUBLE_INDEX) {
             logger.info("Clearing lock...");
-            try {
-                Directory d = FSDirectory.getDirectory(new DoubleIndexSearcher(null).getSmallPath());
-                d.clearLock("write.lock");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            new DoubleIndexSearcher(new Site(getSiteEnvName()), null).clearLocks();
         }
         new IndexerDaemon().start();
     }

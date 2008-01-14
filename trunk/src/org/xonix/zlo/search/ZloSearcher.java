@@ -1,29 +1,28 @@
 package org.xonix.zlo.search;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.*;
-import org.apache.commons.lang.StringUtils;
 import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.utils.TimeUtils;
+import org.xonix.zlo.search.site.SiteSource;
 
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Author: gubarkov
  * Date: 01.06.2007
  * Time: 2:24:05
  */
-public class ZloSearcher {
+public class ZloSearcher extends SiteSource {
     private static final Logger logger = Logger.getLogger(ZloSearcher.class);
 
     public static final int PERIOD_RECREATE_INDEXER = TimeUtils.parseToMilliSeconds(Config.getProp("searcher.period.recreate.indexer"));
@@ -31,6 +30,19 @@ public class ZloSearcher {
     private static long lastCreateTime = -1;
     private static boolean isReopening = false;
     private static IndexReader indexReader;
+
+    private ZloSearcher(Site site) {
+        super(site);
+    }
+
+    private static HashMap<String, ZloSearcher> searchers = new HashMap<String, ZloSearcher>();
+    public static ZloSearcher forSite(Site site) {
+        String siteName = site.getSiteName();
+        if (!searchers.containsKey(siteName)) {
+            searchers.put(siteName, new ZloSearcher(site));
+        }
+        return searchers.get(siteName);
+    }
 
     public static IndexReader getIndexReader() {
         if (indexReader == null) {
@@ -150,7 +162,7 @@ public class ZloSearcher {
         }
     }
 
-    public static SearchResult search(int topicCode,
+    public SearchResult search(int topicCode,
                                          String text,
                                          boolean inTitle,
                                          boolean inBody,
@@ -165,7 +177,7 @@ public class ZloSearcher {
         return search(ZloMessage.formQueryString(text, inTitle, inBody, topicCode, nick, host, fromDate, toDate, inReg, inHasUrl, inHasImg));
     }
 
-    public static SearchResult search(SearchRequest searchRequest) {
+    public SearchResult search(SearchRequest searchRequest) {
         return search(
                 searchRequest.getTopicCode(),
                 searchRequest.getText(),
@@ -181,7 +193,7 @@ public class ZloSearcher {
         );
     }
 
-    public static SearchResult search(int topicCode,
+    public SearchResult search(int topicCode,
                                          String text,
                                          boolean inTitle,
                                          boolean inBody,
@@ -201,7 +213,7 @@ public class ZloSearcher {
                 : null;
     }
 
-    private static SearchResult search(String queryStr) {
+    private SearchResult search(String queryStr) {
         if (!Config.USE_DOUBLE_INDEX) {
             return searchIndexReader(null, queryStr, null);
         } else {
@@ -209,7 +221,7 @@ public class ZloSearcher {
         }
     }
 
-    private static SearchResult searchDoubleIndex(String queryStr, Sort sort) {
+    private SearchResult searchDoubleIndex(String queryStr, Sort sort) {
         if (sort == null)
             sort = getDateSort();
 
@@ -226,10 +238,10 @@ public class ZloSearcher {
         return result;
     }
 
-    private static DoubleIndexSearcher doubleIndexSearcher;
-    public static DoubleIndexSearcher getDoubleIndexSearcher() {
+    private DoubleIndexSearcher doubleIndexSearcher;
+    public DoubleIndexSearcher getDoubleIndexSearcher() {
         if (doubleIndexSearcher == null) {
-            doubleIndexSearcher = new DoubleIndexSearcher(getDateSort());
+            doubleIndexSearcher = new DoubleIndexSearcher(getSite(), getDateSort());
         }
         return doubleIndexSearcher;
     }
@@ -275,7 +287,7 @@ public class ZloSearcher {
         return query;
     }
 
-    public static ZloMessage searchMsgByNum(int urlNum) {
+    public ZloMessage searchMsgByNum(int urlNum) {
         try {
             return search("+num:" + ZloMessage.URL_NUM_FORMAT.format(urlNum)).iterator().next().getMessage(); // returns 1 result
         } catch (NoSuchElementException e) { // 0 results found => msg with such num not indexed
@@ -283,11 +295,11 @@ public class ZloSearcher {
         }
     }
 
-    public static SearchResult searchInNumRange(int urlFrom, int urlTo) {
+    public SearchResult searchInNumRange(int urlFrom, int urlTo) {
         return search(MessageFormat.format(" +num:[{0} TO {1}]", urlFrom, urlTo));
     }
 
-    public static int getLastIndexedNumber() {
+    public int getLastIndexedNumber() {
         String searchStr = MessageFormat.format(" +num:[{0} TO {1}]",
                 ZloMessage.URL_NUM_FORMAT.format(0),
                 ZloMessage.URL_NUM_FORMAT.format(999999999));

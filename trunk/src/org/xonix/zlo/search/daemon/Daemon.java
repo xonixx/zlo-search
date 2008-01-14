@@ -6,6 +6,7 @@ import org.xonix.zlo.search.dao.DB;
 import org.xonix.zlo.search.db.DbManagerSource;
 import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.ZloIndexer;
+import org.xonix.zlo.search.site.SiteSource;
 import sun.misc.Signal;
 import sun.misc.SignalHandler;
 
@@ -14,7 +15,7 @@ import sun.misc.SignalHandler;
  * Date: 17.11.2007
  * Time: 20:00:32
  */
-public abstract class Daemon {
+public abstract class Daemon extends SiteSource {
     private static final Logger logger = Logger.getLogger(Daemon.class);
     private boolean exiting;
     private boolean isSleeping = false;
@@ -23,7 +24,7 @@ public abstract class Daemon {
     protected void setExiting(boolean exiting) {
         if (isSleeping) {
             logger.info("Exiting...");
-            getProcess(getSiteName()).cleanUp();
+            getProcess().cleanUp();
             System.exit(0);
         } else {
             this.exiting = exiting;
@@ -34,11 +35,11 @@ public abstract class Daemon {
         return exiting;
     }
 
-    protected abstract Process createProcess(String siteName);
+    protected abstract Process createProcess();
 
-    private Process getProcess(String siteName) {
+    private Process getProcess() {
         if (process == null) {
-            process = createProcess(siteName);
+            process = createProcess();
         }
         return process;
     }
@@ -46,9 +47,9 @@ public abstract class Daemon {
     protected abstract class Process extends Thread {
         private DbManagerSource dbms;
 
-        public Process(String siteName) {
-            super(siteName);
-            Site site = new Site(siteName);
+        public Process() {
+            super(getSiteName());
+            Site site = getSite();
             site.DB_VIA_CONTAINER = false;
             dbms = new DbManagerSource(site);
         }
@@ -95,6 +96,7 @@ public abstract class Daemon {
     }
 
     protected Daemon() {
+        super(getSiteEnvName());
         registerExitHandlers();
     }
 
@@ -115,7 +117,7 @@ public abstract class Daemon {
 
     protected void start() {
         while (true) {
-            Process t = getProcess(getSiteName());
+            Process t = getProcess();
             t.setPriority(Thread.MIN_PRIORITY); // so daemons not slowing search 
             t.start();
             try {
@@ -134,7 +136,7 @@ public abstract class Daemon {
         }
     }
 
-    private String getSiteName() {
+    protected static String getSiteEnvName() {
         String sn = System.getenv("SITE_NAME");
         if (sn == null) {
             logger.error("Must set SITE_NAME environment variable!");

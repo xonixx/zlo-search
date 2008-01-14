@@ -39,36 +39,48 @@ public class SiteAccessor {
     private String DB_PASSWORD;
     public boolean DB_VIA_CONTAINER;
 
+    // index
+    public boolean PERFORM_INDEXING;
+    public String INDEX_DIR_DOUBLE;
+
     private String siteName;
 
 
     public SiteAccessor(String siteName) {
-        Properties p = Config.loadProperties("org/xonix/zlo/search/config/" + Config.getProp(SITE_CONFIG_PREFIX + siteName));
+        Properties p = new Properties();
+
+        for (String propFile : Config.getProp(SITE_CONFIG_PREFIX + siteName).split(";")) {
+            Config.loadProperties(p, "org/xonix/zlo/search/config/" + propFile);
+        }
 
         setSiteName(siteName);
 
-        MARK_END_MSG_1 =        p.getProperty("str.mark.end.1");
-        MARK_END_MSG_2 =        p.getProperty("str.mark.end.2");
+        MARK_END_MSG_1 = p.getProperty("str.mark.end.1");
+        MARK_END_MSG_2 = p.getProperty("str.mark.end.2");
 
         MSG_NOT_EXIST_OR_WRONG = p.getProperty("str.msg.not.exists");
-        WITHOUT_TOPIC =         p.getProperty("str.without.topic");
+        WITHOUT_TOPIC = p.getProperty("str.without.topic");
 
-        MSG_REG_RE_STR =        p.getProperty("regex.msg.reg");
-        MSG_UNREG_RE_STR =      p.getProperty("regex.msg.unreg");
+        MSG_REG_RE_STR = p.getProperty("regex.msg.reg");
+        MSG_UNREG_RE_STR = p.getProperty("regex.msg.unreg");
 
-        LINK_INDEX_REGEX =      p.getProperty("regex.link.index");
+        LINK_INDEX_REGEX = p.getProperty("regex.link.index");
 
-        SITE_URL =              p.getProperty("site.url");
-        READ_QUERY =            p.getProperty("site.read.query");
+        SITE_URL = p.getProperty("site.url");
+        READ_QUERY = p.getProperty("site.read.query");
         // db -----
-        JNDI_DS_NAME =          p.getProperty("db.jndi.ds.name");
+        JNDI_DS_NAME = p.getProperty("db.jndi.ds.name");
 
-        DB_DRIVER =             p.getProperty("db.driver");
-        DB_URL =                p.getProperty("db.url");
-        DB_USER =               p.getProperty("db.user");
-        DB_PASSWORD =           p.getProperty("db.password");
+        DB_DRIVER = p.getProperty("db.driver");
+        DB_URL = p.getProperty("db.url");
+        DB_USER = p.getProperty("db.user");
+        DB_PASSWORD = p.getProperty("db.password");
 
         DB_VIA_CONTAINER = Config.TRUE.equals(p.getProperty("db.use.container.pull"));
+
+        // indexer-----
+        PERFORM_INDEXING = Config.TRUE.equals(p.getProperty("indexer.perform.indexing"));
+        INDEX_DIR_DOUBLE = p.getProperty("indexer.dir.double");
     }
 
     public String getSiteName() {

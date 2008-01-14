@@ -18,8 +18,7 @@ public class Config {
     private static final Properties props;
     private static final String CONFIG_PATH_ENV_NAME = "ZLO_CONFIG";
 
-    public static Properties loadProperties(String path) {
-        Properties pr = new Properties();
+    public static void loadProperties(Properties pr, String path) {
         try {
             pr.load(Thread.currentThread()
                     .getContextClassLoader()
@@ -28,6 +27,11 @@ public class Config {
             logger.fatal("Can't load config: " + path, e);
             e.printStackTrace();
         }
+    }
+
+    public static Properties loadProperties(String path) {
+        Properties pr = new Properties();
+        loadProperties(pr, path);
         return pr;
     }
 
@@ -52,12 +56,10 @@ public class Config {
     }
 
     static {
-        Properties pr = new Properties();
-        if (loadPropertiesFromEnv(pr)) {
-            props = pr;
-        } else {
+        props = new Properties();
+        if (!loadPropertiesFromEnv(props)) {
             System.out.println("Loading internal config...");
-            props = loadProperties("org/xonix/zlo/search/config/config.properties");
+            loadProperties(props, "org/xonix/zlo/search/config/config.properties");
         }
     }
 
@@ -72,8 +74,8 @@ public class Config {
     public static final int BUFFER = Integer.parseInt(getProp("buffer", "512"));
 
     public static final String CHARSET_NAME = "windows-1251";
-    public static final String INDEX_DIR = getProp("index.dir");
-    public static final String INDEX_DIR_DOUBLE = getProp("index.dir.double");
+    public static final String INDEX_DIR = getProp("indexer.dir");
+    public static final String INDEX_DIR_DOUBLE = getProp("indexer.dir.double");
     public static final String USER_AGENT = getProp("user.agent");
     public static final String TRUE = "true";
 
