@@ -29,7 +29,7 @@ public class ZloIndexer extends DbManagerSource {
 
     public ZloIndexer(Site site) {
         super(site);
-        INDEX_DIR = new File(Config.USE_DOUBLE_INDEX ? site.INDEX_DIR_DOUBLE : Config.INDEX_DIR);
+        INDEX_DIR = new File(Config.USE_DOUBLE_INDEX ? site.INDEX_DIR_DOUBLE + "/2" : Config.INDEX_DIR);
     }
 
     public IndexWriter getWriter() {
