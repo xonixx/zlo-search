@@ -4,9 +4,9 @@ import org.apache.log4j.Logger;
 import org.apache.lucene.index.IndexWriter;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.dao.DAOException;
-import org.xonix.zlo.search.dao.DB;
 import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.search.db.DbException;
+import org.xonix.zlo.search.db.DbManagerSource;
 import org.xonix.zlo.search.model.ZloMessage;
 
 import java.io.File;
@@ -17,25 +17,19 @@ import java.io.IOException;
  * Date: 01.06.2007
  * Time: 1:07:38
  */
-public class ZloIndexer {
+public class ZloIndexer extends DbManagerSource {
     private static Logger logger = Logger.getLogger(ZloIndexer.class);
-    private DB db;
-    private static File INDEX_DIR = Config.USE_DOUBLE_INDEX
-            ? new File(Config.INDEX_DIR_DOUBLE + "/" + 2) // small
-            : new File(Config.INDEX_DIR);
+
+    private File INDEX_DIR;
 
     private static final int INDEX_PER_TIME = 50;
 
     private IndexWriter writer;
     private boolean reindex;
 
-    public ZloIndexer(DB db) {
-        this(db, false);
-    }
-
-    public ZloIndexer(DB db, boolean reindex) {
-        this.db = db;
-        this.reindex = reindex;
+    public ZloIndexer(Site site) {
+        super(site);
+        INDEX_DIR = new File(Config.USE_DOUBLE_INDEX ? site.INDEX_DIR_DOUBLE : Config.INDEX_DIR);
     }
 
     public IndexWriter getWriter() {
@@ -87,7 +81,7 @@ public class ZloIndexer {
 
     private void addMessagesToIndex(int start, int end) throws DAOException, IOException {
         IndexWriter writer = getWriter();
-        for (ZloMessage msg : db.getMessages(start, end)) {
+        for (ZloMessage msg : getDB().getMessages(start, end)) {
             if (msg.getStatus() == ZloMessage.Status.OK) {
                 logger.debug("Addind: " +
                         (Config.DEBUG
@@ -114,12 +108,12 @@ public class ZloIndexer {
             throw new DbException(e.getCause());
         }
         logger.info("Setting last indexed: " + to);
-        db.getDbManager().setLastIndexedNumber(to);
+        getDB().getDbManager().setLastIndexedNumber(to);
     }
 
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
 //        new ZloIndexer(DAO.Site.SOURCE).indexRange(3765000, 3765010);
         new ZloIndexer(new DB(new Site("zlo")), true).indexRange(3000000, 4030586);
 //        new ZloIndexer(new ZloStorage(), true).indexRange(ZloStorage.FROM, ZloStorage.TO);
-    }
+    }*/
 }

@@ -65,6 +65,15 @@ public class Site extends SiteAccessor implements IndexingSource {
         return sites;
     }
 
+    public static String[] getSiteNames() {
+        List<Site> allSites = getSites();
+        String[] sites = new String[allSites.size()];
+        for (int i=0; i<allSites.size(); i++) {
+            sites[i] = allSites.get(i).SITE_URL;
+        }
+        return sites;
+    }
+
     public static Site getSite(int num) {
         return getSites().get(num);
     }

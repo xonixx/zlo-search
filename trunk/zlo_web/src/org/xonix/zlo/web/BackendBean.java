@@ -41,7 +41,7 @@ public class BackendBean {
     }
 
     public String getSiteSelector() {
-        return HtmlConstructor.constructSelector(SN_SITE, Config.SITES, site, true);
+        return HtmlConstructor.constructSelector(SN_SITE, Site.getSiteNames(), site, true);
     }
 
     public String getPageSizeSelector() {

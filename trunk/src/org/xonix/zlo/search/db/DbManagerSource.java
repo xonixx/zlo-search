@@ -2,31 +2,26 @@ package org.xonix.zlo.search.db;
 
 import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.search.dao.DB;
+import org.xonix.zlo.search.site.SiteSource;
 
 /**
  * Author: Vovan
  * Date: 13.01.2008
  * Time: 4:23:03
  */
-public class DbManagerSource {
-    private Site site;
-
+public class DbManagerSource extends SiteSource {
     public DbManagerSource(Site site) {
-        this.site = site;
-    }
-
-    public Site getSite() {
-        return site;
+        super(site);
     }
 
     public DbManager getDbManager() {
-        return DbManager.forSite(site);
+        return DbManager.forSite(getSite());
     }
 
     private DB db;
     public DB getDB() {
         if (db == null) {
-            db = new DB(site);
+            db = new DB(getSite());
         }
         return db;
     }

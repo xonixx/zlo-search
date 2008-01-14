@@ -376,35 +376,6 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
         return doc;
     }
 
-/*    public static ZloMessage fromDocument(Document doc) {
-        int num = Integer.parseInt(doc.get(FIELDS.URL_NUM));
-
-        ZloMessage msg;
-        try {
-            msg = DB._getMessageByNumber(num);
-        } catch (DAOException e) {
-            throw new RuntimeException(e);
-        }
-        return msg;
-    }*/
-
-/*    public static ZloMessage fromDocument(Document doc, int hitId) {
-        ZloMessage res = fromDocument(doc);
-        res.setHitId(hitId);
-        return res;
-    }*/
-
-/*    public static ZloMessage fromHit(Hit hit) {
-        try {
-            ZloMessage res = fromDocument(hit.getDocument());
-            res.setHitId(hit.getId()); // to be adle to determine hit by msg
-            return res;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }*/
-
     private static Analyzer analyzer;
     public static Analyzer constructAnalyzer() {
         if (analyzer == null) {
