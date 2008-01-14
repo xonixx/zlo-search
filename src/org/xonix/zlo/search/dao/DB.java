@@ -13,9 +13,7 @@ import java.util.List;
 * Time: 22:31:10
 */
 public class DB extends DbManagerSource implements IndexingSource {
-//    public static DB SOURCE = new DB();
 
-//    private DB() {}
     public DB(Site site) {
         super(site);
     }
@@ -60,16 +58,4 @@ public class DB extends DbManagerSource implements IndexingSource {
             throw new DAOException(this, e);
         }
     }
-
-/*    public static ZloMessage _getMessageByNumber(int num) throws DAOException {
-        return SOURCE.getMessageByNumber(num);
-    }
-
-    public static List<ZloMessage> _getMessages(int start, int end) throws DAOException {
-        return SOURCE.getMessages(start, end);
-    }
-
-    public static int _getLastMessageNumber() throws DAOException {
-        return SOURCE.getLastMessageNumber();
-    }*/
 }

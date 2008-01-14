@@ -61,7 +61,7 @@ public abstract class Daemon extends SiteSource {
         private ZloIndexer zloIndexer;
         protected ZloIndexer getIndexer() {
             if (zloIndexer == null) {
-                zloIndexer = new ZloIndexer(getDB());
+                zloIndexer = new ZloIndexer(getSite());
             }
             return zloIndexer;
         }

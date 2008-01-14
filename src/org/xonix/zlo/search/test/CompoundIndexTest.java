@@ -1,9 +1,8 @@
 package org.xonix.zlo.search.test;
 
-import org.xonix.zlo.search.ZloIndexer;
-import org.xonix.zlo.search.dao.DB;
-import org.xonix.zlo.search.dao.Site;
 import org.apache.lucene.index.IndexWriter;
+import org.xonix.zlo.search.ZloIndexer;
+import org.xonix.zlo.search.dao.Site;
 
 import java.io.IOException;
 
@@ -14,7 +13,7 @@ import java.io.IOException;
  */
 public class CompoundIndexTest {
     public static void main(String[] args) {
-        ZloIndexer zi = new ZloIndexer(new DB(new Site("zlo")));
+        ZloIndexer zi = new ZloIndexer(new Site("zlo"));
         IndexWriter indexWriter = zi.getWriter();
         System.out.println(indexWriter.getUseCompoundFile());
         indexWriter.setUseCompoundFile(true);

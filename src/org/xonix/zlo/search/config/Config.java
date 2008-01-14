@@ -68,14 +68,14 @@ public class Config {
         PropertyConfigurator.configure(props);
     }
 
-    public static String [] SITES = getProp("sites").split("\\|");
     public static String [] NUMS_PER_PAGE = getProp("nums.per.page").split("\\|");
 
     public static final int BUFFER = Integer.parseInt(getProp("buffer", "512"));
 
     public static final String CHARSET_NAME = "windows-1251";
+
+    // todo: remove
     public static final String INDEX_DIR = getProp("indexer.dir");
-    public static final String INDEX_DIR_DOUBLE = getProp("indexer.dir.double");
     public static final String USER_AGENT = getProp("user.agent");
     public static final String TRUE = "true";
 
@@ -83,6 +83,7 @@ public class Config {
     public static final boolean SEARCH_PERFORM_SORT = TRUE.equals(getProp("search.perform.sort"));
     public static boolean USE_DOUBLE_INDEX = TRUE.equals(getProp("search.use.double.index"));
 
+    // todo: remove
     public static boolean USE_CONTAINER_POOL = TRUE.equals(getProp("db.use.container.pull"));
 
     public static final Analyzer ANALYZER;
