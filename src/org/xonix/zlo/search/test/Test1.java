@@ -39,8 +39,8 @@ class B extends A {
 public class Test1 {
     public static void main(String[] args) {
         new Config();
-//        m15();
-        m21();
+        m15();
+//        m21();
         System.exit(0);
     }
 
@@ -118,7 +118,10 @@ public class Test1 {
 //            System.out.println(DbManager.getMessageByNumber(4149183));
 //            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(648064));
 //            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(4199196));
-            System.out.println(new Site("zlo").getMessageByNumber(4166588));
+            Site site = new Site("sport");
+            System.out.println(site.getMessageByNumber(61353));
+            System.out.println(site.getMessageByNumber(62212));
+            System.out.println(site.getMessageByNumber(622120));
         } /*catch (DbException e) {
             e.printStackTrace();
         } */ catch (DAOException e) {

@@ -10,13 +10,14 @@ import java.util.*;
 
 import static org.xonix.zlo.search.db.VarType.*;
 import org.xonix.zlo.search.dao.Site;
+import org.xonix.zlo.search.site.SiteSource;
 
 /**
  * User: boost
  * Date: Sep 13, 2007
  * Time: 11:33:31 PM
  */
-public class DbManager {
+public class DbManager extends SiteSource {
     private static final Logger logger = Logger.getLogger(DbManager.class);
 
     private static Properties props = Config.loadProperties("org/xonix/zlo/search/db/sql.properties");
@@ -37,10 +38,8 @@ public class DbManager {
     private static final String DB_DICT_LAST_INDEXED =          "lastIndexed";
     private static final String DB_DICT_LAST_INDEXED_DOUBLE =   "lastIndexedDouble";
 
-    private Site site;
-
-    private DbManager(Site site) {
-        this.site = site;
+    public DbManager(Site site) {
+        super(site);
     }
 
     private static HashMap<String, DbManager> dbms = new HashMap<String, DbManager>();
@@ -54,14 +53,6 @@ public class DbManager {
 
     public static DbManager forSite(String siteName) {
         return forSite(new Site(siteName));
-    }
-
-    public Site getSite() {
-        return site;
-    }
-
-    public void setSite(Site site) {
-        this.site = site;
     }
 
     private static final String SQL_INSERT_MSG =            props.getProperty("sql.insert.msg");
@@ -85,7 +76,7 @@ public class DbManager {
                                 STRING,             DATE,               BOOLEAN,   STRING,          INTEGER});
     }
 
-    public void saveMessages(List<ZloMessage> msgs, boolean update) throws DbException {
+/*    public void saveMessages(List<ZloMessage> msgs, boolean update) throws DbException {
         PreparedStatement chkPstmt = null;
         PreparedStatement insertPstmt = null;
         PreparedStatement updatePstmt = null;
@@ -124,7 +115,7 @@ public class DbManager {
         } finally {
             CloseUtils.close(chkPstmt, insertPstmt, updatePstmt, rs);
         }
-    }
+    }*/
 
     public void saveMessagesFast(List<ZloMessage> msgs) throws DbException {
         saveMessagesFast(msgs, false);
@@ -135,7 +126,7 @@ public class DbManager {
         ResultSet rs = null;
         Connection conn = null;
         try {
-            conn = ConnectionUtils.getConnection();
+            conn = ConnectionUtils.getConnection(getSite().getDataSource());
             conn.setAutoCommit(false);
             insertPstmt = conn.prepareStatement(updateIfExists ? SQL_INSERT_UPDATE_MSG : SQL_INSERT_MSG);
 
@@ -170,14 +161,14 @@ public class DbManager {
         }
     }
 
-    public void saveMessages(List<ZloMessage> msgs) throws DbException {
+/*    public void saveMessages(List<ZloMessage> msgs) throws DbException {
         saveMessages(msgs, false);
-    }
+    }*/
 
     // todo: test
     public ZloMessage getMessageByNumber(int num) throws DbException {
         DbUtils.Result res = DbUtils.executeSelect(
-                site,
+                getSite(),
                 SQL_SELECT_MSG_BY_ID,
                 new Object[] {num},
                 new VarType[] {INTEGER});
@@ -192,7 +183,7 @@ public class DbManager {
 
     public List<ZloMessage> getMessagesByRange(int start, int end) throws DbException {
         DbUtils.Result res = DbUtils.executeSelect(
-                site,
+                getSite(),
                 SQL_SELECT_MSG_IN_RANGE,
                 new Object[] {start, end},
                 new VarType[] {INTEGER, INTEGER});
@@ -217,7 +208,7 @@ public class DbManager {
 
         String sql = String.format(SQL_SELECT_SET, sbNums.toString());
 
-        DbUtils.Result res = DbUtils.executeSelect(site, sql);
+        DbUtils.Result res = DbUtils.executeSelect(getSite(), sql);
 
         List<ZloMessage> msgs = new ArrayList<ZloMessage>();
 
@@ -232,7 +223,7 @@ public class DbManager {
     }
 
     public int getLastMessageNumber() throws DbException {
-        DbUtils.Result res = DbUtils.executeSelect(site, SQL_SELECT_LAST_MSG_NUM);
+        DbUtils.Result res = DbUtils.executeSelect(getSite(), SQL_SELECT_LAST_MSG_NUM);
         try {
             return res.getOneInt();
         } finally {
@@ -244,7 +235,7 @@ public class DbManager {
     // returns <topic name, topic code> where "topic name"s also include old codes
     public HashMap<String, Integer> getTopicsHashMap() throws DbException {
         if (topicsHashMap == null) {
-            DbUtils.Result res = DbUtils.executeSelect(site, SQL_SELECT_ALL_TOPICS);
+            DbUtils.Result res = DbUtils.executeSelect(getSite(), SQL_SELECT_ALL_TOPICS);
             try {
                 topicsHashMap = new HashMap<String, Integer>();
                 while (res.next()) {
@@ -262,7 +253,7 @@ public class DbManager {
     public String[] getTopics() throws DbException {
         if (topics == null) {
             Map<Integer, String> topicsMap = new HashMap<Integer, String>();
-            DbUtils.Result res = DbUtils.executeSelect(site, SQL_SELECT_NEW_TOPICS);
+            DbUtils.Result res = DbUtils.executeSelect(getSite(), SQL_SELECT_NEW_TOPICS);
             while (res.next()) {
                 topicsMap.put(res.getInt(1), res.getString(2));
             }
@@ -277,7 +268,7 @@ public class DbManager {
 
     public void logRequest(String host, String userAgent, String reqText, String reqQuery, String referer) throws DbException {
         DbUtils.executeUpdate(
-                site,
+                getSite(),
                 SQL_LOG_REQUEST
                 , new Object[] {
                         StringUtils.substring(host, 0, 100),
@@ -290,7 +281,7 @@ public class DbManager {
     }
 
     private DbDict getDbDict() {
-        return new DbDict(site);
+        return new DbDict(getSite());
     }
 
     public void setLastIndexedNumber(int num) throws DbException {
@@ -307,7 +298,7 @@ public class DbManager {
 
     private ZloMessage getMessage(DbUtils.Result rs) throws DbException {
         return new ZloMessage(
-                site,
+                getSite(),
                 rs.getString(MSG_NICK)
                 , rs.getString(MSG_ALT_NAME)
                 , rs.getString(MSG_HOST)
