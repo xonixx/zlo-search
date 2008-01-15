@@ -54,7 +54,7 @@ public class SiteAccessor {
 
     public int SITE_NUMBER;
 
-    private String SITE_NAME;
+    protected String SITE_NAME;
     private String siteName;
 
 
@@ -109,7 +109,8 @@ public class SiteAccessor {
 
     public String getSiteName() {
         // this is for the reason not to create havy objects for same sites (zlo for board)
-        return SITE_NAME != null ? SITE_NAME : siteName;
+//        return SITE_NAME != null ? SITE_NAME : siteName;
+        return siteName;
     }
 
     public void setSiteName(String siteName) {

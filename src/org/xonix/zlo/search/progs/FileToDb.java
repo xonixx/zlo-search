@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.model.ZloMessage;
+import org.xonix.zlo.search.dao.Site;
 
 import java.io.*;
 import java.text.DateFormat;
@@ -36,7 +37,7 @@ public class FileToDb {
     public static final Logger logger = Logger.getLogger(FileToDb.class);
 
     private void start(boolean doWork) {
-        DbManager dbm = DbManager.forSite("zlo");
+        DbManager dbm = Site.forName("zlo").getDbManager();
         String lastLine = "";
         int result;
         try {

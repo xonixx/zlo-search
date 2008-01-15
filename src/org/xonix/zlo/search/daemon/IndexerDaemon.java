@@ -2,7 +2,6 @@ package org.xonix.zlo.search.daemon;
 
 import org.apache.log4j.Logger;
 import org.xonix.zlo.search.DoubleIndexSearcher;
-import org.xonix.zlo.search.ZloSearcher;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.search.db.DbException;
@@ -33,7 +32,7 @@ public class IndexerDaemon extends Daemon {
         protected void doOneIteration() {
             try {
                 if (indexFrom == -1) {
-                    int inIndex = ZloSearcher.forSite(getSite()).getLastIndexedNumber();
+                    int inIndex = getSite().getZloSearcher().getLastIndexedNumber();
                     indexFrom = (Config.USE_DOUBLE_INDEX
                             ? (inIndex != -1 
                                 ? inIndex  // more reliable
@@ -100,7 +99,7 @@ public class IndexerDaemon extends Daemon {
         logger.info(MessageFormat.format("Starting indexing to {0} index...", Config.USE_DOUBLE_INDEX ? "double" : "simple"));
         if (Config.USE_DOUBLE_INDEX) {
             logger.info("Clearing lock...");
-            new DoubleIndexSearcher(new Site(getSiteEnvName()), null).clearLocks();
+            new DoubleIndexSearcher(Site.forName(getSiteEnvName()), null).clearLocks();
         }
         new IndexerDaemon().start();
     }

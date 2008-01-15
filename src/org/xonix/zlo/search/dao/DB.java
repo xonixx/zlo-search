@@ -4,6 +4,7 @@ import org.xonix.zlo.search.IndexingSource;
 import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.db.DbManagerSource;
 import org.xonix.zlo.search.model.ZloMessage;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
 * Time: 22:31:10
 */
 public class DB extends DbManagerSource implements IndexingSource {
+    private static Logger logger = Logger.getLogger(DB.class);
 
     public DB(Site site) {
         super(site);
@@ -24,14 +26,13 @@ public class DB extends DbManagerSource implements IndexingSource {
 
     public void saveMessages(List<ZloMessage> msgs, boolean fast) throws DAOException {
         try {
-            DAO.logger.info((fast ? "Fast " : "") + "Saving (" + msgs.get(0).getNum() + " - " + msgs.get(msgs.size() - 1).getNum() + ") msgs to DB...");
+            logger.info((fast ? "Fast " : "") + "Saving (" + msgs.get(0).getNum() + " - " + msgs.get(msgs.size() - 1).getNum() + ") msgs to DB...");
             if (fast)
                 getDbManager().saveMessagesFast(msgs);
             else {
-//                getDbManager().saveMessages(msgs);
                 throw new UnsupportedOperationException();
             }
-            DAO.logger.info("Successfully saved " + msgs.size() + " msgs to DB.");
+            logger.info("Successfully saved " + msgs.size() + " msgs to DB.");
         } catch (DbException e) {
             throw new DAOException(this, e);
         }

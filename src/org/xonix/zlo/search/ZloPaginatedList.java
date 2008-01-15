@@ -3,11 +3,10 @@ package org.xonix.zlo.search;
 import org.apache.log4j.Logger;
 import org.displaytag.pagination.PaginatedList;
 import org.displaytag.properties.SortOrderEnum;
+import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.search.db.DbException;
-import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.site.SiteSource;
-import org.xonix.zlo.search.dao.Site;
 
 import java.io.IOException;
 import java.util.List;
@@ -47,7 +46,7 @@ public class ZloPaginatedList extends SiteSource implements PaginatedList {
             logger.error("Error while getting doc from index: " + e);
         }
 
-        return DbManager.forSite(getSite()).getMessages(indexes, fromIndex);
+        return getSite().getDbManager().getMessages(indexes, fromIndex);
     }
 
     public void refreshCurrentList() throws DbException {

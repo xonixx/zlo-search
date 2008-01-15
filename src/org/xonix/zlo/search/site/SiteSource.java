@@ -25,7 +25,7 @@ public class SiteSource {
 
     public void setSiteName(String siteName) {
         this.siteName = siteName;
-        setSite(new Site(siteName));
+        setSite(Site.forName(siteName));
     }
 
     public Site getSite() {

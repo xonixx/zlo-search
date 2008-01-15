@@ -263,13 +263,13 @@ public class SearchServlet extends BaseServlet {
     }
 
     private void showStatistics(ForwardingRequest request) throws DbException {
-        DbManager dbm = DbManager.forSite(getSite(request));
+        DbManager dbm = getSite(request).getDbManager();
         request.setAttribute(QS_LAST_MSGS, new int[]{dbm.getLastMessageNumber(), dbm.getLastIndexedNumber()});
     }
 
     private void logRequest(ForwardingRequest request, String query) {
         try {
-            DbManager.forSite(getSite(request)).logRequest(
+            getSite(request).getDbManager().logRequest(
                     request.getRemoteAddr(),
                     request.getHeader("User-Agent"),
                     request.getParameter(QS_TEXT),

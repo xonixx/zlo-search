@@ -2,17 +2,17 @@ package org.xonix.zlo.search.dao;
 
 import org.xonix.zlo.search.IndexingSource;
 import org.xonix.zlo.search.MultithreadedRetriever;
+import org.xonix.zlo.search.ZloSearcher;
+import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.site.SiteAccessor;
 import org.xonix.zlo.search.site.PageRetriever;
 import org.xonix.zlo.search.site.PageParser;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 
 /**
  * Author: Vovan
@@ -21,12 +21,22 @@ import java.util.Comparator;
 */
 public class Site extends SiteAccessor implements IndexingSource {
 
-    public Site(String siteName) {
+    private static Logger logger = Logger.getLogger(Site.class);
+
+    private Site(String siteName) {
         super(siteName);
     }
 
+    private static HashMap<String, Site> allSites = new HashMap<String, Site>();
+    public static Site forName(String siteName) {
+        if (!allSites.containsKey(siteName)) {
+            allSites.put(siteName, new Site(siteName));
+        }
+        return allSites.get(siteName);
+    }
+
     public ZloMessage getMessageByNumber(int num) throws DAOException {
-        DAO.logger.debug("Receiving from site: " + num);
+        logger.debug("Receiving from site: " + num);
         try {
             return getMessage(num);
         } catch (IOException e) {
@@ -35,13 +45,13 @@ public class Site extends SiteAccessor implements IndexingSource {
     }
 
     public List<ZloMessage> getMessages(int from, int to) throws DAOException {
-        DAO.logger.info("Downloading messages from " + from + " to " + to + "...");
+        logger.info("Downloading messages from " + from + " to " + to + "...");
         long begin = System.currentTimeMillis();
 
         List<ZloMessage> msgs = MultithreadedRetriever.getMessages(this, from, to);
 
         float durationSecs = (System.currentTimeMillis() - begin) / 1000f;
-        DAO.logger.info("Downloaded " + msgs.size() + " messages in " + (int)durationSecs + "secs. Rate: " + ((float)msgs.size()) / durationSecs + "mps.");
+        logger.info("Downloaded " + msgs.size() + " messages in " + (int)durationSecs + "secs. Rate: " + ((float)msgs.size()) / durationSecs + "mps.");
 
         return msgs;
     }
@@ -86,7 +96,7 @@ public class Site extends SiteAccessor implements IndexingSource {
             for (Object key : Config.getAppProperties().keySet()) {
                 String k = (String) key;
                 if (k.startsWith(SITE_CONFIG_PREFIX)) {
-                    sites.add(new Site(k.replaceFirst(SITE_CONFIG_PREFIX, "")));
+                    sites.add(Site.forName(k.replaceFirst(SITE_CONFIG_PREFIX, "")));
                 }
             }
             Collections.sort(sites, new Comparator<Site>(){
@@ -113,5 +123,28 @@ public class Site extends SiteAccessor implements IndexingSource {
 
     public int getNum() {
         return SITE_NUMBER;
+    }
+
+    // =====
+    private DbManager dbManager;
+    public DbManager getDbManager() {
+        if (dbManager == null) {
+            if (SITE_NAME != null)
+                dbManager = Site.forName(SITE_NAME).getDbManager();
+            else
+                dbManager = new DbManager(this);
+        }
+        return dbManager;
+    }
+
+    private ZloSearcher zloSearcher;
+    public ZloSearcher getZloSearcher() {
+        if (zloSearcher == null) {
+            if (SITE_NAME != null)
+                zloSearcher = Site.forName(SITE_NAME).getZloSearcher();
+            else
+                zloSearcher = new ZloSearcher(this);
+        }
+        return zloSearcher;
     }
 }

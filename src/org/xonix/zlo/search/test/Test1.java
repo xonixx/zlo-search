@@ -85,7 +85,7 @@ public class Test1 {
     }
 
     public static void m17() {
-        System.out.println(ZloSearcher.forSite(new Site("zlo")).getLastIndexedNumber());
+        System.out.println(Site.forName("zlo").getZloSearcher().getLastIndexedNumber());
 /*        int from =4000000;
         int to=4000019;
         System.out.println((int)MessageFormat.format("{0}", 4000).charAt(1));
@@ -118,7 +118,7 @@ public class Test1 {
 //            System.out.println(DbManager.getMessageByNumber(4149183));
 //            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(648064));
 //            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(4199196));
-            Site site = new Site("sport");
+            Site site = Site.forName("sport");
             System.out.println(site.getMessageByNumber(61353));
             System.out.println(site.getMessageByNumber(62212));
             System.out.println(site.getMessageByNumber(622120));
@@ -158,7 +158,7 @@ public class Test1 {
 
     public static void m12() {
         try {
-            for (ZloMessage m : new Site("zlo").getMessages(10000, 10042)) {
+            for (ZloMessage m : Site.forName("zlo").getMessages(10000, 10042)) {
                 System.out.println(m);
             }
         } catch (DAOException e) {
@@ -167,7 +167,7 @@ public class Test1 {
     }
 
     public static void m11() {
-        Site site = new Site("zlo");
+        Site site = Site.forName("zlo");
         try {
             for (int i = 0; i < 6000; i++) {
                 site.getMessageByNumber(i);
@@ -180,7 +180,7 @@ public class Test1 {
     public static void m10() {
         try {
 //            System.out.println(new ZloStorage().getLastMessageNumber());
-            System.out.println(new DB(new Site("zlo")).getLastMessageNumber());
+            System.out.println(new DB(Site.forName("zlo")).getLastMessageNumber());
         } catch (DAOException e) {
             e.printStackTrace();
         }
@@ -211,7 +211,7 @@ public class Test1 {
 //        System.out.println(f.format(-123));
 //        System.out.println(Integer.parseInt(f.format(-123)));
 //        System.out.println(ZloSearcher.searchMsgByNum(3765011));
-        for (Object o : ZloSearcher.forSite(new Site("zlo")).searchInNumRange(3765002, 3765007)) {
+        for (Object o : Site.forName("zlo").getZloSearcher().searchInNumRange(3765002, 3765007)) {
             System.out.println(o);
         }
     }
@@ -219,7 +219,7 @@ public class Test1 {
     public static void m5() {
         for (int i = 0; i < 10; i++) {
             try {
-                System.out.println(">" + new Site("zlo").getLastMessageNumber());
+                System.out.println(">" + Site.forName("zlo").getLastMessageNumber());
             } catch (DAOException e) {
                 e.printStackTrace();
             }
@@ -256,7 +256,7 @@ public class Test1 {
 
     public static void m7() {
         try {
-            for (ZloMessage m : new Site("zlo").getMessages(10, 110)) {
+            for (ZloMessage m : Site.forName("zlo").getMessages(10, 110)) {
                 System.out.println(m);
             }
         } catch (DAOException e) {
@@ -266,7 +266,7 @@ public class Test1 {
 
     public static void m8() {
         try {
-            System.out.println(new Site("zlo").getMessageByNumber(3960198));
+            System.out.println(Site.forName("zlo").getMessageByNumber(3960198));
         } catch (DAOException e) {
             e.printStackTrace();
         }
@@ -320,13 +320,13 @@ public class Test1 {
 
     public static void m9() {
         try {
-            List<ZloMessage> l = new Site("zlo").getMessages(3999995, 3999999);
+            List<ZloMessage> l = Site.forName("zlo").getMessages(3999995, 3999999);
 //            Collections.
             for (ZloMessage m : l) {
                 System.out.println(m);
             }
             System.out.println("#############################################");
-            List<ZloMessage> l1 = new Site("zlo").getMessages(4000000, 4000005);
+            List<ZloMessage> l1 = Site.forName("zlo").getMessages(4000000, 4000005);
             for (ZloMessage m : l1) {
                 System.out.println(m);
             }

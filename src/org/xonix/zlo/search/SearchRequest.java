@@ -203,7 +203,7 @@ public class SearchRequest extends SiteSource {
 
     public SearchResult performSearch() {
         // just to throw exception if db connection broken and can't be fixed
-        SearchResult result = ZloSearcher.forSite(getSite()).search(this);
+        SearchResult result = getSite().getZloSearcher().search(this);
         result.setLastSearch(this);
         return result;
     }

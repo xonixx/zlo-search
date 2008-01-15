@@ -30,7 +30,7 @@ public class PageParser extends SiteSource {
 
     public PageParser(Site site) {
         super(site);
-        dbm = DbManager.forSite(site);
+        dbm = site.getDbManager();
         MSG_REG_RE = Pattern.compile(site.MSG_REG_RE_STR, Pattern.DOTALL);
         MSG_UNREG_RE = Pattern.compile(site.MSG_UNREG_RE_STR, Pattern.DOTALL);
     }

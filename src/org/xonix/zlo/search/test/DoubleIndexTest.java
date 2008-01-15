@@ -3,6 +3,7 @@ package org.xonix.zlo.search.test;
 import org.xonix.zlo.search.DoubleIndexSearcher;
 import org.xonix.zlo.search.ZloSearcher;
 import org.xonix.zlo.search.DoubleHits;
+import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.search.model.ZloMessage;
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.Sort;
@@ -32,7 +33,7 @@ public class DoubleIndexTest {
     }
 
     private static DoubleIndexSearcher getDIS() {
-        return new DoubleIndexSearcher("D:\\TEST\\JAVA\\ZloSearcher\\__test", ZloSearcher.getDateSort());
+        return new DoubleIndexSearcher(Site.forName("test"), ZloSearcher.getDateSort());
     }
 
     public static void m1() {

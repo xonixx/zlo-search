@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.apache.lucene.index.IndexWriter;
 import org.xonix.zlo.search.DoubleIndexSearcher;
 import org.xonix.zlo.search.ZloIndexer;
-import org.xonix.zlo.search.ZloSearcher;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.dao.Site;
 
@@ -21,7 +20,7 @@ public class OptimizeIndex {
     public static void main(String[] args) {
         try {
 //            Site site = new Site("zlo");
-            Site site = new Site("sport");
+            Site site = Site.forName("sport");
             if (!Config.USE_DOUBLE_INDEX) {
                 IndexWriter w = new ZloIndexer(site).getWriter();
                 logger.info("Optimizing index...");
@@ -29,7 +28,7 @@ public class OptimizeIndex {
                 w.close();
                 logger.info("Done.");
             } else {
-                DoubleIndexSearcher dis = ZloSearcher.forSite(site).getDoubleIndexSearcher();
+                DoubleIndexSearcher dis = site.getZloSearcher().getDoubleIndexSearcher();
 /*                int lastIndexedInDb = DbManager.getLastIndexedNumber();
                 int lastIndexedInIndex = ZloSearcher.getLastIndexedNumber();
                 if (lastIndexedInIndex != lastIndexedInDb) {
