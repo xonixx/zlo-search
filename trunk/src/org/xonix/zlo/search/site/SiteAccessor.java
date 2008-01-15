@@ -53,6 +53,9 @@ public class SiteAccessor {
     public int DB_SCAN_PERIOD;
     public int DB_RECONNECT_PERIOD;
 
+    public int SITE_NUMBER;
+
+    private String SITE_NAME;
     private String siteName;
 
 
@@ -100,10 +103,14 @@ public class SiteAccessor {
         DB_SCAN_PER_TIME = Integer.parseInt(p.getProperty("db.daemon.scan.per.time"));
         DB_SCAN_PERIOD = TimeUtils.parseToMilliSeconds(p.getProperty("db.daemon.period.to.scan"));
         DB_RECONNECT_PERIOD = TimeUtils.parseToMilliSeconds(p.getProperty("db.daemon.period.to.reconnect"));
+
+        SITE_NUMBER = Integer.parseInt(p.getProperty("site.number"));
+        SITE_NAME = p.getProperty("site.name");
     }
 
     public String getSiteName() {
-        return siteName;
+        // this is for the reason not to create havy objects for same sites (zlo for board)
+        return SITE_NAME != null ? SITE_NAME : siteName;
     }
 
     public void setSiteName(String siteName) {

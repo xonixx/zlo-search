@@ -6,13 +6,17 @@ package org.xonix.zlo.web;
  * Time: 14:47:26
  */
 public class HtmlConstructor {
-    public static String constructSelector(String name, String[][] additionalOptions, String[] itemsCollection,
+    public static String constructSelector(String name, String id, String[][] additionalOptions, String[] itemsCollection,
                                            int selected, boolean enumerate) {
         if (itemsCollection == null)
             itemsCollection = new String[0];
         
         StringBuilder res = new StringBuilder("<select name=\"");
-        res.append(name).append("\">\n");
+        res.append(name).append("\"");
+        if (id != null) {
+            res.append(" id=\"").append(id).append("\"");
+        }
+        res.append(">\n");
 
         if (additionalOptions != null) {
             for (String[] additionalOption : additionalOptions) {
@@ -44,13 +48,13 @@ public class HtmlConstructor {
         return res.toString();
     }
 
-    public static String constructSelector(String name, String[] itemsCollection,
+    public static String constructSelector(String name, String id, String[] itemsCollection,
                                            int selected, boolean enumerate) {
-        return constructSelector(name, (String[][]) null, itemsCollection,
+        return constructSelector(name, id, (String[][]) null, itemsCollection,
                                            selected, enumerate);
     }
 
-    public static String constructSelector(String name, String[] additioanlOptions, String[] itemsCollection,
+    public static String constructSelector(String name, String id, String[] additioanlOptions, String[] itemsCollection,
                                            int selected, boolean enumerate) {
         String[][] additionalOptionsM = new String[additioanlOptions.length][2];
 
@@ -59,13 +63,13 @@ public class HtmlConstructor {
             additionalOptionsM[i][1] = additioanlOptions[i];
         }
         
-        return constructSelector(name, additionalOptionsM, itemsCollection,
+        return constructSelector(name, id, additionalOptionsM, itemsCollection,
                                            selected, enumerate);
     }
 
-    public static String constructSelector(String name, String additioanlOption, String[] itemsCollection,
+/*    public static String constructSelector(String name, String id, String additioanlOption, String[] itemsCollection,
                                            int selected, boolean enumerate) {
-        return constructSelector(name, new String[] {additioanlOption}, itemsCollection,
+        return constructSelector(name, id, new String[] {additioanlOption}, itemsCollection,
                                            selected, enumerate);
-    }
+    }*/
 }
