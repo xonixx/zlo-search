@@ -7,6 +7,7 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.displaytag.pagination.PaginatedList;
 import org.xonix.zlo.search.model.ZloMessageAccessor;
+import org.xonix.zlo.search.dao.Site;
 
 import java.util.Iterator;
 
@@ -17,7 +18,6 @@ import java.util.Iterator;
  */
 public class SearchResult implements Iterable {
 
-//    private Hits hits;
     private DoubleHits doubleHits;
     private IndexSearcher searcher;
     private Analyzer analyzer;
@@ -32,14 +32,6 @@ public class SearchResult implements Iterable {
 
     public SearchResult() {
     }
-
-/*    public Hits getHits() {
-        return hits;
-    }
-
-    public void setHits(Hits hits) {
-        this.hits = hits;
-    }*/
 
     public DoubleHits getHits() {
         return doubleHits;
@@ -122,11 +114,15 @@ public class SearchResult implements Iterable {
         return !isTheSameSearch(searchRequest);
     }
 
-    public PaginatedList getPaginatedList() {
+    public PaginatedList createPaginatedList(Site site) {
         if (paginatedList == null) {
-            paginatedList = new ZloPaginatedList(doubleHits);
+            paginatedList = new ZloPaginatedList(doubleHits, site);
             ((ZloPaginatedList) paginatedList).setPageNumber(1);
         }
+        return paginatedList;
+    }
+
+    public PaginatedList getPaginatedList() {
         return paginatedList;
     }
 

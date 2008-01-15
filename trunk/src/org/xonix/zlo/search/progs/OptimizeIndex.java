@@ -20,14 +20,16 @@ public class OptimizeIndex {
 
     public static void main(String[] args) {
         try {
+//            Site site = new Site("zlo");
+            Site site = new Site("sport");
             if (!Config.USE_DOUBLE_INDEX) {
-                IndexWriter w = new ZloIndexer(new Site("zlo")).getWriter();
+                IndexWriter w = new ZloIndexer(site).getWriter();
                 logger.info("Optimizing index...");
                 w.optimize();
                 w.close();
                 logger.info("Done.");
             } else {
-                DoubleIndexSearcher dis = ZloSearcher.forSite(new Site("zlo")).getDoubleIndexSearcher();
+                DoubleIndexSearcher dis = ZloSearcher.forSite(site).getDoubleIndexSearcher();
 /*                int lastIndexedInDb = DbManager.getLastIndexedNumber();
                 int lastIndexedInIndex = ZloSearcher.getLastIndexedNumber();
                 if (lastIndexedInIndex != lastIndexedInDb) {
