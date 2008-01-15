@@ -42,21 +42,6 @@ public class DbManager extends SiteSource {
         super(site);
     }
 
-/*    private static HashMap<String, DbManager> dbms = new HashMap<String, DbManager>();
-    public static DbManager forSite(Site site) {
-        String siteName = site.getSiteName();
-        if (!dbms.containsKey(siteName)) {
-            dbms.put(siteName, new DbManager(site));
-        }
-        DbManager dbManager = dbms.get(siteName);
-        dbManager.setSite(site);
-        return dbManager;
-    }
-
-    public static DbManager forSite(String siteName) {
-        return forSite(new Site(siteName));
-    }*/
-
     private static final String SQL_INSERT_MSG =            props.getProperty("sql.insert.msg");
     private static final String SQL_INSERT_UPDATE_MSG =     props.getProperty("sql.insert.update.msg");
     private static final String SQL_UPDATE_MSG =            props.getProperty("sql.update.msg");

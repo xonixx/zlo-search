@@ -49,7 +49,6 @@ public class DoubleIndexSearcher {
 
     public DoubleIndexSearcher(SiteAccessor site, Sort renewingSort) {
         this(site.INDEX_DIR_DOUBLE, renewingSort);
-        logger.info("NEW Double index for site: " + site.getSiteName());
     }
 
     public String getBigPath() {

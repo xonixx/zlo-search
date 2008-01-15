@@ -82,13 +82,14 @@ public final class DbUtils {
     }
 
     public static DbResult executeSelect(Site site, String sqlString, Object[] params, VarType[] types) throws DbException {
+        DbResult dbResult;
         if (site.DB_VIA_CONTAINER) {
-            DbResult dbResult = executeSelect(site.JNDI_DS_NAME, sqlString, params, types);
-            dbResult.setSite(site);
-            return dbResult;
+            dbResult = executeSelect(site.JNDI_DS_NAME, sqlString, params, types);
         } else {
-            return executeSelect(site.getDataSource(), sqlString, params, types);
+            dbResult = executeSelect(site.getDataSource(), sqlString, params, types);
         }
+        dbResult.setSite(site);
+        return dbResult;
     }
 
     //--------------------------------------
@@ -101,13 +102,14 @@ public final class DbUtils {
     }*/
 
     public static DbResult executeSelect(Site site, String sqlString) throws DbException {
+        DbResult dbResult;
         if (site.DB_VIA_CONTAINER) {
-            DbResult dbResult = executeSelect(site.JNDI_DS_NAME, sqlString, new Object[0], new VarType[0]);
-            dbResult.setSite(site);
-            return dbResult;
+            dbResult = executeSelect(site.JNDI_DS_NAME, sqlString, new Object[0], new VarType[0]);
         } else {
-            return executeSelect(site.getDataSource(), sqlString, new Object[0], new VarType[0]);
+            dbResult = executeSelect(site.getDataSource(), sqlString, new Object[0], new VarType[0]);
         }
+        dbResult.setSite(site);
+        return dbResult;
     }
     /*
      Executes insert, update, delete
