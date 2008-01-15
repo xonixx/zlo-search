@@ -60,7 +60,7 @@ public class SearchServlet extends BaseServlet {
     public static final String SEARCH_TYPE_ADVANCED = "adv";
     public static final String SEARCH_TYPE_EXACT_PHRASE = "exct";
 
-    public static final String QS_SUBMIT = "submit";
+    public static final String QS_SUBMIT = "submitBtn";
 
     public static final String REQ_HIGHLIGHT_WORDS = "hw";
 

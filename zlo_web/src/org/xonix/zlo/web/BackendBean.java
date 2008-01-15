@@ -37,15 +37,15 @@ public class BackendBean {
         } catch (DbException e) {
             ;
         }
-        return HtmlConstructor.constructSelector(SN_TOPIC, ZloMessage.ALL_TOPICS, topics, topic, true);
+        return HtmlConstructor.constructSelector(SN_TOPIC, null, new String[]{ZloMessage.ALL_TOPICS}, topics, topic, true);
     }
 
     public String getSiteSelector() {
-        return HtmlConstructor.constructSelector(SN_SITE, Site.getSiteNames(), site, true);
+        return HtmlConstructor.constructSelector(SN_SITE, null, Site.getSiteNames(), site, true);
     }
 
     public String getPageSizeSelector() {
-        return HtmlConstructor.constructSelector(SN_PAGE_SIZE, Config.NUMS_PER_PAGE, pageSize, true);
+        return HtmlConstructor.constructSelector(SN_PAGE_SIZE, null, Config.NUMS_PER_PAGE, pageSize, true);
     }
 
     public int getSite() {

@@ -9,6 +9,8 @@ import org.xonix.zlo.search.site.SiteAccessor;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Author: Vovan
@@ -61,6 +63,11 @@ public class Site extends SiteAccessor implements IndexingSource {
                     sites.add(new Site(k.replaceFirst(SITE_CONFIG_PREFIX, "")));
                 }
             }
+            Collections.sort(sites, new Comparator<Site>(){
+                public int compare(Site o1, Site o2) {
+                    return o1.SITE_NUMBER > o2.SITE_NUMBER ? 1 : o1.SITE_NUMBER == o2.SITE_NUMBER ? 0 : -1;
+                }
+            });
         }
         return sites;
     }
@@ -76,5 +83,9 @@ public class Site extends SiteAccessor implements IndexingSource {
 
     public static Site getSite(int num) {
         return getSites().get(num);
+    }
+
+    public int getNum() {
+        return SITE_NUMBER;
     }
 }

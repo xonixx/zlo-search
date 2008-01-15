@@ -215,6 +215,7 @@ public class DbManager extends SiteSource {
         while (res.next()) {
             ZloMessage msg = getMessage(res);
             msg.setHitId(fromIndex++);
+            msg.setSite(getSite());
             msgs.add(msg);
         }
 

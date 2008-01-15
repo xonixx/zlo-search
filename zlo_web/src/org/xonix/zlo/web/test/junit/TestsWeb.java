@@ -17,7 +17,7 @@ public class TestsWeb extends TestCase {
                 "<option value=\"1\" selected>item2</option>\n" +
                 "<option value=\"2\">item3</option>\n" +
                 "</select>",
-                HtmlConstructor.constructSelector("selId", new String[]{"item1", "item2", "item3"}, 1, true));
+                HtmlConstructor.constructSelector("selId", null, new String[]{"item1", "item2", "item3"}, 1, true));
 
         assertEquals("<select name=\"selId\">\n" +
                 "<option value=\"-1\">addItem</option>\n" +
@@ -25,7 +25,7 @@ public class TestsWeb extends TestCase {
                 "<option value=\"1\" selected>item2</option>\n" +
                 "<option value=\"2\">item3</option>\n" +
                 "</select>",
-                HtmlConstructor.constructSelector("selId", "addItem", new String[]{"item1", "item2", "item3"}, 1, true));
+                HtmlConstructor.constructSelector("selId", null, new String[]{"addItem"}, new String[]{"item1", "item2", "item3"}, 1, true));
 
         assertEquals("<select name=\"selId\">\n" +
                 "<option value=\"-1\">addItem1</option>\n" +
@@ -34,7 +34,7 @@ public class TestsWeb extends TestCase {
                 "<option value=\"1\">item2</option>\n" +
                 "<option value=\"2\">item3</option>\n" +
                 "</select>",
-                HtmlConstructor.constructSelector("selId", new String[]{"addItem1", "addItem2"},
+                HtmlConstructor.constructSelector("selId", null, new String[]{"addItem1", "addItem2"},
                         new String[]{"item1", "item2", "item3"}, -2, true));
     }
 }

@@ -29,7 +29,7 @@
                 <tr>
                     <td width="33%"></td>
                     <td>
-                        <form action="search" method="get">
+                        <form action="search" method="get" id="searchFrm">
                             <input type="radio" name="st" id="st1" value="all" <c:if test="${param['st'] == 'all'}">checked="checked"</c:if> /><label for="st1"><fmt:message key="label.search.all" /></label>
                             <input type="radio" name="st" id="st2" value="exct" <c:if test="${param['st'] == 'exct'}">checked="checked"</c:if> /><label for="st2"><fmt:message key="label.search.exact.phrase" /></label>
                             <input type="radio" name="st" id="st3" value="adv" <c:if test="${param['st'] == 'adv'}">checked="checked"</c:if> /><label for="st3"><fmt:message key="label.search.advanced" /></label>
@@ -49,14 +49,19 @@
                             <fmt:message key="label.nick" /> <input type="text" name="nick" <c:if test="${not empty param['nick']}">value="<c:out value="${param['nick']}" />" </c:if>style="width:200px;" />
                             <fmt:message key="label.host" /> <input type="text" name="host" <c:if test="${not empty param['host']}">value="<c:out value="${param['host']}" />" </c:if>style="width:200px;" />
                             <br/>
-                            <input type="checkbox" name="dates" id="dates" onchange="changedDatesSelector();" <c:if test="${not empty param['dates']}">checked="checked"</c:if>/> <label for="dates"><fmt:message key="label.dates" /></label>
+                            <input type="checkbox" name="dates" id="dates" onclick="changedDatesSelector();" <c:if test="${not empty param['dates']}">checked="checked"</c:if>/> <label for="dates"><fmt:message key="label.dates" /></label>
                             <fmt:message key="label.from.date" /> <input type="text" name="fd" id="fd" value="${sessionScope['fd']}" />
                             <fmt:message key="label.to.date" /> <input type="text" name="td" id="td" value="${sessionScope['td']}" />
                             <br/>
                             <fmt:message key="label.site" /> <jsp:getProperty name="backendBean" property="siteSelector" />
+                            <script type="text/javascript">
+                                document.getElementsByName("text")[0].focus();
+                                document.getElementsByName("topic")[0].selectedIndex = 0;
+                                document.getElementsByName("site")[0].onchange = function(){ document.getElementById("searchFrm").submit(); }
+                            </script>
                             <fmt:message key="label.per.page" /> <jsp:getProperty name="backendBean" property="pageSizeSelector" />
                             <br/>
-                            <input type="submit" name="submit" value="Search"/>
+                            <input type="submit" name="submitBtn" value="Search"/>
                         </form>
                     </td>
                     <td></td>
@@ -108,13 +113,14 @@
                                 [<c:out value="${msg.topic}" />]
                             </c:if>
                             <jsp:setProperty name="hl" property="text" value="${msg.title}" />
-                            <c:out value="${hl.highlightedText}" escapeXml="false" /></a>
+                            <c:out value="${hl.highlightedText}" escapeXml="false" />
+                        </a>
                         <small>
                             <c:if test="${empty msg.body}">(-)</c:if>
                             <c:if test="${msg.hasUrl}">(url)</c:if>
                             <c:if test="${msg.hasImg}">(pic)</c:if>
                         </small>
-                        <a class="search" href="msg?num=<c:out value="${msg.num}" /><c:if test="${not empty hl.wordsStr}">&hw=<c:out value="${hl.wordsStr}" /></c:if>"><fmt:message key="link.saved.msg" /></a>
+                        <a class="search" href="msg?site=<c:out value="${msg.site.num}" />&num=<c:out value="${msg.num}" /><c:if test="${not empty hl.wordsStr}">&hw=<c:out value="${hl.wordsStr}" /></c:if>"><fmt:message key="link.saved.msg" /></a>
                     </display:column>
                     <display:column title="<%= HtmlStrings.HEADER_NICK.toString() %>" headerClass="head">
                         <span class="nick">
@@ -127,11 +133,11 @@
                                 </c:otherwise>
                             </c:choose>
                         </span>
-                        <a class="search" href="search?nick=<c:out value="${msg.nick}" />">?</a>
+                        <a class="search" href="search?site=<c:out value="${msg.site.num}" />&nick=<c:out value="${msg.nick}" />">?</a>
                     </display:column>
                     <display:column title="<%= HtmlStrings.HEADER_HOST.toString() %>" class="small" headerClass="head">
                         <c:out value="${msg.host}" />
-                        <a class="search" href="search?host=<c:out value="${msg.host}" />">?</a>
+                        <a class="search" href="search?site=<c:out value="${msg.site.num}" />&host=<c:out value="${msg.host}" />">?</a>
                     </display:column>
                     <display:column title="<%= HtmlStrings.HEADER_DATE.toString() %>" property="date"
                                     class="small nowrap" headerClass="head" />

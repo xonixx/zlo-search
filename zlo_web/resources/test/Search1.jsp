@@ -1,4 +1,4 @@
-<%@ page import="org.xonix.zlo.search.config.Config, org.xonix.zlo.search.config.HtmlStrings, org.xonix.zlo.search.model.ZloMessageAccessor, org.apache.commons.lang.StringUtils" %>
+<%@ page import="org.apache.commons.lang.StringUtils, org.xonix.zlo.search.config.HtmlStrings, org.xonix.zlo.search.model.ZloMessageAccessor" %>
 <%--
   User: gubarkov
   Date: 14.08.2007
@@ -42,7 +42,7 @@
                             <%= HtmlStrings.LABEL_SITE %> <jsp:getProperty name="backendBean" property="siteSelector" />
                             <%= HtmlStrings.LABEL_PER_PAGE %> <jsp:getProperty name="backendBean" property="pageSizeSelector" />
                             <br/>
-                            <input type="submit" name="submit" value="Search"/>
+                            <input type="submit" name="submitBtn" value="Search"/>
                         </form>
                     </td>
                     <td></td>
