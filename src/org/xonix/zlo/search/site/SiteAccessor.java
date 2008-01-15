@@ -4,6 +4,7 @@ import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.utils.TimeUtils;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.apache.commons.lang.StringUtils;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -151,5 +152,14 @@ public class SiteAccessor {
             ds.setPassword(DB_PASSWORD);
         }
         return ds;
+    }
+
+    public boolean equals(Object obj) {
+        if (!(obj instanceof SiteAccessor)) {
+            return false;
+        }
+
+        return StringUtils.equals(getSiteName(), ((SiteAccessor) obj).getSiteName()) &&
+                StringUtils.equals(SITE_NAME, ((SiteAccessor) obj).SITE_NAME);
     }
 }

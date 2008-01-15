@@ -221,6 +221,7 @@ public class SearchServlet extends BaseServlet {
                     searchResult = (SearchResult) session.getAttribute(SESS_SEARCH_RESULT);
                     searchResult.setNewSearch(false); // means we use result of previous search
                 }
+
                 if (searchResult != null) {
                     ZloPaginatedList paginatedList = (ZloPaginatedList) searchResult.createPaginatedList(getSite(request));
                     paginatedList.setObjectsPerPage(pageSize);

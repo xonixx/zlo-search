@@ -48,7 +48,9 @@ public class DbManager extends SiteSource {
         if (!dbms.containsKey(siteName)) {
             dbms.put(siteName, new DbManager(site));
         }
-        return dbms.get(siteName);
+        DbManager dbManager = dbms.get(siteName);
+        dbManager.setSite(site);
+        return dbManager;
     }
 
     public static DbManager forSite(String siteName) {
