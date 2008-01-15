@@ -27,8 +27,10 @@ public class DB extends DbManagerSource implements IndexingSource {
             DAO.logger.info((fast ? "Fast " : "") + "Saving (" + msgs.get(0).getNum() + " - " + msgs.get(msgs.size() - 1).getNum() + ") msgs to DB...");
             if (fast)
                 getDbManager().saveMessagesFast(msgs);
-            else
-                getDbManager().saveMessages(msgs);
+            else {
+//                getDbManager().saveMessages(msgs);
+                throw new UnsupportedOperationException();
+            }
             DAO.logger.info("Successfully saved " + msgs.size() + " msgs to DB.");
         } catch (DbException e) {
             throw new DAOException(this, e);

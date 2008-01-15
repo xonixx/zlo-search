@@ -2,12 +2,10 @@ package org.xonix.zlo.search.daemon;
 
 import org.apache.log4j.Logger;
 import org.xonix.zlo.search.IndexingSource;
-import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.dao.DAOException;
 import org.xonix.zlo.search.dao.DB;
 import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.search.model.ZloMessage;
-import org.xonix.zlo.search.utils.TimeUtils;
 
 import java.util.List;
 
@@ -19,11 +17,11 @@ import java.util.List;
 public class DbDaemon extends Daemon {
     private static Logger logger = Logger.getLogger(DbDaemon.class);
 
-    public static final int SCAN_PER_TIME = Integer.parseInt(Config.getProp("db.daemon.scan.per.time"));
-    public static final int SCAN_PERIOD = TimeUtils.parseToMilliSeconds(Config.getProp("db.daemon.period.to.scan"));
-    public static final int RECONNECT_PERIOD = TimeUtils.parseToMilliSeconds(Config.getProp("db.daemon.period.to.reconnect"));
+    public static int SCAN_PER_TIME;
+    public static int SCAN_PERIOD;
+    public static int RECONNECT_PERIOD;
 
-    private IndexingSource source;
+//    private IndexingSource source;
 
     private class MainProcess extends Process {
         private int endSource = -1;
@@ -34,6 +32,7 @@ public class DbDaemon extends Daemon {
         }
 
         protected void doOneIteration() {
+            IndexingSource source = getSite();
             try {
                 if (startDb == -1)
                     startDb = getDB().getLastMessageNumber() + 1;
@@ -80,9 +79,11 @@ public class DbDaemon extends Daemon {
         }
     }
 
-    public DbDaemon(IndexingSource source) {
+    public DbDaemon() {
         super();
-        this.source = source;
+        SCAN_PER_TIME = getSite().DB_SCAN_PER_TIME;
+        SCAN_PERIOD = getSite().DB_SCAN_PERIOD;
+        RECONNECT_PERIOD = getSite().DB_RECONNECT_PERIOD;
     }
 
     protected Process createProcess() {
@@ -90,10 +91,6 @@ public class DbDaemon extends Daemon {
     }
 
     public static void main(String[] args) {
-//        DAO.DB.saveMessages(DAO.Site._getMessages(3999990, 3999999));
-//        DAO.DB.saveMessages(DAO.Site._getMessages(4000000, 4000010));
-
-        new DbDaemon(new Site("zlo")).start();
-//        new DbDaemon(new ZloStorage()).start();
+        new DbDaemon().start();    
     }
 }

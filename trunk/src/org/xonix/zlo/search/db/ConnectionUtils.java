@@ -27,8 +27,8 @@ public class ConnectionUtils {
     Supposed to return valid connection
     if can't recreate one -> throws DbException
      */
-    public static Connection getConnection() throws DbException {
-/*        if (Config.USE_CONTAINER_POOL) {
+/*    public static Connection getConnection() throws DbException {
+*//*        if (Config.USE_CONTAINER_POOL) {
             try {
                 DataSource connection = getDataSource();
                 if (connection != null)
@@ -39,12 +39,12 @@ public class ConnectionUtils {
             } catch (NamingException e) {
                 logger.error("Error while creating DataSource: " + e.getClass().getName() + ", Starting using single db connection!");
             }
-        }*/
+        }*//*
 
         // if not container pool or not in container environment
         reopenConnectionIfNeeded();
         return DB_CONNECTION;
-    }
+    }*/
 
     public static Connection getConnection(String jndiDsName) throws DbException, NamingException {
 //        if (jndiDsName == null)

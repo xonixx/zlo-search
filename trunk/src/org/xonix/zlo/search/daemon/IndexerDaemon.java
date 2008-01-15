@@ -3,10 +3,9 @@ package org.xonix.zlo.search.daemon;
 import org.apache.log4j.Logger;
 import org.xonix.zlo.search.DoubleIndexSearcher;
 import org.xonix.zlo.search.ZloSearcher;
-import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.search.db.DbException;
-import org.xonix.zlo.search.utils.TimeUtils;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -19,9 +18,9 @@ import java.text.MessageFormat;
 public class IndexerDaemon extends Daemon {
     private static Logger logger = Logger.getLogger(IndexerDaemon.class);
 
-    public static final int INDEX_PER_TIME = Integer.parseInt(Config.getProp("indexer.daemon.index.per.time"));
-    public static final int INDEX_PERIOD = TimeUtils.parseToMilliSeconds(Config.getProp("indexer.daemon.period.to.index"));
-    public static final int RECONNECT_PERIOD = TimeUtils.parseToMilliSeconds(Config.getProp("indexer.daemon.period.to.reconnect"));
+    public static int INDEX_PER_TIME;
+    public static int INDEX_PERIOD;
+    public static int RECONNECT_PERIOD;
 
     private class IndexingProcess extends Process {
         private int indexFrom = -1;
@@ -88,6 +87,13 @@ public class IndexerDaemon extends Daemon {
 
     protected Process createProcess() {
         return new IndexingProcess();
+    }
+
+    public IndexerDaemon() {
+        super();
+        INDEX_PER_TIME = getSite().INDEXER_INDEX_PER_TIME;
+        INDEX_PERIOD = getSite().INDEXER_INDEX_PERIOD;
+        RECONNECT_PERIOD = getSite().INDEXER_RECONNECT_PERIOD;
     }
 
     public static void main(String[] args) {

@@ -2,6 +2,7 @@ package org.xonix.zlo.search.site;
 
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.model.ZloMessage;
+import org.xonix.zlo.search.utils.TimeUtils;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
@@ -43,6 +44,15 @@ public class SiteAccessor {
     public boolean PERFORM_INDEXING;
     public String INDEX_DIR_DOUBLE;
 
+    public int INDEXER_INDEX_PER_TIME;
+    public int INDEXER_INDEX_PERIOD;
+    public int INDEXER_RECONNECT_PERIOD;
+
+    // db daemon
+    public int DB_SCAN_PER_TIME;
+    public int DB_SCAN_PERIOD;
+    public int DB_RECONNECT_PERIOD;
+
     private String siteName;
 
 
@@ -81,6 +91,15 @@ public class SiteAccessor {
         // indexer-----
         PERFORM_INDEXING = Config.TRUE.equals(p.getProperty("indexer.perform.indexing"));
         INDEX_DIR_DOUBLE = p.getProperty("indexer.dir.double");
+
+        INDEXER_INDEX_PER_TIME = Integer.parseInt(p.getProperty("indexer.daemon.index.per.time"));
+        INDEXER_INDEX_PERIOD = TimeUtils.parseToMilliSeconds(p.getProperty("indexer.daemon.period.to.index"));
+        INDEXER_RECONNECT_PERIOD = TimeUtils.parseToMilliSeconds(p.getProperty("indexer.daemon.period.to.reconnect"));
+
+        // db daemon-----
+        DB_SCAN_PER_TIME = Integer.parseInt(p.getProperty("db.daemon.scan.per.time"));
+        DB_SCAN_PERIOD = TimeUtils.parseToMilliSeconds(p.getProperty("db.daemon.period.to.scan"));
+        DB_RECONNECT_PERIOD = TimeUtils.parseToMilliSeconds(p.getProperty("db.daemon.period.to.reconnect"));
     }
 
     public String getSiteName() {
