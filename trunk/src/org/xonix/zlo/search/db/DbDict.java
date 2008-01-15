@@ -57,7 +57,7 @@ public class DbDict extends DbManagerSource {
     }
 
     public Object getVal(String name) throws DbException {
-        DbUtils.Result res = DbUtils.executeSelect(getSite(), SQL_GET_VAL, new Object[]{name}, new VarType[]{STRING});
+        DbResult res = DbUtils.executeSelect(getSite(), SQL_GET_VAL, new Object[]{name}, new VarType[]{STRING});
         try {
             if (res.next()) {
                 int type = res.getInt(1);

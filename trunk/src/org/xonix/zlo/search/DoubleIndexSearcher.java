@@ -42,17 +42,14 @@ public class DoubleIndexSearcher {
 
     private final Object closeLock = new Object();
 
-    public DoubleIndexSearcher(String dir, Sort renewingSort) {
+    private DoubleIndexSearcher(String dir, Sort renewingSort) {
         this.renewingSort = renewingSort;
         this.indexesDir = dir;
     }
 
-/*    public DoubleIndexSearcher(Sort renewingSort) {
-        this(Config.INDEX_DIR_DOUBLE, renewingSort);
-    }*/
-
     public DoubleIndexSearcher(SiteAccessor site, Sort renewingSort) {
         this(site.INDEX_DIR_DOUBLE, renewingSort);
+        logger.info("NEW Double index for site: " + site.getSiteName());
     }
 
     public String getBigPath() {

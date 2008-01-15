@@ -1,12 +1,10 @@
 package org.xonix.zlo.search.db;
 
 import org.apache.log4j.Logger;
-import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.dao.Site;
 
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.io.Closeable;
 import java.sql.*;
 
 /**
@@ -16,96 +14,6 @@ import java.sql.*;
  */
 public final class DbUtils {
     private static final Logger logger = Logger.getLogger(DbUtils.class);
-
-    public static class Result implements Closeable {
-        private ResultSet resultSet;
-        private Statement statement;
-        private Connection connection;
-
-        public Result(Connection connection, ResultSet resultSet, Statement statement) {
-            this.connection = connection;
-            this.resultSet = resultSet;
-            this.statement = statement;
-        }
-
-        public boolean next() throws DbException {
-            try {
-                return resultSet.next();
-            } catch (SQLException e) {
-                throw new DbException(e);
-            }
-        }
-
-        public int getOneInt() throws DbException {
-            try {
-                if (resultSet.next()) {
-                    return resultSet.getInt(1);
-                }
-            } catch (SQLException e) {
-                throw new DbException(e);
-            }
-            return -1;
-        }
-
-        // by columnIndex
-        public Integer getInt(int n) throws DbException {
-            try { return resultSet.getInt(n); }
-            catch (SQLException e) { throw new DbException(e); }
-        }
-
-        public String getString(int n) throws DbException {
-            try { return resultSet.getString(n); }
-            catch (SQLException e) { throw new DbException(e); }
-        }
-
-        public Boolean getBoolean(int n) throws DbException {
-            try { return resultSet.getBoolean(n); }
-            catch (SQLException e) { throw new DbException(e); }
-        }
-
-        public Timestamp getTimestamp(int n) throws DbException {
-            try { return resultSet.getTimestamp(n); }
-            catch (SQLException e) { throw new DbException(e); }
-        }
-
-        public Object getObject(int n) throws DbException {
-            try { return resultSet.getObject(n); }
-            catch (SQLException e) { throw new DbException(e); }
-        }
-
-        // by columnName
-        public Integer getInt(String s) throws DbException {
-            try { return resultSet.getInt(s); }
-            catch (SQLException e) { throw new DbException(e); }
-        }
-
-        public String getString(String s) throws DbException {
-            try { return resultSet.getString(s); }
-            catch (SQLException e) { throw new DbException(e); }
-        }
-
-        public Boolean getBoolean(String s) throws DbException {
-            try { return resultSet.getBoolean(s); }
-            catch (SQLException e) { throw new DbException(e); }
-        }
-
-        public Timestamp getTimestamp(String s) throws DbException {
-            try { return resultSet.getTimestamp(s); }
-            catch (SQLException e) { throw new DbException(e); }
-        }
-
-        public Object getObject(String s) throws DbException {
-            try { return resultSet.getObject(s); }
-            catch (SQLException e) { throw new DbException(e); }
-        }
-
-        public void close() {
-            CloseUtils.close(resultSet, statement);
-            if (Config.USE_CONTAINER_POOL) {
-                CloseUtils.close(connection);
-            }
-        }
-    }
 
     public static void setParams(PreparedStatement st, Object[] params, VarType[] types) throws DbException {
         if (params.length != types.length)
@@ -150,18 +58,18 @@ public final class DbUtils {
     }
 
     //======================================
-    public static Result executeSelect(Connection connection, String sqlString, Object[] params, VarType[] types) throws DbException {
+    private static DbResult executeSelect(Connection connection, String sqlString, Object[] params, VarType[] types) throws DbException {
         PreparedStatement st;
         try {
             st = connection.prepareStatement(sqlString);
             setParams(st, params, types);
-            return new Result(connection, st.executeQuery(), st);
+            return new DbResult(connection, st.executeQuery(), st);
         } catch (SQLException e) {
             throw new DbException(e);
         }
     }
 
-    public static Result executeSelect(String jndiDsName, String sqlString, Object[] params, VarType[] types) throws DbException {
+    private static DbResult executeSelect(String jndiDsName, String sqlString, Object[] params, VarType[] types) throws DbException {
         try {
             return executeSelect(ConnectionUtils.getConnection(jndiDsName), sqlString, params, types);
         } catch (NamingException e) {
@@ -169,30 +77,34 @@ public final class DbUtils {
         }
     }
 
-    public static Result executeSelect(DataSource ds, String sqlString, Object[] params, VarType[] types) throws DbException {
+    private static DbResult executeSelect(DataSource ds, String sqlString, Object[] params, VarType[] types) throws DbException {
         return executeSelect(ConnectionUtils.getConnection(ds), sqlString, params, types);
     }
 
-    public static Result executeSelect(Site site, String sqlString, Object[] params, VarType[] types) throws DbException {
+    public static DbResult executeSelect(Site site, String sqlString, Object[] params, VarType[] types) throws DbException {
         if (site.DB_VIA_CONTAINER) {
-            return executeSelect(site.JNDI_DS_NAME, sqlString, params, types);
+            DbResult dbResult = executeSelect(site.JNDI_DS_NAME, sqlString, params, types);
+            dbResult.setSite(site);
+            return dbResult;
         } else {
             return executeSelect(site.getDataSource(), sqlString, params, types);
         }
     }
 
     //--------------------------------------
-    public static Result executeSelect(String jndiDsName, String sqlString) throws DbException {
+/*    private static DbResult executeSelect(String jndiDsName, String sqlString) throws DbException {
         return executeSelect(jndiDsName, sqlString, new Object[0], new VarType[0]);
     }
 
-    public static Result executeSelect(DataSource ds, String sqlString) throws DbException {
+    private static DbResult executeSelect(DataSource ds, String sqlString) throws DbException {
         return executeSelect(ds, sqlString, new Object[0], new VarType[0]);
-    }
+    }*/
 
-    public static Result executeSelect(Site site, String sqlString) throws DbException {
+    public static DbResult executeSelect(Site site, String sqlString) throws DbException {
         if (site.DB_VIA_CONTAINER) {
-            return executeSelect(site.JNDI_DS_NAME, sqlString, new Object[0], new VarType[0]);
+            DbResult dbResult = executeSelect(site.JNDI_DS_NAME, sqlString, new Object[0], new VarType[0]);
+            dbResult.setSite(site);
+            return dbResult;
         } else {
             return executeSelect(site.getDataSource(), sqlString, new Object[0], new VarType[0]);
         }

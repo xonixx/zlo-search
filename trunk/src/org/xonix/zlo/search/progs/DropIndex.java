@@ -1,10 +1,8 @@
 package org.xonix.zlo.search.progs;
 
 import org.xonix.zlo.search.DoubleIndexSearcher;
-import org.xonix.zlo.search.ZloSearcher;
-import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.search.config.Config;
-import org.xonix.zlo.search.db.DbManager;
+import org.xonix.zlo.search.dao.Site;
 
 import java.io.IOException;
 
@@ -23,10 +21,10 @@ public class DropIndex {
             if (reply[0] == 'y') {
                 System.out.println("Deleting...");
                 if (Config.USE_DOUBLE_INDEX) {
-                    DoubleIndexSearcher dis = ZloSearcher.forSite(new Site("zlo")).getDoubleIndexSearcher();
+                    DoubleIndexSearcher dis = Site.forName("zlo").getZloSearcher().getDoubleIndexSearcher();
                     dis.drop();
                     dis.close();
-                    DbManager.forSite("zlo").setLastIndexedNumber(-1);
+                    Site.forName("zlo").getDbManager().setLastIndexedNumber(-1);
                 }
             }
         } catch (IOException e) {

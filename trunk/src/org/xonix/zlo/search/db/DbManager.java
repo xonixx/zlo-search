@@ -42,7 +42,7 @@ public class DbManager extends SiteSource {
         super(site);
     }
 
-    private static HashMap<String, DbManager> dbms = new HashMap<String, DbManager>();
+/*    private static HashMap<String, DbManager> dbms = new HashMap<String, DbManager>();
     public static DbManager forSite(Site site) {
         String siteName = site.getSiteName();
         if (!dbms.containsKey(siteName)) {
@@ -55,7 +55,7 @@ public class DbManager extends SiteSource {
 
     public static DbManager forSite(String siteName) {
         return forSite(new Site(siteName));
-    }
+    }*/
 
     private static final String SQL_INSERT_MSG =            props.getProperty("sql.insert.msg");
     private static final String SQL_INSERT_UPDATE_MSG =     props.getProperty("sql.insert.update.msg");
@@ -169,7 +169,7 @@ public class DbManager extends SiteSource {
 
     // todo: test
     public ZloMessage getMessageByNumber(int num) throws DbException {
-        DbUtils.Result res = DbUtils.executeSelect(
+        DbResult res = DbUtils.executeSelect(
                 getSite(),
                 SQL_SELECT_MSG_BY_ID,
                 new Object[] {num},
@@ -184,7 +184,7 @@ public class DbManager extends SiteSource {
     }
 
     public List<ZloMessage> getMessagesByRange(int start, int end) throws DbException {
-        DbUtils.Result res = DbUtils.executeSelect(
+        DbResult res = DbUtils.executeSelect(
                 getSite(),
                 SQL_SELECT_MSG_IN_RANGE,
                 new Object[] {start, end},
@@ -210,7 +210,7 @@ public class DbManager extends SiteSource {
 
         String sql = String.format(SQL_SELECT_SET, sbNums.toString());
 
-        DbUtils.Result res = DbUtils.executeSelect(getSite(), sql);
+        DbResult res = DbUtils.executeSelect(getSite(), sql);
 
         List<ZloMessage> msgs = new ArrayList<ZloMessage>();
 
@@ -226,7 +226,7 @@ public class DbManager extends SiteSource {
     }
 
     public int getLastMessageNumber() throws DbException {
-        DbUtils.Result res = DbUtils.executeSelect(getSite(), SQL_SELECT_LAST_MSG_NUM);
+        DbResult res = DbUtils.executeSelect(getSite(), SQL_SELECT_LAST_MSG_NUM);
         try {
             return res.getOneInt();
         } finally {
@@ -238,7 +238,7 @@ public class DbManager extends SiteSource {
     // returns <topic name, topic code> where "topic name"s also include old codes
     public HashMap<String, Integer> getTopicsHashMap() throws DbException {
         if (topicsHashMap == null) {
-            DbUtils.Result res = DbUtils.executeSelect(getSite(), SQL_SELECT_ALL_TOPICS);
+            DbResult res = DbUtils.executeSelect(getSite(), SQL_SELECT_ALL_TOPICS);
             try {
                 topicsHashMap = new HashMap<String, Integer>();
                 while (res.next()) {
@@ -256,7 +256,7 @@ public class DbManager extends SiteSource {
     public String[] getTopics() throws DbException {
         if (topics == null) {
             Map<Integer, String> topicsMap = new HashMap<Integer, String>();
-            DbUtils.Result res = DbUtils.executeSelect(getSite(), SQL_SELECT_NEW_TOPICS);
+            DbResult res = DbUtils.executeSelect(getSite(), SQL_SELECT_NEW_TOPICS);
             while (res.next()) {
                 topicsMap.put(res.getInt(1), res.getString(2));
             }
@@ -299,7 +299,7 @@ public class DbManager extends SiteSource {
         return lastIndexed == null ? 0 : lastIndexed;
     }
 
-    private ZloMessage getMessage(DbUtils.Result rs) throws DbException {
+    private ZloMessage getMessage(DbResult rs) throws DbException {
         return new ZloMessage(
                 getSite(),
                 rs.getString(MSG_NICK)

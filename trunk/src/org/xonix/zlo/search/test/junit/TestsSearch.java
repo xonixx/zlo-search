@@ -27,9 +27,9 @@ public class TestsSearch extends TestCase {
         super.setUp();
         new Config();
 
-        Site site = new Site("zlo");
+        Site site = Site.forName("zlo");
         site.DB_VIA_CONTAINER = false;
-        dbm = DbManager.forSite(site);
+        dbm = site.getDbManager();
         dbDict = new DbDict(site);
     }
 

@@ -13,7 +13,7 @@ import java.io.IOException;
  */
 public class CompoundIndexTest {
     public static void main(String[] args) {
-        ZloIndexer zi = new ZloIndexer(new Site("zlo"));
+        ZloIndexer zi = new ZloIndexer(Site.forName("zlo"));
         IndexWriter indexWriter = zi.getWriter();
         System.out.println(indexWriter.getUseCompoundFile());
         indexWriter.setUseCompoundFile(true);

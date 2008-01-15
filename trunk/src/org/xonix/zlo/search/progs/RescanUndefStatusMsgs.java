@@ -25,7 +25,7 @@ public class RescanUndefStatusMsgs {
     public static void main(String[] args) throws DbException, DAOException {
         new Config();
 
-        DbManager dbm = DbManager.forSite("zlo");
+        DbManager dbm = Site.forName("zlo").getDbManager();
 
         int n=420000;
 
@@ -45,7 +45,7 @@ public class RescanUndefStatusMsgs {
 
             if (newNums.size() > 0) {
                 System.out.print("Getting from site... ");
-                List<ZloMessage> newMsgs = MultithreadedRetriever.getMessages(new Site("zlo"), newNums);
+                List<ZloMessage> newMsgs = MultithreadedRetriever.getMessages(Site.forName("zlo"), newNums);
 
                 System.out.print("Saving... ");
                 dbm.saveMessagesFast(newMsgs, true);

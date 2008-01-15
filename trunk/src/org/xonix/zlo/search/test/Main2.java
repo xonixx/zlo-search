@@ -8,6 +8,7 @@ import org.apache.lucene.search.IndexSearcher;
 import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.ZloSearcher;
+import org.xonix.zlo.search.dao.Site;
 
 import java.io.IOException;
 
@@ -44,7 +45,7 @@ public class Main2 {
                 wr.addDocument(d);
             }
             */
-            DbManager dbm = DbManager.forSite("zlo");
+            DbManager dbm = Site.forName("zlo").getDbManager();
             try {
                 wr.addDocument(dbm.getMessageByNumber(3001403).getDocument());
             } catch (DbException e) {

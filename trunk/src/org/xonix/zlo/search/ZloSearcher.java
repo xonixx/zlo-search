@@ -31,18 +31,19 @@ public class ZloSearcher extends SiteSource {
     private static boolean isReopening = false;
     private static IndexReader indexReader;
 
-    private ZloSearcher(Site site) {
+    public ZloSearcher(Site site) {
         super(site);
+        logger.info("Creating ZloSearcher for " + site.getSiteName());
     }
 
-    private static HashMap<String, ZloSearcher> searchers = new HashMap<String, ZloSearcher>();
+/*    private static HashMap<String, ZloSearcher> searchers = new HashMap<String, ZloSearcher>();
     public static ZloSearcher forSite(Site site) {
         String siteName = site.getSiteName();
         if (!searchers.containsKey(siteName)) {
             searchers.put(siteName, new ZloSearcher(site));
         }
         return searchers.get(siteName);
-    }
+    }*/
 
     public static IndexReader getIndexReader() {
         if (indexReader == null) {

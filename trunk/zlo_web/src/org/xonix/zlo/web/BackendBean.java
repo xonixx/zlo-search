@@ -3,7 +3,6 @@ package org.xonix.zlo.web;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.search.db.DbException;
-import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.model.ZloMessage;
 
 /**
@@ -33,7 +32,7 @@ public class BackendBean {
         String[] topics = new String[0];
         try {
             // todo: check
-            topics = DbManager.forSite(Site.getSite(getSite())).getTopics();
+            topics = Site.getSite(getSite()).getDbManager().getTopics();
         } catch (DbException e) {
             ;
         }

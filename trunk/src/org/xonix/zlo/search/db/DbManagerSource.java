@@ -15,7 +15,7 @@ public class DbManagerSource extends SiteSource {
     }
 
     public DbManager getDbManager() {
-        return DbManager.forSite(getSite());
+        return getSite().getDbManager();
     }
 
     private DB db;
