@@ -6,6 +6,8 @@ import org.displaytag.properties.SortOrderEnum;
 import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.model.ZloMessage;
+import org.xonix.zlo.search.site.SiteSource;
+import org.xonix.zlo.search.dao.Site;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.List;
  * Date: 26.09.2007
  * Time: 16:39:25
  */
-public class ZloPaginatedList implements PaginatedList {
+public class ZloPaginatedList extends SiteSource implements PaginatedList {
     private List currentList;
     private int pageNumber;
     private int objectsPerPage;
@@ -23,10 +25,8 @@ public class ZloPaginatedList implements PaginatedList {
 
     private static final Logger logger = Logger.getLogger(ZloPaginatedList.class);
 
-    public ZloPaginatedList() {
-    }
-
-    public ZloPaginatedList(DoubleHits hits) {
+    public ZloPaginatedList(DoubleHits hits, Site site) {
+        super(site);
         this.hits = hits;
     }
 
@@ -47,8 +47,7 @@ public class ZloPaginatedList implements PaginatedList {
             logger.error("Error while getting doc from index: " + e);
         }
 
-        // todo: VVVVVVVVVVVVVVVVV
-        return DbManager.forSite("zlo").getMessages(indexes, fromIndex);
+        return DbManager.forSite(getSite()).getMessages(indexes, fromIndex);
     }
 
     public void refreshCurrentList() throws DbException {

@@ -222,7 +222,7 @@ public class SearchServlet extends BaseServlet {
                     searchResult.setNewSearch(false); // means we use result of previous search
                 }
                 if (searchResult != null) {
-                    ZloPaginatedList paginatedList = (ZloPaginatedList) searchResult.getPaginatedList();
+                    ZloPaginatedList paginatedList = (ZloPaginatedList) searchResult.createPaginatedList(getSite(request));
                     paginatedList.setObjectsPerPage(pageSize);
                     if (StringUtils.isNotEmpty(request.getParameter(QS_PAGE_NUMBER))) {
                         try {
