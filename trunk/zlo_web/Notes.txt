@@ -18,7 +18,7 @@
     Create_webapp_user.sql
 
 6) Настройка tomcat connection pool:
-   В server.xml внутри тега Host в конце вставить секцию:
+   В server.xml внутри тега Host в конце вставить секцию (так для каждого нового сайта, изменяя имя и базу):
    <Context path="" debug="5" reloadable="true" crossContext="true">
 
 	    <!-- maxActive: Maximum number of dB connections in pool. Make sure you
