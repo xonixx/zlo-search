@@ -1,13 +1,11 @@
 package org.xonix.zlo.search.site;
 
-import org.xonix.zlo.search.config.Config;
-import org.xonix.zlo.search.model.ZloMessage;
-import org.xonix.zlo.search.utils.TimeUtils;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.utils.TimeUtils;
 
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.util.Properties;
 
 
@@ -116,30 +114,6 @@ public class SiteAccessor {
 
     public void setSiteName(String siteName) {
         this.siteName = siteName;
-    }
-
-    public ZloMessage getMessage(int num) throws IOException {
-        return getParser().parseMessage(getRetriever().getPageContentByNumber(num), num);
-    }
-
-    private PageRetriever retreiver;
-    private PageRetriever getRetriever() {
-        if (retreiver == null) {
-            retreiver = new PageRetriever(this);
-        }
-        return retreiver;
-    }
-
-    private PageParser parser;
-    private PageParser getParser() {
-        if (parser == null) {
-            parser = new PageParser(this);
-        }
-        return parser;
-    }
-
-    public int getLastRootMessageNumber() throws IOException {
-        return getRetriever().getLastRootMessageNumber(); 
     }
 
     private DriverManagerDataSource ds;
