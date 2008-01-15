@@ -1,16 +1,16 @@
 package org.xonix.zlo.search.site;
 
-import org.xonix.zlo.search.model.ZloMessage;
-import org.xonix.zlo.search.db.DbManager;
-import org.xonix.zlo.search.db.DbException;
-import org.xonix.zlo.search.dao.Site;
 import org.apache.log4j.Logger;
+import org.xonix.zlo.search.dao.Site;
+import org.xonix.zlo.search.db.DbException;
+import org.xonix.zlo.search.db.DbManager;
+import org.xonix.zlo.search.model.ZloMessage;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.text.MessageFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,20 +20,19 @@ import java.util.regex.Pattern;
  * Date: 30.05.2007
  * Time: 20:17:07
  */
-public class PageParser {
+public class PageParser extends SiteSource {
     public static final Logger logger = Logger.getLogger(PageParser.class);
 
-    private SiteAccessor siteAccessor;
     private DbManager dbm;
 
     private Pattern MSG_REG_RE;
     private Pattern MSG_UNREG_RE;
 
-    public PageParser(SiteAccessor siteAccessor) {
-        this.siteAccessor = siteAccessor;
-        dbm = DbManager.forSite(siteAccessor.getSiteName());
-        MSG_REG_RE = Pattern.compile(siteAccessor.MSG_REG_RE_STR, Pattern.DOTALL);
-        MSG_UNREG_RE = Pattern.compile(siteAccessor.MSG_UNREG_RE_STR, Pattern.DOTALL);
+    public PageParser(Site site) {
+        super(site);
+        dbm = DbManager.forSite(site);
+        MSG_REG_RE = Pattern.compile(site.MSG_REG_RE_STR, Pattern.DOTALL);
+        MSG_UNREG_RE = Pattern.compile(site.MSG_UNREG_RE_STR, Pattern.DOTALL);
     }
 
     public ZloMessage parseMessage(String msg) {
@@ -45,7 +44,7 @@ public class PageParser {
         } else {
             m = MSG_REG_RE.matcher(msg);
             if (!m.find()) {
-                if (msg.contains(siteAccessor.MSG_NOT_EXIST_OR_WRONG)) {
+                if (msg.contains(getSite().MSG_NOT_EXIST_OR_WRONG)) {
                     message.setStatus(ZloMessage.Status.DELETED);
                 } else {
                     message.setStatus(ZloMessage.Status.UNKNOWN);
@@ -69,7 +68,7 @@ public class PageParser {
             logger.error(e);
         }
 
-        message.setSite(new Site(siteAccessor.getSiteName()));
+        message.setSite(getSite());
         message.setTitle(m.group(2));
         message.setNick(m.group(3));
         message.setHost(m.group(4));

@@ -5,6 +5,8 @@ import org.xonix.zlo.search.MultithreadedRetriever;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.site.SiteAccessor;
+import org.xonix.zlo.search.site.PageRetriever;
+import org.xonix.zlo.search.site.PageParser;
 
 import java.io.IOException;
 import java.util.List;
@@ -50,6 +52,30 @@ public class Site extends SiteAccessor implements IndexingSource {
         } catch (IOException e) {
             throw new DAOException(this, e);
         }
+    }
+    
+    public ZloMessage getMessage(int num) throws IOException {
+        return getParser().parseMessage(getRetriever().getPageContentByNumber(num), num);
+    }
+
+    private PageRetriever retreiver;
+    private PageRetriever getRetriever() {
+        if (retreiver == null) {
+            retreiver = new PageRetriever(this);
+        }
+        return retreiver;
+    }
+
+    private PageParser parser;
+    private PageParser getParser() {
+        if (parser == null) {
+            parser = new PageParser(this);
+        }
+        return parser;
+    }
+
+    public int getLastRootMessageNumber() throws IOException {
+        return getRetriever().getLastRootMessageNumber();
     }
 
     private static List<Site> sites;
