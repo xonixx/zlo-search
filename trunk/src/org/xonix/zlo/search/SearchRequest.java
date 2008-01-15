@@ -2,6 +2,7 @@ package org.xonix.zlo.search;
 
 import org.apache.commons.lang.StringUtils;
 import org.xonix.zlo.search.dao.Site;
+import org.xonix.zlo.search.site.SiteSource;
 
 import java.util.Date;
 
@@ -10,7 +11,7 @@ import java.util.Date;
  * Date: 30.09.2007
  * Time: 3:08:16
  */
-public class SearchRequest {
+public class SearchRequest extends SiteSource {
 
     private String text;
 
@@ -28,15 +29,10 @@ public class SearchRequest {
     private Date fromDate;
     private Date toDate;
 
-    private Site site;
-
-    public SearchRequest() {
-    }
-
     public SearchRequest(Site site, String text, boolean inTitle, boolean inBody,
                          boolean inReg, boolean inHasUrl, boolean inHasImg,
                          String nick, String host, int topicCode, Date fromDate, Date toDate) {
-        this.site = site;
+        super(site);
         this.text = text;
         this.inTitle = inTitle;
         this.inBody = inBody;
@@ -152,7 +148,8 @@ public class SearchRequest {
 
         SearchRequest req = (SearchRequest) obj;
 
-        return topicCode == req.getTopicCode() &&
+        return getSite().equals(req.getSite()) &&
+                topicCode == req.getTopicCode() &&
                 StringUtils.equals(text, req.getText()) &&
                 inTitle == req.isInTitle() &&
                 inBody == req.isInBody() &&
@@ -174,39 +171,39 @@ public class SearchRequest {
     }
 
     public boolean isTheSameSearch(int topicCode,
-                                     String text,
-                                     boolean inTitle,
-                                     boolean inBody,
-                                     boolean inReg,
-                                     boolean inHasUrl,
-                                     boolean inHasImg,
-                                     String nick,
-                                     String host,
-                                     Date fromDate,
-                                     Date toDate) {
+                                   String text,
+                                   boolean inTitle,
+                                   boolean inBody,
+                                   boolean inReg,
+                                   boolean inHasUrl,
+                                   boolean inHasImg,
+                                   String nick,
+                                   String host,
+                                   Date fromDate,
+                                   Date toDate) {
         // todo: tmp
         return this.equals(new SearchRequest(null, text, inTitle, inBody, inReg, inHasUrl, inHasImg,
-                                            nick, host, topicCode, fromDate, toDate));
+                nick, host, topicCode, fromDate, toDate));
     }
 
     public boolean isNotTheSameSearch(int topicCode,
-                                     String text,
-                                     boolean inTitle,
-                                     boolean inBody,
-                                     boolean inReg,
-                                     boolean inHasUrl,
-                                     boolean inHasImg,
-                                     String nick,
-                                     String host,
-                                     Date fromDate,
-                                     Date toDate) {
+                                      String text,
+                                      boolean inTitle,
+                                      boolean inBody,
+                                      boolean inReg,
+                                      boolean inHasUrl,
+                                      boolean inHasImg,
+                                      String nick,
+                                      String host,
+                                      Date fromDate,
+                                      Date toDate) {
         return !isTheSameSearch(topicCode, text, inTitle, inBody, inReg,
-                                inHasUrl, inHasImg, nick, host, fromDate, toDate);
+                inHasUrl, inHasImg, nick, host, fromDate, toDate);
     }
 
     public SearchResult performSearch() {
         // just to throw exception if db connection broken and can't be fixed
-        SearchResult result = ZloSearcher.forSite(site).search(this);
+        SearchResult result = ZloSearcher.forSite(getSite()).search(this);
         result.setLastSearch(this);
         return result;
     }

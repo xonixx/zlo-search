@@ -26,8 +26,6 @@ public class SearchResult implements Iterable {
 
     private SearchRequest lastSearch;
 
-    private PaginatedList paginatedList;
-
     private boolean newSearch = true; // by default after created
 
     public SearchResult() {
@@ -114,10 +112,13 @@ public class SearchResult implements Iterable {
         return !isTheSameSearch(searchRequest);
     }
 
+    private PaginatedList paginatedList;
     public PaginatedList createPaginatedList(Site site) {
         if (paginatedList == null) {
             paginatedList = new ZloPaginatedList(doubleHits, site);
             ((ZloPaginatedList) paginatedList).setPageNumber(1);
+        } else {
+            ((ZloPaginatedList) paginatedList).setSite(site);
         }
         return paginatedList;
     }
