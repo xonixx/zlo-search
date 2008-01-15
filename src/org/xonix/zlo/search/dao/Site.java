@@ -129,10 +129,7 @@ public class Site extends SiteAccessor implements IndexingSource {
     private DbManager dbManager;
     public DbManager getDbManager() {
         if (dbManager == null) {
-            if (SITE_NAME != null)
-                dbManager = Site.forName(SITE_NAME).getDbManager();
-            else
-                dbManager = new DbManager(this);
+            dbManager = new DbManager(this);
         }
         return dbManager;
     }
@@ -140,9 +137,9 @@ public class Site extends SiteAccessor implements IndexingSource {
     private ZloSearcher zloSearcher;
     public ZloSearcher getZloSearcher() {
         if (zloSearcher == null) {
-            if (SITE_NAME != null)
+            if (SITE_NAME != null) {
                 zloSearcher = Site.forName(SITE_NAME).getZloSearcher();
-            else
+            } else
                 zloSearcher = new ZloSearcher(this);
         }
         return zloSearcher;

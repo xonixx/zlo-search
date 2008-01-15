@@ -29,7 +29,7 @@ public class ZloIndexer extends DbManagerSource {
 
     public ZloIndexer(Site site) {
         super(site);
-        INDEX_DIR = new File(Config.USE_DOUBLE_INDEX ? site.INDEX_DIR_DOUBLE + "/2" : Config.INDEX_DIR);
+        INDEX_DIR = new File(Config.USE_DOUBLE_INDEX ? site.INDEX_DIR_DOUBLE + "/" + DoubleIndexSearcher.SMALL_INDEX_DIR : Config.INDEX_DIR);
     }
 
     public IndexWriter getWriter() {
@@ -110,10 +110,4 @@ public class ZloIndexer extends DbManagerSource {
         logger.info("Setting last indexed: " + to);
         getDB().getDbManager().setLastIndexedNumber(to);
     }
-
-/*    public static void main(String[] args) {
-//        new ZloIndexer(DAO.Site.SOURCE).indexRange(3765000, 3765010);
-        new ZloIndexer(new DB(new Site("zlo")), true).indexRange(3000000, 4030586);
-//        new ZloIndexer(new ZloStorage(), true).indexRange(ZloStorage.FROM, ZloStorage.TO);
-    }*/
 }

@@ -33,17 +33,7 @@ public class ZloSearcher extends SiteSource {
 
     public ZloSearcher(Site site) {
         super(site);
-        logger.info("Creating ZloSearcher for " + site.getSiteName());
     }
-
-/*    private static HashMap<String, ZloSearcher> searchers = new HashMap<String, ZloSearcher>();
-    public static ZloSearcher forSite(Site site) {
-        String siteName = site.getSiteName();
-        if (!searchers.containsKey(siteName)) {
-            searchers.put(siteName, new ZloSearcher(site));
-        }
-        return searchers.get(siteName);
-    }*/
 
     public static IndexReader getIndexReader() {
         if (indexReader == null) {
