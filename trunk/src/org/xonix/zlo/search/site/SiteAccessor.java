@@ -46,6 +46,7 @@ public class SiteAccessor {
     public int INDEXER_INDEX_PER_TIME;
     public int INDEXER_INDEX_PERIOD;
     public int INDEXER_RECONNECT_PERIOD;
+    public int INDEXER_LIMIT_PER_SECOND;
 
     // db daemon
     public int DB_SCAN_PER_TIME;
@@ -61,8 +62,13 @@ public class SiteAccessor {
     public SiteAccessor(String siteName) {
         Properties p = new Properties();
 
-        for (String propFile : Config.getProp(SITE_CONFIG_PREFIX + siteName).split(";")) {
-            Config.loadProperties(p, "org/xonix/zlo/search/config/" + propFile);
+        try {
+            for (String propFile : Config.getProp(SITE_CONFIG_PREFIX + siteName).split(";")) {
+                Config.loadProperties(p, "org/xonix/zlo/search/config/" + propFile);
+            }
+        } catch (NullPointerException e) {
+            System.err.println("Can't locate: " + SITE_CONFIG_PREFIX + siteName);
+            throw e;
         }
 
         setSiteName(siteName);
@@ -97,6 +103,7 @@ public class SiteAccessor {
         INDEXER_INDEX_PER_TIME = Integer.parseInt(p.getProperty("indexer.daemon.index.per.time"));
         INDEXER_INDEX_PERIOD = TimeUtils.parseToMilliSeconds(p.getProperty("indexer.daemon.period.to.index"));
         INDEXER_RECONNECT_PERIOD = TimeUtils.parseToMilliSeconds(p.getProperty("indexer.daemon.period.to.reconnect"));
+        INDEXER_LIMIT_PER_SECOND = Integer.parseInt(p.getProperty("indexer.limit.per.second"));
 
         // db daemon-----
         DB_SCAN_PER_TIME = Integer.parseInt(p.getProperty("db.daemon.scan.per.time"));

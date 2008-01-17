@@ -118,10 +118,24 @@ public class Test1 {
 //            System.out.println(DbManager.getMessageByNumber(4149183));
 //            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(648064));
 //            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(4199196));
-            Site site = Site.forName("sport");
-            System.out.println(site.getMessageByNumber(61353));
+          Site site = Site.forName("sport");
+/*              System.out.println(site.getMessageByNumber(61353));
             System.out.println(site.getMessageByNumber(62212));
             System.out.println(site.getMessageByNumber(622120));
+
+            site = Site.forName("zlo");
+            System.out.println(site.getMessageByNumber(4235814));
+            System.out.println(site.getMessageByNumber(4235806));
+            System.out.println(site.getMessageByNumber(42358140));*/
+
+            site = Site.forName("anime");
+            System.out.println(site.getMessageByNumber(24));
+            System.out.println(site.getMessageByNumber(25));
+            System.out.println(site.getMessageByNumber(26));
+/*            System.out.println(site.getMessageByNumber(11009));
+            System.out.println(site.getMessageByNumber(11010));
+            System.out.println(site.getMessageByNumber(110100));*/
+
         } /*catch (DbException e) {
             e.printStackTrace();
         } */ catch (DAOException e) {

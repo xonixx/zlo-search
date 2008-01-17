@@ -35,7 +35,7 @@ public class PageParser extends SiteSource {
         MSG_UNREG_RE = Pattern.compile(site.MSG_UNREG_RE_STR, Pattern.DOTALL);
     }
 
-    public ZloMessage parseMessage(String msg) {
+    public ZloMessage parseMessage(String msg) throws PageParseException {
         ZloMessage message = new ZloMessage();
 
         Matcher m = MSG_UNREG_RE.matcher(msg);
@@ -50,6 +50,7 @@ public class PageParser extends SiteSource {
                     message.setStatus(ZloMessage.Status.UNKNOWN);
                     logger.warn("Can't parse msg... Possibly format changed!");
                 }
+                message.setSite(getSite());
                 return message;
             }
             message.setReg(true);
@@ -59,9 +60,7 @@ public class PageParser extends SiteSource {
         try {
             Integer topicCode = dbm.getTopicsHashMap().get(m.group(1));
             if (topicCode == null) {
-                logger.error(MessageFormat.format("Unknown topic: {0} while parsing msg:\n {1}", m.group(0), msg));
-                // todo: tmp
-                System.exit(-1);
+                throw new PageParseException(msg);
             }
             message.setTopicCode(topicCode);
         } catch (DbException e) {
@@ -80,7 +79,13 @@ public class PageParser extends SiteSource {
     }
 
     public ZloMessage parseMessage(String msg, int urlNum) {
-        ZloMessage zm = parseMessage(msg);
+        ZloMessage zm = null;
+        try {
+            zm = parseMessage(msg);
+        } catch (PageParseException e) {
+            logger.error(MessageFormat.format("Unknown topic while parsing msg# {0}:\n {1}", urlNum, msg));
+            System.exit(-1);
+        }
         if (zm == null)
             return null;
 

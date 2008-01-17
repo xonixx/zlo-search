@@ -343,17 +343,22 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
                     "\n\tnum={0},\n\tparentNum={1},\n\ttopicCode={2},\n\ttopic={3}," +
                     "\n\ttitle={4},\n\tnick={5},\n\taltName={6},\n\treg={7}," +
                     "\n\thost={8},\n\tdate={9,date,MMMM, d HH:mm:ss yyyy},\n\thasUrl={10},\n\thasImg={11}," +
-                    "\n\tbody={12}\n)",
+                    "\n\tsite={12}," +
+                    "\n\tbody={13}\n)",
                     num, parentNum, topicCode, topic, title,
                     nick, altName, reg, host, date,
                     isHasUrl() ? TRUE : FALSE,
                     isHasImg() ? TRUE : FALSE,
+                    site == null ? "" : site.getSiteName(),
                     body.replaceAll("\n","\n\t\t"));
         else
             return MessageFormat.format(
                     "ZloMessage(" +
-                    "\n\tnum={0},\n\tstatus={1}\n)",
-                    num, status);
+                    "\n\tnum={0},\n\tstatus={1}," +
+                            "\n\tsite={2}" +
+                            "\n)",
+                    num, status,
+                    site == null ? "" : site.getSiteName());
     }
 
     public Document getDocument() {

@@ -133,15 +133,17 @@ public final class DbUtils {
         }
     }
 
-    public static void executeUpdate(String jndiDsName, String sqlString, Object[] params, VarType[] types, Integer expectedResult) throws DbException {
+    private static void executeUpdate(String jndiDsName, String sqlString, Object[] params, VarType[] types, Integer expectedResult) throws DbException {
         try {
-            executeUpdate(ConnectionUtils.getConnection(jndiDsName), sqlString, params, types, expectedResult);
+            Connection con = ConnectionUtils.getConnection(jndiDsName);
+            executeUpdate(con, sqlString, params, types, expectedResult);
+            CloseUtils.close(con); // return to pool
         } catch (NamingException e) {
             throw new DbException(e);
         }
     }
 
-    public static void executeUpdate(DataSource ds, String sqlString, Object[] params, VarType[] types, Integer expectedResult) throws DbException {
+    private static void executeUpdate(DataSource ds, String sqlString, Object[] params, VarType[] types, Integer expectedResult) throws DbException {
         executeUpdate(ConnectionUtils.getConnection(ds), sqlString, params, types, expectedResult);
     }
 
@@ -153,13 +155,13 @@ public final class DbUtils {
         }
     }
     //--------------------------------------
-    public static void executeUpdate(String jndiDsName, String sqlString, Object[] params, VarType[] types) throws DbException {
+/*    private static void executeUpdate(String jndiDsName, String sqlString, Object[] params, VarType[] types) throws DbException {
         executeUpdate(jndiDsName, sqlString, params, types, null);
     }
 
-    public static void executeUpdate(DataSource ds, String sqlString, Object[] params, VarType[] types) throws DbException {
+    private static void executeUpdate(DataSource ds, String sqlString, Object[] params, VarType[] types) throws DbException {
         executeUpdate(ds, sqlString, params, types, null);
-    }
+    }*/
 
     public static void executeUpdate(Site site, String sqlString, Object[] params, VarType[] types) throws DbException {
         if (site.DB_VIA_CONTAINER) {
