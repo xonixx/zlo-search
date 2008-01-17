@@ -6,6 +6,7 @@ import org.xonix.zlo.search.dao.DB;
 import org.xonix.zlo.search.db.DbManagerSource;
 import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.ZloIndexer;
+import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.site.SiteSource;
 import sun.misc.Signal;
 import sun.misc.SignalHandler;
@@ -96,7 +97,7 @@ public abstract class Daemon extends SiteSource {
     }
 
     protected Daemon() {
-        super(getSiteEnvName());
+        super(Config.getSiteEnvName());
         registerExitHandlers();
     }
 
@@ -133,17 +134,6 @@ public abstract class Daemon extends SiteSource {
                 logger.info("Gracefully exiting...");
                 break;
             }
-        }
-    }
-
-    protected static String getSiteEnvName() {
-        String sn = System.getenv("SITE_NAME");
-        if (sn == null) {
-            logger.error("Must set SITE_NAME environment variable!");
-            System.exit(-1);
-            return null;
-        } else {
-            return sn;
         }
     }
 }

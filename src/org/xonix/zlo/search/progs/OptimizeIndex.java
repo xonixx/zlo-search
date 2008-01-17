@@ -19,8 +19,7 @@ public class OptimizeIndex {
 
     public static void main(String[] args) {
         try {
-//            Site site = new Site("zlo");
-            Site site = Site.forName("sport");
+            Site site = Site.forName(Config.getSiteEnvName());
             if (!Config.USE_DOUBLE_INDEX) {
                 IndexWriter w = new ZloIndexer(site).getWriter();
                 logger.info("Optimizing index...");

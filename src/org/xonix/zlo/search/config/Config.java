@@ -4,8 +4,8 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.lucene.analysis.Analyzer;
 
-import java.io.IOException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -104,5 +104,16 @@ public class Config {
 
     public static String getProp(String key, String defaultVal) {
         return props.getProperty(key, defaultVal);
+    }
+
+    public static String getSiteEnvName() {
+        String sn = System.getenv("SITE_NAME");
+        if (sn == null) {
+            logger.error("Must set SITE_NAME environment variable!");
+            System.exit(-1);
+            return null;
+        } else {
+            return sn;
+        }
     }
 }

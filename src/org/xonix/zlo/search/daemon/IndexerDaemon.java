@@ -99,7 +99,7 @@ public class IndexerDaemon extends Daemon {
         logger.info(MessageFormat.format("Starting indexing to {0} index...", Config.USE_DOUBLE_INDEX ? "double" : "simple"));
         if (Config.USE_DOUBLE_INDEX) {
             logger.info("Clearing lock...");
-            new DoubleIndexSearcher(Site.forName(getSiteEnvName()), null).clearLocks();
+            new DoubleIndexSearcher(Site.forName(Config.getSiteEnvName()), null).clearLocks();
         }
         new IndexerDaemon().start();
     }

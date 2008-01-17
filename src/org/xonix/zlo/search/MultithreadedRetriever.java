@@ -2,8 +2,8 @@ package org.xonix.zlo.search;
 
 import org.apache.log4j.Logger;
 import org.xonix.zlo.search.dao.DAOException;
+import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.search.model.ZloMessage;
-import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.site.PageRetriever;
 
 import java.util.*;
@@ -17,7 +17,7 @@ public class MultithreadedRetriever {
 
     private static Logger logger = Logger.getLogger(MultithreadedRetriever.class);
 
-    private static final int LIMIT_PER_SECOND = Integer.parseInt(Config.getProp("retriever.limit.per.second"));
+//    private static final int LIMIT_PER_SECOND = Integer.parseInt(Config.getProp("retriever.limit.per.second"));
 
     // todo: not tested
     private static class MessageRetriever extends Thread {
@@ -85,7 +85,7 @@ public class MultithreadedRetriever {
         }
     }
 
-    public static List<ZloMessage> getMessages(IndexingSource source, int from, int to) throws DAOException {
+    public static List<ZloMessage> getMessages(Site source, int from, int to) throws DAOException {
         Set<Integer> nums = new HashSet<Integer>(to - from);
         for(int i=from; i<to; i++) {
             nums.add(i);
@@ -93,11 +93,11 @@ public class MultithreadedRetriever {
         return getMessages(source, nums);
     }
 
-    public static List<ZloMessage> getMessages(IndexingSource source, Iterable<Integer> numsToSave) throws DAOException {
+    public static List<ZloMessage> getMessages(Site source, Iterable<Integer> numsToSave) throws DAOException {
         return getMessages(source, numsToSave, PageRetriever.THREADS_NUMBER);
     }
 
-    public static List<ZloMessage> getMessages(IndexingSource source, Iterable<Integer> numsToSave, int threadsNum) throws DAOException {
+    public static List<ZloMessage> getMessages(Site source, Iterable<Integer> numsToSave, int threadsNum) throws DAOException {
         final List<ZloMessage> msgs;
 
         if (threadsNum == 1) {
@@ -109,7 +109,7 @@ public class MultithreadedRetriever {
                 msgs.add(source.getMessageByNumber(i));
 
                 long delta = System.currentTimeMillis() - t1;
-                long toSleep = 1000/LIMIT_PER_SECOND - delta;
+                long toSleep = 1000/source.INDEXER_LIMIT_PER_SECOND - delta;
                 if (toSleep > 0) {
                     try {
                         Thread.sleep(toSleep);
