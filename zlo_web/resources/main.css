@@ -10,9 +10,20 @@ big {
     font-weight:bold;
 }
 
-#searchform {
+#header {
     background: #e1e1e1;
-	border-bottom: solid 1px #999;
+}
+
+#header ul {
+    width: 250px;
+    margin: 0 auto;
+    list-style: none;
+    padding: 0;
+}
+
+#header ul li {
+    display: inline;
+    margin: 0 0.2em;
 }
 
 #debug {
