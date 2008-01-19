@@ -140,6 +140,8 @@ public class SearchServlet extends BaseServlet {
                         request.setParameter(QS_PAGE_SIZE, pageSizeStrIndCookie);
                     } catch (NumberFormatException ex) {
                         ;
+                    } catch(ArrayIndexOutOfBoundsException ex) {
+                        ;
                     }
                 } else {
                     pageSize = Integer.parseInt(Config.NUMS_PER_PAGE[0]);

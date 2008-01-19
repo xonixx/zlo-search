@@ -1,4 +1,4 @@
-<%@ page import="org.xonix.zlo.search.config.HtmlStrings" %>
+<%@ page import="org.xonix.zlo.search.config.HtmlStrings, org.xonix.zlo.search.model.ZloMessage" %>
 <%--
   User: gubarkov
   Date: 14.08.2007
@@ -23,6 +23,13 @@
         <script type="text/javascript" src="script.js"></script>
     </head>
     <body>
+        <div id="header">
+            <ul>
+                <li><a href="http://<c:out value="${siteRoot}"/>"><c:out value="${siteRoot}"/></a></li>
+                <li><a href="about.jsp" target="_blank">About</a></li>
+                <li><a href="faq.jsp" target="_blank">Faq</a></li>
+            </ul>
+        </div>
         <div id="searchform">
             <table width="100%">
                 <tr><td height="20px"></td></tr>
@@ -61,7 +68,7 @@
                             </script>
                             <fmt:message key="label.per.page" /> <jsp:getProperty name="backendBean" property="pageSizeSelector" />
                             <br/>
-                            <input type="submit" name="submitBtn" value="Search"/>
+                            <input type="submit" name="submitBtn" value="<fmt:message key="button.search"/>"/>
                         </form>
                     </td>
                     <td></td>
@@ -76,7 +83,6 @@
             </pre>
         </div>
     </c:if>
-    <br/>
     <c:choose>
         <c:when test="${empty requestScope['error']}">
             <c:if test="${not empty requestScope['lastMsgs']}">
@@ -108,7 +114,7 @@
                                     class="small" headerClass="head"
                                     style="text-align:center;width:1%;"><c:out value="${msg.hitId + 1}" /></display:column>
                     <display:column title="<%= HtmlStrings.HEADER_TITLE.toString() %>" headerClass="head" style="width:67%">
-                        <a href="http://<c:out value="${siteRoot}" />/?read=<c:out value="${msg.num}" />">
+                        <a href="http://<c:out value="${siteRoot}" /><%= ((ZloMessage) msg).getSite().READ_QUERY %><c:out value="${msg.num}" />">
                             <c:if test="${not empty msg.topic and msg.topic != 'без темы'}">
                                 [<c:out value="${msg.topic}" />]
                             </c:if>
