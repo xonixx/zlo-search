@@ -20,39 +20,51 @@
 <sql:setDataSource dataSource="<%= site.getDataSource() %>" />
 
 <c:set var="byNick" value="${empty param['type'] or param['type'] == 'nick'}" />
+<c:set var="period" value="${param['period'] == '2' ? 10 : param['period'] == '3' ? 30 : 2}" />
 
 <c:choose>
     <c:when test="${byNick}">
         <sql:query var="res">
             select nick, COUNT(*) cnt from messages
-            where msgDate > NOW() - INTERVAL 1 DAY
+            where msgDate > NOW() - INTERVAL ? DAY
             group by nick
             order by cnt desc;
-    </sql:query>
+            <sql:param><c:out value="${period}" /></sql:param>
+        </sql:query>
     </c:when>
     <c:otherwise>
         <sql:query var="res">
             select host, COUNT(*) cnt from messages
-            where msgDate > NOW() - INTERVAL 1 DAY
+            where msgDate > NOW() - INTERVAL ? DAY
             group by host
             order by cnt desc;
+            <sql:param><c:out value="${period}" /></sql:param>
         </sql:query>
     </c:otherwise>
 </c:choose>
 
 <c:set var="title">
-    Статистика сайта <%= site.SITE_URL %>
+    Статистика сайта <%= site.SITE_URL %> по <c:choose><c:when test="${byNick}">никам</c:when><c:otherwise>хостам</c:otherwise></c:choose>
+    за последние <c:out value="${period}" /> суток
 </c:set>
 <title><c:out value="${title}"/></title>
 
+<div align="center">
 <h3><c:out value="${title}"/></h3>
 
 <form action="stats.jsp" method="get">
     По:
     <input type="radio" name="type" value="nick" id="tn" <c:if test="${byNick}">checked="checked"</c:if> /><label for="tn">нику</label>
     <input type="radio" name="type" value="host" id="th" <c:if test="${!byNick}">checked="checked"</c:if>/><label for="th">хосту</label>
+    за последние:
+    <select name="period">
+        <option value="1" <c:if test="${period == 2}">selected="selected"</c:if>>2-е суток</option>
+        <option value="2" <c:if test="${period == 10}">selected="selected"</c:if>>10 суток</option>
+        <option value="3" <c:if test="${period == 30}">selected="selected"</c:if>>30 суток</option>
+    </select>
     <input type="submit" value="Показать!" />
 </form>
+</div>
 
 <table border="1" align="center">
     <tr><th>№</th><th><c:choose><c:when test="${byNick}">Ник</c:when><c:otherwise>Хост</c:otherwise></c:choose></th><th>Число сообщений</th></tr>
@@ -63,7 +75,7 @@
             <td><%= i %></td>
         <td><c:choose>
                 <c:when test="${byNick}">
-                    <c:out value="${row.nick}"/><a href="search?site=<%= site.getNum() %>&nick=<c:out value="${row.nick}"/>" class="search">?</a>
+                    <c:out value="${row.nick}" escapeXml="false"/><a href="search?site=<%= site.getNum() %>&nick=<c:out value="${row.nick}"/>" class="search">?</a>
                 </c:when>
                 <c:otherwise>
                     <c:out value="${row.host}"/><a href="search?site=<%= site.getNum() %>&host=<c:out value="${row.host}"/>" class="search">?</a>

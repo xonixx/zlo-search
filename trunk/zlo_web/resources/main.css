@@ -16,7 +16,7 @@ big {
 
 #header ul {
     width: 300px;
-    margin: 0 auto;
+    margin: 0;
     list-style: none;
     padding: 0;
 }

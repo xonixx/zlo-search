@@ -23,7 +23,7 @@
         <script type="text/javascript" src="script.js"></script>
     </head>
     <body>
-        <div id="header">
+        <div id="header" align="center">
             <ul>
                 <li><a href="http://<c:out value="${siteRoot}"/>"><c:out value="${siteRoot}"/></a></li>
                 <li><a href="stats.jsp?site=<c:out value="${param['site']}"/>">Статистика</a></li>
@@ -33,7 +33,7 @@
         </div>
         <div id="searchform">
             <table width="100%">
-                <tr><td height="20px"></td></tr>
+                <tr><td height="1"></td></tr>
                 <tr>
                     <td width="33%"></td>
                     <td>

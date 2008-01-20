@@ -56,3 +56,8 @@
 		       url="jdbc:mysql://localhost:3306/zlo_storage?autoReconnect=true"/>
 
 	</Context>
+
+7) gzip-компрессия
+добавить в <Connector>:
+        compression="on"
+		compressableMimeType="text/html,text/xml,text/css,text/plain,text/javascript,application/javascript,application/x-javascript"
