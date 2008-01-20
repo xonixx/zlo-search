@@ -26,6 +26,7 @@
         <div id="header">
             <ul>
                 <li><a href="http://<c:out value="${siteRoot}"/>"><c:out value="${siteRoot}"/></a></li>
+                <li><a href="stats.jsp?site=<c:out value="${param['site']}"/>">Статистика</a></li>
                 <li><a href="about.jsp" target="_blank">About</a></li>
                 <li><a href="faq.jsp" target="_blank">Faq</a></li>
             </ul>

@@ -70,7 +70,7 @@ public class ConnectionUtils {
 //    private static DataSource dataSource = null;
     private static HashMap<String, DataSource> dsHashMap = new HashMap<String, DataSource>();
 
-    private static DataSource getDataSource(String jndiDsName) throws NamingException {
+    public static DataSource getDataSource(String jndiDsName) throws NamingException {
         if (!dsHashMap.containsKey(jndiDsName)) {
             InitialContext ctx = new InitialContext();
             DataSource dataSource = (DataSource) ctx.lookup(jndiDsName);
