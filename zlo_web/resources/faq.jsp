@@ -31,7 +31,6 @@
             черный белый красный</a></td>
         <td>Запрос "ИЛИ". Будут найдены все сообщения, содержащие хотя бы одно из слов</td>
     </tr>
-
     <tr>
         <td><a href="http://<c:out value="${siteHost}"/>/search?st=adv&text=%EF%F0%E5%E2%E5%E4+-%EC%E5%E4%E2%E5%E4&topic=-1&inTitle=on&nick=&host=&site=0&pageSize=0&submitBtn=Search">
             превед -медвед</a></td>

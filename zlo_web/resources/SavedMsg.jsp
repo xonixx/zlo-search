@@ -42,10 +42,10 @@
                                 <a href="http://<c:out value="${siteRoot}" />/?uinfo=<c:out value="${savedMsg.nick}" />"><c:out value="${savedMsg.nick}" escapeXml="false" /></a>
                             </c:otherwise>
                         </c:choose>
-                        <a class="search" href="search?nick=<c:out value="${savedMsg.nick}" />">?</a>
+                        <a class="search" href="search?site=<c:out value="${savedMsg.site.num}" />&nick=<c:out value="${savedMsg.nick}" />">?</a>
                     </span>
                     (<c:out value="${savedMsg.host}" />
-                    <a class="search" href="search?host=<c:out value="${savedMsg.host}" />">?</a>)
+                    <a class="search" href="search?site=<c:out value="${savedMsg.site.num}" />&host=<c:out value="${savedMsg.host}" />">?</a>)
                     <br />Дата:
                     <fmt:formatDate value="${savedMsg.date}" pattern="EEEE, MMMM d HH:mm:ss yyyy" />
                 </div>
