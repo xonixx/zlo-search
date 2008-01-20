@@ -1,11 +1,9 @@
 package org.xonix.zlo.search.site;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.utils.TimeUtils;
 
-import javax.sql.DataSource;
 import java.util.Properties;
 
 
@@ -33,10 +31,10 @@ public class SiteAccessor {
 
     public String JNDI_DS_NAME;
 
-    private String DB_DRIVER;
-    private String DB_URL;
-    private String DB_USER;
-    private String DB_PASSWORD;
+    protected String DB_DRIVER;
+    protected String DB_URL;
+    protected String DB_USER;
+    protected String DB_PASSWORD;
     public boolean DB_VIA_CONTAINER;
 
     // index
@@ -122,18 +120,6 @@ public class SiteAccessor {
 
     public void setSiteName(String siteName) {
         this.siteName = siteName;
-    }
-
-    private DriverManagerDataSource ds;
-    public DataSource getDataSource() {
-        if (ds == null) {
-            ds = new DriverManagerDataSource();
-            ds.setDriverClassName(DB_DRIVER);
-            ds.setUrl(DB_URL);
-            ds.setUsername(DB_USER);
-            ds.setPassword(DB_PASSWORD);
-        }
-        return ds;
     }
 
     public boolean equals(Object obj) {

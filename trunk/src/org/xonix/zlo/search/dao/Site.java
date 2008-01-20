@@ -1,16 +1,20 @@
 package org.xonix.zlo.search.dao;
 
+import org.apache.log4j.Logger;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.xonix.zlo.search.IndexingSource;
 import org.xonix.zlo.search.MultithreadedRetriever;
 import org.xonix.zlo.search.ZloSearcher;
-import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.db.ConnectionUtils;
+import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.model.ZloMessage;
-import org.xonix.zlo.search.site.SiteAccessor;
-import org.xonix.zlo.search.site.PageRetriever;
 import org.xonix.zlo.search.site.PageParser;
-import org.apache.log4j.Logger;
+import org.xonix.zlo.search.site.PageRetriever;
+import org.xonix.zlo.search.site.SiteAccessor;
 
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.*;
 
@@ -143,5 +147,27 @@ public class Site extends SiteAccessor implements IndexingSource {
                 zloSearcher = new ZloSearcher(this);
         }
         return zloSearcher;
+    }
+
+    private DataSource ds;
+    public DataSource getDataSource() {
+        if (ds == null) {
+            if (DB_VIA_CONTAINER) {
+                try {
+                    ds = ConnectionUtils.getDataSource(JNDI_DS_NAME);
+                } catch (NamingException e) {
+                    logger.error(e);
+                }
+            }
+            if (ds == null) {
+                DriverManagerDataSource ds = new DriverManagerDataSource();
+                ds.setDriverClassName(DB_DRIVER);
+                ds.setUrl(DB_URL);
+                ds.setUsername(DB_USER);
+                ds.setPassword(DB_PASSWORD);
+                this.ds = ds;
+            }
+        }
+        return ds;
     }
 }
