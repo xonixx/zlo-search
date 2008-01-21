@@ -75,7 +75,7 @@
             <td><%= i %></td>
         <td><c:choose>
                 <c:when test="${byNick}">
-                    <c:out value="${row.nick}" escapeXml="false"/><a href="search?site=<%= site.getNum() %>&nick=<c:out value="${row.nick}"/>" class="search">?</a>
+                    <c:out value="${row.nick}" escapeXml="false"/><a href="search?site=<%= site.getNum() %>&nick=<c:out value="${row.nick}" escapeXml="false" />" class="search">?</a>
                 </c:when>
                 <c:otherwise>
                     <c:out value="${row.host}"/><a href="search?site=<%= site.getNum() %>&host=<c:out value="${row.host}"/>" class="search">?</a>
