@@ -136,11 +136,11 @@
                                     <c:out value="${msg.nick}" />
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="http://<c:out value="${siteRoot}" />/?uinfo=<c:out value="${msg.nick}" />"><c:out value="${msg.nick}" escapeXml="false"/></a>
+                                    <a href="http://<c:out value="${siteRoot}" />/?uinfo=<c:out value="${msg.nick}" escapeXml="false" />"><c:out value="${msg.nick}" escapeXml="false"/></a>
                                 </c:otherwise>
                             </c:choose>
                         </span>
-                        <a class="search" href="search?site=<c:out value="${msg.site.num}" />&nick=<c:out value="${msg.nick}" />">?</a>
+                        <a class="search" href="search?site=<c:out value="${msg.site.num}" />&nick=<c:out value="${msg.nick}" escapeXml="false" />">?</a>
                     </display:column>
                     <display:column title="<%= HtmlStrings.HEADER_HOST.toString() %>" class="small" headerClass="head">
                         <c:out value="${msg.host}" />

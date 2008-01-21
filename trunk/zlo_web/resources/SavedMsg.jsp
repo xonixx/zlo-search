@@ -39,10 +39,10 @@
                                 <c:out value="${savedMsg.nick}" />
                             </c:when>
                             <c:otherwise>
-                                <a href="http://<c:out value="${siteRoot}" />/?uinfo=<c:out value="${savedMsg.nick}" />"><c:out value="${savedMsg.nick}" escapeXml="false" /></a>
+                                <a href="http://<c:out value="${siteRoot}" />/?uinfo=<c:out value="${savedMsg.nick}" escapeXml="false" />"><c:out value="${savedMsg.nick}" escapeXml="false" /></a>
                             </c:otherwise>
                         </c:choose>
-                        <a class="search" href="search?site=<c:out value="${savedMsg.site.num}" />&nick=<c:out value="${savedMsg.nick}" />">?</a>
+                        <a class="search" href="search?site=<c:out value="${savedMsg.site.num}" />&nick=<c:out value="${savedMsg.nick}" escapeXml="false"/>">?</a>
                     </span>
                     (<c:out value="${savedMsg.host}" />
                     <a class="search" href="search?site=<c:out value="${savedMsg.site.num}" />&host=<c:out value="${savedMsg.host}" />">?</a>)
