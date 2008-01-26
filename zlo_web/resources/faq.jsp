@@ -27,17 +27,17 @@
     <tr>
         <td><a href="search?st=adv&text=%F7%E5%F0%ED%FB%E9+%E1%E5%EB%FB%E9+%EA%F0%E0%F1%ED%FB%E9&topic=-1&inTitle=on&nick=&host=&site=0&pageSize=0&submitBtn=Search">
             черный белый красный</a></td>
-        <td>Запрос "ИЛИ". Будут найдены все сообщения, содержащие хотя бы одно из слов</td>
+        <td>Запрос "ИЛИ". Будут найдены все сообщения, содержащие хотя бы одно из слов.</td>
     </tr>
     <tr>
         <td><a href="search?st=adv&text=%EF%F0%E5%E2%E5%E4+-%EC%E5%E4%E2%E5%E4&topic=-1&inTitle=on&nick=&host=&site=0&pageSize=0&submitBtn=Search">
             превед -медвед</a></td>
-        <td>Запрос "НЕ". Будут найдены все сообщения, содержащие "превед" но не содержащие "медвед"</td>
+        <td>Запрос "НЕ". Будут найдены все сообщения, содержащие "превед" но не содержащие "медвед".</td>
     </tr>
     <tr>
         <td><a href="search?st=adv&text=%2B%EF%F0%E5%E2%E5%E4+%2B%EC%E5%E4%E2%E5%E4&topic=-1&inTitle=on&nick=&host=&site=0&pageSize=0&submitBtn=Search">
             +превед +медвед</a></td>
-        <td>Запрос "И". Будут найдены все сообщения, содержащие одновременно оба слова</td>
+        <td>Запрос "И". Будут найдены все сообщения, содержащие одновременно оба слова. Соответствует режиму поиска "Со всеми словами".</td>
     </tr>
     <tr>
         <td><a href="search?st=adv&text=%22java+html%22%7E2&topic=-1&inTitle=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">
@@ -47,7 +47,7 @@
     <tr>
         <td><a href="search?st=adv&text=%22%F3+%EB%F3%EA%EE%EC%EE%F0%FC%FF+%E4%F3%E1+%E7%E5%EB%E5%ED%FB%E9%22&topic=-1&inTitle=on&nick=&host=&site=0&pageSize=0&submitBtn=Search">
             "у лукоморья дуб зеленый"</a></td>
-        <td>Будут найдены сообщения, содержащие точную фразу</td>
+        <td>Будут найдены сообщения, содержащие точную фразу. Соответствует режиму поиска "Точная фраза". Ищите ссылки используя этот режим.</td>
     </tr>
     <tr>
         <td><a href="search?st=adv&text=%F2%3F%E7&topic=-1&inTitle=on&nick=&host=&site=0&pageSize=0&submitBtn=Search">
@@ -84,3 +84,9 @@
         </a>
     </li>
 </ul>
+
+<h4>Поиск ссылок</h4>
+Ссылки следует искать в режиме "Точная фраза", например
+<a href="search?st=exct&text=http%3A%2F%2Fbash.org.ru%2Fbest.php&topic=-1&inTitle=on&inBody=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">
+    http://bash.org.ru/best.php
+</a>

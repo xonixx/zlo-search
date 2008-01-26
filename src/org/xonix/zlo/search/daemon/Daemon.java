@@ -3,13 +3,17 @@ package org.xonix.zlo.search.daemon;
 import org.apache.log4j.Logger;
 import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.search.dao.DB;
+import org.xonix.zlo.search.dao.DAOException;
 import org.xonix.zlo.search.db.DbManagerSource;
 import org.xonix.zlo.search.db.DbManager;
+import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.ZloIndexer;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.site.SiteSource;
 import sun.misc.Signal;
 import sun.misc.SignalHandler;
+
+import java.io.IOException;
 
 /**
  * Author: Vovan
@@ -22,9 +26,14 @@ public abstract class Daemon extends SiteSource {
     private boolean isSleeping = false;
     private Process process;
 
+    protected int DO_PER_TIME;
+    protected int SLEEP_PERIOD;
+    protected int RETRY_PERIOD;
+
+
     protected void setExiting(boolean exiting) {
         if (isSleeping) {
-            logger.info("Exiting...");
+            logger.info(getSiteName() + " - Exiting...");
             getProcess().cleanUp();
             System.exit(0);
         } else {
@@ -82,7 +91,53 @@ public abstract class Daemon extends SiteSource {
             }
         }
 
-        protected abstract void doOneIteration();
+        protected abstract int getFromIndex() throws DAOException;
+        protected abstract int getEndIndex() throws DAOException;
+        protected abstract void perform(int from, int to) throws DAOException;
+
+        private int indexFrom = -1;
+        private int end = -1;
+
+        private void doOneIteration() {
+            try {
+                if (indexFrom == -1) {
+                    indexFrom = getFromIndex() + 1;
+                }
+
+                if (end == -1)
+                    end = getEndIndex();
+
+                int indexTo;
+
+                if (indexFrom + DO_PER_TIME - 1 < end) {
+                    indexTo = indexFrom + DO_PER_TIME - 1;
+                } else {
+                    end = getEndIndex();
+                    if (indexFrom + DO_PER_TIME - 1 < end)
+                        indexTo = indexFrom + DO_PER_TIME - 1;
+                    else
+                        indexTo = end;
+                }
+
+                if (indexFrom <= indexTo) {
+                    perform(indexFrom, indexTo);
+                }
+
+                indexFrom = indexTo + 1;
+
+                while (indexFrom > end) {
+                    logger.info(getSiteName() + " - Sleeping " + SLEEP_PERIOD / 1000 / 60f + " min...");
+                    sleepSafe(SLEEP_PERIOD);
+                    end = getEndIndex();
+                }
+            } catch (DbException e) {
+                logger.warn(getSiteName() + " - Problem with db: " + e.getClass());
+                sleepSafe(RETRY_PERIOD);
+            } catch (IOException e) {
+                logger.error(getSiteName() + " - IOException while indexing, probably something with index...", e);
+                sleepSafe(RETRY_PERIOD);
+            }
+        }
         protected abstract void cleanUp();
 
         protected void sleepSafe(long millis) {
@@ -90,7 +145,7 @@ public abstract class Daemon extends SiteSource {
             try {
                 sleep(millis);
             } catch (InterruptedException e) {
-                logger.info("MainProcess interrupted???");
+                logger.info(getSiteName() + " - MainProcess interrupted???");
             }
             isSleeping = false;
         }
@@ -102,12 +157,12 @@ public abstract class Daemon extends SiteSource {
     }
 
     public void registerExitHandlers() {
-        logger.info("Registering exit handlers...");
+        logger.info(getSiteName() + " - Registering exit handlers...");
         setExiting(false);
 
         SignalHandler exitHandler = new SignalHandler() {
             public void handle(Signal signal) {
-                logger.info("Exit handler for " + signal.getName() + "...");
+                logger.info(getSiteName() + " - Exit handler for " + signal.getName() + "...");
                 setExiting(true);
             }
         };
@@ -129,9 +184,9 @@ public abstract class Daemon extends SiteSource {
             // if we are here => thread finished
             // if !exiting => thread was finished by mysterious reason
             if (!isExiting()) {
-                logger.warn("MainProcess unexpectedly finished, restarting...");
+                logger.warn(getSiteName() + " - MainProcess unexpectedly finished, restarting...");
             } else {
-                logger.info("Gracefully exiting...");
+                logger.info(getSiteName() + " - Gracefully exiting...");
                 break;
             }
         }

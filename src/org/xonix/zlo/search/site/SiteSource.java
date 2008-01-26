@@ -8,7 +8,6 @@ import org.xonix.zlo.search.dao.Site;
  * Time: 21:31:44
  */
 public class SiteSource {
-    private String siteName;
     private Site site;
 
     public SiteSource(String siteName) {
@@ -20,11 +19,10 @@ public class SiteSource {
     }
 
     public String getSiteName() {
-        return siteName;
+        return site.getSiteName();
     }
 
     public void setSiteName(String siteName) {
-        this.siteName = siteName;
         setSite(Site.forName(siteName));
     }
 

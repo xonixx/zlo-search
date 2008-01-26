@@ -2,6 +2,7 @@ package org.xonix.zlo.search.test;
 
 import org.xonix.zlo.search.daemon.Daemon;
 import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.dao.DAOException;
 import org.apache.log4j.Logger;
 
 /**
@@ -24,10 +25,15 @@ public class TestDaemon extends Daemon {
             super();
         }
 
-        protected void doOneIteration() {
-            System.out.println("Iteration: " + i);
-            sleepSafe(5000);
-            i++;
+        protected int getFromIndex() throws DAOException {
+            return 0;
+        }
+
+        protected int getEndIndex() throws DAOException {
+            return 0;
+        }
+
+        protected void perform(int from, int to) throws DAOException {
         }
 
         protected void cleanUp() {

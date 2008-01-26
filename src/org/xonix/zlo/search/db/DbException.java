@@ -1,13 +1,13 @@
 package org.xonix.zlo.search.db;
 
-import java.io.IOException;
+import org.xonix.zlo.search.dao.DAOException;
 
 /**
  * Author: gubarkov
  * Date: 14.09.2007
  * Time: 14:32:12
  */
-public class DbException extends IOException {
+public class DbException extends DAOException {
     public DbException(String message, Throwable cause) {
         super(message, cause);
     }

@@ -57,8 +57,6 @@ public class ZloIndexer extends DbManagerSource {
             writer.close();
         } catch (IOException e) {
             ex = e;
-        } catch (DAOException e) {
-            ex = e;
         }
         if (ex != null) {
             logger.error("Exception occured: " + ex);
@@ -83,13 +81,10 @@ public class ZloIndexer extends DbManagerSource {
         IndexWriter writer = getWriter();
         for (ZloMessage msg : getDB().getMessages(start, end)) {
             if (msg.getStatus() == ZloMessage.Status.OK) {
-                logger.debug("Addind: " +
-                        (Config.DEBUG
-                                ? msg
-                                : msg.getNum()));
+                logger.debug(getSiteName() + " - Addind: " + (Config.DEBUG ? msg : msg.getNum()));
                 writer.addDocument(msg.getDocument());
             } else {
-                logger.debug("Not adding: " + msg.getNum() + " with status: " + msg.getStatus());
+                logger.debug(getSiteName() + " - Not adding: " + msg.getNum() + " with status: " + msg.getStatus());
             }
         }
         writer.flush();

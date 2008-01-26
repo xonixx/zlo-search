@@ -68,8 +68,6 @@ public class ZloStorage implements Serializable, IndexingSource {
             oos.close();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (DAOException e) {
-            e.printStackTrace();
         }
     }
 
