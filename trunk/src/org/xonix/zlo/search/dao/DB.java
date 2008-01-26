@@ -26,13 +26,13 @@ public class DB extends DbManagerSource implements IndexingSource {
 
     public void saveMessages(List<ZloMessage> msgs, boolean fast) throws DAOException {
         try {
-            logger.info((fast ? "Fast " : "") + "Saving (" + msgs.get(0).getNum() + " - " + msgs.get(msgs.size() - 1).getNum() + ") msgs to DB...");
+            logger.info(getSiteName() + " - Saving (" + msgs.get(0).getNum() + " - " + msgs.get(msgs.size() - 1).getNum() + ") msgs to DB...");
             if (fast)
                 getDbManager().saveMessagesFast(msgs);
             else {
                 throw new UnsupportedOperationException();
             }
-            logger.info("Successfully saved " + msgs.size() + " msgs to DB.");
+            logger.info(getSiteName() + " - Successfully saved " + msgs.size() + " msgs to DB.");
         } catch (DbException e) {
             throw new DAOException(this, e);
         }

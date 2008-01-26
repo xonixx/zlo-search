@@ -40,7 +40,7 @@ public class Site extends SiteAccessor implements IndexingSource {
     }
 
     public ZloMessage getMessageByNumber(int num) throws DAOException {
-        logger.debug("Receiving from site: " + num);
+        logger.debug(getSiteName() + " - Receiving from site: " + num);
         try {
             return getMessage(num);
         } catch (IOException e) {
@@ -49,13 +49,13 @@ public class Site extends SiteAccessor implements IndexingSource {
     }
 
     public List<ZloMessage> getMessages(int from, int to) throws DAOException {
-        logger.info("Downloading messages from " + from + " to " + to + "...");
+        logger.info(getSiteName() + " - Downloading messages from " + from + " to " + to + "...");
         long begin = System.currentTimeMillis();
 
         List<ZloMessage> msgs = MultithreadedRetriever.getMessages(this, from, to);
 
         float durationSecs = (System.currentTimeMillis() - begin) / 1000f;
-        logger.info("Downloaded " + msgs.size() + " messages in " + (int)durationSecs + "secs. Rate: " + ((float)msgs.size()) / durationSecs + "mps.");
+        logger.info(getSiteName() + " - Downloaded " + msgs.size() + " messages in " + (int)durationSecs + "secs. Rate: " + ((float)msgs.size()) / durationSecs + "mps.");
 
         return msgs;
     }
