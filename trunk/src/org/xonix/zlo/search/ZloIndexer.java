@@ -18,7 +18,7 @@ import java.io.IOException;
  * Time: 1:07:38
  */
 public class ZloIndexer extends DbManagerSource {
-    private static Logger logger = Logger.getLogger(ZloIndexer.class);
+    private static Logger logger = Logger.getLogger("ZloIndexer");
 
     private File INDEX_DIR;
 

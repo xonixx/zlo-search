@@ -21,7 +21,7 @@ import java.io.IOException;
  * Time: 20:00:32
  */
 public abstract class Daemon extends SiteSource {
-    private static final Logger logger = Logger.getLogger("Daemon");
+//    private static final Logger logger = Logger.getLogger("Daemon");
     private boolean exiting;
     private boolean isSleeping = false;
     private Process process;
@@ -30,10 +30,11 @@ public abstract class Daemon extends SiteSource {
     protected int SLEEP_PERIOD;
     protected int RETRY_PERIOD;
 
+    protected abstract Logger getLogger();
 
     protected void setExiting(boolean exiting) {
         if (isSleeping) {
-            logger.info(getSiteName() + " - Exiting...");
+            getLogger().info(getSiteName() + " - Exiting...");
             getProcess().cleanUp();
             System.exit(0);
         } else {
@@ -126,15 +127,15 @@ public abstract class Daemon extends SiteSource {
                 indexFrom = indexTo + 1;
 
                 while (indexFrom > end) {
-                    logger.info(getSiteName() + " - Sleeping " + SLEEP_PERIOD / 1000 / 60f + " min...");
+                    getLogger().info(getSiteName() + " - Sleeping " + SLEEP_PERIOD / 1000 / 60f + " min...");
                     sleepSafe(SLEEP_PERIOD);
                     end = getEndIndex();
                 }
             } catch (DbException e) {
-                logger.warn(getSiteName() + " - Problem with db: " + e.getClass());
+                getLogger().warn(getSiteName() + " - Problem with db: " + e.getClass());
                 sleepSafe(RETRY_PERIOD);
             } catch (IOException e) {
-                logger.error(getSiteName() + " - IOException while indexing, probably something with index...", e);
+                getLogger().error(getSiteName() + " - IOException while indexing, probably something with index...", e);
                 sleepSafe(RETRY_PERIOD);
             }
         }
@@ -145,7 +146,7 @@ public abstract class Daemon extends SiteSource {
             try {
                 sleep(millis);
             } catch (InterruptedException e) {
-                logger.info(getSiteName() + " - MainProcess interrupted???");
+                getLogger().info(getSiteName() + " - MainProcess interrupted???");
             }
             isSleeping = false;
         }
@@ -161,12 +162,12 @@ public abstract class Daemon extends SiteSource {
     }
 
     public void registerExitHandlers() {
-        logger.info(getSiteName() + " - Registering exit handlers...");
+        getLogger().info(getSiteName() + " - Registering exit handlers...");
         setExiting(false);
 
         SignalHandler exitHandler = new SignalHandler() {
             public void handle(Signal signal) {
-                logger.info(getSiteName() + " - Exit handler for " + signal.getName() + "...");
+                getLogger().info(getSiteName() + " - Exit handler for " + signal.getName() + "...");
                 setExiting(true);
             }
         };
@@ -176,7 +177,7 @@ public abstract class Daemon extends SiteSource {
     }
 
     protected void start() {
-        logger.info("Starting " + this.getClass() + " daemon for site: " + getSiteName());
+        getLogger().info("Starting " + this.getClass() + " daemon for site: " + getSiteName());
         while (true) {
             Process t = getProcess();
             t.setPriority(Thread.MIN_PRIORITY); // so daemons not slowing search 
@@ -189,9 +190,9 @@ public abstract class Daemon extends SiteSource {
             // if we are here => thread finished
             // if !exiting => thread was finished by mysterious reason
             if (!isExiting()) {
-                logger.warn(getSiteName() + " - MainProcess unexpectedly finished, restarting...");
+                getLogger().warn(getSiteName() + " - MainProcess unexpectedly finished, restarting...");
             } else {
-                logger.info(getSiteName() + " - Gracefully exiting...");
+                getLogger().info(getSiteName() + " - Gracefully exiting...");
                 break;
             }
         }

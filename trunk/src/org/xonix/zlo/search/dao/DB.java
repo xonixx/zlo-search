@@ -14,7 +14,7 @@ import java.util.List;
 * Time: 22:31:10
 */
 public class DB extends DbManagerSource implements IndexingSource {
-    private static Logger logger = Logger.getLogger(DB.class);
+    private static Logger logger = Logger.getLogger("DB");
 
     public DB(Site site) {
         super(site);

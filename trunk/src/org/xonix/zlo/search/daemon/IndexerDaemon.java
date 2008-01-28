@@ -17,6 +17,10 @@ import java.text.MessageFormat;
 public class IndexerDaemon extends Daemon {
     private static Logger logger = Logger.getLogger("IndexerDaemon");
 
+    protected Logger getLogger() {
+        return logger;
+    }
+
     private class IndexingProcess extends Process {
         public IndexingProcess() {
             super();
