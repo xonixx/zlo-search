@@ -15,7 +15,7 @@ import java.text.MessageFormat;
  * Time: 19:25:04
  */
 public class IndexerDaemon extends Daemon {
-    private static Logger logger = Logger.getLogger(IndexerDaemon.class);
+    private static Logger logger = Logger.getLogger("IndexerDaemon");
 
     private class IndexingProcess extends Process {
         public IndexingProcess() {
@@ -53,17 +53,30 @@ public class IndexerDaemon extends Daemon {
 
     public IndexerDaemon() {
         super();
+        setParams();
+    }
+
+    protected IndexerDaemon(Site site) {
+        super(site);
+        setParams();
+    }
+
+    private void setParams() {
         DO_PER_TIME = getSite().INDEXER_INDEX_PER_TIME;
         SLEEP_PERIOD = getSite().INDEXER_INDEX_PERIOD;
         RETRY_PERIOD = getSite().INDEXER_RECONNECT_PERIOD;
     }
 
     public static void main(String[] args) {
+        new IndexerDaemon().start();
+    }
+
+    protected void start() {
         logger.info(MessageFormat.format("Starting indexing to {0} index...", Config.USE_DOUBLE_INDEX ? "double" : "simple"));
         if (Config.USE_DOUBLE_INDEX) {
             logger.info("Clearing lock...");
-            new DoubleIndexSearcher(Site.forName(Config.getSiteEnvName()), null).clearLocks();
+            new DoubleIndexSearcher(getSite(), null).clearLocks();
         }
-        new IndexerDaemon().start();
+        super.start();
     }
 }

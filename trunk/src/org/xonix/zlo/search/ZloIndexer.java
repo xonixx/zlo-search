@@ -96,13 +96,13 @@ public class ZloIndexer extends DbManagerSource {
     indexes [from, to] including...
      */
     public void index(int from, int to) throws IOException {
-        logger.info(String.format("Adding %s msgs [%s-%s] to index...", to - from + 1, from, to));
+        logger.info(String.format(getSiteName() + " - Adding %s msgs [%s-%s] to index...", to - from + 1, from, to));
         try {
             addMessagesToIndex(from, to + 1);
         } catch (DAOException e) {
             throw new DbException(e.getCause());
         }
-        logger.info("Setting last indexed: " + to);
+        logger.info(getSiteName() + " - Setting last indexed: " + to);
         getDB().getDbManager().setLastIndexedNumber(to);
     }
 }
