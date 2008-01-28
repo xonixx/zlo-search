@@ -12,6 +12,10 @@ import org.xonix.zlo.search.dao.Site;
 public class DbDaemon extends Daemon {
     private static Logger logger = Logger.getLogger("DbDaemon");
 
+    protected Logger getLogger() {
+        return logger;
+    }
+
     private class MainProcess extends Process {
         public MainProcess() {
             super();

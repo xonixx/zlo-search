@@ -25,7 +25,7 @@ import java.util.*;
 */
 public class Site extends SiteAccessor implements IndexingSource {
 
-    private static Logger logger = Logger.getLogger(Site.class);
+    private static Logger logger = Logger.getLogger("Site");
 
     private Site(String siteName) {
         super(siteName);

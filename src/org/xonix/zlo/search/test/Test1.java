@@ -128,10 +128,14 @@ public class Test1 {
             System.out.println(site.getMessageByNumber(4235806));
             System.out.println(site.getMessageByNumber(42358140));*/
 
-            site = Site.forName("anime");
+/*            site = Site.forName("anime");
             System.out.println(site.getMessageByNumber(24));
             System.out.println(site.getMessageByNumber(25));
-            System.out.println(site.getMessageByNumber(26));
+            System.out.println(site.getMessageByNumber(26));*/
+            site = Site.forName("games");
+            System.out.println(site.getMessageByNumber(47405)); // unreg
+            System.out.println(site.getMessageByNumber(47116)); // reg + sign (
+            System.out.println(site.getMessageByNumber(47128)); // unreg w/o text
 /*            System.out.println(site.getMessageByNumber(11009));
             System.out.println(site.getMessageByNumber(11010));
             System.out.println(site.getMessageByNumber(110100));*/

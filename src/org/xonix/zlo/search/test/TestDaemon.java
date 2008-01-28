@@ -13,6 +13,10 @@ import org.apache.log4j.Logger;
 public class TestDaemon extends Daemon {
     private static final Logger logger = Logger.getLogger(TestDaemon.class);
 
+    protected Logger getLogger() {
+        return null;
+    }
+
     protected Process createProcess() {
         return null;
     }
