@@ -2,6 +2,7 @@ package org.xonix.zlo.search.daemon;
 
 import org.apache.log4j.Logger;
 import org.xonix.zlo.search.dao.DAOException;
+import org.xonix.zlo.search.dao.Site;
 
 /**
  * User: boost
@@ -9,7 +10,7 @@ import org.xonix.zlo.search.dao.DAOException;
  * Time: 10:35:37
  */
 public class DbDaemon extends Daemon {
-    private static Logger logger = Logger.getLogger(DbDaemon.class);
+    private static Logger logger = Logger.getLogger("DbDaemon");
 
     private class MainProcess extends Process {
         public MainProcess() {
@@ -34,6 +35,15 @@ public class DbDaemon extends Daemon {
 
     public DbDaemon() {
         super();
+        setParams();
+    }
+
+    protected DbDaemon(Site site) {
+        super(site);
+        setParams();
+    }
+
+    private void setParams() {
         DO_PER_TIME = getSite().DB_SCAN_PER_TIME;
         SLEEP_PERIOD = getSite().DB_SCAN_PERIOD;
         RETRY_PERIOD = getSite().DB_RECONNECT_PERIOD;

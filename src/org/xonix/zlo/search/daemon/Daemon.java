@@ -21,7 +21,7 @@ import java.io.IOException;
  * Time: 20:00:32
  */
 public abstract class Daemon extends SiteSource {
-    private static final Logger logger = Logger.getLogger(Daemon.class);
+    private static final Logger logger = Logger.getLogger("Daemon");
     private boolean exiting;
     private boolean isSleeping = false;
     private Process process;
@@ -152,7 +152,11 @@ public abstract class Daemon extends SiteSource {
     }
 
     protected Daemon() {
-        super(Config.getSiteEnvName());
+        this(Site.forName(Config.getSiteEnvName()));
+    }
+
+    protected Daemon(Site site) {
+        super(site);
         registerExitHandlers();
     }
 
@@ -172,6 +176,7 @@ public abstract class Daemon extends SiteSource {
     }
 
     protected void start() {
+        logger.info("Starting " + this.getClass() + " daemon for site: " + getSiteName());
         while (true) {
             Process t = getProcess();
             t.setPriority(Thread.MIN_PRIORITY); // so daemons not slowing search 

@@ -170,4 +170,8 @@ public class Site extends SiteAccessor implements IndexingSource {
         }
         return ds;
     }
+
+    public String toString() {
+        return "Site(" + getSiteName() + ")";
+    }
 }
