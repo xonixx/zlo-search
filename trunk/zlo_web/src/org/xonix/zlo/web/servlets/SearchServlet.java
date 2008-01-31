@@ -95,6 +95,9 @@ public class SearchServlet extends BaseServlet {
         ErrorMessage errorMsg = null;
         request.setAttribute(DEBUG, Config.DEBUG);
 
+        // to refresh site from session to req
+        setSiteInSession(request, response);
+
         try {
             HttpSession session = request.getSession(true); // create if session not started
 
