@@ -1,7 +1,8 @@
 package org.xonix.zlo.search.test.junit;
 
-import junit.framework.TestCase;
+import static junit.framework.Assert.*;
 import org.junit.Test;
+import org.junit.Before;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.search.db.DbDict;
@@ -18,13 +19,13 @@ import java.util.Date;
  * Date: 03.10.2007
  * Time: 22:56:24
  */
-public class TestsSearch extends TestCase {
+public class TestsSearch {
 
     DbManager dbm;
     DbDict dbDict;
 
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         new Config();
 
         Site site = Site.forName("zlo");
