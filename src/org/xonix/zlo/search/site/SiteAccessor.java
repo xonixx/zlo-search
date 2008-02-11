@@ -3,6 +3,7 @@ package org.xonix.zlo.search.site;
 import org.apache.commons.lang.StringUtils;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.utils.TimeUtils;
+import org.xonix.zlo.search.db.DbAccessor;
 
 import java.util.Properties;
 
@@ -12,48 +13,41 @@ import java.util.Properties;
  * Date: 28.12.2007
  * Time: 2:45:21
  */
-public class SiteAccessor {
+public class SiteAccessor extends DbAccessor {
 
     public static final String SITE_CONFIG_PREFIX = "site.config.";
 
-    public String MARK_END_MSG_1;
-    public String MARK_END_MSG_2;
-    public String MSG_NOT_EXIST_OR_WRONG;
-    public String WITHOUT_TOPIC;
+    private String MARK_END_MSG_1;
+    private String MARK_END_MSG_2;
+    private String MSG_NOT_EXIST_OR_WRONG;
+    private String WITHOUT_TOPIC;
 
     // regexes
-    public String MSG_REG_RE_STR;
-    public String MSG_UNREG_RE_STR;
-    public String LINK_INDEX_REGEX;
+    private String MSG_REG_RE_STR;
+    private String MSG_UNREG_RE_STR;
+    private String LINK_INDEX_REGEX;
 
-    public String SITE_URL;
-    public String READ_QUERY;
-
-    public String JNDI_DS_NAME;
-
-    protected String DB_DRIVER;
-    protected String DB_URL;
-    protected String DB_USER;
-    protected String DB_PASSWORD;
-    public boolean DB_VIA_CONTAINER;
+    private String SITE_URL;
+    private String READ_QUERY;
 
     // index
-    public boolean PERFORM_INDEXING;
-    public String INDEX_DIR_DOUBLE;
+    private boolean PERFORM_INDEXING;
+    private String INDEX_DIR_DOUBLE;
 
-    public int INDEXER_INDEX_PER_TIME;
-    public int INDEXER_INDEX_PERIOD;
-    public int INDEXER_RECONNECT_PERIOD;
-    public int INDEXER_LIMIT_PER_SECOND;
+    private int INDEXER_INDEX_PER_TIME;
+    private int INDEXER_INDEX_PERIOD;
+    private int INDEXER_RECONNECT_PERIOD;
+    private int INDEXER_LIMIT_PER_SECOND;
 
     // db daemon
-    public int DB_SCAN_PER_TIME;
-    public int DB_SCAN_PERIOD;
-    public int DB_RECONNECT_PERIOD;
+    private int DB_SCAN_PER_TIME;
+    private int DB_SCAN_PERIOD;
+    private int DB_RECONNECT_PERIOD;
 
-    public int SITE_NUMBER;
+    private int SITE_NUMBER;
 
-    protected String SITE_NAME;
+    private String SITE_NAME;
+
     private String siteName;
 
 
@@ -84,15 +78,16 @@ public class SiteAccessor {
 
         SITE_URL = p.getProperty("site.url");
         READ_QUERY = p.getProperty("site.read.query");
+
         // db -----
-        JNDI_DS_NAME = p.getProperty("db.jndi.ds.name");
+        setJNDI_DS_NAME(p.getProperty("db.jndi.ds.name"));
 
-        DB_DRIVER = p.getProperty("db.driver");
-        DB_URL = p.getProperty("db.url");
-        DB_USER = p.getProperty("db.user");
-        DB_PASSWORD = p.getProperty("db.password");
+        setDB_DRIVER(p.getProperty("db.driver"));
+        setDB_URL(p.getProperty("db.url"));
+        setDB_USER(p.getProperty("db.user"));
+        setDB_PASSWORD(p.getProperty("db.password"));
 
-        DB_VIA_CONTAINER = Config.TRUE.equals(p.getProperty("db.use.container.pull"));
+        setDB_VIA_CONTAINER(Config.TRUE.equals(p.getProperty("db.use.container.pull")));
 
         // indexer-----
         PERFORM_INDEXING = Config.TRUE.equals(p.getProperty("indexer.perform.indexing"));
@@ -129,5 +124,166 @@ public class SiteAccessor {
 
         return StringUtils.equals(getSiteName(), ((SiteAccessor) obj).getSiteName()) &&
                 StringUtils.equals(SITE_NAME, ((SiteAccessor) obj).SITE_NAME);
+    }
+
+    // getters & setters
+    public String getMARK_END_MSG_1() {
+        return MARK_END_MSG_1;
+    }
+
+    public void setMARK_END_MSG_1(String MARK_END_MSG_1) {
+        this.MARK_END_MSG_1 = MARK_END_MSG_1;
+    }
+
+    public String getMARK_END_MSG_2() {
+        return MARK_END_MSG_2;
+    }
+
+    public void setMARK_END_MSG_2(String MARK_END_MSG_2) {
+        this.MARK_END_MSG_2 = MARK_END_MSG_2;
+    }
+
+    public String getMSG_NOT_EXIST_OR_WRONG() {
+        return MSG_NOT_EXIST_OR_WRONG;
+    }
+
+    public void setMSG_NOT_EXIST_OR_WRONG(String MSG_NOT_EXIST_OR_WRONG) {
+        this.MSG_NOT_EXIST_OR_WRONG = MSG_NOT_EXIST_OR_WRONG;
+    }
+
+    public String getWITHOUT_TOPIC() {
+        return WITHOUT_TOPIC;
+    }
+
+    public void setWITHOUT_TOPIC(String WITHOUT_TOPIC) {
+        this.WITHOUT_TOPIC = WITHOUT_TOPIC;
+    }
+
+    public String getMSG_REG_RE_STR() {
+        return MSG_REG_RE_STR;
+    }
+
+    public void setMSG_REG_RE_STR(String MSG_REG_RE_STR) {
+        this.MSG_REG_RE_STR = MSG_REG_RE_STR;
+    }
+
+    public String getMSG_UNREG_RE_STR() {
+        return MSG_UNREG_RE_STR;
+    }
+
+    public void setMSG_UNREG_RE_STR(String MSG_UNREG_RE_STR) {
+        this.MSG_UNREG_RE_STR = MSG_UNREG_RE_STR;
+    }
+
+    public String getLINK_INDEX_REGEX() {
+        return LINK_INDEX_REGEX;
+    }
+
+    public void setLINK_INDEX_REGEX(String LINK_INDEX_REGEX) {
+        this.LINK_INDEX_REGEX = LINK_INDEX_REGEX;
+    }
+
+    public String getSITE_URL() {
+        return SITE_URL;
+    }
+
+    public void setSITE_URL(String SITE_URL) {
+        this.SITE_URL = SITE_URL;
+    }
+
+    public String getREAD_QUERY() {
+        return READ_QUERY;
+    }
+
+    public void setREAD_QUERY(String READ_QUERY) {
+        this.READ_QUERY = READ_QUERY;
+    }
+
+    public boolean isPERFORM_INDEXING() {
+        return PERFORM_INDEXING;
+    }
+
+    public void setPERFORM_INDEXING(boolean PERFORM_INDEXING) {
+        this.PERFORM_INDEXING = PERFORM_INDEXING;
+    }
+
+    public String getINDEX_DIR_DOUBLE() {
+        return INDEX_DIR_DOUBLE;
+    }
+
+    public void setINDEX_DIR_DOUBLE(String INDEX_DIR_DOUBLE) {
+        this.INDEX_DIR_DOUBLE = INDEX_DIR_DOUBLE;
+    }
+
+    public int getINDEXER_INDEX_PER_TIME() {
+        return INDEXER_INDEX_PER_TIME;
+    }
+
+    public void setINDEXER_INDEX_PER_TIME(int INDEXER_INDEX_PER_TIME) {
+        this.INDEXER_INDEX_PER_TIME = INDEXER_INDEX_PER_TIME;
+    }
+
+    public int getINDEXER_INDEX_PERIOD() {
+        return INDEXER_INDEX_PERIOD;
+    }
+
+    public void setINDEXER_INDEX_PERIOD(int INDEXER_INDEX_PERIOD) {
+        this.INDEXER_INDEX_PERIOD = INDEXER_INDEX_PERIOD;
+    }
+
+    public int getINDEXER_RECONNECT_PERIOD() {
+        return INDEXER_RECONNECT_PERIOD;
+    }
+
+    public void setINDEXER_RECONNECT_PERIOD(int INDEXER_RECONNECT_PERIOD) {
+        this.INDEXER_RECONNECT_PERIOD = INDEXER_RECONNECT_PERIOD;
+    }
+
+    public int getINDEXER_LIMIT_PER_SECOND() {
+        return INDEXER_LIMIT_PER_SECOND;
+    }
+
+    public void setINDEXER_LIMIT_PER_SECOND(int INDEXER_LIMIT_PER_SECOND) {
+        this.INDEXER_LIMIT_PER_SECOND = INDEXER_LIMIT_PER_SECOND;
+    }
+
+    public int getDB_SCAN_PER_TIME() {
+        return DB_SCAN_PER_TIME;
+    }
+
+    public void setDB_SCAN_PER_TIME(int DB_SCAN_PER_TIME) {
+        this.DB_SCAN_PER_TIME = DB_SCAN_PER_TIME;
+    }
+
+    public int getDB_SCAN_PERIOD() {
+        return DB_SCAN_PERIOD;
+    }
+
+    public void setDB_SCAN_PERIOD(int DB_SCAN_PERIOD) {
+        this.DB_SCAN_PERIOD = DB_SCAN_PERIOD;
+    }
+
+    public int getDB_RECONNECT_PERIOD() {
+        return DB_RECONNECT_PERIOD;
+    }
+
+    public void setDB_RECONNECT_PERIOD(int DB_RECONNECT_PERIOD) {
+        this.DB_RECONNECT_PERIOD = DB_RECONNECT_PERIOD;
+    }
+
+    public int getSITE_NUMBER() {
+        return SITE_NUMBER;
+    }
+
+    public void setSITE_NUMBER(int SITE_NUMBER) {
+        this.SITE_NUMBER = SITE_NUMBER;
+    }
+
+    public String getSITE_NAME() {
+        return SITE_NAME;
+    }
+
+    public void setSITE_NAME(String SITE_NAME) {
+        this.SITE_NAME = SITE_NAME;
     }
 }

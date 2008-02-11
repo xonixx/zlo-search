@@ -1,20 +1,15 @@
 package org.xonix.zlo.search.dao;
 
 import org.apache.log4j.Logger;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.xonix.zlo.search.IndexingSource;
 import org.xonix.zlo.search.MultithreadedRetriever;
 import org.xonix.zlo.search.ZloSearcher;
 import org.xonix.zlo.search.config.Config;
-import org.xonix.zlo.search.db.ConnectionUtils;
-import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.model.ZloMessage;
 import org.xonix.zlo.search.site.PageParser;
 import org.xonix.zlo.search.site.PageRetriever;
 import org.xonix.zlo.search.site.SiteAccessor;
 
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.*;
 
@@ -105,7 +100,7 @@ public class Site extends SiteAccessor implements IndexingSource {
             }
             Collections.sort(sites, new Comparator<Site>(){
                 public int compare(Site o1, Site o2) {
-                    return o1.SITE_NUMBER > o2.SITE_NUMBER ? 1 : o1.SITE_NUMBER == o2.SITE_NUMBER ? 0 : -1;
+                    return o1.getSITE_NUMBER() > o2.getSITE_NUMBER() ? 1 : o1.getSITE_NUMBER() == o2.getSITE_NUMBER() ? 0 : -1;
                 }
             });
         }
@@ -116,7 +111,7 @@ public class Site extends SiteAccessor implements IndexingSource {
         List<Site> allSites = getSites();
         String[] sites = new String[allSites.size()];
         for (int i=0; i<allSites.size(); i++) {
-            sites[i] = allSites.get(i).SITE_URL;
+            sites[i] = allSites.get(i).getSITE_URL();
         }
         return sites;
     }
@@ -126,49 +121,18 @@ public class Site extends SiteAccessor implements IndexingSource {
     }
 
     public int getNum() {
-        return SITE_NUMBER;
-    }
-
-    // =====
-    private DbManager dbManager;
-    public DbManager getDbManager() {
-        if (dbManager == null) {
-            dbManager = new DbManager(this);
-        }
-        return dbManager;
+        return getSITE_NUMBER();
     }
 
     private ZloSearcher zloSearcher;
     public ZloSearcher getZloSearcher() {
         if (zloSearcher == null) {
-            if (SITE_NAME != null) {
-                zloSearcher = Site.forName(SITE_NAME).getZloSearcher();
+            if (getSITE_NAME() != null) {
+                zloSearcher = Site.forName(getSITE_NAME()).getZloSearcher();
             } else
                 zloSearcher = new ZloSearcher(this);
         }
         return zloSearcher;
-    }
-
-    private DataSource ds;
-    public DataSource getDataSource() {
-        if (ds == null) {
-            if (DB_VIA_CONTAINER) {
-                try {
-                    ds = ConnectionUtils.getDataSource(JNDI_DS_NAME);
-                } catch (NamingException e) {
-                    logger.error(e);
-                }
-            }
-            if (ds == null) {
-                DriverManagerDataSource ds = new DriverManagerDataSource();
-                ds.setDriverClassName(DB_DRIVER);
-                ds.setUrl(DB_URL);
-                ds.setUsername(DB_USER);
-                ds.setPassword(DB_PASSWORD);
-                this.ds = ds;
-            }
-        }
-        return ds;
     }
 
     public String toString() {

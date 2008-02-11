@@ -10,7 +10,7 @@ import org.xonix.zlo.search.dao.Site;
 public class DaemonLauncher {
     public static void main(String[] args) {
         for (Site site : Site.getSites()) {
-            if (site.PERFORM_INDEXING) {
+            if (site.isPERFORM_INDEXING()) {
                 startInNewThread(new DbDaemon(site));
                 startInNewThread(new IndexerDaemon(site));
             }

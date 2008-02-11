@@ -1,23 +1,24 @@
 package org.xonix.zlo.search.db;
 
-import org.apache.log4j.Logger;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.xonix.zlo.search.config.Config;
+import org.xonix.zlo.search.dao.Site;
+import static org.xonix.zlo.search.db.VarType.*;
 import org.xonix.zlo.search.model.ZloMessage;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
-
-import static org.xonix.zlo.search.db.VarType.*;
-import org.xonix.zlo.search.dao.Site;
-import org.xonix.zlo.search.site.SiteSource;
 
 /**
  * User: boost
  * Date: Sep 13, 2007
  * Time: 11:33:31 PM
  */
-public class DbManager extends SiteSource {
+public class DbManager {
     private static final Logger logger = Logger.getLogger(DbManager.class);
 
     private static Properties props = Config.loadProperties("org/xonix/zlo/search/db/sql.properties");
@@ -38,8 +39,10 @@ public class DbManager extends SiteSource {
     private static final String DB_DICT_LAST_INDEXED =          "lastIndexed";
     private static final String DB_DICT_LAST_INDEXED_DOUBLE =   "lastIndexedDouble";
 
-    public DbManager(Site site) {
-        super(site);
+    private DbAccessor dbAccessor;
+
+    public DbManager(DbAccessor dbAcessor) {
+        this.dbAccessor = dbAcessor;
     }
 
     private static final String SQL_INSERT_MSG =            props.getProperty("sql.insert.msg");
@@ -113,7 +116,7 @@ public class DbManager extends SiteSource {
         ResultSet rs = null;
         Connection conn = null;
         try {
-            conn = ConnectionUtils.getConnection(getSite().getDataSource());
+            conn = ConnectionUtils.getConnection(dbAccessor.getDataSource());
             conn.setAutoCommit(false);
             insertPstmt = conn.prepareStatement(updateIfExists ? SQL_INSERT_UPDATE_MSG : SQL_INSERT_MSG);
 
@@ -155,7 +158,7 @@ public class DbManager extends SiteSource {
     // todo: test
     public ZloMessage getMessageByNumber(int num) throws DbException {
         DbResult res = DbUtils.executeSelect(
-                getSite(),
+                dbAccessor,
                 SQL_SELECT_MSG_BY_ID,
                 new Object[] {num},
                 new VarType[] {INTEGER});
@@ -170,7 +173,7 @@ public class DbManager extends SiteSource {
 
     public List<ZloMessage> getMessagesByRange(int start, int end) throws DbException {
         DbResult res = DbUtils.executeSelect(
-                getSite(),
+                dbAccessor,
                 SQL_SELECT_MSG_IN_RANGE,
                 new Object[] {start, end},
                 new VarType[] {INTEGER, INTEGER});
@@ -195,14 +198,14 @@ public class DbManager extends SiteSource {
 
         String sql = String.format(SQL_SELECT_SET, sbNums.toString());
 
-        DbResult res = DbUtils.executeSelect(getSite(), sql);
+        DbResult res = DbUtils.executeSelect(dbAccessor, sql);
 
         List<ZloMessage> msgs = new ArrayList<ZloMessage>();
 
         while (res.next()) {
             ZloMessage msg = getMessage(res);
             msg.setHitId(fromIndex++);
-            msg.setSite(getSite());
+            msg.setSite((Site) dbAccessor);
             msgs.add(msg);
         }
 
@@ -211,7 +214,7 @@ public class DbManager extends SiteSource {
     }
 
     public int getLastMessageNumber() throws DbException {
-        DbResult res = DbUtils.executeSelect(getSite(), SQL_SELECT_LAST_MSG_NUM);
+        DbResult res = DbUtils.executeSelect(dbAccessor, SQL_SELECT_LAST_MSG_NUM);
         try {
             return res.getOneInt();
         } finally {
@@ -223,7 +226,7 @@ public class DbManager extends SiteSource {
     // returns <topic name, topic code> where "topic name"s also include old codes
     public HashMap<String, Integer> getTopicsHashMap() throws DbException {
         if (topicsHashMap == null) {
-            DbResult res = DbUtils.executeSelect(getSite(), SQL_SELECT_ALL_TOPICS);
+            DbResult res = DbUtils.executeSelect(dbAccessor, SQL_SELECT_ALL_TOPICS);
             try {
                 topicsHashMap = new HashMap<String, Integer>();
                 while (res.next()) {
@@ -241,7 +244,7 @@ public class DbManager extends SiteSource {
     public String[] getTopics() throws DbException {
         if (topics == null) {
             Map<Integer, String> topicsMap = new HashMap<Integer, String>();
-            DbResult res = DbUtils.executeSelect(getSite(), SQL_SELECT_NEW_TOPICS);
+            DbResult res = DbUtils.executeSelect(dbAccessor, SQL_SELECT_NEW_TOPICS);
             while (res.next()) {
                 topicsMap.put(res.getInt(1), res.getString(2));
             }
@@ -256,7 +259,7 @@ public class DbManager extends SiteSource {
 
     public void logRequest(String host, String userAgent, String reqText, String reqQuery, String referer) throws DbException {
         DbUtils.executeUpdate(
-                getSite(),
+                dbAccessor,
                 SQL_LOG_REQUEST
                 , new Object[] {
                         StringUtils.substring(host, 0, 100),
@@ -269,7 +272,7 @@ public class DbManager extends SiteSource {
     }
 
     private DbDict getDbDict() {
-        return new DbDict(getSite());
+        return new DbDict(dbAccessor);
     }
 
     public void setLastIndexedNumber(int num) throws DbException {
@@ -286,7 +289,7 @@ public class DbManager extends SiteSource {
 
     private ZloMessage getMessage(DbResult rs) throws DbException {
         return new ZloMessage(
-                getSite(),
+                (Site) dbAccessor,
                 rs.getString(MSG_NICK)
                 , rs.getString(MSG_ALT_NAME)
                 , rs.getString(MSG_HOST)

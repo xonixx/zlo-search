@@ -37,7 +37,8 @@ public class FileToDb {
     public static final Logger logger = Logger.getLogger(FileToDb.class);
 
     private void start(boolean doWork) {
-        DbManager dbm = Site.forName("zlo").getDbManager();
+        Site site = Site.forName("zlo");
+        DbManager dbm = site.getDbManager();
         String lastLine = "";
         int result;
         try {
@@ -77,7 +78,7 @@ public class FileToDb {
 
                     try {
                         msgs.add(new ZloMessage(
-                                dbm.getSite(),
+                                site,
                                 columnVals[2], // userName
                                 columnVals[3], // alt
                                 columnVals[4], // host

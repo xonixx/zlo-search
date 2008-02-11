@@ -66,9 +66,9 @@ public class IndexerDaemon extends Daemon {
     }
 
     private void setParams() {
-        DO_PER_TIME = getSite().INDEXER_INDEX_PER_TIME;
-        SLEEP_PERIOD = getSite().INDEXER_INDEX_PERIOD;
-        RETRY_PERIOD = getSite().INDEXER_RECONNECT_PERIOD;
+        DO_PER_TIME = getSite().getINDEXER_INDEX_PER_TIME();
+        SLEEP_PERIOD = getSite().getINDEXER_INDEX_PERIOD();
+        RETRY_PERIOD = getSite().getINDEXER_RECONNECT_PERIOD();
     }
 
     public static void main(String[] args) {

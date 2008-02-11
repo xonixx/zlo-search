@@ -1,9 +1,7 @@
 package org.xonix.zlo.search.db;
 
-import org.apache.log4j.Logger;
 import org.xonix.zlo.search.config.Config;
 import static org.xonix.zlo.search.db.VarType.*;
-import org.xonix.zlo.search.dao.Site;
 
 import java.util.Date;
 import java.util.Properties;
@@ -13,8 +11,8 @@ import java.util.Properties;
  * Date: 05.12.2007
  * Time: 17:05:56
  */
-public class DbDict extends DbManagerSource {
-    private static final Logger logger = Logger.getLogger(DbDict.class);
+public class DbDict {
+//    private static final Logger logger = Logger.getLogger(DbDict.class);
 
     private static Properties props = Config.loadProperties("org/xonix/zlo/search/db/db_dict.sql.properties");
 
@@ -22,8 +20,10 @@ public class DbDict extends DbManagerSource {
     private static final String SQL_GET_VAL = props.getProperty("sql.get.val");
     private static final String SQL_REMOVE_VAL = props.getProperty("sql.remove.val");
 
-    public DbDict(Site site) {
-        super(site);
+    private DbAccessor dbAccessor;
+
+    public DbDict(DbAccessor dbAccessor) {
+        this.dbAccessor = dbAccessor;
     }
 
     public void setVal(String name, Object val, VarType type) throws DbException {
@@ -32,7 +32,7 @@ public class DbDict extends DbManagerSource {
         vals[getValIndex(type)] = val;
 
         DbUtils.executeUpdate(
-                getSite(),
+                dbAccessor,
                 SQL_SET_VAL,
                 new Object[]{name, type.getInt(), vals[0], vals[1], vals[2], vals[3],
                                     type.getInt(), vals[0], vals[1], vals[2], vals[3]},
@@ -57,7 +57,7 @@ public class DbDict extends DbManagerSource {
     }
 
     public Object getVal(String name) throws DbException {
-        DbResult res = DbUtils.executeSelect(getSite(), SQL_GET_VAL, new Object[]{name}, new VarType[]{STRING});
+        DbResult res = DbUtils.executeSelect(dbAccessor, SQL_GET_VAL, new Object[]{name}, new VarType[]{STRING});
         try {
             if (res.next()) {
                 int type = res.getInt(1);
@@ -87,7 +87,7 @@ public class DbDict extends DbManagerSource {
     }
 
     public void remove(String name) throws DbException {
-        DbUtils.executeUpdate(getSite(), SQL_REMOVE_VAL, new Object[]{name}, new VarType[]{STRING});    
+        DbUtils.executeUpdate(dbAccessor, SQL_REMOVE_VAL, new Object[]{name}, new VarType[]{STRING});
     }
 
     private int getValIndex(VarType type) {

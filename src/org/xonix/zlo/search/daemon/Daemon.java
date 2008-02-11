@@ -61,7 +61,7 @@ public abstract class Daemon extends SiteSource {
         public Process() {
             super(getSiteName());
             Site site = getSite();
-            site.DB_VIA_CONTAINER = false;
+            site.setDB_VIA_CONTAINER(false);
             dbms = new DbManagerSource(site);
         }
 

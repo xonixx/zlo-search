@@ -1,7 +1,6 @@
 package org.xonix.zlo.search.db;
 
 import org.apache.log4j.Logger;
-import org.xonix.zlo.search.dao.Site;
 
 import javax.naming.NamingException;
 import javax.sql.DataSource;
@@ -13,7 +12,7 @@ import java.sql.*;
  * Time: 0:23:01
  */
 public final class DbUtils {
-    private static final Logger logger = Logger.getLogger(DbUtils.class);
+//    private static final Logger logger = Logger.getLogger(DbUtils.class);
 
     public static void setParams(PreparedStatement st, Object[] params, VarType[] types) throws DbException {
         if (params.length != types.length)
@@ -81,14 +80,14 @@ public final class DbUtils {
         return executeSelect(ConnectionUtils.getConnection(ds), sqlString, params, types);
     }
 
-    public static DbResult executeSelect(Site site, String sqlString, Object[] params, VarType[] types) throws DbException {
+    public static DbResult executeSelect(DbAccessor dbAccessor, String sqlString, Object[] params, VarType[] types) throws DbException {
         DbResult dbResult;
-        if (site.DB_VIA_CONTAINER) {
-            dbResult = executeSelect(site.JNDI_DS_NAME, sqlString, params, types);
+        if (dbAccessor.isDB_VIA_CONTAINER()) {
+            dbResult = executeSelect(dbAccessor.getJNDI_DS_NAME(), sqlString, params, types);
         } else {
-            dbResult = executeSelect(site.getDataSource(), sqlString, params, types);
+            dbResult = executeSelect(dbAccessor.getDataSource(), sqlString, params, types);
         }
-        dbResult.setSite(site);
+        dbResult.setDbAccessor(dbAccessor);
         return dbResult;
     }
 
@@ -101,14 +100,14 @@ public final class DbUtils {
         return executeSelect(ds, sqlString, new Object[0], new VarType[0]);
     }*/
 
-    public static DbResult executeSelect(Site site, String sqlString) throws DbException {
+    public static DbResult executeSelect(DbAccessor dbAccessor, String sqlString) throws DbException {
         DbResult dbResult;
-        if (site.DB_VIA_CONTAINER) {
-            dbResult = executeSelect(site.JNDI_DS_NAME, sqlString, new Object[0], new VarType[0]);
+        if (dbAccessor.isDB_VIA_CONTAINER()) {
+            dbResult = executeSelect(dbAccessor.getJNDI_DS_NAME(), sqlString, new Object[0], new VarType[0]);
         } else {
-            dbResult = executeSelect(site.getDataSource(), sqlString, new Object[0], new VarType[0]);
+            dbResult = executeSelect(dbAccessor.getDataSource(), sqlString, new Object[0], new VarType[0]);
         }
-        dbResult.setSite(site);
+        dbResult.setDbAccessor(dbAccessor);
         return dbResult;
     }
     /*
@@ -147,11 +146,11 @@ public final class DbUtils {
         executeUpdate(ConnectionUtils.getConnection(ds), sqlString, params, types, expectedResult);
     }
 
-    public static void executeUpdate(Site site, String sqlString, Object[] params, VarType[] types, Integer expectedResult) throws DbException {
-        if (site.DB_VIA_CONTAINER) {
-            executeUpdate(site.JNDI_DS_NAME, sqlString, params, types, expectedResult);
+    public static void executeUpdate(DbAccessor dbAccessor, String sqlString, Object[] params, VarType[] types, Integer expectedResult) throws DbException {
+        if (dbAccessor.isDB_VIA_CONTAINER()) {
+            executeUpdate(dbAccessor.getJNDI_DS_NAME(), sqlString, params, types, expectedResult);
         } else {
-            executeUpdate(site.getDataSource(), sqlString, params, types, expectedResult);
+            executeUpdate(dbAccessor.getDataSource(), sqlString, params, types, expectedResult);
         }
     }
     //--------------------------------------
@@ -163,11 +162,11 @@ public final class DbUtils {
         executeUpdate(ds, sqlString, params, types, null);
     }*/
 
-    public static void executeUpdate(Site site, String sqlString, Object[] params, VarType[] types) throws DbException {
-        if (site.DB_VIA_CONTAINER) {
-            executeUpdate(site.JNDI_DS_NAME, sqlString, params, types, null);
+    public static void executeUpdate(DbAccessor dbAccessor, String sqlString, Object[] params, VarType[] types) throws DbException {
+        if (dbAccessor.isDB_VIA_CONTAINER()) {
+            executeUpdate(dbAccessor.getJNDI_DS_NAME(), sqlString, params, types, null);
         } else {
-            executeUpdate(site.getDataSource(), sqlString, params, types, null);
+            executeUpdate(dbAccessor.getDataSource(), sqlString, params, types, null);
         }
     }
 }
