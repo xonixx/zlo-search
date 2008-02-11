@@ -9,7 +9,6 @@ import org.xonix.zlo.search.ZloPaginatedList;
 import org.xonix.zlo.search.ZloSearcher;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.config.ErrorMessage;
-import org.xonix.zlo.search.db.ConnectionUtils;
 import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.web.CookieUtils;
@@ -285,7 +284,7 @@ public class SearchServlet extends BaseServlet {
         }
     }
 
-    public void destroy() {
+/*    public void destroy() {
         super.destroy();
         logger.info("Destroying search servlet. Cleaning...");
         ZloSearcher.clean();
@@ -293,5 +292,5 @@ public class SearchServlet extends BaseServlet {
         logger.info("Collecting garbage...");
         System.gc();
         logger.info("Done.");
-    }
+    }*/
 }

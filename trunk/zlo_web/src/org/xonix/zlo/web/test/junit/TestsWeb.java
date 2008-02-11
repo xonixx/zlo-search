@@ -1,15 +1,15 @@
 package org.xonix.zlo.web.test.junit;
 
-import junit.framework.TestCase;
 import org.junit.Test;
 import org.xonix.zlo.web.HtmlConstructor;
+import static org.junit.Assert.*;
 
 /**
  * Author: Vovan
  * Date: 16.10.2007
  * Time: 23:31:05
  */
-public class TestsWeb extends TestCase {
+public class TestsWeb {
     @Test
     public void testHtmlConstructor() {
         assertEquals("<select name=\"selId\">\n" +
