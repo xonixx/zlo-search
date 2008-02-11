@@ -48,9 +48,9 @@ public class DbDaemon extends Daemon {
     }
 
     private void setParams() {
-        DO_PER_TIME = getSite().DB_SCAN_PER_TIME;
-        SLEEP_PERIOD = getSite().DB_SCAN_PERIOD;
-        RETRY_PERIOD = getSite().DB_RECONNECT_PERIOD;
+        DO_PER_TIME = getSite().getDB_SCAN_PER_TIME();
+        SLEEP_PERIOD = getSite().getDB_SCAN_PERIOD();
+        RETRY_PERIOD = getSite().getDB_RECONNECT_PERIOD();
     }
 
     protected Process createProcess() {

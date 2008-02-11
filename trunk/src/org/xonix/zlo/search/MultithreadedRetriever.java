@@ -109,7 +109,7 @@ public class MultithreadedRetriever {
                 msgs.add(source.getMessageByNumber(i));
 
                 long delta = System.currentTimeMillis() - t1;
-                long toSleep = 1000/source.INDEXER_LIMIT_PER_SECOND - delta;
+                long toSleep = 1000/source.getINDEXER_LIMIT_PER_SECOND() - delta;
                 if (toSleep > 0) {
                     try {
                         Thread.sleep(toSleep);

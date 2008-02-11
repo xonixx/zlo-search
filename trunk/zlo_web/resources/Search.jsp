@@ -115,7 +115,7 @@
                                     class="small" headerClass="head"
                                     style="text-align:center;width:1%;"><c:out value="${msg.hitId + 1}" /></display:column>
                     <display:column title="<%= HtmlStrings.HEADER_TITLE.toString() %>" headerClass="head" style="width:67%">
-                        <a href="http://<c:out value="${siteRoot}" /><%= ((ZloMessage) msg).getSite().READ_QUERY %><c:out value="${msg.num}" />">
+                        <a href="http://<c:out value="${siteRoot}" /><c:out value="${msg.site.READ_QUERY}" /><c:out value="${msg.num}" />">
                             <c:if test="${not empty msg.topic and msg.topic != 'без темы'}">
                                 [<c:out value="${msg.topic}" />]
                             </c:if>

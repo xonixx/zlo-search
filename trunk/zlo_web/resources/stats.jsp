@@ -44,7 +44,7 @@
 </c:choose>
 
 <c:set var="title">
-    —татистика сайта <%= site.SITE_URL %> по <c:choose><c:when test="${byNick}">никам</c:when><c:otherwise>хостам</c:otherwise></c:choose>
+    —татистика сайта <%= site.getSITE_URL() %> по <c:choose><c:when test="${byNick}">никам</c:when><c:otherwise>хостам</c:otherwise></c:choose>
     за последние <c:out value="${period}" /> суток
 </c:set>
 <title><c:out value="${title}"/></title>

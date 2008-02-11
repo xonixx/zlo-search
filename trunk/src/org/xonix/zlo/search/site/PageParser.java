@@ -31,8 +31,8 @@ public class PageParser extends SiteSource {
     public PageParser(Site site) {
         super(site);
         dbm = site.getDbManager();
-        MSG_REG_RE = Pattern.compile(site.MSG_REG_RE_STR, Pattern.DOTALL);
-        MSG_UNREG_RE = Pattern.compile(site.MSG_UNREG_RE_STR, Pattern.DOTALL);
+        MSG_REG_RE = Pattern.compile(site.getMSG_REG_RE_STR(), Pattern.DOTALL);
+        MSG_UNREG_RE = Pattern.compile(site.getMSG_UNREG_RE_STR(), Pattern.DOTALL);
     }
 
     public ZloMessage parseMessage(String msg) throws PageParseException {
@@ -44,7 +44,7 @@ public class PageParser extends SiteSource {
         } else {
             m = MSG_REG_RE.matcher(msg);
             if (!m.find()) {
-                if (msg.contains(getSite().MSG_NOT_EXIST_OR_WRONG)) {
+                if (msg.contains(getSite().getMSG_NOT_EXIST_OR_WRONG())) {
                     message.setStatus(ZloMessage.Status.DELETED);
                 } else {
                     message.setStatus(ZloMessage.Status.UNKNOWN);

@@ -29,7 +29,7 @@ public class TestsSearch {
         new Config();
 
         Site site = Site.forName("zlo");
-        site.DB_VIA_CONTAINER = false;
+        site.setDB_VIA_CONTAINER(false);
         dbm = site.getDbManager();
         dbDict = new DbDict(site);
     }

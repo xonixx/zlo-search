@@ -38,11 +38,11 @@ public class PageRetriever {
 
     public PageRetriever(SiteAccessor siteAccessor) {
         this.siteAccessor = siteAccessor;
-        INDEX_UNREG_RE = Pattern.compile(siteAccessor.LINK_INDEX_REGEX);
+        INDEX_UNREG_RE = Pattern.compile(siteAccessor.getLINK_INDEX_REGEX());
     }
 
     public String getPageContentByNumber(int num) throws IOException {
-        GetMethod getMethod = formGetMethod("http://" + siteAccessor.SITE_URL + siteAccessor.READ_QUERY + num);
+        GetMethod getMethod = formGetMethod("http://" + siteAccessor.getSITE_URL() + siteAccessor.getREAD_QUERY() + num);
 
         List<String> stringGroups = new ArrayList<String>();
         InputStream is = null;
@@ -69,9 +69,9 @@ public class PageRetriever {
                 currSize = stringGroups.size();
                 ending = stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1);
             } while(
-                ending.indexOf(siteAccessor.MARK_END_MSG_1) == -1 &&
-                ending.indexOf(siteAccessor.MARK_END_MSG_2) == -1 && // if user have sign - won't read it all
-                ending.indexOf(siteAccessor.MSG_NOT_EXIST_OR_WRONG) == -1
+                ending.indexOf(siteAccessor.getMARK_END_MSG_1()) == -1 &&
+                ending.indexOf(siteAccessor.getMARK_END_MSG_2()) == -1 && // if user have sign - won't read it all
+                ending.indexOf(siteAccessor.getMSG_NOT_EXIST_OR_WRONG()) == -1
                 );
         } finally {
             if (is != null)
@@ -89,7 +89,7 @@ public class PageRetriever {
     *  returns last number of root-message or -1 if not found
      */
     public int getLastRootMessageNumber() throws IOException {
-        GetMethod getMethod = formGetMethod("http://" + siteAccessor.SITE_URL);
+        GetMethod getMethod = formGetMethod("http://" + siteAccessor.getSITE_URL());
 
         InputStream is = null;
         Matcher m = null;
@@ -124,7 +124,7 @@ public class PageRetriever {
 
     private GetMethod formGetMethod(String uri) {
         GetMethod getMethod = new GetMethod(uri);
-        getMethod.addRequestHeader("Host", siteAccessor.SITE_URL);
+        getMethod.addRequestHeader("Host", siteAccessor.getSITE_URL());
         getMethod.addRequestHeader("User-Agent", Config.USER_AGENT);
         return getMethod;
     }

@@ -1,8 +1,5 @@
 package org.xonix.zlo.search.db;
 
-import org.xonix.zlo.search.dao.Site;
-import org.xonix.zlo.search.site.SiteSource;
-
 import java.io.Closeable;
 import java.sql.*;
 
@@ -11,13 +8,13 @@ import java.sql.*;
 * Date: 15.01.2008
 * Time: 22:44:48
 */
-public class DbResult extends SiteSource implements Closeable {
+public class DbResult implements Closeable {
     private ResultSet resultSet;
     private Statement statement;
     private Connection connection;
+    private DbAccessor dbAccessor;
 
     public DbResult(Connection connection, ResultSet resultSet, Statement statement) {
-        super((Site)null);
         this.connection = connection;
         this.resultSet = resultSet;
         this.statement = statement;
@@ -94,9 +91,17 @@ public class DbResult extends SiteSource implements Closeable {
         catch (SQLException e) { throw new DbException(e); }
     }
 
+    public DbAccessor getDbAccessor() {
+        return dbAccessor;
+    }
+
+    public void setDbAccessor(DbAccessor dbAccessor) {
+        this.dbAccessor = dbAccessor;
+    }
+
     public void close() {
         CloseUtils.close(resultSet, statement);
-        if (getSite().DB_VIA_CONTAINER) {
+        if (dbAccessor.isDB_VIA_CONTAINER()) {
             CloseUtils.close(connection);
         }
     }
