@@ -80,14 +80,7 @@ public class SiteAccessor extends DbAccessor {
         READ_QUERY = p.getProperty("site.read.query");
 
         // db -----
-        setJNDI_DS_NAME(p.getProperty("db.jndi.ds.name"));
-
-        setDB_DRIVER(p.getProperty("db.driver"));
-        setDB_URL(p.getProperty("db.url"));
-        setDB_USER(p.getProperty("db.user"));
-        setDB_PASSWORD(p.getProperty("db.password"));
-
-        setDB_VIA_CONTAINER(Config.TRUE.equals(p.getProperty("db.use.container.pull")));
+        initDb(p);
 
         // indexer-----
         PERFORM_INDEXING = Config.TRUE.equals(p.getProperty("indexer.perform.indexing"));

@@ -23,11 +23,11 @@
           <setting name="BUILD_ONLY_WEB_RESOURCES" value="false" />
         </building>
         <packaging>
-          <containerElement type="module" name="zlo_web">
+          <containerElement type="module" name="zlo_search">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/classes" />
           </containerElement>
-          <containerElement type="module" name="zlo_search">
+          <containerElement type="module" name="zlo_web">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/classes" />
           </containerElement>
@@ -35,14 +35,6 @@
             <attribute name="method" value="0" />
             <attribute name="URI" value="&lt;N/A&gt;" />
             <url>jar://$APPLICATION_HOME_DIR$/lib/j2ee.jar!/</url>
-          </containerElement>
-          <containerElement type="library" name="commons-collections-3.2" level="project">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib" />
-          </containerElement>
-          <containerElement type="library" name="commons-lang" level="project">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib" />
           </containerElement>
           <containerElement type="library" level="module">
             <attribute name="method" value="1" />
@@ -74,6 +66,42 @@
             <attribute name="URI" value="/WEB-INF/lib/commons-logging-1.1.jar" />
             <url>jar://$MODULE_DIR$/../../lib/commons-logging-1.1.jar!/</url>
           </containerElement>
+          <containerElement type="library" name="Lucene" level="project">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib" />
+          </containerElement>
+          <containerElement type="library" name="commons-collections-3.2" level="project">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib" />
+          </containerElement>
+          <containerElement type="library" name="commons-lang" level="project">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib" />
+          </containerElement>
+          <containerElement type="library" name="displaytag-1.1.1" level="project">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib" />
+          </containerElement>
+          <containerElement type="library" name="jstl" level="project">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib" />
+          </containerElement>
+          <containerElement type="library" name="junit-4.4" level="project">
+            <attribute name="method" value="0" />
+            <attribute name="URI" value="/WEB-INF/lib" />
+          </containerElement>
+          <containerElement type="library" name="log4j-1.2.15" level="project">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib" />
+          </containerElement>
+          <containerElement type="library" name="mysql-connector-java-5.0.7-bin" level="project">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib" />
+          </containerElement>
+          <containerElement type="library" name="spring" level="project">
+            <attribute name="method" value="0" />
+            <attribute name="URI" value="/WEB-INF/lib" />
+          </containerElement>
           <containerElement type="library" level="module">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib/commons-codec-1.3.jar" />
@@ -104,34 +132,6 @@
             <attribute name="URI" value="/WEB-INF/lib/lucene-demos-2007-05-31_00-04-53.jar" />
             <url>jar://$MODULE_DIR$/../../../../JAVA_DISTR/Lucene/2007-05-31/lucene-2007-05-31_00-04-53/lucene-demos-2007-05-31_00-04-53.jar!/</url>
           </containerElement>
-          <containerElement type="library" name="displaytag-1.1.1" level="project">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib" />
-          </containerElement>
-          <containerElement type="library" name="jstl" level="project">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib" />
-          </containerElement>
-          <containerElement type="library" name="junit-4.4" level="project">
-            <attribute name="method" value="0" />
-            <attribute name="URI" value="/WEB-INF/lib" />
-          </containerElement>
-          <containerElement type="library" name="log4j-1.2.15" level="project">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib" />
-          </containerElement>
-          <containerElement type="library" name="Lucene" level="project">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib" />
-          </containerElement>
-          <containerElement type="library" name="mysql-connector-java-5.0.7-bin" level="project">
-            <attribute name="method" value="1" />
-            <attribute name="URI" value="/WEB-INF/lib" />
-          </containerElement>
-          <containerElement type="library" name="spring" level="project">
-            <attribute name="method" value="0" />
-            <attribute name="URI" value="/WEB-INF/lib" />
-          </containerElement>
         </packaging>
       </configuration>
     </facet>
@@ -140,6 +140,7 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/exploded" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

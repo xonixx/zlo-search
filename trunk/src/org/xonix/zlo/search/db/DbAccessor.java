@@ -2,9 +2,12 @@ package org.xonix.zlo.search.db;
 
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.xonix.zlo.search.config.Config;
 
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Properties;
 
 /**
  * Author: Vovan
@@ -20,12 +23,29 @@ public class DbAccessor {
     private String DB_URL;
     private String DB_USER;
     private String DB_PASSWORD;
-    private boolean DB_VIA_CONTAINER;// =====
+    private boolean DB_VIA_CONTAINER;
+    
     private DbManager dbManager;
 
     private DataSource ds;
 
     public DbAccessor() {
+    }
+
+    private DbAccessor(String configFileName) {
+        Properties p = new Properties();
+        if (!configFileName.endsWith(".properties"))
+            configFileName += ".properties";
+        Config.loadProperties(p, "org/xonix/zlo/search/config/" + configFileName);
+        initDb(p);
+    }
+
+    private static HashMap<String, DbAccessor> dbAccessors = new HashMap<String, DbAccessor>();
+    public static DbAccessor getInstance(String configFileName) {
+        if (!dbAccessors.containsKey(configFileName)) {
+            dbAccessors.put(configFileName, new DbAccessor(configFileName));
+        }
+        return dbAccessors.get(configFileName);
     }
 
     public String getJNDI_DS_NAME() {
@@ -102,5 +122,16 @@ public class DbAccessor {
 
     public void setDB_VIA_CONTAINER(boolean DB_VIA_CONTAINER) {
         this.DB_VIA_CONTAINER = DB_VIA_CONTAINER;
+    }
+
+    protected void initDb(Properties p) {
+        setJNDI_DS_NAME(p.getProperty("db.jndi.ds.name"));
+
+        setDB_DRIVER(p.getProperty("db.driver"));
+        setDB_URL(p.getProperty("db.url"));
+        setDB_USER(p.getProperty("db.user"));
+        setDB_PASSWORD(p.getProperty("db.password"));
+
+        setDB_VIA_CONTAINER(Config.TRUE.equals(p.getProperty("db.use.container.pull")));
     }
 }

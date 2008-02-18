@@ -257,17 +257,18 @@ public class DbManager {
         return topics;
     }
 
-    public void logRequest(String host, String userAgent, String reqText, String reqQuery, String referer) throws DbException {
+    public void logRequest(int siteNum, String host, String userAgent, String reqText, String reqQuery, String referer) throws DbException {
         DbUtils.executeUpdate(
                 dbAccessor,
                 SQL_LOG_REQUEST
                 , new Object[] {
+                        siteNum,
                         StringUtils.substring(host, 0, 100),
                         StringUtils.substring(userAgent, 0, 100),
                         StringUtils.substring(reqText, 0, 200),
                         StringUtils.substring(reqQuery, 0, 200),
                         StringUtils.substring(referer, 0, 100)}
-                , new VarType[] {STRING, STRING, STRING, STRING, STRING}
+                , new VarType[] {INTEGER, STRING, STRING, STRING, STRING, STRING}
                 , 1);
     }
 
