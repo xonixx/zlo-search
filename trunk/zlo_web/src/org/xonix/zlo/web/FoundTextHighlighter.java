@@ -42,8 +42,7 @@ public class FoundTextHighlighter {
         for (String w : highlightWords) {
             w = w.replaceAll("\\?", "[^\\\\s]{1}").replaceAll("\\*", "[^\\\\s]*?");
             txt = txt.replaceAll("(?iu)" +                                              // case insensetive, unicode
-                    "(?<!\\<a href=\"http(?:s?)://[^\"<>]{0,300})" +                     // not to break links
-                    "(?<!\\<img class=\"imgtag\" src=\"http(?:s?)://[^\"<>]{0,300})" +   // not to break pics
+                    "(?<!\\<[^<>]{0,300})" +                                            // not to break html tags
                     "(\\b" + w + "[^\\s]*?)\\b", "<span class=\"hl\">$1</span>");               // highlight
         }
         return txt;
