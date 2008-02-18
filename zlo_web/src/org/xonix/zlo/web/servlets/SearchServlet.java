@@ -11,6 +11,7 @@ import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.config.ErrorMessage;
 import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.db.DbManager;
+import org.xonix.zlo.search.db.DbAccessor;
 import org.xonix.zlo.web.CookieUtils;
 import org.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 
@@ -273,24 +274,15 @@ public class SearchServlet extends BaseServlet {
 
     private void logRequest(ForwardingRequest request, String query) {
         try {
-            getSite(request).getDbManager().logRequest(
+            DbAccessor.getInstance("search_log").getDbManager().logRequest(
+                    getSite(request).getNum(),
                     request.getRemoteAddr(),
                     request.getHeader("User-Agent"),
                     request.getParameter(QS_TEXT),
                     query,
                     request.getHeader("Referer"));
         } catch (DbException e) {
-            logger.error("Can't log user request" + e.getClass());
+            logger.error(e);
         }
     }
-
-/*    public void destroy() {
-        super.destroy();
-        logger.info("Destroying search servlet. Cleaning...");
-        ZloSearcher.clean();
-        ConnectionUtils.clean();
-        logger.info("Collecting garbage...");
-        System.gc();
-        logger.info("Done.");
-    }*/
 }
