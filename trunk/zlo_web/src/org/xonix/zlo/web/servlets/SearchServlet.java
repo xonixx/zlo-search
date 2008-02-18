@@ -279,7 +279,10 @@ public class SearchServlet extends BaseServlet {
                     request.getRemoteAddr(),
                     request.getHeader("User-Agent"),
                     request.getParameter(QS_TEXT),
+                    request.getParameter(QS_NICK),
+                    request.getParameter(QS_HOST),
                     query,
+                    request.getQueryString(),
                     request.getHeader("Referer"));
         } catch (DbException e) {
             logger.error(e);

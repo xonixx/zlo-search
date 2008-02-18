@@ -257,7 +257,9 @@ public class DbManager {
         return topics;
     }
 
-    public void logRequest(int siteNum, String host, String userAgent, String reqText, String reqQuery, String referer) throws DbException {
+    public void logRequest(int siteNum, String host, String userAgent,
+                           String reqText, String reqNick, String reqHost,
+                           String reqQuery, String reqQueryString, String referer) throws DbException {
         DbUtils.executeUpdate(
                 dbAccessor,
                 SQL_LOG_REQUEST
@@ -265,10 +267,15 @@ public class DbManager {
                         siteNum,
                         StringUtils.substring(host, 0, 100),
                         StringUtils.substring(userAgent, 0, 100),
+
                         StringUtils.substring(reqText, 0, 200),
+                        StringUtils.substring(reqNick, 0, 100),
+                        StringUtils.substring(reqHost, 0, 100),
+
                         StringUtils.substring(reqQuery, 0, 200),
+                        StringUtils.substring(reqQueryString, 0, 400),
                         StringUtils.substring(referer, 0, 100)}
-                , new VarType[] {INTEGER, STRING, STRING, STRING, STRING, STRING}
+                , new VarType[] {INTEGER, STRING, STRING, STRING, STRING, STRING, STRING, STRING, STRING}
                 , 1);
     }
 
