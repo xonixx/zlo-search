@@ -12,6 +12,8 @@
     LIMIT 1000;
 </sql:query>
 
+<c:set var="showAll" value="${ param['showMeAllPlease'] != null  }" />
+
 <% int i=0; %>
 <div align="center">
     <display:table name="${res.rows}" id="row" htmlId="resultTable">
@@ -29,6 +31,9 @@
                 <%= site.getSiteName() %></a>
         </display:column>
         <display:column property="req_date" title="Дата" headerClass="head" />
-        <display:column property="user_agent" title="Браузер" class="small" headerClass="head" />
+        <c:if test="${showAll}">
+            <display:column property="user_agent" title="Браузер" class="small" headerClass="head" />
+            <display:column property="host" title="Хост" class="small" headerClass="head" />
+        </c:if>
     </display:table>
 </div>
