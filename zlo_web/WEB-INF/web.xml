@@ -17,6 +17,12 @@
             <taglib-location>WEB-INF/tld/sql.tld</taglib-location>
         </taglib>
     </jsp-config>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
     <servlet>
         <description>Search servlet</description>
         <servlet-name>search</servlet-name>
@@ -26,6 +32,7 @@
             <param-value>windows-1251</param-value>
         </init-param>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>search</servlet-name>
         <url-pattern>/search</url-pattern>
