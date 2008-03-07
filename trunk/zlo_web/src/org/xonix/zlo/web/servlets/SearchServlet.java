@@ -273,10 +273,11 @@ public class SearchServlet extends BaseServlet {
     }
 
     private void logRequest(ForwardingRequest request, String query) {
+        String remoteAddr = request.getHeader("x-forwarded-for");
         try {
             DbAccessor.getInstance("search_log").getDbManager().logRequest(
                     getSite(request).getNum(),
-                    request.getRemoteAddr(),
+                    StringUtils.isNotEmpty(remoteAddr) ? remoteAddr : request.getRemoteAddr(),
                     request.getHeader("User-Agent"),
                     request.getParameter(QS_TEXT),
                     request.getParameter(QS_NICK),
