@@ -4,7 +4,7 @@
   Date: 20.01.2008
   Time: 4:08:47
 --%>
-<%@ include file="import.jsp" %>
+<%@ include file="WEB-INF/include/import.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 <link rel="stylesheet" type="text/css" href="main.css" />
 
@@ -86,3 +86,5 @@
         </tr>
     </c:forEach>
 </table>
+
+<jsp:include page="WEB-INF/include/_ga.jsp" flush="true" />

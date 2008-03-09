@@ -1,4 +1,4 @@
-<%@ include file="import.jsp" %>
+<%@ include file="WEB-INF/include/import.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 
 <link rel="stylesheet" type="text/css" href="main.css" />
@@ -90,3 +90,5 @@
 <a href="search?st=exct&text=http%3A%2F%2Fbash.org.ru%2Fbest.php&topic=-1&inTitle=on&inBody=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">
     http://bash.org.ru/best.php
 </a>
+
+<jsp:include page="WEB-INF/include/_ga.jsp" flush="true" />

@@ -4,8 +4,8 @@
   Date: 14.08.2007
   Time: 16:46:12
 --%>
-<%@ include file="import.jsp" %>
-<%@ include file="notDirectlyAccessible.jsp" %>
+<%@ include file="WEB-INF/include/import.jsp" %>
+<%@ include file="WEB-INF/include/notDirectlyAccessible.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 
 <jsp:useBean id="backendBean" class="org.xonix.zlo.web.BackendBean" scope="session" />
@@ -162,4 +162,5 @@
     <script type="text/javascript">
         changedDatesSelector();
     </script>
+    <jsp:include page="WEB-INF/include/_ga.jsp" flush="true" />
 </html>

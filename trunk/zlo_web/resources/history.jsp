@@ -1,5 +1,5 @@
 <%@ page import="org.xonix.zlo.search.db.DbAccessor, org.xonix.zlo.search.dao.Site, java.util.TreeMap" %>
-<%@ include file="import.jsp" %>
+<%@ include file="WEB-INF/include/import.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 <link rel="stylesheet" type="text/css" href="main.css" />
 <title>Request history</title>
@@ -37,3 +37,5 @@
         </c:if>
     </display:table>
 </div>
+
+<jsp:include page="WEB-INF/include/_ga.jsp" flush="true" />
