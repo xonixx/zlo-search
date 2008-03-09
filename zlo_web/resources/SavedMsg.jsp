@@ -4,8 +4,8 @@
   Time: 17:31:09
 --%>
 
-<%@ include file="import.jsp" %>
-<%@ include file="notDirectlyAccessible.jsp" %>
+<%@ include file="WEB-INF/include/import.jsp" %>
+<%@ include file="WEB-INF/include/notDirectlyAccessible.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 
 <jsp:useBean id="savedMsg" scope="request" class="org.xonix.zlo.search.model.ZloMessage" />
@@ -62,4 +62,5 @@
             </c:otherwise>
         </c:choose>
     </body>
+    <jsp:include page="WEB-INF/include/_ga.jsp" flush="true" />
 </html>
