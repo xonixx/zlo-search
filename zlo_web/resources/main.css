@@ -15,7 +15,6 @@ big {
 }
 
 #header ul {
-    width: 300px;
     margin: 0;
     list-style: none;
     padding: 0;
@@ -53,6 +52,10 @@ big {
 
 #body {
     padding: 0 25px;
+}
+
+.content {
+    padding: 0 10px;
 }
 
 .nick {

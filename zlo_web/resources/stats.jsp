@@ -8,6 +8,9 @@
 <%@ page contentType="text/html; charset=windows-1251" %>
 <link rel="stylesheet" type="text/css" href="main.css" />
 
+<jsp:useBean id="backendBean" class="org.xonix.zlo.web.BackendBean" scope="session" />
+<jsp:setProperty name="backendBean" property="*" /> <%-- all from request properties --%>
+
 <%
     Site site;
     try {
@@ -50,9 +53,10 @@
 <title><c:out value="${title}"/></title>
 
 <div align="center">
-<h3><c:out value="${title}"/></h3>
+<h3 style="margin:5px auto;"><c:out value="${title}"/></h3>
 
 <form action="stats.jsp" method="get">
+    Сайт: <jsp:getProperty name="backendBean" property="siteSelector" /><br/>
     По:
     <input type="radio" name="type" value="nick" id="tn" <c:if test="${byNick}">checked="checked"</c:if> /><label for="tn">нику</label>
     <input type="radio" name="type" value="host" id="th" <c:if test="${!byNick}">checked="checked"</c:if>/><label for="th">хосту</label>

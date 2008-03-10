@@ -27,8 +27,9 @@
             <ul>
                 <li><a href="http://<c:out value="${siteRoot}"/>"><c:out value="${siteRoot}"/></a></li>
                 <li><a href="stats.jsp?site=<c:out value="${param['site']}"/>">Статистика</a></li>
+                <li><a href="history.jsp">История</a></li>
                 <li><a href="about.jsp" target="_blank">About</a></li>
-                <li><a href="faq.jsp" target="_blank">Faq</a></li>
+                <li><a href="faq.jsp" target="_blank">FAQ</a></li>
             </ul>
         </div>
         <div id="searchform">
@@ -87,8 +88,14 @@
     <c:choose>
         <c:when test="${empty requestScope['error']}">
             <c:if test="${not empty requestScope['lastMsgs']}">
-                <fmt:message key="label.last.saved.msg" /> <c:out value="${requestScope['lastMsgs'][0]}" /><br />
-                <fmt:message key="label.last.indexed.msg" /> <c:out value="${requestScope['lastMsgs'][1]}" />
+                <div class="content">
+                    <table><tr>
+                        <td><fmt:message key="label.last.saved.msg" /></td>
+                        <td><c:out value="${requestScope['lastMsgs'][0]}" /></td>
+                    </tr><tr>
+                        <td><fmt:message key="label.last.indexed.msg" /></td>
+                        <td><c:out value="${requestScope['lastMsgs'][1]}" /></td></tr></table>
+                </div>
             </c:if>
             <c:if test="${not empty sessionScope['searchResult']}">
                 <div class="searchResOuter">
