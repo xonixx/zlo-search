@@ -127,8 +127,7 @@
                                 [<c:out value="${msg.topic}" />]
                             </c:if>
                             <jsp:setProperty name="hl" property="text" value="${msg.title}" />
-                            <c:out value="${hl.highlightedText}" escapeXml="false" />
-                        </a>
+                            <c:out value="${hl.highlightedText}" escapeXml="false" /></a>
                         <small>
                             <c:if test="${empty msg.body}">(-)</c:if>
                             <c:if test="${msg.hasUrl}">(url)</c:if>
