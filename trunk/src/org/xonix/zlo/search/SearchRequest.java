@@ -138,6 +138,8 @@ public class SearchRequest extends SiteSource {
         return StringUtils.isNotEmpty(text)
                 || StringUtils.isNotEmpty(nick)
                 || StringUtils.isNotEmpty(host)
+                || inHasUrl
+                || inHasImg
 //                || -1 != topicCode
                 ;
     }
