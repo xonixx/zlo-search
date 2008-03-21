@@ -61,7 +61,7 @@
         <tr>
             <td><a href="search?st=adv&text=%22%F3+%EB%F3%EA%EE%EC%EE%F0%FC%FF+%E4%F3%E1+%E7%E5%EB%E5%ED%FB%E9%22&topic=-1&inTitle=on&nick=&host=&site=0&pageSize=0&submitBtn=Search">
                 "у лукоморья дуб зеленый"</a></td>
-            <td>Будут найдены сообщения, содержащие точную фразу. Соответствует режиму поиска "Точная фраза". Ищите ссылки используя этот режим.</td>
+            <td>Будут найдены сообщения, содержащие точную фразу. Соответствует режиму поиска "Точная фраза".</td>
         </tr>
         <tr>
             <td><a href="search?st=adv&text=%F2%3F%E7&topic=-1&inTitle=on&nick=&host=&site=0&pageSize=0&submitBtn=Search">
