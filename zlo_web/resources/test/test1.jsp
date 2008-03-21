@@ -32,3 +32,11 @@ enum Enum {
 </c:if>
 
 <fmt:message key="header.title" />
+
+<% try{ %>
+
+<%
+ throw new RuntimeException("asda");
+%>
+
+<% }catch(Exception e){ response.getOutputStream().print("Error"); response.flushBuffer(); }%>

@@ -5,14 +5,27 @@
 <title>История запросов</title>
 <h3 align="center">История запросов</h3>
 
-<sql:setDataSource dataSource="<%= DbAccessor.getInstance("search_log").getDataSource() %>" />
- <sql:query var="res">
-    SELECT * FROM request_log
-    order by req_date DESC
-    LIMIT 1000;
-</sql:query>
-
 <c:set var="showAll" value="${ param['showMeAllPlease'] != null  }" />
+
+<sql:setDataSource dataSource="<%= DbAccessor.getInstance("search_log").getDataSource() %>" />
+
+<c:choose>
+    <c:when test="${showAll}">
+        <sql:query var="res">
+            SELECT * FROM request_log
+            order by req_date DESC
+            LIMIT 1000;
+        </sql:query>
+    </c:when>
+    <c:otherwise>
+        <sql:query var="res">
+            SELECT * FROM request_log
+            where host not in ('127.0.0.1', '194.85.80.242', '193.125.143.185')
+            order by req_date DESC
+            LIMIT 1000;
+        </sql:query>
+    </c:otherwise>
+</c:choose>
 
 <% int i=0; %>
 <div align="center">
