@@ -62,7 +62,7 @@ public class FoundTextHighlighter {
      * @return
      */
     public static String escapeColon(String text){
-        if (!StringUtils.equals(text, "*:*")) { // matchAllQuery
+        if (text != null && !StringUtils.equals(text, "*:*")) { // matchAllQuery
             return text.replace(":", ".");
         } else
             return text;
@@ -92,7 +92,7 @@ public class FoundTextHighlighter {
         } catch (UnsupportedOperationException e) {
             // for wildcard query
             String qs = query.toString(ZloMessage.FIELDS.BODY);
-            qs = qs.replaceAll("-\\b.+?\\b", " ").replaceAll("\\(|\\)|\\+", " ");
+            qs = qs.replaceAll("-\\b.+?(?:\\s|$)", " ").replaceAll("\\(|\\)|\\+", " ");
             return qs.trim().split("\\s+");
         }
         return new String[0];
