@@ -67,10 +67,10 @@ public class Test1 {
         } catch (ParseException e) {
             e.printStackTrace();
         }*/
-        String st = "+(Привет медведь т?ст) +Путин -извращенец педофил";
-        for (String s : ZloSearcher.formHighlightedWords(st)) {
+/*        String st = "+(Привет медведь т?ст) +Путин -извращенец педофил";
+        for (String s : FoundTextHighlighter.formHighlightedWords(st)) {
             System.out.println(s);
-        }
+        }*/
     }
 
     public static void m18() {

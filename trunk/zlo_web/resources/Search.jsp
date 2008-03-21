@@ -13,7 +13,7 @@
 
 <jsp:useBean id="siteRoot" class="java.lang.String" scope="session" />
 
-<jsp:useBean id="hl" class="org.xonix.zlo.web.FoundTextHighlighter" scope="session" />
+<jsp:useBean id="hl" class="org.xonix.zlo.search.FoundTextHighlighter" scope="session" />
 <jsp:setProperty name="hl" property="highlightWords" value="${requestScope['hw']}"/>
 
 <html>

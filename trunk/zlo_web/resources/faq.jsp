@@ -6,6 +6,17 @@
 <title>FAQ</title>
 
 <div class="content">
+    <h3 class="attention">News</h3>
+    <ul>
+        <li>Ссылки теперь можно искать в любом режиме, например
+            <a href="search?st=all&text=http%3A%2F%2Fbash.org.ru%2Fbest.php&topic=-1&inTitle=on&inBody=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">
+                http://bash.org.ru/best.php
+            </a>
+        </li>
+        <li>Стал возможен поиск только по сообщениям <a href="search?st=all&text=&topic=-1&inTitle=on&inBody=on&hasImg=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">с картинками</a>
+            , и только по сообщениям <a href="search?st=all&text=&topic=-1&inTitle=on&inBody=on&hasUrl=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">со ссылками</a></li>
+    </ul>
+
     <h3>Как искать?</h3>
     Поисковик имеет три режима поиска:
     <ul>
@@ -35,7 +46,7 @@
         <tr>
             <td><a href="search?st=adv&text=%EF%F0%E5%E2%E5%E4+-%EC%E5%E4%E2%E5%E4&topic=-1&inTitle=on&nick=&host=&site=0&pageSize=0&submitBtn=Search">
                 превед -медвед</a></td>
-            <td>Запрос "НЕ". Будут найдены все сообщения, содержащие "превед" но не содержащие "медвед".</td>
+            <td>Запрос "НЕ". Будут найдены все сообщения, содержащие "превед" но не содержащие "медвед". Вместо "-" можно использовать "!".</td>
         </tr>
         <tr>
             <td><a href="search?st=adv&text=%2B%EF%F0%E5%E2%E5%E4+%2B%EC%E5%E4%E2%E5%E4&topic=-1&inTitle=on&nick=&host=&site=0&pageSize=0&submitBtn=Search">
@@ -89,8 +100,14 @@
     </ul>
 
     <h4>Поиск ссылок</h4>
+    <s>
     Ссылки следует искать в режиме "Точная фраза", например
     <a href="search?st=exct&text=http%3A%2F%2Fbash.org.ru%2Fbest.php&topic=-1&inTitle=on&inBody=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">
+        http://bash.org.ru/best.php
+    </a></s>
+    <br/>
+    <span class="attention">(upd!)</span> Ссылки теперь можно искать в любом режиме, например
+    <a href="search?st=all&text=http%3A%2F%2Fbash.org.ru%2Fbest.php&topic=-1&inTitle=on&inBody=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">
         http://bash.org.ru/best.php
     </a>
 </div>

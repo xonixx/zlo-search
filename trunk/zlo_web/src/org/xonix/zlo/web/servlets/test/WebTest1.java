@@ -1,9 +1,7 @@
 package org.xonix.zlo.web.servlets.test;
 
 import org.xonix.zlo.search.config.Config;
-import org.xonix.zlo.web.FoundTextHighlighter;
-
-import java.util.regex.Pattern;
+import org.xonix.zlo.search.FoundTextHighlighter;
 
 /**
  * Author: Vovan
