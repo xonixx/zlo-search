@@ -10,6 +10,7 @@ import org.apache.lucene.document.Field;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.search.utils.HtmlUtils;
+import org.xonix.zlo.search.FoundTextHighlighter;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -96,6 +97,8 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
     }
 
     public static String formQueryString(String text, boolean inTitle, boolean inBody, int topicCode, String nick, String host, Date fromDate, Date toDate, boolean inReg, boolean inHasUrl, boolean inHasImg) {
+        text = FoundTextHighlighter.escapeColon(text); 
+
         StringBuilder queryStr = new StringBuilder();
 
         nick = StringUtils.lowerCase(nick);

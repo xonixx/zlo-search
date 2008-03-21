@@ -99,4 +99,5 @@ big {
     white-space: nowrap;
 }
 
+.attention {color:red; font-weight:bold;}
 .hl { color: red; }

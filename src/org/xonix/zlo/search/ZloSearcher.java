@@ -1,21 +1,20 @@
 package org.xonix.zlo.search;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.*;
 import org.xonix.zlo.search.config.Config;
 import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.search.model.ZloMessage;
-import org.xonix.zlo.search.utils.TimeUtils;
 import org.xonix.zlo.search.site.SiteSource;
+import org.xonix.zlo.search.utils.TimeUtils;
 
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.NoSuchElementException;
 
 /**
  * Author: gubarkov
@@ -45,7 +44,7 @@ public class ZloSearcher extends SiteSource {
         } else {
             try {
                 if (needToRecreateReader()) {
-                    synchronized(ZloSearcher.class) {
+                    synchronized (ZloSearcher.class) {
                         if (needToRecreateReader()) {
                             startReopeningThread();
                         }
@@ -60,8 +59,8 @@ public class ZloSearcher extends SiteSource {
 
     private static boolean needToRecreateReader() throws IOException {
         return !indexReader.isCurrent()
-                        && System.currentTimeMillis() - lastCreateTime > PERIOD_RECREATE_INDEXER
-                        && !isReopening;
+                && System.currentTimeMillis() - lastCreateTime > PERIOD_RECREATE_INDEXER
+                && !isReopening;
     }
 
     private static void startReopeningThread() {
@@ -72,7 +71,7 @@ public class ZloSearcher extends SiteSource {
 
                 logger.info("Start recreating indexReader in separate thread...");
                 IndexReader _indexReader = null,
-                            oldIndexReader;
+                        oldIndexReader;
 
                 try {
                     _indexReader = IndexReader.open(Config.INDEX_DIR);
@@ -112,34 +111,6 @@ public class ZloSearcher extends SiteSource {
         indexReader = null;
     }
 
-    public static String[] formHighlightedWords(String txt) {
-        if (StringUtils.isEmpty(txt))
-            return new String[0];
-
-        Query query = null;
-        try {
-            String queryStr = MessageFormat.format("{0}:({1})", ZloMessage.FIELDS.BODY, txt);
-            QueryParser parser = new QueryParser(ZloMessage.FIELDS.BODY, ZloMessage.constructAnalyzer());
-            query = parser.parse(queryStr);
-            Set<Term> set = new HashSet<Term>();
-            query.extractTerms(set);
-            String[] res = new String[set.size()];
-            int i=0;
-            for (Term t : set) {
-                res[i++] = t.text();
-            }
-            return res;
-        } catch (org.apache.lucene.queryParser.ParseException e) {
-            logger.error(e);
-        } catch (UnsupportedOperationException e) {
-            // for wildcard query
-            String qs = query.toString(ZloMessage.FIELDS.BODY);
-            qs = qs.replaceAll("-\\b.+?\\b", " ").replaceAll("\\(|\\)|\\+", " ");
-            return qs.trim().split("\\s+");
-        }
-        return new String[0];
-    }
-
     public static class ParseException extends RuntimeException {
         private String query;
 
@@ -154,16 +125,16 @@ public class ZloSearcher extends SiteSource {
     }
 
     public SearchResult search(int topicCode,
-                                         String text,
-                                         boolean inTitle,
-                                         boolean inBody,
-                                         boolean inReg,
-                                         boolean inHasUrl,
-                                         boolean inHasImg,
-                                         String nick,
-                                         String host,
-                                         Date fromDate,
-                                         Date toDate) {
+                               String text,
+                               boolean inTitle,
+                               boolean inBody,
+                               boolean inReg,
+                               boolean inHasUrl,
+                               boolean inHasImg,
+                               String nick,
+                               String host,
+                               Date fromDate,
+                               Date toDate) {
 
         return search(ZloMessage.formQueryString(text, inTitle, inBody, topicCode, nick, host, fromDate, toDate, inReg, inHasUrl, inHasImg));
     }
@@ -185,14 +156,14 @@ public class ZloSearcher extends SiteSource {
     }
 
     public SearchResult search(int topicCode,
-                                         String text,
-                                         boolean inTitle,
-                                         boolean inBody,
-                                         boolean inReg,
-                                         boolean inHasUrl,
-                                         boolean inHasImg,
-                                         String nick,
-                                         String host) {
+                               String text,
+                               boolean inTitle,
+                               boolean inBody,
+                               boolean inReg,
+                               boolean inHasUrl,
+                               boolean inHasImg,
+                               String nick,
+                               String host) {
         return search(topicCode, text, inTitle, inBody,
                 inReg, inHasUrl, inHasImg, nick, host, null, null);
     }
@@ -230,6 +201,7 @@ public class ZloSearcher extends SiteSource {
     }
 
     private DoubleIndexSearcher doubleIndexSearcher;
+
     public DoubleIndexSearcher getDoubleIndexSearcher() {
         if (doubleIndexSearcher == null) {
             doubleIndexSearcher = new DoubleIndexSearcher(getSite(), getDateSort());
@@ -271,6 +243,9 @@ public class ZloSearcher extends SiteSource {
         Analyzer analyzer = ZloMessage.constructAnalyzer();
         QueryParser parser = new QueryParser(ZloMessage.FIELDS.BODY, analyzer);
         Query query = parser.parse(queryStr);
+
+        logger.info("queryStr: " + queryStr);
+        logger.info("query   : " + query);
 
         result.setAnalyzer(analyzer);
         result.setQueryParser(parser);

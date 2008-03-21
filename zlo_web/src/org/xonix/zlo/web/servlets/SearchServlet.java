@@ -13,6 +13,7 @@ import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.db.DbAccessor;
 import org.xonix.zlo.web.CookieUtils;
+import org.xonix.zlo.search.FoundTextHighlighter;
 import org.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 
 import javax.servlet.ServletException;
@@ -185,7 +186,7 @@ public class SearchServlet extends BaseServlet {
 
             if (StringUtils.isNotEmpty(text)) {
                 if(SEARCH_TYPE_ALL.equals(request.getParameter(QS_SEARCH_TYPE))) {
-                    text = text.replaceAll("\\b([^\\s]+)\\b", "+$1");
+                    text = text.replaceAll("(?<!-|!)\\b([^\\s]+)\\b", "+$1");
                 } else if (SEARCH_TYPE_EXACT_PHRASE.equals(request.getParameter(QS_SEARCH_TYPE))) {
                     text = MessageFormat.format("\"{0}\"", text);
                 }
@@ -195,7 +196,7 @@ public class SearchServlet extends BaseServlet {
 
             if (searchRequest.canBeProcessed()) {
 
-                request.setAttribute(REQ_HIGHLIGHT_WORDS, ZloSearcher.formHighlightedWords(text));
+                request.setAttribute(REQ_HIGHLIGHT_WORDS, FoundTextHighlighter.formHighlightedWords(text));
 
                 if (StringUtils.isEmpty(request.getParameter(QS_DATES))) {
                     searchRequest.setFromDate(null);
