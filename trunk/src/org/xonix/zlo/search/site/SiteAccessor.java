@@ -30,6 +30,8 @@ public class SiteAccessor extends DbAccessor {
     private String SITE_URL;
     private String READ_QUERY;
 
+    private String MSG_DATE_PATTERN;
+
     // index
     private boolean PERFORM_INDEXING;
     private String INDEX_DIR_DOUBLE;
@@ -98,6 +100,8 @@ public class SiteAccessor extends DbAccessor {
 
         SITE_NUMBER = Integer.parseInt(p.getProperty("site.number"));
         SITE_NAME = p.getProperty("site.name");
+
+        MSG_DATE_PATTERN = p.getProperty("str.date.pattern");
     }
 
     public String getSiteName() {
@@ -190,6 +194,10 @@ public class SiteAccessor extends DbAccessor {
 
     public void setREAD_QUERY(String READ_QUERY) {
         this.READ_QUERY = READ_QUERY;
+    }
+
+    public String getMSG_DATE_PATTERN() {
+        return MSG_DATE_PATTERN;
     }
 
     public boolean isPERFORM_INDEXING() {
