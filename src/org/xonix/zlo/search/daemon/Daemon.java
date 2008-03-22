@@ -14,6 +14,7 @@ import sun.misc.Signal;
 import sun.misc.SignalHandler;
 
 import java.io.IOException;
+import java.net.ConnectException;
 
 /**
  * Author: Vovan
@@ -133,6 +134,13 @@ public abstract class Daemon extends SiteSource {
                 }
             } catch (DbException e) {
                 getLogger().warn(getSiteName() + " - Problem with db: " + e.getClass());
+                sleepSafe(RETRY_PERIOD);
+            } catch (DAOException e) {
+                if (e.getCause() instanceof ConnectException) {
+                    getLogger().error(getSiteName() + " - Problem with site...", e);
+                } else {
+                    getLogger().error(getSiteName() + " - ", e);
+                }
                 sleepSafe(RETRY_PERIOD);
             } catch (IOException e) {
                 getLogger().error(getSiteName() + " - IOException while indexing, probably something with index...", e);

@@ -1,14 +1,13 @@
 package org.xonix.zlo.search.site;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.xonix.zlo.search.dao.Site;
 import org.xonix.zlo.search.db.DbException;
 import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.model.ZloMessage;
 
-import java.io.IOException;
 import java.text.DateFormat;
-import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,18 +26,20 @@ public class PageParser extends SiteSource {
 
     private Pattern MSG_REG_RE;
     private Pattern MSG_UNREG_RE;
+    private String MSG_DATE_PATTERN;
 
     public PageParser(Site site) {
         super(site);
         dbm = site.getDbManager();
         MSG_REG_RE = Pattern.compile(site.getMSG_REG_RE_STR(), Pattern.DOTALL);
         MSG_UNREG_RE = Pattern.compile(site.getMSG_UNREG_RE_STR(), Pattern.DOTALL);
+        MSG_DATE_PATTERN = site.getMSG_DATE_PATTERN();
     }
 
-    public ZloMessage parseMessage(String msg) throws PageParseException {
-        ZloMessage message = new ZloMessage();
+    public ZloMessage parseMessage(ZloMessage message, String msg) {
 
         Matcher m = MSG_UNREG_RE.matcher(msg);
+
         if (m.find()) {
             message.setReg(false);
         } else {
@@ -48,7 +49,7 @@ public class PageParser extends SiteSource {
                     message.setStatus(ZloMessage.Status.DELETED);
                 } else {
                     message.setStatus(ZloMessage.Status.UNKNOWN);
-                    logger.warn("Can't parse msg... Possibly format changed!");
+                    throw new PageParseException("Can't parse msg#:" + message.getNum() + " in site:" + getSiteName() + "... Possibly format changed!\n\n" + msg);
                 }
                 message.setSite(getSite());
                 return message;
@@ -56,11 +57,18 @@ public class PageParser extends SiteSource {
             message.setReg(true);
         }
 
-        message.setTopic(m.group(1));
+        String topic = m.group(1);
+        String title = m.group(2);
+
+        message.setTopic(topic);
         try {
-            Integer topicCode = dbm.getTopicsHashMap().get(m.group(1));
+            Integer topicCode = dbm.getTopicsHashMap().get(topic);
             if (topicCode == null) {
-                throw new PageParseException(msg);
+                topicCode = -1;
+                if (StringUtils.isNotEmpty(topic)) {
+                    logger.info("Unknown topic: " + topic + " while parsing msg#: " + message.getNum() + " in site:" + getSiteName() + "... Adding to title.");
+                    title = "[" + topic + "] " + title;
+                }
             }
             message.setTopicCode(topicCode);
         } catch (DbException e) {
@@ -68,7 +76,7 @@ public class PageParser extends SiteSource {
         }
 
         message.setSite(getSite());
-        message.setTitle(m.group(2));
+        message.setTitle(title);
         message.setNick(m.group(3));
         message.setHost(m.group(4));
         message.setDate(prepareDate(m.group(5)));
@@ -79,17 +87,9 @@ public class PageParser extends SiteSource {
     }
 
     public ZloMessage parseMessage(String msg, int urlNum) {
-        ZloMessage zm = null;
-        try {
-            zm = parseMessage(msg);
-        } catch (PageParseException e) {
-            logger.error(MessageFormat.format("Unknown topic while parsing msg# {0}:\n {1}", urlNum, msg));
-            System.exit(-1);
-        }
-        if (zm == null)
-            return null;
-
+        ZloMessage zm = new ZloMessage();
         zm.setNum(urlNum);
+        parseMessage(zm, msg);
         return zm;
     }
 
@@ -97,34 +97,28 @@ public class PageParser extends SiteSource {
 //        return siteAccessor.WITHOUT_TOPIC.equals(topic) ? "" : topic;
 //    }
 
-    private static Date prepareDate(String s) {
-        // s can be "Среда, Декабрь 5 13:35:25 2007<i>(Изменен: Среда, Декабрь 5 13:40:21 2007)</i>"
-        final String[] RUS_MONTHS = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль",
-                                    "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
-        DateFormat df = new SimpleDateFormat("M d hh:mm:ss yyyy");
-        s = s.split("\\<(i|I)\\>")[0];
-        s = s.split(",")[1].trim();
-        for (int i=0; i<RUS_MONTHS.length; i++) {
-            s = s.replaceFirst(RUS_MONTHS[i], Integer.toString(i+1));
-        }
+    private Date prepareDate(String s) {
+        DateFormat df;
         Date d = null;
         try {
+            if (StringUtils.isNotEmpty(MSG_DATE_PATTERN)) {
+                df = new SimpleDateFormat(MSG_DATE_PATTERN);
+                return df.parse(s);
+            }
+
+            // s can be "Среда, Декабрь 5 13:35:25 2007<i>(Изменен: Среда, Декабрь 5 13:40:21 2007)</i>"
+            final String[] RUS_MONTHS = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль",
+                    "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
+            df = new SimpleDateFormat("M d hh:mm:ss yyyy");
+            s = s.split("\\<(i|I)\\>")[0];
+            s = s.split(",")[1].trim();
+            for (int i = 0; i < RUS_MONTHS.length; i++) {
+                s = s.replaceFirst(RUS_MONTHS[i], Integer.toString(i + 1));
+            }
             d = df.parse(s);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return d;
-    }
-
-    public static void main(String[] args) throws IOException {
-//        String s = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" +
-//                "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=windows-1251\" /><link rel=\"shortcut icon\" href=\"/favicon.ico\" /><link rel=\"stylesheet\" type=\"text/css\" href=\"/main.css\" /><meta http-equiv=\"Page-Exit\" content=\"progid:DXImageTransform.Microsoft.Fade(Duration=0.2)\" /><title>Форум-ФРТК-МФТИ : Добро пожаловать на новую старую борду</title></head><body>\n" +
-//                "<script language=\"JavaScript\" type=\"text/javascript\">function popup(action, value, w, h){wnd=window.open(\"?\"+action+\"=\"+value,\"popup\",\"resizable=no,menubars=no,scrollbars=yes,width=\"+w+\",height=\"+h); }</script><div class=\"menu\"><A HREF=\"#1\">Перейти к ответам</A><A HREF=\"#Reply\">Ответить</A><A HREF=\"?index#1\" style=\"color:red;\">На главную страницу</A><a HREF=\"http://boards.alexzam.ru\">Поиск</A><A HREF=\"?register=form\">Регистрация</A><A HREF=\"?login=form\">Вход</A><A HREF=\"?rules\">Правила</A></div><BR><DIV ALIGN=CENTER><BIG>[без темы]</BIG>&nbsp;&nbsp;<BIG>Добро пожаловать на новую старую борду</BIG><BR>Сообщение было послано: <b>Bbsadmin</b><SMALL> (unreg)</SMALL> <small>(ignition.3ka.mipt.ru)</small><BR>Дата: Суббота, Апрель 7 14:16:27 2001</DIV><BR><br /><div class=\"body\"><P>Если появились какие то глюки с куками, сотрите их, они могли остаться от предыдущей борды..<P>IE: C:\\WINDOWS\\Cookies NN:<P>C:\\Program Files\\Netscape\\Users\\{user}\\cookies.txt</div><P></P><BR><CENTER><BIG>Сообщения в этом потоке</BIG></CENTER><DIV class=w><span id=m1><A NAME";
-        //System.out.println(parseMessage(s));
-
-//        for (int i=3764000; i<3764113; i++) {
-//            System.out.println(parseMessage(PageRetriever.getPageContentByNumber(i), i));
-//        }
-//        System.out.println(prepareDate("Четверг, Май 31 21:52:27 2007"));
     }
 }
