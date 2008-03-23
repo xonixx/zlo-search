@@ -27,19 +27,24 @@ public class OptimizeIndex {
                 w.close();
                 logger.info("Done.");
             } else {
-                DoubleIndexSearcher dis = site.getZloSearcher().getDoubleIndexSearcher();
+                optimizeDoubleIndexForSite(site);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void optimizeDoubleIndexForSite(Site site) throws IOException {
+        logger.info("Optimizing index for " + site.getSiteName());
+        DoubleIndexSearcher dis = site.getZloSearcher().getDoubleIndexSearcher();
 /*                int lastIndexedInDb = DbManager.getLastIndexedNumber();
                 int lastIndexedInIndex = ZloSearcher.getLastIndexedNumber();
                 if (lastIndexedInIndex != lastIndexedInDb) {
                     logger.warn(MessageFormat.format("Last indexed nums not equal! db={0}, index={1}", lastIndexedInDb, lastIndexedInIndex));
                     DbManager.setLastIndexedNumber(lastIndexedInIndex);
                 }*/
-                dis.moveSmallToBig();
-                dis.optimize();
-                dis.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        dis.moveSmallToBig();
+        dis.optimize();
+        dis.close();
     }
 }

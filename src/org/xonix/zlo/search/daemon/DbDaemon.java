@@ -16,8 +16,8 @@ public class DbDaemon extends Daemon {
         return logger;
     }
 
-    private class MainProcess extends Process {
-        public MainProcess() {
+    private class DbProcess extends Process {
+        public DbProcess() {
             super();
         }
 
@@ -54,7 +54,7 @@ public class DbDaemon extends Daemon {
     }
 
     protected Process createProcess() {
-        return new MainProcess();
+        return new DbProcess();
     }
 
     public static void main(String[] args) {
