@@ -8,6 +8,7 @@
 <div class="content">
     <h3 class="attention">News</h3>
     <ul>
+        <li>ƒобавлен поиск по форуму <a href="http://velo.mipt.ru/cgi/forum/index.cgi">velo.mipt.ru</a></li>
         <li>—сылки теперь можно искать в любом режиме, например
             <a href="search?st=all&text=http%3A%2F%2Fbash.org.ru%2Fbest.php&topic=-1&inTitle=on&inBody=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">
                 http://bash.org.ru/best.php

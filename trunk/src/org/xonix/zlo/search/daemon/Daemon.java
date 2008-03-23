@@ -15,6 +15,7 @@ import sun.misc.SignalHandler;
 
 import java.io.IOException;
 import java.net.ConnectException;
+import java.util.Vector;
 
 /**
  * Author: Vovan
@@ -33,14 +34,29 @@ public abstract class Daemon extends SiteSource {
 
     protected abstract Logger getLogger();
 
-    protected void setExiting(boolean exiting) {
-        if (isSleeping) {
-            getLogger().info(getSiteName() + " - Exiting...");
-            getProcess().cleanUp();
-            System.exit(0);
-        } else {
-            this.exiting = exiting;
+    // clean up
+    private static Vector<Daemon> daemons = new Vector<Daemon>();
+    /**
+     * register for cleaning up
+     * @param d
+     */
+    public static void registerForCleanUp(Daemon d) {
+        daemons.add(d);
+    }
+
+    public static void setExitingAll() {
+        for (Daemon d : daemons) {
+            d.setExiting(true);
+
+            if (d.isSleeping) {
+                d.getProcess().interrupt();
+            }
         }
+    }
+    // end clean up
+
+    protected void setExiting(boolean exiting) {
+        this.exiting = exiting;
     }
 
     protected boolean isExiting() {
@@ -60,7 +76,8 @@ public abstract class Daemon extends SiteSource {
         private DbManagerSource dbms;
 
         public Process() {
-            super(getSiteName());
+            super();
+            setName(getSiteName());
             Site site = getSite();
             site.setDB_VIA_CONTAINER(false);
             dbms = new DbManagerSource(site);
@@ -84,9 +101,14 @@ public abstract class Daemon extends SiteSource {
 
         public void run() {
             while (true) {
-                doOneIteration();
+                try {
+                    doOneIteration();
+                } catch (InterruptedException e) {
+                    getLogger().info(getSiteName() + " - Process interrupted.");
+                }
 
                 if (isExiting()) {
+                    getLogger().info(getSiteName() + " - Performing cleanup...");
                     cleanUp();
                     break;
                 }
@@ -100,7 +122,7 @@ public abstract class Daemon extends SiteSource {
         private int indexFrom = -1;
         private int end = -1;
 
-        private void doOneIteration() {
+        private void doOneIteration() throws InterruptedException {
             try {
                 if (indexFrom == -1) {
                     indexFrom = getFromIndex() + 1;
@@ -129,33 +151,29 @@ public abstract class Daemon extends SiteSource {
 
                 while (indexFrom > end) {
                     getLogger().info(getSiteName() + " - Sleeping " + SLEEP_PERIOD / 1000 / 60f + " min...");
-                    sleepSafe(SLEEP_PERIOD);
+                    doSleep(SLEEP_PERIOD);
                     end = getEndIndex();
                 }
             } catch (DbException e) {
                 getLogger().warn(getSiteName() + " - Problem with db: " + e.getClass());
-                sleepSafe(RETRY_PERIOD);
+                doSleep(RETRY_PERIOD);
             } catch (DAOException e) {
                 if (e.getCause() instanceof ConnectException) {
                     getLogger().error(getSiteName() + " - Problem with site...", e);
                 } else {
                     getLogger().error(getSiteName() + " - ", e);
                 }
-                sleepSafe(RETRY_PERIOD);
+                doSleep(RETRY_PERIOD);
             } catch (IOException e) {
                 getLogger().error(getSiteName() + " - IOException while indexing, probably something with index...", e);
-                sleepSafe(RETRY_PERIOD);
+                doSleep(RETRY_PERIOD);
             }
         }
         protected abstract void cleanUp();
 
-        protected void sleepSafe(long millis) {
+        protected void doSleep(long millis) throws InterruptedException {
             isSleeping = true;
-            try {
-                sleep(millis);
-            } catch (InterruptedException e) {
-                getLogger().info(getSiteName() + " - MainProcess interrupted???");
-            }
+            sleep(millis);
             isSleeping = false;
         }
     }
@@ -170,13 +188,15 @@ public abstract class Daemon extends SiteSource {
     }
 
     public void registerExitHandlers() {
+        registerForCleanUp(this);
+
         getLogger().info(getSiteName() + " - Registering exit handlers...");
         setExiting(false);
 
         SignalHandler exitHandler = new SignalHandler() {
             public void handle(Signal signal) {
                 getLogger().info(getSiteName() + " - Exit handler for " + signal.getName() + "...");
-                setExiting(true);
+                setExitingAll();
             }
         };
 

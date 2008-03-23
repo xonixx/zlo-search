@@ -77,6 +77,8 @@ public class IndexerDaemon extends Daemon {
 
     protected void start() {
         logger.info(MessageFormat.format("Starting indexing to {0} index...", Config.USE_DOUBLE_INDEX ? "double" : "simple"));
+
+        // this is for clearing in case of not graceful exit
         if (Config.USE_DOUBLE_INDEX) {
             logger.info("Clearing lock...");
             new DoubleIndexSearcher(getSite(), null).clearLocks();
