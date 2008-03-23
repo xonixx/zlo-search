@@ -14,7 +14,7 @@ public class HtmlUtils {
     private final static String NEW_LINE = "\n";
 
     // суть в том, чтоб не считать смайлы за картинки, потому важно http
-    private static final Pattern IMG = Pattern.compile("(?i)<img.*?src=(\"?|\'?)http://.*(\\1).*?>", Pattern.CASE_INSENSITIVE);
+    private static final Pattern IMG = Pattern.compile("(?i)<img.*?src\\s*=\\s*(\"?|\'?)http(s?)://.*(\\1).*?>", Pattern.CASE_INSENSITIVE);
     private static final Pattern URL = Pattern.compile("(?i)<a\\s.+?>", Pattern.CASE_INSENSITIVE);
 
     public static String cleanHtml(String s) {
