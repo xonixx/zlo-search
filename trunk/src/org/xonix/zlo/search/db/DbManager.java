@@ -266,7 +266,7 @@ public class DbManager {
                 , new Object[] {
                         siteNum,
                         StringUtils.substring(host, 0, 100),
-                        StringUtils.substring(userAgent, 0, 100),
+                        StringUtils.substring(userAgent, 0, 200),
 
                         StringUtils.substring(reqText, 0, 200),
                         StringUtils.substring(reqNick, 0, 100),

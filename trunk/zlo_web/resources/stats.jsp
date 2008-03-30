@@ -53,7 +53,7 @@
 <title><c:out value="${title}"/></title>
 
 <div align="center">
-<h3 style="margin:5px auto;"><c:out value="${title}"/></h3>
+<h3><c:out value="${title}"/></h3>
 
 <form action="stats.jsp" method="get">
     Сайт: <jsp:getProperty name="backendBean" property="siteSelector" /><br/>

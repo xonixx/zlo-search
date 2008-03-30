@@ -2,10 +2,9 @@
 <%@ include file="WEB-INF/include/import.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 <link rel="stylesheet" type="text/css" href="main.css" />
-<title>История запросов</title>
-<h3 align="center">История запросов</h3>
 
 <c:set var="showAll" value="${ param['showMeAllPlease'] != null  }" />
+<c:set var="numberToShow" value="${1000}" />
 
 <sql:setDataSource dataSource="<%= DbAccessor.getInstance("search_log").getDataSource() %>" />
 
@@ -14,30 +13,44 @@
         <sql:query var="res">
             SELECT * FROM request_log
             order by req_date DESC
-            LIMIT 1000;
+            LIMIT ?;
+            <sql:param value="${numberToShow}" />
+        </sql:query>
+        <sql:query var="totalNum">
+            SELECT count(*) AS count FROM request_log
         </sql:query>
     </c:when>
     <c:otherwise>
         <sql:query var="res">
             SELECT * FROM request_log
-            where host not in ('127.0.0.1', '194.85.80.242', '193.125.143.185')
+            WHERE host not in ('127.0.0.1', '194.85.80.242', '193.125.143.185')
             order by req_date DESC
-            LIMIT 1000;
+            LIMIT ?;
+            <sql:param value="${numberToShow}" />
+        </sql:query>
+        <sql:query var="totalNum">
+            SELECT count(*) AS count FROM request_log
+            WHERE host not in ('127.0.0.1', '194.85.80.242', '193.125.143.185')
         </sql:query>
     </c:otherwise>
 </c:choose>
 
-<% int i=0; %>
+<title>История запросов</title>
+
 <div align="center">
-    <display:table name="${res.rows}" id="row" htmlId="resultTable">
+    <h3>История запросов</h3>
+    <small>(всего запросов: <c:out value="${totalNum.rows[0].count}" />, показаны последние: <c:out value="${numberToShow}" />)</small>
+
+    <% int i=0; %>
+    <display:table name="${res.rows}" id="row" htmlId="resultTable" decorator="org.xonix.zlo.web.decorators.HistoryTableDecorator">
         <display:column title="№" headerClass="head">
             <a href="search?<c:out value="${row.req_query_str}"/>" class="search">
                 <%= ++i %>
             </a>
         </display:column>
-        <display:column property="req_text" title="Текст" headerClass="head" />
-        <display:column property="req_nick" title="Ник поиска" headerClass="head" />
-        <display:column property="req_host" title="Хост поиска" headerClass="head" />
+        <display:column property="searchText" title="Текст" headerClass="head" />
+        <display:column property="searchNick" title="Ник поиска" headerClass="head" />
+        <display:column property="searchHost" title="Хост поиска" headerClass="head" />
         <display:column title="Сайт" headerClass="head">
             <% Site site = Site.getSite((Integer)((TreeMap)row).get("site")); %>
             <a href="http://<%= site.getSITE_URL() %>">
@@ -45,24 +58,10 @@
         </display:column>
         <display:column property="req_date" title="Дата" headerClass="head" class="small" />
         <c:if test="${showAll}">
-            <display:column property="user_agent" title="Браузер" class="small" headerClass="head" />
             <display:column property="host" title="Хост" class="small" headerClass="head" />
+            <display:column property="user_agent" title="User-Agent" class="small" headerClass="head" />
         </c:if>
-        <c:if test="${!showAll}">
-            <display:column title="Браузер" class="small" headerClass="head" style="text-align:center;">
-                <% String userAgent = (String) ((TreeMap)row).get("user_agent"); %>
-                <%= userAgent.contains("MSIE")
-                ? "Internet Explorer"
-                : userAgent.contains("Firefox") || userAgent.contains("Minefield")
-                ? "Firefox"
-                : userAgent.contains("Opera")
-                ? "Opera"
-                : userAgent.contains("Konqueror")
-                ? "Konqueror"
-                : "other"
-                %>
-            </display:column>
-        </c:if>
+        <display:column property="userAgentSmall" title="Браузер" class="small" headerClass="head" style="text-align:center;" />
     </display:table>
 </div>
 

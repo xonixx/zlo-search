@@ -17,3 +17,6 @@ CREATE TABLE request_log (
     referer VARCHAR(100),
     req_date DATETIME
 );
+
+ALTER TABLE searcher_logs.request_log
+ CHANGE user_agent user_agent VARCHAR(200);
