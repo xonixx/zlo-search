@@ -28,11 +28,11 @@
 <c:choose>
     <c:when test="${byNick}">
         <sql:query var="res">
-            select nick, COUNT(*) cnt from messages
+            select nick, reg, COUNT(*) cnt from messages
             where msgDate > NOW() - INTERVAL ? DAY
             group by nick
             order by cnt desc;
-            <sql:param><c:out value="${period}" /></sql:param>
+            <sql:param>${period}</sql:param>
         </sql:query>
     </c:when>
     <c:otherwise>
@@ -41,19 +41,19 @@
             where msgDate > NOW() - INTERVAL ? DAY
             group by host
             order by cnt desc;
-            <sql:param><c:out value="${period}" /></sql:param>
+            <sql:param>${period}</sql:param>
         </sql:query>
     </c:otherwise>
 </c:choose>
 
 <c:set var="title">
     —татистика сайта <%= site.getSITE_URL() %> по <c:choose><c:when test="${byNick}">никам</c:when><c:otherwise>хостам</c:otherwise></c:choose>
-    за последние <c:out value="${period}" /> суток
+    за последние ${period} суток
 </c:set>
-<title><c:out value="${title}"/></title>
+<title>${title}</title>
 
 <div align="center">
-<h3><c:out value="${title}"/></h3>
+<h3>${title}</h3>
 
 <form action="stats.jsp" method="get">
     —айт: <jsp:getProperty name="backendBean" property="siteSelector" /><br/>
@@ -80,13 +80,21 @@
             <td><%= i %></td>
         <td><c:choose>
                 <c:when test="${byNick}">
-                    <c:out value="${row.nick}" escapeXml="false"/><a href="search?site=<%= site.getNum() %>&nick=<c:out value="${row.nick}" escapeXml="false" />" class="search">?</a>
+                    <span class="nick">
+                        <c:choose>
+                            <c:when test="${not row.reg}"><c:out value="${row.nick}" escapeXml="false" /></c:when>
+                            <c:otherwise>
+                                <a href="http://<%= site.getSITE_URL() %>/?uinfo=<c:out value="${row.nick}" escapeXml="false" />"><c:out value="${row.nick}" escapeXml="false"/></a>
+                            </c:otherwise>
+                        </c:choose>
+                    </span>
+                    <a href="search?site=<%= site.getNum() %>&nick=<c:out value="${row.nick}" escapeXml="false" />" class="search">?</a>
                 </c:when>
                 <c:otherwise>
-                    <c:out value="${row.host}"/><a href="search?site=<%= site.getNum() %>&host=<c:out value="${row.host}"/>" class="search">?</a>
+                    ${row.host} <a href="search?site=<%= site.getNum() %>&host=${row.host}" class="search">?</a>
                 </c:otherwise>
             </c:choose></td>
-        <td><c:out value="${row.cnt}"/></td>
+        <td>${row.cnt}</td>
         </tr>
     </c:forEach>
 </table>
