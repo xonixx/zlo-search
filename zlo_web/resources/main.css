@@ -10,6 +10,10 @@ big {
     font-weight:bold;
 }
 
+h3 {
+    margin:5px auto;
+}
+
 #header {
     background: #e1e1e1;
 }
