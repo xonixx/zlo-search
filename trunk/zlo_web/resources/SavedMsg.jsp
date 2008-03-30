@@ -25,27 +25,22 @@
             <c:when test="${empty requestScope['error']}">
                 <div align="center">
                     <big>
-                        <c:if test="${not empty savedMsg.topic}">
-                            [<c:out value="${savedMsg.topic}" />]
-                        </c:if>
+                        <c:if test="${not empty savedMsg.topic}">[${savedMsg.topic}]</c:if>
                         <jsp:setProperty name="hl" property="text" value="${savedMsg.title}" />
                         <c:out value="${hl.highlightedText}" escapeXml="false" />
-                        <a href="http://<c:out value="${siteRoot}" />/?read=<c:out value="${savedMsg.num}" />">?</a>
+                        <a href="http://${siteRoot}/?read=${savedMsg.num}">?</a>
                     </big>
                     <br />Сообщение было послано:
                     <span class="nick">
                         <c:choose>
-                            <c:when test="${not savedMsg.reg}">
-                                <c:out value="${savedMsg.nick}" />
-                            </c:when>
+                            <c:when test="${not savedMsg.reg}"><c:out value="${savedMsg.nick}" escapeXml="true" /></c:when>
                             <c:otherwise>
-                                <a href="http://<c:out value="${siteRoot}" />/?uinfo=<c:out value="${savedMsg.nick}" escapeXml="false" />"><c:out value="${savedMsg.nick}" escapeXml="false" /></a>
+                                <a href="http://${siteRoot}/?uinfo=<c:out value="${savedMsg.nick}" escapeXml="false" />"><c:out value="${savedMsg.nick}" escapeXml="false" /></a>
                             </c:otherwise>
                         </c:choose>
-                        <a class="search" href="search?site=<c:out value="${savedMsg.site.num}" />&nick=<c:out value="${savedMsg.nick}" escapeXml="false"/>">?</a>
+                        <a class="search" href="search?site=${savedMsg.site.num}&nick=<c:out value="${savedMsg.nick}" escapeXml="false"/>">?</a>
                     </span>
-                    (<c:out value="${savedMsg.host}" />
-                    <a class="search" href="search?site=<c:out value="${savedMsg.site.num}" />&host=<c:out value="${savedMsg.host}" />">?</a>)
+                    (${savedMsg.host} <a class="search" href="search?site=${savedMsg.site.num}&host=${savedMsg.host}">?</a>)
                     <br />Дата:
                     <fmt:formatDate value="${savedMsg.date}" pattern="EEEE, MMMM d HH:mm:ss yyyy" />
                 </div>

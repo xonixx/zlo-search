@@ -25,8 +25,8 @@
     <body>
         <div id="header" align="center">
             <ul>
-                <li><a href="http://<c:out value="${siteRoot}"/>"><c:out value="${siteRoot}"/></a></li>
-                <li><a href="stats.jsp?site=<c:out value="${param['site']}"/>">Статистика</a></li>
+                <li><a href="http://${siteRoot}">${siteRoot}</a></li>
+                <li><a href="stats.jsp?site=${param['site']}">Статистика</a></li>
                 <li><a href="history.jsp">История</a></li>
                 <li><a href="about.jsp" target="_blank">About</a></li>
                 <li><a href="faq.jsp" target="_blank">FAQ</a></li>
@@ -43,7 +43,7 @@
                             <input type="radio" name="st" id="st2" value="exct" <c:if test="${param['st'] == 'exct'}">checked="checked"</c:if> /><label for="st2"><fmt:message key="label.search.exact.phrase" /></label>
                             <input type="radio" name="st" id="st3" value="adv" <c:if test="${param['st'] == 'adv'}">checked="checked"</c:if> /><label for="st3"><fmt:message key="label.search.advanced" /></label>
                             <br/>
-                            <fmt:message key="label.text" /> <input type="text" name="text" <c:if test="${not empty param['text']}">value="<c:out value="${param['text']}" />" </c:if>style="width:450px;" />
+                            <fmt:message key="label.text" /> <input type="text" name="text" <c:if test="${not empty param['text']}">value="${param['text']}"</c:if>style="width:450px;" />
                             <fmt:message key="label.topic" /> <jsp:getProperty name="backendBean" property="topicSelector" />
                             <br/>
                             <fmt:message key="label.search" />
@@ -55,8 +55,8 @@
                             <input type="checkbox" name="hasUrl" id="hasUrl" <c:if test="${not empty param['hasUrl']}">checked="checked"</c:if>/> <label for="hasUrl"><fmt:message key="label.search.in.has.url" /></label>
                             <input type="checkbox" name="hasImg" id="hasImg" <c:if test="${not empty param['hasImg']}">checked="checked"</c:if>/> <label for="hasImg"><fmt:message key="label.search.in.has.img" /></label>
                             <br/>
-                            <fmt:message key="label.nick" /> <input type="text" name="nick" <c:if test="${not empty param['nick']}">value="<c:out value="${param['nick']}" />" </c:if>style="width:200px;" />
-                            <fmt:message key="label.host" /> <input type="text" name="host" <c:if test="${not empty param['host']}">value="<c:out value="${param['host']}" />" </c:if>style="width:200px;" />
+                            <fmt:message key="label.nick" /> <input type="text" name="nick" <c:if test="${not empty param['nick']}">value="${param['nick']}"</c:if>style="width:200px;" />
+                            <fmt:message key="label.host" /> <input type="text" name="host" <c:if test="${not empty param['host']}">value="${param['host']}"</c:if>style="width:200px;" />
                             <br/>
                             <input type="checkbox" name="dates" id="dates" onclick="changedDatesSelector();" <c:if test="${not empty param['dates']}">checked="checked"</c:if>/> <label for="dates"><fmt:message key="label.dates" /></label>
                             <fmt:message key="label.from.date" /> <input type="text" name="fd" id="fd" value="${sessionScope['fd']}" />
@@ -65,8 +65,10 @@
                             <fmt:message key="label.site" /> <jsp:getProperty name="backendBean" property="siteSelector" />
                             <script type="text/javascript">
                                 document.getElementsByName("text")[0].focus();
-                                document.getElementsByName("topic")[0].selectedIndex = 0;
-                                document.getElementsByName("site")[0].onchange = function(){ document.getElementById("searchFrm").submit(); }
+                                document.getElementsByName("site")[0].onchange = function() {
+                                    document.getElementsByName("topic")[0].selectedIndex = 0;
+                                    document.getElementById("searchFrm").submit();
+                                }
                             </script>
                             <fmt:message key="label.per.page" /> <jsp:getProperty name="backendBean" property="pageSizeSelector" />
                             <br/>
@@ -80,8 +82,8 @@
     <c:if test="${requestScope['debug'] == true}">
         <div id="debug">
             <pre>
-                Query:          <c:out value="${sessionScope['searchResult'].query}" />
-                isNewSearch:    <c:out value="${sessionScope['searchResult'].newSearch}" />
+                Query:          ${sessionScope['searchResult'].query}
+                isNewSearch:    ${sessionScope['searchResult'].newSearch}
             </pre>
         </div>
     </c:if>
@@ -91,10 +93,10 @@
                 <div class="content">
                     <table><tr>
                         <td><fmt:message key="label.last.saved.msg" /></td>
-                        <td><c:out value="${requestScope['lastMsgs'][0]}" /></td>
+                        <td>${requestScope['lastMsgs'][0]}</td>
                     </tr><tr>
                         <td><fmt:message key="label.last.indexed.msg" /></td>
-                        <td><c:out value="${requestScope['lastMsgs'][1]}" /></td></tr></table>
+                        <td>${requestScope['lastMsgs'][1]}</td></tr></table>
                 </div>
             </c:if>
             <c:if test="${not empty sessionScope['searchResult']}">
@@ -120,12 +122,10 @@
 
                     <display:column title="<%= HtmlStrings.HEADER_NUM.toString() %>"
                                     class="small" headerClass="head"
-                                    style="text-align:center;width:1%;"><c:out value="${msg.hitId + 1}" /></display:column>
+                                    style="text-align:center;width:1%;">${msg.hitId + 1}</display:column>
                     <display:column title="<%= HtmlStrings.HEADER_TITLE.toString() %>" headerClass="head" style="width:67%">
-                        <a href="http://<c:out value="${siteRoot}" /><c:out value="${msg.site.READ_QUERY}" /><c:out value="${msg.num}" />">
-                            <c:if test="${not empty msg.topic and msg.topic != 'без темы'}">
-                                [<c:out value="${msg.topic}" />]
-                            </c:if>
+                        <a href="http://${siteRoot}${msg.site.READ_QUERY}${msg.num}">
+                            <c:if test="${not empty msg.topic and msg.topic != 'без темы'}">[${msg.topic}]</c:if>
                             <jsp:setProperty name="hl" property="text" value="${msg.title}" />
                             <c:out value="${hl.highlightedText}" escapeXml="false" /></a>
                         <small>
@@ -133,24 +133,21 @@
                             <c:if test="${msg.hasUrl}">(url)</c:if>
                             <c:if test="${msg.hasImg}">(pic)</c:if>
                         </small>
-                        <a class="search" href="msg?site=<c:out value="${msg.site.num}" />&num=<c:out value="${msg.num}" /><c:if test="${not empty hl.wordsStr}">&hw=<c:out value="${hl.wordsStr}" /></c:if>"><fmt:message key="link.saved.msg" /></a>
+                        <a class="search" href="msg?site=${msg.site.num}&num=${msg.num}<c:if test="${not empty hl.wordsStr}">&hw=${hl.wordsStr}</c:if>"><fmt:message key="link.saved.msg" /></a>
                     </display:column>
                     <display:column title="<%= HtmlStrings.HEADER_NICK.toString() %>" headerClass="head">
                         <span class="nick">
                             <c:choose>
-                                <c:when test="${not msg.reg}">
-                                    <c:out value="${msg.nick}" />
-                                </c:when>
+                                <c:when test="${not msg.reg}"><c:out value="${msg.nick}" escapeXml="false" /></c:when>
                                 <c:otherwise>
-                                    <a href="http://<c:out value="${siteRoot}" />/?uinfo=<c:out value="${msg.nick}" escapeXml="false" />"><c:out value="${msg.nick}" escapeXml="false"/></a>
+                                    <a href="http://${siteRoot}/?uinfo=<c:out value="${msg.nick}" escapeXml="false" />"><c:out value="${msg.nick}" escapeXml="false"/></a>
                                 </c:otherwise>
                             </c:choose>
                         </span>
-                        <a class="search" href="search?site=<c:out value="${msg.site.num}" />&nick=<c:out value="${msg.nick}" escapeXml="false" />">?</a>
+                        <a class="search" href="search?site=${msg.site.num}&nick=<c:out value="${msg.nick}" escapeXml="false" />">?</a>
                     </display:column>
                     <display:column title="<%= HtmlStrings.HEADER_HOST.toString() %>" class="small" headerClass="head">
-                        <c:out value="${msg.host}" />
-                        <a class="search" href="search?site=<c:out value="${msg.site.num}" />&host=<c:out value="${msg.host}" />">?</a>
+                        ${msg.host} <a class="search" href="search?site=${msg.site.num}&host=${msg.host}">?</a>
                     </display:column>
                     <display:column title="<%= HtmlStrings.HEADER_DATE.toString() %>" property="date"
                                     class="small nowrap" headerClass="head" />
