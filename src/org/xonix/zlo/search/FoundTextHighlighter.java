@@ -10,6 +10,7 @@ import org.xonix.zlo.search.model.ZloMessage;
 import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * Author: Vovan
@@ -47,11 +48,15 @@ public class FoundTextHighlighter {
     // todo: works, but very slow
     public String getHighlightedText() {
         String txt = text;
-        for (String w : highlightWords) {
-            w = w.replaceAll("\\?", "[^\\\\s]{1}").replaceAll("\\*", "[^\\\\s]*?");
-            txt = txt.replaceAll("(?iu)" +                                              // case insensetive, unicode
-                    "(?<!\\<[^<>]{0,300})" +                                            // not to break html tags
-                    "(\\b" + w + "[^\\s]*?)\\b", "<span class=\"hl\">$1</span>");               // highlight
+        try {
+            for (String w : highlightWords) {
+                w = w.replaceAll("\\?", "[^\\\\s]{1}").replaceAll("\\*", "[^\\\\s]*?");
+                txt = txt.replaceAll("(?iu)" +                                              // case insensetive, unicode
+                        "(?<!\\<[^<>]{0,300})" +                                            // not to break html tags
+                        "(\\b" + w + "[^\\s]*?)\\b", "<span class=\"hl\">$1</span>");               // highlight
+            }
+        } catch (PatternSyntaxException ex) {
+            logger.error("Regex parse error: ", ex);        
         }
         return txt;
     }
@@ -92,7 +97,7 @@ public class FoundTextHighlighter {
         } catch (UnsupportedOperationException e) {
             // for wildcard query
             String qs = query.toString(ZloMessage.FIELDS.BODY);
-            qs = qs.replaceAll("-\\b.+?(?:\\s|$)", " ").replaceAll("\\(|\\)|\\+", " ");
+            qs = qs.replaceAll("-\\b.+?(?:\\s|$)", " ").replaceAll("\\(|\\)|\\+|\\[|\\]|\\{|\\}", " ");
             return qs.trim().split("\\s+");
         }
         return new String[0];

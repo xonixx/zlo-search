@@ -123,10 +123,10 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
         }
 
         if (StringUtils.isNotEmpty(nick))
-            queryStr.append(MessageFormat.format(" +{0}:\"{1}\"", FIELDS.NICK, nick));
+            queryStr.append(MessageFormat.format(" +{0}:(\"{1}\")", FIELDS.NICK, nick));
 
         if (StringUtils.isNotEmpty(host))
-            queryStr.append(MessageFormat.format(" +{0}:{1}", FIELDS.HOST, host));
+            queryStr.append(MessageFormat.format(" +{0}:({1})", FIELDS.HOST, host));
 
         if (fromDate != null && toDate != null)
             queryStr.append(MessageFormat.format(" +{0}:[{1,date,yyyyMMdd} TO {2,date,yyyyMMdd}]", FIELDS.DATE, fromDate, toDate));

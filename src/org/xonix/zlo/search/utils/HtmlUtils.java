@@ -29,7 +29,16 @@ public class HtmlUtils {
                     .replaceAll("(?i)<" + tag + POSIBLE_SPACE_AND_ATTRIBS + "/>", NEW_LINE);
         }
 
+        s = escapeEntities(s);
+
         return s;
+    }
+
+    private static String escapeEntities(String s) {
+        return s.replace("&amp;", "&")
+                .replace("&gt;", ">")
+                .replace("&lt;", "<")
+                .replace("&quot;", "\"");
     }
 
     public static boolean hasUrl(String s) {
@@ -44,5 +53,12 @@ public class HtmlUtils {
         s = cleanHtml(s);
         s = s.replaceAll("\\[q\\]", " ").replaceAll("\\[/q\\]", " ");
         return s;
+    }
+
+    public static boolean remindsUrl(String text) {
+        if (text == null)
+            return false;
+        text = text.trim();
+        return !text.contains(" ") && !text.contains("\t") && text.startsWith("http");
     }
 }
