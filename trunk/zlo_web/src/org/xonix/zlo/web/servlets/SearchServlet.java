@@ -14,6 +14,7 @@ import org.xonix.zlo.search.db.DbManager;
 import org.xonix.zlo.search.db.DbAccessor;
 import org.xonix.zlo.web.CookieUtils;
 import org.xonix.zlo.search.FoundTextHighlighter;
+import org.xonix.zlo.search.utils.HtmlUtils;
 import org.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 
 import javax.servlet.ServletException;
@@ -108,7 +109,8 @@ public class SearchServlet extends BaseServlet {
             }
 
             // set default search type
-            if (StringUtils.isEmpty(request.getParameter(QS_SEARCH_TYPE))) {
+            String searchType = request.getParameter(QS_SEARCH_TYPE);
+            if (StringUtils.isEmpty(searchType)) {
                 request.setParameter(QS_SEARCH_TYPE, SEARCH_TYPE_ALL);
             }
 
@@ -184,13 +186,7 @@ public class SearchServlet extends BaseServlet {
             session.setAttribute(QS_TO_DATE, FROM_TO_DATE_FORMAT.format(toDate));
             session.setAttribute(QS_FROM_DATE, FROM_TO_DATE_FORMAT.format(fromDate));
 
-            if (StringUtils.isNotEmpty(text)) {
-                if(SEARCH_TYPE_ALL.equals(request.getParameter(QS_SEARCH_TYPE))) {
-                    text = text.replaceAll("(?<!-|!)\\b([^\\s]+)\\b", "+$1");
-                } else if (SEARCH_TYPE_EXACT_PHRASE.equals(request.getParameter(QS_SEARCH_TYPE))) {
-                    text = MessageFormat.format("\"{0}\"", text);
-                }
-            }
+            text = preprocessSearchText(text, searchType);
 
             SearchRequest searchRequest = new SearchRequest(getSite(request), text, inTitle, inBody, inReg, inHasUrl, inHasImg, nick, host, topicCode, fromDate, toDate);
 
@@ -275,10 +271,11 @@ public class SearchServlet extends BaseServlet {
 
     private void logRequest(ForwardingRequest request, String query) {
         String remoteAddr = request.getHeader("x-forwarded-for");
+        remoteAddr = StringUtils.isNotEmpty(remoteAddr) ? remoteAddr : request.getRemoteAddr();
         try {
             DbAccessor.getInstance("search_log").getDbManager().logRequest(
                     getSite(request).getNum(),
-                    StringUtils.isNotEmpty(remoteAddr) ? remoteAddr : request.getRemoteAddr(),
+                    remoteAddr,
                     request.getHeader("User-Agent"),
                     request.getParameter(QS_TEXT),
                     request.getParameter(QS_NICK),
@@ -289,5 +286,22 @@ public class SearchServlet extends BaseServlet {
         } catch (DbException e) {
             logger.error(e);
         }
+    }
+
+    private String preprocessSearchText(String text, String searchType) {
+        // preprocess for search for urls with "?"
+        if (HtmlUtils.remindsUrl(text)) {
+            text = text.replace("?", ".");
+        }
+        
+        if (StringUtils.isNotEmpty(text)) {
+            if(SEARCH_TYPE_ALL.equals(searchType)) {
+                text = text.replaceAll("(?<!-|!)\\b([^\\s]+)\\b", "+$1");
+            } else if (SEARCH_TYPE_EXACT_PHRASE.equals(searchType)) {
+                text = MessageFormat.format("\"{0}\"", text);
+            }
+        }
+
+        return text;
     }
 }
