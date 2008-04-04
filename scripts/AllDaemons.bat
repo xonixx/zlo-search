@@ -10,5 +10,5 @@ if "%1"=="d" (
 
 title AllDaemons
 call set_env.bat
-call %J% org.xonix.zlo.search.daemon.DaemonLauncher
+call %J% info.xonix.zlo.search.daemon.DaemonLauncher
 pause

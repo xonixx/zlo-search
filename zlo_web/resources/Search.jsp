@@ -1,4 +1,4 @@
-<%@ page import="org.xonix.zlo.search.config.HtmlStrings, org.xonix.zlo.search.model.ZloMessage" %>
+<%@ page import="info.xonix.zlo.search.config.HtmlStrings, info.xonix.zlo.search.model.ZloMessage" %>
 <%--
   User: gubarkov
   Date: 14.08.2007
@@ -8,12 +8,12 @@
 <%@ include file="WEB-INF/include/notDirectlyAccessible.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 
-<jsp:useBean id="backendBean" class="org.xonix.zlo.web.BackendBean" scope="session" />
+<jsp:useBean id="backendBean" class="info.xonix.zlo.web.BackendBean" scope="session" />
 <jsp:setProperty name="backendBean" property="*" /> <%-- all from request properties --%>
 
 <jsp:useBean id="siteRoot" class="java.lang.String" scope="session" />
 
-<jsp:useBean id="hl" class="org.xonix.zlo.search.FoundTextHighlighter" scope="session" />
+<jsp:useBean id="hl" class="info.xonix.zlo.search.FoundTextHighlighter" scope="session" />
 <jsp:setProperty name="hl" property="highlightWords" value="${requestScope['hw']}"/>
 
 <html>
@@ -102,7 +102,7 @@
             <c:if test="${not empty sessionScope['searchResult']}">
                 <div class="searchResOuter">
                 <display:table name="sessionScope.searchResult.paginatedList" id="msg" htmlId="resultTable"
-                               decorator="org.xonix.zlo.web.decorators.SearchResultLineDecorator" requestURI="search"
+                               decorator="info.xonix.zlo.web.decorators.SearchResultLineDecorator" requestURI="search"
                                 class="searchRes">
                     <display:setProperty name="basic.msg.empty_list"><span class="pagebanner">Сообщения, соответствующие введенным критериям поиска не найдены. </span></display:setProperty>
                     <display:setProperty name="paging.banner.one_item_found"><span class="pagebanner">Найдено одно сообщение. </span></display:setProperty>

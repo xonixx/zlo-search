@@ -1,4 +1,4 @@
-<%@ page import="org.xonix.zlo.web.servlets.test.TestLazy1" %>
+<%@ page import="info.xonix.zlo.web.servlets.test.TestLazy1" %>
 <%--
   User: Vovan
   Date: 23.09.2007
@@ -9,7 +9,7 @@
 <%@ page contentType="text/html; charset=windows-1251" %>
 
 <display:table pagesize="2" name="res" id="row" requestURI="test2"
-        decorator="org.xonix.zlo.web.servlets.test.TestLazy1Decorator">
+        decorator="info.xonix.zlo.web.servlets.test.TestLazy1Decorator">
 <%--    <display:column title="Row">
         <% TestLazy1.Val it = (TestLazy1.Val) row; %>
         <%= it.getField() %>    

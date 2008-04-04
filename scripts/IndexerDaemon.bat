@@ -10,5 +10,5 @@ if "%1"=="d" (
 
 title IndexerDaemon-%SITE_NAME%
 call set_env.bat
-call %J% org.xonix.zlo.search.daemon.IndexerDaemon
+call %J% info.xonix.zlo.search.daemon.IndexerDaemon
 pause

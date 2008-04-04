@@ -1,4 +1,4 @@
-<%@ page import="org.xonix.zlo.search.db.DbAccessor, org.xonix.zlo.search.dao.Site, java.util.TreeMap" %>
+<%@ page import="info.xonix.zlo.search.db.DbAccessor, info.xonix.zlo.search.dao.Site, java.util.TreeMap" %>
 <%@ include file="WEB-INF/include/import.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 <link rel="stylesheet" type="text/css" href="main.css" />
@@ -42,7 +42,7 @@
     <small>(всего запросов: <c:out value="${totalNum.rows[0].count}" />, показаны последние: <c:out value="${numberToShow}" />)</small>
 
     <% int i=0; %>
-    <display:table name="${res.rows}" id="row" htmlId="resultTable" decorator="org.xonix.zlo.web.decorators.HistoryTableDecorator">
+    <display:table name="${res.rows}" id="row" htmlId="resultTable" decorator="info.xonix.zlo.web.decorators.HistoryTableDecorator">
         <display:column title="№" headerClass="head">
             <a href="search?<c:out value="${row.req_query_str}"/>" class="search">
                 <%= ++i %>
