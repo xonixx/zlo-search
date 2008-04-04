@@ -1,4 +1,4 @@
-<%@ page import="org.xonix.zlo.search.dao.Site" %>
+<%@ page import="info.xonix.zlo.search.dao.Site" %>
 <%--
   User: Vovan
   Date: 20.01.2008
@@ -8,7 +8,7 @@
 <%@ page contentType="text/html; charset=windows-1251" %>
 <link rel="stylesheet" type="text/css" href="main.css" />
 
-<jsp:useBean id="backendBean" class="org.xonix.zlo.web.BackendBean" scope="session" />
+<jsp:useBean id="backendBean" class="info.xonix.zlo.web.BackendBean" scope="session" />
 <jsp:setProperty name="backendBean" property="*" /> <%-- all from request properties --%>
 
 <%

@@ -1,4 +1,4 @@
-<%@ page import="org.xonix.zlo.web.servlets.helpful.ForwardingRequest" %>
+<%@ page import="info.xonix.zlo.web.servlets.helpful.ForwardingRequest" %>
 <%--
   User: gubarkov
   Date: 02.10.2007
