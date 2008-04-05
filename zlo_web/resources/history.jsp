@@ -54,7 +54,7 @@
         <display:column title="Сайт" headerClass="head">
             <% Site site = Site.getSite((Integer)((TreeMap)row).get("site")); %>
             <a href="http://<%= site.getSITE_URL() %>">
-                <%= site.getSiteName() %></a>
+                <%= site.getName() %></a>
         </display:column>
         <display:column property="req_date" title="Дата" headerClass="head" class="small" />
         <c:if test="${showAll}">
