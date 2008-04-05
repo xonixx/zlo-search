@@ -50,8 +50,6 @@ public class SiteAccessor extends DbAccessor {
 
     private String SITE_NAME;
 
-    private String siteName;
-
 
     public SiteAccessor(String siteName) {
         Properties p = new Properties();
@@ -65,7 +63,7 @@ public class SiteAccessor extends DbAccessor {
             throw e;
         }
 
-        setSiteName(siteName);
+        setName(siteName);
 
         MARK_END_MSG_1 = p.getProperty("str.mark.end.1");
         MARK_END_MSG_2 = p.getProperty("str.mark.end.2");
@@ -104,22 +102,12 @@ public class SiteAccessor extends DbAccessor {
         MSG_DATE_PATTERN = p.getProperty("str.date.pattern");
     }
 
-    public String getSiteName() {
-        // this is for the reason not to create havy objects for same sites (zlo for board)
-//        return SITE_NAME != null ? SITE_NAME : siteName;
-        return siteName;
-    }
-
-    public void setSiteName(String siteName) {
-        this.siteName = siteName;
-    }
-
     public boolean equals(Object obj) {
         if (!(obj instanceof SiteAccessor)) {
             return false;
         }
 
-        return StringUtils.equals(getSiteName(), ((SiteAccessor) obj).getSiteName()) &&
+        return StringUtils.equals(getName(), ((SiteAccessor) obj).getName()) &&
                 StringUtils.equals(SITE_NAME, ((SiteAccessor) obj).SITE_NAME);
     }
 

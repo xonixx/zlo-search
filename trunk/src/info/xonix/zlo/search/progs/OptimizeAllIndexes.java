@@ -13,7 +13,7 @@ public class OptimizeAllIndexes {
     public static void main(String[] args) throws IOException {
         for (Site site : Site.getSites()){
             if (site.isPERFORM_INDEXING()) {
-                System.out.println("-----" + site.getSiteName() + "-----");
+                System.out.println("-----" + site.getName() + "-----");
                 OptimizeIndex.optimizeDoubleIndexForSite(site);
             }
         }

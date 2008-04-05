@@ -279,19 +279,15 @@ public class DbManager {
                 , 1);
     }
 
-    private DbDict getDbDict() {
-        return new DbDict(dbAccessor);
-    }
-
     public void setLastIndexedNumber(int num) throws DbException {
         if (Config.USE_DOUBLE_INDEX)
-            getDbDict().setInt(DB_DICT_LAST_INDEXED_DOUBLE, num);
+            dbAccessor.getDbDict().setInt(DB_DICT_LAST_INDEXED_DOUBLE, num);
         else
-            getDbDict().setInt(DB_DICT_LAST_INDEXED, num);
+            dbAccessor.getDbDict().setInt(DB_DICT_LAST_INDEXED, num);
     }
 
     public int getLastIndexedNumber() throws DbException {
-        Integer lastIndexed = getDbDict().getInt(Config.USE_DOUBLE_INDEX ? DB_DICT_LAST_INDEXED_DOUBLE : DB_DICT_LAST_INDEXED);
+        Integer lastIndexed = dbAccessor.getDbDict().getInt(Config.USE_DOUBLE_INDEX ? DB_DICT_LAST_INDEXED_DOUBLE : DB_DICT_LAST_INDEXED);
         return lastIndexed == null ? 0 : lastIndexed;
     }
 

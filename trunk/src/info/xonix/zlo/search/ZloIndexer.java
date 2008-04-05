@@ -6,8 +6,8 @@ import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.db.DbException;
-import info.xonix.zlo.search.db.DbManagerSource;
 import info.xonix.zlo.search.model.ZloMessage;
+import info.xonix.zlo.search.site.SiteSource;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +17,7 @@ import java.io.IOException;
  * Date: 01.06.2007
  * Time: 1:07:38
  */
-public class ZloIndexer extends DbManagerSource {
+public class ZloIndexer extends SiteSource {
     private static Logger logger = Logger.getLogger("ZloIndexer");
 
     private File INDEX_DIR;
@@ -79,7 +79,7 @@ public class ZloIndexer extends DbManagerSource {
 
     private void addMessagesToIndex(int start, int end) throws DAOException, IOException {
         IndexWriter writer = getWriter();
-        for (ZloMessage msg : getDB().getMessages(start, end)) {
+        for (ZloMessage msg : getSite().getDB().getMessages(start, end)) {
             if (msg.getStatus() == ZloMessage.Status.OK) {
                 logger.debug(getSiteName() + " - Addind: " + (Config.DEBUG ? msg : msg.getNum()));
                 writer.addDocument(msg.getDocument());
@@ -103,6 +103,6 @@ public class ZloIndexer extends DbManagerSource {
             throw new DbException(e.getCause());
         }
         logger.info(getSiteName() + " - Setting last indexed: " + to);
-        getDB().getDbManager().setLastIndexedNumber(to);
+        getSite().getDbManager().setLastIndexedNumber(to);
     }
 }

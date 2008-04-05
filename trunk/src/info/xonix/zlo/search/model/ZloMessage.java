@@ -352,7 +352,7 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
                     nick, altName, reg, host, date,
                     isHasUrl() ? TRUE : FALSE,
                     isHasImg() ? TRUE : FALSE,
-                    site == null ? "" : site.getSiteName(),
+                    site == null ? "" : site.getName(),
                     body.replaceAll("\n","\n\t\t"));
         else
             return MessageFormat.format(
@@ -361,7 +361,7 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
                             "\n\tsite={2}" +
                             "\n)",
                     num, status,
-                    site == null ? "" : site.getSiteName());
+                    site == null ? "" : site.getName());
     }
 
     public Document getDocument() {
