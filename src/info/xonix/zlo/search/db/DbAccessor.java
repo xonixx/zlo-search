@@ -3,6 +3,8 @@ package info.xonix.zlo.search.db;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.site.Nameable;
+import info.xonix.zlo.search.dao.DB;
 
 import javax.naming.NamingException;
 import javax.sql.DataSource;
@@ -14,7 +16,7 @@ import java.util.Properties;
  * Date: 11.02.2008
  * Time: 18:18:05
  */
-public class DbAccessor {
+public class DbAccessor implements Nameable {
 
     private static final Logger logger = Logger.getLogger(DbAccessor.class);
 
@@ -25,9 +27,9 @@ public class DbAccessor {
     private String DB_PASSWORD;
     private boolean DB_VIA_CONTAINER;
     
-    private DbManager dbManager;
-
     private DataSource ds;
+
+    private String name;
 
     public DbAccessor() {
     }
@@ -41,11 +43,20 @@ public class DbAccessor {
     }
 
     private static HashMap<String, DbAccessor> dbAccessors = new HashMap<String, DbAccessor>();
+
     public static DbAccessor getInstance(String configFileName) {
         if (!dbAccessors.containsKey(configFileName)) {
             dbAccessors.put(configFileName, new DbAccessor(configFileName));
         }
         return dbAccessors.get(configFileName);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getJNDI_DS_NAME() {
@@ -72,11 +83,28 @@ public class DbAccessor {
         return DB_VIA_CONTAINER;
     }
 
+    private DbManager dbManager;
     public DbManager getDbManager() {
         if (dbManager == null) {
             dbManager = new DbManager(this);
         }
         return dbManager;
+    }
+
+    private DbDict dbDict;
+    public DbDict getDbDict() {
+        if (dbDict == null) {
+            dbDict = new DbDict(this);
+        }
+        return dbDict;
+    }
+
+    private DB db;
+    public DB getDB() {
+        if (db == null) {
+            db = new DB(this);
+        }
+        return db;
     }
 
     public DataSource getDataSource() {

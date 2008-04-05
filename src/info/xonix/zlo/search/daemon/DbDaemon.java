@@ -22,7 +22,7 @@ public class DbDaemon extends Daemon {
         }
 
         protected int getFromIndex() throws DAOException {
-            return getDB().getLastMessageNumber();
+            return getSite().getDB().getLastMessageNumber();
         }
 
         protected int getEndIndex() throws DAOException {
@@ -30,7 +30,7 @@ public class DbDaemon extends Daemon {
         }
 
         protected void perform(int from, int to) throws DAOException {
-            getDB().saveMessages(getSite().getMessages(from, to + 1));
+            getSite().getDB().saveMessages(getSite().getMessages(from, to + 1));
         }
 
         protected void cleanUp() {
@@ -48,9 +48,9 @@ public class DbDaemon extends Daemon {
     }
 
     private void setParams() {
-        DO_PER_TIME = getSite().getDB_SCAN_PER_TIME();
-        SLEEP_PERIOD = getSite().getDB_SCAN_PERIOD();
-        RETRY_PERIOD = getSite().getDB_RECONNECT_PERIOD();
+        setDoPerTime(getSite().getDB_SCAN_PER_TIME());
+        setSleepPeriod(getSite().getDB_SCAN_PERIOD());
+        setRetryPeriod(getSite().getDB_RECONNECT_PERIOD());
     }
 
     protected Process createProcess() {

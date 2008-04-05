@@ -19,7 +19,7 @@ public class SiteSource {
     }
 
     public String getSiteName() {
-        return site.getSiteName();
+        return site.getName();
     }
 
     public void setSiteName(String siteName) {

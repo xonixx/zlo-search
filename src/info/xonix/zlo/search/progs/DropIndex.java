@@ -13,7 +13,7 @@ import java.io.IOException;
  */
 public class DropIndex {
     public static void main(String[] args) {
-        System.out.print("Are you shure you want to drop index ? (y/n): ");
+        System.out.print("Are you sure you want to drop index ? (y/n): ");
         byte[] reply = new byte[1];
         try {
             System.in.read(reply);

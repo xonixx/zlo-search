@@ -35,7 +35,7 @@ public class OptimizeIndex {
     }
 
     public static void optimizeDoubleIndexForSite(Site site) throws IOException {
-        logger.info("Optimizing index for " + site.getSiteName());
+        logger.info("Optimizing index for " + site.getName());
         DoubleIndexSearcher dis = site.getZloSearcher().getDoubleIndexSearcher();
 /*                int lastIndexedInDb = DbManager.getLastIndexedNumber();
                 int lastIndexedInIndex = ZloSearcher.getLastIndexedNumber();

@@ -27,11 +27,11 @@ public class IndexerDaemon extends Daemon {
         }
 
         protected int getFromIndex() throws DAOException {
-            return getDbManager().getLastIndexedNumber();
+            return getSite().getDbManager().getLastIndexedNumber();
         }
 
         protected int getEndIndex() throws DAOException {
-            return getDbManager().getLastMessageNumber();
+            return getSite().getDbManager().getLastMessageNumber();
         }
 
         protected void perform(int from, int to) throws DAOException {
@@ -66,9 +66,9 @@ public class IndexerDaemon extends Daemon {
     }
 
     private void setParams() {
-        DO_PER_TIME = getSite().getINDEXER_INDEX_PER_TIME();
-        SLEEP_PERIOD = getSite().getINDEXER_INDEX_PERIOD();
-        RETRY_PERIOD = getSite().getINDEXER_RECONNECT_PERIOD();
+        setDoPerTime(getSite().getINDEXER_INDEX_PER_TIME());
+        setSleepPeriod(getSite().getINDEXER_INDEX_PERIOD());
+        setRetryPeriod(getSite().getINDEXER_RECONNECT_PERIOD());
     }
 
     public static void main(String[] args) {

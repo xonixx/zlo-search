@@ -1,15 +1,12 @@
 package info.xonix.zlo.search.daemon;
 
-import org.apache.log4j.Logger;
-import info.xonix.zlo.search.dao.Site;
-import info.xonix.zlo.search.dao.DB;
-import info.xonix.zlo.search.dao.DAOException;
-import info.xonix.zlo.search.db.DbManagerSource;
-import info.xonix.zlo.search.db.DbManager;
-import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.ZloIndexer;
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.dao.DAOException;
+import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.site.SiteSource;
+import org.apache.log4j.Logger;
 import sun.misc.Signal;
 import sun.misc.SignalHandler;
 
@@ -28,9 +25,21 @@ public abstract class Daemon extends SiteSource {
     private boolean isSleeping = false;
     private Process process;
 
-    protected int DO_PER_TIME;
-    protected int SLEEP_PERIOD;
-    protected int RETRY_PERIOD;
+    private int doPerTime;
+    private int sleepPeriod;
+    private int retryPeriod;
+
+    public void setDoPerTime(int doPerTime) {
+        this.doPerTime = doPerTime;
+    }
+
+    public void setSleepPeriod(int sleepPeriod) {
+        this.sleepPeriod = sleepPeriod;
+    }
+
+    public void setRetryPeriod(int retryPeriod) {
+        this.retryPeriod = retryPeriod;
+    }
 
     protected abstract Logger getLogger();
 
@@ -73,19 +82,11 @@ public abstract class Daemon extends SiteSource {
     }
 
     protected abstract class Process extends Thread {
-        private DbManagerSource dbms;
 
         public Process() {
             super();
-            setName(getSiteName());
-            Site site = getSite();
-            site.setDB_VIA_CONTAINER(false);
-            dbms = new DbManagerSource(site);
         }
 
-        protected DbManager getDbManager() {
-            return dbms.getDbManager();
-        }
 
         private ZloIndexer zloIndexer;
         protected ZloIndexer getIndexer() {
@@ -93,10 +94,6 @@ public abstract class Daemon extends SiteSource {
                 zloIndexer = new ZloIndexer(getSite());
             }
             return zloIndexer;
-        }
-
-        protected DB getDB() {
-            return dbms.getDB();
         }
 
         public void run() {
@@ -131,16 +128,13 @@ public abstract class Daemon extends SiteSource {
                 if (end == -1)
                     end = getEndIndex();
 
-                int indexTo;
+                int indexTo = indexFrom + doPerTime - 1;
 
-                if (indexFrom + DO_PER_TIME - 1 < end) {
-                    indexTo = indexFrom + DO_PER_TIME - 1;
-                } else {
+                if (indexTo >= end) {
                     end = getEndIndex();
-                    if (indexFrom + DO_PER_TIME - 1 < end)
-                        indexTo = indexFrom + DO_PER_TIME - 1;
-                    else
+                    if (indexTo >= end) {
                         indexTo = end;
+                    }
                 }
 
                 if (indexFrom <= indexTo) {
@@ -150,23 +144,23 @@ public abstract class Daemon extends SiteSource {
                 indexFrom = indexTo + 1;
 
                 while (indexFrom > end) {
-                    getLogger().info(getSiteName() + " - Sleeping " + SLEEP_PERIOD / 1000 / 60f + " min...");
-                    doSleep(SLEEP_PERIOD);
+                    getLogger().info(getSiteName() + " - Sleeping " + sleepPeriod / 1000 / 60f + " min...");
+                    doSleep(sleepPeriod);
                     end = getEndIndex();
                 }
             } catch (DbException e) {
                 getLogger().warn(getSiteName() + " - Problem with db: " + e.getClass());
-                doSleep(RETRY_PERIOD);
+                doSleep(retryPeriod);
             } catch (DAOException e) {
                 if (e.getCause() instanceof ConnectException) {
                     getLogger().error(getSiteName() + " - Problem with site...", e);
                 } else {
                     getLogger().error(getSiteName() + " - ", e);
                 }
-                doSleep(RETRY_PERIOD);
+                doSleep(retryPeriod);
             } catch (IOException e) {
                 getLogger().error(getSiteName() + " - IOException while indexing, probably something with index...", e);
-                doSleep(RETRY_PERIOD);
+                doSleep(retryPeriod);
             }
         }
         protected abstract void cleanUp();
@@ -184,6 +178,7 @@ public abstract class Daemon extends SiteSource {
 
     protected Daemon(Site site) {
         super(site);
+        site.setDB_VIA_CONTAINER(false);
         registerExitHandlers();
     }
 

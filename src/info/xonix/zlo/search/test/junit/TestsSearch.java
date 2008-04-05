@@ -31,7 +31,7 @@ public class TestsSearch {
         Site site = Site.forName("zlo");
         site.setDB_VIA_CONTAINER(false);
         dbm = site.getDbManager();
-        dbDict = new DbDict(site);
+        dbDict = site.getDbDict();
     }
 
     @Test

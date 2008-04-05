@@ -30,142 +30,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\db\sql.properties" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/db/sql.properties" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\org\xonix\zlo\web\HtmlConstructor.java" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/HtmlConstructor.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\config\games.properties" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/config/games.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/AllDaemons.bat" afterPath="$PROJECT_DIR$/scripts/AllDaemons.bat" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\test\Main2.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/test/Main2.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\db\DbDict.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/db/DbDict.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\progs\FileToDb.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/progs/FileToDb.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\db\DbUtils.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/db/DbUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/zlo_web/WEB-INF/web.xml" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\config\zlo.properties" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/config/zlo.properties" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\site\SiteSource.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/site/SiteSource.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\org\xonix\zlo\web\servlets\helpful\ForwardingServletAbstract.java" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/helpful/ForwardingServletAbstract.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\db\ConnectionUtils.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/db/ConnectionUtils.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\model\ZloMessageAccessor.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/model/ZloMessageAccessor.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/zlo_web/src/org" afterPath="$PROJECT_DIR$/zlo_web/src/info" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/zlo_web/src/org/xonix" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\MultithreadedRetriever.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/MultithreadedRetriever.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\test\Obj1.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/test/Obj1.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\db\DbResult.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/db/DbResult.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/OptimizeIndex-games.bat" afterPath="$PROJECT_DIR$/scripts/OptimizeIndex-games.bat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/resources/stats.jsp" afterPath="$PROJECT_DIR$/zlo_web/resources/stats.jsp" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\model\ZloMessageLazy.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/model/ZloMessageLazy.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\config\HtmlStrings.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/config/HtmlStrings.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\config\board.properties" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/config/board.properties" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\dao\DB.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/dao/DB.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\test\Test2.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/test/Test2.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\daemon\Daemon.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/daemon/Daemon.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\config\sport.properties" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/config/sport.properties" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\org\xonix\zlo\web\servlets\helpful\ForwardingServlet.java" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/helpful/ForwardingServlet.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\FoundTextHighlighter.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/FoundTextHighlighter.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\org\xonix\zlo\web\test\junit\TestsWeb.java" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/test/junit/TestsWeb.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\progs\OptimizeIndex.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/progs/OptimizeIndex.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\utils\TimeUtils.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/utils/TimeUtils.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\test\SearchSpeedTest.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/test/SearchSpeedTest.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\db\VarType.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/db/VarType.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\DoubleHits.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/DoubleHits.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/test/junit" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/test/junit" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\model\ZloMessage.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/model/ZloMessage.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/zlo_web/src/org/xonix/zlo/web/servlets/helpful" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/helpful" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/test/storage" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/test/storage" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\ZloSearcher.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/ZloSearcher.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\org\xonix\zlo\web\decorators\SearchResultLineDecorator.java" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/decorators/SearchResultLineDecorator.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/zlo_web/src/org/xonix/zlo/web/servlets/test" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/test" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\org\xonix\zlo\web\servlets\SearchServlet.java" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/SearchServlet.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/site" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/site" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/config" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/config" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\test\Test3.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/test/Test3.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\org\xonix\zlo\web\servlets\test\PaginatedListImpl.java" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/test/PaginatedListImpl.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/test/siteparsing" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/test/siteparsing" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\test\siteparsing\TestSites.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/test/siteparsing/TestSites.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\config\search_log.properties" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/config/search_log.properties" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\db\DbManagerSource.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/db/DbManagerSource.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/WEB-INF/include/notDirectlyAccessible.jsp" afterPath="$PROJECT_DIR$/zlo_web/WEB-INF/include/notDirectlyAccessible.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/resources/test/test2.jsp" afterPath="$PROJECT_DIR$/zlo_web/resources/test/test2.jsp" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\org\xonix\zlo\web\CookieUtils.java" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/CookieUtils.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/org/xonix" afterPath="$PROJECT_DIR$/src/info/xonix" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\org\xonix\zlo\web\servlets\test\IExtendedPaginatedList.java" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/test/IExtendedPaginatedList.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/zlo_web/src/org/xonix/zlo/web" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\progs\RescanUndefStatusMsgs.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/progs/RescanUndefStatusMsgs.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/utils" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/utils" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/daemons_config.properties" afterPath="$PROJECT_DIR$/scripts/daemons_config.properties" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\test\storage\ZloStorage.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/test/storage/ZloStorage.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\RussianWithNumbersAnalyzer.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/RussianWithNumbersAnalyzer.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\test\junit\TestsSearch.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/test/junit/TestsSearch.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\test\ThreadTest1.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/test/ThreadTest1.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\org\xonix\zlo\web\servlets\test\TestLazy1Decorator.java" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/test/TestLazy1Decorator.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\org\xonix\zlo\web\servlets\helpful\ForwardingRequest.java" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/helpful/ForwardingRequest.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/test" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/test" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\site\SiteAccessor.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/site/SiteAccessor.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\utils\HtmlUtils.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/utils/HtmlUtils.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\daemon\DaemonLauncher.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/daemon/DaemonLauncher.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\test\storage\TestZloStorage.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/test/storage/TestZloStorage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/IndexerDaemon.bat" afterPath="$PROJECT_DIR$/scripts/IndexerDaemon.bat" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\test\DoubleIndexTest.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/test/DoubleIndexTest.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\org\xonix\zlo\web\servlets\BaseServlet.java" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/BaseServlet.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/zlo_web/src/org/xonix/zlo/web/test" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/test" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\progs\InsertEmptyRows.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/progs/InsertEmptyRows.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/org" afterPath="$PROJECT_DIR$/src/info" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/OptimizeIndex-anime.bat" afterPath="$PROJECT_DIR$/scripts/OptimizeIndex-anime.bat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/resources/history.jsp" afterPath="$PROJECT_DIR$/zlo_web/resources/history.jsp" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\config\ErrorMessage.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/config/ErrorMessage.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/dao" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/dao" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\org\xonix\zlo\web\servlets\test\TestLazy1.java" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/test/TestLazy1.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\ZloIndexer.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/ZloIndexer.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/model" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/model" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\config\anime.properties" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/config/anime.properties" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\site\PageRetriever.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/site/PageRetriever.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\db\CloseUtils.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/db/CloseUtils.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\SearchRequest.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/SearchRequest.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\daemon\IndexerDaemon.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/daemon/IndexerDaemon.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\org\xonix\zlo\web\decorators\HistoryTableDecorator.java" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/decorators/HistoryTableDecorator.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\progs\DropIndex.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/progs/DropIndex.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\db\DbManager.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/db/DbManager.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\org\xonix\zlo\web\servlets\test\WebTest1.java" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/test/WebTest1.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\config\Config.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/config/Config.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\org\xonix\zlo\web\servlets\SavedMessageServlet.java" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/SavedMessageServlet.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\test\TestDaemon.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/test/TestDaemon.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\ZloPaginatedList.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/ZloPaginatedList.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\dao\DAOException.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/dao/DAOException.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\db\DbAccessor.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/db/DbAccessor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/Todo.txt" afterPath="$PROJECT_DIR$/zlo_web/Todo.txt" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\DoubleIndexSearcher.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/DoubleIndexSearcher.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/DbDaemon.bat" afterPath="$PROJECT_DIR$/scripts/DbDaemon.bat" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/zlo_web/src/org/xonix/zlo/web/servlets" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\SearchResult.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/SearchResult.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/daemon" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/daemon" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/resources/Search.jsp" afterPath="$PROJECT_DIR$/zlo_web/resources/Search.jsp" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\org\xonix\zlo\web\BackendBean.java" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/BackendBean.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\config\velo.properties" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/config/velo.properties" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\IndexingSource.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/IndexingSource.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\site\PageParseException.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/site/PageParseException.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\db\DbException.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/db/DbException.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\test\Test1.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/test/Test1.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\test\CompoundIndexTest.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/test/CompoundIndexTest.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\org\xonix\zlo\web\servlets\test\T1.java" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/test/T1.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/OptimizeIndex-zlo.bat" afterPath="$PROJECT_DIR$/scripts/OptimizeIndex-zlo.bat" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\test\W1.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/test/W1.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\progs\OptimizeAllIndexes.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/progs/OptimizeAllIndexes.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/zlo_web/src/org/xonix/zlo/web/decorators" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/decorators" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\config\config.properties" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/config/config.properties" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\daemon\DbDaemon.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/daemon/DbDaemon.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/OptimizeIndex.bat" afterPath="$PROJECT_DIR$/scripts/OptimizeIndex.bat" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\site\PageParser.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/site/PageParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/WEB-INF/include/import.jsp" afterPath="$PROJECT_DIR$/zlo_web/WEB-INF/include/import.jsp" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\db\db_dict.sql.properties" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/db/db_dict.sql.properties" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/progs" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/progs" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\dao\Site.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/dao/Site.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/org/xonix/zlo/search/db" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/db" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/resources/SavedMsg.jsp" afterPath="$PROJECT_DIR$/zlo_web/resources/SavedMsg.jsp" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/zlo_web/src/org/xonix/zlo/web/test/junit" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/test/junit" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\org\xonix\zlo\search\test\Main1.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/test/Main1.java" />
-    </list>
-    <list name="Project files" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/info/xonix/zlo/search/progs/DropIndex.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/progs/DropIndex.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/info/xonix/zlo/search/test/junit/TestsSearch.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/test/junit/TestsSearch.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/info/xonix/zlo/search/ZloIndexer.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/ZloIndexer.java" />
+      <change type="DELETED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\src\info\xonix\zlo\search\db\DbManagerSource.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/info/xonix/zlo/search/site/SiteAccessor.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/site/SiteAccessor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/info/xonix/zlo/search/db/DbAccessor.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/db/DbAccessor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/info/xonix/zlo/search/daemon/IndexerDaemon.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/daemon/IndexerDaemon.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/info/xonix/zlo/search/daemon/Daemon.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/daemon/Daemon.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/info/xonix/zlo/search/progs/OptimizeAllIndexes.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/progs/OptimizeAllIndexes.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/site/Nameable.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_search.iws" afterPath="$PROJECT_DIR$/zlo_search.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/info/xonix/zlo/search/daemon/DbDaemon.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/daemon/DbDaemon.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/info/xonix/zlo/search/dao/Site.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/dao/Site.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/daemon/DbMessagesIteratingDaemon.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/info/xonix/zlo/search/db/DbManager.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/db/DbManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/info/xonix/zlo/search/site/SiteSource.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/site/SiteSource.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/daemon/DbMessagesPrintDaemon.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/info/xonix/zlo/search/dao/DB.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/dao/DB.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/info/xonix/zlo/search/model/ZloMessage.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/model/ZloMessage.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/info/xonix/zlo/search/progs/OptimizeIndex.java" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/progs/OptimizeIndex.java" />
     </list>
+    <list name="Project files" comment="" />
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="Commander">
@@ -285,73 +171,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="import.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zlo_web/WEB-INF/include/import.jsp">
+      <file leaf-file-name="SiteSource.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/site/SiteSource.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="35" selection-start="286" selection-end="296" vertical-scroll-proportion="0.1289507">
+            <state line="21" column="23" selection-start="394" selection-end="394" vertical-scroll-proportion="0.76282054">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="notDirectlyAccessible.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zlo_web/WEB-INF/include/notDirectlyAccessible.jsp">
+      <file leaf-file-name="DB.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/dao/DB.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="27" selection-start="17" selection-end="27" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SavedMsg.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zlo_web/resources/SavedMsg.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="38" selection-start="286" selection-end="296" vertical-scroll-proportion="0.24097939">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Search.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zlo_web/resources/Search.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="104" column="52" selection-start="17" selection-end="27" vertical-scroll-proportion="2.2783506">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="history.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zlo_web/resources/history.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="89" selection-start="17" selection-end="27" vertical-scroll-proportion="0.96391755">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="stats.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zlo_web/resources/stats.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="47" selection-start="17" selection-end="27" vertical-scroll-proportion="0.21907216">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test2.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zlo_web/resources/test/test2.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="29" selection-start="17" selection-end="27" vertical-scroll-proportion="0.2364096">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HistoryTableDecorator.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/decorators/HistoryTableDecorator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="18" selection-start="8" selection-end="18" vertical-scroll-proportion="0.0">
+            <state line="49" column="28" selection-start="1586" selection-end="1586" vertical-scroll-proportion="1.3504274">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -359,10 +191,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DbUtils.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/db/DbUtils.java">
+      <file leaf-file-name="SiteAccessor.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/site/SiteAccessor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="0" selection-start="153" selection-end="153" vertical-scroll-proportion="0.14930992">
+            <state line="52" column="29" selection-start="1232" selection-end="1232" vertical-scroll-proportion="-6.2777777">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DbMessagesPrintDaemon.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/daemon/DbMessagesPrintDaemon.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="15" column="49" selection-start="340" selection-end="340" vertical-scroll-proportion="0.5448718">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -370,10 +211,55 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="W1.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/test/W1.java">
+      <file leaf-file-name="DbMessagesIteratingDaemon.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/daemon/DbMessagesIteratingDaemon.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="4" selection-start="420" selection-end="420" vertical-scroll-proportion="0.3768473">
+            <state line="28" column="70" selection-start="853" selection-end="853" vertical-scroll-proportion="0.76282054">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DbManager.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/db/DbManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="289" column="41" selection-start="12194" selection-end="12194" vertical-scroll-proportion="1.1743929">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestsSearch.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/test/junit/TestsSearch.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="33" column="26" selection-start="854" selection-end="854" vertical-scroll-proportion="0.40397352">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DbAccessor.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/db/DbAccessor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="96" column="28" selection-start="2370" selection-end="2370" vertical-scroll-proportion="0.71581197">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DbDict.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/db/DbDict.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="32" column="34" selection-start="1045" selection-end="1045" vertical-scroll-proportion="1.0064102">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Daemon.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/daemon/Daemon.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="180" column="12" selection-start="5133" selection-end="5133" vertical-scroll-proportion="0.78846157">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -453,38 +339,6 @@
         <PATH_ELEMENT>
           <option name="myItemId" value="zlo_web" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="org.xonix.zlo.web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="org.xonix.zlo.web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="servlets" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
         </PATH_ELEMENT>
       </PATH>
       <PATH>
@@ -586,19 +440,9 @@
           <option name="myItemId" value="zlo_search" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
         </PATH_ELEMENT>
-      </PATH>
-      <PATH>
         <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="org.xonix.zlo.search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+          <option name="myItemId" value="Libraries" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewLibrariesNode" />
         </PATH_ELEMENT>
       </PATH>
       <PATH>
@@ -611,25 +455,11 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="info.xonix.zlo.search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+          <option name="myItemId" value="Libraries" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewLibrariesNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="info.xonix.zlo.search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="utils" />
+          <option name="myItemId" value="META-INF" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
         </PATH_ELEMENT>
       </PATH>
@@ -644,54 +474,6 @@
         </PATH_ELEMENT>
         <PATH_ELEMENT>
           <option name="myItemId" value="info.xonix.zlo.search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="test" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="info.xonix.zlo.search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="test" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="storage" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="info.xonix.zlo.search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="test" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="junit" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
         </PATH_ELEMENT>
       </PATH>
@@ -745,7 +527,7 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="model" />
+          <option name="myItemId" value="db" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
         </PATH_ELEMENT>
       </PATH>
@@ -763,7 +545,25 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="db" />
+          <option name="myItemId" value="dao" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="zlo_search" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="zlo_search" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="info.xonix.zlo.search" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="daemon" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
         </PATH_ELEMENT>
       </PATH>
@@ -1467,7 +1267,7 @@
       <showLibraryContents />
       <hideEmptyPackages ProjectPane="true" />
       <abbreviatePackageNames />
-      <showStructure PackagesPane="false" J2EEPane="false" Scope="false" Favorites="false" ProjectPane="false" />
+      <showStructure ProjectPane="false" J2EEPane="false" Scope="false" PackagesPane="false" Favorites="false" />
       <autoscrollToSource ProjectPane="false" />
       <autoscrollFromSource PackagesPane="true" ProjectPane="true" />
       <sortByType ProjectPane="true" />
@@ -1499,8 +1299,8 @@
     <property name="cvs_file_history_flatOrder2" value="2" />
     <property name="cvs_file_history_flatOrder3" value="3" />
     <property name="cvs_file_history_flatOrder0" value="0" />
-    <property name="cvs_file_history_flatOrder1" value="1" />
     <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
+    <property name="cvs_file_history_flatOrder1" value="1" />
     <property name="Web Module Deployment Descriptor Default Version" value="2.4" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GenerateAntBuildDialog.backupFiles" value="true" />
@@ -1521,22 +1321,66 @@
       <recent name="org.xonix.zlo.web.test.junit" />
     </key>
   </component>
-  <component name="RunManager" selected="Tomcat Server.TomCat1">
-    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local">
+  <component name="RunManager" selected="Application.DbMessagesPrintDaemon">
+    <tempConfiguration default="false" name="DbMessagesPrintDaemon" type="Application" factoryName="Application" enabled="false" merge="false">
+      <option name="MAIN_CLASS_NAME" value="info.xonix.zlo.search.daemon.DbMessagesPrintDaemon" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="zlo_search" />
+      <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="4588" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method>
+        <option name="Make" value="true" />
+      </method>
+    </tempConfiguration>
+    <configuration default="true" type="TestNG" factoryName="TestNG" enabled="false" merge="false">
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="ADDITIONAL_CLASS_PATH" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="wholeProject" />
+      </option>
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method>
+        <option name="Make" value="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
-      <option name="PORT" value="8080" />
-      <option name="LOCAL" value="true" />
-      <option name="OPEN_IN_BROWSER" value="true" />
-      <option name="OPEN_IN_BROWSER_URL" value="/" />
-      <option name="COMMON_VM_ARGUMENTS" value="" />
-      <JAVAEE_FACET FACET_ID="zlo_web/web/zlo_web" DEPLOYMENT_SOURCE_NAME="exploded">
-        <option name="CONTEXT_PATH" value="/" />
-        <option name="DEPLOY" value="false" />
-      </JAVAEE_FACET>
-      <option name="DEPLOY_TOMCAT_MANAGER" value="false" />
-      <option name="BASE_DIRECTORY_NAME" value="" />
-      <predefined_log_file id="TOMCAT_LOCALHOST_LOG_ID" enabled="true" />
+      <option name="PORT" value="5005" />
     </configuration>
     <configuration default="true" type="Applet" factoryName="Applet">
       <module name="" />
@@ -1549,13 +1393,6 @@
       <option name="VM_PARAMETERS" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-    </configuration>
-    <configuration default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application" enabled="false" merge="false">
       <option name="MAIN_CLASS_NAME" />
@@ -1595,34 +1432,21 @@
         <option name="Make" value="true" />
       </method>
     </configuration>
-    <configuration default="true" type="TestNG" factoryName="TestNG" enabled="false" merge="false">
-      <module name="" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="SUITE_NAME" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="GROUP_NAME" />
-      <option name="TEST_OBJECT" value="CLASS" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
+    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local">
       <option name="WORKING_DIRECTORY" />
-      <option name="OUTPUT_DIRECTORY" />
-      <option name="ANNOTATION_TYPE" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="ADDITIONAL_CLASS_PATH" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="wholeProject" />
-      </option>
-      <option name="PROPERTIES_FILE" />
-      <envs />
-      <properties />
-      <listeners />
-      <method>
-        <option name="Make" value="true" />
-      </method>
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="8080" />
+      <option name="LOCAL" value="true" />
+      <option name="OPEN_IN_BROWSER" value="true" />
+      <option name="OPEN_IN_BROWSER_URL" value="/" />
+      <option name="COMMON_VM_ARGUMENTS" value="" />
+      <JAVAEE_FACET FACET_ID="zlo_web/web/zlo_web" DEPLOYMENT_SOURCE_NAME="exploded">
+        <option name="CONTEXT_PATH" value="/" />
+        <option name="DEPLOY" value="false" />
+      </JAVAEE_FACET>
+      <option name="DEPLOY_TOMCAT_MANAGER" value="false" />
+      <option name="BASE_DIRECTORY_NAME" value="" />
+      <predefined_log_file id="TOMCAT_LOCALHOST_LOG_ID" enabled="true" />
     </configuration>
     <configuration default="false" name="DbDaemon" type="Application" factoryName="Application" enabled="false" merge="false">
       <option name="MAIN_CLASS_NAME" value="org.xonix.zlo.search.daemon.DbDaemon" />
@@ -1945,7 +1769,7 @@
         <option name="Make" value="true" />
       </method>
     </configuration>
-    <list size="13">
+    <list size="14">
       <item index="0" class="java.lang.String" itemvalue="Application.DbDaemon" />
       <item index="1" class="java.lang.String" itemvalue="Application.TestZloStorage" />
       <item index="2" class="java.lang.String" itemvalue="Application.Test1" />
@@ -1959,6 +1783,7 @@
       <item index="10" class="java.lang.String" itemvalue="Tomcat Server.TomCat1" />
       <item index="11" class="java.lang.String" itemvalue="Application.Test3" />
       <item index="12" class="java.lang.String" itemvalue="Application.OptimizeAllIndexes" />
+      <item index="13" class="java.lang.String" itemvalue="Application.DbMessagesPrintDaemon" />
     </list>
   </component>
   <component name="SQLPlugin.ProjectConfiguration">
@@ -2052,31 +1877,31 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="-4" width="1288" height="979" extended-state="7" />
-    <editor active="true" />
+    <frame x="-4" y="-4" width="1608" height="1155" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41231126" order="13" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.512054" order="13" />
       <window_info id="SQL" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3263647" order="8" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="4" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2491951" order="1" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41811848" order="1" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3902439" order="3" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41755062" order="1" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38958535" order="3" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32982457" order="14" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14616871" order="3" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32783705" order="15" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.554007" order="11" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5535198" order="11" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32594022" order="6" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24898621" order="1" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3992273" order="0" />
       <window_info id="Maven projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="6" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2562855" order="0" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17063747" order="0" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="12" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1970803" order="2" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="5" />
       <window_info id="Duplicates" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29732868" order="2" x="23" y="296" width="1553" height="555" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.65863067" order="2" x="23" y="296" width="1553" height="555" />
       <window_info id="File View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="5" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="7" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="0" />
@@ -2180,125 +2005,121 @@
     <option name="myLastEditedConfigurable" value="Default" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/config/config.properties">
+    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/daemon/IndexerDaemon.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="24" selection-start="117" selection-end="127" vertical-scroll-proportion="1.5813954">
+        <state line="28" column="44" selection-start="719" selection-end="719" vertical-scroll-proportion="0.5166426">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/test/Main1.java">
+    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/dao/Site.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="18" selection-start="8" selection-end="18" vertical-scroll-proportion="0.0">
+        <state line="138" column="34" selection-start="4399" selection-end="4399" vertical-scroll-proportion="1.2344428">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/progs/OptimizeAllIndexes.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="59" selection-start="414" selection-end="414" vertical-scroll-proportion="0.31982633">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/model/ZloMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="354" column="45" selection-start="9946" selection-end="9946" vertical-scroll-proportion="5.204142">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/progs/OptimizeIndex.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="51" selection-start="1171" selection-end="1171" vertical-scroll-proportion="0.7380608">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/daemon/DbDaemon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="33" selection-start="252" selection-end="252" vertical-scroll-proportion="0.22141823">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/site/SiteSource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="23" selection-start="394" selection-end="394" vertical-scroll-proportion="0.76282054">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/site/SiteAccessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="52" column="29" selection-start="1232" selection-end="1232" vertical-scroll-proportion="-6.2777777">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/db/DbManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="289" column="41" selection-start="12194" selection-end="12194" vertical-scroll-proportion="1.1743929">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/test/junit/TestsSearch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="26" selection-start="854" selection-end="854" vertical-scroll-proportion="0.40397352">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/db/DbAccessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="96" column="28" selection-start="2370" selection-end="2370" vertical-scroll-proportion="0.71581197">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/db/DbDict.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="34" selection-start="1045" selection-end="1045" vertical-scroll-proportion="1.0064102">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/dao/DB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="28" selection-start="1586" selection-end="1586" vertical-scroll-proportion="1.3504274">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/test/Obj1.java">
+    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/daemon/Daemon.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="18" selection-start="8" selection-end="18" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/test/Test2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="18" selection-start="8" selection-end="18" vertical-scroll-proportion="0.0">
+        <state line="180" column="12" selection-start="5133" selection-end="5133" vertical-scroll-proportion="0.78846157">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/test/ThreadTest1.java">
+    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/daemon/DbMessagesPrintDaemon.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="18" selection-start="8" selection-end="18" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/Todo.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="43" selection-start="1870" selection-end="1880" vertical-scroll-proportion="0.8876405">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/WEB-INF/include/import.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="35" selection-start="286" selection-end="296" vertical-scroll-proportion="0.1289507">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/WEB-INF/include/notDirectlyAccessible.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="27" selection-start="17" selection-end="27" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/resources/SavedMsg.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="38" selection-start="286" selection-end="296" vertical-scroll-proportion="0.24097939">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/resources/Search.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="104" column="52" selection-start="17" selection-end="27" vertical-scroll-proportion="2.2783506">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/resources/history.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="89" selection-start="17" selection-end="27" vertical-scroll-proportion="0.96391755">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/resources/stats.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="47" selection-start="17" selection-end="27" vertical-scroll-proportion="0.21907216">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/resources/test/test2.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="29" selection-start="17" selection-end="27" vertical-scroll-proportion="0.2364096">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/decorators/HistoryTableDecorator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="18" selection-start="8" selection-end="18" vertical-scroll-proportion="0.0">
+        <state line="15" column="49" selection-start="340" selection-end="340" vertical-scroll-proportion="0.5448718">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/db/DbUtils.java">
+    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/daemon/DbMessagesIteratingDaemon.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="0" selection-start="153" selection-end="153" vertical-scroll-proportion="0.14930992">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/test/W1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="4" selection-start="420" selection-end="420" vertical-scroll-proportion="0.3768473">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="28" column="70" selection-start="853" selection-end="853" vertical-scroll-proportion="0.76282054">
+          <folding />
         </state>
       </provider>
     </entry>
