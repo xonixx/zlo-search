@@ -61,7 +61,7 @@
             <display:column property="host" title="Хост" class="small" headerClass="head" />
             <display:column property="user_agent" title="User-Agent" class="small" headerClass="head" />
         </c:if>
-        <display:column property="userAgentSmall" title="Браузер" class="small" headerClass="head" style="text-align:center;" />
+        <display:column property="userAgentSmall" title="Браузер" class="small center" headerClass="head" />
     </display:table>
 </div>
 
