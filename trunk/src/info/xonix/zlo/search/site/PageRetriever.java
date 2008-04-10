@@ -54,25 +54,31 @@ public class PageRetriever {
             is = getMethod.getResponseBodyAsStream();
             stringGroups.add("");
 
-            int currSize;
+            int currSize, lenRead;
             String ending;
+            byte[] buff = new byte[Config.BUFFER];
             do {
-                byte[] buff = new byte[Config.BUFFER];
-                int lenRead = is.read(buff);
+                lenRead = is.read(buff);
 
-                if (lenRead == -1) {
-                    logger.warn("lenRead = -1 while receiving " + num + ". It means that message can't be parsed correctly...");
+                if (lenRead <= 0) {
+                    logger.warn("lenRead = " + lenRead + " while receiving " + num + ". It possibly means that message can't be parsed correctly...");
                     break;
                 }
 
                 stringGroups.add(new String(buff, 0, lenRead, Config.CHARSET_NAME));
                 currSize = stringGroups.size();
                 ending = stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1);
-            } while(
-                ending.indexOf(siteAccessor.getMARK_END_MSG_1()) == -1 &&
-                ending.indexOf(siteAccessor.getMARK_END_MSG_2()) == -1 && // if user have sign - won't read it all
-                ending.indexOf(siteAccessor.getMSG_NOT_EXIST_OR_WRONG()) == -1
-                );
+            } while (
+                    ending.indexOf(siteAccessor.getMARK_END_MSG_1()) == -1 &&
+                            ending.indexOf(siteAccessor.getMARK_END_MSG_2()) == -1 && // if user have sign - won't read it all
+                            ending.indexOf(siteAccessor.getMSG_NOT_EXIST_OR_WRONG()) == -1
+                    );
+
+            // read till end - seems that closing while not end riached causes board crash
+            for (lenRead = 0; lenRead > 0;) {
+                lenRead = is.read(buff);
+            }
+
         } finally {
             if (is != null)
                 is.close();
@@ -101,18 +107,24 @@ public class PageRetriever {
             List<String> stringGroups = new ArrayList<String>();
             stringGroups.add("");
 
-            int currSize;
+            int currSize, lenRead;
+            byte[] buff = new byte[Config.BUFFER];
             do {
-                byte[] buff = new byte[Config.BUFFER];
-                int lenRead = is.read(buff);
-                if (lenRead == -1) {
-                    logger.warn("lenRead = -1");
-                    throw new IOException("lenRead = -1");
+                lenRead = is.read(buff);
+                if (lenRead <= 0) {
+                    logger.warn("lenRead = " + lenRead);
+                    throw new IOException("lenRead = " + lenRead);
                 }
                 stringGroups.add(new String(buff, 0, lenRead, Config.CHARSET_NAME));
                 currSize = stringGroups.size();
                 m = INDEX_UNREG_RE.matcher(stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1));
             } while (!m.find());
+
+            // read till end
+            for (lenRead = 0; lenRead > 0;) {
+                lenRead = is.read(buff);
+            }
+
         } finally {
             if (is != null)
                 is.close();

@@ -1,6 +1,7 @@
 package info.xonix.zlo.search.daemon;
 
 import info.xonix.zlo.search.ZloIndexer;
+import info.xonix.zlo.search.utils.TimeUtils;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.dao.Site;
@@ -20,7 +21,7 @@ import java.util.Vector;
  * Time: 20:00:32
  */
 public abstract class Daemon extends SiteSource {
-//    private static final Logger logger = Logger.getLogger("Daemon");
+    //    private static final Logger logger = Logger.getLogger("Daemon");
     private boolean exiting;
     private boolean isSleeping = false;
     private Process process;
@@ -45,8 +46,10 @@ public abstract class Daemon extends SiteSource {
 
     // clean up
     private static Vector<Daemon> daemons = new Vector<Daemon>();
+
     /**
      * register for cleaning up
+     *
      * @param d
      */
     public static void registerForCleanUp(Daemon d) {
@@ -89,6 +92,7 @@ public abstract class Daemon extends SiteSource {
 
 
         private ZloIndexer zloIndexer;
+
         protected ZloIndexer getIndexer() {
             if (zloIndexer == null) {
                 zloIndexer = new ZloIndexer(getSite());
@@ -113,13 +117,16 @@ public abstract class Daemon extends SiteSource {
         }
 
         protected abstract int getFromIndex() throws DAOException;
+
         protected abstract int getEndIndex() throws DAOException;
+
         protected abstract void perform(int from, int to) throws DAOException;
 
         private int indexFrom = -1;
         private int end = -1;
 
         private void doOneIteration() throws InterruptedException {
+            boolean wasException = false;
             try {
                 if (indexFrom == -1) {
                     indexFrom = getFromIndex() + 1;
@@ -144,25 +151,31 @@ public abstract class Daemon extends SiteSource {
                 indexFrom = indexTo + 1;
 
                 while (indexFrom > end) {
-                    getLogger().info(getSiteName() + " - Sleeping " + sleepPeriod / 1000 / 60f + " min...");
+                    getLogger().info(getSiteName() + " - Sleeping " + TimeUtils.toMinutesSeconds(sleepPeriod) + "...");
                     doSleep(sleepPeriod);
                     end = getEndIndex();
                 }
             } catch (DbException e) {
                 getLogger().warn(getSiteName() + " - Problem with db: " + e.getClass());
-                doSleep(retryPeriod);
+                wasException = true;
             } catch (DAOException e) {
                 if (e.getCause() instanceof ConnectException) {
-                    getLogger().error(getSiteName() + " - Problem with site...", e);
+                    getLogger().error(getSiteName() + " - Problem with site... " + e.getCause().getClass());
                 } else {
                     getLogger().error(getSiteName() + " - ", e);
                 }
-                doSleep(retryPeriod);
+                wasException = true;
             } catch (IOException e) {
                 getLogger().error(getSiteName() + " - IOException while indexing, probably something with index...", e);
+                wasException = true;
+            }
+
+            if (wasException) {
+                getLogger().info(getSiteName() + " - Reconnect in " + TimeUtils.toMinutesSeconds(retryPeriod));
                 doSleep(retryPeriod);
             }
         }
+
         protected abstract void cleanUp();
 
         protected void doSleep(long millis) throws InterruptedException {

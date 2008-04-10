@@ -32,4 +32,10 @@ public class TimeUtils {
 
         return (60 * m_i + s_i) * 1000;
     }
+
+    public static String toMinutesSeconds(long millis) {
+        long allSeconds = millis / 1000;
+        long seconds = allSeconds % 60;
+        return "{" + (allSeconds / 60) + "min" + (seconds == 0 ? "" : " " + seconds + "sec") + "}";        
+    }
 }
