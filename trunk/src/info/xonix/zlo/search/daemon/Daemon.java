@@ -160,7 +160,7 @@ public abstract class Daemon extends SiteSource {
                 wasException = true;
             } catch (DAOException e) {
                 if (e.getCause() instanceof ConnectException) {
-                    getLogger().error(getSiteName() + " - Problem with site... " + e.getCause().getClass());
+                    getLogger().error(getSiteName() + " - Problem with site... " + e.getCause().getClass().getName());
                 } else {
                     getLogger().error(getSiteName() + " - ", e);
                 }

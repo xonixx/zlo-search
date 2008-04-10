@@ -18,7 +18,7 @@ public class TimeUtils {
         int s_i = 0;
 
         if (m.find()) {
-            String m_s = m.group(1);     
+            String m_s = m.group(1);
             String s_s = m.group(2);
             if (m_s != null) {
                 m_i = Integer.parseInt(m_s.substring(0, m_s.length() - 1));
@@ -34,8 +34,14 @@ public class TimeUtils {
     }
 
     public static String toMinutesSeconds(long millis) {
+        if (millis == 0)
+            return "{0}";
         long allSeconds = millis / 1000;
         long seconds = allSeconds % 60;
-        return "{" + (allSeconds / 60) + "min" + (seconds == 0 ? "" : " " + seconds + "sec") + "}";        
+        long minutes = allSeconds / 60;
+        return "{" +
+                (minutes == 0 ? "" : minutes + "min") +
+                (minutes == 0 || seconds == 0 ? "" : " ") +
+                (seconds == 0 ? "" : seconds + "sec") + "}";
     }
 }
