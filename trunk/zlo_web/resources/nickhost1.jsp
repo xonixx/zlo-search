@@ -83,7 +83,7 @@
 
     <c:if test="${isAllSelected}">
         <c:set var="totalCnt" value="${totalNum.rows[0].cnt}" />
-        Всего сообщений: ${totalCnt} <a href="search?site=${siteNum}&${isHost ? 'host' : 'nick'}=${text}" class="search">?</a>
+        Всего сообщений: ${totalCnt == null ? 0 : totalCnt} <a href="search?site=${siteNum}&${isHost ? 'host' : 'nick'}=${text}" class="search">?</a>
 
         <c:if test="${totalCnt > 0}">
         <display:table name="${res.rows}" id="row" htmlId="resultTable">
