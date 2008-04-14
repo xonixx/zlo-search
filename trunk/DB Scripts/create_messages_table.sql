@@ -19,11 +19,17 @@ CREATE TABLE messages (num INT UNIQUE PRIMARY KEY,
 
 ALTER TABLE messages ADD INDEX (msgDate); -- for statistics
 
-ALTER TABLE messages
-  ADD INDEX nick_index (nick);
+--ALTER TABLE messages
+--  ADD INDEX nick_index (nick);
 
-ALTER TABLE messages
-  ADD INDEX host_index (host);
+--ALTER TABLE messages
+--  ADD INDEX host_index (host);
+
+--ALTER TABLE messages
+--  ADD INDEX idx_nick_host_7 (nick(7), host(7));
+
+--ALTER TABLE messages
+--  ADD INDEX idx_host_nick_7 (host(7), nick(7));
 
 --ALTER TABLE `zlo_storage`.`messages` CHANGE `host` host VARCHAR(100),
 --  CHANGE `title` title VARCHAR(255),
