@@ -137,18 +137,21 @@
                         <a class="search" href="msg?site=${msg.site.num}&num=${msg.num}<c:if test="${not empty hl.wordsStr}">&hw=${hl.wordsStr}</c:if>"><fmt:message key="link.saved.msg" /></a>
                     </display:column>
                     <display:column title="<%= HtmlStrings.HEADER_NICK.toString() %>" headerClass="head">
+                        <c:set var="nick"><c:out value="${msg.nick}" escapeXml="false" /></c:set>
                         <span class="nick">
                             <c:choose>
-                                <c:when test="${not msg.reg}"><c:out value="${msg.nick}" escapeXml="false" /></c:when>
+                                <c:when test="${not msg.reg}">${nick}</c:when>
                                 <c:otherwise>
-                                    <a href="http://${siteRoot}/?uinfo=<c:out value="${msg.nick}" escapeXml="false" />"><c:out value="${msg.nick}" escapeXml="false"/></a>
+                                    <a href="http://${siteRoot}/?uinfo=${nick}">${nick}</a>
                                 </c:otherwise>
                             </c:choose>
                         </span>
-                        <a class="search" href="search?site=${msg.site.num}&nick=<c:out value="${msg.nick}" escapeXml="false" />">?</a>
+                        <a class="search" href="search?site=${msg.site.num}&nick=${nick}">?</a>
+                        <a class="search" href="nickhost.jsp?site=${msg.site.num}&w=n&t=${nick}" title="хосты этого ника">h</a>
                     </display:column>
                     <display:column title="<%= HtmlStrings.HEADER_HOST.toString() %>" class="small" headerClass="head">
                         ${msg.host} <a class="search" href="search?site=${msg.site.num}&host=${msg.host}">?</a>
+                        <a class="search" href="nickhost.jsp?site=${msg.site.num}&w=h&t=${msg.host}" title="ники этого хоста">n</a>
                     </display:column>
                     <display:column title="<%= HtmlStrings.HEADER_DATE.toString() %>" property="date"
                                     class="small nowrap" headerClass="head" />

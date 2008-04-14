@@ -20,6 +20,8 @@
     }
 %>
 
+<c:set var="siteNum" value="<%= site.getNum() %>" /> 
+<c:set var="siteUrl" value="<%= site.getSITE_URL() %>" />
 <sql:setDataSource dataSource="<%= site.getDataSource() %>" />
 
 <c:set var="isHost" value="${param['w'] == 'h'}" />
@@ -62,7 +64,7 @@
 </c:if>
 
 <c:set var="title">
-    ¬се ${isHost ? 'ники хоста' : 'хосты ника'} ${text} на сайте <%= site.getSITE_URL() %>
+    ¬се ${isHost ? 'ники хоста' : 'хосты ника'} ${text} на сайте ${siteUrl}
 </c:set>
 <title>${title}</title>
 
@@ -83,28 +85,31 @@
 
     <c:if test="${isAllSelected}">
         <c:set var="totalCnt" value="${totalNum.rows[0].cnt}" />
-        ¬сего сообщений: ${totalCnt}
+        ¬сего сообщений: ${totalCnt} <a href="search?site=${siteNum}&${isHost ? 'host' : 'nick'}=${text}" class="search">?</a>
 
         <c:if test="${totalCnt > 0}">
         <display:table name="${res.rows}" id="row" htmlId="resultTable">
             <display:column headerClass="head" title="${isHost ? 'Ќик' : '’ост'}" class="center">
+                <c:set var="nick"><c:out value="${row.nick}" escapeXml="false" /></c:set>
                 <c:choose>
                     <c:when test="${isHost}">
                         <span class="nick">
                             <c:choose>
                                 <c:when test="${row.reg}">
-                                    <a href="<%= site.getSITE_URL() %>/?uinfo=<c:out value="${row.nick}" escapeXml="false" />"><c:out value="${row.nick}" escapeXml="false" /></a>
+                                    <a href="http://${siteUrl}/?uinfo=${nick}">${nick}</a>
                                 </c:when>
-                                <c:otherwise><c:out value="${row.nick}" escapeXml="false" /></c:otherwise>
+                                <c:otherwise>${nick}</c:otherwise>
                             </c:choose>
                         </span>
-                        <a href="search?site=<%= site.getNum() %>&nick=<c:out value="${row.nick}" escapeXml="false" />" class="search">?</a>
-                        <a href="nickhost.jsp?site=<%= site.getNum() %>&w=n&t=<c:out value="${row.nick}" escapeXml="false" />" class="search">a</a>
+                        <a href="search?site=${siteNum}&nick=${nick}" class="search" title="поиск этого ника">?</a>
+                        <a href="search?site=${siteNum}&host=${text}&nick=${nick}" class="search" title="поиск по нику и хосту">?nh</a>
+                        <a href="nickhost.jsp?site=${siteNum}&w=n&t=${nick}" class="search" title="хосты этого ника">h</a>
                     </c:when>
                     <c:otherwise>
                         ${row.host}
-                        <a href="search?site=<%= site.getNum() %>&host=${row.host}" class="search">?</a>
-                        <a href="nickhost.jsp?site=<%= site.getNum() %>&w=h&t=${row.host}" class="search">a</a>
+                        <a href="search?site=${siteNum}&host=${row.host}" class="search" title="поиск этого хоста">?</a>
+                        <a href="search?site=${siteNum}&nick=${text}&host=${row.host}" class="search" title="поиск по нику и хосту">?nh</a>
+                        <a href="nickhost.jsp?site=${siteNum}&w=h&t=${row.host}" class="search" title="ники этого хоста">n</a>
                     </c:otherwise>
                 </c:choose>
             </display:column>
@@ -113,3 +118,7 @@
         </c:if>
     </c:if>
 </div>
+<script type="text/javascript">
+    document.getElementsByName("t")[0].focus();
+</script>
+<jsp:include page="WEB-INF/include/_ga.jsp" flush="true" />
