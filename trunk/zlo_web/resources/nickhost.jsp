@@ -20,7 +20,7 @@
     }
 %>
 
-<c:set var="siteNum" value="<%= site.getNum() %>" /> 
+<c:set var="siteNum" value="<%= site.getNum() %>" />
 <c:set var="siteUrl" value="<%= site.getSITE_URL() %>" />
 <sql:setDataSource dataSource="<%= site.getDataSource() %>" />
 
@@ -28,35 +28,33 @@
 <c:set var="isNick" value="${param['w'] == 'n'}" />
 <c:set var="text" value="${param['t']}" />
 
-<c:set var="isAllSelected" value="${ (isHost or isNick) and not empty text  }" />
+<c:set var="isAllSelected" value="${ (isHost or isNick) and not empty text }" />
 
 <c:if test="${isAllSelected}">
     <c:choose>
         <c:when test="${isHost}">
             <sql:query var="res">
-                select nick, count(*) cnt, reg from messages
+                select nick, cnt, reg from nickhost
                 where host=?
-                group by nick
                 order by cnt desc;
                 <sql:param>${text}</sql:param>
             </sql:query>
             <sql:query var="totalNum">
-                select count(*) cnt from messages
-                where host=?;
+                select sum(cnt) cnt from nickhost
+                where host=?
                 <sql:param>${text}</sql:param>
             </sql:query>
         </c:when>
         <c:otherwise>
             <sql:query var="res">
-                select host, count(*) cnt from messages
+                select host, cnt, reg from nickhost
                 where nick=?
-                group by host
                 order by cnt desc;
                 <sql:param>${text}</sql:param>
             </sql:query>
             <sql:query var="totalNum">
-                select count(*) cnt from messages
-                where nick=?;
+                select sum(cnt) cnt from nickhost
+                where nick=?
                 <sql:param>${text}</sql:param>
             </sql:query>
         </c:otherwise>
@@ -85,7 +83,7 @@
 
     <c:if test="${isAllSelected}">
         <c:set var="totalCnt" value="${totalNum.rows[0].cnt}" />
-        Всего сообщений: ${totalCnt} <a href="search?site=${siteNum}&${isHost ? 'host' : 'nick'}=${text}" class="search">?</a>
+        Всего сообщений: ${totalCnt == null ? 0 : totalCnt} <a href="search?site=${siteNum}&${isHost ? 'host' : 'nick'}=${text}" class="search">?</a>
 
         <c:if test="${totalCnt > 0}">
         <display:table name="${res.rows}" id="row" htmlId="resultTable">
