@@ -37,7 +37,9 @@ public class DbManager {
     public static final String MSG_STATUS = ZloMessage.STATUS;
 
     private static final String DB_DICT_LAST_INDEXED =          "lastIndexed";
+    private static final String DB_DICT_LAST_INDEXED_DATE =          "lastIndexed_date";
     private static final String DB_DICT_LAST_INDEXED_DOUBLE =   "lastIndexedDouble";
+    private static final String DB_DICT_LAST_INDEXED_DOUBLE_DATE =   "lastIndexedDouble_date";
 
     private DbAccessor dbAccessor;
 
@@ -280,15 +282,24 @@ public class DbManager {
     }
 
     public void setLastIndexedNumber(int num) throws DbException {
-        if (Config.USE_DOUBLE_INDEX)
-            dbAccessor.getDbDict().setInt(DB_DICT_LAST_INDEXED_DOUBLE, num);
-        else
-            dbAccessor.getDbDict().setInt(DB_DICT_LAST_INDEXED, num);
+        DbDict dbDict = dbAccessor.getDbDict();
+        if (Config.USE_DOUBLE_INDEX) {
+            dbDict.setInt(DB_DICT_LAST_INDEXED_DOUBLE, num);
+            dbDict.setDate(DB_DICT_LAST_INDEXED_DOUBLE_DATE, new Date());
+        } else {
+            dbDict.setInt(DB_DICT_LAST_INDEXED, num);
+            dbDict.setDate(DB_DICT_LAST_INDEXED_DATE, new Date());
+        }
     }
 
     public int getLastIndexedNumber() throws DbException {
         Integer lastIndexed = dbAccessor.getDbDict().getInt(Config.USE_DOUBLE_INDEX ? DB_DICT_LAST_INDEXED_DOUBLE : DB_DICT_LAST_INDEXED);
         return lastIndexed == null ? 0 : lastIndexed;
+    }
+
+    public Date getLastIndexedDate() throws DbException {
+        Date lastIndexedDate = dbAccessor.getDbDict().getDate(Config.USE_DOUBLE_INDEX ? DB_DICT_LAST_INDEXED_DOUBLE_DATE : DB_DICT_LAST_INDEXED_DATE);
+        return lastIndexedDate == null ? new Date(0) : lastIndexedDate;
     }
 
     private ZloMessage getMessage(DbResult rs) throws DbException {

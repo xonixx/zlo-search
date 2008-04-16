@@ -49,6 +49,7 @@ public class SearchServlet extends BaseServlet {
     public static final String QS_PAGE_NUMBER = "page";
 
     public static final String QS_LAST_MSGS = "lastMsgs";
+    public static final String QS_LAST_MSGS_DATES = "lastMsgs_dates";
 
     public static final String QS_IN_TITLE = "inTitle";
     public static final String QS_IN_BODY = "inBody";
@@ -270,6 +271,7 @@ public class SearchServlet extends BaseServlet {
     private void showStatistics(ForwardingRequest request) throws DbException {
         DbManager dbm = getSite(request).getDbManager();
         request.setAttribute(QS_LAST_MSGS, new int[]{dbm.getLastMessageNumber(), dbm.getLastIndexedNumber()});
+        request.setAttribute(QS_LAST_MSGS_DATES, new Date[]{new Date(0), dbm.getLastIndexedDate()}); // todo: last saved date?
     }
 
     private void logRequest(ForwardingRequest request, String query) {
