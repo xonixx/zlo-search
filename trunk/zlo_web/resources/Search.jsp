@@ -92,12 +92,10 @@
         <c:when test="${empty requestScope['error']}">
             <c:if test="${not empty requestScope['lastMsgs']}">
                 <div class="content">
-                    <table><tr>
-                        <td><fmt:message key="label.last.saved.msg" /></td>
-                        <td>${requestScope['lastMsgs'][0]}</td>
-                    </tr><tr>
-                        <td><fmt:message key="label.last.indexed.msg" /></td>
-                        <td>${requestScope['lastMsgs'][1]}</td></tr></table>
+                    <table cellspacing="5">
+                        <tr><td><fmt:message key="label.last.saved.msg" /></td><td>${requestScope['lastMsgs'][0]}</td><td>(<fmt:formatDate value="${requestScope['lastMsgs_dates'][0]}" pattern="dd/MM/yyyy HH:mm" />)</td></tr>
+                        <tr><td><fmt:message key="label.last.indexed.msg" /></td><td>${requestScope['lastMsgs'][1]}</td><td>(<fmt:formatDate value="${requestScope['lastMsgs_dates'][1]}" pattern="dd/MM/yyyy HH:mm" />)</td></tr>
+                    </table>
                 </div>
             </c:if>
             <c:if test="${not empty sessionScope['searchResult']}">
