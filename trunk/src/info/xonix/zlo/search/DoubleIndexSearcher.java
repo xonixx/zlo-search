@@ -17,6 +17,7 @@ import info.xonix.zlo.search.utils.TimeUtils;
 import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Date;
 
 /**
  * Author: Vovan
@@ -42,9 +43,12 @@ public class DoubleIndexSearcher {
 
     private final Object closeLock = new Object();
 
+    private Date renewDate;
+
     private DoubleIndexSearcher(String dir, Sort renewingSort) {
         this.renewingSort = renewingSort;
         this.indexesDir = dir;
+        renewDate = new Date();
     }
 
     public DoubleIndexSearcher(SiteAccessor site, Sort renewingSort) {
@@ -205,6 +209,8 @@ public class DoubleIndexSearcher {
             isReopeningSmall = false;
         else
             isReopeningBig = false;
+
+        renewDate = new Date();
     }
 
     private void startReopeningThread(final IndexReader r) {
@@ -290,5 +296,9 @@ public class DoubleIndexSearcher {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Date getRenewDate() {
+        return renewDate;
     }
 }

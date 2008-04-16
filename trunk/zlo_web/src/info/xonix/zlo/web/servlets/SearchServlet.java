@@ -200,9 +200,11 @@ public class SearchServlet extends BaseServlet {
                 }
 
                 SearchResult searchResult;
-
-                if (session.getAttribute(SESS_SEARCH_RESULT) == null
-                        || ((SearchResult) session.getAttribute(SESS_SEARCH_RESULT)).isNotTheSameSearch(searchRequest)
+                SearchResult prevSearchResult = (SearchResult) session.getAttribute(SESS_SEARCH_RESULT);
+                
+                if (prevSearchResult == null
+                        || prevSearchResult.isNotTheSameSearch(searchRequest)
+                        || prevSearchResult.isOld()
                         || StringUtils.isEmpty(request.getParameter(QS_PAGE_NUMBER)) // turning pages
                         ) {
 
@@ -220,7 +222,8 @@ public class SearchServlet extends BaseServlet {
 
                     session.setAttribute(SESS_SEARCH_RESULT, searchResult);
                 } else {
-                    searchResult = (SearchResult) session.getAttribute(SESS_SEARCH_RESULT);
+                    logger.info("The same search: " + text);
+                    searchResult = prevSearchResult;
                     searchResult.setNewSearch(false); // means we use result of previous search
                 }
 

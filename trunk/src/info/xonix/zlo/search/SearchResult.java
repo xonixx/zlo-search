@@ -5,11 +5,13 @@ import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
+import org.apache.log4j.Logger;
 import org.displaytag.pagination.PaginatedList;
 import info.xonix.zlo.search.model.ZloMessageAccessor;
 import info.xonix.zlo.search.dao.Site;
 
 import java.util.Iterator;
+import java.util.Date;
 
 /**
  * Author: gubarkov
@@ -17,6 +19,8 @@ import java.util.Iterator;
  * Time: 16:59:08
  */
 public class SearchResult implements Iterable {
+
+    public static final Logger logger = Logger.getLogger(SearchResult.class);
 
     private DoubleHits doubleHits;
     private IndexSearcher searcher;
@@ -27,8 +31,11 @@ public class SearchResult implements Iterable {
     private SearchRequest lastSearch;
 
     private boolean newSearch = true; // by default after created
+    private Date creationDate;
+    private DoubleIndexSearcher doubleIndexSearcher;
 
     public SearchResult() {
+        creationDate = new Date(); // now
     }
 
     public DoubleHits getHits() {
@@ -133,5 +140,20 @@ public class SearchResult implements Iterable {
 
     public void setNewSearch(boolean newSearch) {
         this.newSearch = newSearch;
+    }
+
+    public void setDoubleIndexSearcher(DoubleIndexSearcher dis) {
+        this.doubleIndexSearcher = dis;
+    }
+
+    /**
+     * if creationDate is before renewing indexReader -> reader will be closed
+     * @return
+     */
+    public boolean isOld() {
+        boolean old = creationDate.before(doubleIndexSearcher.getRenewDate());
+        if (old)
+            logger.info("Search result for " + query + " is old.");
+        return old;
     }
 }

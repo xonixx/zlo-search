@@ -11,7 +11,7 @@ import java.io.Reader;
  * Time: 4:32:05
  */
 public class T1{
- public static void main(String[] args) {
+/* public static void main(String[] args) {
    int x = 5, y = 7;
    swap(x, y);
    System.out.println("x = " + x + ", y = " + y );
@@ -27,6 +27,10 @@ public class T1{
              return null;
          }
      };
- }
+ }*/
+    public static void main(String[] args) {
+        Object a = (Integer) null;
+    System.out.println(a);
+    }
 }
 
