@@ -293,13 +293,11 @@ public class DbManager {
     }
 
     public int getLastIndexedNumber() throws DbException {
-        Integer lastIndexed = dbAccessor.getDbDict().getInt(Config.USE_DOUBLE_INDEX ? DB_DICT_LAST_INDEXED_DOUBLE : DB_DICT_LAST_INDEXED);
-        return lastIndexed == null ? 0 : lastIndexed;
+        return dbAccessor.getDbDict().getInt(Config.USE_DOUBLE_INDEX ? DB_DICT_LAST_INDEXED_DOUBLE : DB_DICT_LAST_INDEXED, 0);
     }
 
     public Date getLastIndexedDate() throws DbException {
-        Date lastIndexedDate = dbAccessor.getDbDict().getDate(Config.USE_DOUBLE_INDEX ? DB_DICT_LAST_INDEXED_DOUBLE_DATE : DB_DICT_LAST_INDEXED_DATE);
-        return lastIndexedDate == null ? new Date(0) : lastIndexedDate;
+        return dbAccessor.getDbDict().getDate(Config.USE_DOUBLE_INDEX ? DB_DICT_LAST_INDEXED_DOUBLE_DATE : DB_DICT_LAST_INDEXED_DATE, new Date(0));
     }
 
     private ZloMessage getMessage(DbResult rs) throws DbException {
