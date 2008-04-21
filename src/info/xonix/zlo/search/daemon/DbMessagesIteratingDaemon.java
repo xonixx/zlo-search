@@ -23,8 +23,7 @@ public abstract class DbMessagesIteratingDaemon extends Daemon {
     private class DbMessagesIterationProcess extends Process {
 
         protected int getFromIndex() throws DAOException {
-            Integer val = dbDict.getInt(getIteratingVariableName());
-            return val == null ? 0 : val;
+            return dbDict.getInt(getIteratingVariableName(), 0);
         }
 
         protected int getEndIndex() throws DAOException {

@@ -74,16 +74,36 @@ public class DbDict {
         return (Integer) getVal(name);
     }
 
+    public int getInt(String name, int defaultVal) throws DbException {
+        Integer i = getInt(name);
+        return i == null ? defaultVal : i;
+    }
+
     public String getStr(String name) throws DbException {
         return (String) getVal(name);
+    }
+
+    public String getStr(String name, String defaultVal) throws DbException {
+        String s = getStr(name);
+        return s == null ? defaultVal : s;
     }
 
     public Boolean getBool(String name) throws DbException {
         return (Boolean) getVal(name);
     }
+
+    public boolean getBool(String name, boolean defaultVal) throws DbException {
+        Boolean b = getBool(name);
+        return b == null ? defaultVal : b;
+    }
     
     public Date getDate(String name) throws DbException {
         return (Date) getVal(name);
+    }
+
+    public Date getDate(String name, Date defaultVal) throws DbException {
+        Date d = getDate(name);
+        return d == null ? defaultVal : d;
     }
 
     public void remove(String name) throws DbException {

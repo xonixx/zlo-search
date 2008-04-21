@@ -44,8 +44,8 @@ public class SavedMessageServlet extends BaseServlet {
 
         ZloMessage msg;
         try {
-            msg = new DB(getSite(request)).getMessageByNumber(num);
-            if (msg != null) {
+            msg = getSite(request).getDB().getMessageByNumber(num);
+            if (msg != null && msg.getStatus() != ZloMessage.Status.DELETED) {
                 request.setAttribute(SAVED_MSG, msg);
             } else {
                 request.setAttribute(ERROR, ErrorMessage.MessageNotFound);
