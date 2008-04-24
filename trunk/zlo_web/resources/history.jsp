@@ -39,7 +39,7 @@
 
 <div align="center">
     <h3>История запросов</h3>
-    <small>(всего запросов: <c:out value="${totalNum.rows[0].count}" />, показаны последние: <c:out value="${numberToShow}" />)</small>
+    <small>(всего запросов:${totalNum.rows[0].count}, показаны последние: ${numberToShow})</small>
 
     <% int i=0; %>
     <display:table name="${res.rows}" id="row" htmlId="resultTable" decorator="info.xonix.zlo.web.decorators.HistoryTableDecorator">
@@ -56,7 +56,7 @@
             <a href="http://<%= site.getSITE_URL() %>">
                 <%= site.getName() %></a>
         </display:column>
-        <display:column property="req_date" title="Дата" headerClass="head" class="small" />
+        <display:column property="reqDate" title="Дата" headerClass="head" class="small" />
         <c:if test="${showAll}">
             <display:column property="host" title="Хост" class="small" headerClass="head" />
             <display:column property="user_agent" title="User-Agent" class="small" headerClass="head" />
