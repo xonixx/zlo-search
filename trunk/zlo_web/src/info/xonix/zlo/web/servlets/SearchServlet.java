@@ -224,9 +224,9 @@ public class SearchServlet extends BaseServlet {
 
                     cache.put(textHash, searchResult);
                 } else {
-                    logger.info("The same search: " + text);
                     searchResult = prevSearchResult;
                     searchResult.setNewSearch(false); // means we use result of previous search
+                    logger.info("The same search: " + searchResult.getQuery());
                 }
 
                 if (searchResult != null) {

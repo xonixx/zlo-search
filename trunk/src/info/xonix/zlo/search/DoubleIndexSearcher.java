@@ -106,6 +106,7 @@ public class DoubleIndexSearcher {
         if (smallReader == null) {
             try {
                 smallReader = IndexReader.open(getSmallPath());
+                renewDate = new Date();
             } catch (IOException e) {
                 logger.error("Can't create smallReader... Creating empty one...");
                 try {
