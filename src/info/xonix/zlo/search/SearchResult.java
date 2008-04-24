@@ -31,11 +31,10 @@ public class SearchResult implements Iterable {
     private SearchRequest lastSearch;
 
     private boolean newSearch = true; // by default after created
-    private Date creationDate;
+    private Date searchDate;
     private DoubleIndexSearcher doubleIndexSearcher;
 
     public SearchResult() {
-        creationDate = new Date(); // now
     }
 
     public DoubleHits getHits() {
@@ -44,6 +43,10 @@ public class SearchResult implements Iterable {
 
     public void setHits(DoubleHits doubleHits) {
         this.doubleHits = doubleHits;
+    }
+
+    public void setSearchDateNow() {
+        searchDate = new Date(); // now
     }
 
     public void setHits(Hits hits) {
@@ -151,7 +154,7 @@ public class SearchResult implements Iterable {
      * @return
      */
     public boolean isOld() {
-        boolean old = creationDate.before(doubleIndexSearcher.getRenewDate());
+        boolean old = searchDate.before(doubleIndexSearcher.getRenewDate());
         if (old)
             logger.info("Search result for " + query + " is old.");
         return old;

@@ -193,6 +193,7 @@ public class ZloSearcher extends SiteSource {
             DoubleIndexSearcher dis = getDoubleIndexSearcher();
             result.setDoubleIndexSearcher(dis);
             result.setHits(dis.search(query, sort));
+            result.setSearchDateNow();
         } catch (org.apache.lucene.queryParser.ParseException e) {
             throw new ParseException(queryStr, e);
         } catch (IOException e) {
