@@ -4,6 +4,8 @@ import org.displaytag.decorator.TableDecorator;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.TreeMap;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * Author: Vovan
@@ -13,6 +15,7 @@ import java.util.TreeMap;
 public class HistoryTableDecorator extends TableDecorator {
 
     public static final int MAX_LEN = 40;
+    public static final DateFormat DF = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
     private String shortenString(String s, int len) {
         if (s.length() > len) {
@@ -41,9 +44,17 @@ public class HistoryTableDecorator extends TableDecorator {
         return shortenString(((TreeMap) getCurrentRowObject()).get("req_host"));
     }
 
+    public String getReqDate() {
+        return DF.format(((TreeMap) getCurrentRowObject()).get("req_date"));
+    }
+
     public String getUserAgentSmall() {
         TreeMap row = (TreeMap) getCurrentRowObject();
         String userAgent = (String) row.get("user_agent");
+
+        if (userAgent == null)
+            userAgent = "";
+        
         return userAgent.contains("MSIE")
             ? "Internet Explorer"
             : userAgent.contains("Firefox") || userAgent.contains("Minefield")

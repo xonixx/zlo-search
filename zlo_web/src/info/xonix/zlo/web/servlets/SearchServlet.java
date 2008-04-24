@@ -13,13 +13,13 @@ import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.db.DbManager;
 import info.xonix.zlo.search.db.DbAccessor;
 import info.xonix.zlo.web.CookieUtils;
+import info.xonix.zlo.web.RequestCache;
 import info.xonix.zlo.search.FoundTextHighlighter;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.text.ParseException;
@@ -68,7 +68,7 @@ public class SearchServlet extends BaseServlet {
     public static final String REQ_HIGHLIGHT_WORDS = "hw";
 
     // session keys
-    public static final String SESS_SEARCH_RESULT = "searchResult";
+    public static final String REQ_SEARCH_RESULT = "searchResult";
     public static final String SESS_PAGE_SIZE = QS_PAGE_SIZE;
 
     public static final String ERROR = "error";
@@ -77,6 +77,8 @@ public class SearchServlet extends BaseServlet {
     public static final String JSP_SEARCH = "/Search.jsp";
 
     public static SimpleDateFormat FROM_TO_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
+
+    private static RequestCache cache = new RequestCache();
 
     protected void doGet(ForwardingRequest request, HttpServletResponse response) throws ServletException, IOException {
         String topicCodeStr = request.getParameter(QS_TOPIC_CODE);
@@ -102,8 +104,6 @@ public class SearchServlet extends BaseServlet {
         setSiteInSession(request, response);
 
         try {
-            HttpSession session = request.getSession(true); // create if session not started
-
             // set default topic code
             if (StringUtils.isEmpty(topicCodeStr)) {
                 request.setParameter(QS_TOPIC_CODE, "-1"); // all
@@ -154,7 +154,7 @@ public class SearchServlet extends BaseServlet {
                     pageSize = Integer.parseInt(Config.NUMS_PER_PAGE[0]);
                 }
             }
-            session.setAttribute(SESS_PAGE_SIZE, pageSize);
+            request.setAttribute(SESS_PAGE_SIZE, pageSize);
 
             Date fromDate;
             Date toDate;
@@ -184,8 +184,8 @@ public class SearchServlet extends BaseServlet {
                 }
             }
 
-            session.setAttribute(QS_TO_DATE, FROM_TO_DATE_FORMAT.format(toDate));
-            session.setAttribute(QS_FROM_DATE, FROM_TO_DATE_FORMAT.format(fromDate));
+            request.setAttribute(QS_TO_DATE, FROM_TO_DATE_FORMAT.format(toDate));
+            request.setAttribute(QS_FROM_DATE, FROM_TO_DATE_FORMAT.format(fromDate));
 
             text = preprocessSearchText(text, searchType);
 
@@ -200,18 +200,19 @@ public class SearchServlet extends BaseServlet {
                     searchRequest.setToDate(null);
                 }
 
+                int textHash = text.hashCode();
+
                 SearchResult searchResult;
-                SearchResult prevSearchResult = (SearchResult) session.getAttribute(SESS_SEARCH_RESULT);
-                
+                SearchResult prevSearchResult = cache.get(textHash);
+
                 if (prevSearchResult == null
                         || prevSearchResult.isNotTheSameSearch(searchRequest)
                         || prevSearchResult.isOld()
-                        || StringUtils.isEmpty(request.getParameter(QS_PAGE_NUMBER)) // turning pages
+                        || StringUtils.isEmpty(request.getParameter(QS_PAGE_NUMBER)) // not turning pages, but searching
                         ) {
 
                     try {
                         searchResult = searchRequest.performSearch();
-                        logRequest(request, searchResult.getQuery().toString());
                     } catch (BooleanQuery.TooManyClauses e) { // например как в поиске текста +с*
                         errorMsg = ErrorMessage.TooComplexSearch;
                         throw e;
@@ -221,7 +222,7 @@ public class SearchServlet extends BaseServlet {
                         throw e;
                     }
 
-                    session.setAttribute(SESS_SEARCH_RESULT, searchResult);
+                    cache.put(textHash, searchResult);
                 } else {
                     logger.info("The same search: " + text);
                     searchResult = prevSearchResult;
@@ -229,6 +230,14 @@ public class SearchServlet extends BaseServlet {
                 }
 
                 if (searchResult != null) {
+                    // log only initial search. Moved here - because now cached for all users,
+                    // but log need to be performed nevertheless for every user
+                    if (StringUtils.isEmpty(request.getParameter(QS_PAGE_NUMBER))) {
+                        logRequest(request, searchResult.getQuery().toString());
+                    }
+
+                    request.setAttribute(REQ_SEARCH_RESULT, searchResult);
+
                     ZloPaginatedList paginatedList = (ZloPaginatedList) searchResult.createPaginatedList(getSite(request));
                     paginatedList.setObjectsPerPage(pageSize);
                     if (StringUtils.isNotEmpty(request.getParameter(QS_PAGE_NUMBER))) {
@@ -242,12 +251,14 @@ public class SearchServlet extends BaseServlet {
                     }
 
                     paginatedList.refreshCurrentList();
+                } else {
+                    logger.error("searchResult == null. This should not happen!");
                 }
             } else if (StringUtils.isNotEmpty(request.getParameter(QS_SUBMIT))) {
                 errorMsg = ErrorMessage.MustSelectCriterion;
                 throw new Exception();
             } else {
-                session.setAttribute(SESS_SEARCH_RESULT, null);
+                request.setAttribute(REQ_SEARCH_RESULT, null);
                 showStatistics(request);
             }
 

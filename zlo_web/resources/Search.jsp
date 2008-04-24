@@ -60,8 +60,8 @@
                             <fmt:message key="label.host" /> <input type="text" name="host" <c:if test="${not empty param['host']}">value="${param['host']}"</c:if>style="width:200px;" />
                             <br/>
                             <input type="checkbox" name="dates" id="dates" onclick="changedDatesSelector();" <c:if test="${not empty param['dates']}">checked="checked"</c:if>/> <label for="dates"><fmt:message key="label.dates" /></label>
-                            <fmt:message key="label.from.date" /> <input type="text" name="fd" id="fd" value="${sessionScope['fd']}" />
-                            <fmt:message key="label.to.date" /> <input type="text" name="td" id="td" value="${sessionScope['td']}" />
+                            <fmt:message key="label.from.date" /> <input type="text" name="fd" id="fd" value="${requestScope['fd']}" />
+                            <fmt:message key="label.to.date" /> <input type="text" name="td" id="td" value="${requestScope['td']}" />
                             <br/>
                             <fmt:message key="label.site" /> <jsp:getProperty name="backendBean" property="siteSelector" />
                             <script type="text/javascript">
@@ -83,8 +83,8 @@
     <c:if test="${requestScope['debug'] == true}">
         <div id="debug">
             <pre>
-                Query:          ${sessionScope['searchResult'].query}
-                isNewSearch:    ${sessionScope['searchResult'].newSearch}
+                Query:          ${requestScope['searchResult'].query}
+                isNewSearch:    ${requestScope['searchResult'].newSearch}
             </pre>
         </div>
     </c:if>
@@ -98,9 +98,9 @@
                     </table>
                 </div>
             </c:if>
-            <c:if test="${not empty sessionScope['searchResult']}">
+            <c:if test="${not empty requestScope['searchResult']}">
                 <div class="searchResOuter">
-                <display:table name="sessionScope.searchResult.paginatedList" id="msg" htmlId="resultTable"
+                <display:table name="requestScope.searchResult.paginatedList" id="msg" htmlId="resultTable"
                                decorator="info.xonix.zlo.web.decorators.SearchResultLineDecorator" requestURI="search"
                                 class="searchRes">
                     <display:setProperty name="basic.msg.empty_list"><span class="pagebanner">Сообщения, соответствующие введенным критериям поиска не найдены. </span></display:setProperty>
