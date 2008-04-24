@@ -200,15 +200,15 @@ public class SearchServlet extends BaseServlet {
                     searchRequest.setToDate(null);
                 }
 
-                int textHash = text.hashCode();
+                int searchHash = StringUtils.join(new Object[]{text, inTitle, inBody, inReg, inHasUrl, inHasImg, nick, host, topicCode}, '|').hashCode();
 
                 SearchResult searchResult;
-                SearchResult prevSearchResult = cache.get(textHash);
+                SearchResult prevSearchResult = cache.get(searchHash);
 
                 if (prevSearchResult == null
                         || prevSearchResult.isNotTheSameSearch(searchRequest)
-                        || prevSearchResult.isOld()
-                        || StringUtils.isEmpty(request.getParameter(QS_PAGE_NUMBER)) // not turning pages, but searching
+                        || prevSearchResult.isOld() // this should enforce re-search while indexing, so VV seems not needed more
+//                        || StringUtils.isEmpty(request.getParameter(QS_PAGE_NUMBER)) // not turning pages, but searching // commenting by now todo: check if this is not needed more
                         ) {
 
                     try {
@@ -222,7 +222,7 @@ public class SearchServlet extends BaseServlet {
                         throw e;
                     }
 
-                    cache.put(textHash, searchResult);
+                    cache.put(searchHash, searchResult);
                 } else {
                     searchResult = prevSearchResult;
                     searchResult.setNewSearch(false); // means we use result of previous search
