@@ -25,6 +25,16 @@ public class FoundTextHighlighter {
     private String[] highlightWords;
     private String text;
 
+    private String hlClass;
+
+    public String getHlClass() {
+        return hlClass;
+    }
+
+    public void setHlClass(String hlClass) {
+        this.hlClass = hlClass;
+    }
+
     public void setHighlightWords(String[] highlightWords) {
         this.highlightWords = highlightWords;
     }
@@ -53,7 +63,7 @@ public class FoundTextHighlighter {
                 w = w.replaceAll("\\?", "[^\\\\s]{1}").replaceAll("\\*", "[^\\\\s]*?");
                 txt = txt.replaceAll("(?iu)" +                                              // case insensetive, unicode
                         "(?<!\\<[^<>]{0,300})" +                                            // not to break html tags
-                        "(\\b" + w + "[^\\s]*?)\\b", "<span class=\"hl\">$1</span>");               // highlight
+                        "(\\b" + w + "[^\\s]*?)\\b", "<span class=\"" + (StringUtils.isEmpty(hlClass) ? "hl" : hlClass) + "\">$1</span>");               // highlight;
             }
         } catch (PatternSyntaxException ex) {
             logger.error("Regex parse error: ", ex);        

@@ -188,6 +188,7 @@ public class SearchServlet extends BaseServlet {
             request.setAttribute(QS_FROM_DATE, FROM_TO_DATE_FORMAT.format(fromDate));
 
             text = preprocessSearchText(text, searchType);
+            nick = preprocessSearchNick(nick);
 
             SearchRequest searchRequest = new SearchRequest(getSite(request), text, inTitle, inBody, inReg, inHasUrl, inHasImg, nick, host, topicCode, fromDate, toDate);
 
@@ -319,5 +320,10 @@ public class SearchServlet extends BaseServlet {
         }
 
         return text;
+    }
+
+    private String preprocessSearchNick(String nick) {
+        // todo: need to index stripped nicks too!! 
+        return StringUtils.strip(nick);
     }
 }

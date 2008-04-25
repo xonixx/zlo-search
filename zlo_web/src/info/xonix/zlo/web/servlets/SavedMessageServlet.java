@@ -1,11 +1,10 @@
 package info.xonix.zlo.web.servlets;
 
-import org.apache.commons.lang.StringUtils;
 import info.xonix.zlo.search.config.ErrorMessage;
 import info.xonix.zlo.search.dao.DAOException;
-import info.xonix.zlo.search.dao.DB;
 import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
+import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +18,7 @@ import java.io.IOException;
 public class SavedMessageServlet extends BaseServlet {
     public static final String QS_NUM = "num";
     public static final String ERROR = "error";
-    public static final String SAVED_MSG = "savedMsg";
+    public static final String SAVED_MSG = "msg";
 
     public static final String JSP_SAVED_MSG = "/SavedMsg.jsp";
 

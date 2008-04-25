@@ -104,5 +104,6 @@ h3 {
 }
 
 .attention {color:red; font-weight:bold;}
-.hl { color: red; }
+.hl0 { color:red; }
+.hl { background-color:yellow; }
 .center { text-align:center; }
