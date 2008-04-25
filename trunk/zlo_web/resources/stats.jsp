@@ -53,6 +53,8 @@
 </c:set>
 <title>${title}</title>
 
+<tiles:insertDefinition name="header.stats" />
+
 <div align="center">
 <h3>${title}</h3>
 

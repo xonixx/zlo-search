@@ -4,6 +4,9 @@
 <link rel="stylesheet" type="text/css" href="main.css" />
 
 <title>О системе</title>
+
+<tiles:insertDefinition name="header.about" />
+
 <div class="content">
     <h3>О системе</h3>
     Поисковик использует следующие технологии:

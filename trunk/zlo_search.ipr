@@ -297,7 +297,7 @@
       <module fileurl="file://$PROJECT_DIR$/zlo_web/zlo_web.iml" filepath="$PROJECT_DIR$/zlo_web/zlo_web.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="1.6 (1)" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/classes" />
   </component>
   <component name="ResourceManagerContainer">
@@ -410,6 +410,22 @@
       <SOURCES>
         <root url="jar://D:/TEST/JAVA/ZloSearcher/lib-src/spring-src.zip!/" />
       </SOURCES>
+    </library>
+    <library name="tiles">
+      <CLASSES>
+        <root url="jar://D:/TEST/JAVA/ZloSearcher/lib/tiles-api-2.0.5.jar!/" />
+        <root url="jar://D:/TEST/JAVA/ZloSearcher/lib/tiles-core-2.0.5.jar!/" />
+        <root url="jar://D:/TEST/JAVA/ZloSearcher/lib/tiles-jsp-2.0.5.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="digister">
+      <CLASSES>
+        <root url="jar://D:/TEST/JAVA/ZloSearcher/lib/commons-digester-1.8.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
     </library>
   </component>
 </project>

@@ -29,6 +29,10 @@ h3 {
     margin: 0 0.2em;
 }
 
+#header a:link, #header a:visited { color:blue }
+#header a.activeLink { color:blue; font-weight:bold; }
+#header a:hover { background-color:#cc3300; color:white; }
+
 #debug {
     background-color: blanchedalmond;
 }

@@ -78,6 +78,10 @@
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib" />
           </containerElement>
+          <containerElement type="library" name="digister" level="project">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib" />
+          </containerElement>
           <containerElement type="library" name="displaytag-1.1.1" level="project">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib" />
@@ -100,6 +104,10 @@
           </containerElement>
           <containerElement type="library" name="spring" level="project">
             <attribute name="method" value="0" />
+            <attribute name="URI" value="/WEB-INF/lib" />
+          </containerElement>
+          <containerElement type="library" name="tiles" level="project">
+            <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib" />
           </containerElement>
           <containerElement type="library" level="module">
@@ -190,6 +198,8 @@
     <orderEntry type="library" name="junit-4.4" level="project" />
     <orderEntry type="library" name="mysql-connector-java-5.0.7-bin" level="project" />
     <orderEntry type="library" name="log4j-1.2.15" level="project" />
+    <orderEntry type="library" name="tiles" level="project" />
+    <orderEntry type="library" name="digister" level="project" />
     <orderEntryProperties />
   </component>
   <component name="VcsManagerConfiguration">

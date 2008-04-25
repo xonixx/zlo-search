@@ -24,16 +24,8 @@
         <script type="text/javascript" src="script.js"></script>
     </head>
     <body>
-        <div id="header" align="center">
-            <ul>
-                <li><a href="http://${siteRoot}">${siteRoot}</a></li>
-                <li><a href="stats.jsp?site=${param['site']}">Статистика</a></li>
-                <li><a href="history.jsp">История</a></li>
-                <li><a href="nickhost.jsp?site=${param['site']}">Ники/Хосты</a></li>
-                <li><a href="about.jsp" target="_blank">About</a></li>
-                <li><a href="faq.jsp" target="_blank">FAQ</a></li>
-            </ul>
-        </div>
+        <tiles:insertDefinition name="header.search" />
+
         <div id="searchform">
             <table width="100%">
                 <tr><td height="1"></td></tr>
