@@ -5,6 +5,8 @@
 
 <title>FAQ</title>
 
+<tiles:insertDefinition name="header.faq" />
+
 <div class="content">
     <h3 class="attention">News</h3>
     <ul>

@@ -1,0 +1,39 @@
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://struts.apache.org/dtds/tiles-config_2_0.dtd">
+
+
+<tiles-definitions>
+    <!-- header -->
+    <definition name="header" template="/WEB-INF/include/templates/header.jsp">
+    </definition>
+
+    <definition name="header.search" extends="header">
+        <put-attribute name="activeScreen" value="search" />
+    </definition>
+
+    <definition name="header.stats" extends="header">
+        <put-attribute name="activeScreen" value="stats" />
+    </definition>
+
+    <definition name="header.history" extends="header">
+        <put-attribute name="activeScreen" value="history" />
+    </definition>
+
+    <definition name="header.nickhost" extends="header">
+        <put-attribute name="activeScreen" value="nickhost" />
+    </definition>
+
+    <definition name="header.about" extends="header">
+        <put-attribute name="activeScreen" value="about" />
+    </definition>
+
+    <definition name="header.faq" extends="header">
+        <put-attribute name="activeScreen" value="faq" />
+    </definition>
+
+    <!-- test -->
+    <definition name="test" template="/test/t/tmp.jsp">
+        <put-attribute name="a" value="BBB" />
+    </definition>
+</tiles-definitions>

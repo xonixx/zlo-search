@@ -70,6 +70,8 @@
     <c:set var="isNick" value="${true}" />
 </c:if>
 
+<tiles:insertDefinition name="header.nickhost" />
+
 <div align="center">
     <h3>${title}</h3>
 
