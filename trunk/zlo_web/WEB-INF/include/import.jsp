@@ -4,4 +4,6 @@
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 <%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
 
+<%@ taglib prefix="xx" uri="http://xonix.info" %>
+
 <fmt:setBundle basename="info.xonix.zlo.search.config.config" />

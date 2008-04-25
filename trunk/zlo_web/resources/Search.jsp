@@ -8,12 +8,13 @@
 <%@ include file="WEB-INF/include/notDirectlyAccessible.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 
-<jsp:useBean id="backendBean" class="info.xonix.zlo.web.BackendBean" scope="session" />
+<jsp:useBean id="backendBean" class="info.xonix.zlo.web.BackendBean" scope="request" />
 <jsp:setProperty name="backendBean" property="*" /> <%-- all from request properties --%>
 
 <jsp:useBean id="siteRoot" class="java.lang.String" scope="session" />
 
-<jsp:useBean id="hl" class="info.xonix.zlo.search.FoundTextHighlighter" scope="session" />
+<jsp:useBean id="hl" class="info.xonix.zlo.search.FoundTextHighlighter" scope="request" />
+<jsp:setProperty name="hl" property="hlClass" value="hl0" />
 <jsp:setProperty name="hl" property="highlightWords" value="${requestScope['hw']}"/>
 
 <html>
@@ -44,7 +45,7 @@
                             <input type="radio" name="st" id="st2" value="exct" <c:if test="${param['st'] == 'exct'}">checked="checked"</c:if> /><label for="st2"><fmt:message key="label.search.exact.phrase" /></label>
                             <input type="radio" name="st" id="st3" value="adv" <c:if test="${param['st'] == 'adv'}">checked="checked"</c:if> /><label for="st3"><fmt:message key="label.search.advanced" /></label>
                             <br/>
-                            <fmt:message key="label.text" /> <input type="text" name="text" <c:if test="${not empty param['text']}">value="${param['text']}"</c:if>style="width:450px;" />
+                            <fmt:message key="label.text" /> <input type="text" name="text" <c:if test="${not empty param['text']}">value="<c:out value="${param['text']}" />" </c:if>style="width:450px;" />
                             <fmt:message key="label.topic" /> <jsp:getProperty name="backendBean" property="topicSelector" />
                             <br/>
                             <fmt:message key="label.search" />
@@ -56,12 +57,12 @@
                             <input type="checkbox" name="hasUrl" id="hasUrl" <c:if test="${not empty param['hasUrl']}">checked="checked"</c:if>/> <label for="hasUrl"><fmt:message key="label.search.in.has.url" /></label>
                             <input type="checkbox" name="hasImg" id="hasImg" <c:if test="${not empty param['hasImg']}">checked="checked"</c:if>/> <label for="hasImg"><fmt:message key="label.search.in.has.img" /></label>
                             <br/>
-                            <fmt:message key="label.nick" /> <input type="text" name="nick" <c:if test="${not empty param['nick']}">value="${param['nick']}"</c:if>style="width:200px;" />
-                            <fmt:message key="label.host" /> <input type="text" name="host" <c:if test="${not empty param['host']}">value="${param['host']}"</c:if>style="width:200px;" />
+                            <fmt:message key="label.nick" /> <input type="text" name="nick" <c:if test="${not empty param['nick']}">value="<c:out value="${param['nick']}" />"</c:if>style="width:200px;" />
+                            <fmt:message key="label.host" /> <input type="text" name="host" <c:if test="${not empty param['host']}">value="<c:out value="${param['host']}" />"</c:if>style="width:200px;" />
                             <br/>
                             <input type="checkbox" name="dates" id="dates" onclick="changedDatesSelector();" <c:if test="${not empty param['dates']}">checked="checked"</c:if>/> <label for="dates"><fmt:message key="label.dates" /></label>
-                            <fmt:message key="label.from.date" /> <input type="text" name="fd" id="fd" value="${requestScope['fd']}" />
-                            <fmt:message key="label.to.date" /> <input type="text" name="td" id="td" value="${requestScope['td']}" />
+                            <fmt:message key="label.from.date" /> <input type="text" name="fd" id="fd" value="<c:out value="${requestScope['fd']}" />" />
+                            <fmt:message key="label.to.date" /> <input type="text" name="td" id="td" value="<c:out value="${requestScope['td']}" />" />
                             <br/>
                             <fmt:message key="label.site" /> <jsp:getProperty name="backendBean" property="siteSelector" />
                             <script type="text/javascript">
@@ -135,17 +136,18 @@
                         <a class="search" href="msg?site=${msg.site.num}&num=${msg.num}<c:if test="${not empty hl.wordsStr}">&hw=${hl.wordsStr}</c:if>"><fmt:message key="link.saved.msg" /></a>
                     </display:column>
                     <display:column title="<%= HtmlStrings.HEADER_NICK.toString() %>" headerClass="head">
-                        <c:set var="nick"><c:out value="${msg.nick}" escapeXml="false" /></c:set>
+                        <c:set var="nickEscaped"><c:out value="${msg.nick}" /></c:set>
+                        <c:set var="nickUrlencoded"><c:out value="${xx:urlencode(msg.nick)}" /></c:set>
                         <span class="nick">
                             <c:choose>
-                                <c:when test="${not msg.reg}">${nick}</c:when>
+                                <c:when test="${not msg.reg}">${nickEscaped}</c:when>
                                 <c:otherwise>
-                                    <a href="http://${siteRoot}/?uinfo=${nick}">${nick}</a>
+                                    <a href="http://${siteRoot}/?uinfo=${nickUrlencoded}">${nickEscaped}</a>
                                 </c:otherwise>
                             </c:choose>
                         </span>
-                        <a class="search" href="search?site=${msg.site.num}&nick=${nick}">?</a>
-                        <a class="search" href="nickhost.jsp?site=${msg.site.num}&w=n&t=${nick}" title="хосты этого ника">h</a>
+                        <a class="search" href="search?site=${msg.site.num}&nick=${nickUrlencoded}">?</a>
+                        <a class="search" href="nickhost.jsp?site=${msg.site.num}&w=n&t=${nickUrlencoded}" title="хосты этого ника">h</a>
                     </display:column>
                     <display:column title="<%= HtmlStrings.HEADER_HOST.toString() %>" class="small" headerClass="head">
                         ${msg.host} <a class="search" href="search?site=${msg.site.num}&host=${msg.host}">?</a>

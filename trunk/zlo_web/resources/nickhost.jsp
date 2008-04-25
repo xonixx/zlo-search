@@ -62,7 +62,7 @@
 </c:if>
 
 <c:set var="title">
-    Все ${isHost ? 'ники хоста' : 'хосты ника'} ${text} на сайте ${siteUrl}
+    Все ${isHost ? 'ники хоста' : 'хосты ника'} <c:out value="${text}" /> на сайте ${siteUrl}
 </c:set>
 <title>${title}</title>
 
@@ -77,31 +77,32 @@
         Сайт: <jsp:getProperty name="backendBean" property="siteSelector" /><br/>
         <input type="radio" name="w" value="n" id="nick" <c:if test="${isNick}" >checked="checked"</c:if>><label for="nick">Все хосты ника</label>
         <input type="radio" name="w" value="h" id="host" <c:if test="${isHost}" >checked="checked"</c:if>><label for="host">Все ники хоста</label><br/>
-        <input type="text" name="t" style="width:250px;" <c:if test="${not empty text}"> value="${text}"</c:if> /><br/>
+        <input type="text" name="t" style="width:250px;" <c:if test="${not empty text}"> value="<c:out value="${text}" />"</c:if> /><br/>
         <input type="submit" value="Показать!" />
     </form>
 
     <c:if test="${isAllSelected}">
         <c:set var="totalCnt" value="${totalNum.rows[0].cnt}" />
-        Всего сообщений: ${totalCnt == null ? 0 : totalCnt} <a href="search?site=${siteNum}&${isHost ? 'host' : 'nick'}=${text}" class="search">?</a>
+        Всего сообщений: ${totalCnt == null ? 0 : totalCnt} <a href="search?site=${siteNum}&${isHost ? 'host' : 'nick'}=<c:out value="${text}" />" class="search">?</a>
 
         <c:if test="${totalCnt > 0}">
         <display:table name="${res.rows}" id="row" htmlId="resultTable">
             <display:column headerClass="head" title="${isHost ? 'Ник' : 'Хост'}" class="center">
-                <c:set var="nick"><c:out value="${row.nick}" escapeXml="false" /></c:set>
+                <c:set var="nickEscaped"><c:out value="${row.nick}" /></c:set>
+                <c:set var="nickUrlencoded"><c:out value="${xx:urlencode(row.nick)}" /></c:set>
                 <c:choose>
                     <c:when test="${isHost}">
                         <span class="nick">
                             <c:choose>
                                 <c:when test="${row.reg}">
-                                    <a href="http://${siteUrl}/?uinfo=${nick}">${nick}</a>
+                                    <a href="http://${siteUrl}/?uinfo=${nickUrlencoded}">${nickEscaped}</a>
                                 </c:when>
-                                <c:otherwise>${nick}</c:otherwise>
+                                <c:otherwise>${nickEscaped}</c:otherwise>
                             </c:choose>
                         </span>
-                        <a href="search?site=${siteNum}&nick=${nick}" class="search" title="поиск этого ника">?</a>
-                        <a href="search?site=${siteNum}&host=${text}&nick=${nick}" class="search" title="поиск по нику и хосту">?nh</a>
-                        <a href="nickhost.jsp?site=${siteNum}&w=n&t=${nick}" class="search" title="хосты этого ника">h</a>
+                        <a href="search?site=${siteNum}&nick=${nickUrlencoded}" class="search" title="поиск этого ника">?</a>
+                        <a href="search?site=${siteNum}&host=${text}&nick=${nickUrlencoded}" class="search" title="поиск по нику и хосту">?nh</a>
+                        <a href="nickhost.jsp?site=${siteNum}&w=n&t=${nickUrlencoded}" class="search" title="хосты этого ника">h</a>
                     </c:when>
                     <c:otherwise>
                         ${row.host}
