@@ -1,5 +1,5 @@
 <%@ page import="info.xonix.zlo.search.db.DbAccessor, info.xonix.zlo.search.dao.Site, java.util.TreeMap" %>
-<%@ include file="WEB-INF/include/import.jsp" %>
+<%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 <link rel="stylesheet" type="text/css" href="main.css" />
 
@@ -67,4 +67,4 @@
     </display:table>
 </div>
 
-<jsp:include page="WEB-INF/include/_ga.jsp" flush="true" />
+<tiles:insertDefinition name="ga" />

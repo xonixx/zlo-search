@@ -5,7 +5,7 @@
 
 <tiles-definitions>
     <!-- header -->
-    <definition name="header" template="/WEB-INF/include/templates/header.jsp">
+    <definition name="header" template="/WEB-INF/jsp/templates/header.jsp">
     </definition>
 
     <definition name="header.search" extends="header">
@@ -30,6 +30,21 @@
 
     <definition name="header.faq" extends="header">
         <put-attribute name="activeScreen" value="faq" />
+    </definition>
+
+    <!-- nick -->
+    <definition name="nick" template="/WEB-INF/jsp/templates/nick.jsp">
+        <put-attribute name="host" value="" /> <!-- default -->
+    </definition>
+
+    <!-- host -->
+    <definition name="host" template="/WEB-INF/jsp/templates/host.jsp">
+        <put-attribute name="nick" value="" /> <!-- default -->
+        <put-attribute name="brackets" value="" />
+    </definition>
+
+    <!-- google analitics -->
+    <definition name="ga" template="/WEB-INF/jsp/templates/_ga.jsp">
     </definition>
 
     <!-- test -->

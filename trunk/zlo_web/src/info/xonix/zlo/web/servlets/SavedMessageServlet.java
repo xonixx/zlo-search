@@ -20,7 +20,7 @@ public class SavedMessageServlet extends BaseServlet {
     public static final String ERROR = "error";
     public static final String SAVED_MSG = "msg";
 
-    public static final String JSP_SAVED_MSG = "/SavedMsg.jsp";
+    public static final String JSP_SAVED_MSG = "/WEB-INF/jsp/SavedMsg.jsp";
 
     protected void doGet(ForwardingRequest request, HttpServletResponse response) throws ServletException, IOException {
         int num = -1;
@@ -39,7 +39,7 @@ public class SavedMessageServlet extends BaseServlet {
             return;
         }
 
-        setSiteInSession(request, response);
+        setSiteInReq(request, response);
 
         ZloMessage msg;
         try {

@@ -4,25 +4,18 @@
   Date: 10.04.2008
   Time: 18:26:19
 --%>
-<%@ include file="WEB-INF/include/import.jsp" %>
+<%@ include file="/WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 <link rel="stylesheet" type="text/css" href="main.css" />
 
-<jsp:useBean id="backendBean" class="info.xonix.zlo.web.BackendBean" scope="session" />
+<jsp:useBean id="backendBean" class="info.xonix.zlo.web.BackendBean" scope="request" />
 <jsp:setProperty name="backendBean" property="*" />
 
-<%
-    Site site;
-    try {
-        site = Site.getSite(Integer.parseInt(request.getParameter("site")));
-    } catch (NumberFormatException e) {
-        site = Site.getSite(0);
-    }
-%>
+<%@ include file="/WEB-INF/jsp/setSite.jsp" %>
 
-<c:set var="siteNum" value="<%= site.getNum() %>" />
-<c:set var="siteUrl" value="<%= site.getSITE_URL() %>" />
-<sql:setDataSource dataSource="<%= site.getDataSource() %>" />
+<c:set var="siteNum" value="${site.num}" />
+<c:set var="siteUrl" value="${site.SITE_URL}" />
+<sql:setDataSource dataSource="${site.dataSource}" />
 
 <c:set var="isHost" value="${param['w'] == 'h'}" />
 <c:set var="isNick" value="${param['w'] == 'n'}" />
@@ -90,27 +83,21 @@
         <c:if test="${totalCnt > 0}">
         <display:table name="${res.rows}" id="row" htmlId="resultTable">
             <display:column headerClass="head" title="${isHost ? 'Ник' : 'Хост'}" class="center">
-                <c:set var="nickEscaped"><c:out value="${row.nick}" /></c:set>
-                <c:set var="nickUrlencoded"><c:out value="${xx:urlencode(row.nick)}" /></c:set>
                 <c:choose>
                     <c:when test="${isHost}">
-                        <span class="nick">
-                            <c:choose>
-                                <c:when test="${row.reg}">
-                                    <a href="http://${siteUrl}/?uinfo=${nickUrlencoded}">${nickEscaped}</a>
-                                </c:when>
-                                <c:otherwise>${nickEscaped}</c:otherwise>
-                            </c:choose>
-                        </span>
-                        <a href="search?site=${siteNum}&nick=${nickUrlencoded}" class="search" title="поиск этого ника">?</a>
-                        <a href="search?site=${siteNum}&host=${text}&nick=${nickUrlencoded}" class="search" title="поиск по нику и хосту">?nh</a>
-                        <a href="nickhost.jsp?site=${siteNum}&w=n&t=${nickUrlencoded}" class="search" title="хосты этого ника">h</a>
+                        <tiles:insertDefinition name="nick">
+                            <tiles:putAttribute name="reg" value="${row.reg}" />
+                            <tiles:putAttribute name="nick" value="${row.nick}" />
+                            <tiles:putAttribute name="host" value="${text}" />
+                            <tiles:putAttribute name="site" value="${site}" />
+                        </tiles:insertDefinition>
                     </c:when>
                     <c:otherwise>
-                        ${row.host}
-                        <a href="search?site=${siteNum}&host=${row.host}" class="search" title="поиск этого хоста">?</a>
-                        <a href="search?site=${siteNum}&nick=${text}&host=${row.host}" class="search" title="поиск по нику и хосту">?nh</a>
-                        <a href="nickhost.jsp?site=${siteNum}&w=h&t=${row.host}" class="search" title="ники этого хоста">n</a>
+                        <tiles:insertDefinition name="host">
+                            <tiles:putAttribute name="host" value="${row.host}" />
+                            <tiles:putAttribute name="nick" value="${text}" />
+                            <tiles:putAttribute name="site" value="${site}" />
+                        </tiles:insertDefinition>
                     </c:otherwise>
                 </c:choose>
             </display:column>
@@ -122,4 +109,5 @@
 <script type="text/javascript">
     document.getElementsByName("t")[0].focus();
 </script>
-<jsp:include page="WEB-INF/include/_ga.jsp" flush="true" />
+
+<tiles:insertDefinition name="ga" />

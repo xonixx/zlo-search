@@ -3,7 +3,7 @@
   Date: 30.08.2007
   Time: 21:10:26
 --%>
-<%@ include file="../WEB-INF/include/import.jsp"%>
+<%@ include file="../WEB-INF/jsp/import.jsp"%>
 <%@ page contentType="text/html; charset=windows-1251" %>
 
 <c:out value="${requestScope['aaa']}" />

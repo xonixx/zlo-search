@@ -3,11 +3,11 @@
   Date: 25.04.2008
   Time: 18:01:15
 --%>
-<%@ include file="/WEB-INF/include/import.jsp" %>
+<%@ include file="/WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 
 <c:set var="activeScreen"><tiles:getAsString name="activeScreen" /></c:set>
-<jsp:useBean id="siteRoot" class="java.lang.String" scope="session" />
+<jsp:useBean id="siteRoot" class="java.lang.String" scope="request" />
 
 <div id="header" align="center">
     <ul>
