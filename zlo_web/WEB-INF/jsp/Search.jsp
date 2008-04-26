@@ -4,14 +4,11 @@
   Date: 14.08.2007
   Time: 16:46:12
 --%>
-<%@ include file="WEB-INF/include/import.jsp" %>
-<%@ include file="WEB-INF/include/notDirectlyAccessible.jsp" %>
+<%@ include file="import.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 
 <jsp:useBean id="backendBean" class="info.xonix.zlo.web.BackendBean" scope="request" />
 <jsp:setProperty name="backendBean" property="*" /> <%-- all from request properties --%>
-
-<jsp:useBean id="siteRoot" class="java.lang.String" scope="session" />
 
 <jsp:useBean id="hl" class="info.xonix.zlo.search.FoundTextHighlighter" scope="request" />
 <jsp:setProperty name="hl" property="hlClass" value="hl0" />
@@ -96,6 +93,8 @@
                 <display:table name="requestScope.searchResult.paginatedList" id="msg" htmlId="resultTable"
                                decorator="info.xonix.zlo.web.decorators.SearchResultLineDecorator" requestURI="search"
                                 class="searchRes">
+                    <c:set var="site" value="${msg.site}" />
+
                     <display:setProperty name="basic.msg.empty_list"><span class="pagebanner">—ообщени€, соответствующие введенным критери€м поиска не найдены. </span></display:setProperty>
                     <display:setProperty name="paging.banner.one_item_found"><span class="pagebanner">Ќайдено одно сообщение. </span></display:setProperty>
                     <display:setProperty name="paging.banner.all_items_found"><span class="pagebanner">Ќайдено сообщений: {0}, показаны все. </span></display:setProperty>
@@ -116,7 +115,7 @@
                                     class="small" headerClass="head"
                                     style="text-align:center;width:1%;">${msg.hitId + 1}</display:column>
                     <display:column title="<%= HtmlStrings.HEADER_TITLE.toString() %>" headerClass="head" style="width:67%">
-                        <a href="http://${siteRoot}${msg.site.READ_QUERY}${msg.num}">
+                        <a href="http://${site.SITE_URL}${site.READ_QUERY}${msg.num}">
                             <c:if test="${not empty msg.topic and msg.topic != 'без темы'}">[${msg.topic}]</c:if>
                             <jsp:setProperty name="hl" property="text" value="${msg.title}" />
                             <c:out value="${hl.highlightedText}" escapeXml="false" /></a>
@@ -128,22 +127,17 @@
                         <a class="search" href="msg?site=${msg.site.num}&num=${msg.num}<c:if test="${not empty hl.wordsStr}">&hw=${hl.wordsStr}</c:if>"><fmt:message key="link.saved.msg" /></a>
                     </display:column>
                     <display:column title="<%= HtmlStrings.HEADER_NICK.toString() %>" headerClass="head">
-                        <c:set var="nickEscaped"><c:out value="${msg.nick}" /></c:set>
-                        <c:set var="nickUrlencoded"><c:out value="${xx:urlencode(msg.nick)}" /></c:set>
-                        <span class="nick">
-                            <c:choose>
-                                <c:when test="${not msg.reg}">${nickEscaped}</c:when>
-                                <c:otherwise>
-                                    <a href="http://${siteRoot}/?uinfo=${nickUrlencoded}">${nickEscaped}</a>
-                                </c:otherwise>
-                            </c:choose>
-                        </span>
-                        <a class="search" href="search?site=${msg.site.num}&nick=${nickUrlencoded}">?</a>
-                        <a class="search" href="nickhost.jsp?site=${msg.site.num}&w=n&t=${nickUrlencoded}" title="хосты этого ника">h</a>
+                        <tiles:insertDefinition name="nick">
+                            <tiles:putAttribute name="reg" value="${msg.reg}" />
+                            <tiles:putAttribute name="nick" value="${msg.nick}" />
+                            <tiles:putAttribute name="site" value="${msg.site}" />
+                        </tiles:insertDefinition>
                     </display:column>
                     <display:column title="<%= HtmlStrings.HEADER_HOST.toString() %>" class="small" headerClass="head">
-                        ${msg.host} <a class="search" href="search?site=${msg.site.num}&host=${msg.host}">?</a>
-                        <a class="search" href="nickhost.jsp?site=${msg.site.num}&w=h&t=${msg.host}" title="ники этого хоста">n</a>
+                        <tiles:insertDefinition name="host">
+                            <tiles:putAttribute name="host" value="${msg.host}" />
+                            <tiles:putAttribute name="site" value="${msg.site}" />
+                        </tiles:insertDefinition>
                     </display:column>
                     <display:column title="<%= HtmlStrings.HEADER_DATE.toString() %>" property="date"
                                     class="small nowrap" headerClass="head" />
@@ -161,5 +155,5 @@
     <script type="text/javascript">
         changedDatesSelector();
     </script>
-    <jsp:include page="WEB-INF/include/_ga.jsp" flush="true" />
+    <tiles:insertDefinition name="ga" />
 </html>

@@ -1,14 +1,13 @@
 package info.xonix.zlo.web.servlets;
 
-import org.apache.commons.lang.StringUtils;
 import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.web.CookieUtils;
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 import info.xonix.zlo.web.servlets.helpful.ForwardingServlet;
+import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * Author: Vovan
@@ -16,32 +15,35 @@ import javax.servlet.http.HttpSession;
  * Time: 16:32:17
  */
 public class BaseServlet extends ForwardingServlet {
-    public static final String SESS_SITE_ROOT = "siteRoot";
+    public static final String REQ_SITE_ROOT = "siteRoot";
     public static final String QS_SITE = "site";
 
-    protected void setSiteInSession(ForwardingRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession(true);
+    protected void setSiteInReq(ForwardingRequest request, HttpServletResponse response) {
         String siteInCookie;
         String[] sites = Site.getSiteNames();
-        if (StringUtils.isNotEmpty(request.getParameter(QS_SITE))) {
-            String site;
+
+        String siteNumStr = request.getParameter(QS_SITE);
+        if (StringUtils.isNotEmpty(siteNumStr)) {
+            String siteRoot;
             try {
-                site = sites[Integer.parseInt(request.getParameter(QS_SITE))];
+                siteRoot = sites[Integer.parseInt(siteNumStr)];
             } catch (Exception e) {
-                site = sites[0];
+                siteRoot = sites[0];
                 request.setParameter(QS_SITE, "0");
             }
-            session.setAttribute(SESS_SITE_ROOT, site);
-            CookieUtils.rememberInCookie(response, QS_SITE, request.getParameter(QS_SITE));
+            request.setAttribute(REQ_SITE_ROOT, siteRoot);
+            CookieUtils.rememberInCookie(response, QS_SITE, siteNumStr);
         } else if (StringUtils.isNotEmpty(siteInCookie = CookieUtils.recallFromCookie(request, QS_SITE))) {
             request.setParameter(QS_SITE, siteInCookie); // for drop-down
-            session.setAttribute(SESS_SITE_ROOT, sites[Integer.parseInt(siteInCookie)]); // for search result list
+            request.setAttribute(REQ_SITE_ROOT, sites[Integer.parseInt(siteInCookie)]); // for search result list
         } else {
-            session.setAttribute(SESS_SITE_ROOT, sites[0]);
+            request.setAttribute(REQ_SITE_ROOT, sites[0]);
         }
+
+        request.setAttribute(QS_SITE, getSite(request));
     }
 
-    protected Site getSite(HttpServletRequest req) {
+    public static Site getSite(HttpServletRequest req) {
         // todo: tmp
         String sn = req.getParameter(QS_SITE);
         int siteId;

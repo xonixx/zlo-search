@@ -1,27 +1,18 @@
-<%@ page import="info.xonix.zlo.search.dao.Site" %>
+<%@ page import="info.xonix.zlo.search.dao.Site, info.xonix.zlo.web.servlets.BaseServlet" %>
 <%--
   User: Vovan
   Date: 20.01.2008
   Time: 4:08:47
 --%>
-<%@ include file="WEB-INF/include/import.jsp" %>
+<%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 <link rel="stylesheet" type="text/css" href="main.css" />
 
-<jsp:useBean id="backendBean" class="info.xonix.zlo.web.BackendBean" scope="session" />
+<jsp:useBean id="backendBean" class="info.xonix.zlo.web.BackendBean" scope="request" />
 <jsp:setProperty name="backendBean" property="*" /> <%-- all from request properties --%>
 
-<%
-    Site site;
-    try {
-        site = Site.getSite(Integer.parseInt(request.getParameter("site")));
-    } catch (NumberFormatException e) {
-        site = Site.getSite(0);
-    }
-%>
-
-<c:set var="site" value="<%= site %>" />
-<sql:setDataSource dataSource="<%= site.getDataSource() %>" />
+<%@ include file="WEB-INF/jsp/setSite.jsp"%>
+<sql:setDataSource dataSource="${site.dataSource}" />
 
 <c:set var="byNick" value="${empty param['type'] or param['type'] == 'nick'}" />
 <c:set var="period" value="${param['period'] == '2' ? 10 : param['period'] == '3' ? 30 : 2}" />
@@ -78,25 +69,22 @@
     <tr><th>№</th><th><c:choose><c:when test="${byNick}">Ник</c:when><c:otherwise>Хост</c:otherwise></c:choose></th><th>Число сообщений</th></tr>
     <% Integer i=0; %>
     <c:forEach var="row" items="${res.rows}">
-        <% i++; %><c:set var="nick"><c:out value="${row.nick}" escapeXml="false" /></c:set>
+        <% i++; %>
         <tr>
             <td><%= i %></td>
         <td><c:choose>
                 <c:when test="${byNick}">
-                    <span class="nick">
-                        <c:choose>
-                            <c:when test="${not row.reg}">${nick}</c:when>
-                            <c:otherwise>
-                                <a href="http://${site.SITE_URL}/?uinfo=${nick}">${nick}</a>
-                            </c:otherwise>
-                        </c:choose>
-                    </span>
-                    <a href="search?site=${site.num}&nick=${nick}" class="search">?</a>
-                    <a href="nickhost.jsp?site=${site.num}&w=n&t=${nick}" class="search" title="хосты этого ника">h</a>
+                    <tiles:insertDefinition name="nick">
+                        <tiles:putAttribute name="reg" value="${row.reg}" />
+                        <tiles:putAttribute name="nick" value="${row.nick}" />
+                        <tiles:putAttribute name="site" value="${site}" />
+                    </tiles:insertDefinition>
                 </c:when>
                 <c:otherwise>
-                    ${row.host} <a href="search?site=${site.num}&host=${row.host}" class="search">?</a>
-                    <a href="nickhost.jsp?site=${site.num}&w=h&t=${row.host}" class="search" title="ники этого хоста">n</a>
+                    <tiles:insertDefinition name="host">
+                        <tiles:putAttribute name="host" value="${row.host}" />
+                        <tiles:putAttribute name="site" value="${site}" />
+                    </tiles:insertDefinition>
                 </c:otherwise>
             </c:choose></td>
         <td>${row.cnt}</td>
@@ -104,4 +92,4 @@
     </c:forEach>
 </table>
 
-<jsp:include page="WEB-INF/include/_ga.jsp" flush="true" />
+<tiles:insertDefinition name="ga" />

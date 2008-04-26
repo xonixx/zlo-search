@@ -5,7 +5,7 @@
   Time: 22:45:44
 --%>
 
-<%@ include file="../WEB-INF/include/import.jsp" %>
+<%@ include file="../WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 
 <display:table pagesize="2" name="res" id="row" requestURI="test2"

@@ -67,14 +67,14 @@ public class SearchServlet extends BaseServlet {
 
     public static final String REQ_HIGHLIGHT_WORDS = "hw";
 
-    // session keys
+    // request keys
     public static final String REQ_SEARCH_RESULT = "searchResult";
-    public static final String SESS_PAGE_SIZE = QS_PAGE_SIZE;
+    public static final String REQ_PAGE_SIZE = QS_PAGE_SIZE;
 
     public static final String ERROR = "error";
     public static final String DEBUG = "debug";
 
-    public static final String JSP_SEARCH = "/Search.jsp";
+    public static final String JSP_SEARCH = "/WEB-INF/jsp/Search.jsp";
 
     public static SimpleDateFormat FROM_TO_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 
@@ -100,8 +100,8 @@ public class SearchServlet extends BaseServlet {
         ErrorMessage errorMsg = null;
         request.setAttribute(DEBUG, Config.DEBUG);
 
-        // to refresh site from session to req
-        setSiteInSession(request, response);
+        // to refresh site from cookies to req
+        setSiteInReq(request, response);
 
         try {
             // set default topic code
@@ -147,14 +147,14 @@ public class SearchServlet extends BaseServlet {
                         request.setParameter(QS_PAGE_SIZE, pageSizeStrIndCookie);
                     } catch (NumberFormatException ex) {
                         ;
-                    } catch(ArrayIndexOutOfBoundsException ex) {
+                    } catch (ArrayIndexOutOfBoundsException ex) {
                         ;
                     }
                 } else {
                     pageSize = Integer.parseInt(Config.NUMS_PER_PAGE[0]);
                 }
             }
-            request.setAttribute(SESS_PAGE_SIZE, pageSize);
+            request.setAttribute(REQ_PAGE_SIZE, pageSize);
 
             Date fromDate;
             Date toDate;
@@ -263,7 +263,7 @@ public class SearchServlet extends BaseServlet {
                 showStatistics(request);
             }
 
-            setSiteInSession(request, response);
+            setSiteInReq(request, response);
         } catch (DbException e) {
             errorMsg = ErrorMessage.DbError;
             logger.error(e);
@@ -310,9 +310,16 @@ public class SearchServlet extends BaseServlet {
         if (HtmlUtils.remindsUrl(text)) {
             text = text.replace("?", ".");
         }
-        
+
         if (StringUtils.isNotEmpty(text)) {
-            if(SEARCH_TYPE_ALL.equals(searchType)) {
+            if (SEARCH_TYPE_ALL.equals(searchType)) {
+                text = text
+                        .replace("(", ".")
+                        .replace(")", ".")
+                        .replace("[", ".")
+                        .replace("]", ".")
+                        .replace("{", ".")
+                        .replace("}", ".");
                 text = text.replaceAll("(?<!-|!)\\b([^\\s]+)\\b", "+$1");
             } else if (SEARCH_TYPE_EXACT_PHRASE.equals(searchType)) {
                 text = MessageFormat.format("\"{0}\"", text);

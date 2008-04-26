@@ -3,7 +3,7 @@
   Date: 25.04.2008
   Time: 17:18:42
 --%>
-<%@ include file="/WEB-INF/include/import.jsp" %>
+<%@ include file="/WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 
 <tiles:insertTemplate template="tmp.jsp">
