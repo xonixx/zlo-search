@@ -37,6 +37,7 @@ public class BaseServlet extends ForwardingServlet {
             request.setParameter(QS_SITE, siteInCookie); // for drop-down
             request.setAttribute(REQ_SITE_ROOT, sites[Integer.parseInt(siteInCookie)]); // for search result list
         } else {
+            request.setParameter(QS_SITE, "0");
             request.setAttribute(REQ_SITE_ROOT, sites[0]);
         }
 

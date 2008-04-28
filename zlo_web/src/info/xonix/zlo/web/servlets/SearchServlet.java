@@ -262,8 +262,6 @@ public class SearchServlet extends BaseServlet {
                 request.setAttribute(REQ_SEARCH_RESULT, null);
                 showStatistics(request);
             }
-
-            setSiteInReq(request, response);
         } catch (DbException e) {
             errorMsg = ErrorMessage.DbError;
             logger.error(e);
