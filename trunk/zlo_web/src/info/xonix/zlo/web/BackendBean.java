@@ -4,6 +4,7 @@ import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.model.ZloMessage;
+import org.apache.commons.lang.math.NumberUtils;
 
 /**
  * Author: Vovan
@@ -11,15 +12,15 @@ import info.xonix.zlo.search.model.ZloMessage;
  * Time: 20:03:46
  */
 public class BackendBean {
-    private int topic;
+    private String topic;
     private String title;
     private String body;
     private String nick;
     private String host;
     private String fromDate;
     private String toDate;
-    private int site;
-    private int pageSize;
+    private String site;
+    private String pageSize;
 
     public static final String SN_TOPIC = "topic";
     public static final String SN_SITE = "site";
@@ -32,34 +33,42 @@ public class BackendBean {
         String[] topics = new String[0];
         try {
             // todo: check
-            topics = Site.getSite(getSite()).getDbManager().getTopics();
+            topics = Site.getSite(getSiteInt()).getDbManager().getTopics();
         } catch (DbException e) {
             ;
         }
-        return HtmlConstructor.constructSelector(SN_TOPIC, null, new String[]{ZloMessage.ALL_TOPICS}, topics, topic, true);
+        return HtmlConstructor.constructSelector(SN_TOPIC, null, new String[]{ZloMessage.ALL_TOPICS}, topics, getTopicInt(), true);
     }
 
     public String getSiteSelector() {
-        return HtmlConstructor.constructSelector(SN_SITE, null, Site.getSiteNames(), site, true);
+        return HtmlConstructor.constructSelector(SN_SITE, null, Site.getSiteNames(), getSiteInt(), true);
     }
 
     public String getPageSizeSelector() {
-        return HtmlConstructor.constructSelector(SN_PAGE_SIZE, null, Config.NUMS_PER_PAGE, pageSize, true);
+        return HtmlConstructor.constructSelector(SN_PAGE_SIZE, null, Config.NUMS_PER_PAGE, getPageSizeInt(), true);
     }
 
-    public int getSite() {
+    public String getSite() {
         return site;
     }
 
-    public void setSite(int site) {
+    public int getSiteInt() {
+        return NumberUtils.toInt(site, 0);
+    }
+
+    public void setSite(String site) {
         this.site = site;
     }
 
-    public int getTopic() {
+    public String getTopic() {
         return topic;
     }
 
-    public void setTopic(int topic) {
+    public int getTopicInt() {
+        return NumberUtils.toInt(topic, -1);
+    }
+
+    public void setTopic(String topic) {
         this.topic = topic;
     }
 
@@ -111,11 +120,15 @@ public class BackendBean {
         this.toDate = toDate;
     }
 
-    public int getPageSize() {
+    public String getPageSize() {
         return pageSize;
     }
 
-    public void setPageSize(int pageSize) {
+    public int getPageSizeInt() {
+        return NumberUtils.toInt(pageSize, 0);
+    }
+
+    public void setPageSize(String pageSize) {
         this.pageSize = pageSize;
     }
 }
