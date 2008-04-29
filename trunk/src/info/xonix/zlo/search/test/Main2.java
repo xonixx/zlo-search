@@ -70,7 +70,7 @@ public class Main2 {
                 Document d = ((Hit)it.next()).getDocument();
                 System.out.println("Found: {"+d.get("num")+", "+d.get("title")+", "+d.get("body")+"}");
             }*/
-            System.out.println(ZloSearcher.searchIndexReader(reader, "topicCode:4", null).getHits().length());
+//            System.out.println(ZloSearcher.searchIndexReader(reader, "topicCode:4", null).getHits().length());
         } catch (IOException e) {
             e.printStackTrace();
         } /*catch (ParseException e) {

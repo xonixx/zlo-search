@@ -190,7 +190,11 @@ public class SearchServlet extends BaseServlet {
             text = preprocessSearchText(text, searchType);
             nick = preprocessSearchNick(nick);
 
-            SearchRequest searchRequest = new SearchRequest(getSite(request), text, inTitle, inBody, inReg, inHasUrl, inHasImg, nick, host, topicCode, fromDate, toDate);
+            SearchRequest searchRequest = new SearchRequest(
+                    getSite(request), text,
+                    inTitle, inBody, inReg, inHasUrl, inHasImg,
+                    nick, host, topicCode, fromDate, toDate,
+                    SEARCH_TYPE_ALL.equals(searchType));
 
             if (searchRequest.canBeProcessed()) {
 
@@ -201,7 +205,7 @@ public class SearchServlet extends BaseServlet {
                     searchRequest.setToDate(null);
                 }
 
-                int searchHash = StringUtils.join(new Object[]{text, inTitle, inBody, inReg, inHasUrl, inHasImg, nick, host, topicCode}, '|').hashCode();
+                int searchHash = StringUtils.join(new Object[]{text, inTitle, inBody, inReg, inHasUrl, inHasImg, nick, host, topicCode, searchType}, '|').hashCode();
 
                 SearchResult searchResult;
                 SearchResult prevSearchResult = cache.get(searchHash);
@@ -227,7 +231,7 @@ public class SearchServlet extends BaseServlet {
                 } else {
                     searchResult = prevSearchResult;
                     searchResult.setNewSearch(false); // means we use result of previous search
-                    logger.info("The same search: " + searchResult.getQuery());
+                    logger.info("Cached search: " + searchResult.getQuery());
                 }
 
                 if (searchResult != null) {
@@ -310,16 +314,7 @@ public class SearchServlet extends BaseServlet {
         }
 
         if (StringUtils.isNotEmpty(text)) {
-            if (SEARCH_TYPE_ALL.equals(searchType)) {
-                text = text
-                        .replace("(", ".")
-                        .replace(")", ".")
-                        .replace("[", ".")
-                        .replace("]", ".")
-                        .replace("{", ".")
-                        .replace("}", ".");
-                text = text.replaceAll("(?<!-|!)\\b([^\\s]+)\\b", "+$1");
-            } else if (SEARCH_TYPE_EXACT_PHRASE.equals(searchType)) {
+            if (SEARCH_TYPE_EXACT_PHRASE.equals(searchType)) {
                 text = MessageFormat.format("\"{0}\"", text);
             }
         }

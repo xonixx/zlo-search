@@ -107,7 +107,7 @@ public class FoundTextHighlighter {
         } catch (UnsupportedOperationException e) {
             // for wildcard query
             String qs = query.toString(ZloMessage.FIELDS.BODY);
-            qs = qs.replaceAll("-\\b.+?(?:\\s|$)", " ").replaceAll("\\(|\\)|\\+|\\[|\\]|\\{|\\}", " ");
+            qs = qs.replaceAll("-\\b.+?(?:\\s|$)", " ").replaceAll("\\(|\\)|\\+|\\[|\\]|\\{|\\}|\"", " ");
             return qs.trim().split("\\s+");
         }
         return new String[0];
