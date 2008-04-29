@@ -29,9 +29,12 @@ public class SearchRequest extends SiteSource {
     private Date fromDate;
     private Date toDate;
 
+    private boolean searchAll;
+
     public SearchRequest(Site site, String text, boolean inTitle, boolean inBody,
                          boolean inReg, boolean inHasUrl, boolean inHasImg,
-                         String nick, String host, int topicCode, Date fromDate, Date toDate) {
+                         String nick, String host, int topicCode, Date fromDate, Date toDate,
+                         boolean searchAll) {
         super(site);
         this.text = text;
         this.inTitle = inTitle;
@@ -44,6 +47,7 @@ public class SearchRequest extends SiteSource {
         this.topicCode = topicCode;
         this.fromDate = fromDate;
         this.toDate = toDate;
+        this.searchAll = searchAll;
     }
 
     public String getText() {
@@ -134,6 +138,14 @@ public class SearchRequest extends SiteSource {
         this.toDate = toDate;
     }
 
+    public boolean isSearchAll() {
+        return searchAll;
+    }
+
+    public void setSearchAll(boolean searchAll) {
+        this.searchAll = searchAll;
+    }
+
     public boolean canBeProcessed() {
         return StringUtils.isNotEmpty(text)
                 || StringUtils.isNotEmpty(nick)
@@ -161,7 +173,8 @@ public class SearchRequest extends SiteSource {
                 StringUtils.equals(nick, req.getNick()) &&
                 StringUtils.equals(host, req.getHost()) &&
                 (fromDate == req.getFromDate() || fromDate != null && fromDate.equals(req.getFromDate())) &&
-                (toDate == req.getToDate() || toDate != null && toDate.equals(req.getToDate()));
+                (toDate == req.getToDate() || toDate != null && toDate.equals(req.getToDate())) &&
+                searchAll == req.isSearchAll();
     }
 
     public boolean isTheSameSearch(SearchRequest searchRequest) {
@@ -170,37 +183,6 @@ public class SearchRequest extends SiteSource {
 
     public boolean isNotTheSameSearch(SearchRequest searchRequest) {
         return !isTheSameSearch(searchRequest);
-    }
-
-    public boolean isTheSameSearch(int topicCode,
-                                   String text,
-                                   boolean inTitle,
-                                   boolean inBody,
-                                   boolean inReg,
-                                   boolean inHasUrl,
-                                   boolean inHasImg,
-                                   String nick,
-                                   String host,
-                                   Date fromDate,
-                                   Date toDate) {
-        // todo: tmp
-        return this.equals(new SearchRequest(null, text, inTitle, inBody, inReg, inHasUrl, inHasImg,
-                nick, host, topicCode, fromDate, toDate));
-    }
-
-    public boolean isNotTheSameSearch(int topicCode,
-                                      String text,
-                                      boolean inTitle,
-                                      boolean inBody,
-                                      boolean inReg,
-                                      boolean inHasUrl,
-                                      boolean inHasImg,
-                                      String nick,
-                                      String host,
-                                      Date fromDate,
-                                      Date toDate) {
-        return !isTheSameSearch(topicCode, text, inTitle, inBody, inReg,
-                inHasUrl, inHasImg, nick, host, fromDate, toDate);
     }
 
     public SearchResult performSearch() {

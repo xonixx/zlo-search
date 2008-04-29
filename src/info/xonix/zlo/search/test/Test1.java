@@ -73,6 +73,7 @@ public class Test1 {
         }*/
     }
 
+/*
     public static void m18() {
         try {
 //            System.out.println(new IndexSearcher(ZloSearcher.getIndexReader()).search(new TermQuery(new Term("nick", "abcdef"))).length());
@@ -83,14 +84,15 @@ public class Test1 {
             e.printStackTrace();
         }
     }
+*/
 
-    public static void m17() {
+/*    public static void m17() {
         System.out.println(Site.forName("zlo").getZloSearcher().getLastIndexedNumber());
-/*        int from =4000000;
+*//*        int from =4000000;
         int to=4000019;
         System.out.println((int)MessageFormat.format("{0}", 4000).charAt(1));
-        System.out.println((int)' ');*/
-    }
+        System.out.println((int)' ');*//*
+    }*/
 
     public static void m16() {
         int N = 10000;
@@ -147,6 +149,7 @@ public class Test1 {
         }
     }
 
+/*
     public static void m14() {
 //        System.out.println(new int[2] instanceof Array);
 //        System.out.println(ZloSearcher.search(9, null, true, true, false, false, false, null, null, null, null).getHits().length());
@@ -161,6 +164,7 @@ public class Test1 {
             System.out.println(ZloSearcher.searchIndexReader(null, " +nick:Borisych", null).getHits().length());
         }
     }
+*/
 
     public static void m13() throws RuntimeException {
         try {
@@ -224,7 +228,7 @@ public class Test1 {
         System.out.println(new Date().hashCode());
     }
 
-    public static void m4() {
+/*    public static void m4() {
 //        NumberFormat f = new DecimalFormat("0000000000");
 //        System.out.println(f.format(-123));
 //        System.out.println(Integer.parseInt(f.format(-123)));
@@ -232,7 +236,7 @@ public class Test1 {
         for (Object o : Site.forName("zlo").getZloSearcher().searchInNumRange(3765002, 3765007)) {
             System.out.println(o);
         }
-    }
+    }*/
 
     public static void m5() {
         for (int i = 0; i < 10; i++) {

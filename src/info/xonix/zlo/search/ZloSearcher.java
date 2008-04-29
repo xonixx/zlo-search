@@ -12,9 +12,7 @@ import info.xonix.zlo.search.site.SiteSource;
 import info.xonix.zlo.search.utils.TimeUtils;
 
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.Date;
-import java.util.NoSuchElementException;
 
 /**
  * Author: gubarkov
@@ -26,75 +24,8 @@ public class ZloSearcher extends SiteSource {
 
     public static final int PERIOD_RECREATE_INDEXER = TimeUtils.parseToMilliSeconds(Config.getProp("searcher.period.recreate.indexer"));
 
-    private static long lastCreateTime = -1;
-    private static boolean isReopening = false;
-    private static IndexReader indexReader;
-
     public ZloSearcher(Site site) {
         super(site);
-    }
-
-    public static IndexReader getIndexReader() {
-        if (indexReader == null) {
-            try {
-                indexReader = IndexReader.open(Config.INDEX_DIR);
-            } catch (IOException e) {
-                logger.error("Error while creating index reader: " + e);
-            }
-        } else {
-            try {
-                if (needToRecreateReader()) {
-                    synchronized (ZloSearcher.class) {
-                        if (needToRecreateReader()) {
-                            startReopeningThread();
-                        }
-                    }
-                }
-            } catch (IOException e) {
-                logger.error("IndexReader error", e);
-            }
-        }
-        return indexReader;
-    }
-
-    private static boolean needToRecreateReader() throws IOException {
-        return !indexReader.isCurrent()
-                && System.currentTimeMillis() - lastCreateTime > PERIOD_RECREATE_INDEXER
-                && !isReopening;
-    }
-
-    private static void startReopeningThread() {
-        Thread t = new Thread(new Runnable() {
-
-            public void run() {
-                isReopening = true;
-
-                logger.info("Start recreating indexReader in separate thread...");
-                IndexReader _indexReader = null,
-                        oldIndexReader;
-
-                try {
-                    _indexReader = IndexReader.open(Config.INDEX_DIR);
-                } catch (IOException e) {
-                    logger.error("Error while recreating index reader: " + e);
-                }
-
-                // search to form memory caches
-                searchIndexReader(_indexReader, " +nick:абырвалг", null);
-                oldIndexReader = indexReader;
-
-                indexReader = _indexReader;
-                lastCreateTime = System.currentTimeMillis();
-
-                clean(oldIndexReader);
-                logger.info("Successfuly recreated.");
-
-                isReopening = false;
-            }
-        });
-
-        t.setPriority(Thread.MIN_PRIORITY);
-        t.start();
     }
 
     public static void clean(IndexReader ir) {
@@ -104,11 +35,6 @@ public class ZloSearcher extends SiteSource {
         } catch (IOException e) {
             logger.error("Error while closing index reader: " + e.getClass());
         }
-    }
-
-    public static void clean() {
-        clean(indexReader);
-        indexReader = null;
     }
 
     public static class ParseException extends RuntimeException {
@@ -134,9 +60,10 @@ public class ZloSearcher extends SiteSource {
                                String nick,
                                String host,
                                Date fromDate,
-                               Date toDate) {
+                               Date toDate,
+                               boolean searchAll) {
 
-        return search(ZloMessage.formQueryString(text, inTitle, inBody, topicCode, nick, host, fromDate, toDate, inReg, inHasUrl, inHasImg));
+        return search(ZloMessage.formQueryString(text, inTitle, inBody, topicCode, nick, host, fromDate, toDate, inReg, inHasUrl, inHasImg), searchAll);
     }
 
     public SearchResult search(SearchRequest searchRequest) {
@@ -151,7 +78,8 @@ public class ZloSearcher extends SiteSource {
                 searchRequest.getNick(),
                 searchRequest.getHost(),
                 searchRequest.getFromDate(),
-                searchRequest.getToDate()
+                searchRequest.getToDate(),
+                searchRequest.isSearchAll()
         );
     }
 
@@ -165,7 +93,7 @@ public class ZloSearcher extends SiteSource {
                                String nick,
                                String host) {
         return search(topicCode, text, inTitle, inBody,
-                inReg, inHasUrl, inHasImg, nick, host, null, null);
+                inReg, inHasUrl, inHasImg, nick, host, null, null, false);
     }
 
     public static Sort getDateSort() {
@@ -175,22 +103,34 @@ public class ZloSearcher extends SiteSource {
                 : null;
     }
 
-    private SearchResult search(String queryStr) {
+    private SearchResult search(String queryStr, boolean searchAll) {
         if (!Config.USE_DOUBLE_INDEX) {
-            return searchIndexReader(null, queryStr, null);
+            throw new RuntimeException("Old!!!");
         } else {
-            return searchDoubleIndex(queryStr, null);
+            return searchDoubleIndex(queryStr, null, searchAll);
         }
     }
 
-    private SearchResult searchDoubleIndex(String queryStr, Sort sort) {
+    private SearchResult searchDoubleIndex(String queryStr, Sort sort, boolean searchAll) {
         if (sort == null)
             sort = getDateSort();
 
         SearchResult result = new SearchResult();
         try {
-            Query query = setQuery(result, queryStr);
+            Analyzer analyzer = ZloMessage.constructAnalyzer();
+
+            QueryParser parser = new QueryParser(ZloMessage.FIELDS.BODY, analyzer);
+            parser.setDefaultOperator(searchAll ? QueryParser.AND_OPERATOR : QueryParser.OR_OPERATOR);
+
+            Query query = parser.parse(queryStr);
+
+            logger.info("query: " + query);
+
             DoubleIndexSearcher dis = getDoubleIndexSearcher();
+
+            result.setAnalyzer(analyzer);
+            result.setQueryParser(parser);
+            result.setQuery(query);
             result.setDoubleIndexSearcher(dis);
             result.setHits(dis.search(query, sort));
             result.setSearchDateNow();
@@ -209,79 +149,5 @@ public class ZloSearcher extends SiteSource {
             doubleIndexSearcher = new DoubleIndexSearcher(getSite(), getDateSort());
         }
         return doubleIndexSearcher;
-    }
-
-    public static SearchResult searchIndexReader(IndexReader indexReader, String queryStr, Sort sort) {
-        if (sort == null)
-            sort = getDateSort();
-
-        if (indexReader == null)
-            indexReader = getIndexReader();
-
-        SearchResult result = new SearchResult();
-        IndexSearcher searcher = null;
-        try {
-            searcher = new IndexSearcher(indexReader);
-            result.setSearcher(searcher);
-            Query query = setQuery(result, queryStr);
-            Hits hits = searcher.search(query, sort);
-            result.setHits(hits);
-        } catch (IOException e) {
-            logger.error(e);
-        } catch (org.apache.lucene.queryParser.ParseException e) {
-            throw new ParseException(queryStr, e);
-        } finally {
-            try {
-                if (searcher != null)
-                    searcher.close();
-            } catch (IOException e) {
-                logger.warn("Error while closing searcher: " + e);
-            }
-        }
-        return result;
-    }
-
-    private static Query setQuery(SearchResult result, String queryStr) throws org.apache.lucene.queryParser.ParseException {
-        Analyzer analyzer = ZloMessage.constructAnalyzer();
-        QueryParser parser = new QueryParser(ZloMessage.FIELDS.BODY, analyzer);
-        Query query = parser.parse(queryStr);
-
-        logger.info("queryStr: " + queryStr);
-        logger.info("query   : " + query);
-
-        result.setAnalyzer(analyzer);
-        result.setQueryParser(parser);
-        result.setQuery(query);
-        return query;
-    }
-
-    public ZloMessage searchMsgByNum(int urlNum) {
-        try {
-            return search("+num:" + ZloMessage.URL_NUM_FORMAT.format(urlNum)).iterator().next().getMessage(); // returns 1 result
-        } catch (NoSuchElementException e) { // 0 results found => msg with such num not indexed
-            return null;
-        }
-    }
-
-    public SearchResult searchInNumRange(int urlFrom, int urlTo) {
-        return search(MessageFormat.format(" +num:[{0} TO {1}]", urlFrom, urlTo));
-    }
-
-    public int getLastIndexedNumber() {
-        String searchStr = MessageFormat.format(" +num:[{0} TO {1}]",
-                ZloMessage.URL_NUM_FORMAT.format(0),
-                ZloMessage.URL_NUM_FORMAT.format(999999999));
-        try {
-            DoubleHits hits = ZloSearcher.searchIndexReader(
-                    Config.USE_DOUBLE_INDEX ? getDoubleIndexSearcher().getSmallReader() : null,
-                    searchStr,
-                    new Sort(new SortField(ZloMessage.FIELDS.URL_NUM, SortField.STRING, true))).getHits();
-            return hits.length() > 0
-                    ? Integer.parseInt(hits.doc(0).get(ZloMessage.FIELDS.URL_NUM))
-                    : -1;
-        } catch (IOException e) {
-            logger.error(e);
-            return -1;
-        }
     }
 }
