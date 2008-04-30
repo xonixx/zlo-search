@@ -205,7 +205,7 @@ public class SearchServlet extends BaseServlet {
                     searchRequest.setToDate(null);
                 }
 
-                int searchHash = StringUtils.join(new Object[]{text, inTitle, inBody, inReg, inHasUrl, inHasImg, nick, host, topicCode, searchType}, '|').hashCode();
+                int searchHash = searchRequest.hashCode();
 
                 SearchResult searchResult;
                 SearchResult prevSearchResult = cache.get(searchHash);
