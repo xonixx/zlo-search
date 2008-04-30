@@ -1,4 +1,3 @@
-<%@ page import="info.xonix.zlo.search.config.HtmlStrings, info.xonix.zlo.search.model.ZloMessage" %>
 <%--
   User: gubarkov
   Date: 14.08.2007
@@ -111,10 +110,10 @@
                         <span class="pagelinks">[<a href="{1}">Перв</a>/<a href="{2}">Пред</a>] {0} [След/Последн]</span>
                     </display:setProperty>
 
-                    <display:column title="<%= HtmlStrings.HEADER_NUM.toString() %>"
+                    <display:column title="№"
                                     class="small" headerClass="head"
                                     style="text-align:center;width:1%;">${msg.hitId + 1}</display:column>
-                    <display:column title="<%= HtmlStrings.HEADER_TITLE.toString() %>" headerClass="head" style="width:67%">
+                    <display:column title="Тема" headerClass="head" style="width:67%">
                         <a href="http://${site.SITE_URL}${site.READ_QUERY}${msg.num}">
                             <c:if test="${not empty msg.topic and msg.topic != 'без темы'}">[${msg.topic}]</c:if>
                             <jsp:setProperty name="hl" property="text" value="${msg.title}" />
@@ -126,20 +125,20 @@
                         </small>
                         <a class="search" href="msg?site=${msg.site.num}&num=${msg.num}<c:if test="${not empty hl.wordsStr}">&hw=${hl.wordsStr}</c:if>"><fmt:message key="link.saved.msg" /></a>
                     </display:column>
-                    <display:column title="<%= HtmlStrings.HEADER_NICK.toString() %>" headerClass="head">
+                    <display:column title="Ник" headerClass="head">
                         <tiles:insertDefinition name="nick">
                             <tiles:putAttribute name="reg" value="${msg.reg}" />
                             <tiles:putAttribute name="nick" value="${msg.nick}" />
                             <tiles:putAttribute name="site" value="${msg.site}" />
                         </tiles:insertDefinition>
                     </display:column>
-                    <display:column title="<%= HtmlStrings.HEADER_HOST.toString() %>" class="small" headerClass="head">
+                    <display:column title="Хост" class="small" headerClass="head">
                         <tiles:insertDefinition name="host">
                             <tiles:putAttribute name="host" value="${msg.host}" />
                             <tiles:putAttribute name="site" value="${msg.site}" />
                         </tiles:insertDefinition>
                     </display:column>
-                    <display:column title="<%= HtmlStrings.HEADER_DATE.toString() %>" property="date"
+                    <display:column title="Дата" property="date"
                                     class="small nowrap" headerClass="head" />
                 </display:table>
                 </div>

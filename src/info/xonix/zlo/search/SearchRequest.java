@@ -177,6 +177,10 @@ public class SearchRequest extends SiteSource {
                 searchAll == req.isSearchAll();
     }
 
+    public int hashCode() {
+        return StringUtils.join(new Object[]{text, inTitle, inBody, inReg, inHasUrl, inHasImg, nick, host, topicCode, searchAll, getSiteName()}, '|').hashCode();
+    }
+
     public boolean isTheSameSearch(SearchRequest searchRequest) {
         return this.equals(searchRequest);
     }
