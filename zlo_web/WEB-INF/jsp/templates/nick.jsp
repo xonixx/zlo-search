@@ -12,7 +12,7 @@
 <tiles:useAttribute name="site" />
 
 <c:set var="nickEscaped"><c:out value="${nick}" /></c:set>
-<c:set var="nickUrlencoded"><c:out value="${xx:urlencode(nick)}" /></c:set>
+<c:set var="nickUrlencoded"><c:out value="${xonix:urlencode(nick)}" /></c:set>
 
 <span class="nick">
     <c:choose>

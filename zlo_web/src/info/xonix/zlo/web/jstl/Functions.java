@@ -1,6 +1,7 @@
 package info.xonix.zlo.web.jstl;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.StringUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -18,6 +19,10 @@ public class Functions {
             e.printStackTrace();
             return StringEscapeUtils.escapeHtml(s);
         }
+    }
+
+    public static String mysqlRange(String s) {
+        return "('" + StringUtils.join(StringUtils.split(s, '|'), "','") + "')";
     }
 
     public static String highlight(String text, String wordsStr, String hlClass) {
