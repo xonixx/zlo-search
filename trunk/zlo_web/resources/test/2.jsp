@@ -7,7 +7,7 @@
 <%@ include file="/WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 
-<c:out value="${xx:urlencode('<sb>')}" />
+<c:out value="${xonix:urlencode('<sb>')}" />
 
 <c:set var="a">"&qqq></c:set>
 

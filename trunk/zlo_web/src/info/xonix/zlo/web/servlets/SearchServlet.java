@@ -14,6 +14,7 @@ import info.xonix.zlo.search.db.DbManager;
 import info.xonix.zlo.search.db.DbAccessor;
 import info.xonix.zlo.web.CookieUtils;
 import info.xonix.zlo.web.RequestCache;
+import info.xonix.zlo.web.utils.RequestUtils;
 import info.xonix.zlo.search.FoundTextHighlighter;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
@@ -289,12 +290,10 @@ public class SearchServlet extends BaseServlet {
     }
 
     private void logRequest(ForwardingRequest request, String query) {
-        String remoteAddr = request.getHeader("x-forwarded-for");
-        remoteAddr = StringUtils.isNotEmpty(remoteAddr) ? remoteAddr : request.getRemoteAddr();
         try {
             DbAccessor.getInstance("search_log").getDbManager().logRequest(
                     getSite(request).getNum(),
-                    remoteAddr,
+                    RequestUtils.getClientIp(request),
                     request.getHeader("User-Agent"),
                     request.getParameter(QS_TEXT),
                     request.getParameter(QS_NICK),

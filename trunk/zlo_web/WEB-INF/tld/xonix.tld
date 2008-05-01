@@ -21,4 +21,26 @@
     <example>
     </example>
   </function>
+
+  <function>
+    <description>
+        "a|b|c" -> "('a', 'b', 'c')"
+    </description>
+    <name>mysqlRange</name>
+    <function-class>info.xonix.zlo.web.jstl.Functions</function-class>
+    <function-signature>java.lang.String mysqlRange(java.lang.String)</function-signature>
+    <example>
+    </example>
+  </function>
+
+  <function>
+    <description>
+        Integer.parseInt(String s)
+    </description>
+    <name>int</name>
+    <function-class>java.lang.Integer</function-class>
+    <function-signature>int parseInt(java.lang.String)</function-signature>
+    <example>
+    </example>
+  </function>
 </taglib>
