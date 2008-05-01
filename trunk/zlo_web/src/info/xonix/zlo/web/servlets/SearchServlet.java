@@ -307,15 +307,19 @@ public class SearchServlet extends BaseServlet {
     }
 
     private String preprocessSearchText(String text, String searchType) {
+        if (StringUtils.isEmpty(text))
+            return text;
+
+        // kill escaping "\" to be able search for \\host\share
+        text = text.replace("\\", ".");
+
         // preprocess for search for urls with "?"
         if (HtmlUtils.remindsUrl(text)) {
             text = text.replace("?", ".");
         }
 
-        if (StringUtils.isNotEmpty(text)) {
-            if (SEARCH_TYPE_EXACT_PHRASE.equals(searchType)) {
-                text = MessageFormat.format("\"{0}\"", text);
-            }
+        if (SEARCH_TYPE_EXACT_PHRASE.equals(searchType)) {
+            text = MessageFormat.format("\"{0}\"", text);
         }
 
         return text;
