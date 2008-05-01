@@ -23,9 +23,9 @@
     <h3>Как искать?</h3>
     Поисковик имеет три режима поиска:
     <ul>
-        <li><a href="#all">Со всеми словами</a></li>
+        <li><a href="#adv">Со всеми словами</a></li>
+        <li><a href="#adv">Хотя бы с одним из слов</a></li>
         <li><a href="#exct">Точная фраза</a></li>
-        <li><a href="#adv">Расширенный поиск</a></li>
     </ul>
     Кроме того, возможна фильтрация результата поиска по:
     <ul>
@@ -35,25 +35,44 @@
         <li>Промежутку дат</li>
         <li>Дополнительным критериям: 1) только от зарегистрированных пользователей 2) только среди сообщений со ссылками 3) только среди сообщений с картинками</li>
     </ul>
-    Также, возможен поиск только по имени и хосту.
+    Также, возможен поиск только по имени пользователя и хосту.
+
+    <h4 id="exct">Точная фраза</h4>
+    При поиске в режиме <i>"Точная фраза"</i> ищутся сообщения с точным вхождением искомой фразы вплоть до порядка следования слов.
 
     <h4 id="adv">Расширенный поиск</h4>
-    В объяснении нуждается разве что этот режим. При расширенном поиске поисковые запросы могут иметь вид:
+    Режимы <i>"Со всеми словами"</i> и <i>"Хотя бы с одним из слов"</i> предоставляют возможности расширенного поиска и отличаются лишь тем, что в первом случае между словами неявно ставится
+    оператор AND, а во втором OR. При расширенном поиске поисковые запросы могут иметь вид:
     <table border=1>
         <tr><th>Запрос</th><th>Объяснение</th></tr>
         <tr>
             <td><a href="search?st=adv&text=%F7%E5%F0%ED%FB%E9+%E1%E5%EB%FB%E9+%EA%F0%E0%F1%ED%FB%E9&topic=-1&inTitle=on&nick=&host=&site=0&pageSize=0&submitBtn=Search">
-                черный белый красный</a></td>
+                черный белый красный</a>
+            или
+                <a href="search?st=all&text=%F7%E5%F0%ED%FB%E9+OR+%E1%E5%EB%FB%E9+OR+%EA%F0%E0%F1%ED%FB%E9&topic=-1&inTitle=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">
+                черный OR белый OR красный
+                </a>
+            </td>
             <td>Запрос "ИЛИ". Будут найдены все сообщения, содержащие хотя бы одно из слов.</td>
         </tr>
         <tr>
             <td><a href="search?st=adv&text=%EF%F0%E5%E2%E5%E4+-%EC%E5%E4%E2%E5%E4&topic=-1&inTitle=on&nick=&host=&site=0&pageSize=0&submitBtn=Search">
-                превед -медвед</a></td>
+                превед -медвед</a>
+            или
+                <a href="search?st=all&text=%EF%F0%E5%E2%E5%E4+NOT+%EC%E5%E4%E2%E5%E4&topic=-1&inTitle=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">
+                    превед NOT медвед
+                </a>
+            </td>
             <td>Запрос "НЕ". Будут найдены все сообщения, содержащие "превед" но не содержащие "медвед". Вместо "-" можно использовать "!".</td>
         </tr>
         <tr>
             <td><a href="search?st=adv&text=%2B%EF%F0%E5%E2%E5%E4+%2B%EC%E5%E4%E2%E5%E4&topic=-1&inTitle=on&nick=&host=&site=0&pageSize=0&submitBtn=Search">
-                +превед +медвед</a></td>
+                +превед +медвед</a>
+            или
+                <a href="search?st=all&text=%EF%F0%E5%E2%E5%E4+AND+%EC%E5%E4%E2%E5%E4&topic=-1&inTitle=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">
+                    превед AND медвед
+                </a>
+            </td>
             <td>Запрос "И". Будут найдены все сообщения, содержащие одновременно оба слова. Соответствует режиму поиска "Со всеми словами".</td>
         </tr>
         <tr>
@@ -69,16 +88,21 @@
         <tr>
             <td><a href="search?st=adv&text=%F2%3F%E7&topic=-1&inTitle=on&nick=&host=&site=0&pageSize=0&submitBtn=Search">
                 т?з</a></td>
-            <td>"?" сотвтетствует одной произвольной букве. Будут надены слова "таз", "туз".</td>
+            <td>"?" сотвтетствует одной произвольной букве. Будут надены слова "таз", "туз". <i>Не работает в режиме точная фраза!</i></td>
         </tr>
         <tr>
             <td><a href="search?st=adv&text=%F1%F2%EE*&topic=-1&inTitle=on&nick=&host=&site=0&pageSize=0&submitBtn=Search">
                 сто*</a></td>
-            <td>"*" сотвтетствует произвольному числу букв, включая 0. будут надены все слова, начинающиеся на "сто"</td>
+            <td>"*" сотвтетствует произвольному числу букв, включая 0. будут надены все слова, начинающиеся на "сто". <i>Не работает в режиме точная фраза!</i></td>
         </tr>
         <tr>
             <td><a href="search?st=adv&text=%2B%28%E1%E5%EB%FB%E9+%F7%E5%F0%ED%FB%E9%29+%2B%F6%E2%E5%F2&topic=-1&inTitle=on&nick=&host=&site=0&pageSize=0&submitBtn=Search">
-                +(белый черный) +цвет</a></td>
+                +(белый черный) +цвет</a>
+            или
+                <a href="search?st=all&text=%28%E1%E5%EB%FB%E9+OR+%F7%E5%F0%ED%FB%E9%29+%F6%E2%E5%F2&topic=-1&inTitle=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">
+                    (белый OR черный) цвет
+                </a>
+            </td>
             <td>Можно использовать скобки. Будут найдены сообщения со словом "цвет" и с любым из слов "белый" и "черный" или с двумя сразу.</td>
         </tr>
     </table>
@@ -102,17 +126,9 @@
         </li>
     </ul>
 
-    <h4>Поиск ссылок</h4>
-    <s>
-    Ссылки следует искать в режиме "Точная фраза", например
-    <a href="search?st=exct&text=http%3A%2F%2Fbash.org.ru%2Fbest.php&topic=-1&inTitle=on&inBody=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">
-        http://bash.org.ru/best.php
-    </a></s>
-    <br/>
-    <span class="attention">(upd!)</span> Ссылки теперь можно искать в любом режиме, например
-    <a href="search?st=all&text=http%3A%2F%2Fbash.org.ru%2Fbest.php&topic=-1&inTitle=on&inBody=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">
-        http://bash.org.ru/best.php
-    </a>
+    <h4>Полезный совет</h4>
+    Не пытайтесь отбрасывать окончания слов при поиске для того, чтобы получить больше результатов. Используемый в поисковике стеммер русского языка сам обрежет окончание с тем чтоб
+    найти все подходящие слова.
 </div>
 
 <tiles:insertDefinition name="ga" />
