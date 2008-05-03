@@ -328,7 +328,10 @@ public class SearchServlet extends BaseServlet {
     }
 
     private String preprocessSearchNick(String nick) {
+        if (nick == null)
+                return "";
         // todo: need to index stripped nicks too!! 
-        return StringUtils.strip(nick);
+        return StringUtils.strip(nick)
+                .replace("\\", "\\\\"); // to be possible search for nick like \/\/0\/\/KA 
     }
 }
