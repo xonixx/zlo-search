@@ -254,6 +254,8 @@ public class SearchServlet extends BaseServlet {
                         } catch (NumberFormatException e) {
                             paginatedList.setPageNumber(1);
                         }
+                    } else {
+                        paginatedList.setPageNumber(1);   
                     }
 
                     paginatedList.refreshCurrentList();
