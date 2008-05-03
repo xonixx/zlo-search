@@ -1,10 +1,10 @@
 package info.xonix.zlo.search;
 
-import org.apache.log4j.Logger;
 import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.search.site.PageRetriever;
+import org.apache.log4j.Logger;
 
 import java.util.*;
 

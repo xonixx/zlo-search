@@ -1,8 +1,8 @@
 package info.xonix.zlo.search;
 
-import org.apache.lucene.search.Hits;
-import org.apache.lucene.document.Document;
 import org.apache.commons.collections.IteratorUtils;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.search.Hits;
 
 import java.io.IOException;
 import java.util.Iterator;

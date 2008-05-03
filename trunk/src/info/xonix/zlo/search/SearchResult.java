@@ -1,17 +1,17 @@
 package info.xonix.zlo.search;
 
+import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.model.ZloMessageAccessor;
+import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
-import org.apache.log4j.Logger;
 import org.displaytag.pagination.PaginatedList;
-import info.xonix.zlo.search.model.ZloMessageAccessor;
-import info.xonix.zlo.search.dao.Site;
 
-import java.util.Iterator;
 import java.util.Date;
+import java.util.Iterator;
 
 /**
  * Author: gubarkov
