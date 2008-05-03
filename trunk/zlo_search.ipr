@@ -293,7 +293,8 @@
   <component name="ProjectFileVersion" converted="true" />
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/zlo_search.iml" filepath="$PROJECT_DIR$/zlo_search.iml" />
+      <module fileurl="file://$PROJECT_DIR$/other_engines/other_engines.iml" filepath="$PROJECT_DIR$/other_engines/other_engines.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zlo_search/zlo_search.iml" filepath="$PROJECT_DIR$/zlo_search/zlo_search.iml" />
       <module fileurl="file://$PROJECT_DIR$/zlo_web/zlo_web.iml" filepath="$PROJECT_DIR$/zlo_web/zlo_web.iml" />
     </modules>
   </component>

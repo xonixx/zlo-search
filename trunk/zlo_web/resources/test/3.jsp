@@ -1,4 +1,3 @@
-<%@ page import="java.util.ArrayList, info.xonix.zlo.web.servlets.test.t.Obj" %>
 <%--
   User: Vovan
   Date: 30.04.2008
@@ -24,7 +23,9 @@
 <% request.setAttribute("lyah", getArray()); %>
 
 <display:table name="${lyah}" id="row" decorator="info.xonix.zlo.web.servlets.test.t.Decor">
-    <display:column property="n" title="N" />
+    <display:column title="N">
+        <a href="http://ya.ru/?q=${row.n}">${row.n}</a>
+    </display:column>
     <display:column property="s" title="S" />
     <display:column property="t" title="Double" />
 </display:table>
