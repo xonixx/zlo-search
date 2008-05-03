@@ -1,12 +1,12 @@
 package info.xonix.zlo.search.daemon;
 
 import info.xonix.zlo.search.ZloIndexer;
-import info.xonix.zlo.search.utils.TimeUtils;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.site.SiteSource;
+import info.xonix.zlo.search.utils.TimeUtils;
 import org.apache.log4j.Logger;
 import sun.misc.Signal;
 import sun.misc.SignalHandler;

@@ -1,5 +1,3 @@
-<%@ page import="info.xonix.zlo.web.servlets.BaseServlet" %>
-
 <%@ include file="/WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 

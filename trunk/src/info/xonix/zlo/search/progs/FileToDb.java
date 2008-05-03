@@ -1,10 +1,10 @@
 package info.xonix.zlo.search.progs;
 
-import org.apache.log4j.Logger;
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.db.DbManager;
 import info.xonix.zlo.search.model.ZloMessage;
-import info.xonix.zlo.search.dao.Site;
+import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.text.DateFormat;

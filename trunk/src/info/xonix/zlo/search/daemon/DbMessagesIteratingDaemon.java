@@ -1,11 +1,11 @@
 package info.xonix.zlo.search.daemon;
 
-import org.apache.log4j.Logger;
-import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.db.DbDict;
 import info.xonix.zlo.search.db.DbException;
+import info.xonix.zlo.search.model.ZloMessage;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 

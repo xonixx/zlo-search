@@ -1,13 +1,13 @@
 package info.xonix.zlo.search.progs;
 
-import info.xonix.zlo.search.model.ZloMessage;
-import info.xonix.zlo.search.db.*;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.db.*;
+import info.xonix.zlo.search.model.ZloMessage;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.text.MessageFormat;
 
 /**
  * Author: Vovan

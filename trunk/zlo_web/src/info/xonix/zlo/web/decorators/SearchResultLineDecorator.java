@@ -1,8 +1,7 @@
 package info.xonix.zlo.web.decorators;
 
-import org.displaytag.decorator.TableDecorator;
-import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.search.model.ZloMessageAccessor;
+import org.displaytag.decorator.TableDecorator;
 
 import java.text.SimpleDateFormat;
 

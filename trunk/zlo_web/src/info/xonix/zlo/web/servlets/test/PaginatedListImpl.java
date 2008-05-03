@@ -1,8 +1,9 @@
 package info.xonix.zlo.web.servlets.test;
 
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import org.displaytag.properties.SortOrderEnum;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 
 /**

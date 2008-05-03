@@ -1,10 +1,10 @@
 package info.xonix.zlo.search.db;
 
+import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.dao.DB;
+import info.xonix.zlo.search.site.Nameable;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.site.Nameable;
-import info.xonix.zlo.search.dao.DB;
 
 import javax.naming.NamingException;
 import javax.sql.DataSource;

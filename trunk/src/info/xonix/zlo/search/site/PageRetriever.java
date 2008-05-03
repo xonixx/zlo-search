@@ -1,11 +1,11 @@
 package info.xonix.zlo.search.site;
 
+import info.xonix.zlo.search.config.Config;
 import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.log4j.Logger;
-import info.xonix.zlo.search.config.Config;
 
 import java.io.IOException;
 import java.io.InputStream;

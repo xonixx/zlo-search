@@ -1,13 +1,13 @@
 package info.xonix.zlo.search.test;
 
+import info.xonix.zlo.search.DoubleHits;
 import info.xonix.zlo.search.DoubleIndexSearcher;
 import info.xonix.zlo.search.ZloSearcher;
-import info.xonix.zlo.search.DoubleHits;
 import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.model.ZloMessage;
+import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.Sort;
-import org.apache.lucene.index.IndexWriter;
 
 import java.io.IOException;
 

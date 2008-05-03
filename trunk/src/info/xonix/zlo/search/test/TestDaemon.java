@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.test;
 
-import info.xonix.zlo.search.daemon.Daemon;
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.daemon.Daemon;
 import info.xonix.zlo.search.dao.DAOException;
 import org.apache.log4j.Logger;
 

@@ -2,9 +2,9 @@ package info.xonix.zlo.web.servlets.test;
 
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 import info.xonix.zlo.web.servlets.helpful.ForwardingServlet;
-import org.displaytag.properties.SortOrderEnum;
-import org.displaytag.pagination.PaginatedList;
 import org.apache.commons.lang.StringUtils;
+import org.displaytag.pagination.PaginatedList;
+import org.displaytag.properties.SortOrderEnum;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;

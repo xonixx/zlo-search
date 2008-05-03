@@ -1,4 +1,3 @@
-<%@ page import="info.xonix.zlo.web.servlets.test.TestLazy1" %>
 <%--
   User: Vovan
   Date: 23.09.2007

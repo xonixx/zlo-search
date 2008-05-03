@@ -1,8 +1,5 @@
 package info.xonix.zlo.search.test.junit;
 
-import static junit.framework.Assert.*;
-import org.junit.Test;
-import org.junit.Before;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.db.DbDict;
@@ -11,6 +8,9 @@ import info.xonix.zlo.search.db.DbManager;
 import info.xonix.zlo.search.db.VarType;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import info.xonix.zlo.search.utils.TimeUtils;
+import static junit.framework.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.Date;
 

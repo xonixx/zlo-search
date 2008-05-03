@@ -1,14 +1,13 @@
 package info.xonix.zlo.search.test;
 
+import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.db.DbException;
+import info.xonix.zlo.search.db.DbManager;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.ru.RussianAnalyzer;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.search.IndexSearcher;
-import info.xonix.zlo.search.db.DbManager;
-import info.xonix.zlo.search.db.DbException;
-import info.xonix.zlo.search.ZloSearcher;
-import info.xonix.zlo.search.dao.Site;
 
 import java.io.IOException;
 

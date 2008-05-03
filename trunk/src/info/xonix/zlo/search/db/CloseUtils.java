@@ -1,11 +1,11 @@
 package info.xonix.zlo.search.db;
 
-import java.sql.Statement;
-import java.sql.ResultSet;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.io.Closeable;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Author: Vovan

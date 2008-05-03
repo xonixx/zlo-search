@@ -1,23 +1,19 @@
 package info.xonix.zlo.web.servlets;
 
+import info.xonix.zlo.search.*;
+import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.config.ErrorMessage;
+import info.xonix.zlo.search.db.DbAccessor;
+import info.xonix.zlo.search.db.DbException;
+import info.xonix.zlo.search.db.DbManager;
+import info.xonix.zlo.search.utils.HtmlUtils;
+import info.xonix.zlo.web.CookieUtils;
+import info.xonix.zlo.web.RequestCache;
+import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
+import info.xonix.zlo.web.utils.RequestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.search.BooleanQuery;
-import info.xonix.zlo.search.SearchRequest;
-import info.xonix.zlo.search.SearchResult;
-import info.xonix.zlo.search.ZloPaginatedList;
-import info.xonix.zlo.search.ZloSearcher;
-import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.config.ErrorMessage;
-import info.xonix.zlo.search.db.DbException;
-import info.xonix.zlo.search.db.DbManager;
-import info.xonix.zlo.search.db.DbAccessor;
-import info.xonix.zlo.web.CookieUtils;
-import info.xonix.zlo.web.RequestCache;
-import info.xonix.zlo.web.utils.RequestUtils;
-import info.xonix.zlo.search.FoundTextHighlighter;
-import info.xonix.zlo.search.utils.HtmlUtils;
-import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;

@@ -1,9 +1,9 @@
 package info.xonix.zlo.search.site;
 
-import org.apache.commons.lang.StringUtils;
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.utils.TimeUtils;
 import info.xonix.zlo.search.db.DbAccessor;
+import info.xonix.zlo.search.utils.TimeUtils;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.Properties;
 

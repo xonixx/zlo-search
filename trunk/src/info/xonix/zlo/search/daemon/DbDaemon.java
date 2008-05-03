@@ -1,8 +1,8 @@
 package info.xonix.zlo.search.daemon;
 
-import org.apache.log4j.Logger;
 import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.dao.Site;
+import org.apache.log4j.Logger;
 
 /**
  * User: boost
