@@ -3,8 +3,8 @@ package info.xonix.zlo.search.test;
 import info.xonix.zlo.search.ZloSearcher;
 import info.xonix.zlo.search.dao.Site;
 
-import java.util.Random;
 import java.io.IOException;
+import java.util.Random;
 
 /**
  * Author: Vovan

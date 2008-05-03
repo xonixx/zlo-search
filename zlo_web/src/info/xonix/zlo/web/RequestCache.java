@@ -2,7 +2,9 @@ package info.xonix.zlo.web;
 
 import info.xonix.zlo.search.SearchResult;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Author: Vovan

@@ -1,5 +1,9 @@
 package info.xonix.zlo.search.model;
 
+import info.xonix.zlo.search.FoundTextHighlighter;
+import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.utils.HtmlUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.KeywordAnalyzer;
@@ -7,10 +11,6 @@ import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
 import org.apache.lucene.document.DateTools;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.dao.Site;
-import info.xonix.zlo.search.utils.HtmlUtils;
-import info.xonix.zlo.search.FoundTextHighlighter;
 
 import java.io.Serializable;
 import java.sql.Timestamp;

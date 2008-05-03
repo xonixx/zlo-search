@@ -1,4 +1,3 @@
-<%@ page import="info.xonix.zlo.search.dao.Site" %>
 <%--
   User: Vovan
   Date: 10.04.2008

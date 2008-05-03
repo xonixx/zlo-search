@@ -1,11 +1,11 @@
 package info.xonix.zlo.search.site;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.db.DbManager;
 import info.xonix.zlo.search.model.ZloMessage;
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 import java.text.DateFormat;
 import java.text.ParseException;

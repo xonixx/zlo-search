@@ -1,10 +1,5 @@
 package info.xonix.zlo.web.servlets.test;
 
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.TokenStream;
-
-import java.io.Reader;
-
 /**
  * Author: Vovan
  * Date: 22.01.2008

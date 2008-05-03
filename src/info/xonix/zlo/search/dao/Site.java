@@ -1,6 +1,5 @@
 package info.xonix.zlo.search.dao;
 
-import org.apache.log4j.Logger;
 import info.xonix.zlo.search.IndexingSource;
 import info.xonix.zlo.search.MultithreadedRetriever;
 import info.xonix.zlo.search.ZloSearcher;
@@ -9,6 +8,7 @@ import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.search.site.PageParser;
 import info.xonix.zlo.search.site.PageRetriever;
 import info.xonix.zlo.search.site.SiteAccessor;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.*;

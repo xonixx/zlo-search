@@ -1,9 +1,9 @@
 package info.xonix.zlo.web.servlets.test;
 
-import java.util.List;
-
 import org.displaytag.pagination.PaginatedList;
 import org.displaytag.properties.SortOrderEnum;
+
+import java.util.List;
 
 
 /** A convienience Paginated List for Pagination using Display Tag

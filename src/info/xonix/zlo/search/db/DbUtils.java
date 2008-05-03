@@ -1,7 +1,5 @@
 package info.xonix.zlo.search.db;
 
-import org.apache.log4j.Logger;
-
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.*;

@@ -1,15 +1,14 @@
 package info.xonix.zlo.search.test.siteparsing;
 
-import org.junit.Test;
-import org.junit.Before;
-import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.dao.DAOException;
+import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.model.ZloMessage;
+import junit.framework.Assert;
 import org.apache.commons.lang.StringUtils;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.IOException;
-
-import junit.framework.Assert;
 
 /**
  * Author: Vovan

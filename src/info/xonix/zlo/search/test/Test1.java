@@ -1,17 +1,15 @@
 package info.xonix.zlo.search.test;
 
-import org.apache.lucene.analysis.SimpleAnalyzer;
-import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.search.*;
-import info.xonix.zlo.search.ZloSearcher;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.dao.DB;
 import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.model.ZloMessage;
+import org.apache.lucene.analysis.SimpleAnalyzer;
+import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.search.Query;
 
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.util.*;

@@ -1,11 +1,11 @@
 package info.xonix.zlo.search.db;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.Site;
 import static info.xonix.zlo.search.db.VarType.*;
 import info.xonix.zlo.search.model.ZloMessage;
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

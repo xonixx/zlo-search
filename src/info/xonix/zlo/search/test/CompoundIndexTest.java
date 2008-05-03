@@ -1,8 +1,8 @@
 package info.xonix.zlo.search.test;
 
-import org.apache.lucene.index.IndexWriter;
 import info.xonix.zlo.search.ZloIndexer;
 import info.xonix.zlo.search.dao.Site;
+import org.apache.lucene.index.IndexWriter;
 
 import java.io.IOException;
 

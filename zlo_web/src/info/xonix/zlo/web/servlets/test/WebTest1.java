@@ -1,7 +1,7 @@
 package info.xonix.zlo.web.servlets.test;
 
-import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.FoundTextHighlighter;
+import info.xonix.zlo.search.config.Config;
 
 /**
  * Author: Vovan

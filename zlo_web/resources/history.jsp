@@ -1,4 +1,3 @@
-<%@ page import="info.xonix.zlo.search.dao.Site, info.xonix.zlo.search.db.DbAccessor, java.util.TreeMap, info.xonix.zlo.web.utils.RequestUtils" %>
 <%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 <link rel="stylesheet" type="text/css" href="main.css" />
