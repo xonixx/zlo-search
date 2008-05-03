@@ -30,43 +30,67 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/resources/test/t/tmp.jsp" afterPath="$PROJECT_DIR$/zlo_web/resources/test/t/tmp.jsp" />
-      <change type="DELETED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\WEB-INF\jsp\_ga.jsp" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/OptimizeAllIndex.bat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/resources/nickhost.jsp" afterPath="$PROJECT_DIR$/zlo_web/resources/nickhost.jsp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/zlo_web/WEB-INF/jsp/templates/host.jsp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/zlo_web/WEB-INF/jsp/setSite.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/WEB-INF/tiles-defs.xml" afterPath="$PROJECT_DIR$/zlo_web/WEB-INF/tiles-defs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/zlo_web/WEB-INF/jsp/templates/_ga.jsp" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\WEB-INF\include\import.jsp" afterPath="$PROJECT_DIR$/zlo_web/WEB-INF/jsp/import.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/resources/history.jsp" afterPath="$PROJECT_DIR$/zlo_web/resources/history.jsp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/zlo_web/WEB-INF/jsp/templates/nick.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/resources/test/test2.jsp" afterPath="$PROJECT_DIR$/zlo_web/resources/test/test2.jsp" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/zlo_web/WEB-INF/include" afterPath="$PROJECT_DIR$/zlo_web/WEB-INF/jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/resources/faq.jsp" afterPath="$PROJECT_DIR$/zlo_web/resources/faq.jsp" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\WEB-INF\include\templates\header.jsp" afterPath="$PROJECT_DIR$/zlo_web/WEB-INF/jsp/templates/header.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/resources/stats.jsp" afterPath="$PROJECT_DIR$/zlo_web/resources/stats.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/SearchServlet.java" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/SearchServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/resources/test/t/1.jsp" afterPath="$PROJECT_DIR$/zlo_web/resources/test/t/1.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/resources/test/test1.jsp" afterPath="$PROJECT_DIR$/zlo_web/resources/test/test1.jsp" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\resources\Search.jsp" afterPath="$PROJECT_DIR$/zlo_web/WEB-INF/jsp/Search.jsp" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\WEB-INF\include\_ga.jsp" afterPath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\WEB-INF\jsp\_ga.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/resources/about.jsp" afterPath="$PROJECT_DIR$/zlo_web/resources/about.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_search.iws" afterPath="$PROJECT_DIR$/zlo_search.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/SavedMessageServlet.java" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/SavedMessageServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/BaseServlet.java" afterPath="$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/BaseServlet.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/zlo_web/WEB-INF/include/templates" afterPath="$PROJECT_DIR$/zlo_web/WEB-INF/jsp/templates" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/resources/test/2.jsp" afterPath="$PROJECT_DIR$/zlo_web/resources/test/2.jsp" />
-      <change type="DELETED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\WEB-INF\jsp\notDirectlyAccessible.jsp" afterPath="" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\resources\SavedMsg.jsp" afterPath="$PROJECT_DIR$/zlo_web/WEB-INF/jsp/SavedMsg.jsp" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\WEB-INF\include\notDirectlyAccessible.jsp" afterPath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\WEB-INF\jsp\notDirectlyAccessible.jsp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/zlo_search/src/info/xonix/zlo/search/rmi" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\set_env.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/set_env.bat" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts\create_table_request_log_common.sql" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts/create_table_request_log_common.sql" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\IndexerDaemonDebug-zlo.lnk" afterPath="$PROJECT_DIR$/zlo_search/scripts/IndexerDaemonDebug-zlo.lnk" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_search.iml" afterPath="$PROJECT_DIR$/zlo_search/zlo_search.iml" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts\topics_table_zlo.sql" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts/topics_table_zlo.sql" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/scripts" afterPath="$PROJECT_DIR$/zlo_search/scripts" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts\topics_table_anime.sql" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts/topics_table_anime.sql" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\IndexerDaemonStart-sport.lnk" afterPath="$PROJECT_DIR$/zlo_search/scripts/IndexerDaemonStart-sport.lnk" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/zlo_search/src/info/xonix/zlo/search/rmi/ServerInterface.java" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\DbDaemon-zlo.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/DbDaemon-zlo.bat" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/DB Scripts" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts\create_messages_table.sql" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts/create_messages_table.sql" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts\DBDeploy.bat" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts/DBDeploy.bat" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\AllDaemons.lnk" afterPath="$PROJECT_DIR$/zlo_search/scripts/AllDaemons.lnk" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/info" afterPath="$PROJECT_DIR$/zlo_search/src/info" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\j.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/j.bat" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\OptimizeIndex-anime.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/OptimizeIndex-anime.bat" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts\topics_table_velo.sql" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts/topics_table_velo.sql" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\daemons_config.properties" afterPath="$PROJECT_DIR$/zlo_search/scripts/daemons_config.properties" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\test_storage\serialized.bin" afterPath="$PROJECT_DIR$/zlo_search/test_storage/serialized.bin" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\remove_lock.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/remove_lock.bat" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\DbDaemon-anime.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/DbDaemon-anime.bat" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\IndexerDaemon-sport.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/IndexerDaemon-sport.bat" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts\create_table_request_log.sql" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts/create_table_request_log.sql" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/zlo_search" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\IndexerDaemon-anime.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/IndexerDaemon-anime.bat" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\j_d.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/j_d.bat" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\DbDaemon.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/DbDaemon.bat" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\start_services.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/start_services.bat" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts\create_db_dict.sql" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts/create_db_dict.sql" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\DbDaemonStart-anime.lnk" afterPath="$PROJECT_DIR$/zlo_search/scripts/DbDaemonStart-anime.lnk" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\DbDaemonStart-sport.lnk" afterPath="$PROJECT_DIR$/zlo_search/scripts/DbDaemonStart-sport.lnk" />
+      <change type="DELETED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_search\src\info\xonix\zlo\search\config\HtmlStrings.java" afterPath="" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts\topics_table_games.sql" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts/topics_table_games.sql" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\IndexerDaemon.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/IndexerDaemon.bat" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/zlo_search/src/info/xonix/zlo/search/rmi/Server.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src" afterPath="$PROJECT_DIR$/zlo_search/src" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\IndexerDaemon-zlo.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/IndexerDaemon-zlo.bat" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\OptimizeIndex-zlo.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/OptimizeIndex-zlo.bat" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\DbDaemon-sport.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/DbDaemon-sport.bat" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\IndexerDaemonStart-zlo.lnk" afterPath="$PROJECT_DIR$/zlo_search/scripts/IndexerDaemonStart-zlo.lnk" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts\topics_table_sport.sql" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts/topics_table_sport.sql" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts\Create_webapp_user.sql" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts/Create_webapp_user.sql" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\OptimizeIndex-games.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/OptimizeIndex-games.bat" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\AllDaemons.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/AllDaemons.bat" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\OptimizeIndex.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/OptimizeIndex.bat" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts\nickhost.sql" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts/nickhost.sql" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\DbDaemonStart-zlo.lnk" afterPath="$PROJECT_DIR$/zlo_search/scripts/DbDaemonStart-zlo.lnk" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\DbDaemonDebug-zlo.lnk" afterPath="$PROJECT_DIR$/zlo_search/scripts/DbDaemonDebug-zlo.lnk" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\IndexerDaemonStart-anime.lnk" afterPath="$PROJECT_DIR$/zlo_search/scripts/IndexerDaemonStart-anime.lnk" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/test_storage" afterPath="$PROJECT_DIR$/zlo_search/test_storage" />
+      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\OptimizeAllIndex.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/OptimizeAllIndex.bat" />
     </list>
-    <list name="Project files" comment="" />
-    <list name="rmi" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/rmi/ServerInterface.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/rmi/Server.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/rmi" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/info/xonix/zlo/search/config/config.properties" afterPath="$PROJECT_DIR$/src/info/xonix/zlo/search/config/config.properties" />
+    <list name="Project files" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_search.iws" afterPath="$PROJECT_DIR$/zlo_search.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_search.ipr" afterPath="$PROJECT_DIR$/zlo_search.ipr" />
+    </list>
+    <list name="rmi" comment="" />
+    <list name="test" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/resources/test/3.jsp" afterPath="$PROJECT_DIR$/zlo_web/resources/test/3.jsp" />
     </list>
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
@@ -186,100 +210,7 @@
     </subPane>
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="stats.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zlo_web/resources/stats.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="71" column="18" selection-start="2849" selection-end="2849" vertical-scroll-proportion="3.5922618">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="setSite.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zlo_web/WEB-INF/jsp/setSite.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="17" selection-start="250" selection-end="250" vertical-scroll-proportion="0.30357143">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BaseServlet.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/BaseServlet.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="13" selection-start="455" selection-end="455" vertical-scroll-proportion="0.5322129">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nickhost.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zlo_web/resources/nickhost.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="85" column="0" selection-start="3272" selection-end="3272" vertical-scroll-proportion="4.501558">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nick.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zlo_web/WEB-INF/jsp/templates/nick.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="160" selection-start="931" selection-end="931" vertical-scroll-proportion="1.3239875">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="host.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zlo_web/WEB-INF/jsp/templates/host.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="61" selection-start="498" selection-end="498" vertical-scroll-proportion="0.7943925">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SearchServlet.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/SearchServlet.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="279" column="0" selection-start="12013" selection-end="12013" vertical-scroll-proportion="12.576023">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Search.jsp" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/zlo_web/WEB-INF/jsp/Search.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="117" column="47" selection-start="9124" selection-end="9124" vertical-scroll-proportion="0.47975078">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SavedMsg.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zlo_web/WEB-INF/jsp/SavedMsg.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="52" selection-start="1783" selection-end="1783" vertical-scroll-proportion="1.9226191">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tiles-defs.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zlo_web/WEB-INF/tiles-defs.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="46" selection-start="1484" selection-end="1484" vertical-scroll-proportion="2.125">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -409,174 +340,14 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
+          <option name="myItemId" value="zlo_search" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="info.xonix.zlo.web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="servlets" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="test" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
         </PATH_ELEMENT>
       </PATH>
       <PATH>
         <PATH_ELEMENT>
           <option name="myItemId" value="zlo_search" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="info.xonix.zlo.web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="decorators" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewLibrariesNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewLibrariesNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="META-INF" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="info.xonix.zlo.search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="info.xonix.zlo.search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="site" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="info.xonix.zlo.search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="progs" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="info.xonix.zlo.search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="db" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="info.xonix.zlo.search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="dao" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="info.xonix.zlo.search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="daemon" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
         </PATH_ELEMENT>
       </PATH>
     </subPane>
@@ -609,528 +380,6 @@
           <option name="myItemId" value="zlo_search" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
         </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="tiles" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\tiles-jsp-2.0.5.jar" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="tiles" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\tiles-jsp-2.0.5.jar" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\tiles-jsp-2.0.5.jar!\META-INF" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="tiles" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\tiles-jsp-2.0.5.jar" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\tiles-jsp-2.0.5.jar!\META-INF" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\tiles-jsp-2.0.5.jar!\META-INF\tld" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="tiles" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\tiles-core-2.0.5.jar" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\tiles-core-2.0.5.jar!\org\apache\tiles" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\tiles-core-2.0.5.jar!\org\apache\tiles\web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="tiles" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\tiles-core-2.0.5.jar" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\tiles-core-2.0.5.jar!\org\apache\tiles" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\tiles-core-2.0.5.jar!\org\apache\tiles\web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\tiles-core-2.0.5.jar!\org\apache\tiles\web\startup" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="tiles" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\tiles-core-2.0.5.jar" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\tiles-core-2.0.5.jar!\org\apache\tiles" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="tiles" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\tiles-core-2.0.5.jar" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\tiles-core-2.0.5.jar!\org\apache\tiles" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\tiles-core-2.0.5.jar!\org\apache\tiles\resources" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="tiles" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\tiles-core-2.0.5.jar" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="tiles" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\tiles-api-2.0.5.jar" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\tiles-api-2.0.5.jar!\org\apache\tiles" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="tiles" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\tiles-api-2.0.5.jar" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\WEB-INF" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\WEB-INF" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\WEB-INF\jsp" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\WEB-INF" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\WEB-INF\jsp" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\WEB-INF\jsp\templates" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\WEB-INF" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\WEB-INF\include" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\info\xonix\zlo\web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\info\xonix\zlo\web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\info\xonix\zlo\web\servlets" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\info\xonix\zlo\web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\info\xonix\zlo\web\servlets" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src\info\xonix\zlo\web\servlets\helpful" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\resources" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\resources" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\resources\test" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\resources" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\resources\test" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\resources\test\t" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
       </PATH>
       <PATH>
         <PATH_ELEMENT>
@@ -1152,7 +401,7 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk" />
+          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\zlo_search" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
       </PATH>
@@ -1162,20 +411,8 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
+          <option name="myItemId" value="other_engines" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\src\info\xonix\zlo\search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
       </PATH>
       <PATH>
@@ -1184,75 +421,11 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
+          <option name="myItemId" value="other_engines" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\src\info\xonix\zlo\search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\src\info\xonix\zlo\search\site" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\src\info\xonix\zlo\search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\src\info\xonix\zlo\search\db" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="zlo_search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\src\info\xonix\zlo\search" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\src\info\xonix\zlo\search\dao" />
+          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\other_engines" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
       </PATH>
@@ -1269,7 +442,7 @@
       <showLibraryContents />
       <hideEmptyPackages ProjectPane="true" />
       <abbreviatePackageNames />
-      <showStructure ProjectPane="false" J2EEPane="false" Scope="false" PackagesPane="false" Favorites="false" />
+      <showStructure Favorites="false" J2EEPane="false" Scope="false" PackagesPane="false" ProjectPane="false" />
       <autoscrollToSource ProjectPane="false" />
       <autoscrollFromSource PackagesPane="true" ProjectPane="true" />
       <sortByType ProjectPane="true" />
@@ -1301,8 +474,8 @@
     <property name="cvs_file_history_flatOrder2" value="2" />
     <property name="cvs_file_history_flatOrder3" value="3" />
     <property name="cvs_file_history_flatOrder0" value="0" />
-    <property name="cvs_file_history_flatOrder1" value="1" />
     <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
+    <property name="cvs_file_history_flatOrder1" value="1" />
     <property name="Web Module Deployment Descriptor Default Version" value="2.4" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GenerateAntBuildDialog.backupFiles" value="true" />
@@ -1328,8 +501,8 @@
     </key>
   </component>
   <component name="RunManager" selected="Tomcat Server.TomCat1">
-    <tempConfiguration default="false" name="Functions" type="Application" factoryName="Application" enabled="false" merge="false">
-      <option name="MAIN_CLASS_NAME" value="info.xonix.zlo.web.jstl.Functions" />
+    <tempConfiguration default="false" name="Test5" type="Application" factoryName="Application" enabled="false" merge="false">
+      <option name="MAIN_CLASS_NAME" value="info.xonix.zlo.search.test.Test5" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -1338,7 +511,7 @@
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="zlo_web" />
+      <module name="zlo_search" />
       <envs />
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
@@ -1346,22 +519,6 @@
         <option name="Make" value="true" />
       </method>
     </tempConfiguration>
-    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local">
-      <option name="WORKING_DIRECTORY" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="8080" />
-      <option name="LOCAL" value="true" />
-      <option name="OPEN_IN_BROWSER" value="true" />
-      <option name="OPEN_IN_BROWSER_URL" value="/" />
-      <option name="COMMON_VM_ARGUMENTS" value="" />
-      <JAVAEE_FACET FACET_ID="zlo_web/web/zlo_web" DEPLOYMENT_SOURCE_NAME="exploded">
-        <option name="CONTEXT_PATH" value="/" />
-        <option name="DEPLOY" value="false" />
-      </JAVAEE_FACET>
-      <option name="DEPLOY_TOMCAT_MANAGER" value="false" />
-      <option name="BASE_DIRECTORY_NAME" value="" />
-      <predefined_log_file id="TOMCAT_LOCALHOST_LOG_ID" enabled="true" />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG" enabled="false" merge="false">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -1391,12 +548,49 @@
         <option name="Make" value="true" />
       </method>
     </configuration>
-    <configuration default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+    </configuration>
+    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local">
+      <option name="WORKING_DIRECTORY" />
       <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
+      <option name="PORT" value="8080" />
+      <option name="LOCAL" value="true" />
+      <option name="OPEN_IN_BROWSER" value="true" />
+      <option name="OPEN_IN_BROWSER_URL" value="/" />
+      <option name="COMMON_VM_ARGUMENTS" value="" />
+      <JAVAEE_FACET FACET_ID="zlo_web/web/zlo_web" DEPLOYMENT_SOURCE_NAME="exploded">
+        <option name="CONTEXT_PATH" value="/" />
+        <option name="DEPLOY" value="false" />
+      </JAVAEE_FACET>
+      <option name="DEPLOY_TOMCAT_MANAGER" value="false" />
+      <option name="BASE_DIRECTORY_NAME" value="" />
+      <predefined_log_file id="TOMCAT_LOCALHOST_LOG_ID" enabled="true" />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application" enabled="false" merge="false">
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method>
+        <option name="Make" value="true" />
+      </method>
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit" enabled="false" merge="false">
       <module name="" />
@@ -1420,33 +614,12 @@
         <option name="Make" value="true" />
       </method>
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-    </configuration>
-    <configuration default="true" type="Application" factoryName="Application" enabled="false" merge="false">
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
-      <envs />
-      <method>
-        <option name="Make" value="true" />
-      </method>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
     </configuration>
     <configuration default="false" name="DbDaemon" type="Application" factoryName="Application" enabled="false" merge="false">
       <option name="MAIN_CLASS_NAME" value="org.xonix.zlo.search.daemon.DbDaemon" />
@@ -1770,7 +943,7 @@
       </method>
     </configuration>
     <list size="14">
-      <item index="0" class="java.lang.String" itemvalue="Application.Functions" />
+      <item index="0" class="java.lang.String" itemvalue="Application.Test5" />
       <item index="1" class="java.lang.String" itemvalue="Application.DbDaemon" />
       <item index="2" class="java.lang.String" itemvalue="Application.TestZloStorage" />
       <item index="3" class="java.lang.String" itemvalue="Application.Test1" />
@@ -1877,16 +1050,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="-4" width="1608" height="1155" extended-state="0" />
-    <editor active="true" />
+    <frame x="-4" y="-4" width="1608" height="1155" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.61909354" order="13" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.56123435" order="13" />
       <window_info id="SQL" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3263647" order="8" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="4" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2491951" order="1" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.46094504" order="1" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38958535" order="3" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44358727" order="3" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32982457" order="14" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14616871" order="3" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32783705" order="15" />
@@ -1896,12 +1069,12 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3992273" order="0" />
       <window_info id="Maven projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296845" order="3" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="6" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16934964" order="0" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23696072" order="0" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="12" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3084353" order="2" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="5" />
       <window_info id="Duplicates" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47444552" order="2" x="23" y="296" width="1553" height="555" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.43297976" order="2" x="23" y="296" width="1553" height="555" />
       <window_info id="File View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="5" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="7" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="0" />
@@ -1926,7 +1099,7 @@
     <option name="PERFORM_EDIT_IN_BACKGROUND" value="true" />
     <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="impr:&#10;- tiles: nick, host&#10;- kill session&#10;- kill notDirectlyAccessible&#10;- refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="optimize imports" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
@@ -1938,31 +1111,31 @@
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
     <confirmMoveToFailedCommit value="1" />
-    <MESSAGE value="AllDaemons" />
-    <MESSAGE value="games site added&#10;+ impr" />
-    <MESSAGE value="robots.txt + mobed to idea 7.0.3" />
-    <MESSAGE value="DbAccessor added" />
-    <MESSAGE value="google analytics" />
     <MESSAGE value="- improved stats&#10;- history added" />
     <MESSAGE value="link search possible now in all modes&#10;+ impr" />
     <MESSAGE value="added velo" />
     <MESSAGE value="- OptimizeAllIndexes&#10;- Daemon fix for gracefull exit of all threads" />
-    <MESSAGE value="history impr" />
     <MESSAGE value="fixes:&#10;- search urls&#10;- regex parse exceptions" />
     <MESSAGE value="org. -&gt; info." />
     <MESSAGE value="db refactor + DbMessagesIteratingDaemon" />
     <MESSAGE value="nicks\hosts" />
     <MESSAGE value="impr&#10;" />
     <MESSAGE value="nickhost impr" />
-    <MESSAGE value="fix" />
     <MESSAGE value="try avoid AlreadyClosed reader exception" />
     <MESSAGE value="last indexed date" />
     <MESSAGE value="- impr&#10;- RequestCache instead of session" />
     <MESSAGE value="impr - (now 1 time init search not 2)" />
-    <MESSAGE value="impr" />
     <MESSAGE value="impr:&#10;-escaping&#10;-urlencoding&#10;-strip nick&#10;-other impr" />
     <MESSAGE value="tiles + header menu" />
     <MESSAGE value="impr:&#10;- tiles: nick, host&#10;- kill session&#10;- kill notDirectlyAccessible&#10;- refactor" />
+    <MESSAGE value="QueryParser.setDefaultOperator" />
+    <MESSAGE value="test" />
+    <MESSAGE value="refactor" />
+    <MESSAGE value="history impr" />
+    <MESSAGE value="impr" />
+    <MESSAGE value="fix&#10;search for shares files" />
+    <MESSAGE value="fix" />
+    <MESSAGE value="optimize imports" />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -2013,116 +1186,114 @@
     <option name="myLastEditedConfigurable" value="Default" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/zlo_web/resources/history.jsp">
+    <entry file="jar://D:/TEST/JAVA/ZloSearcher/lib-src/lucene-2.2.0-src.zip!/lucene-2.2.0/src/java/org/apache/lucene/util/Parameter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="28" column="22" selection-start="1054" selection-end="1054" vertical-scroll-proportion="0.22181818">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/db/DbAccessor.java">
+    <entry file="file://$PROJECT_DIR$/zlo_web/WEB-INF/tld/xonix.tld">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="109" column="22" selection-start="2579" selection-end="2579" vertical-scroll-proportion="0.56302524">
+        <state line="17" column="10" selection-start="565" selection-end="565" vertical-scroll-proportion="0.7118227">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/site/SiteAccessor.java">
+    <entry file="file://$PROJECT_DIR$/zlo_search/src/info/xonix/zlo/search/config/config.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="170" column="18" selection-start="5127" selection-end="5127" vertical-scroll-proportion="0.56302524">
+        <state line="52" column="29" selection-start="1626" selection-end="1626" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://D:/TEST/JAVA/ZloSearcher/lib/tiles-jsp-2.0.5.jar!/META-INF/tld/tiles-jsp.tld">
+    <entry file="file://$PROJECT_DIR$/zlo_web/resources/test/3.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="216" column="34" selection-start="7791" selection-end="7791" vertical-scroll-proportion="0.21116751">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://D:/TEST/JAVA/ZloSearcher/lib/tiles-api-2.0.5.jar!/org/apache/tiles/Attribute.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="13" selection-start="154" selection-end="154" vertical-scroll-proportion="0.06861756">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/info/xonix/zlo/search/dao/Site.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="119" column="22" selection-start="3897" selection-end="3897" vertical-scroll-proportion="0.88793105">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/WEB-INF/tiles-defs.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="46" selection-start="1484" selection-end="1484" vertical-scroll-proportion="2.125">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/WEB-INF/jsp/SavedMsg.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="52" selection-start="1783" selection-end="1783" vertical-scroll-proportion="1.9226191">
+        <state line="29" column="53" selection-start="824" selection-end="824" vertical-scroll-proportion="0.5005076">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/SearchServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="279" column="0" selection-start="12013" selection-end="12013" vertical-scroll-proportion="12.576023">
+        <state line="331" column="26" selection-start="13876" selection-end="13876" vertical-scroll-proportion="0.7941473">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/WEB-INF/jsp/templates/host.jsp">
+    <entry file="file://$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/helpful/ForwardingServletAbstract.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="61" selection-start="498" selection-end="498" vertical-scroll-proportion="0.7943925">
+        <state line="22" column="0" selection-start="821" selection-end="821" vertical-scroll-proportion="0.308779">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zlo_search/src/info/xonix/zlo/search/SearchRequest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="193" column="58" selection-start="4929" selection-end="4929" vertical-scroll-proportion="0.82643795">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zlo_search/src/info/xonix/zlo/search/ZloSearcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="119" column="50" selection-start="4141" selection-end="4141" vertical-scroll-proportion="0.3370333">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zlo_search/src/info/xonix/zlo/search/test/Test4.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="14" selection-start="402" selection-end="402" vertical-scroll-proportion="0.32107356">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zlo_search/src/info/xonix/zlo/search/test/Test5.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="20" selection-start="314" selection-end="314" vertical-scroll-proportion="0.2027833">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zlo_search/src/info/xonix/zlo/search/model/ZloMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="387" column="27" selection-start="11760" selection-end="11760" vertical-scroll-proportion="0.691221">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/zlo_web/WEB-INF/jsp/templates/nick.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="160" selection-start="931" selection-end="931" vertical-scroll-proportion="1.3239875">
+        <state line="14" column="49" selection-start="413" selection-end="413" vertical-scroll-proportion="0.24536082">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/resources/nickhost.jsp">
+    <entry file="file://$PROJECT_DIR$/zlo_web/resources/test/2.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="0" selection-start="3272" selection-end="3272" vertical-scroll-proportion="4.501558">
+        <state line="9" column="21" selection-start="186" selection-end="186" vertical-scroll-proportion="0.15532994">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/BaseServlet.java">
+    <entry file="file://$PROJECT_DIR$/zlo_search.ipr">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="13" selection-start="455" selection-end="455" vertical-scroll-proportion="0.5322129">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/WEB-INF/jsp/setSite.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="17" selection-start="250" selection-end="250" vertical-scroll-proportion="0.30357143">
+        <state line="296" column="73" selection-start="16335" selection-end="16335" vertical-scroll-proportion="0.35093167">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/resources/stats.jsp">
+    <entry file="file://$PROJECT_DIR$/zlo_search.iws">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="18" selection-start="2849" selection-end="2849" vertical-scroll-proportion="3.5922618">
+        <state line="55" column="89" selection-start="5259" selection-end="5262" vertical-scroll-proportion="0.33333334">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/WEB-INF/jsp/Search.jsp">
+    <entry file="file://$PROJECT_DIR$/other_engines/src/A.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="117" column="47" selection-start="9124" selection-end="9124" vertical-scroll-proportion="0.47975078">
+        <state line="10" column="0" selection-start="164" selection-end="164" vertical-scroll-proportion="0.32629558">
           <folding />
         </state>
       </provider>
