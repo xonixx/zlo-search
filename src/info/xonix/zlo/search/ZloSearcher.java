@@ -1,15 +1,17 @@
 package info.xonix.zlo.search;
 
-import org.apache.log4j.Logger;
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.search.*;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.search.site.SiteSource;
 import info.xonix.zlo.search.utils.TimeUtils;
+import org.apache.log4j.Logger;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.SortField;
 
 import java.io.IOException;
 import java.util.Date;

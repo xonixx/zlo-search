@@ -1,8 +1,8 @@
 package info.xonix.zlo.search;
 
-import org.apache.commons.lang.StringUtils;
 import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.site.SiteSource;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.Date;
 

@@ -1,12 +1,12 @@
 package info.xonix.zlo.search;
 
-import org.apache.log4j.Logger;
-import org.displaytag.pagination.PaginatedList;
-import org.displaytag.properties.SortOrderEnum;
 import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.search.site.SiteSource;
+import org.apache.log4j.Logger;
+import org.displaytag.pagination.PaginatedList;
+import org.displaytag.properties.SortOrderEnum;
 
 import java.io.IOException;
 import java.util.List;

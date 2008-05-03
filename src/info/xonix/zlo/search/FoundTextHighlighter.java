@@ -1,11 +1,11 @@
 package info.xonix.zlo.search;
 
+import info.xonix.zlo.search.model.ZloMessage;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Query;
-import info.xonix.zlo.search.model.ZloMessage;
 
 import java.text.MessageFormat;
 import java.util.HashSet;

@@ -1,13 +1,13 @@
 package info.xonix.zlo.search;
 
-import org.apache.log4j.Logger;
-import org.apache.lucene.index.IndexWriter;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.search.site.SiteSource;
+import org.apache.log4j.Logger;
+import org.apache.lucene.index.IndexWriter;
 
 import java.io.File;
 import java.io.IOException;
