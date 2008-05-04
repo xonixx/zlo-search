@@ -19,4 +19,8 @@ public class Obj {
     public void setS(String s) {
         this.s = s;
     }
+
+    public String[] getStrArr() {
+        return new String[] {"q", "w", "zzz"};
+    }
 }

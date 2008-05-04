@@ -28,4 +28,19 @@
     </display:column>
     <display:column property="s" title="S" />
     <display:column property="t" title="Double" />
+    <display:column title="Array">
+        <display:table name="${row.strArr}" />
+        <c:if test="${not empty row.strArr}">
+            <c:out value="${row.s}"/>
+        </c:if>
+        <display:table name="${row.strArr}" id="str">
+            <display:setProperty name="basic.msg.empty_list"><span class="pagebanner">Сообщения, соответствующие введенным критериям поиска не найдены. </span></display:setProperty>
+            <display:setProperty name="paging.banner.one_item_found"><span class="pagebanner">Найдено одно сообщение. </span></display:setProperty>
+            <display:setProperty name="paging.banner.all_items_found"><span class="pagebanner">Найдено сообщений: {0}, показаны все. </span></display:setProperty>
+            <display:setProperty name="paging.banner.some_items_found"><span class="pagebanner">Найдено сообщений: {0}, показаны с {2} по {3}. </span></display:setProperty>
+            <display:column title="${row.s}">
+                ${str}
+            </display:column>
+        </display:table>
+    </display:column>
 </display:table>
