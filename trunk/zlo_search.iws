@@ -30,68 +30,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/zlo_search/src/info/xonix/zlo/search/rmi" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\set_env.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/set_env.bat" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts\create_table_request_log_common.sql" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts/create_table_request_log_common.sql" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\IndexerDaemonDebug-zlo.lnk" afterPath="$PROJECT_DIR$/zlo_search/scripts/IndexerDaemonDebug-zlo.lnk" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_search.iml" afterPath="$PROJECT_DIR$/zlo_search/zlo_search.iml" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts\topics_table_zlo.sql" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts/topics_table_zlo.sql" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/scripts" afterPath="$PROJECT_DIR$/zlo_search/scripts" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts\topics_table_anime.sql" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts/topics_table_anime.sql" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\IndexerDaemonStart-sport.lnk" afterPath="$PROJECT_DIR$/zlo_search/scripts/IndexerDaemonStart-sport.lnk" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/zlo_search/src/info/xonix/zlo/search/rmi/ServerInterface.java" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\DbDaemon-zlo.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/DbDaemon-zlo.bat" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/DB Scripts" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts\create_messages_table.sql" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts/create_messages_table.sql" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts\DBDeploy.bat" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts/DBDeploy.bat" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\AllDaemons.lnk" afterPath="$PROJECT_DIR$/zlo_search/scripts/AllDaemons.lnk" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/info" afterPath="$PROJECT_DIR$/zlo_search/src/info" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\j.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/j.bat" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\OptimizeIndex-anime.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/OptimizeIndex-anime.bat" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts\topics_table_velo.sql" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts/topics_table_velo.sql" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\daemons_config.properties" afterPath="$PROJECT_DIR$/zlo_search/scripts/daemons_config.properties" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\test_storage\serialized.bin" afterPath="$PROJECT_DIR$/zlo_search/test_storage/serialized.bin" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\remove_lock.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/remove_lock.bat" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\DbDaemon-anime.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/DbDaemon-anime.bat" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\IndexerDaemon-sport.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/IndexerDaemon-sport.bat" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts\create_table_request_log.sql" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts/create_table_request_log.sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/zlo_search" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\IndexerDaemon-anime.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/IndexerDaemon-anime.bat" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\j_d.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/j_d.bat" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\DbDaemon.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/DbDaemon.bat" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\start_services.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/start_services.bat" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts\create_db_dict.sql" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts/create_db_dict.sql" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\DbDaemonStart-anime.lnk" afterPath="$PROJECT_DIR$/zlo_search/scripts/DbDaemonStart-anime.lnk" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\DbDaemonStart-sport.lnk" afterPath="$PROJECT_DIR$/zlo_search/scripts/DbDaemonStart-sport.lnk" />
-      <change type="DELETED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\zlo_search\src\info\xonix\zlo\search\config\HtmlStrings.java" afterPath="" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts\topics_table_games.sql" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts/topics_table_games.sql" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\IndexerDaemon.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/IndexerDaemon.bat" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/zlo_search/src/info/xonix/zlo/search/rmi/Server.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src" afterPath="$PROJECT_DIR$/zlo_search/src" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\IndexerDaemon-zlo.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/IndexerDaemon-zlo.bat" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\OptimizeIndex-zlo.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/OptimizeIndex-zlo.bat" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\DbDaemon-sport.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/DbDaemon-sport.bat" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\IndexerDaemonStart-zlo.lnk" afterPath="$PROJECT_DIR$/zlo_search/scripts/IndexerDaemonStart-zlo.lnk" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts\topics_table_sport.sql" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts/topics_table_sport.sql" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts\Create_webapp_user.sql" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts/Create_webapp_user.sql" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\OptimizeIndex-games.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/OptimizeIndex-games.bat" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\AllDaemons.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/AllDaemons.bat" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\OptimizeIndex.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/OptimizeIndex.bat" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\DB Scripts\nickhost.sql" afterPath="$PROJECT_DIR$/zlo_search/DB Scripts/nickhost.sql" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\DbDaemonStart-zlo.lnk" afterPath="$PROJECT_DIR$/zlo_search/scripts/DbDaemonStart-zlo.lnk" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\DbDaemonDebug-zlo.lnk" afterPath="$PROJECT_DIR$/zlo_search/scripts/DbDaemonDebug-zlo.lnk" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\IndexerDaemonStart-anime.lnk" afterPath="$PROJECT_DIR$/zlo_search/scripts/IndexerDaemonStart-anime.lnk" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/test_storage" afterPath="$PROJECT_DIR$/zlo_search/test_storage" />
-      <change type="MOVED" beforePath="D:\TEST\JAVA\ZloSearcher\trunk\scripts\OptimizeAllIndex.bat" afterPath="$PROJECT_DIR$/zlo_search/scripts/OptimizeAllIndex.bat" />
-    </list>
-    <list name="Project files" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_search.iws" afterPath="$PROJECT_DIR$/zlo_search.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_search.ipr" afterPath="$PROJECT_DIR$/zlo_search.ipr" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_search/zlo_search.iml" afterPath="$PROJECT_DIR$/zlo_search/zlo_search.iml" />
     </list>
+    <list name="Project files" comment="" />
     <list name="rmi" comment="" />
-    <list name="test" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zlo_web/resources/test/3.jsp" afterPath="$PROJECT_DIR$/zlo_web/resources/test/3.jsp" />
-    </list>
+    <list name="test" comment="" />
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="Commander">
@@ -157,6 +101,21 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
+    <line_breakpoints>
+      <breakpoint url="file://D:/TEST/JAVA/ZloSearcher/lib-src/sphinxapi/org/sphx/api/SphinxClient.java" line="787" class="org.sphx.api.SphinxClient" package="org.sphx.api">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </line_breakpoints>
     <breakpoint_any>
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -210,7 +169,82 @@
     </subPane>
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="SphinxClient.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://D:/TEST/JAVA/ZloSearcher/lib-src/sphinxapi/org/sphx/api/SphinxClient.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="798" column="39" selection-start="23082" selection-end="23082" vertical-scroll-proportion="0.67476636">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ByteArrayOutputStream.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.6.0_05/src.zip!/java/io/ByteArrayOutputStream.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="58" column="115" selection-start="1649" selection-end="1649" vertical-scroll-proportion="0.78909093">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SphinxWordInfo.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://D:/TEST/JAVA/ZloSearcher/lib-src/sphinxapi/org/sphx/api/SphinxWordInfo.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="19" column="11" selection-start="460" selection-end="460" vertical-scroll-proportion="0.5254545">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://D:/TEST/JAVA/ZloSearcher/lib-src/sphinxapi/org/sphx/api/test.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="80" column="0" selection-start="3980" selection-end="3980" vertical-scroll-proportion="1.3921568">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="T1.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/other_engines/src/info/xonix/sphinx/test/T1.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="14" column="99" selection-start="420" selection-end="420" vertical-scroll-proportion="0.43272728">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SphinxException.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://D:/TEST/JAVA/ZloSearcher/lib-src/sphinxapi/org/sphx/api/SphinxException.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="13" selection-start="193" selection-end="193" vertical-scroll-proportion="0.15454546">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SphinxMatch.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://D:/TEST/JAVA/ZloSearcher/lib-src/sphinxapi/org/sphx/api/SphinxMatch.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="11" column="13" selection-start="187" selection-end="187" vertical-scroll-proportion="0.27818182">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SphinxResult.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://D:/TEST/JAVA/ZloSearcher/lib-src/sphinxapi/org/sphx/api/SphinxResult.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="52" column="32" selection-start="1174" selection-end="1174" vertical-scroll-proportion="0.71090907">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -414,6 +448,140 @@
           <option name="myItemId" value="other_engines" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
         </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="Libraries" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="sphinxapi" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\sphinxapi.jar" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\sphinxapi.jar!\org\sphx\api" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="zlo_search" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="other_engines" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="Libraries" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="sphinxapi" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\lib\sphinxapi.jar" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="zlo_search" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="other_engines" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="Libraries" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="&lt; 1.6 &gt;" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="zlo_search" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="other_engines" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="Libraries" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="&lt; 1.6 &gt;" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\Program Files\Java\jdk1.6.0_05\jre\lib\rt.jar" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="zlo_search" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="other_engines" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="Libraries" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="&lt; 1.6 &gt;" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\Program Files\Java\jdk1.6.0_05\jre\lib\rt.jar" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\Program Files\Java\jdk1.6.0_05\jre\lib\rt.jar!\java" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="zlo_search" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="other_engines" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="Libraries" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="&lt; 1.6 &gt;" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\Program Files\Java\jdk1.6.0_05\jre\lib\rt.jar" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\Program Files\Java\jdk1.6.0_05\jre\lib\rt.jar!\java" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\Program Files\Java\jdk1.6.0_05\jre\lib\rt.jar!\java\io" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
       </PATH>
       <PATH>
         <PATH_ELEMENT>
@@ -426,6 +594,28 @@
         </PATH_ELEMENT>
         <PATH_ELEMENT>
           <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\other_engines" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="zlo_search" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="other_engines" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\other_engines" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\other_engines\src" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:D:\TEST\JAVA\ZloSearcher\trunk\other_engines\src\info\xonix\sphinx\test" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
       </PATH>
@@ -500,9 +690,9 @@
       <recent name="org.xonix.zlo.web.test.junit" />
     </key>
   </component>
-  <component name="RunManager" selected="Tomcat Server.TomCat1">
-    <tempConfiguration default="false" name="Test5" type="Application" factoryName="Application" enabled="false" merge="false">
-      <option name="MAIN_CLASS_NAME" value="info.xonix.zlo.search.test.Test5" />
+  <component name="RunManager" selected="Application.T1">
+    <tempConfiguration default="false" name="T1" type="Application" factoryName="Application" enabled="false" merge="false">
+      <option name="MAIN_CLASS_NAME" value="info.xonix.sphinx.test.T1" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -511,9 +701,15 @@
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="zlo_search" />
+      <module name="other_engines" />
       <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="1575" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
       <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
       <ConfigurationWrapper RunnerId="Run" />
       <method>
         <option name="Make" value="true" />
@@ -943,20 +1139,20 @@
       </method>
     </configuration>
     <list size="14">
-      <item index="0" class="java.lang.String" itemvalue="Application.Test5" />
-      <item index="1" class="java.lang.String" itemvalue="Application.DbDaemon" />
-      <item index="2" class="java.lang.String" itemvalue="Application.TestZloStorage" />
-      <item index="3" class="java.lang.String" itemvalue="Application.Test1" />
-      <item index="4" class="java.lang.String" itemvalue="Application.FileToDb" />
-      <item index="5" class="java.lang.String" itemvalue="Application.IndexerDaemon" />
-      <item index="6" class="java.lang.String" itemvalue="Application.OptimizeIndex" />
-      <item index="7" class="java.lang.String" itemvalue="Application.SearchSpeedTest" />
-      <item index="8" class="java.lang.String" itemvalue="Application.DaemonLauncher" />
-      <item index="9" class="java.lang.String" itemvalue="JUnit.TestsWeb" />
-      <item index="10" class="java.lang.String" itemvalue="Remote.Daemons" />
-      <item index="11" class="java.lang.String" itemvalue="Tomcat Server.TomCat1" />
-      <item index="12" class="java.lang.String" itemvalue="Application.Test3" />
-      <item index="13" class="java.lang.String" itemvalue="Application.OptimizeAllIndexes" />
+      <item index="0" class="java.lang.String" itemvalue="Application.DbDaemon" />
+      <item index="1" class="java.lang.String" itemvalue="Application.TestZloStorage" />
+      <item index="2" class="java.lang.String" itemvalue="Application.Test1" />
+      <item index="3" class="java.lang.String" itemvalue="Application.FileToDb" />
+      <item index="4" class="java.lang.String" itemvalue="Application.IndexerDaemon" />
+      <item index="5" class="java.lang.String" itemvalue="Application.OptimizeIndex" />
+      <item index="6" class="java.lang.String" itemvalue="Application.SearchSpeedTest" />
+      <item index="7" class="java.lang.String" itemvalue="Application.DaemonLauncher" />
+      <item index="8" class="java.lang.String" itemvalue="JUnit.TestsWeb" />
+      <item index="9" class="java.lang.String" itemvalue="Remote.Daemons" />
+      <item index="10" class="java.lang.String" itemvalue="Tomcat Server.TomCat1" />
+      <item index="11" class="java.lang.String" itemvalue="Application.Test3" />
+      <item index="12" class="java.lang.String" itemvalue="Application.OptimizeAllIndexes" />
+      <item index="13" class="java.lang.String" itemvalue="Application.T1" />
     </list>
   </component>
   <component name="SQLPlugin.ProjectConfiguration">
@@ -1051,7 +1247,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-4" y="-4" width="1608" height="1155" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.56123435" order="13" />
@@ -1059,7 +1255,7 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="4" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2491951" order="1" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.46094504" order="1" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44358727" order="3" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47444552" order="3" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32982457" order="14" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14616871" order="3" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32783705" order="15" />
@@ -1069,12 +1265,12 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3992273" order="0" />
       <window_info id="Maven projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296845" order="3" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="6" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23696072" order="0" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23696072" order="0" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="12" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3084353" order="2" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="5" />
       <window_info id="Duplicates" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.43297976" order="2" x="23" y="296" width="1553" height="555" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.43297976" order="2" x="23" y="296" width="1553" height="555" />
       <window_info id="File View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="5" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="7" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="0" />
@@ -1186,69 +1382,6 @@
     <option name="myLastEditedConfigurable" value="Default" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://D:/TEST/JAVA/ZloSearcher/lib-src/lucene-2.2.0-src.zip!/lucene-2.2.0/src/java/org/apache/lucene/util/Parameter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="22" selection-start="1054" selection-end="1054" vertical-scroll-proportion="0.22181818">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/WEB-INF/tld/xonix.tld">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="10" selection-start="565" selection-end="565" vertical-scroll-proportion="0.7118227">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_search/src/info/xonix/zlo/search/config/config.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="29" selection-start="1626" selection-end="1626" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/resources/test/3.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="53" selection-start="824" selection-end="824" vertical-scroll-proportion="0.5005076">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/SearchServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="331" column="26" selection-start="13876" selection-end="13876" vertical-scroll-proportion="0.7941473">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_web/src/info/xonix/zlo/web/servlets/helpful/ForwardingServletAbstract.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="0" selection-start="821" selection-end="821" vertical-scroll-proportion="0.308779">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_search/src/info/xonix/zlo/search/SearchRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="193" column="58" selection-start="4929" selection-end="4929" vertical-scroll-proportion="0.82643795">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_search/src/info/xonix/zlo/search/ZloSearcher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="119" column="50" selection-start="4141" selection-end="4141" vertical-scroll-proportion="0.3370333">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/zlo_search/src/info/xonix/zlo/search/test/Test4.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="14" selection-start="402" selection-end="402" vertical-scroll-proportion="0.32107356">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/zlo_search/src/info/xonix/zlo/search/test/Test5.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="20" selection-start="314" selection-end="314" vertical-scroll-proportion="0.2027833">
@@ -1286,14 +1419,79 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/zlo_search.iws">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="89" selection-start="5259" selection-end="5262" vertical-scroll-proportion="0.33333334">
+        <state line="55" column="89" selection-start="5259" selection-end="5262" vertical-scroll-proportion="0.33400604">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/other_engines/src/A.java">
+    <entry file="file://$PROJECT_DIR$/zlo_search/zlo_search.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="164" selection-end="164" vertical-scroll-proportion="0.32629558">
+        <state line="6" column="4" selection-start="314" selection-end="314" vertical-scroll-proportion="0.10139165">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zlo_search/src/info/xonix/zlo/search/test/junit/TestsSearch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="7" selection-start="1057" selection-end="1057" vertical-scroll-proportion="0.4803229">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/TEST/JAVA/ZloSearcher/lib-src/sphinxapi/org/sphx/api/SphinxWordInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="11" selection-start="460" selection-end="460" vertical-scroll-proportion="0.5254545">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.6.0_05/src.zip!/java/io/ByteArrayOutputStream.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="58" column="115" selection-start="1649" selection-end="1649" vertical-scroll-proportion="0.78909093">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/TEST/JAVA/ZloSearcher/lib-src/sphinxapi/org/sphx/api/SphinxClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="798" column="39" selection-start="23082" selection-end="23082" vertical-scroll-proportion="0.67476636">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/TEST/JAVA/ZloSearcher/lib-src/sphinxapi/org/sphx/api/test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="80" column="0" selection-start="3980" selection-end="3980" vertical-scroll-proportion="1.3921568">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/other_engines/src/info/xonix/sphinx/test/T1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="99" selection-start="420" selection-end="420" vertical-scroll-proportion="0.43272728">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/TEST/JAVA/ZloSearcher/lib-src/sphinxapi/org/sphx/api/SphinxException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="13" selection-start="193" selection-end="193" vertical-scroll-proportion="0.15454546">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/TEST/JAVA/ZloSearcher/lib-src/sphinxapi/org/sphx/api/SphinxMatch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="13" selection-start="187" selection-end="187" vertical-scroll-proportion="0.27818182">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/TEST/JAVA/ZloSearcher/lib-src/sphinxapi/org/sphx/api/SphinxResult.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="52" column="32" selection-start="1174" selection-end="1174" vertical-scroll-proportion="0.71090907">
           <folding />
         </state>
       </provider>
