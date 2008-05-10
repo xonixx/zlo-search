@@ -61,6 +61,10 @@ public class TestsSearch {
         assertTrue(HtmlUtils.hasImg("<IMG src = \"http://194.85.81.128/~mc/pics/mybike.jpg\">"));
         assertTrue(HtmlUtils.hasImg("<IMG src = https://194.85.81.128/~mc/pics/mybike.jpg>"));
         assertFalse(HtmlUtils.hasImg("<IMG src = /pics/mybike.jpg>"));
+
+        assertEquals("a\"a", HtmlUtils.unescapeHtml("a&quot;a"));
+        assertEquals("<qqq>", HtmlUtils.unescapeHtml("&lt;qqq&gt;"));
+        assertEquals("1&&3", HtmlUtils.unescapeHtml("1&amp;&amp;3"));
     }
 
     @Test
