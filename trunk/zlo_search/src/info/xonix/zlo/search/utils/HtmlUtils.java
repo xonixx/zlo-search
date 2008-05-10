@@ -1,5 +1,7 @@
 package info.xonix.zlo.search.utils;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import java.util.regex.Pattern;
 
 /**
@@ -29,16 +31,13 @@ public class HtmlUtils {
                     .replaceAll("(?i)<" + tag + POSIBLE_SPACE_AND_ATTRIBS + "/>", NEW_LINE);
         }
 
-        s = escapeEntities(s);
+        s = unescapeHtml(s);
 
         return s;
     }
 
-    private static String escapeEntities(String s) {
-        return s.replace("&amp;", "&")
-                .replace("&gt;", ">")
-                .replace("&lt;", "<")
-                .replace("&quot;", "\"");
+    public static String unescapeHtml(String s) {
+        return StringEscapeUtils.unescapeHtml(s);
     }
 
     public static boolean hasUrl(String s) {

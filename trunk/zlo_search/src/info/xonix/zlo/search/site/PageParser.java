@@ -4,6 +4,7 @@ import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.db.DbManager;
 import info.xonix.zlo.search.model.ZloMessage;
+import info.xonix.zlo.search.utils.HtmlUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -77,7 +78,7 @@ public class PageParser extends SiteSource {
 
         message.setSite(getSite());
         message.setTitle(title);
-        message.setNick(m.group(3));
+        message.setNick(StringUtils.trim(HtmlUtils.unescapeHtml(m.group(3)))); // unescape nick
         message.setHost(m.group(4));
         message.setDate(prepareDate(m.group(5)));
         message.setBody(m.group(6));
@@ -92,10 +93,6 @@ public class PageParser extends SiteSource {
         parseMessage(zm, msg);
         return zm;
     }
-
-//    private String prepareTopic(String topic) {
-//        return siteAccessor.WITHOUT_TOPIC.equals(topic) ? "" : topic;
-//    }
 
     private Date prepareDate(String s) {
         DateFormat df;
