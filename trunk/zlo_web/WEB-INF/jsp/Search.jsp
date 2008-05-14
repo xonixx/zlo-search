@@ -22,20 +22,23 @@
     <body>
         <tiles:insertDefinition name="header.search" />
 
-        <div id="searchform">
-            <table width="100%">
-                <tr><td height="1"></td></tr>
-                <tr>
-                    <td width="33%"></td>
-                    <td>
-                        <form action="search" method="get" id="searchFrm">
+        <div id="searchform" align="center" style="padding-top:5px;">
+            <form action="search" method="get" id="searchFrm">
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>
                             <input type="radio" name="st" id="st1" value="all" <c:if test="${param['st'] == 'all'}">checked="checked"</c:if> /><label for="st1"><fmt:message key="label.search.all" /></label>
                             <input type="radio" name="st" id="st2" value="exct" <c:if test="${param['st'] == 'exct'}">checked="checked"</c:if> /><label for="st2"><fmt:message key="label.search.exact.phrase" /></label>
                             <input type="radio" name="st" id="st3" value="adv" <c:if test="${param['st'] == 'adv'}">checked="checked"</c:if> /><label for="st3"><fmt:message key="label.search.advanced" /></label>
                             <br/>
                             <fmt:message key="label.text" /> <input type="text" name="text" <c:if test="${not empty param['text']}">value="<c:out value="${param['text']}" />" </c:if>style="width:450px;" />
+                        </td>
+                        <td valign="bottom" style="padding-left:10px;">
                             <fmt:message key="label.topic" /> <jsp:getProperty name="backendBean" property="topicSelector" />
-                            <br/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
                             <fmt:message key="label.search" />
                             <input type="checkbox" name="inTitle" id="inTitle" <c:if test="${not empty param['inTitle']}">checked="checked"</c:if>/> <label for="inTitle"><fmt:message key="label.search.in.title" /></label>
                             <input type="checkbox" name="inBody" id="inBody" <c:if test="${not empty param['inBody']}">checked="checked"</c:if>/> <label for="inBody"><fmt:message key="label.search.in.body" /></label>
@@ -63,11 +66,10 @@
                             <fmt:message key="label.per.page" /> <jsp:getProperty name="backendBean" property="pageSizeSelector" />
                             <br/>
                             <input type="submit" name="submitBtn" value="<fmt:message key="button.search"/>"/>
-                        </form>
-                    </td>
-                    <td></td>
-                </tr>
-            </table>
+                        </td>
+                    </tr>
+                </table>
+            </form>
         </div>
     <c:if test="${requestScope['debug'] == true}">
         <div id="debug">

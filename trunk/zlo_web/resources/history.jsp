@@ -48,7 +48,7 @@
 
 <tiles:insertDefinition name="header.history" />
 
-<div align="center">
+<div align="center" class="content">
     <h3>История запросов</h3>
     <small>(всего запросов:${totalNum.rows[0].count}, показаны последние: ${numberToShow})</small>
 

@@ -40,6 +40,7 @@ public class DbManager {
     private static final String DB_DICT_LAST_INDEXED_DATE =          "lastIndexed_date";
     private static final String DB_DICT_LAST_INDEXED_DOUBLE =   "lastIndexedDouble";
     private static final String DB_DICT_LAST_INDEXED_DOUBLE_DATE =   "lastIndexedDouble_date";
+    private static final String DB_DICT_LAST_SAVED_DATE =   "lastSavedDate";
 
     private DbAccessor dbAccessor;
 
@@ -298,6 +299,14 @@ public class DbManager {
 
     public Date getLastIndexedDate() throws DbException {
         return dbAccessor.getDbDict().getDate(Config.USE_DOUBLE_INDEX ? DB_DICT_LAST_INDEXED_DOUBLE_DATE : DB_DICT_LAST_INDEXED_DATE, new Date(0));
+    }
+
+    public void setLastSavedDate(Date d) throws DbException {
+        dbAccessor.getDbDict().setDate(DB_DICT_LAST_SAVED_DATE, d);
+    }
+
+    public Date getLastSavedDate() throws DbException {
+        return dbAccessor.getDbDict().getDate(DB_DICT_LAST_SAVED_DATE, new Date(0));
     }
 
     private ZloMessage getMessage(DbResult rs) throws DbException {
