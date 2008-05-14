@@ -4,6 +4,8 @@ import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.dao.Site;
 import org.apache.log4j.Logger;
 
+import java.util.Date;
+
 /**
  * User: boost
  * Date: 28.09.2007
@@ -31,6 +33,7 @@ public class DbDaemon extends Daemon {
 
         protected void perform(int from, int to) throws DAOException {
             getSite().getDB().saveMessages(getSite().getMessages(from, to + 1));
+            getSite().getDbManager().setLastSavedDate(new Date());
         }
 
         protected void cleanUp() {

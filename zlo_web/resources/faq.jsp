@@ -88,12 +88,12 @@
         <tr>
             <td><a href="search?st=adv&text=%F2%3F%E7&topic=-1&inTitle=on&nick=&host=&site=0&pageSize=0&submitBtn=Search">
                 т?з</a></td>
-            <td>"?" сотвтетствует одной произвольной букве. Ѕудут надены слова "таз", "туз". <i>Ќе работает в режиме точна€ фраза!</i></td>
+            <td>"?" соответствует одной произвольной букве. Ѕудут надены слова "таз", "туз". <i>Ќе работает в режиме точна€ фраза!</i></td>
         </tr>
         <tr>
             <td><a href="search?st=adv&text=%F1%F2%EE*&topic=-1&inTitle=on&nick=&host=&site=0&pageSize=0&submitBtn=Search">
                 сто*</a></td>
-            <td>"*" сотвтетствует произвольному числу букв, включа€ 0. будут надены все слова, начинающиес€ на "сто". <i>Ќе работает в режиме точна€ фраза!</i></td>
+            <td>"*" соответствует произвольному числу букв, включа€ 0. будут надены все слова, начинающиес€ на "сто". <i>Ќе работает в режиме точна€ фраза!</i></td>
         </tr>
         <tr>
             <td><a href="search?st=adv&text=%2B%28%E1%E5%EB%FB%E9+%F7%E5%F0%ED%FB%E9%29+%2B%F6%E2%E5%F2&topic=-1&inTitle=on&nick=&host=&site=0&pageSize=0&submitBtn=Search">

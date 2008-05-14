@@ -284,7 +284,7 @@ public class SearchServlet extends BaseServlet {
     private void showStatistics(ForwardingRequest request) throws DbException {
         DbManager dbm = getSite(request).getDbManager();
         request.setAttribute(QS_LAST_MSGS, new int[]{dbm.getLastMessageNumber(), dbm.getLastIndexedNumber()});
-        request.setAttribute(QS_LAST_MSGS_DATES, new Date[]{new Date(0), dbm.getLastIndexedDate()}); // todo: last saved date?
+        request.setAttribute(QS_LAST_MSGS_DATES, new Date[]{dbm.getLastSavedDate(), dbm.getLastIndexedDate()});
     }
 
     private void logRequest(ForwardingRequest request, String query) {
