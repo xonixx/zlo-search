@@ -56,9 +56,9 @@
         <display:column title="№" headerClass="head">
             <a href="search?<c:out value="${row.req_query_str}"/>" class="search">${row_rowNum}</a>
         </display:column>
-        <display:column property="searchText" title="Текст" headerClass="head" />
-        <display:column property="searchNick" title="Ник поиска" headerClass="head" />
-        <display:column property="searchHost" title="Хост поиска" headerClass="head" />
+        <display:column property="searchText" title="Текст" headerClass="head" escapeXml="true" />
+        <display:column property="searchNick" title="Ник поиска" headerClass="head" escapeXml="true" />
+        <display:column property="searchHost" title="Хост поиска" headerClass="head" escapeXml="true" />
         <display:column title="Сайт" headerClass="head">
             <% Site site = Site.getSite((Integer)((TreeMap)row).get("site")); %>
             <a href="http://<%= site.getSITE_URL() %>">

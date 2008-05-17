@@ -17,7 +17,14 @@ public class RussianWithNumbersAnalyzer extends Analyzer {
     private Analyzer russianAnalyzer;
 
     public RussianWithNumbersAnalyzer() {
-        russianAnalyzer = new RussianAnalyzer(getRussianCharSet());
+        initialize();
+    }
+
+    protected void initialize() {
+        String[] stopWords = getStopWords();
+        russianAnalyzer = stopWords == null
+                ? new RussianAnalyzer(getRussianCharSet())
+                : new RussianAnalyzer(getRussianCharSet(), stopWords);
     }
 
     private char[] getRussianCharSet()
@@ -37,7 +44,11 @@ public class RussianWithNumbersAnalyzer extends Analyzer {
         russianChars[length++] = '8';
         russianChars[length] = '9';
         return russianChars;
-    }    
+    }
+
+    protected String[] getStopWords() {
+        return null;
+    }
 
     public TokenStream tokenStream(String fieldName, Reader reader) {
         return russianAnalyzer.tokenStream(fieldName, reader);
