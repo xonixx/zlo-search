@@ -8,6 +8,7 @@ import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.search.site.SiteSource;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.analysis.Analyzer;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,25 +21,51 @@ import java.io.IOException;
 public class ZloIndexer extends SiteSource {
     private static Logger logger = Logger.getLogger("ZloIndexer");
 
-    private File INDEX_DIR;
+    private File indexDir;
 
-    private static final int INDEX_PER_TIME = 50;
-
+    private int indexPerTime;
     private IndexWriter writer;
     private boolean reindex;
+    private Analyzer analyzer;
 
     public ZloIndexer(Site site) {
         super(site);
-        INDEX_DIR = new File(Config.USE_DOUBLE_INDEX ? site.getINDEX_DIR_DOUBLE() + "/" + DoubleIndexSearcher.SMALL_INDEX_DIR : Config.INDEX_DIR);
+        setIndexPerTime(100);
+        setAnalyzer(ZloMessage.constructAnalyzer());
+        setIndexDir(new File(Config.USE_DOUBLE_INDEX ? site.getINDEX_DIR_DOUBLE() + "/" + DoubleIndexSearcher.SMALL_INDEX_DIR : Config.INDEX_DIR));
+    }
+
+    public Analyzer getAnalyzer() {
+        return analyzer;
+    }
+
+    public void setAnalyzer(Analyzer analyzer) {
+        this.analyzer = analyzer;
+    }
+
+    public File getIndexDir() {
+        return indexDir;
+    }
+
+    public void setIndexDir(File indexDir) {
+        this.indexDir = indexDir;
+    }
+
+    public int getIndexPerTime() {
+        return indexPerTime;
+    }
+
+    public void setIndexPerTime(int indexPerTime) {
+        this.indexPerTime = indexPerTime;
     }
 
     public IndexWriter getWriter() {
         if (writer == null) {
             try {
-                if (INDEX_DIR.list().length == 0)
+                if (indexDir.list().length == 0)
                     reindex = true;
 
-                writer = new IndexWriter(INDEX_DIR, ZloMessage.constructAnalyzer(), reindex);
+                writer = new IndexWriter(indexDir, analyzer, reindex);
             } catch (IOException e) {
                 logger.error("Can't create writer", e);
             }
@@ -46,11 +73,11 @@ public class ZloIndexer extends SiteSource {
         return writer;
     }
 
-    private void indexRange(int startNum, int endNum) {
+    public void indexRange(int startNum, int endNum) {
         Exception ex = null;
         try {
             IndexWriter writer = getWriter();
-            logger.info("Indexing to directory '" + INDEX_DIR + "' range (" + startNum + " - " + endNum + ") ...");
+            logger.info("Indexing to directory '" + indexDir + "' range (" + startNum + " - " + endNum + ") ...");
             indexMsgs(startNum, endNum);
             logger.info("Optimizing...");
             writer.optimize();
@@ -66,10 +93,10 @@ public class ZloIndexer extends SiteSource {
     private void indexMsgs(final int startNum, final int endNum) throws DAOException, IOException {
         int start = startNum, end;
         while (start < endNum) {
-            if (start + INDEX_PER_TIME > endNum) {
+            if (start + indexPerTime > endNum) {
                 end = endNum;
             } else {
-                end = start + INDEX_PER_TIME;
+                end = start + indexPerTime;
             }
             logger.info("Indexing part (" + start + " - " + end + ") ...");
             addMessagesToIndex(start, end);
