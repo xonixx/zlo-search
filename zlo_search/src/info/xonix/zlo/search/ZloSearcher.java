@@ -5,6 +5,7 @@ import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.search.site.SiteSource;
 import info.xonix.zlo.search.utils.TimeUtils;
+import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.IndexReader;
@@ -134,7 +135,7 @@ public class ZloSearcher extends SiteSource {
             result.setQueryParser(parser);
             result.setQuery(query);
             result.setDoubleIndexSearcher(dis);
-            result.setHits(dis.search(query, sort));
+            result.setHits(dis.search(query));
             result.setSearchDateNow();
         } catch (org.apache.lucene.queryParser.ParseException e) {
             throw new ParseException(queryStr, e);

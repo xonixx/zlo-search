@@ -1,4 +1,4 @@
-package info.xonix.zlo.search;
+package info.xonix.zlo.search.doubleindex;
 
 import org.apache.commons.collections.IteratorUtils;
 import org.apache.lucene.document.Document;
@@ -13,8 +13,8 @@ import java.util.Iterator;
  * Time: 3:51:51
  */
 public class DoubleHits implements Iterable {
-    private Hits smallHits;
-    private Hits bigHits;
+    protected Hits smallHits;
+    protected Hits bigHits;
 
     public DoubleHits(Hits bigHits, Hits smallHits) {
         this.bigHits = bigHits;

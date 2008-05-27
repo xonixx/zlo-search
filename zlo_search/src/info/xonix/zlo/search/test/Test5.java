@@ -3,6 +3,7 @@ package info.xonix.zlo.search.test;
 import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.search.RussianWithNumbersAndSpecialStopWordsAnalyzer;
 import info.xonix.zlo.search.ZloIndexer;
+import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
 import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.dao.Site;
 import org.apache.lucene.analysis.Analyzer;
@@ -10,6 +11,9 @@ import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.Hits;
 
 import java.io.StringReader;
 import java.io.IOException;
@@ -22,7 +26,7 @@ import java.io.File;
  */
 public class Test5 {
     public static void main(String[] args) {
-        m3();
+        m4();
     }
 
     public static void m3() {
@@ -45,8 +49,8 @@ public class Test5 {
     public static void m2() {
         String s = "в чем смысл жизни?";
 
-//        Analyzer analyzer = ZloMessage.constructAnalyzer();
-        Analyzer analyzer = new RussianWithNumbersAndSpecialStopWordsAnalyzer(new String[0]);
+        Analyzer analyzer = ZloMessage.constructAnalyzer();
+//        Analyzer analyzer = new RussianWithNumbersAndSpecialStopWordsAnalyzer(new String[0]);
 
         showTokens(s, analyzer);
 
@@ -72,5 +76,28 @@ public class Test5 {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void m4(){
+//        ZloSearcher zs = new ZloSearcher(Site.forName("zlo"));
+//        System.out.println(zs.search(-1, "тест", true, true, false, false, false, null, null).getHits().length());
+        Site site = Site.forName("zlo");
+        site.setDB_VIA_CONTAINER(false);
+        DoubleIndexSearcher dis = new DoubleIndexSearcher(site, null);
+        IndexSearcher is = new IndexSearcher(dis.getBigReader());
+        try {
+            Hits hits = is.search(new QueryParser("body", ZloMessage.constructAnalyzer()).parse("body:тест title:тест"), Sort.INDEXORDER);
+
+            for (int i=1; i<10; i++) {
+                System.out.println(hits.doc(hits.length()-i).get("num"));
+            }
+
+            System.out.println(hits.length());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        ;
     }
 }

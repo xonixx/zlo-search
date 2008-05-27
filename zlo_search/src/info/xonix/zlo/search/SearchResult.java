@@ -2,6 +2,8 @@ package info.xonix.zlo.search;
 
 import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.model.ZloMessageAccessor;
+import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
+import info.xonix.zlo.search.doubleindex.DoubleHits;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.queryParser.QueryParser;
