@@ -2,6 +2,7 @@ package info.xonix.zlo.web.decorators;
 
 import org.apache.commons.lang.StringUtils;
 import org.displaytag.decorator.TableDecorator;
+import org.springframework.web.util.HtmlUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -33,15 +34,15 @@ public class HistoryTableDecorator extends TableDecorator {
 
 
     public String getSearchText() {
-        return shortenString(((TreeMap) getCurrentRowObject()).get("req_text"));
+        return HtmlUtils.htmlEscape(shortenString(((TreeMap) getCurrentRowObject()).get("req_text")));
     }
 
     public String getSearchNick() {
-        return shortenString(((TreeMap) getCurrentRowObject()).get("req_nick"));
+        return HtmlUtils.htmlEscape(shortenString(((TreeMap) getCurrentRowObject()).get("req_nick")));
     }
 
     public String getSearchHost() {
-        return shortenString(((TreeMap) getCurrentRowObject()).get("req_host"));
+        return HtmlUtils.htmlEscape(shortenString(((TreeMap) getCurrentRowObject()).get("req_host")));
     }
 
     public String getReqDate() {

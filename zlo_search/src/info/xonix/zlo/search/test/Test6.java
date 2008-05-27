@@ -1,5 +1,8 @@
 package info.xonix.zlo.search.test;
 
+import org.apache.commons.lang.StringEscapeUtils;
+import org.springframework.web.util.HtmlUtils;
+
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -9,6 +12,10 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class Test6 {
     public static void main(String[] args) {
+        System.out.println(HtmlUtils.htmlEscape("<привет>"));
+    }
+
+    public static void main1(String[] args) {
         A1 o = new B1();
         o.a();
 
