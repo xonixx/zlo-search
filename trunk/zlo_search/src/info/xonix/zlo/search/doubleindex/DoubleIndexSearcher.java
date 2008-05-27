@@ -1,4 +1,4 @@
-package info.xonix.zlo.search;
+package info.xonix.zlo.search.doubleindex;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.model.ZloMessage;
@@ -235,10 +235,10 @@ public class DoubleIndexSearcher {
         }
     }
 
-    public DoubleHits search(Query query, Sort sort) throws IOException {
-        return new DoubleHits(
-                new IndexSearcher(getBigReader()).search(query, sort),
-                new IndexSearcher(getSmallReader()).search(query, sort)
+    public DoubleHits search(Query query) throws IOException {
+        return new DoubleHits1(
+                new IndexSearcher(getBigReader()).search(query, Sort.INDEXORDER),
+                new IndexSearcher(getSmallReader()).search(query, Sort.INDEXORDER)
         );
     }
 
