@@ -2,6 +2,8 @@ package info.xonix.zlo.search.utils;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.regex.Pattern;
 
 /**
@@ -38,6 +40,15 @@ public class HtmlUtils {
 
     public static String unescapeHtml(String s) {
         return StringEscapeUtils.unescapeHtml(s);
+    }
+
+    public static String urlencode(String s) {
+        try {
+            return URLEncoder.encode(s, "windows-1251");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return StringEscapeUtils.escapeHtml(s);
+        }
     }
 
     public static boolean hasUrl(String s) {

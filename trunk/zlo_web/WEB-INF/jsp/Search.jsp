@@ -1,3 +1,4 @@
+<%@ page import="info.xonix.zlo.search.config.Config" %>
 <%--
   User: gubarkov
   Date: 14.08.2007
@@ -13,10 +14,18 @@
 <jsp:setProperty name="hl" property="hlClass" value="hl0" />
 <jsp:setProperty name="hl" property="highlightWords" value="${requestScope['hw']}"/>
 
+<c:set var="isError" value="${not empty requestScope['error']}" />
+<c:set var="isSearchResultPresent" value="${not empty requestScope['searchResult']}" />
+<c:set var="rssUrl" value="<%= String.format("search?rss&%s", request.getQueryString()) %>" />
+<c:set var="rssLinkHtml"><a href="${rssUrl}" title="RSS для этого запроса"><img src="feed-icon-14x14.png" alt="RSS для этого запроса" /></a></c:set>
+
 <html>
     <head>
         <title><fmt:message key="page.title" /></title>
         <link rel="stylesheet" type="text/css" href="main.css" />
+        <c:if test="${not isError and isSearchResultPresent}">
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="${rssUrl}">
+        </c:if>
         <script type="text/javascript" src="script.js"></script>
     </head>
     <body>
@@ -80,7 +89,7 @@
         </div>
     </c:if>
     <c:choose>
-        <c:when test="${empty requestScope['error']}">
+        <c:when test="${not isError}">
             <c:if test="${not empty requestScope['lastMsgs']}">
                 <div class="content">
                     <table cellspacing="5">
@@ -89,7 +98,7 @@
                     </table>
                 </div>
             </c:if>
-            <c:if test="${not empty requestScope['searchResult']}">
+            <c:if test="${isSearchResultPresent}">
                 <div class="searchResOuter">
                 <display:table name="requestScope.searchResult.paginatedList" id="msg" htmlId="resultTable"
                                decorator="info.xonix.zlo.web.decorators.SearchResultLineDecorator" requestURI="search"
@@ -97,20 +106,20 @@
                     <c:set var="site" value="${msg.site}" />
 
                     <display:setProperty name="basic.msg.empty_list"><span class="pagebanner">Сообщения, соответствующие введенным критериям поиска не найдены. </span></display:setProperty>
-                    <display:setProperty name="paging.banner.one_item_found"><span class="pagebanner">Найдено одно сообщение. </span></display:setProperty>
-                    <display:setProperty name="paging.banner.all_items_found"><span class="pagebanner">Найдено сообщений: {0}, показаны все. </span></display:setProperty>
+                    <display:setProperty name="paging.banner.one_item_found"><span class="pagebanner">Найдено одно сообщение. ${rssLinkHtml}</span></display:setProperty>
+                    <display:setProperty name="paging.banner.all_items_found"><span class="pagebanner">Найдено сообщений: {0}, показаны все. ${rssLinkHtml}</span></display:setProperty>
                     <display:setProperty name="paging.banner.some_items_found"><span class="pagebanner">Найдено сообщений: {0}, показаны с {2} по {3}. </span></display:setProperty>
                     <display:setProperty name="paging.banner.group_size" value="15" />
                     <display:setProperty name="paging.banner.onepage" value="" />
                     <display:setProperty name="paging.banner.placement" value="both" />
                     <display:setProperty name="paging.banner.full">
-                        <span class="pagelinks">[<a href="{1}">Перв</a>/<a href="{2}">Пред</a>] {0} [<a href="{3}">След</a>/<a href="{4}">Последн</a>]</span>
+                        <span class="pagelinks">[<a href="{1}">Перв</a>/<a href="{2}">Пред</a>] {0} [<a href="{3}">След</a>/<a href="{4}">Последн</a>] ${rssLinkHtml}</span>
                     </display:setProperty>
                     <display:setProperty name="paging.banner.first">
-                        <span class="pagelinks">[Перв/Пред] {0} [<a href="{3}">След</a>/<a href="{4}">Последн</a>]</span>
+                        <span class="pagelinks">[Перв/Пред] {0} [<a href="{3}">След</a>/<a href="{4}">Последн</a>] ${rssLinkHtml}</span>
                     </display:setProperty>
                     <display:setProperty name="paging.banner.last">
-                        <span class="pagelinks">[<a href="{1}">Перв</a>/<a href="{2}">Пред</a>] {0} [След/Последн]</span>
+                        <span class="pagelinks">[<a href="{1}">Перв</a>/<a href="{2}">Пред</a>] {0} [След/Последн] ${rssLinkHtml}</span>
                     </display:setProperty>
 
                     <display:column title="№"

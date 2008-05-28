@@ -5,6 +5,7 @@ import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.db.DbManager;
 import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.search.utils.HtmlUtils;
+import info.xonix.zlo.search.config.Config;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -106,13 +107,12 @@ public class PageParser extends SiteSource {
             // s can be "Среда, Декабрь 5 13:35:25 2007<i>(Изменен: Среда, Декабрь 5 13:40:21 2007)</i>"
             final String[] RUS_MONTHS = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль",
                     "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
-            df = new SimpleDateFormat("M d hh:mm:ss yyyy");
             s = s.split("\\<(i|I)\\>")[0];
             s = s.split(",")[1].trim();
             for (int i = 0; i < RUS_MONTHS.length; i++) {
                 s = s.replaceFirst(RUS_MONTHS[i], Integer.toString(i + 1));
             }
-            d = df.parse(s);
+            d = Config.DateFormats.DF_BOARD_MSG.parse(s);
         } catch (ParseException e) {
             e.printStackTrace();
         }
