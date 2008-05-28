@@ -1,6 +1,8 @@
 package info.xonix.zlo.web.servlets;
 
 import info.xonix.zlo.search.*;
+import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.config.ErrorMessage;
 import info.xonix.zlo.search.db.DbAccessor;
@@ -9,6 +11,7 @@ import info.xonix.zlo.search.db.DbManager;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import info.xonix.zlo.web.CookieUtils;
 import info.xonix.zlo.web.RequestCache;
+import info.xonix.zlo.web.rss.ZloRss20Exporter;
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 import info.xonix.zlo.web.utils.RequestUtils;
 import org.apache.commons.lang.StringUtils;
@@ -24,6 +27,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Arrays;
+import java.net.URL;
+import java.net.MalformedURLException;
+
+import de.nava.informa.core.ChannelIF;
+import de.nava.informa.core.CategoryIF;
+import de.nava.informa.impl.basic.Channel;
+import de.nava.informa.impl.basic.Item;
+import de.nava.informa.impl.basic.Category;
 
 /**
  * Author: gubarkov
@@ -44,6 +56,8 @@ public class SearchServlet extends BaseServlet {
     public static final String QS_TO_DATE = "td";
     public static final String QS_PAGE_SIZE = "pageSize";
     public static final String QS_PAGE_NUMBER = "page";
+
+    public static final String QS_RSS = "rss";
 
     public static final String QS_LAST_MSGS = "lastMsgs";
     public static final String QS_LAST_MSGS_DATES = "lastMsgs_dates";
@@ -87,6 +101,8 @@ public class SearchServlet extends BaseServlet {
         boolean inReg = StringUtils.isNotEmpty(request.getParameter(QS_IN_REG));
         boolean inHasUrl = StringUtils.isNotEmpty(request.getParameter(QS_IN_HAS_URL));
         boolean inHasImg = StringUtils.isNotEmpty(request.getParameter(QS_IN_HAS_IMG));
+
+        boolean isRssAsked = request.getParameter(QS_RSS) != null;
 
         String nick = request.getParameter(QS_NICK);
         String host = request.getParameter(QS_HOST);
@@ -241,17 +257,23 @@ public class SearchServlet extends BaseServlet {
                     request.setAttribute(REQ_SEARCH_RESULT, searchResult);
 
                     ZloPaginatedList paginatedList = (ZloPaginatedList) searchResult.createPaginatedList(getSite(request));
-                    paginatedList.setObjectsPerPage(pageSize);
-                    if (StringUtils.isNotEmpty(request.getParameter(QS_PAGE_NUMBER))) {
-                        try {
-                            int pageNumber = Integer.parseInt(request.getParameter(QS_PAGE_NUMBER));
-                            pageNumber = pageNumber <= 0 ? 1 : pageNumber;
-                            paginatedList.setPageNumber(pageNumber);
-                        } catch (NumberFormatException e) {
+
+                    if (isRssAsked) {
+                        paginatedList.setPageNumber(1);
+                        paginatedList.setObjectsPerPage(50);
+                    } else {
+                        paginatedList.setObjectsPerPage(pageSize);
+                        if (StringUtils.isNotEmpty(request.getParameter(QS_PAGE_NUMBER))) {
+                            try {
+                                int pageNumber = Integer.parseInt(request.getParameter(QS_PAGE_NUMBER));
+                                pageNumber = pageNumber <= 0 ? 1 : pageNumber;
+                                paginatedList.setPageNumber(pageNumber);
+                            } catch (NumberFormatException e) {
+                                paginatedList.setPageNumber(1);
+                            }
+                        } else {
                             paginatedList.setPageNumber(1);
                         }
-                    } else {
-                        paginatedList.setPageNumber(1);   
                     }
 
                     paginatedList.refreshCurrentList();
@@ -278,7 +300,63 @@ public class SearchServlet extends BaseServlet {
         if (errorMsg != null)
             request.setAttribute(ERROR, errorMsg);
 
-        request.forwardTo(JSP_SEARCH);
+        if (isRssAsked)
+            formRss(request, response);
+        else
+            request.forwardTo(JSP_SEARCH);
+    }
+
+    private void formRss(ForwardingRequest request, HttpServletResponse response) {
+        if (request.getAttribute(ERROR) != null) {
+            // process error
+        } else {
+            response.setContentType("application/rss+xml");
+            response.setCharacterEncoding("windows-1251");
+
+            SearchResult searchResult = (SearchResult) request.getAttribute(REQ_SEARCH_RESULT);
+            ZloPaginatedList pl = (ZloPaginatedList) searchResult.getPaginatedList();
+
+            ChannelIF ch = new Channel();
+            String chTitle = "RSS для запроса: " + searchResult.getQuery();
+            ch.setTitle(chTitle);
+
+            try {
+                ch.setLocation(new URL(String.format("http://%s/search?%s", Config.WEBSITE_DOMAIN, request.getQueryString().replace("rss&", ""))));
+                ch.setDescription(chTitle);
+                ch.setLanguage("ru");
+                ch.setTtl(120); // 2 hours
+
+                FoundTextHighlighter hl = new FoundTextHighlighter();
+                hl.setPreHl("<b>");
+                hl.setPostHl("</b>");
+                hl.setHighlightWords(FoundTextHighlighter.formHighlightedWords(searchResult.getLastSearch().getText()));
+
+                for (Object m1 : pl.getList()) {
+                    ZloMessage m = (ZloMessage) m1;
+                    Item it = new Item();
+
+                    Site s = m.getSite();
+
+                    it.setTitle(m.getTitle()); // todo: can we somehow highlight it?
+                    it.setDescription(hl.highlight(m.getBody()));
+                    it.setCreator(m.getNick() + "@" + m.getHost());
+                    it.setDate(m.getDate());
+                    it.setCategories(Arrays.asList((CategoryIF) new Category(m.getTopic())));
+                    it.setLink(new URL(String.format("http://%s/msg?site=%s&num=%s&hw=%s", Config.WEBSITE_DOMAIN, s.getNum(), m.getNum(), hl.getWordsStr())));
+                    it.setComments(new URL(String.format("http://%s%s%s", s.getSITE_URL(), s.getREAD_QUERY(), m.getNum())));
+
+                    ch.addItem(it);
+                }
+
+                ZloRss20Exporter exporter = new ZloRss20Exporter(response.getWriter(), "windows-1251");
+
+                exporter.write(ch);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void showStatistics(ForwardingRequest request) throws DbException {
@@ -325,7 +403,7 @@ public class SearchServlet extends BaseServlet {
 
     private String preprocessSearchNick(String nick) {
         if (nick == null)
-                return "";
+            return "";
         // todo: need to index stripped nicks too!! 
         return StringUtils.strip(nick)
                 .replace("\\", "\\\\"); // to be possible search for nick like \/\/0\/\/KA 

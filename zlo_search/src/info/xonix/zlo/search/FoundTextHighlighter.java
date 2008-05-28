@@ -26,6 +26,9 @@ public class FoundTextHighlighter {
     private String text;
 
     private String hlClass;
+    private String hlColor;
+    private String preHl;
+    private String postHl;
 
     public String getHlClass() {
         return hlClass;
@@ -58,12 +61,22 @@ public class FoundTextHighlighter {
     // todo: works, but very slow
     public String getHighlightedText() {
         String txt = text;
+
+        if (StringUtils.isEmpty(preHl) || StringUtils.isEmpty(postHl)) {
+            postHl = "</span>";
+            if (StringUtils.isNotEmpty(hlColor)) {
+                preHl = String.format("<span style=\"background:%s\">", hlColor);
+            } else {
+                preHl = String.format("<span class=\"%s\">", StringUtils.isEmpty(hlClass) ? "hl" : hlClass);
+            }
+        }
+
         try {
             for (String w : highlightWords) {
                 w = w.replaceAll("\\?", "[^\\\\s]{1}").replaceAll("\\*", "[^\\\\s]*?");
                 txt = txt.replaceAll("(?iu)" +                                              // case insensetive, unicode
                         "(?<!\\<[^<>]{0,300})" +                                            // not to break html tags
-                        "(\\b" + w + "[^\\s]*?)\\b", "<span class=\"" + (StringUtils.isEmpty(hlClass) ? "hl" : hlClass) + "\">$1</span>");               // highlight;
+                        "(\\b" + w + "[^\\s]*?)\\b", preHl + "$1" + postHl);               // highlight;
             }
         } catch (PatternSyntaxException ex) {
             logger.error("Regex parse error: ", ex);        
@@ -111,5 +124,22 @@ public class FoundTextHighlighter {
             return qs.trim().split("\\s+");
         }
         return new String[0];
+    }
+
+    public String highlight(String textToHighlight) {
+        setText(textToHighlight);
+        return getHighlightedText();
+    }
+
+    public void setHlColor(String hlColor) {
+        this.hlColor = hlColor;
+    }
+
+    public void setPreHl(String preHl) {
+        this.preHl = preHl;
+    }
+
+    public void setPostHl(String postHl) {
+        this.postHl = postHl;
     }
 }
