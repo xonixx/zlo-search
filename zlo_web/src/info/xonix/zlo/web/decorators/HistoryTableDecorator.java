@@ -1,11 +1,10 @@
 package info.xonix.zlo.web.decorators;
 
+import info.xonix.zlo.search.config.Config;
 import org.apache.commons.lang.StringUtils;
 import org.displaytag.decorator.TableDecorator;
 import org.springframework.web.util.HtmlUtils;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.TreeMap;
 
 /**
@@ -16,7 +15,6 @@ import java.util.TreeMap;
 public class HistoryTableDecorator extends TableDecorator {
 
     public static final int MAX_LEN = 40;
-    public static final DateFormat DF = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
     private String shortenString(String s, int len) {
         if (s.length() > len) {
@@ -46,7 +44,7 @@ public class HistoryTableDecorator extends TableDecorator {
     }
 
     public String getReqDate() {
-        return DF.format(((TreeMap) getCurrentRowObject()).get("req_date"));
+        return Config.DateFormats.DF_1.format(((TreeMap) getCurrentRowObject()).get("req_date"));
     }
 
     public String getUserAgentSmall() {

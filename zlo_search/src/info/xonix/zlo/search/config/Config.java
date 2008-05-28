@@ -7,6 +7,8 @@ import org.apache.lucene.analysis.Analyzer;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * Author: gubarkov
@@ -14,6 +16,14 @@ import java.util.Properties;
  * Time: 18:06:03
  */
 public class Config {
+
+    public static class DateFormats {
+        public static final DateFormat DF_1 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        public static final DateFormat DF_2 = new SimpleDateFormat("dd/MM/yyyy");
+        public static final DateFormat DF_3 = new SimpleDateFormat("dd.MM.yyyy");
+        public static final DateFormat DF_BOARD_MSG = new SimpleDateFormat("M d hh:mm:ss yyyy");
+    }
+
     private static final Logger logger = Logger.getLogger(Config.class);
     private static final Properties props;
     private static final String CONFIG_PATH_ENV_NAME = "ZLO_CONFIG";
@@ -68,7 +78,7 @@ public class Config {
         PropertyConfigurator.configure(props);
     }
 
-    public static String [] NUMS_PER_PAGE = getProp("nums.per.page").split("\\|");
+    public static String[] NUMS_PER_PAGE = getProp("nums.per.page").split("\\|");
 
     public static final int BUFFER = Integer.parseInt(getProp("buffer", "512"));
 
@@ -86,6 +96,7 @@ public class Config {
     public static final String WEBSITE_DOMAIN = getProp("website.domain");
 
     public static final Analyzer ANALYZER;
+
     static {
         Analyzer _a = null;
         try {

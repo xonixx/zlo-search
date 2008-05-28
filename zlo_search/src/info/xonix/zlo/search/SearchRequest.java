@@ -1,9 +1,12 @@
 package info.xonix.zlo.search;
 
 import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.site.SiteSource;
+import info.xonix.zlo.search.config.Config;
 import org.apache.commons.lang.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -187,6 +190,36 @@ public class SearchRequest extends SiteSource {
 
     public boolean isNotTheSameSearch(SearchRequest searchRequest) {
         return !isTheSameSearch(searchRequest);
+    }
+
+    public String describeToString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("форум:(").append(getSite().getSITE_URL()).append(")");
+
+        if (StringUtils.isNotEmpty(text)) sb.append(" текст:(").append(text).append(")");
+        if (topicCode != -1) try {
+            sb.append(" категория:(").append(getSite().getDbManager().getTopics()[topicCode]).append(")");
+        } catch (DbException e) {;}
+
+        ArrayList<String> options = new ArrayList<String>(5);
+        if (inTitle) options.add("в заголовках");
+        if (inBody) options.add("в теле");
+        if (inHasImg) options.add("картинки");
+        if (inHasUrl) options.add("ссылки");
+        if (inReg) options.add("от регов");
+
+        if (options.size() > 0)
+            sb.append(" ищем:(").append(StringUtils.join(options, ", ")).append(")");
+
+        options.clear();
+
+        if (fromDate != null || toDate != null) {
+            options.add(fromDate != null ? Config.DateFormats.DF_2.format(fromDate) : "-inf");
+            options.add(toDate != null ? Config.DateFormats.DF_2.format(toDate) : "inf");
+            sb.append(" в промежутке дат:(").append(StringUtils.join(options, ", ")).append(")");
+        }
+
+        return sb.toString();
     }
 
     public SearchResult performSearch() {

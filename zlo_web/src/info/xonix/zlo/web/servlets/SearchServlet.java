@@ -1,13 +1,18 @@
 package info.xonix.zlo.web.servlets;
 
+import de.nava.informa.core.CategoryIF;
+import de.nava.informa.core.ChannelIF;
+import de.nava.informa.impl.basic.Category;
+import de.nava.informa.impl.basic.Channel;
+import de.nava.informa.impl.basic.Item;
 import info.xonix.zlo.search.*;
-import info.xonix.zlo.search.dao.Site;
-import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.config.ErrorMessage;
+import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.db.DbAccessor;
 import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.db.DbManager;
+import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import info.xonix.zlo.web.CookieUtils;
 import info.xonix.zlo.web.RequestCache;
@@ -21,21 +26,15 @@ import org.apache.lucene.search.BooleanQuery;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Arrays;
-import java.net.URL;
-import java.net.MalformedURLException;
-
-import de.nava.informa.core.ChannelIF;
-import de.nava.informa.core.CategoryIF;
-import de.nava.informa.impl.basic.Channel;
-import de.nava.informa.impl.basic.Item;
-import de.nava.informa.impl.basic.Category;
 
 /**
  * Author: gubarkov
@@ -87,7 +86,7 @@ public class SearchServlet extends BaseServlet {
 
     public static final String JSP_SEARCH = "/WEB-INF/jsp/Search.jsp";
 
-    public static SimpleDateFormat FROM_TO_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
+    public static DateFormat FROM_TO_DATE_FORMAT = Config.DateFormats.DF_3;
 
     private static RequestCache cache = new RequestCache();
 
@@ -317,7 +316,7 @@ public class SearchServlet extends BaseServlet {
             ZloPaginatedList pl = (ZloPaginatedList) searchResult.getPaginatedList();
 
             ChannelIF ch = new Channel();
-            String chTitle = "RSS для запроса: " + searchResult.getQuery();
+            String chTitle = "Board search: " + searchResult.getLastSearch().describeToString();
             ch.setTitle(chTitle);
 
             try {
@@ -337,12 +336,13 @@ public class SearchServlet extends BaseServlet {
 
                     Site s = m.getSite();
 
-                    it.setTitle(m.getTitle()); // todo: can we somehow highlight it?
-                    it.setDescription(hl.highlight(m.getBody()));
+                    // highlighting of all feed takes to many time & cpu
+                    it.setTitle(HtmlUtils.unescapeHtml(m.getTitle()));
+                    it.setDescription(m.getBody());
                     it.setCreator(m.getNick() + "@" + m.getHost());
                     it.setDate(m.getDate());
                     it.setCategories(Arrays.asList((CategoryIF) new Category(m.getTopic())));
-                    it.setLink(new URL(String.format("http://%s/msg?site=%s&num=%s&hw=%s", Config.WEBSITE_DOMAIN, s.getNum(), m.getNum(), hl.getWordsStr())));
+                    it.setLink(new URL(String.format("http://%s/msg?site=%s&num=%s&hw=%s", Config.WEBSITE_DOMAIN, s.getNum(), m.getNum(), HtmlUtils.urlencode(hl.getWordsStr()))));
                     it.setComments(new URL(String.format("http://%s%s%s", s.getSITE_URL(), s.getREAD_QUERY(), m.getNum())));
 
                     ch.addItem(it);

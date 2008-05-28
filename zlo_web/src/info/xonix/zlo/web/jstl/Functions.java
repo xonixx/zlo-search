@@ -1,10 +1,7 @@
 package info.xonix.zlo.web.jstl;
 
-import org.apache.commons.lang.StringEscapeUtils;
+import info.xonix.zlo.search.utils.HtmlUtils;
 import org.apache.commons.lang.StringUtils;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 /**
  * Author: Vovan
@@ -13,12 +10,7 @@ import java.net.URLEncoder;
  */
 public class Functions {
     public static String urlencode(String s) {
-        try {
-            return URLEncoder.encode(s, "windows-1251");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return StringEscapeUtils.escapeHtml(s);
-        }
+        return HtmlUtils.urlencode(s);
     }
 
     public static String mysqlRange(String s) {
