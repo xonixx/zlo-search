@@ -1,6 +1,7 @@
 package info.xonix.zlo.web.decorators;
 
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.web.utils.RequestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.displaytag.decorator.TableDecorator;
 import org.springframework.web.util.HtmlUtils;
@@ -48,24 +49,6 @@ public class HistoryTableDecorator extends TableDecorator {
     }
 
     public String getUserAgentSmall() {
-        TreeMap row = (TreeMap) getCurrentRowObject();
-        String userAgent = (String) row.get("user_agent");
-
-        if (userAgent == null)
-            userAgent = "";
-        
-        return userAgent.contains("MSIE")
-            ? "Internet Explorer"
-            : userAgent.contains("Firefox") || userAgent.contains("Minefield")
-            ? "Firefox"
-            : userAgent.contains("Safari")
-            ? "Safari"
-            : userAgent.contains("Mozilla")
-            ? "Mozilla"
-            : userAgent.contains("Opera")
-            ? "Opera"
-            : userAgent.contains("Konqueror")
-            ? "Konqueror"
-            : "other";
+        return RequestUtils.getUserAgentSmall((String) ((TreeMap) getCurrentRowObject()).get("user_agent"));
     }
 }

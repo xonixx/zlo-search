@@ -31,10 +31,7 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.ParseException;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.*;
 
 /**
  * Author: gubarkov
@@ -314,38 +311,55 @@ public class SearchServlet extends BaseServlet {
 
             SearchResult searchResult = (SearchResult) request.getAttribute(REQ_SEARCH_RESULT);
             ZloPaginatedList pl = (ZloPaginatedList) searchResult.getPaginatedList();
+            List msgsList = pl.getList();
+            Date firstMsgDate = msgsList != null && msgsList.size() > 0 ? ((ZloMessage) msgsList.get(0)).getDate() : null; // the youngest msg (max date)
+
+            logger.info("RSS request. User-Agent: " + request.getHeader("User-Agent") + ", If-Modified-Since: " + request.getHeader("If-Modified-Since"));
+
+            if (firstMsgDate != null) {
+                Date lastModifiedDate = new Date(request.getDateHeader("If-Modified-Since"));
+
+                if (lastModifiedDate.before(firstMsgDate)) {
+                    response.setDateHeader("Last-Modified", firstMsgDate.getTime());
+                    logger.info("Feed is modified, lastMsgFeedDate=" + firstMsgDate);
+                } else {
+                    logger.info("Sending 304 Not modified: If-Modified-Since Date is _not before_ lastMsgFeedDate=" + firstMsgDate);
+                    response.setStatus(304); // Not Modified
+                    return;
+                }
+            }
 
             ChannelIF ch = new Channel();
-            String chTitle = "Board search: " + searchResult.getLastSearch().describeToString();
+            String chTitle = "Board search: " + searchResult.getLastSearch().getText();
             ch.setTitle(chTitle);
 
             try {
                 ch.setLocation(new URL(String.format("http://%s/search?%s", Config.WEBSITE_DOMAIN, request.getQueryString().replace("rss&", ""))));
-                ch.setDescription(chTitle);
+                ch.setDescription(searchResult.getLastSearch().describeToString());
                 ch.setLanguage("ru");
                 ch.setTtl(120); // 2 hours
 
                 FoundTextHighlighter hl = new FoundTextHighlighter();
-                hl.setPreHl("<b>");
-                hl.setPostHl("</b>");
                 hl.setHighlightWords(FoundTextHighlighter.formHighlightedWords(searchResult.getLastSearch().getText()));
 
-                for (Object m1 : pl.getList()) {
-                    ZloMessage m = (ZloMessage) m1;
-                    Item it = new Item();
+                if (msgsList != null) {
+                    for (Object m1 : msgsList) {
+                        ZloMessage m = (ZloMessage) m1;
+                        Item it = new Item();
 
-                    Site s = m.getSite();
+                        Site s = m.getSite();
 
-                    // highlighting of all feed takes to many time & cpu
-                    it.setTitle(HtmlUtils.unescapeHtml(m.getTitle()));
-                    it.setDescription(m.getBody());
-                    it.setCreator(m.getNick() + "@" + m.getHost());
-                    it.setDate(m.getDate());
-                    it.setCategories(Arrays.asList((CategoryIF) new Category(m.getTopic())));
-                    it.setLink(new URL(String.format("http://%s/msg?site=%s&num=%s&hw=%s", Config.WEBSITE_DOMAIN, s.getNum(), m.getNum(), HtmlUtils.urlencode(hl.getWordsStr()))));
-                    it.setComments(new URL(String.format("http://%s%s%s", s.getSITE_URL(), s.getREAD_QUERY(), m.getNum())));
+                        // highlighting of all feed takes to many time & cpu
+                        it.setTitle(HtmlUtils.unescapeHtml(m.getTitle()));
+                        it.setDescription(m.getBody());
+                        it.setCreator(m.getNick() + "@" + m.getHost());
+                        it.setDate(m.getDate());
+                        it.setCategories(Arrays.asList((CategoryIF) new Category(m.getTopic())));
+                        it.setLink(new URL(String.format("http://%s/msg?site=%s&num=%s&hw=%s", Config.WEBSITE_DOMAIN, s.getNum(), m.getNum(), HtmlUtils.urlencode(hl.getWordsStr()))));
+                        it.setComments(new URL(String.format("http://%s%s%s", s.getSITE_URL(), s.getREAD_QUERY(), m.getNum())));
 
-                    ch.addItem(it);
+                        ch.addItem(it);
+                    }
                 }
 
                 ZloRss20Exporter exporter = new ZloRss20Exporter(response.getWriter(), "windows-1251");

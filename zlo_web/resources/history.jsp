@@ -49,7 +49,12 @@
 <tiles:insertDefinition name="header.history" />
 
 <div align="center" class="content">
-    <h3>История запросов</h3>
+    <h3>История запросов
+        <c:choose>
+            <c:when test="${isLocalIp and !showAll}">
+                <a href="history.jsp?all" class="search">(подробно)</a></c:when>
+            <c:otherwise><a href="history.jsp" class="search">(кратко)</a></c:otherwise>
+        </c:choose></h3>
     <small>(всего запросов:${totalNum.rows[0].count}, показаны последние: ${numberToShow})</small>
 
     <display:table name="${res.rows}" id="row" htmlId="resultTable" decorator="info.xonix.zlo.web.decorators.HistoryTableDecorator">
