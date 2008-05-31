@@ -32,6 +32,10 @@
         <put-attribute name="activeScreen" value="faq" />
     </definition>
 
+    <definition name="header.forums" extends="header">
+        <put-attribute name="activeScreen" value="forums" />
+    </definition>
+
     <!-- nick -->
     <definition name="nick" template="/WEB-INF/jsp/templates/nick.jsp">
         <put-attribute name="host" value="" /> <!-- default -->

@@ -123,9 +123,8 @@
                     </display:setProperty>
 
                     <display:column title="№"
-                                    class="small" headerClass="head"
-                                    style="text-align:center;width:1%;">${msg.hitId + 1}</display:column>
-                    <display:column title="Тема" headerClass="head" style="width:67%">
+                                    class="small" style="text-align:center;width:1%;">${msg.hitId + 1}</display:column>
+                    <display:column title="Тема" style="width:67%">
                         <a href="http://${site.SITE_URL}${site.READ_QUERY}${msg.num}">
                             <c:if test="${not empty msg.topic and msg.topic != 'без темы'}">[${msg.topic}]</c:if>
                             <jsp:setProperty name="hl" property="text" value="${msg.title}" />
@@ -137,21 +136,20 @@
                         </small>
                         <a class="search" href="msg?site=${msg.site.num}&num=${msg.num}<c:if test="${not empty hl.wordsStr}">&hw=${hl.wordsStr}</c:if>"><fmt:message key="link.saved.msg" /></a>
                     </display:column>
-                    <display:column title="Ник" headerClass="head">
+                    <display:column title="Ник">
                         <tiles:insertDefinition name="nick">
                             <tiles:putAttribute name="reg" value="${msg.reg}" />
                             <tiles:putAttribute name="nick" value="${msg.nick}" />
                             <tiles:putAttribute name="site" value="${msg.site}" />
                         </tiles:insertDefinition>
                     </display:column>
-                    <display:column title="Хост" class="small" headerClass="head">
+                    <display:column title="Хост" class="small">
                         <tiles:insertDefinition name="host">
                             <tiles:putAttribute name="host" value="${msg.host}" />
                             <tiles:putAttribute name="site" value="${msg.site}" />
                         </tiles:insertDefinition>
                     </display:column>
-                    <display:column title="Дата" property="date"
-                                    class="small nowrap" headerClass="head" />
+                    <display:column title="Дата" property="date" class="small nowrap" />
                 </display:table>
                 </div>
             </c:if>
