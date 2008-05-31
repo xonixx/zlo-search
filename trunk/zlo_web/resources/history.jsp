@@ -60,23 +60,23 @@
     <small>(всего запросов:${totalNum.rows[0].count}, показаны последние: ${numberToShow})</small>
 
     <display:table name="${res.rows}" id="row" htmlId="resultTable" decorator="info.xonix.zlo.web.decorators.HistoryTableDecorator">
-        <display:column title="№" headerClass="head">
+        <display:column title="№">
             <a href="search?<c:out value="${row.req_query_str}"/>" class="search">${row_rowNum}</a>
         </display:column>
-        <display:column property="searchText" title="Текст" headerClass="head" />
-        <display:column property="searchNick" title="Ник поиска" headerClass="head" />
-        <display:column property="searchHost" title="Хост поиска" headerClass="head" />
-        <display:column title="Сайт" headerClass="head">
+        <display:column property="searchText" title="Текст" />
+        <display:column property="searchNick" title="Ник поиска" />
+        <display:column property="searchHost" title="Хост поиска" />
+        <display:column title="Сайт">
             <% Site site = Site.getSite((Integer)((TreeMap)row).get("site")); %>
             <a href="http://<%= site.getSITE_URL() %>">
                 <%= site.getName() %></a>
         </display:column>
-        <display:column property="reqDate" title="Дата" headerClass="head" class="small" />
+        <display:column property="reqDate" title="Дата" class="small" />
         <c:if test="${showAll}">
-            <display:column property="host" title="Хост" class="small" headerClass="head" />
-            <display:column property="user_agent" title="User-Agent" class="small" headerClass="head" />
+            <display:column property="host" title="Хост" class="small" />
+            <display:column property="user_agent" title="User-Agent" class="small" />
         </c:if>
-        <display:column property="userAgentSmall" title="Браузер" class="small center" headerClass="head" />
+        <display:column property="userAgentSmall" title="Браузер" class="small center" />
     </display:table>
 </div>
 

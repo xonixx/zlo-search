@@ -81,7 +81,7 @@
 
         <c:if test="${totalCnt > 0}">
         <display:table name="${res.rows}" id="row" htmlId="resultTable">
-            <display:column headerClass="head" title="${isHost ? 'Ник' : 'Хост'}" class="center">
+            <display:column title="${isHost ? 'Ник' : 'Хост'}" class="center">
                 <c:choose>
                     <c:when test="${isHost}">
                         <tiles:insertDefinition name="nick">
@@ -100,7 +100,7 @@
                     </c:otherwise>
                 </c:choose>
             </display:column>
-            <display:column headerClass="head" title="Число сообщений" property="cnt" class="center" />
+            <display:column title="Число сообщений" property="cnt" class="center" />
         </display:table>
         </c:if>
     </c:if>

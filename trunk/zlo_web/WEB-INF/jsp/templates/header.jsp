@@ -15,14 +15,15 @@
                <c:if test="${activeScreen == 'search'}">class="activeLink"</c:if>>Поиск</a></li>
         <li><a href="stats.jsp?site=${param['site']}"
                <c:if test="${activeScreen == 'stats'}">class="activeLink"</c:if>>Статистика</a></li>
-        <li><a href="history.jsp"
-                <c:if test="${activeScreen == 'history'}">class="activeLink"</c:if>>История</a></li>
         <li><a href="nickhost.jsp?site=${param['site']}"
                 <c:if test="${activeScreen == 'nickhost'}">class="activeLink"</c:if>>Ники/Хосты</a></li>
-        <li><a href="about.jsp"
-                <c:if test="${activeScreen == 'about'}">class="activeLink"</c:if>>About</a></li>
+        <li><a href="history.jsp"
+                <c:if test="${activeScreen == 'history'}">class="activeLink"</c:if>>История</a></li>
+        <li><a href="forums.jsp"
+                <c:if test="${activeScreen == 'forums'}">class="activeLink"</c:if>>Форумы</a></li>
         <li><a href="faq.jsp"
                 <c:if test="${activeScreen == 'faq'}">class="activeLink"</c:if>>FAQ</a></li>
-        <li><a href="http://${siteRoot}">${siteRoot}</a></li>
+        <li><a href="about.jsp"
+                <c:if test="${activeScreen == 'about'}">class="activeLink"</c:if>>About</a></li>
     </ul>
 </div>

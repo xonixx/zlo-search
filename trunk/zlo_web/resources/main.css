@@ -56,7 +56,7 @@ h3 {
     border-bottom:1px solid #CCC;
 }
 
-#resultTable .head {
+#resultTable th {
 	background-color: #ccc;
 }
 

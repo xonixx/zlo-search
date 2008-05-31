@@ -28,6 +28,8 @@ public class SiteAccessor extends DbAccessor {
     private String LINK_INDEX_REGEX;
 
     private String SITE_URL;
+    private String SITE_DESCRIPTION;
+
     private String READ_QUERY;
 
     private String MSG_DATE_PATTERN;
@@ -77,6 +79,8 @@ public class SiteAccessor extends DbAccessor {
         LINK_INDEX_REGEX = p.getProperty("regex.link.index");
 
         SITE_URL = p.getProperty("site.url");
+        SITE_DESCRIPTION = p.getProperty("site.description");
+
         READ_QUERY = p.getProperty("site.read.query");
 
         // db -----
@@ -174,6 +178,14 @@ public class SiteAccessor extends DbAccessor {
 
     public void setSITE_URL(String SITE_URL) {
         this.SITE_URL = SITE_URL;
+    }
+
+    public String getSITE_DESCRIPTION() {
+        return SITE_DESCRIPTION;
+    }
+
+    public void setSITE_DESCRIPTION(String SITE_DESCRIPTION) {
+        this.SITE_DESCRIPTION = SITE_DESCRIPTION;
     }
 
     public String getREAD_QUERY() {
