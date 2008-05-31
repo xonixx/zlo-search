@@ -10,30 +10,30 @@
 <div class="content">
     <h3 class="attention">News</h3>
     <ul>
-        <li>Добавлен поиск по форуму <a href="http://velo.mipt.ru/cgi/forum/index.cgi">velo.mipt.ru</a></li>
+        <li>Добавлена функциональность RSS на форум. Теперь можно подписаться на сообщения по конкретному запросу, например, канал <a href="search?rss&st=adv&text=%F1%E8%F1%FC*+%F2%E8%F2%FC*+boobs+tits+%F1%E8%F1%E8+%F6%FB%F6%EA%E8&topic=-1&inTitle=on&inBody=on&hasImg=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">сисек</a>;</li>
+        <li>Добавлен поиск по форуму <a href="http://velo.mipt.ru/cgi/forum/index.cgi">velo.mipt.ru</a>;</li>
         <li>Ссылки теперь можно искать в любом режиме, например
             <a href="search?st=all&text=http%3A%2F%2Fbash.org.ru%2Fbest.php&topic=-1&inTitle=on&inBody=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">
-                http://bash.org.ru/best.php
-            </a>
+                http://bash.org.ru/best.php</a>;
         </li>
-        <li>Стал возможен поиск только по сообщениям <a href="search?st=all&text=&topic=-1&inTitle=on&inBody=on&hasImg=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">с картинками</a>
-            , и только по сообщениям <a href="search?st=all&text=&topic=-1&inTitle=on&inBody=on&hasUrl=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">со ссылками</a></li>
+        <li>Стал возможен поиск только по сообщениям <a href="search?st=all&text=&topic=-1&inTitle=on&inBody=on&hasImg=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">с картинками</a>,
+            и только по сообщениям <a href="search?st=all&text=&topic=-1&inTitle=on&inBody=on&hasUrl=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">со ссылками</a>;</li>
     </ul>
 
     <h3>Как искать?</h3>
     Поисковик имеет три режима поиска:
     <ul>
-        <li><a href="#adv">Со всеми словами</a></li>
-        <li><a href="#adv">Хотя бы с одним из слов</a></li>
-        <li><a href="#exct">Точная фраза</a></li>
+        <li><a href="#adv">Со всеми словами</a>;</li>
+        <li><a href="#adv">Хотя бы с одним из слов</a>;</li>
+        <li><a href="#exct">Точная фраза</a>;</li>
     </ul>
     Кроме того, возможна фильтрация результата поиска по:
     <ul>
-        <li>Теме сообщени</li>
-        <li>Имени пользователя</li>
-        <li>Хосту пользователя</li>
-        <li>Промежутку дат</li>
-        <li>Дополнительным критериям: 1) только от зарегистрированных пользователей 2) только среди сообщений со ссылками 3) только среди сообщений с картинками</li>
+        <li>Теме сообщени;</li>
+        <li>Имени пользователя;</li>
+        <li>Хосту пользователя;</li>
+        <li>Промежутку дат;</li>
+        <li>Дополнительным критериям: 1) только от зарегистрированных пользователей 2) только среди сообщений со ссылками 3) только среди сообщений с картинками;</li>
     </ul>
     Также, возможен поиск только по имени пользователя и хосту.
 

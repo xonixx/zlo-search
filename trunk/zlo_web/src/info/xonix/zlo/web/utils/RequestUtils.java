@@ -24,4 +24,27 @@ public class RequestUtils {
         String remoteAddr = request.getHeader("x-forwarded-for");
         return StringUtils.isNotEmpty(remoteAddr) ? remoteAddr : request.getRemoteAddr();
     }
+
+    public static String getUserAgentSmall(String userAgent) {
+        if (userAgent == null)
+            userAgent = "";
+
+        return userAgent.contains("MSIE")
+            ? "Internet Explorer"
+            : userAgent.contains("Firefox") || userAgent.contains("Minefield")
+            ? "Firefox"
+            : userAgent.contains("Safari")
+            ? "Safari"
+            : userAgent.contains("Feedfetcher-Google")
+            ? "Google Feed Reader"
+            : userAgent.contains("YandexBlog")
+            ? "Yandex Feed Reader"
+            : userAgent.contains("Mozilla")
+            ? "Mozilla"
+            : userAgent.contains("Opera")
+            ? "Opera"
+            : userAgent.contains("Konqueror")
+            ? "Konqueror"
+            : "other";
+    }
 }

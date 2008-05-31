@@ -13,6 +13,10 @@ public class Test1 {
 
         Test1 t = new Test1();
         t.q(Arrays.asList((IA)new A()));
+
+        A a = new A();
+        new B().b((IA)a);
+        new B().b(null);
     }
 
     public void q(Collection<IA> col) {};
@@ -23,5 +27,15 @@ interface IA {
 }
 
 class A implements IA {
+
+}
+
+class B {
+
+    public void b(A a){
+        System.out.println("A called");}
+
+    public void b(IA a){
+        System.out.println("IA called");}
 
 }

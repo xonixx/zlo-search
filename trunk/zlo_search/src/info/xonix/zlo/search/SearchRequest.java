@@ -204,8 +204,8 @@ public class SearchRequest extends SiteSource {
         ArrayList<String> options = new ArrayList<String>(5);
         if (inTitle) options.add("в заголовках");
         if (inBody) options.add("в теле");
-        if (inHasImg) options.add("картинки");
-        if (inHasUrl) options.add("ссылки");
+        if (inHasImg) options.add("с картинками");
+        if (inHasUrl) options.add("со ссылками");
         if (inReg) options.add("от регов");
 
         if (options.size() > 0)
