@@ -197,6 +197,9 @@ public class SearchRequest extends SiteSource {
         sb.append("форум:(").append(getSite().getSITE_URL()).append(")");
 
         if (StringUtils.isNotEmpty(text)) sb.append(" текст:(").append(text).append(")");
+        if (StringUtils.isNotEmpty(nick)) sb.append(" ник:(").append(nick).append(")");
+        if (StringUtils.isNotEmpty(host)) sb.append(" хост:(").append(host).append(")");
+
         if (topicCode != -1) try {
             sb.append(" категория:(").append(getSite().getDbManager().getTopics()[topicCode]).append(")");
         } catch (DbException e) {;}

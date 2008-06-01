@@ -10,7 +10,7 @@
 <div class="content">
     <h3 class="attention">News</h3>
     <ul>
-        <li>Добавлена функциональность RSS. Теперь можно подписаться на сообщения по конкретному запросу, например, канал <a href="search?rss&st=adv&text=%F1%E8%F1%FC*+%F2%E8%F2%FC*+boobs+tits+%F1%E8%F1%E8+%F6%FB%F6%EA%E8&topic=-1&inTitle=on&inBody=on&hasImg=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">сисек</a>;</li>
+        <li>Добавлена функциональность RSS. Теперь можно подписаться на сообщения по конкретному запросу, например, канал <a href="search?rss&st=adv&text=%F1%E8%F1%FC*+%F2%E8%F2%FC*+boobs+tits+%F1%E8%F1%E8+%F6%FB%F6%EA%E8&topic=-1&inTitle=on&inBody=on&hasImg=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">сисек <img src="feed-icon-14x14.png" alt="картинки сисек" /></a>;</li>
         <li>Добавлен поиск по форуму <a href="http://velo.mipt.ru/cgi/forum/index.cgi">velo.mipt.ru</a>;</li>
         <li>Ссылки теперь можно искать в любом режиме, например
             <a href="search?st=all&text=http%3A%2F%2Fbash.org.ru%2Fbest.php&topic=-1&inTitle=on&inBody=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">
