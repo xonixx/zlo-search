@@ -32,3 +32,5 @@
 
     </display:table>
 </div>
+
+<tiles:insertDefinition name="ga" />

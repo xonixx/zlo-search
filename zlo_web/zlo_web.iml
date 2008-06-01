@@ -86,6 +86,14 @@
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib" />
           </containerElement>
+          <containerElement type="library" name="informa" level="project">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib" />
+          </containerElement>
+          <containerElement type="library" name="jdom" level="project">
+            <attribute name="method" value="1" />
+            <attribute name="URI" value="/WEB-INF/lib" />
+          </containerElement>
           <containerElement type="library" name="jstl" level="project">
             <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib" />
@@ -103,7 +111,7 @@
             <attribute name="URI" value="/WEB-INF/lib" />
           </containerElement>
           <containerElement type="library" name="spring" level="project">
-            <attribute name="method" value="0" />
+            <attribute name="method" value="1" />
             <attribute name="URI" value="/WEB-INF/lib" />
           </containerElement>
           <containerElement type="library" name="tiles" level="project">
@@ -200,6 +208,9 @@
     <orderEntry type="library" name="log4j-1.2.15" level="project" />
     <orderEntry type="library" name="tiles" level="project" />
     <orderEntry type="library" name="digister" level="project" />
+    <orderEntry type="library" name="spring" level="project" />
+    <orderEntry type="library" name="jdom" level="project" />
+    <orderEntry type="library" name="informa" level="project" />
     <orderEntryProperties />
   </component>
   <component name="VcsManagerConfiguration">

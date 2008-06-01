@@ -365,7 +365,9 @@
         <root url="jar://D:/TEST/JAVA/ZloSearcher/lib/standard.jar!/" />
       </CLASSES>
       <JAVADOC />
-      <SOURCES />
+      <SOURCES>
+        <root url="jar://D:/TEST/JAVA/ZloSearcher/lib-src/jakarta-taglibs-standard-1.1.2-src.zip!/jakarta-taglibs-standard-1.1.2-src/standard/src" />
+      </SOURCES>
     </library>
     <library name="commons-collections-3.2">
       <CLASSES>
@@ -427,6 +429,22 @@
       </CLASSES>
       <JAVADOC />
       <SOURCES />
+    </library>
+    <library name="jdom">
+      <CLASSES>
+        <root url="jar://D:/TEST/JAVA/ZloSearcher/lib/jdom.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="informa">
+      <CLASSES>
+        <root url="jar://D:/TEST/JAVA/ZloSearcher/lib/informa.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="file://D:/TEST/JAVA/ZloSearcher/lib-src/informa-0.7.0-alpha2/src" />
+      </SOURCES>
     </library>
   </component>
 </project>
