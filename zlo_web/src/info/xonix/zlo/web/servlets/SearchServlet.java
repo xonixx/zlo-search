@@ -329,18 +329,27 @@ public class SearchServlet extends BaseServlet {
                 }
             }
 
+            SearchRequest lastSearch = searchResult.getLastSearch();
+
             ChannelIF ch = new Channel();
-            String chTitle = "Board search: " + searchResult.getLastSearch().getText();
+
+            List<String> l = new ArrayList<String>(3);
+            for (String s : Arrays.asList(lastSearch.getText(), lastSearch.getNick(), lastSearch.getHost())) {
+                if (StringUtils.isNotEmpty(s))
+                    l.add(s);
+            }
+            String chTitle = "Board search: " + StringUtils.join(l, ", ");
+
             ch.setTitle(chTitle);
 
             try {
                 ch.setLocation(new URL(String.format("http://%s/search?%s", Config.WEBSITE_DOMAIN, request.getQueryString().replace("rss&", ""))));
-                ch.setDescription(searchResult.getLastSearch().describeToString());
+                ch.setDescription(lastSearch.describeToString());
                 ch.setLanguage("ru");
                 ch.setTtl(120); // 2 hours
 
                 FoundTextHighlighter hl = new FoundTextHighlighter();
-                hl.setHighlightWords(FoundTextHighlighter.formHighlightedWords(searchResult.getLastSearch().getText()));
+                hl.setHighlightWords(FoundTextHighlighter.formHighlightedWords(lastSearch.getText()));
 
                 if (msgsList != null) {
                     for (Object m1 : msgsList) {
