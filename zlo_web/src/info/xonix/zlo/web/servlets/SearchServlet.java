@@ -312,18 +312,18 @@ public class SearchServlet extends BaseServlet {
             SearchResult searchResult = (SearchResult) request.getAttribute(REQ_SEARCH_RESULT);
             ZloPaginatedList pl = (ZloPaginatedList) searchResult.getPaginatedList();
             List msgsList = pl.getList();
-            Date firstMsgDate = msgsList != null && msgsList.size() > 0 ? ((ZloMessage) msgsList.get(0)).getDate() : null; // the youngest msg (max date)
+            Date lastModifiedDateCurrent = msgsList != null && msgsList.size() > 0 ? ((ZloMessage) msgsList.get(0)).getDate() : null; // the youngest msg (max date)
 
             logger.info("RSS request. User-Agent: " + request.getHeader("User-Agent") + ", If-Modified-Since: " + request.getHeader("If-Modified-Since"));
 
-            if (firstMsgDate != null) {
-                Date lastModifiedDate = new Date(request.getDateHeader("If-Modified-Since"));
+            if (lastModifiedDateCurrent != null) {
+                Date lastModifiedDateOld = new Date(request.getDateHeader("If-Modified-Since"));
 
-                if (lastModifiedDate.before(firstMsgDate)) {
-                    response.setDateHeader("Last-Modified", firstMsgDate.getTime());
-                    logger.info("Feed is modified, lastMsgFeedDate=" + firstMsgDate);
+                if (lastModifiedDateCurrent.after(lastModifiedDateOld)) {
+                    response.setDateHeader("Last-Modified", lastModifiedDateCurrent.getTime());
+                    logger.info("Feed is modified: If-Modified-Since Date=" + lastModifiedDateOld + ", lastMsgFeedDate=" + lastModifiedDateCurrent);
                 } else {
-                    logger.info("Sending 304 Not modified: If-Modified-Since Date is _not before_ lastMsgFeedDate=" + firstMsgDate);
+                    logger.info("Sending 304 Not modified: If-Modified-Since Date=" + lastModifiedDateOld + " is _not before_ lastMsgFeedDate=" + lastModifiedDateCurrent);
                     response.setStatus(304); // Not Modified
                     return;
                 }
