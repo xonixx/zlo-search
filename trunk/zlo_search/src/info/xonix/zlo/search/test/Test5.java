@@ -1,23 +1,23 @@
 package info.xonix.zlo.search.test;
 
-import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.search.RussianWithNumbersAndSpecialStopWordsAnalyzer;
 import info.xonix.zlo.search.ZloIndexer;
-import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
-import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.db.DbException;
+import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
+import info.xonix.zlo.search.model.ZloMessage;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Sort;
-import org.apache.lucene.search.Hits;
 
-import java.io.StringReader;
-import java.io.IOException;
 import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
 
 /**
  * Author: Vovan

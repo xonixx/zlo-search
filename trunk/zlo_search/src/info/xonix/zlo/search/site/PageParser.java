@@ -1,11 +1,11 @@
 package info.xonix.zlo.search.site;
 
+import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.db.DbManager;
 import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.search.utils.HtmlUtils;
-import info.xonix.zlo.search.config.Config;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 

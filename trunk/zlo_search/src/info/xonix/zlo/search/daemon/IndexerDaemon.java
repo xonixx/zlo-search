@@ -1,9 +1,10 @@
 package info.xonix.zlo.search.daemon;
 
-import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.db.DbException;
+import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -40,6 +41,17 @@ public class IndexerDaemon extends Daemon {
             } catch (IOException e) {
                 throw new DAOException(e);
             }
+        }
+
+        protected boolean processException(Exception e) {
+            if (e instanceof DbException) {
+                getLogger().warn(getSiteName() + " - Problem with db: " + e.getClass());
+                return true;
+            } else if (e instanceof IOException) {
+                logger.error(getSiteName() + " - IOException while indexing, probably something with index...", e);
+                return true;
+            }
+            return false;
         }
 
         protected void cleanUp() {

@@ -1,9 +1,9 @@
 package info.xonix.zlo.search.progs;
 
-import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
 import info.xonix.zlo.search.ZloIndexer;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.IndexWriter;
 

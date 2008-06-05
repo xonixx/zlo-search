@@ -40,6 +40,10 @@ public class TestDaemon extends Daemon {
         protected void perform(int from, int to) throws DAOException {
         }
 
+        protected boolean processException(Exception ex) {
+            return false;
+        }
+
         protected void cleanUp() {
         }
     }

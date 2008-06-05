@@ -1,6 +1,5 @@
 package info.xonix.zlo.search.test;
 
-import org.apache.commons.lang.StringEscapeUtils;
 import org.springframework.web.util.HtmlUtils;
 
 import java.lang.reflect.InvocationTargetException;
