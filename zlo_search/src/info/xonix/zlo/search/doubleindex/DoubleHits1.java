@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.doubleindex;
 
-import org.apache.lucene.search.Hits;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.search.Hits;
 
 import java.io.IOException;
 

@@ -2,8 +2,11 @@ package info.xonix.zlo.search.daemon;
 
 import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.db.DbException;
 import org.apache.log4j.Logger;
 
+import java.net.ConnectException;
+import java.sql.BatchUpdateException;
 import java.util.Date;
 
 /**
@@ -34,6 +37,26 @@ public class DbDaemon extends Daemon {
         protected void perform(int from, int to) throws DAOException {
             getSite().getDB().saveMessages(getSite().getMessages(from, to + 1));
             getSite().getDbManager().setLastSavedDate(new Date());
+        }
+
+        protected boolean processException(Exception e) {
+            if (e instanceof DbException) {
+                logger.warn(getSiteName() + " - Problem with db: " + e.getClass());
+                return true;
+            } else if (e instanceof DAOException) {
+                if (e.getCause() instanceof ConnectException) {
+                    logger.error(getSiteName() + " - Problem with site... " + e.getCause().getClass().getName());
+                } else if (e.getCause() instanceof DbException && e.getCause().getCause() instanceof BatchUpdateException) {
+                    logger.error(getSiteName(), e);
+                    logger.info("Resetting...");
+                    reset();
+                } else {
+                    logger.error(getSiteName(), e);
+                }
+                return true;
+            }
+
+            return false;
         }
 
         protected void cleanUp() {

@@ -4,15 +4,12 @@ import info.xonix.zlo.search.ZloIndexer;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.dao.Site;
-import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.site.SiteSource;
 import info.xonix.zlo.search.utils.TimeUtils;
 import org.apache.log4j.Logger;
 import sun.misc.Signal;
 import sun.misc.SignalHandler;
 
-import java.io.IOException;
-import java.net.ConnectException;
 import java.util.Vector;
 
 /**
@@ -122,11 +119,12 @@ public abstract class Daemon extends SiteSource {
 
         protected abstract void perform(int from, int to) throws DAOException;
 
+        protected abstract boolean processException(Exception ex);
+
         private int indexFrom = -1;
         private int end = -1;
 
         private void doOneIteration() throws InterruptedException {
-            boolean wasException = false;
             try {
                 if (indexFrom == -1) {
                     indexFrom = getFromIndex() + 1;
@@ -155,24 +153,12 @@ public abstract class Daemon extends SiteSource {
                     doSleep(sleepPeriod);
                     end = getEndIndex();
                 }
-            } catch (DbException e) {
-                getLogger().warn(getSiteName() + " - Problem with db: " + e.getClass());
-                wasException = true;
-            } catch (DAOException e) {
-                if (e.getCause() instanceof ConnectException) {
-                    getLogger().error(getSiteName() + " - Problem with site... " + e.getCause().getClass().getName());
-                } else {
-                    getLogger().error(getSiteName() + " - ", e);
+            } catch (Exception e) {
+                if (!processException(e)) {
+                    getLogger().error("Unknown exception", e);
                 }
-                wasException = true;
-            } catch (IOException e) {
-                getLogger().error(getSiteName() + " - IOException while indexing, probably something with index...", e);
-                wasException = true;
-            }
-
-            if (wasException) {
-                getLogger().info(getSiteName() + " - Reconnect in " + TimeUtils.toMinutesSeconds(retryPeriod));
-                doSleep(retryPeriod);
+                getLogger().info(getSiteName() + " - Retry in " + TimeUtils.toMinutesSeconds(retryPeriod));
+                doSleep(retryPeriod);                
             }
         }
 
@@ -182,6 +168,11 @@ public abstract class Daemon extends SiteSource {
             isSleeping = true;
             sleep(millis);
             isSleeping = false;
+        }
+
+        protected void reset() {
+            indexFrom = -1;
+            end = -1;
         }
     }
 

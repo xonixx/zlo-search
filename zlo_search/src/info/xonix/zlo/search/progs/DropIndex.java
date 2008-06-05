@@ -1,8 +1,8 @@
 package info.xonix.zlo.search.progs;
 
-import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
 
 import java.io.IOException;
 

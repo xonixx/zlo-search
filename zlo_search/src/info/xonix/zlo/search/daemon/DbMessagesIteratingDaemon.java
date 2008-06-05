@@ -35,6 +35,10 @@ public abstract class DbMessagesIteratingDaemon extends Daemon {
             dbDict.setInt(getIteratingVariableName(), to);
         }
 
+        protected boolean processException(Exception ex) {
+            return false;
+        }
+
         protected void cleanUp() {
         }
     }

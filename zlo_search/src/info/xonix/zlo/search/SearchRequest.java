@@ -1,9 +1,9 @@
 package info.xonix.zlo.search;
 
+import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.site.SiteSource;
-import info.xonix.zlo.search.config.Config;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;

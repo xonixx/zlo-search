@@ -6,9 +6,9 @@ import org.apache.lucene.analysis.Analyzer;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Properties;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Properties;
 
 /**
  * Author: gubarkov
