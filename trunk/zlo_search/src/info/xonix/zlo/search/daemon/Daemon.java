@@ -153,6 +153,8 @@ public abstract class Daemon extends SiteSource {
                     doSleep(sleepPeriod);
                     end = getEndIndex();
                 }
+            } catch (InterruptedException e) {
+                throw e;    
             } catch (Exception e) {
                 if (!processException(e)) {
                     getLogger().error("Unknown exception", e);
