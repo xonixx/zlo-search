@@ -7,10 +7,12 @@ import glob
 src_dirs = [ 
 	r'D:\TEST\JAVA\ZloSearcher\trunk\zlo_search\src',
 	r'D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\src',
-	r'D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\WEB-INF']
+	r'D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\WEB-INF',
+	r'D:\TEST\JAVA\ZloSearcher\trunk\zlo_web\resources',
+	r'D:\TEST\JAVA\ZloSearcher\trunk\zlo_search\DB Scripts']
 
 exts = [
-	'.java', '.jsp', '.xml'
+	'java', 'jsp', 'xml', 'properties', 'sql', 'css', 'js'
 ]
 
 exclude_dirs = [
@@ -28,7 +30,7 @@ def process_dir(_dir):
 		f = _dir + '/' + _file
 		if os.path.isdir(f):
 			process_dir(f)
-		elif os.path.isfile(f) and any([f.endswith(ext) for ext in exts]):
+		elif os.path.isfile(f) and any([f.endswith('.' + ext) for ext in exts]):
 			process_file(f)
 			
 def process_file(f_name):
@@ -57,7 +59,7 @@ def init():
 	global stat
 	stat = {}
 	for ext in exts:
-		stat[ext[1:]] = {"count":0, "loc":0, "size":0}
+		stat[ext] = {"count":0, "loc":0, "size":0}
 
 def format_size(size):
 	return ''.join(['{', str(size / 1024), 'kb ', str(size % 1024), 'b}'])
@@ -78,5 +80,6 @@ def report():
 
 if __name__ == '__main__':
 	init()
-	process_dir('.')
+	for d in src_dirs:
+		process_dir(d)
 	report()
