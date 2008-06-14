@@ -262,7 +262,7 @@ public class DbManager {
 
     public void logRequest(int siteNum, String host, String userAgent,
                            String reqText, String reqNick, String reqHost,
-                           String reqQuery, String reqQueryString, String referer) throws DbException {
+                           String reqQuery, String reqQueryString, String referer, boolean rssAsked) throws DbException {
         DbUtils.executeUpdate(
                 dbAccessor,
                 SQL_LOG_REQUEST
@@ -277,8 +277,9 @@ public class DbManager {
 
                         StringUtils.substring(reqQuery, 0, 200),
                         StringUtils.substring(reqQueryString, 0, 400),
-                        StringUtils.substring(referer, 0, 100)}
-                , new VarType[] {INTEGER, STRING, STRING, STRING, STRING, STRING, STRING, STRING, STRING}
+                        StringUtils.substring(referer, 0, 100),
+                        rssAsked}
+                , new VarType[] {INTEGER, STRING, STRING, STRING, STRING, STRING, STRING, STRING, STRING, BOOLEAN}
                 , 1);
     }
 

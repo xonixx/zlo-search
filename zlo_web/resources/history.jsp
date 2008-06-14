@@ -21,25 +21,29 @@
     <c:when test="${showAll}">
         <sql:query var="res">
             SELECT * FROM request_log
-            order by req_date DESC
-            LIMIT ?;
+            WHERE id > (select MAX(id) FROM request_log) - ?
+            order by id DESC;
             <sql:param value="${xonix:int(numberToShow)}" />
         </sql:query>
         <sql:query var="totalNum">
-            SELECT count(*) AS count FROM request_log
+            SELECT count(1) AS count FROM request_log
         </sql:query>
     </c:when>
     <c:otherwise>
         <sql:query var="res">
             SELECT * FROM request_log
             WHERE host not in ${xonix:mysqlRange(localIps)}
-            order by req_date DESC
-            LIMIT ?;
+            AND is_rss_req = 0
+            AND id > (select MAX(id) FROM request_log) - 1000
+            order by id DESC
+            LIMIT ?
+            ;
             <sql:param value="${xonix:int(numberToShow)}" />
         </sql:query>
         <sql:query var="totalNum">
-            SELECT count(*) AS count FROM request_log
+            SELECT count(1) AS count FROM request_log
             WHERE host not in ${xonix:mysqlRange(localIps)}
+            AND is_rss_req = 0
         </sql:query>
     </c:otherwise>
 </c:choose>

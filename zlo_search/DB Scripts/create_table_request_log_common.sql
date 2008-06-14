@@ -20,3 +20,8 @@ CREATE TABLE request_log (
 
 ALTER TABLE searcher_logs.request_log
  CHANGE user_agent user_agent VARCHAR(200);
+
+ALTER TABLE searcher_logs.request_log
+    ADD is_rss_req BOOL;
+    
+--update request_log set is_rss_req=if(req_query_str like 'rss&%', 1, 0)
