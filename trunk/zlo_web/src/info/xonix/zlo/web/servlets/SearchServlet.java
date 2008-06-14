@@ -247,7 +247,7 @@ public class SearchServlet extends BaseServlet {
                     // log only initial search. Moved here - because now cached for all users,
                     // but log need to be performed nevertheless for every user
                     if (StringUtils.isEmpty(request.getParameter(QS_PAGE_NUMBER))) {
-                        logRequest(request, searchResult.getQuery().toString());
+                        logRequest(request, searchResult.getQuery().toString(), isRssAsked);
                     }
 
                     request.setAttribute(REQ_SEARCH_RESULT, searchResult);
@@ -388,7 +388,7 @@ public class SearchServlet extends BaseServlet {
         request.setAttribute(QS_LAST_MSGS_DATES, new Date[]{dbm.getLastSavedDate(), dbm.getLastIndexedDate()});
     }
 
-    private void logRequest(ForwardingRequest request, String query) {
+    private void logRequest(ForwardingRequest request, String query, boolean rssAsked) {
         try {
             DbAccessor.getInstance("search_log").getDbManager().logRequest(
                     getSite(request).getNum(),
@@ -399,7 +399,8 @@ public class SearchServlet extends BaseServlet {
                     request.getParameter(QS_HOST),
                     query,
                     request.getQueryString(),
-                    request.getHeader("Referer"));
+                    request.getHeader("Referer"),
+                    rssAsked);
         } catch (DbException e) {
             logger.error(e);
         }
