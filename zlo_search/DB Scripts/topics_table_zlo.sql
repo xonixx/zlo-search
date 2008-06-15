@@ -9,7 +9,7 @@ CREATE TABLE topics (id INT,
                     );
 
 -- index
-ALTER TABLE zlo_storage.topics
+ALTER TABLE topics
   ADD INDEX (id);
 
 -- insert
