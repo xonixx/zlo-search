@@ -1,9 +1,10 @@
 USE mysql;
 
-DROP DATABASE IF EXISTS `zlo_storage`;
-CREATE DATABASE `zlo_storage` DEFAULT CHARACTER SET cp1251;
+-- VVV - fuck these rows
+-- DROP DATABASE IF EXISTS `zlo_storage`;
+-- CREATE DATABASE `zlo_storage` DEFAULT CHARACTER SET cp1251;
 
-USE `zlo_storage`;
+-- USE `zlo_storage`;
 
 CREATE TABLE messages (num INT UNIQUE PRIMARY KEY,
                         parentNum INT,

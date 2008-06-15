@@ -1,5 +1,5 @@
 
-DROP TABLE nickhost;
+DROP TABLE IF EXISTS nickhost;
 CREATE TABLE nickhost (
                         nick VARCHAR(100),
                         host VARCHAR(100),
@@ -16,7 +16,7 @@ select nick, host, reg, count(1) cnt from messages
 group by nick, host;
 
 -- trigger
-DROP TRIGGER trigger_nickhost;
+DROP TRIGGER IF EXISTS trigger_nickhost;
 CREATE TRIGGER trigger_nickhost BEFORE INSERT
     ON messages FOR EACH ROW
 BEGIN
