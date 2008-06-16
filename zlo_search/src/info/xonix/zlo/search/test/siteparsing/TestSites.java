@@ -18,11 +18,19 @@ import java.io.IOException;
 public class TestSites {
 
     Site velo;
+    Site dev;
+    Site zlo;
 
     @Before
     public void setUp() {
         velo = Site.forName("velo");
         velo.setDB_VIA_CONTAINER(false);
+
+        dev = Site.forName("dev");
+        dev.setDB_VIA_CONTAINER(false);
+
+        zlo = Site.forName("zlo");
+        zlo.setDB_VIA_CONTAINER(false);
     }
 
     @Test
@@ -60,6 +68,90 @@ public class TestSites {
 
             System.out.println(velo.getMessage(33));
 
+
+        } catch (DAOException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testDev() {
+        try {
+            int lmn = dev.getLastMessageNumber();
+            System.out.println(lmn);
+
+            ZloMessage m = dev.getMessage(9404);
+
+            Assert.assertEquals(9404, m.getNum());
+            Assert.assertEquals("Berk", m.getNick());
+            Assert.assertEquals("post.mirantis.ru", m.getHost());
+            Assert.assertTrue(m.isReg());
+            Assert.assertEquals("Unix/Linux", m.getTopic());
+            Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
+
+            System.out.println(m);
+
+            m = dev.getMessage(9374);
+
+            Assert.assertEquals(9374, m.getNum());
+            Assert.assertEquals("arfix.", m.getNick());
+            Assert.assertTrue(StringUtils.isEmpty(m.getBody()));
+            Assert.assertTrue(!m.isReg());
+
+            System.out.println(m);
+
+            m = dev.getMessage(10153);
+
+            Assert.assertEquals(10153, m.getNum());
+            Assert.assertEquals("Рыбак", m.getNick());
+            Assert.assertEquals("ppp91-77-164-91.pppoe.mtu-net.ru", m.getHost());
+            Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
+            Assert.assertTrue(!m.isReg());
+
+            System.out.println(m);
+
+        } catch (DAOException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
+    public void testZlo() {
+        try {
+            int lmn = zlo.getLastMessageNumber();
+            System.out.println(lmn);
+
+            ZloMessage m =  zlo.getMessage(4093778);
+
+            Assert.assertEquals("QDiesel", m.getNick());
+            Assert.assertEquals("nokia.7ka.mipt.ru", m.getHost());
+            Assert.assertTrue(m.isReg());
+            Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
+
+            System.out.println(m);
+
+            m =  zlo.getMessage(4093788);
+
+            Assert.assertEquals("Loki", m.getNick());
+            Assert.assertEquals("loki.3ka.mipt.ru", m.getHost());
+            Assert.assertTrue(m.isReg());
+            Assert.assertTrue(StringUtils.isEmpty(m.getBody()));
+
+            System.out.println(m);
+
+            m =  zlo.getMessage(405573);
+
+            Assert.assertEquals("Demoney", m.getNick());
+            Assert.assertEquals("morgue.7ka.mipt.ru", m.getHost());
+            Assert.assertTrue(!m.isReg());
+            Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
+
+            System.out.println(m);
 
         } catch (DAOException e) {
             e.printStackTrace();
