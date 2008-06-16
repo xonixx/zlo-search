@@ -5,6 +5,7 @@ import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.model.ZloMessage;
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * Author: Vovan
@@ -25,6 +26,7 @@ public class BackendBean {
     public static final String SN_TOPIC = "topic";
     public static final String SN_SITE = "site";
     public static final String SN_PAGE_SIZE = "pageSize";
+    public static final int SITE_URL_MAX_LEN = 30;
 
     public BackendBean() {
     }
@@ -41,7 +43,20 @@ public class BackendBean {
     }
 
     public String getSiteSelector() {
-        return HtmlConstructor.constructSelector(SN_SITE, null, Site.getSiteNames(), getSiteInt(), true);
+        return HtmlConstructor.constructSelector(SN_SITE, null, formSiteHosts(Site.getSiteNames()), getSiteInt(), true);
+    }
+
+    private String[] formSiteHosts(String[] siteNames) {
+        String[] res = new String[siteNames.length];
+
+        int i=0;
+        for (String siteName : siteNames){
+//            res[i++] = StringUtils.substringBefore(siteName, "/");
+            res[i++] = siteName.length() <= SITE_URL_MAX_LEN
+                    ? siteName
+                    : StringUtils.substring(siteName, 0, SITE_URL_MAX_LEN - 3) + "...";
+        }
+        return res;
     }
 
     public String getPageSizeSelector() {
