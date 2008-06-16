@@ -97,6 +97,16 @@ public class Config {
 
     public static final Analyzer ANALYZER;
 
+    public static final boolean USE_PROXY = TRUE.equals(getProp("proxy.use"));
+
+    public static final String PROXY_HOST = USE_PROXY ? getProp("proxy.host") : null;
+    public static final int PROXY_PORT = USE_PROXY ? Integer.parseInt(getProp("proxy.port")) : -1;
+
+    static {
+        if (USE_PROXY)
+            logger.info("Starting using proxy: " + PROXY_HOST + ":" + PROXY_PORT);
+    }
+    
     static {
         Analyzer _a = null;
         try {

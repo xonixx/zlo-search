@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -64,8 +65,11 @@ public class PageParser extends SiteSource {
         List<Integer> groupsOrder = getSite().getMSG_RE_GROUPS_ORDER();
         if (groupsOrder == null)
             groupsOrder = Arrays.asList(0, 1, 2, 3, 4, 5, 6);
-        else
+        else {
+            groupsOrder = new ArrayList<Integer>(groupsOrder); // copy
             groupsOrder.add(0, 0);
+        }
+
 
         String topic = m.group(groupsOrder.get(1));
         String title = m.group(groupsOrder.get(2));

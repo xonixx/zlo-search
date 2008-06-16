@@ -41,7 +41,7 @@ public class DbDaemon extends Daemon {
 
         protected boolean processException(Exception e) {
             if (e instanceof DbException) {
-                logger.warn(getSiteName() + " - Problem with db: " + e.getClass());
+                logger.warn(getSiteName() + " - Problem with db: " + e.getClass(), e);
                 return true;
             } else if (e instanceof DAOException) {
                 if (e.getCause() instanceof ConnectException) {

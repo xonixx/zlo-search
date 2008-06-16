@@ -34,6 +34,9 @@ public class PageRetriever {
         // 100 - so many, because we will manage concurrancy ourselves
         connectionManager.getParams().setMaxConnectionsPerHost(HostConfiguration.ANY_HOST_CONFIGURATION, 100);
         HTTP_CLIENT = new HttpClient(connectionManager);
+        if (Config.USE_PROXY) {
+            HTTP_CLIENT.getHostConfiguration().setProxy(Config.PROXY_HOST, Config.PROXY_PORT);
+        }
     }
 
     public PageRetriever(SiteAccessor siteAccessor) {
