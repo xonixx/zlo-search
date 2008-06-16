@@ -65,6 +65,17 @@ public class TestsSearch {
         assertEquals("a\"a", HtmlUtils.unescapeHtml("a&quot;a"));
         assertEquals("<qqq>", HtmlUtils.unescapeHtml("&lt;qqq&gt;"));
         assertEquals("1&&3", HtmlUtils.unescapeHtml("1&amp;&amp;3"));
+
+        Site games = Site.forName("games");
+        assertTrue(HtmlUtils.hasImg("<img src='http://123' >", games));
+        assertTrue(HtmlUtils.hasImg("<img src=\"http://123\" >", games));
+        assertTrue(HtmlUtils.hasImg("<img src=https://123 >", games));
+        assertTrue(HtmlUtils.hasImg("<img src=https://123 />", games));
+        assertTrue(HtmlUtils.hasImg("<img src=https://123 / >", games));
+        assertFalse(HtmlUtils.hasImg("<img src=http://games.mipt.ru/cstrike/board/pic/123.jpg / >", games));
+        assertFalse(HtmlUtils.hasImg("<img src=\"http://games.mipt.ru/cstrike/board/pic/123.jpg\" / >", games));
+        assertFalse(HtmlUtils.hasImg("<img src='https://games.mipt.ru/cstrike/board/pic/123.jpg' / >", games));
+        assertTrue(HtmlUtils.hasImg("<img src='https://games1.mipt.ru/cstrike/board/pic/123.jpg' / >", games));
     }
 
     @Test

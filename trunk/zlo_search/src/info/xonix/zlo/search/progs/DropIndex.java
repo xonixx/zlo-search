@@ -11,7 +11,7 @@ import java.io.IOException;
  * Date: 11.01.2008
  * Time: 16:20:13
  */
-public class DropIndex {
+public class DropIndex extends App {
     public static void main(String[] args) {
         System.out.print("Are you sure you want to drop index ? (y/n): ");
         byte[] reply = new byte[1];
@@ -19,12 +19,16 @@ public class DropIndex {
             System.in.read(reply);
 
             if (reply[0] == 'y') {
+                System.in.read(reply);
+                String siteName = getSiteName();
                 System.out.println("Deleting...");
                 if (Config.USE_DOUBLE_INDEX) {
-                    DoubleIndexSearcher dis = Site.forName("zlo").getZloSearcher().getDoubleIndexSearcher();
+                    Site site = Site.forName(siteName);
+                    site.setDB_VIA_CONTAINER(false);
+                    DoubleIndexSearcher dis = site.getZloSearcher().getDoubleIndexSearcher();
                     dis.drop();
                     dis.close();
-                    Site.forName("zlo").getDbManager().setLastIndexedNumber(-1);
+                    site.getDbManager().setLastIndexedNumber(-1);
                 }
             }
         } catch (IOException e) {

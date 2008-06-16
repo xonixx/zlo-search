@@ -315,7 +315,7 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
 
     public boolean isHasImg() {
         if (hasImg == null)
-            hasImg = HtmlUtils.hasImg(body);
+            hasImg = HtmlUtils.hasImg(body, getSite());
         return hasImg;
     }
 
