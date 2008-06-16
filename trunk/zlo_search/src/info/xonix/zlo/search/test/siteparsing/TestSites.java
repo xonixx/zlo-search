@@ -20,6 +20,8 @@ public class TestSites {
     Site velo;
     Site dev;
     Site zlo;
+    Site takeoff;
+    Site anime;
 
     @Before
     public void setUp() {
@@ -31,6 +33,12 @@ public class TestSites {
 
         zlo = Site.forName("zlo");
         zlo.setDB_VIA_CONTAINER(false);
+
+        takeoff = Site.forName("takeoff");
+        takeoff.setDB_VIA_CONTAINER(false);
+
+        anime = Site.forName("anime");
+        anime.setDB_VIA_CONTAINER(false);
     }
 
     @Test
@@ -156,6 +164,59 @@ public class TestSites {
         } catch (DAOException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testTakeoff() {
+        try {
+            int lmn = takeoff.getLastMessageNumber();
+
+            System.out.println(lmn);
+
+            ZloMessage m = takeoff.getMessage(13996);
+
+            Assert.assertEquals("быртр", m.getNick());
+            Assert.assertEquals("gluk.2ka.mipt.ru", m.getHost());
+            Assert.assertTrue(m.isReg());
+            Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
+
+            System.out.println(m);            
+
+            m = takeoff.getMessage(14003);
+
+            Assert.assertEquals(14003, m.getNum());
+            Assert.assertEquals("mitrich", m.getNick());
+            Assert.assertEquals("83.229.152.73", m.getHost());
+            Assert.assertTrue(m.isReg());
+            Assert.assertTrue(StringUtils.isEmpty(m.getBody()));
+
+            System.out.println(m);
+
+            m = takeoff.getMessage(1729);
+
+            Assert.assertEquals(1729, m.getNum());
+            Assert.assertEquals("shpagin&stalker", m.getNick());
+            Assert.assertEquals("stalker.4ka.mipt.ru", m.getHost());
+            Assert.assertTrue(!m.isReg());
+            Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
+
+            System.out.println(m);
+
+        } catch (DAOException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testAnime() {
+        try {
+            int lmn = anime.getLastMessageNumber();
+            System.out.println(lmn);
+        } catch (DAOException e) {
             e.printStackTrace();
         }
     }
