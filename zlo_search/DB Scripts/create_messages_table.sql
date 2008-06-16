@@ -1,4 +1,4 @@
-USE mysql;
+-- USE mysql;
 
 -- VVV - fuck these rows
 -- DROP DATABASE IF EXISTS `zlo_storage`;

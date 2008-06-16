@@ -12,7 +12,9 @@ import org.apache.log4j.Logger;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,8 +61,14 @@ public class PageParser extends SiteSource {
             message.setReg(true);
         }
 
-        String topic = m.group(1);
-        String title = m.group(2);
+        List<Integer> groupsOrder = getSite().getMSG_RE_GROUPS_ORDER();
+        if (groupsOrder == null)
+            groupsOrder = Arrays.asList(0, 1, 2, 3, 4, 5, 6);
+        else
+            groupsOrder.add(0, 0);
+
+        String topic = m.group(groupsOrder.get(1));
+        String title = m.group(groupsOrder.get(2));
 
         message.setTopic(topic);
         try {
@@ -79,10 +87,10 @@ public class PageParser extends SiteSource {
 
         message.setSite(getSite());
         message.setTitle(title);
-        message.setNick(StringUtils.trim(HtmlUtils.unescapeHtml(m.group(3)))); // unescape nick
-        message.setHost(m.group(4));
-        message.setDate(prepareDate(m.group(5)));
-        message.setBody(m.group(6));
+        message.setNick(StringUtils.trim(HtmlUtils.unescapeHtml(m.group(groupsOrder.get(3))))); // unescape nick
+        message.setHost(m.group(groupsOrder.get(4)));
+        message.setDate(prepareDate(m.group(groupsOrder.get(5))));
+        message.setBody(m.group(groupsOrder.get(6)));
         message.setStatus(ZloMessage.Status.OK);
 
         return message;
