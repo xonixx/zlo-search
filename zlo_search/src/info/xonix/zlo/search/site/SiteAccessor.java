@@ -31,6 +31,7 @@ public class SiteAccessor extends DbAccessor {
     private ArrayList<Integer> MSG_RE_GROUPS_ORDER = null;
 
     private String SITE_URL;
+    private String SITE_SMILES_PATH;
     private String SITE_DESCRIPTION;
 
     private String READ_QUERY;
@@ -90,6 +91,7 @@ public class SiteAccessor extends DbAccessor {
         LINK_INDEX_REGEX = p.getProperty("regex.link.index");
 
         SITE_URL = p.getProperty("site.url");
+        SITE_SMILES_PATH = p.getProperty("site.smiles.path");
         SITE_DESCRIPTION = p.getProperty("site.description");
 
         READ_QUERY = p.getProperty("site.read.query");
@@ -197,6 +199,14 @@ public class SiteAccessor extends DbAccessor {
 
     public void setSITE_URL(String SITE_URL) {
         this.SITE_URL = SITE_URL;
+    }
+
+    public String getSITE_SMILES_PATH() {
+        return SITE_SMILES_PATH;
+    }
+
+    public void setSITE_SMILES_PATH(String SITE_SMILES_PATH) {
+        this.SITE_SMILES_PATH = SITE_SMILES_PATH;
     }
 
     public String getSITE_DESCRIPTION() {

@@ -1,10 +1,14 @@
 package info.xonix.zlo.search.utils;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.StringUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
+import info.xonix.zlo.search.dao.Site;
 
 /**
  * Author: Vovan
@@ -18,7 +22,7 @@ public class HtmlUtils {
     private final static String NEW_LINE = "\n";
 
     // суть в том, чтоб не считать смайлы за картинки, потому важно http
-    private static final Pattern IMG = Pattern.compile("(?i)<img.*?src\\s*=\\s*(\"?|\'?)http(s?)://.*(\\1).*?>", Pattern.CASE_INSENSITIVE);
+    private static final Pattern IMG = Pattern.compile("(?i)<img.*?src\\s*=\\s*(\"?|\'?)https?://(.*)(\\1).*?>", Pattern.CASE_INSENSITIVE);
     private static final Pattern URL = Pattern.compile("(?i)<a\\s.+?>", Pattern.CASE_INSENSITIVE);
 
     public static String cleanHtml(String s) {
@@ -55,8 +59,22 @@ public class HtmlUtils {
         return URL.matcher(s).find();
     }
 
+    public static boolean hasImg(String s, Site site) {
+        Matcher matcher = IMG.matcher(s);
+
+        boolean isFound = matcher.find();
+
+        if (isFound &&
+                (site != null
+                        && StringUtils.isNotEmpty(site.getSITE_SMILES_PATH())
+                        && matcher.group(2).contains(site.getSITE_SMILES_PATH())))
+            return false; // this is smile
+        else
+            return isFound;
+    }
+
     public static boolean hasImg(String s) {
-        return IMG.matcher(s).find();
+        return hasImg(s, null);
     }
 
     public static String cleanBoardSpecific(String s) {

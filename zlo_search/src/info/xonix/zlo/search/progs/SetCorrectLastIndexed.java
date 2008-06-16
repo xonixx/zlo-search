@@ -5,18 +5,15 @@ import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
 import org.apache.lucene.search.MatchAllDocsQuery;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 /**
  * Author: Vovan
  * Date: 16.06.2008
  * Time: 2:16:36
  */
-public class SetCorrectLastIndexed {
+public class SetCorrectLastIndexed extends App {
     public static void main(String[] args) throws IOException {
-        System.out.println("Enter site to set correct lastIndexed or e to exit");
-        Scanner scanner = new Scanner(System.in);
-        String siteName = scanner.nextLine();
+        String siteName = getSiteName();
 
         if ("e".equals(siteName))
             return;
@@ -32,4 +29,5 @@ public class SetCorrectLastIndexed {
         s.getDbManager().setLastIndexedNumber(lastIndexedNum);
 
     }
+
 }
