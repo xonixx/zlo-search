@@ -144,9 +144,8 @@ public abstract class Daemon extends SiteSource {
 
                 if (indexFrom <= indexTo) {
                     perform(indexFrom, indexTo);
+                    indexFrom = indexTo + 1;
                 }
-
-                indexFrom = indexTo + 1;
 
                 while (indexFrom > end) {
                     getLogger().info(getSiteName() + " - Sleeping " + TimeUtils.toMinutesSeconds(sleepPeriod) + "...");

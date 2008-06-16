@@ -6,6 +6,7 @@ import info.xonix.zlo.search.utils.TimeUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Properties;
+import java.util.ArrayList;
 
 
 /**
@@ -26,6 +27,8 @@ public class SiteAccessor extends DbAccessor {
     private String MSG_REG_RE_STR;
     private String MSG_UNREG_RE_STR;
     private String LINK_INDEX_REGEX;
+
+    private ArrayList<Integer> MSG_RE_GROUPS_ORDER = null;
 
     private String SITE_URL;
     private String SITE_DESCRIPTION;
@@ -75,6 +78,14 @@ public class SiteAccessor extends DbAccessor {
 
         MSG_REG_RE_STR = p.getProperty("regex.msg.reg");
         MSG_UNREG_RE_STR = p.getProperty("regex.msg.unreg");
+
+        String msgReGroups = p.getProperty("regex.msg.groups");
+        if (msgReGroups != null) {
+            MSG_RE_GROUPS_ORDER = new ArrayList<Integer>();
+            for (String s : StringUtils.split(msgReGroups, ',')) {
+                MSG_RE_GROUPS_ORDER.add(Integer.parseInt(s));    
+            }
+        }
 
         LINK_INDEX_REGEX = p.getProperty("regex.link.index");
 
@@ -170,6 +181,14 @@ public class SiteAccessor extends DbAccessor {
 
     public void setLINK_INDEX_REGEX(String LINK_INDEX_REGEX) {
         this.LINK_INDEX_REGEX = LINK_INDEX_REGEX;
+    }
+
+    public ArrayList<Integer> getMSG_RE_GROUPS_ORDER() {
+        return MSG_RE_GROUPS_ORDER;
+    }
+
+    public void setMSG_RE_GROUPS_ORDER(ArrayList<Integer> MSG_RE_GROUPS_ORDER) {
+        this.MSG_RE_GROUPS_ORDER = MSG_RE_GROUPS_ORDER;
     }
 
     public String getSITE_URL() {
