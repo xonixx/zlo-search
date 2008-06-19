@@ -59,7 +59,6 @@
         <option value="2" <c:if test="${period == 10}">selected="selected"</c:if>>10 суток</option>
         <option value="3" <c:if test="${period == 30}">selected="selected"</c:if>>30 суток</option>
     </select>
-    <input type="hidden" name="site" value="${site.num}" />
     <input type="submit" value="Показать!" />
 </form>
 </div>
