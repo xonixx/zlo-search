@@ -11,7 +11,9 @@
 <tiles:useAttribute name="site" />
 <tiles:useAttribute name="brackets" />
 
-<c:if test="${brackets}">(</c:if><c:out value="${host}" />
-<a class="search" href="search?site=${site.num}&host=${host}">?</a>
-<c:if test="${not empty nick}"><a href="search?site=${site.num}&nick=${nick}&host=${host}" class="search" title="поиск по нику и хосту">?nh</a></c:if>
-<a class="search" href="nickhost.jsp?site=${site.num}&w=h&t=${host}" title="ники этого хоста">n</a><c:if test="${brackets}">)</c:if>
+<c:if test="${not empty host}">
+    <c:if test="${brackets}">(</c:if><c:out value="${host}" />
+    <a class="search" href="search?site=${site.num}&host=${host}">?</a>
+    <c:if test="${not empty nick}"><a href="search?site=${site.num}&nick=${nick}&host=${host}" class="search" title="поиск по нику и хосту">?nh</a></c:if>
+    <a class="search" href="nickhost.jsp?site=${site.num}&w=h&t=${host}" title="ники этого хоста">n</a><c:if test="${brackets}">)</c:if>
+</c:if>
