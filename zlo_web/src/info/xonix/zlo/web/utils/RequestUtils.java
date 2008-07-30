@@ -41,6 +41,10 @@ public class RequestUtils {
             ? "Yandex Feed Reader"
             : userAgent.contains("Yahoo Pipes")
             ? "Yahoo Feed Reader"
+            : userAgent.contains("Yahoo! Slurp")
+            ? "Yahoo! Slurp"
+            : userAgent.contains("Googlebot")
+            ? "Googlebot"
             : userAgent.contains("Mozilla")
             ? "Mozilla"
             : userAgent.contains("Opera")
