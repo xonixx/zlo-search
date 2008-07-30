@@ -36,8 +36,8 @@ public class PageParser extends SiteSource {
     public PageParser(Site site) {
         super(site);
         dbm = site.getDbManager();
-        MSG_REG_RE = Pattern.compile(site.getMSG_REG_RE_STR(), Pattern.DOTALL);
-        MSG_UNREG_RE = Pattern.compile(site.getMSG_UNREG_RE_STR(), Pattern.DOTALL);
+        MSG_REG_RE = site.getMSG_REG_RE_STR() == null ? null : Pattern.compile(site.getMSG_REG_RE_STR(), Pattern.DOTALL);
+        MSG_UNREG_RE = site.getMSG_UNREG_RE_STR() == null ? null : Pattern.compile(site.getMSG_UNREG_RE_STR(), Pattern.DOTALL);
         MSG_DATE_PATTERN = site.getMSG_DATE_PATTERN();
     }
 
@@ -64,7 +64,14 @@ public class PageParser extends SiteSource {
 
         List<Integer> groupsOrder = getSite().getMSG_RE_GROUPS_ORDER();
         if (groupsOrder == null)
-            groupsOrder = Arrays.asList(0, 1, 2, 3, 4, 5, 6);
+            groupsOrder = Arrays.asList(0,
+                    1, // topic
+                    2, // title
+                    3, // nick
+                    4, // host
+                    5, // date
+                    6  // body
+            );
         else {
             groupsOrder = new ArrayList<Integer>(groupsOrder); // copy
             groupsOrder.add(0, 0);
@@ -93,7 +100,10 @@ public class PageParser extends SiteSource {
         message.setTitle(title);
         message.setNick(StringUtils.trim(HtmlUtils.unescapeHtml(m.group(groupsOrder.get(3))))); // unescape nick
         message.setHost(m.group(groupsOrder.get(4)));
-        message.setDate(prepareDate(m.group(groupsOrder.get(5))));
+
+        String dateStr = m.group(groupsOrder.get(5));
+        message.setDate(StringUtils.isEmpty(dateStr) ? new Date(0) : prepareDate(dateStr));
+
         message.setBody(m.group(groupsOrder.get(6)));
         message.setStatus(ZloMessage.Status.OK);
 

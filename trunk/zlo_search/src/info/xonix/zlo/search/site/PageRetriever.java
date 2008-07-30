@@ -4,6 +4,7 @@ import info.xonix.zlo.search.config.Config;
 import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
+import org.apache.commons.httpclient.HttpVersion;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.log4j.Logger;
 
@@ -141,6 +142,7 @@ public class PageRetriever {
         GetMethod getMethod = new GetMethod(uri);
         getMethod.addRequestHeader("Host", siteAccessor.getSITE_URL());
         getMethod.addRequestHeader("User-Agent", Config.USER_AGENT);
+        getMethod.getParams().setVersion(HttpVersion.HTTP_1_0); // to prevent chunk transfer-encoding in reply
         return getMethod;
     }
 }
