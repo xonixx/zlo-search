@@ -22,6 +22,7 @@ public class TestSites {
     Site zlo;
     Site takeoff;
     Site anime;
+    Site np;
 
     @Before
     public void setUp() {
@@ -39,6 +40,9 @@ public class TestSites {
 
         anime = Site.forName("anime");
         anime.setDB_VIA_CONTAINER(false);
+
+        np = Site.forName("np");
+        np.setDB_VIA_CONTAINER(false);
     }
 
     @Test
@@ -217,6 +221,32 @@ public class TestSites {
             int lmn = anime.getLastMessageNumber();
             System.out.println(lmn);
         } catch (DAOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testNp() {
+        try {
+            int lmn = np.getLastMessageNumber();
+            System.out.println(lmn);
+
+            ZloMessage m = np.getMessage(96119);
+            System.out.println(m);
+
+            Assert.assertEquals("там сочинение на страницу или больше", m.getTitle());
+            Assert.assertEquals("а я почему-то могу писать или писать только иногда, когда настроение", m.getBody());
+            Assert.assertEquals("без темы", m.getTopic());
+
+            m = np.getMessage(95933);
+            System.out.println(m);
+
+            Assert.assertEquals("проверим", m.getTitle());
+            Assert.assertEquals("Кто здесь?", m.getTopic());
+            Assert.assertEquals("", m.getBody());
+        } catch (DAOException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
