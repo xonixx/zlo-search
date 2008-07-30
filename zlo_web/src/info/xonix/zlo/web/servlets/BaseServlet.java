@@ -34,8 +34,10 @@ public class BaseServlet extends ForwardingServlet {
             request.setAttribute(REQ_SITE_ROOT, siteRoot);
             CookieUtils.rememberInCookie(response, QS_SITE, siteNumStr);
         } else if (StringUtils.isNotEmpty(siteInCookie = CookieUtils.recallFromCookie(request, QS_SITE))) {
-            request.setParameter(QS_SITE, siteInCookie); // for drop-down
-            request.setAttribute(REQ_SITE_ROOT, sites[Integer.parseInt(siteInCookie)]); // for search result list
+            int siteInCookieInt = Integer.parseInt(siteInCookie);
+            siteInCookieInt = siteInCookieInt > sites.length ? 0 : siteInCookieInt;
+            request.setAttribute(REQ_SITE_ROOT, sites[siteInCookieInt]); // for search result list
+            request.setParameter(QS_SITE, Integer.toString(siteInCookieInt)); // for drop-down
         } else {
             request.setParameter(QS_SITE, "0");
             request.setAttribute(REQ_SITE_ROOT, sites[0]);
