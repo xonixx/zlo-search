@@ -50,6 +50,7 @@ public class PageRetriever {
 
         List<String> stringGroups = new ArrayList<String>();
         InputStream is = null;
+        int totalRead = 0;
 
         try {
             HTTP_CLIENT.executeMethod(getMethod);
@@ -61,13 +62,20 @@ public class PageRetriever {
             int currSize, lenRead;
             String ending;
             byte[] buff = new byte[Config.BUFFER];
+
             do {
                 lenRead = is.read(buff);
-
+                /*
+                if (lenRead != buff.length) {
+                    logger.warn("buff.length=" + buff.length + " but lenRead=" + lenRead); // <-- 4, 120
+                }
+                */
                 if (lenRead <= 0) {
                     logger.warn("lenRead = " + lenRead + " while receiving " + num + ". It possibly means that message can't be parsed correctly...");
                     break;
                 }
+
+                totalRead += lenRead;
 
                 stringGroups.add(new String(buff, 0, lenRead, Config.CHARSET_NAME));
                 currSize = stringGroups.size();
@@ -79,19 +87,23 @@ public class PageRetriever {
                     );
 
             // read till end - seems that closing while not end riached causes board crash
+            /* let's save traffic
             for (lenRead = 0; lenRead > 0;) {
                 lenRead = is.read(buff);
             }
+            */
 
         } finally {
             if (is != null)
                 is.close();
             getMethod.releaseConnection(); // http://jakarta.apache.org/httpcomponents/httpclient-3.x/threading.html
         }
-        StringBuffer sb = new StringBuffer(stringGroups.size());
+        StringBuffer sb = new StringBuffer(totalRead);
         for (String s : stringGroups) {
             sb.append(s);
         }
+        stringGroups.clear();
+
         return sb.toString();
     }
 

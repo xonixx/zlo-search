@@ -40,6 +40,9 @@ public class Site extends SiteAccessor implements IndexingSource {
             return getMessage(num);
         } catch (IOException e) {
             throw new DAOException(this, e);
+        } catch (RuntimeException e) {
+            logger.error("Exception while saving msg #" + num);
+            throw e;
         }
     }
 
