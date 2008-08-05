@@ -27,6 +27,7 @@
             <link rel="alternate" type="application/rss+xml" title="RSS" href="${rssUrl}">
         </c:if>
         <script type="text/javascript" src="script.js"></script>
+        <script type="text/javascript" src="pic/lulz/db.js"></script>
     </head>
     <body>
         <tiles:insertDefinition name="header.search" />
@@ -162,7 +163,7 @@
     </c:choose>
     </body>
     <script type="text/javascript">
-        changedDatesSelector();
+        changedDatesSelector(); dbInit();
     </script>
     <tiles:insertDefinition name="ga" />
 </html>
