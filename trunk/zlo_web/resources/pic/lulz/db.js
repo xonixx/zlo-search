@@ -1,7 +1,5 @@
 
-var _blDiv;
-var interv;
-var w=223,h=336; // db pic w h
+var _blDiv,interv,w=223,h=336; // db pic w h
 
 function createDiv() {
     if (!_blDiv) {
@@ -27,7 +25,7 @@ function startSlide() {
     initPos();
     interv = setInterval(function () {moveStep(true,
             function() {
-                alert('Не-не-не-не-не!!! Нет!!\nЭто Девит Блэйн! ФАК МОЙ МОЗГ!!');
+                alert('Не-не-не-не-не!!! Нет!!\nЭто Дэвид Блэйн! ФАК МОЙ МОЗГ!!');
                 interv = setInterval(function () {moveStep(false)}, 50);
             }
     )}, 50);
@@ -52,8 +50,7 @@ function dbInit() {
     var txt = document.getElementsByName("text")[0];
     if (txt) {
         var dbIntev = setInterval(function(){
-            if (txt.value.replace(/\\s*/, '') != '' &&
-                ['david blaine','дэвид блэйн','в рот мне ноги','фак мой мозг',
+            if (['david blaine','дэвид блэйн','в рот мне ноги','фак мой мозг',
                     'печеньки','оранж сода','тэдди бир'].contains(txt.value.toLowerCase())) {
                 showDB(); clearInterval(dbIntev);
             }
