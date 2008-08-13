@@ -19,6 +19,7 @@
 <c:set var="rssUrl" value="<%= String.format("search?rss&%s", request.getQueryString()) %>" />
 <c:set var="rssLinkHtml"><a href="${rssUrl}" title="RSS для этого запроса"><img src="feed-icon-14x14.png" alt="RSS для этого запроса" /></a></c:set>
 
+<!-- ПРЕВЕД -->
 <html>
     <head>
         <title><fmt:message key="page.title" /></title>
@@ -167,3 +168,4 @@
     </script>
     <tiles:insertDefinition name="ga" />
 </html>
+<!-- ПАКА -->
