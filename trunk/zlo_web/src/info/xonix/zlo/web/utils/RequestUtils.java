@@ -16,6 +16,22 @@ public class RequestUtils {
      * @param localIps
      * @return
      */
+    public static String [][] BROWSERS = {
+            {"MSIE", "Internet Explorer"},
+            {"Firefox", "Firefox"},
+            {"Minefield", "Firefox"},
+            {"Chrome", "Chrome"},
+            {"Safari", "Safari"},
+            {"Feedfetcher-Google", "Google Feed Reader"},
+            {"YandexBlog", "Yandex Feed Reader"},
+            {"Yahoo Pipes", "Yahoo Feed Reader"},
+            {"Yahoo! Slurp", "Yahoo! Slurp"},
+            {"Googlebot", "Googlebot"},
+            {"Mozilla", "Mozilla"},
+            {"Opera", "Opera"},
+            {"Konqueror", "Konqueror"},
+    };
+
     public static boolean isLocalIp(HttpServletRequest request, String localIps) {
         return StringUtils.indexOf(localIps, getClientIp(request)) != -1;
     }
@@ -29,28 +45,11 @@ public class RequestUtils {
         if (userAgent == null)
             userAgent = "";
 
-        return userAgent.contains("MSIE")
-            ? "Internet Explorer"
-            : userAgent.contains("Firefox") || userAgent.contains("Minefield")
-            ? "Firefox"
-            : userAgent.contains("Safari")
-            ? "Safari"
-            : userAgent.contains("Feedfetcher-Google")
-            ? "Google Feed Reader"
-            : userAgent.contains("YandexBlog")
-            ? "Yandex Feed Reader"
-            : userAgent.contains("Yahoo Pipes")
-            ? "Yahoo Feed Reader"
-            : userAgent.contains("Yahoo! Slurp")
-            ? "Yahoo! Slurp"
-            : userAgent.contains("Googlebot")
-            ? "Googlebot"
-            : userAgent.contains("Mozilla")
-            ? "Mozilla"
-            : userAgent.contains("Opera")
-            ? "Opera"
-            : userAgent.contains("Konqueror")
-            ? "Konqueror"
-            : "other";
+        for (String[] br : BROWSERS) {
+            if (userAgent.contains(br[0]))
+                return br[1];
+        }
+        
+        return "other";
     }
 }
