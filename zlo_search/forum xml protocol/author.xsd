@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="author">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="name" type="xs:string" />
+                <xs:element name="fullName" type="xs:string" minOccurs="0" />
+
+                <xs:element name="email" type="xs:string" minOccurs="0" />
+                <xs:element name="homepage" type="xs:anyURI" minOccurs="0" />
+
+                <xs:element name="host" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>User host</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="registered" type="xs:boolean" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Whether user is registered in conference</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+                <xs:element name="signature" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>User signature</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
