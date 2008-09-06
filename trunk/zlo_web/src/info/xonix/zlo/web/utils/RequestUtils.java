@@ -19,6 +19,7 @@ public class RequestUtils {
     public static String [][] BROWSERS = {
             {"MSIE", "Internet Explorer"},
             {"Firefox", "Firefox"},
+            {"Opera", "Opera"},
             {"Minefield", "Firefox"},
             {"Chrome", "Chrome"},
             {"Safari", "Safari"},
@@ -27,9 +28,8 @@ public class RequestUtils {
             {"Yahoo Pipes", "Yahoo Feed Reader"},
             {"Yahoo! Slurp", "Yahoo! Slurp"},
             {"Googlebot", "Googlebot"},
-            {"Mozilla", "Mozilla"},
-            {"Opera", "Opera"},
             {"Konqueror", "Konqueror"},
+            {"Mozilla", "Mozilla"},
     };
 
     public static boolean isLocalIp(HttpServletRequest request, String localIps) {
