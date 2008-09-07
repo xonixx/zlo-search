@@ -1,4 +1,4 @@
-<%@ page import="info.xonix.zlo.search.model.ZloMessage, org.apache.commons.lang.StringUtils, info.xonix.zlo.search.forumxmlprotocol.ZloJaxb" %>
+<%@ page import="info.xonix.zlo.search.model.ZloMessage, org.apache.commons.lang.StringUtils, info.xonix.zlo.search.xmlfp.ZloJaxb" %>
 <%--
   User: Vovan
   Date: 13.08.2008
