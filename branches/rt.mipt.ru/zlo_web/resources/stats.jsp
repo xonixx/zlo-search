@@ -18,11 +18,15 @@
 
 <c:set var="messagesTbl">${site.name}_messages</c:set>
 
+<c:set var="msgDateWhereClause">
+    where msgDate BETWEEN (NOW() - INTERVAL ? DAY) AND NOW()
+</c:set>
+
 <c:choose>
     <c:when test="${byNick}">
         <sql:query var="res">
             select nick, reg, COUNT(*) cnt from ${messagesTbl}
-            where msgDate > NOW() - INTERVAL ? DAY
+            ${msgDateWhereClause}
             group by nick
             order by cnt desc;
             <sql:param>${period}</sql:param>
@@ -31,7 +35,7 @@
     <c:otherwise>
         <sql:query var="res">
             select host, COUNT(*) cnt from ${messagesTbl}
-            where msgDate > NOW() - INTERVAL ? DAY
+            ${msgDateWhereClause}
             group by host
             order by cnt desc;
             <sql:param>${period}</sql:param>
@@ -41,7 +45,7 @@
 
 <sql:query var="resTotal">
     select COUNT(*) cnt from ${messagesTbl}
-    where msgDate > NOW() - INTERVAL ? DAY
+    ${msgDateWhereClause}
     <sql:param>${period}</sql:param>
 </sql:query>
 
@@ -70,33 +74,29 @@
     <input type="submit" value="Показать!" />
 </form>
     <small>Всего сообщений за этот период: ${resTotal.rows[0].cnt}</small>
-</div>
 
-<table border="1" align="center">
-    <tr><th>№</th><th><c:choose><c:when test="${byNick}">Ник</c:when><c:otherwise>Хост</c:otherwise></c:choose></th><th>Число сообщений</th></tr>
-    <% Integer i=0; %>
-    <c:forEach var="row" items="${res.rows}">
-        <% i++; %>
-        <tr>
-            <td><%= i %></td>
-        <td><c:choose>
-                <c:when test="${byNick}">
-                    <tiles:insertDefinition name="nick">
-                        <tiles:putAttribute name="reg" value="${row.reg}" />
-                        <tiles:putAttribute name="nick" value="${row.nick}" />
-                        <tiles:putAttribute name="site" value="${site}" />
-                    </tiles:insertDefinition>
-                </c:when>
-                <c:otherwise>
-                    <tiles:insertDefinition name="host">
-                        <tiles:putAttribute name="host" value="${row.host}" />
-                        <tiles:putAttribute name="site" value="${site}" />
-                    </tiles:insertDefinition>
-                </c:otherwise>
-            </c:choose></td>
-        <td>${row.cnt}</td>
-        </tr>
-    </c:forEach>
-</table>
+<display:table name="${res.rows}" id="row" htmlId="resultTable">
+    <display:column title="№" value="${row_rowNum}"/>
+    <display:column title="${byNick ? 'Ник' : 'Хост'}">
+        <c:choose>
+            <c:when test="${byNick}">
+                <tiles:insertDefinition name="nick">
+                    <tiles:putAttribute name="reg" value="${row.reg}"/>
+                    <tiles:putAttribute name="nick" value="${row.nick}"/>
+                    <tiles:putAttribute name="site" value="${site}"/>
+                </tiles:insertDefinition>
+            </c:when>
+            <c:otherwise>
+                <tiles:insertDefinition name="host">
+                    <tiles:putAttribute name="host" value="${row.host}"/>
+                    <tiles:putAttribute name="site" value="${site}"/>
+                </tiles:insertDefinition>
+            </c:otherwise>
+        </c:choose>
+    </display:column>
+    <display:column title="Число сообщений" value="${row.cnt}" />
+</display:table>
+
+</div>    
 
 <tiles:insertDefinition name="ga" />
