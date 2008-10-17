@@ -18,11 +18,15 @@
     SELECT MAX(id) last FROM request_log
 </sql:query>
 
+<c:set var="reqDateWhereClause">
+    WHERE req_date BETWEEN (NOW() - INTERVAL ? HOUR) AND NOW()
+</c:set>
+
 <c:choose>
     <c:when test="${showAll}">
         <sql:query var="res">
             SELECT * FROM request_log USE INDEX (req_date_idx)
-            WHERE req_date > NOW() - INTERVAL ? HOUR
+            ${reqDateWhereClause}
             order by id DESC
             <sql:param value="${lastHours}" />
         </sql:query>
@@ -30,9 +34,9 @@
     <c:otherwise>
         <sql:query var="res">
             SELECT * FROM request_log USE INDEX (req_date_idx)
-            WHERE host not in ${xonix:mysqlRange(localIps)}
+            ${reqDateWhereClause}
+            AND host not in ${xonix:mysqlRange(localIps)}
             AND is_rss_req = 0
-            AND req_date > NOW() - INTERVAL ? HOUR
             order by id DESC
             <sql:param value="${lastHours}" />
         </sql:query>
