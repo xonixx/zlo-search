@@ -1,46 +1,54 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <taglib xmlns="http://java.sun.com/xml/ns/j2ee"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
-  version="2.0">
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0">
 
-  <description>JSTL 1.1 functions library</description>
-  <display-name>xonix functions</display-name>
-  <tlib-version>1.1</tlib-version>
-  <short-name>xx</short-name>
-  <uri>http://xonix.info</uri>
+    <description>JSTL 1.1 functions library</description>
+    <display-name>xonix functions</display-name>
+    <tlib-version>1.1</tlib-version>
+    <short-name>xx</short-name>
+    <uri>http://xonix.info</uri>
 
-  <function>
-    <description>
-      urlencode windows-1251
-    </description>
-    <name>urlencode</name>
-    <function-class>info.xonix.zlo.web.jstl.Functions</function-class>
-    <function-signature>java.lang.String urlencode(java.lang.String)</function-signature>
-    <example>
-    </example>
-  </function>
+    <function>
+        <description>
+            urlencode windows-1251
+        </description>
+        <name>urlencode</name>
+        <function-class>info.xonix.zlo.web.jstl.Functions</function-class>
+        <function-signature>java.lang.String urlencode(java.lang.String)</function-signature>
+        <example>
+        </example>
+    </function>
 
-  <function>
-    <description>
-        "a|b|c" -> "('a', 'b', 'c')"
-    </description>
-    <name>mysqlRange</name>
-    <function-class>info.xonix.zlo.web.jstl.Functions</function-class>
-    <function-signature>java.lang.String mysqlRange(java.lang.String)</function-signature>
-    <example>
-    </example>
-  </function>
+    <function>
+        <description>
+            "a|b|c" -> "('a', 'b', 'c')"
+        </description>
+        <name>mysqlRange</name>
+        <function-class>info.xonix.zlo.web.jstl.Functions</function-class>
+        <function-signature>java.lang.String mysqlRange(java.lang.String)</function-signature>
+        <example>
+        </example>
+    </function>
 
-  <function>
-    <description>
-        Integer.parseInt(String s)
-    </description>
-    <name>int</name>
-    <function-class>java.lang.Integer</function-class>
-    <function-signature>int parseInt(java.lang.String)</function-signature>
-    <example>
-    </example>
-  </function>
+    <function>
+        <description>
+            Integer.parseInt(String s)
+        </description>
+        <name>int</name>
+        <function-class>java.lang.Integer</function-class>
+        <function-signature>int parseInt(java.lang.String)</function-signature>
+        <example>
+        </example>
+    </function>
+
+    <function>
+        <description>Returns plural word form</description>
+        <name>plural</name>
+        <function-class>info.xonix.zlo.web.jstl.Functions</function-class>
+        <function-signature>java.lang.String plural(int,java.lang.String,java.lang.String,java.lang.String)
+        </function-signature>
+    </function>
 </taglib>

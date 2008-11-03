@@ -24,4 +24,23 @@ public class Functions {
     public static void main(String[] args) {
         System.out.println(urlencode("<sb>"));
     }
+
+    public static String plural(int n, String word1, String word2, String wordMany) {
+        int n20 = n % 100;
+        if (n20 >= 10 && n20 < 20)
+            return wordMany;
+        else {
+            int n10 = n20 % 10;
+            switch (n10) {
+                case 1:
+                    return word1;
+                case 2:
+                case 3:
+                case 4:
+                    return word2;
+                default:
+                    return wordMany;
+            }
+        }
+    }
 }

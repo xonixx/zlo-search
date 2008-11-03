@@ -77,6 +77,13 @@
                             <fmt:message key="label.per.page" /> <jsp:getProperty name="backendBean" property="pageSizeSelector" />
                             <br/>
                             <input type="submit" name="submitBtn" value="<fmt:message key="button.search"/>"/>
+                            <br/>
+                            <c:if test="${not isError and not empty requestScope['lastMsgs']}">
+                                <table cellspacing="5" class="small">
+                                    <tr><td><fmt:message key="label.last.saved.msg" /></td><td>${requestScope['lastMsgs'][0]}</td><td>(<fmt:formatDate value="${requestScope['lastMsgs_dates'][0]}" pattern="dd/MM/yyyy HH:mm" />)</td></tr>
+                                    <tr><td><fmt:message key="label.last.indexed.msg" /></td><td>${requestScope['lastMsgs'][1]}</td><td>(<fmt:formatDate value="${requestScope['lastMsgs_dates'][1]}" pattern="dd/MM/yyyy HH:mm" />)</td></tr>
+                                </table>
+                            </c:if>
                         </td>
                     </tr>
                 </table>
@@ -92,14 +99,6 @@
     </c:if>
     <c:choose>
         <c:when test="${not isError}">
-            <c:if test="${not empty requestScope['lastMsgs']}">
-                <div class="content">
-                    <table cellspacing="5">
-                        <tr><td><fmt:message key="label.last.saved.msg" /></td><td>${requestScope['lastMsgs'][0]}</td><td>(<fmt:formatDate value="${requestScope['lastMsgs_dates'][0]}" pattern="dd/MM/yyyy HH:mm" />)</td></tr>
-                        <tr><td><fmt:message key="label.last.indexed.msg" /></td><td>${requestScope['lastMsgs'][1]}</td><td>(<fmt:formatDate value="${requestScope['lastMsgs_dates'][1]}" pattern="dd/MM/yyyy HH:mm" />)</td></tr>
-                    </table>
-                </div>
-            </c:if>
             <c:if test="${isSearchResultPresent}">
                 <div class="searchResOuter">
                 <display:table name="requestScope.searchResult.paginatedList" id="msg" htmlId="resultTable"
