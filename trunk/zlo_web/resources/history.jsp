@@ -6,27 +6,24 @@
 <c:set var="isLocalIp" value="<%= RequestUtils.isLocalIp(request, (String) pageContext.getAttribute("localIps")) %>" />
 <c:set var="showAll" value="${ param['all'] != null and isLocalIp }" />
 
-<c:choose>
-    <c:when test="${isLocalIp and not empty param['n']}">
-        <c:set var="numberToShow" value="${param['n']}" />
-    </c:when>
-    <c:otherwise>
-        <c:set var="numberToShow"><fmt:message key="history.numberToShow" /></c:set>        
-    </c:otherwise>
-</c:choose>
-
 <sql:setDataSource dataSource="<%= DbAccessor.getInstance("search_log").getDataSource() %>" />
+
+<c:set var="lastHours" value="6" />
+<c:if test="${isLocalIp and not empty param['n']}">
+    <c:set var="lastHours" value="${param['n']}" />
+</c:if>
+
+<sql:query var="totalNum">
+    SELECT MAX(id) last FROM request_log
+</sql:query>
 
 <c:choose>
     <c:when test="${showAll}">
         <sql:query var="res">
             SELECT * FROM request_log
-            WHERE id > (select MAX(id) FROM request_log) - ?
-            order by id DESC;
-            <sql:param value="${xonix:int(numberToShow)}" />
-        </sql:query>
-        <sql:query var="totalNum">
-            SELECT count(1) AS count FROM request_log
+            WHERE req_date > NOW() - INTERVAL ? HOUR
+            order by id DESC
+            <sql:param value="${lastHours}" />
         </sql:query>
     </c:when>
     <c:otherwise>
@@ -34,16 +31,9 @@
             SELECT * FROM request_log
             WHERE host not in ${xonix:mysqlRange(localIps)}
             AND is_rss_req = 0
-            AND id > (select MAX(id) FROM request_log) - 1000
+            AND req_date > NOW() - INTERVAL ? HOUR
             order by id DESC
-            LIMIT ?
-            ;
-            <sql:param value="${xonix:int(numberToShow)}" />
-        </sql:query>
-        <sql:query var="totalNum">
-            SELECT count(1) AS count FROM request_log
-            WHERE host not in ${xonix:mysqlRange(localIps)}
-            AND is_rss_req = 0
+            <sql:param value="${lastHours}" />
         </sql:query>
     </c:otherwise>
 </c:choose>
@@ -61,7 +51,9 @@
                 </c:choose>
             </c:if>
     </h3>
-    <small>(всего запросов:${totalNum.rows[0].count}, показаны последние: ${numberToShow})</small>
+    <small>(всего запросов: ${totalNum.rows[0].last}, показано ${res.rowCount} ${
+        xonix:plural(res.rowCount, 'запрос', 'запроса', 'запросов')}, за последние ${lastHours} ${
+        xonix:plural(lastHours, 'час', 'часа', 'часов')})</small>
 
     <display:table name="${res.rows}" id="row" htmlId="resultTable" decorator="info.xonix.zlo.web.decorators.HistoryTableDecorator">
         <display:column title="№">

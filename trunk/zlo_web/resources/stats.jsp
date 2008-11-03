@@ -37,6 +37,12 @@
     </c:otherwise>
 </c:choose>
 
+<sql:query var="resTotal">
+    select COUNT(1) cnt from messages
+    where msgDate > NOW() - INTERVAL ? DAY
+    <sql:param>${period}</sql:param>
+</sql:query>
+
 <c:set var="title">
     Статистика сайта ${site.SITE_URL} по <c:choose><c:when test="${byNick}">никам</c:when><c:otherwise>хостам</c:otherwise></c:choose>
     за последние ${period} суток
@@ -61,6 +67,7 @@
     </select>
     <input type="submit" value="Показать!" />
 </form>
+    <small>Всего сообщений за этот период: ${resTotal.rows[0].cnt}</small>
 </div>
 
 <table border="1" align="center">

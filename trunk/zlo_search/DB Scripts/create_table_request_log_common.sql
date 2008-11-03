@@ -23,5 +23,8 @@ ALTER TABLE searcher_logs.request_log
 
 ALTER TABLE searcher_logs.request_log
     ADD is_rss_req BOOL;
+
+ALTER TABLE searcher_logs.request_log
+  ADD INDEX req_date_idx (req_date);
     
 --update request_log set is_rss_req=if(req_query_str like 'rss&%', 1, 0)
