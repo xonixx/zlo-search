@@ -348,8 +348,8 @@ public class SearchServlet extends BaseServlet {
                 ch.setLanguage("ru");
                 ch.setTtl(120); // 2 hours
 
-                FoundTextHighlighter hl = new FoundTextHighlighter();
-                hl.setHighlightWords(FoundTextHighlighter.formHighlightedWords(lastSearch.getText()));
+//                FoundTextHighlighter hl = new FoundTextHighlighter();
+//                hl.setHighlightWords(FoundTextHighlighter.formHighlightedWords(lastSearch.getText()));
 
                 if (msgsList != null) {
                     for (Object m1 : msgsList) {
@@ -359,13 +359,21 @@ public class SearchServlet extends BaseServlet {
                         Site s = m.getSite();
 
                         // highlighting of all feed takes to many time & cpu
-                        it.setTitle(HtmlUtils.unescapeHtml(m.getTitle()));
+
+                        String title = HtmlUtils.unescapeHtml(m.getTitle());
+                        if (!"без темы".equals(m.getTopic().toLowerCase()))
+                            title = "[" + m.getTopic() + "] " + title;
+                        it.setTitle(title);
                         it.setDescription(m.getBody());
                         it.setCreator(m.getNick() + "@" + m.getHost());
                         it.setDate(m.getDate());
                         it.setCategories(Arrays.asList((CategoryIF) new Category(m.getTopic())));
-                        it.setLink(new URL(String.format("http://%s/msg?site=%s&num=%s&hw=%s", Config.WEBSITE_DOMAIN, s.getNum(), m.getNum(), HtmlUtils.urlencode(hl.getWordsStr()))));
-                        it.setComments(new URL(String.format("http://%s%s%s", s.getSITE_URL(), s.getREAD_QUERY(), m.getNum())));
+
+                        // let it point to forum msg, not saved msg
+//                        it.setLink(new URL(String.format("http://%s/msg?site=%s&num=%s&hw=%s", Config.WEBSITE_DOMAIN, s.getNum(), m.getNum(), HtmlUtils.urlencode(hl.getWordsStr()))));
+                        URL commentsUrl = new URL(String.format("http://%s%s%s", s.getSITE_URL(), s.getREAD_QUERY(), m.getNum()));
+                        it.setLink(commentsUrl);
+                        it.setComments(commentsUrl);
 
                         ch.addItem(it);
                     }
