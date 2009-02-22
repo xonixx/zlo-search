@@ -21,7 +21,7 @@ public class Config {
         public static final DateFormat DF_1 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         public static final DateFormat DF_2 = new SimpleDateFormat("dd/MM/yyyy");
         public static final DateFormat DF_3 = new SimpleDateFormat("dd.MM.yyyy");
-        public static final DateFormat DF_BOARD_MSG = new SimpleDateFormat("M d hh:mm:ss yyyy");
+        public static final DateFormat DF_BOARD_MSG = new SimpleDateFormat("M d HH:mm:ss yyyy");
     }
 
     private static final Logger logger = Logger.getLogger(Config.class);
