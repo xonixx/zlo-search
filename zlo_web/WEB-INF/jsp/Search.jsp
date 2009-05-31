@@ -32,6 +32,7 @@
     </head>
     <body>
         <tiles:insertDefinition name="header.search" />
+        <tiles:insertDefinition name="suggest.anotherBrowser" />
 
         <div id="searchform" align="center" style="padding-top:5px;">
             <form action="search" method="get" id="searchFrm">
