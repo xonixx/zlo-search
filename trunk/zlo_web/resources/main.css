@@ -113,3 +113,6 @@ h3 {
 .hl0 { color:red; }
 .hl { background-color:yellow; }
 .center { text-align:center; }
+
+a.brwsr:link, a.brwsr:visited { color:blue; text-decoration:none }
+a.brwsr:hover { text-decoration:underline }

@@ -51,6 +51,9 @@
     <definition name="ga" template="/WEB-INF/jsp/templates/_ga.jsp">
     </definition>
 
+    <definition name="suggest.anotherBrowser" template="/WEB-INF/jsp/templates/anotherBrowser.jsp">
+    </definition>
+
     <!-- test -->
     <definition name="test" template="/test/t/tmp.jsp">
         <put-attribute name="a" value="BBB" />
