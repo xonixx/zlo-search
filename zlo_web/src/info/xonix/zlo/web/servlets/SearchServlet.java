@@ -1,22 +1,15 @@
 package info.xonix.zlo.web.servlets;
 
-import de.nava.informa.core.CategoryIF;
-import de.nava.informa.core.ChannelIF;
-import de.nava.informa.impl.basic.Category;
-import de.nava.informa.impl.basic.Channel;
-import de.nava.informa.impl.basic.Item;
 import info.xonix.zlo.search.*;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.config.ErrorMessage;
-import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.db.DbAccessor;
 import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.db.DbManager;
-import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import info.xonix.zlo.web.CookieUtils;
 import info.xonix.zlo.web.RequestCache;
-import info.xonix.zlo.web.rss.ZloRss20Exporter;
+import info.xonix.zlo.web.rss.RssFormer;
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 import info.xonix.zlo.web.utils.RequestUtils;
 import org.apache.commons.lang.StringUtils;
@@ -26,17 +19,18 @@ import org.apache.lucene.search.BooleanQuery;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.ParseException;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Author: gubarkov
  * Date: 30.08.2007
  * Time: 20:31:41
+ * TODO: Refactor this!!!
  */
 public class SearchServlet extends BaseServlet {
     private static final Logger logger = Logger.getLogger(SearchServlet.class);
@@ -85,7 +79,8 @@ public class SearchServlet extends BaseServlet {
 
     public static DateFormat FROM_TO_DATE_FORMAT = Config.DateFormats.DF_3;
 
-    private static RequestCache cache = new RequestCache();
+    private static final RequestCache cache = new RequestCache();
+    private final RssFormer rssFormer = new RssFormer();
 
     protected void doGet(ForwardingRequest request, HttpServletResponse response) throws ServletException, IOException {
         String topicCodeStr = request.getParameter(QS_TOPIC_CODE);
@@ -167,8 +162,10 @@ public class SearchServlet extends BaseServlet {
 
             Date fromDate;
             Date toDate;
+            Calendar cal = new GregorianCalendar();
             if (StringUtils.isEmpty(toDateStr)) {
-                toDate = new Date(); // now
+                cal.add(Calendar.DAY_OF_MONTH, 1);
+                toDate = cal.getTime(); // now + 1 day
             } else {
                 try {
                     toDate = FROM_TO_DATE_FORMAT.parse(toDateStr);
@@ -179,10 +176,10 @@ public class SearchServlet extends BaseServlet {
             }
 
             if (StringUtils.isEmpty(fromDateStr)) {
-                Calendar cal = new GregorianCalendar();
-                cal.setTime(toDate);
-                cal.add(Calendar.YEAR, -Config.TIME_PERIOD_YEARS);
-                cal.add(Calendar.MONTH, -Config.TIME_PERIOD_MONTHS);
+//                cal.add(Calendar.YEAR, -Config.TIME_PERIOD_YEARS);
+//                cal.add(Calendar.MONTH, -Config.TIME_PERIOD_MONTHS);
+                cal.setTime(new Date());
+                cal.add(Calendar.DAY_OF_MONTH, -1); // last 24 h
                 fromDate = cal.getTime();
             } else {
                 try {
@@ -202,7 +199,9 @@ public class SearchServlet extends BaseServlet {
             SearchRequest searchRequest = new SearchRequest(
                     getSite(request), text,
                     inTitle, inBody, inReg, inHasUrl, inHasImg,
-                    nick, host, topicCode, fromDate, toDate,
+                    nick, host, topicCode,
+                    StringUtils.isNotEmpty(fromDateStr) || StringUtils.isNotEmpty(toDateStr),
+                    fromDate, toDate,
                     SEARCH_TYPE_ALL.equals(searchType));
 
             if (searchRequest.canBeProcessed()) {
@@ -289,6 +288,7 @@ public class SearchServlet extends BaseServlet {
         } catch (Exception e) {
             if (errorMsg == null) {
                 // unknown error
+                logger.error("Unknown error", e);
                 throw new ServletException(e);
             }
         }
@@ -297,97 +297,9 @@ public class SearchServlet extends BaseServlet {
             request.setAttribute(ERROR, errorMsg);
 
         if (isRssAsked)
-            formRss(request, response);
+            rssFormer.formRss(request, response);
         else
             request.forwardTo(JSP_SEARCH);
-    }
-
-    private void formRss(ForwardingRequest request, HttpServletResponse response) {
-        if (request.getAttribute(ERROR) != null) {
-            // process error
-        } else {
-            response.setContentType("application/rss+xml");
-            response.setCharacterEncoding("windows-1251");
-
-            SearchResult searchResult = (SearchResult) request.getAttribute(REQ_SEARCH_RESULT);
-            ZloPaginatedList pl = (ZloPaginatedList) searchResult.getPaginatedList();
-            List msgsList = pl.getList();
-            Date lastModifiedDateCurrent = msgsList != null && msgsList.size() > 0 ? ((ZloMessage) msgsList.get(0)).getDate() : null; // the youngest msg (max date)
-
-            logger.info("RSS request. User-Agent: " + request.getHeader("User-Agent") + ", If-Modified-Since: " + request.getHeader("If-Modified-Since"));
-
-            if (lastModifiedDateCurrent != null) {
-                Date lastModifiedDateOld = new Date(request.getDateHeader("If-Modified-Since"));
-
-                if (lastModifiedDateCurrent.after(lastModifiedDateOld)) {
-                    response.setDateHeader("Last-Modified", lastModifiedDateCurrent.getTime());
-                    logger.info("Feed is modified: If-Modified-Since Date=" + lastModifiedDateOld + ", lastMsgFeedDate=" + lastModifiedDateCurrent);
-                } else {
-                    logger.info("Sending 304 Not modified: If-Modified-Since Date=" + lastModifiedDateOld + " is _not before_ lastMsgFeedDate=" + lastModifiedDateCurrent);
-                    response.setStatus(304); // Not Modified
-                    return;
-                }
-            }
-
-            SearchRequest lastSearch = searchResult.getLastSearch();
-
-            ChannelIF ch = new Channel();
-
-            List<String> l = new ArrayList<String>(3);
-            for (String s : Arrays.asList(lastSearch.getText(), lastSearch.getNick(), lastSearch.getHost())) {
-                if (StringUtils.isNotEmpty(s))
-                    l.add(s);
-            }
-            String chTitle = "Board search: " + StringUtils.join(l, ", ");
-
-            ch.setTitle(chTitle);
-
-            try {
-                ch.setLocation(new URL(String.format("http://%s/search?%s", Config.WEBSITE_DOMAIN, request.getQueryString().replace("rss&", ""))));
-                ch.setDescription(lastSearch.describeToString());
-                ch.setLanguage("ru");
-                ch.setTtl(120); // 2 hours
-
-//                FoundTextHighlighter hl = new FoundTextHighlighter();
-//                hl.setHighlightWords(FoundTextHighlighter.formHighlightedWords(lastSearch.getText()));
-
-                if (msgsList != null) {
-                    for (Object m1 : msgsList) {
-                        ZloMessage m = (ZloMessage) m1;
-                        Item it = new Item();
-
-                        Site s = m.getSite();
-
-                        // highlighting of all feed takes to many time & cpu
-
-                        String title = HtmlUtils.unescapeHtml(m.getTitle());
-                        if (!"без темы".equals(m.getTopic().toLowerCase()))
-                            title = "[" + m.getTopic() + "] " + title;
-                        it.setTitle(title);
-                        it.setDescription(m.getBody());
-                        it.setCreator(m.getNick() + "@" + m.getHost());
-                        it.setDate(m.getDate());
-                        it.setCategories(Arrays.asList((CategoryIF) new Category(m.getTopic())));
-
-                        // let it point to forum msg, not saved msg
-//                        it.setLink(new URL(String.format("http://%s/msg?site=%s&num=%s&hw=%s", Config.WEBSITE_DOMAIN, s.getNum(), m.getNum(), HtmlUtils.urlencode(hl.getWordsStr()))));
-                        URL commentsUrl = new URL(String.format("http://%s%s%s", s.getSITE_URL(), s.getREAD_QUERY(), m.getNum()));
-                        it.setLink(commentsUrl);
-                        it.setComments(commentsUrl);
-
-                        ch.addItem(it);
-                    }
-                }
-
-                ZloRss20Exporter exporter = new ZloRss20Exporter(response.getWriter(), "windows-1251");
-
-                exporter.write(ch);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     private void showStatistics(ForwardingRequest request) throws DbException {
