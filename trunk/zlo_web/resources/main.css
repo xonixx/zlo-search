@@ -75,6 +75,7 @@ h3 {
 .error {
     font-weight: bold;
     color: red;
+    text-align: center;
 }
 
 .search {

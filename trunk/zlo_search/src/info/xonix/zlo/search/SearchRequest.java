@@ -29,6 +29,7 @@ public class SearchRequest extends SiteSource {
     private String host;
     private int topicCode = -1; // by default - all
 
+    private boolean isDateSet = false;
     private Date fromDate;
     private Date toDate;
 
@@ -36,7 +37,7 @@ public class SearchRequest extends SiteSource {
 
     public SearchRequest(Site site, String text, boolean inTitle, boolean inBody,
                          boolean inReg, boolean inHasUrl, boolean inHasImg,
-                         String nick, String host, int topicCode, Date fromDate, Date toDate,
+                         String nick, String host, int topicCode, boolean isDateSet, Date fromDate, Date toDate,
                          boolean searchAll) {
         super(site);
         this.text = text;
@@ -48,8 +49,11 @@ public class SearchRequest extends SiteSource {
         this.nick = nick;
         this.host = host;
         this.topicCode = topicCode;
+
+        this.isDateSet = isDateSet;
         this.fromDate = fromDate;
         this.toDate = toDate;
+        
         this.searchAll = searchAll;
     }
 
@@ -155,6 +159,7 @@ public class SearchRequest extends SiteSource {
                 || StringUtils.isNotEmpty(host)
                 || inHasUrl
                 || inHasImg
+                || isDateSet
 //                || -1 != topicCode
                 ;
     }

@@ -2,6 +2,7 @@ package info.xonix.zlo.web.test;
 
 import java.util.Collection;
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * Author: Vovan
@@ -10,6 +11,9 @@ import java.util.Arrays;
  */
 public class Test1 {
     public static void main(String[] args) {
+        System.out.println(new Date());
+    }
+    public static void main1(String[] args) {
 
         Test1 t = new Test1();
         t.q(Arrays.asList((IA)new A()));

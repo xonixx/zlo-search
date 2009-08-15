@@ -9,13 +9,20 @@
 <c:set var="activeScreen"><tiles:getAsString name="activeScreen" /></c:set>
 <jsp:useBean id="siteRoot" class="java.lang.String" scope="request" />
 
+<c:set var="site">
+    <c:choose>
+        <c:when test="${not empty param['site']}">${param['site']}</c:when>
+        <c:otherwise>${cookie['site'].value}</c:otherwise>
+    </c:choose>
+</c:set>
+
 <div id="header" align="center">
     <ul>
         <li><a href="search"
                <c:if test="${activeScreen == 'search'}">class="activeLink"</c:if>>Поиск</a></li>
-        <li><a href="stats.jsp?site=${param['site']}"
+        <li><a href="stats.jsp?site=${site}"
                <c:if test="${activeScreen == 'stats'}">class="activeLink"</c:if>>Статистика</a></li>
-        <li><a href="nickhost.jsp?site=${param['site']}"
+        <li><a href="nickhost.jsp?site=${site}"
                 <c:if test="${activeScreen == 'nickhost'}">class="activeLink"</c:if>>Ники/Хосты</a></li>
         <li><a href="history.jsp"
                 <c:if test="${activeScreen == 'history'}">class="activeLink"</c:if>>История</a></li>
