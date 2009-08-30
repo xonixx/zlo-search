@@ -52,7 +52,7 @@ public class SiteAccessor extends DbAccessor {
     private int DB_SCAN_PERIOD;
     private int DB_RECONNECT_PERIOD;
 
-    private int SITE_NUMBER;
+    private Integer SITE_NUMBER;
 
     private String SITE_NAME;
 
@@ -301,11 +301,11 @@ public class SiteAccessor extends DbAccessor {
         this.DB_RECONNECT_PERIOD = DB_RECONNECT_PERIOD;
     }
 
-    public int getSITE_NUMBER() {
+    public Integer getSITE_NUMBER() {
         return SITE_NUMBER;
     }
 
-    public void setSITE_NUMBER(int SITE_NUMBER) {
+    public void setSITE_NUMBER(Integer SITE_NUMBER) {
         this.SITE_NUMBER = SITE_NUMBER;
     }
 

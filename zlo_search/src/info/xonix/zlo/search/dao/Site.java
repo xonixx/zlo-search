@@ -103,7 +103,7 @@ public class Site extends SiteAccessor implements IndexingSource {
             }
             Collections.sort(sites, new Comparator<Site>(){
                 public int compare(Site o1, Site o2) {
-                    return o1.getSITE_NUMBER() > o2.getSITE_NUMBER() ? 1 : o1.getSITE_NUMBER() == o2.getSITE_NUMBER() ? 0 : -1;
+                    return new Integer(o1.getSITE_NUMBER()).compareTo(o2.getSITE_NUMBER());
                 }
             });
         }
@@ -120,10 +120,15 @@ public class Site extends SiteAccessor implements IndexingSource {
     }
 
     public static Site getSite(int num) {
-        return getSites().get(num);
+        for (Site site : getSites()) {
+            if (site.getNum() == num) {
+                return site;
+            }
+        }
+        return null;
     }
 
-    public int getNum() {
+    public Integer getNum() {
         return getSITE_NUMBER();
     }
 

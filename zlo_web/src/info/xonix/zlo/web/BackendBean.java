@@ -7,6 +7,8 @@ import info.xonix.zlo.search.model.ZloMessage;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.lang.StringUtils;
 
+import java.util.List;
+
 /**
  * Author: Vovan
  * Date: 03.09.2007
@@ -39,18 +41,31 @@ public class BackendBean {
         } catch (DbException e) {
             ;
         }
-        return HtmlConstructor.constructSelector(SN_TOPIC, null, new String[]{ZloMessage.ALL_TOPICS}, topics, getTopicInt(), true);
+        return HtmlConstructor.constructSelector(SN_TOPIC, null,
+                new String[]{ZloMessage.ALL_TOPICS}, topics, getTopicInt(), true);
     }
 
     public String getSiteSelector() {
-        return HtmlConstructor.constructSelector(SN_SITE, null, formSiteHosts(Site.getSiteNames()), getSiteInt(), true);
+        return HtmlConstructor.constructSelector(SN_SITE, null, null,
+                formSiteNums(Site.getSites()),
+                formSiteHosts(Site.getSiteNames()), getSiteInt(), true);
     }
+
+    private String[] formSiteNums(List<Site> sites) {
+        String[] siteNums = new String[sites.size()];
+        int i = 0;
+        for (Site site1 : sites) {
+            siteNums[i++] = site1.getNum().toString();
+        }
+        return siteNums;
+    }
+
 
     private String[] formSiteHosts(String[] siteNames) {
         String[] res = new String[siteNames.length];
 
-        int i=0;
-        for (String siteName : siteNames){
+        int i = 0;
+        for (String siteName : siteNames) {
 //            res[i++] = StringUtils.substringBefore(siteName, "/");
             res[i++] = siteName.length() <= SITE_URL_MAX_LEN
                     ? siteName

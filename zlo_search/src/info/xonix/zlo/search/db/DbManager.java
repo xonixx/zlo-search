@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+import java.text.MessageFormat;
 
 /**
  * User: boost
@@ -44,22 +45,37 @@ public class DbManager {
 
     private DbAccessor dbAccessor;
 
+    private final String SQL_INSERT_MSG;// =            props.getProperty("sql.insert.msg");
+    private final String SQL_INSERT_UPDATE_MSG;// =     props.getProperty("sql.insert.update.msg");
+    private final String SQL_UPDATE_MSG;// =            props.getProperty("sql.update.msg");
+    private final String SQL_DELETE_MSG;// =            props.getProperty("sql.delete.msg");
+    private final String SQL_SELECT_MSG_BY_ID;// =      props.getProperty("sql.select.msg.by.id");
+    private final String SQL_SELECT_MSG_IN_RANGE;// =   props.getProperty("sql.select.msg.in.range");
+    private final String SQL_SELECT_LAST_MSG_NUM;// =   props.getProperty("sql.select.last.msg.num");
+    private final String SQL_SELECT_SET;// =            props.getProperty("sql.select.set");
+    private final String SQL_SELECT_ALL_TOPICS;// =     props.getProperty("sql.select.all.topics");
+    private final String SQL_SELECT_NEW_TOPICS;// =     props.getProperty("sql.select.new.topics");
+
+    private final String SQL_LOG_REQUEST =           props.getProperty("sql.log.request");
+
     public DbManager(DbAccessor dbAcessor) {
         this.dbAccessor = dbAcessor;
+
+        String name = dbAcessor.getName();
+        SQL_INSERT_MSG = MessageFormat.format(props.getProperty("sql.insert.msg"), name);
+        SQL_INSERT_UPDATE_MSG = MessageFormat.format(props.getProperty("sql.insert.update.msg"), name);
+
+        SQL_UPDATE_MSG = MessageFormat.format(props.getProperty("sql.update.msg"), name);
+        SQL_DELETE_MSG = MessageFormat.format(props.getProperty("sql.delete.msg"), name);
+
+        SQL_SELECT_MSG_BY_ID = MessageFormat.format(props.getProperty("sql.select.msg.by.id"), name);
+        SQL_SELECT_MSG_IN_RANGE = MessageFormat.format(props.getProperty("sql.select.msg.in.range"), name);
+        SQL_SELECT_LAST_MSG_NUM = MessageFormat.format(props.getProperty("sql.select.last.msg.num"), name);
+        SQL_SELECT_SET = MessageFormat.format(props.getProperty("sql.select.set"), name);
+
+        SQL_SELECT_ALL_TOPICS = MessageFormat.format(props.getProperty("sql.select.all.topics"), name);
+        SQL_SELECT_NEW_TOPICS = MessageFormat.format(props.getProperty("sql.select.new.topics"), name);
     }
-
-    private static final String SQL_INSERT_MSG =            props.getProperty("sql.insert.msg");
-    private static final String SQL_INSERT_UPDATE_MSG =     props.getProperty("sql.insert.update.msg");
-    private static final String SQL_UPDATE_MSG =            props.getProperty("sql.update.msg");
-    private static final String SQL_DELETE_MSG =            props.getProperty("sql.delete.msg");
-    private static final String SQL_SELECT_MSG_BY_ID =      props.getProperty("sql.select.msg.by.id");
-    private static final String SQL_SELECT_MSG_IN_RANGE =   props.getProperty("sql.select.msg.in.range");
-    private static final String SQL_SELECT_LAST_MSG_NUM =   props.getProperty("sql.select.last.msg.num");
-    private static final String SQL_SELECT_SET =            props.getProperty("sql.select.set");
-    private static final String SQL_SELECT_ALL_TOPICS =     props.getProperty("sql.select.all.topics");
-    private static final String SQL_SELECT_NEW_TOPICS =     props.getProperty("sql.select.new.topics");
-
-    private static final String SQL_LOG_REQUEST =           props.getProperty("sql.log.request");
 
     private void fillPreparedStatement(PreparedStatement pstmt, ZloMessage msg) throws DbException {
         DbUtils.setParams(pstmt,

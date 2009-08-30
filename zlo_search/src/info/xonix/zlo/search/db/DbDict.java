@@ -5,6 +5,7 @@ import static info.xonix.zlo.search.db.VarType.*;
 
 import java.util.Date;
 import java.util.Properties;
+import java.text.MessageFormat;
 
 /**
  * Author: Vovan
@@ -16,14 +17,20 @@ public class DbDict {
 
     private static Properties props = Config.loadProperties("info/xonix/zlo/search/db/db_dict.sql.properties");
 
-    private static final String SQL_SET_VAL = props.getProperty("sql.set.val");
-    private static final String SQL_GET_VAL = props.getProperty("sql.get.val");
-    private static final String SQL_REMOVE_VAL = props.getProperty("sql.remove.val");
+    private final String SQL_SET_VAL;// = props.getProperty("sql.set.val");
+    private final String SQL_GET_VAL;// = props.getProperty("sql.get.val");
+    private final String SQL_REMOVE_VAL;// = props.getProperty("sql.remove.val");
 
     private DbAccessor dbAccessor;
 
     public DbDict(DbAccessor dbAccessor) {
         this.dbAccessor = dbAccessor;
+
+        String name = dbAccessor.getName();
+
+        SQL_SET_VAL = MessageFormat.format(props.getProperty("sql.set.val"), name);
+        SQL_GET_VAL = MessageFormat.format(props.getProperty("sql.get.val"), name);
+        SQL_REMOVE_VAL = MessageFormat.format(props.getProperty("sql.remove.val"), name);
     }
 
     public void setVal(String name, Object val, VarType type) throws DbException {

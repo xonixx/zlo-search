@@ -6,7 +6,7 @@
 <c:set var="isLocalIp" value="<%= RequestUtils.isLocalIp(request, (String) pageContext.getAttribute("localIps")) %>" />
 <c:set var="showAll" value="${ param['all'] != null and isLocalIp }" />
 
-<sql:setDataSource dataSource="<%= DbAccessor.getInstance("search_log").getDataSource() %>" />
+<sql:setDataSource dataSource="<%= Site.getSites().get(0).getDataSource() %>" />
 
 <c:set var="lastHours" value="6" />
 <c:if test="${isLocalIp and not empty param['n']}">
@@ -64,8 +64,10 @@
         <display:column property="searchHost" title="Хост поиска" />
         <display:column title="Сайт">
             <% Site site = Site.getSite((Integer)((TreeMap)row).get("site")); %>
-            <a href="http://<%= site.getSITE_URL() %>">
-                <%= site.getName() %></a>
+            <c:if test="<%= site != null %>">
+                <a href="http://<%= site.getSITE_URL() %>">
+                    <%= site.getName() %></a>
+            </c:if>
         </display:column>
         <display:column property="reqDate" title="Дата" class="small" />
         <c:if test="${showAll}">

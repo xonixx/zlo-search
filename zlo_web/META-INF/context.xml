@@ -29,7 +29,7 @@
 		 connection.  mysqld by default closes idle connections after 8 hours.
 		 -->
 
-	  <Resource name="jdbc/zlo_storage" auth="Container" type="javax.sql.DataSource"
+	  <!--Resource name="jdbc/zlo_storage" auth="Container" type="javax.sql.DataSource"
 		       maxActive="50" maxIdle="30" maxWait="10000"
 			removeAbandoned="true" removeAbandonedTimeout="100" logAbandoned="true"
 		       username="webapp" password="!d3v3l0p3r" driverClassName="com.mysql.jdbc.Driver"
@@ -90,6 +90,13 @@
 			removeAbandoned="true" removeAbandonedTimeout="100" logAbandoned="true"
 		       username="webapp" password="!d3v3l0p3r" driverClassName="com.mysql.jdbc.Driver"
 		       url="jdbc:mysql://localhost:3306/searcher_logs?autoReconnect=true"
+		       validationQuery="select 1;"/>-->
+
+    <Resource name="jdbc/xonix_search" auth="Container" type="javax.sql.DataSource"
+		       maxActive="50" maxIdle="30" maxWait="10000"
+			removeAbandoned="true" removeAbandonedTimeout="100" logAbandoned="true"
+		       username="webapp" password="!d3v3l0p3r" driverClassName="com.mysql.jdbc.Driver"
+		       url="jdbc:mysql://localhost:3306/xonix_search?autoReconnect=true"
 		       validationQuery="select 1;"/>
 
 	</Context>
