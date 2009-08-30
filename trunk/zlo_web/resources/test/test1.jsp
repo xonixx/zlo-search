@@ -3,7 +3,7 @@
   Date: 30.08.2007
   Time: 21:10:26
 --%>
-<%@ include file="../WEB-INF/jsp/import.jsp"%>
+<%--<%@ include file="../WEB-INF/jsp/import.jsp"%>
 <%@ page contentType="text/html; charset=windows-1251" %>
 
 <c:out value="${requestScope['aaa']}" />
@@ -35,8 +35,9 @@ enum Enum {
 
 <% try{ %>
 
+
 <%
  throw new RuntimeException("asda");
 %>
 
-<% }catch(Exception e){ response.getOutputStream().print("Error"); response.flushBuffer(); }%>
+<% }catch(Exception e){ response.getOutputStream().print("Error"); response.flushBuffer(); }%>--%>

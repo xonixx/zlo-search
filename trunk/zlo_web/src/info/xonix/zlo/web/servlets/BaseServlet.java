@@ -20,30 +20,36 @@ public class BaseServlet extends ForwardingServlet {
 
     protected void setSiteInReq(ForwardingRequest request, HttpServletResponse response) {
         String siteInCookie;
-        String[] sites = Site.getSiteNames();
+        Site site;
 
         String siteNumStr = request.getParameter(QS_SITE);
+
         if (StringUtils.isNotEmpty(siteNumStr)) {
-            String siteRoot;
-            try {
-                siteRoot = sites[Integer.parseInt(siteNumStr)];
-            } catch (Exception e) {
-                siteRoot = sites[0];
-                request.setParameter(QS_SITE, "0");
-            }
-            request.setAttribute(REQ_SITE_ROOT, siteRoot);
-            CookieUtils.rememberInCookie(response, QS_SITE, siteNumStr);
+            site = getSiteOrDefault(siteNumStr);
+            CookieUtils.rememberInCookie(response, QS_SITE, site.getNum().toString());
         } else if (StringUtils.isNotEmpty(siteInCookie = CookieUtils.recallFromCookie(request, QS_SITE))) {
-            int siteInCookieInt = Integer.parseInt(siteInCookie);
-            siteInCookieInt = siteInCookieInt > sites.length ? 0 : siteInCookieInt;
-            request.setAttribute(REQ_SITE_ROOT, sites[siteInCookieInt]); // for search result list
-            request.setParameter(QS_SITE, Integer.toString(siteInCookieInt)); // for drop-down
+            site = getSiteOrDefault(siteInCookie);
         } else {
-            request.setParameter(QS_SITE, "0");
-            request.setAttribute(REQ_SITE_ROOT, sites[0]);
+            site = getSiteOrDefault("0");
         }
 
-        request.setAttribute(QS_SITE, getSite(request));
+        request.setParameter(QS_SITE, site.getNum().toString());
+        request.setAttribute(QS_SITE, site);
+        request.setAttribute(REQ_SITE_ROOT, site.getSITE_URL());
+    }
+
+    private Site getSiteOrDefault(String siteNumStr) {
+        Site defaultSite = Site.getSites().get(0);
+        Site site;
+        try {
+            site = Site.getSite(Integer.parseInt(siteNumStr));
+            if (site == null) {
+                site = defaultSite;
+            }
+        } catch (Exception e) {
+            site = defaultSite;
+        }
+        return site;
     }
 
     public static Site getSite(HttpServletRequest req) {

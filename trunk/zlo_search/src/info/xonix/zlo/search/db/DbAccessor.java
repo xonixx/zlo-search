@@ -128,23 +128,23 @@ public class DbAccessor implements Nameable {
         return ds;
     }
 
-    public void setJNDI_DS_NAME(String JNDI_DS_NAME) {
+    private void setJNDI_DS_NAME(String JNDI_DS_NAME) {
         this.JNDI_DS_NAME = JNDI_DS_NAME;
     }
 
-    public void setDB_DRIVER(String DB_DRIVER) {
+    private void setDB_DRIVER(String DB_DRIVER) {
         this.DB_DRIVER = DB_DRIVER;
     }
 
-    public void setDB_URL(String DB_URL) {
+    private void setDB_URL(String DB_URL) {
         this.DB_URL = DB_URL;
     }
 
-    public void setDB_USER(String DB_USER) {
+    private void setDB_USER(String DB_USER) {
         this.DB_USER = DB_USER;
     }
 
-    public void setDB_PASSWORD(String DB_PASSWORD) {
+    private void setDB_PASSWORD(String DB_PASSWORD) {
         this.DB_PASSWORD = DB_PASSWORD;
     }
 

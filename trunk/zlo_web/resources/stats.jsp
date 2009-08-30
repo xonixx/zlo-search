@@ -16,10 +16,12 @@
 <c:set var="byNick" value="${empty param['type'] or param['type'] == 'nick'}" />
 <c:set var="period" value="${param['period'] == '2' ? 10 : param['period'] == '3' ? 30 : 2}" />
 
+<c:set var="messagesTbl">${site.name}_messages</c:set>
+
 <c:choose>
     <c:when test="${byNick}">
         <sql:query var="res">
-            select nick, reg, COUNT(*) cnt from messages
+            select nick, reg, COUNT(*) cnt from ${messagesTbl}
             where msgDate > NOW() - INTERVAL ? DAY
             group by nick
             order by cnt desc;
@@ -28,7 +30,7 @@
     </c:when>
     <c:otherwise>
         <sql:query var="res">
-            select host, COUNT(*) cnt from messages
+            select host, COUNT(*) cnt from ${messagesTbl}
             where msgDate > NOW() - INTERVAL ? DAY
             group by host
             order by cnt desc;
@@ -38,7 +40,7 @@
 </c:choose>
 
 <sql:query var="resTotal">
-    select COUNT(1) cnt from messages
+    select COUNT(*) cnt from ${messagesTbl}
     where msgDate > NOW() - INTERVAL ? DAY
     <sql:param>${period}</sql:param>
 </sql:query>

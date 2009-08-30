@@ -70,7 +70,7 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
 
     public static Comparator<ZloMessage> NUM_COMPARATOR = new Comparator<ZloMessage>() {
             public int compare(ZloMessage m1, ZloMessage m2) {
-                return m1.getNum() > m2.getNum() ? 1 : m1.getNum() < m2.getNum() ? -1 : 0;
+                return new Integer(m1.getNum()).compareTo(m2.getNum());
             }
         };
 

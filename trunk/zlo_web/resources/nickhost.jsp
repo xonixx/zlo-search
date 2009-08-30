@@ -22,30 +22,32 @@
 
 <c:set var="isAllSelected" value="${ (isHost or isNick) and not empty text }" />
 
+<c:set var="nickhostTbl">${site.name}_nickhost</c:set>
+
 <c:if test="${isAllSelected}">
     <c:choose>
         <c:when test="${isHost}">
             <sql:query var="res">
-                select nick, cnt, reg from nickhost
+                select nick, cnt, reg from ${nickhostTbl}
                 where host=?
                 order by cnt desc;
                 <sql:param>${text}</sql:param>
             </sql:query>
             <sql:query var="totalNum">
-                select sum(cnt) cnt from nickhost
+                select sum(cnt) cnt from ${nickhostTbl}
                 where host=?
                 <sql:param>${text}</sql:param>
             </sql:query>
         </c:when>
         <c:otherwise>
             <sql:query var="res">
-                select host, cnt, reg from nickhost
+                select host, cnt, reg from ${nickhostTbl}
                 where nick=?
                 order by cnt desc;
                 <sql:param>${text}</sql:param>
             </sql:query>
             <sql:query var="totalNum">
-                select sum(cnt) cnt from nickhost
+                select sum(cnt) cnt from ${nickhostTbl}
                 where nick=?
                 <sql:param>${text}</sql:param>
             </sql:query>
