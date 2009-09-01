@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="message.xsd"
+        status="ok">
+    <info>
+        <date>2010-10-10T10:10:10</date>
+        <id>123</id>
+        <parentId>0</parentId>
+        <messageUrl>http://site/?123</messageUrl>
+    </info>
+    <author>
+        <name>vasya</name>
+        <fullName>Vasiliy Pupkin</fullName>
+        <email>vasuliy@pupkin.ru</email>
+        <registered>true</registered>
+        <signature>Без пруда не вытащишь и рыбку из него</signature>
+    </author>
+    <content>
+        <category>Temp</category>
+        <title>Привет люди</title>
+        <body><![CDATA[
+            <asd>asdasd
+            ]]></body>
+        <tags>
+            <tag>Политика</tag>
+            <tag>Экономика</tag>
+        </tags>
+    </content>
+</message>
+

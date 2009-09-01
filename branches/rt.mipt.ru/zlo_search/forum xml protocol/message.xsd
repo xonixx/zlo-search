@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:include schemaLocation="author.xsd" />
+
+    <xs:element name="message">
+        <xs:annotation>
+            <xs:documentation>Message document</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:all>
+                <xs:element ref="info" />
+                <xs:element ref="author" />
+                <xs:element ref="content" />
+            </xs:all>
+            <xs:attribute name="status">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="ok" />
+                        <xs:enumeration value="deleted" />
+                        <xs:enumeration value="notExists" />
+                        <xs:enumeration value="unknown" />
+                        <xs:enumeration value="spam" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="info">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="date" type="xs:dateTime">
+                    <xs:annotation>
+                        <xs:documentation>Creation date</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+                <xs:element name="dateModified" type="xs:dateTime" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Last modification date</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+                <xs:element name="isRoot" type="xs:boolean" minOccurs="0" >
+                    <xs:annotation>
+                        <xs:documentation>Whether the message is initial message in the thread</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+                <xs:element name="id" type="xs:nonNegativeInteger" />
+                <xs:element name="parentId" type="xs:nonNegativeInteger" minOccurs="0" />
+
+                <xs:element name="messageUrl" type="xs:anyURI">
+                    <xs:annotation>
+                        <xs:documentation>URL of the message</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="content">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="category">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attribute name="id" type="xs:nonNegativeInteger" />
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="title" type="xs:string" />
+                <xs:element name="body" type="xs:string" />
+                <xs:element name="tags" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="tag" type="xs:string" maxOccurs="unbounded" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

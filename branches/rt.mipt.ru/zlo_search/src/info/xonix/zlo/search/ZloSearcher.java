@@ -1,0 +1,156 @@
+package info.xonix.zlo.search;
+
+import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
+import info.xonix.zlo.search.model.ZloMessage;
+import info.xonix.zlo.search.site.SiteSource;
+import info.xonix.zlo.search.utils.TimeUtils;
+import org.apache.log4j.Logger;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.SortField;
+
+import java.io.IOException;
+import java.util.Date;
+
+/**
+ * Author: gubarkov
+ * Date: 01.06.2007
+ * Time: 2:24:05
+ */
+public class ZloSearcher extends SiteSource {
+    private static final Logger logger = Logger.getLogger(ZloSearcher.class);
+
+    public static final int PERIOD_RECREATE_INDEXER = TimeUtils.parseToMilliSeconds(Config.getProp("searcher.period.recreate.indexer"));
+
+    public ZloSearcher(Site site) {
+        super(site);
+    }
+
+    public static void clean(IndexReader ir) {
+        try {
+            if (ir != null)
+                ir.close();
+        } catch (IOException e) {
+            logger.error("Error while closing index reader: " + e.getClass());
+        }
+    }
+
+    public static class ParseException extends RuntimeException {
+        private String query;
+
+        public ParseException(String query, Throwable cause) {
+            super(cause);
+            this.query = query;
+        }
+
+        public String getQuery() {
+            return query;
+        }
+    }
+
+    public SearchResult search(int topicCode,
+                               String text,
+                               boolean inTitle,
+                               boolean inBody,
+                               boolean inReg,
+                               boolean inHasUrl,
+                               boolean inHasImg,
+                               String nick,
+                               String host,
+                               Date fromDate,
+                               Date toDate,
+                               boolean searchAll) {
+
+        return search(ZloMessage.formQueryString(text, inTitle, inBody, topicCode, nick, host, fromDate, toDate, inReg, inHasUrl, inHasImg), searchAll);
+    }
+
+    public SearchResult search(SearchRequest searchRequest) {
+        return search(
+                searchRequest.getTopicCode(),
+                searchRequest.getText(),
+                searchRequest.isInTitle(),
+                searchRequest.isInBody(),
+                searchRequest.isInReg(),
+                searchRequest.isInHasUrl(),
+                searchRequest.isInHasImg(),
+                searchRequest.getNick(),
+                searchRequest.getHost(),
+                searchRequest.getFromDate(),
+                searchRequest.getToDate(),
+                searchRequest.isSearchAll()
+        );
+    }
+
+    public SearchResult search(int topicCode,
+                               String text,
+                               boolean inTitle,
+                               boolean inBody,
+                               boolean inReg,
+                               boolean inHasUrl,
+                               boolean inHasImg,
+                               String nick,
+                               String host) {
+        return search(topicCode, text, inTitle, inBody,
+                inReg, inHasUrl, inHasImg, nick, host, null, null, false);
+    }
+
+    public static Sort getDateSort() {
+        // sort causes slow first search & lot memory used!
+        return Config.SEARCH_PERFORM_SORT
+                ? new Sort(new SortField(ZloMessage.FIELDS.DATE, SortField.STRING, true))
+                : null;
+    }
+
+    private SearchResult search(String queryStr, boolean searchAll) {
+        if (!Config.USE_DOUBLE_INDEX) {
+            throw new RuntimeException("Old!!!");
+        } else {
+            return searchDoubleIndex(queryStr, null, searchAll);
+        }
+    }
+
+    private SearchResult searchDoubleIndex(String queryStr, Sort sort, boolean searchAll) {
+        if (sort == null)
+            sort = getDateSort();
+
+        SearchResult result = new SearchResult();
+        try {
+            Analyzer analyzer = ZloMessage.constructAnalyzer();
+
+            QueryParser parser = new QueryParser(ZloMessage.FIELDS.BODY, analyzer);
+            parser.setDefaultOperator(searchAll ? QueryParser.AND_OPERATOR : QueryParser.OR_OPERATOR);
+
+            Query query = parser.parse(queryStr);
+
+            logger.info("query: " + query);
+
+            DoubleIndexSearcher dis = getDoubleIndexSearcher();
+
+            result.setAnalyzer(analyzer);
+            result.setQueryParser(parser);
+            result.setQuery(query);
+            result.setDoubleIndexSearcher(dis);
+            result.setHits(dis.search(query));
+            result.setSearchDateNow();
+        } catch (org.apache.lucene.queryParser.ParseException e) {
+            throw new ParseException(queryStr, e);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+        return result;
+    }
+
+    private DoubleIndexSearcher doubleIndexSearcher;
+
+    public DoubleIndexSearcher getDoubleIndexSearcher() {
+        if (doubleIndexSearcher == null) {
+            doubleIndexSearcher = new DoubleIndexSearcher(getSite(), getDateSort());
+        }
+        return doubleIndexSearcher;
+    }
+}
