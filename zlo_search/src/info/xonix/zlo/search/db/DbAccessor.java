@@ -153,13 +153,13 @@ public class DbAccessor implements Nameable {
     }
 
     protected void initDb(Properties p) {
-        setJNDI_DS_NAME(p.getProperty("db.jndi.ds.name"));
+        setJNDI_DS_NAME(Config.getProp("db.jndi.ds.name"));
 
-        setDB_DRIVER(p.getProperty("db.driver"));
-        setDB_URL(p.getProperty("db.url"));
-        setDB_USER(p.getProperty("db.user"));
-        setDB_PASSWORD(p.getProperty("db.password"));
+        setDB_DRIVER(Config.getProp("db.driver"));
+        setDB_URL(Config.getProp("db.url"));
+        setDB_USER(Config.getProp("db.user"));
+        setDB_PASSWORD(Config.getProp("db.password"));
 
-        setDB_VIA_CONTAINER(Config.TRUE.equals(p.getProperty("db.use.container.pull")));
+        setDB_VIA_CONTAINER(Config.TRUE.equals(Config.getProp("db.use.container.pull")));
     }
 }
