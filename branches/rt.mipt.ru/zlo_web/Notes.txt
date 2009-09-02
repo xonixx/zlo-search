@@ -52,7 +52,7 @@
 	  <Resource name="jdbc/zlo_storage" auth="Container" type="javax.sql.DataSource"
 		       maxActive="50" maxIdle="30" maxWait="10000"
 			removeAbandoned="true" removeAbandonedTimeout="100" logAbandoned="true"
-		       username="webapp" password="!d3v3l0p3r" driverClassName="com.mysql.jdbc.Driver"
+		       username="webapp" password="xonix_mysql" driverClassName="com.mysql.jdbc.Driver"
 		       url="jdbc:mysql://localhost:3306/zlo_storage?autoReconnect=true"
 		       validationQuery="select 1;"/>
 
