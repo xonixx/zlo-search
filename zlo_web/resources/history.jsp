@@ -3,7 +3,7 @@
 <link rel="stylesheet" type="text/css" href="main.css" />
 
 <c:set var="localIps"><fmt:message key="history.localIps" /></c:set>
-<c:set var="isLocalIp" value="<%= RequestUtils.isLocalIp(request, (String) pageContext.getAttribute("localIps")) %>" />
+<c:set var="isLocalIp" value='<%= RequestUtils.isLocalIp(request, (String) pageContext.getAttribute("localIps")) %>' />
 <c:set var="showAll" value="${ param['all'] != null and isLocalIp }" />
 
 <sql:setDataSource dataSource="<%= Site.getSites().get(0).getDataSource() %>" />
@@ -20,7 +20,7 @@
 <c:choose>
     <c:when test="${showAll}">
         <sql:query var="res">
-            SELECT * FROM request_log
+            SELECT * FROM request_log USE INDEX (req_date_idx)
             WHERE req_date > NOW() - INTERVAL ? HOUR
             order by id DESC
             <sql:param value="${lastHours}" />
@@ -28,7 +28,7 @@
     </c:when>
     <c:otherwise>
         <sql:query var="res">
-            SELECT * FROM request_log
+            SELECT * FROM request_log USE INDEX (req_date_idx)
             WHERE host not in ${xonix:mysqlRange(localIps)}
             AND is_rss_req = 0
             AND req_date > NOW() - INTERVAL ? HOUR
