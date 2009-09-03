@@ -11,7 +11,7 @@
 
 <jsp:useBean id="hl" class="info.xonix.zlo.search.FoundTextHighlighter" scope="request" />
 <jsp:setProperty name="hl" property="hlClass" value="hl" />
-<jsp:setProperty name="hl" property="wordsStr" value="<%= request.getParameter("hw") %>" />
+<jsp:setProperty name="hl" property="wordsStr" value='<%= request.getParameter("hw") %>' />
 
 <html>
     <head>

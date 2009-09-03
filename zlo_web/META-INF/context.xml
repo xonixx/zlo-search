@@ -33,14 +33,14 @@
 		       maxActive="50" maxIdle="30" maxWait="10000"
 			removeAbandoned="true" removeAbandonedTimeout="100" logAbandoned="true"
 		       username="xonix" password="xonix_mysql" driverClassName="com.mysql.jdbc.Driver"
-		       url="jdbc:mysql://localhost:3306/xonix_search?autoReconnect=true"
+		       url="jdbc:mysql://localhost:3306/xonix_search?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=cp1251"
 		       validationQuery="select 1;"/>-->
 
     <Resource name="jdbc/xonix_search" auth="Container" type="javax.sql.DataSource"
 		       maxActive="50" maxIdle="30" maxWait="10000"
 			removeAbandoned="true" removeAbandonedTimeout="100" logAbandoned="true"
 		       username="webapp" password="!d3v3l0p3r" driverClassName="com.mysql.jdbc.Driver"
-		       url="jdbc:mysql://localhost:3306/xonix_search?autoReconnect=true"
+		       url="jdbc:mysql://localhost:3306/xonix_search?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=cp1251"
 		       validationQuery="select 1;"/>
 
 	</Context>
