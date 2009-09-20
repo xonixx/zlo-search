@@ -9,6 +9,13 @@
 <%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 
+<%
+    if (!RequestUtils.isLocalIp(request)) {
+        response.sendError(404);
+        return;
+    }
+%>
+
 <style type="text/css">
     .reportTbl {
         border: solid 1px black;
@@ -88,7 +95,8 @@
     <display:column title="Name" property="name"/>
     <display:column title="Url"><a href="http://${site.SITE_URL}/">${site.SITE_URL}</a></display:column>
     <display:column title="Index">${dis.indexesDir}</display:column>
-    <display:column title="Renew Date"><fmt:formatDate value="${dis.renewDate}" pattern="dd.MM.yy hh:mm" /></display:column>
+    <display:column title="Renew Date"><fmt:formatDate value="${dis.renewDate}"
+                                                       pattern="dd.MM.yy hh:mm"/></display:column>
     <display:column title="Big index size"><fmt:formatNumber value="${dis.bigIndexSize / mb}"
                                                              pattern="#.##"/></display:column>
     <display:column title="Small index size"><fmt:formatNumber value="${dis.smallIndexSize / mb}"

@@ -3,8 +3,8 @@
 <%@ page contentType="text/html; charset=windows-1251" %>
 <link rel="stylesheet" type="text/css" href="main.css" />
 
-<c:set var="localIps"><fmt:message key="history.localIps" /></c:set>
-<c:set var="isLocalIp" value='<%= RequestUtils.isLocalIp(request, (String) pageContext.getAttribute("localIps")) %>' />
+<c:set var="localIps"><fmt:message key="localIps" /></c:set>
+<c:set var="isLocalIp" value='<%= RequestUtils.isLocalIp(request) %>' />
 <c:set var="showAll" value="${ param['all'] != null and isLocalIp }" />
 
 <sql:setDataSource dataSource="<%= Site.getSites().get(0).getDataSource() %>" />

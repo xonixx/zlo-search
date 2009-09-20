@@ -1,5 +1,6 @@
 package info.xonix.zlo.web.utils;
 
+import info.xonix.zlo.search.config.Config;
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,8 +33,17 @@ public class RequestUtils {
             {"Mozilla", "Mozilla"},
     };
 
-    public static boolean isLocalIp(HttpServletRequest request, String localIps) {
-        return StringUtils.indexOf(localIps, getClientIp(request)) != -1;
+    private static boolean isLocalIp(HttpServletRequest request, String[] localIps) {
+        String clientIp = getClientIp(request);
+        for (String localIp : localIps) {
+            if (localIp.equals(clientIp))
+                return true;
+        }
+        return false;
+    }
+
+    public static boolean isLocalIp(HttpServletRequest request) {
+        return isLocalIp(request, Config.getProp("localIps").split("\\|"));
     }
 
     public static String getClientIp(HttpServletRequest request) {
