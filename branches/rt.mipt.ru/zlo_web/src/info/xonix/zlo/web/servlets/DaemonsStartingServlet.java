@@ -19,8 +19,12 @@ public class DaemonsStartingServlet extends GenericServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        log("Starting daemons...");
-        DaemonLauncher.main(new String[0]);
+        if ("1".equals(getInitParameter("startDaemons"))) {
+            log("Starting daemons...");
+            DaemonLauncher.main(new String[0]);
+        } else {
+            log("Daemons not started.");
+        }
     }
 
     @Override

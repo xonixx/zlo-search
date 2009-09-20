@@ -55,6 +55,10 @@ public class DoubleIndexSearcher {
         this(site.getINDEX_DIR_DOUBLE(), renewingSort);
     }
 
+    public String getIndexesDir() {
+        return indexesDir;
+    }
+
     public String getBigPath() {
         String path = indexesDir + "/" + BIG_INDEX_DIR;
         createDirIfAbsent(path);
@@ -65,6 +69,23 @@ public class DoubleIndexSearcher {
         String path = indexesDir + "/" + SMALL_INDEX_DIR;
         createDirIfAbsent(path);
         return path;
+    }
+
+    public long getSmallIndexSize() {
+        return getDirSize(getSmallPath());
+    }
+
+    public long getBigIndexSize() {
+        return getDirSize(getBigPath());
+    }
+
+    private long getDirSize(String dirName) {
+        long size = 0;
+        File dir = new File(dirName);
+        for (File file : dir.listFiles()) {
+            size += file.length();
+        }
+        return size;
     }
 
     private void createDirIfAbsent(String path) {
@@ -236,7 +257,7 @@ public class DoubleIndexSearcher {
     }
 
     public DoubleHits search(Query query) throws IOException {
-        return new DoubleHits1(
+        return new DoubleHits1( //TODO: optimize - lazy search big index
                 new IndexSearcher(getBigReader()).search(query, Sort.INDEXORDER),
                 new IndexSearcher(getSmallReader()).search(query, Sort.INDEXORDER)
         );

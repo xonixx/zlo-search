@@ -1,3 +1,4 @@
+<%@ page import="java.util.Map" %>
 <%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 <link rel="stylesheet" type="text/css" href="main.css" />
@@ -63,7 +64,7 @@
         <display:column property="searchNick" title="Ник поиска" />
         <display:column property="searchHost" title="Хост поиска" />
         <display:column title="Сайт">
-            <% Site site = Site.getSite((Integer)((TreeMap)row).get("site")); %>
+            <% Site site = Site.getSite((Integer)((Map)row).get("site")); %>
             <c:if test="<%= site != null %>">
                 <a href="http://<%= site.getSITE_URL() %>">
                     <%= site.getName() %></a>
