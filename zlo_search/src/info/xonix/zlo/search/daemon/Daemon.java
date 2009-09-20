@@ -1,6 +1,7 @@
 package info.xonix.zlo.search.daemon;
 
 import info.xonix.zlo.search.ZloIndexer;
+import info.xonix.zlo.search.ZloObservable;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.dao.Site;
@@ -12,6 +13,8 @@ import sun.misc.SignalHandler;
 
 import java.util.Date;
 import java.util.Vector;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Author: Vovan
@@ -33,6 +36,16 @@ public abstract class Daemon extends SiteSource {
     private Date lastExceptionTime;
 
     private DaemonState daemonState;
+
+    private static Observable observable = new ZloObservable();
+
+    public static void on(Observer o) {
+        observable.addObserver(o);
+    }
+
+    public static void un(Observer o) {
+        observable.deleteObserver(o);
+    }
 
     public void setDoPerTime(int doPerTime) {
         this.doPerTime = doPerTime;
@@ -78,13 +91,15 @@ public abstract class Daemon extends SiteSource {
         daemons.remove(daemon);
         if (daemons.isEmpty()) {
             System.out.println("!!!!!!!!!All exited");
+            observable.notifyObservers("exited");
         }
     }
     // end clean up
 
     protected void setExiting(boolean exiting) {
         this.exiting = exiting;
-        daemonState = DaemonState.EXITING; 
+        if (exiting)
+            daemonState = DaemonState.EXITING; 
     }
 
     protected boolean isExiting() {

@@ -1,6 +1,11 @@
-<%@ page import="org.apache.commons.collections.map.LinkedMap" %>
-<%@ page import="java.util.*" %>
 <%@ page import="info.xonix.zlo.search.daemon.Daemon" %>
+<%@ page import="info.xonix.zlo.search.daemon.DaemonLauncher" %>
+<%@ page import="info.xonix.zlo.search.progs.OptimizeAllIndexes" %>
+<%@ page import="java.io.IOException" %>
+<%@ page import="java.util.LinkedHashMap" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.Observable" %>
+<%@ page import="java.util.Observer" %>
 <%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 
@@ -24,13 +29,14 @@
 </style>
 
 <form action="admin.jsp" method="post">
-    <input type="submit" name="command" value="Optimize" />
+    <input type="submit" name="command" value="Optimize"/>
 </form>
 
 <%
     if ("POST".equals(request.getMethod())) {
         if ("Optimize".equals(request.getParameter("command"))) {
-            Daemon.setExitingAll();
+            new OptimizeAllIndexes().optimizeRestartDaemons();
+
             response.sendRedirect("admin.jsp");
             return;
         }
@@ -75,16 +81,18 @@
 </display:table>
 
 <display:table id="site" name="<%= Site.getSites() %>">
-    <c:set var="dis" value="${site.zloSearcher.doubleIndexSearcher}" />
+    <c:set var="dis" value="${site.zloSearcher.doubleIndexSearcher}"/>
     <display:caption>Sites</display:caption>
 
     <display:column title="#">${site_rowNum}</display:column>
-    <display:column title="Name" property="name" />
+    <display:column title="Name" property="name"/>
     <display:column title="Url"><a href="http://${site.SITE_URL}/">${site.SITE_URL}</a></display:column>
     <display:column title="Index">${dis.indexesDir}</display:column>
-    <display:column title="Big index size"><fmt:formatNumber value="${dis.bigIndexSize / mb}" pattern="#.##"/></display:column>
-    <display:column title="Small index size"><fmt:formatNumber value="${dis.smallIndexSize / mb}" pattern="#.##"/></display:column>
-
+    <display:column title="Renew Date"><fmt:formatDate value="${dis.renewDate}" pattern="dd.MM.yy hh:mm" /></display:column>
+    <display:column title="Big index size"><fmt:formatNumber value="${dis.bigIndexSize / mb}"
+                                                             pattern="#.##"/></display:column>
+    <display:column title="Small index size"><fmt:formatNumber value="${dis.smallIndexSize / mb}"
+                                                               pattern="#.##"/></display:column>
 
 
 </display:table>
