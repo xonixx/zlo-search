@@ -282,6 +282,7 @@ public class DoubleIndexSearcher {
         bigIndexWriter.addIndexesNoOptimize(new Directory[]{FSDirectory.getDirectory(getSmallPath())}); // add small to big, w/o optimize
 
         smlR.close();
+        smallReader = null;
         bigIndexWriter.close();
 
         logger.info("Cleaning small index...");
