@@ -101,7 +101,7 @@ public class SiteAccessor extends DbAccessor {
 
         // indexer-----
         PERFORM_INDEXING = Config.TRUE.equals(p.getProperty("indexer.perform.indexing"));
-        INDEX_DIR_DOUBLE = p.getProperty("indexer.dir.double");
+        INDEX_DIR_DOUBLE = Config.getProp("indexer.dir.double") + "/index_" + siteName;
 
         INDEXER_INDEX_PER_TIME = Integer.parseInt(p.getProperty("indexer.daemon.index.per.time"));
         INDEXER_INDEX_PERIOD = TimeUtils.parseToMilliSeconds(p.getProperty("indexer.daemon.period.to.index"));

@@ -52,6 +52,17 @@
         <url-pattern>/msg</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <description>Servlet only for daemons threads starting</description>
+        <servlet-name>daemon starter servlet</servlet-name>
+        <servlet-class>info.xonix.zlo.web.servlets.DaemonsStartingServlet</servlet-class>
+        <init-param>
+            <param-name>startDaemons</param-name>
+            <param-value>1</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
     <!-- tiles -->
     <servlet>
     <servlet-name>tiles</servlet-name>
