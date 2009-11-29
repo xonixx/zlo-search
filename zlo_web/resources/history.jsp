@@ -1,9 +1,10 @@
+<%@ page import="java.util.Map" %>
 <%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 <link rel="stylesheet" type="text/css" href="main.css" />
 
-<c:set var="localIps"><fmt:message key="history.localIps" /></c:set>
-<c:set var="isLocalIp" value="<%= RequestUtils.isLocalIp(request, (String) pageContext.getAttribute("localIps")) %>" />
+<c:set var="localIps"><fmt:message key="localIps" /></c:set>
+<c:set var="isLocalIp" value='<%= RequestUtils.isLocalIp(request) %>' />
 <c:set var="showAll" value="${ param['all'] != null and isLocalIp }" />
 
 <sql:setDataSource dataSource="<%= Site.getSites().get(0).getDataSource() %>" />
@@ -17,21 +18,25 @@
     SELECT MAX(id) last FROM request_log
 </sql:query>
 
+<c:set var="reqDateWhereClause">
+    WHERE req_date BETWEEN (NOW() - INTERVAL ? HOUR) AND NOW()
+</c:set>
+
 <c:choose>
     <c:when test="${showAll}">
         <sql:query var="res">
-            SELECT * FROM request_log
-            WHERE req_date > NOW() - INTERVAL ? HOUR
+            SELECT * FROM request_log USE INDEX (req_date_idx)
+            ${reqDateWhereClause}
             order by id DESC
             <sql:param value="${lastHours}" />
         </sql:query>
     </c:when>
     <c:otherwise>
         <sql:query var="res">
-            SELECT * FROM request_log
-            WHERE host not in ${xonix:mysqlRange(localIps)}
+            SELECT * FROM request_log USE INDEX (req_date_idx)
+            ${reqDateWhereClause}
+            AND host not in ${xonix:mysqlRange(localIps)}
             AND is_rss_req = 0
-            AND req_date > NOW() - INTERVAL ? HOUR
             order by id DESC
             <sql:param value="${lastHours}" />
         </sql:query>
@@ -63,7 +68,7 @@
         <display:column property="searchNick" title="Ник поиска" />
         <display:column property="searchHost" title="Хост поиска" />
         <display:column title="Сайт">
-            <% Site site = Site.getSite((Integer)((TreeMap)row).get("site")); %>
+            <% Site site = Site.getSite((Integer)((Map)row).get("site")); %>
             <c:if test="<%= site != null %>">
                 <a href="http://<%= site.getSITE_URL() %>">
                     <%= site.getName() %></a>

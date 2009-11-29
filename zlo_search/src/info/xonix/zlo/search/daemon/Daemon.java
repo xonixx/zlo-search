@@ -1,6 +1,7 @@
 package info.xonix.zlo.search.daemon;
 
 import info.xonix.zlo.search.ZloIndexer;
+import info.xonix.zlo.search.ZloObservable;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.dao.Site;
@@ -10,12 +11,16 @@ import org.apache.log4j.Logger;
 import sun.misc.Signal;
 import sun.misc.SignalHandler;
 
+import java.util.Date;
 import java.util.Vector;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Author: Vovan
  * Date: 17.11.2007
  * Time: 20:00:32
+ * todo: create class DaemonGroup
  */
 public abstract class Daemon extends SiteSource {
     //    private static final Logger logger = Logger.getLogger("Daemon");
@@ -26,6 +31,21 @@ public abstract class Daemon extends SiteSource {
     private int doPerTime;
     private int sleepPeriod;
     private int retryPeriod;
+
+    private Exception lastException;
+    private Date lastExceptionTime;
+
+    private DaemonState daemonState;
+
+    private static Observable observable = new ZloObservable();
+
+    public static void on(Observer o) {
+        observable.addObserver(o);
+    }
+
+    public static void un(Observer o) {
+        observable.deleteObserver(o);
+    }
 
     public void setDoPerTime(int doPerTime) {
         this.doPerTime = doPerTime;
@@ -43,6 +63,10 @@ public abstract class Daemon extends SiteSource {
 
     // clean up
     private static Vector<Daemon> daemons = new Vector<Daemon>();
+
+    public static Vector<Daemon> getDaemons() {
+        return daemons;
+    }
 
     /**
      * register for cleaning up
@@ -62,14 +86,49 @@ public abstract class Daemon extends SiteSource {
             }
         }
     }
+
+    private static void processExited(Daemon daemon) {
+        daemons.remove(daemon);
+        if (daemons.isEmpty()) {
+            System.out.println("!!!!!!!!!All exited");
+            observable.notifyObservers("exited");
+        }
+    }
     // end clean up
 
     protected void setExiting(boolean exiting) {
         this.exiting = exiting;
+        if (exiting)
+            daemonState = DaemonState.EXITING; 
     }
 
     protected boolean isExiting() {
         return exiting;
+    }
+
+    private void saveLastException(Exception e) {
+        lastException = e;
+        lastExceptionTime = new Date();
+    }
+
+    public Exception getLastException() {
+        return lastException;
+    }
+
+    public void setLastException(Exception lastException) {
+        this.lastException = lastException;
+    }
+
+    public Date getLastExceptionTime() {
+        return lastExceptionTime;
+    }
+
+    public void setLastExceptionTime(Date lastExceptionTime) {
+        this.lastExceptionTime = lastExceptionTime;
+    }
+
+    public DaemonState getDaemonState() {
+        return daemonState;
     }
 
     protected abstract Process createProcess();
@@ -108,6 +167,7 @@ public abstract class Daemon extends SiteSource {
                 if (isExiting()) {
                     getLogger().info(getSiteName() + " - Performing cleanup...");
                     cleanUp();
+                    processExited(Daemon.this);
                     break;
                 }
             }
@@ -143,7 +203,7 @@ public abstract class Daemon extends SiteSource {
                 }
 
                 if (indexFrom <= indexTo) {
-                    perform(indexFrom, indexTo);
+                    doPerform(indexFrom, indexTo);
                     indexFrom = indexTo + 1;
                 }
 
@@ -153,22 +213,29 @@ public abstract class Daemon extends SiteSource {
                     end = getEndIndex();
                 }
             } catch (InterruptedException e) {
-                throw e;    
+                throw e;
             } catch (Exception e) {
+                saveLastException(e);
                 if (!processException(e)) {
                     getLogger().error("Unknown exception", e);
                 }
                 getLogger().info(getSiteName() + " - Retry in " + TimeUtils.toMinutesSeconds(retryPeriod));
-                doSleep(retryPeriod);                
+                doSleep(retryPeriod);
             }
         }
 
         protected abstract void cleanUp();
 
         protected void doSleep(long millis) throws InterruptedException {
+            daemonState = DaemonState.SLEEPING;
             isSleeping = true;
             sleep(millis);
             isSleeping = false;
+        }
+
+        private void doPerform(int from, int to) throws DAOException {
+            daemonState = DaemonState.PERFORMING;
+            perform(from, to);
         }
 
         protected void reset() {

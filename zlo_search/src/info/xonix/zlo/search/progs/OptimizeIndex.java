@@ -45,6 +45,7 @@ public class OptimizeIndex {
                 }*/
         dis.moveSmallToBig();
         dis.optimize();
-        dis.close();
+        // VVV --- won't close - as it closes dis for websearch
+//        dis.close();
     }
 }
