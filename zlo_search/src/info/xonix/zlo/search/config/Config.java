@@ -29,6 +29,7 @@ public class Config {
     private static final String CONFIG_PATH_ENV_NAME = "ZLO_CONFIG";
 
     public static void loadProperties(Properties pr, String path) {
+        System.out.println("Loading props from: " + path); // not through logger as logger maybe not yet inited
         try {
             pr.load(Thread.currentThread()
                     .getContextClassLoader()
@@ -70,6 +71,11 @@ public class Config {
         if (!loadPropertiesFromEnv(props)) {
             System.out.println("Loading internal config...");
             loadProperties(props, "info/xonix/zlo/search/config/config.properties");
+
+            String additionalConfigPath = props.getProperty("config.additional");
+            if (additionalConfigPath != null) {
+                loadProperties(props, additionalConfigPath);
+            }
         }
     }
 
