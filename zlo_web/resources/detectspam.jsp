@@ -26,10 +26,15 @@
 <c:set var="msgsMax"
        value="${param['msgsMax'] == '2' ? 10 : 5}"/>
 
+<%--maybe need optimize this--%>
 <sql:query var="res">
-    SELECT m.* from ${messagesTbl} m
-    where m.num > (select max(num) from ${messagesTbl}) - ?
-    and exists (select sum(cnt) from ${nickhostTbl} n where m.nick=n.nick group by n.nick having sum(cnt) < ?);
+    SELECT
+        m.*,
+        (select sum(cnt) from ${nickhostTbl} n where m.nick=n.nick group by n.nick) AS count
+    FROM ${messagesTbl} m
+    WHERE m.num > (select max(num) FROM ${messagesTbl}) - ?
+    AND EXISTS (select sum(cnt) from ${nickhostTbl} n where m.nick=n.nick group by n.nick having sum(cnt) < ?)
+    ORDER BY m.num DESC;
     <sql:param value="${checkLastNum}"/>
     <sql:param value="${msgsMax}"/>
 </sql:query>
@@ -73,36 +78,11 @@
     <%--todo: maybe create component--%>
     <div class="searchResOuter">
         <display:table name="${res.rows}" id="msg" htmlId="resultTable" requestURI="detectspam.jsp" class="searchRes">
-            <%--<c:set var="site" value="${msg.site}"/>--%>
-
-            <%--<display:setProperty name="basic.msg.empty_list"><span class="pagebanner">Сообщения, соответствующие введенным критериям поиска не найдены. </span></display:setProperty>
-            <display:setProperty name="paging.banner.one_item_found"><span
-                    class="pagebanner">Найдено одно сообщение. ${rssLinkHtml}</span></display:setProperty>
-            <display:setProperty name="paging.banner.all_items_found"><span class="pagebanner">Найдено сообщений: {0}, показаны все. ${rssLinkHtml}</span></display:setProperty>
-            <display:setProperty name="paging.banner.some_items_found"><span class="pagebanner">Найдено сообщений: {0}, показаны с {2} по {3}. </span></display:setProperty>
-            <display:setProperty name="paging.banner.group_size" value="15"/>
-            <display:setProperty name="paging.banner.onepage" value=""/>
-            <display:setProperty name="paging.banner.placement" value="both"/>
-            <display:setProperty name="paging.banner.full">
-                <span class="pagelinks">[<a href="{1}">Перв</a>/<a href="{2}">Пред</a>] {0} [<a href="{3}">След</a>/<a
-                        href="{4}">Последн</a>] ${rssLinkHtml}</span>
-            </display:setProperty>
-            <display:setProperty name="paging.banner.first">
-                <span class="pagelinks">[Перв/Пред] {0} [<a href="{3}">След</a>/<a
-                        href="{4}">Последн</a>] ${rssLinkHtml}</span>
-            </display:setProperty>
-            <display:setProperty name="paging.banner.last">
-                <span class="pagelinks">[<a href="{1}">Перв</a>/<a
-                        href="{2}">Пред</a>] {0} [След/Последн] ${rssLinkHtml}</span>
-            </display:setProperty>--%>
-
             <display:column title="№"
-                            class="small" style="text-align:center;width:1%;">${msg_rowNum + 1}</display:column>
+                            class="small" style="text-align:center;width:1%;">${msg_rowNum}</display:column>
             <display:column title="Тема" style="width:67%">
                 <a href="http://${site.SITE_URL}${site.READ_QUERY}${msg.num}">
                     <c:if test="${not empty msg.topic and msg.topic != 'без темы'}">[${msg.topic}]</c:if>
-                        <%--<jsp:setProperty name="hl" property="text" value="${msg.title}"/>
-                      <c:out value="${hl.highlightedText}" escapeXml="false"/></a>--%>
                     <c:out value="${msg.title}" escapeXml="false"/>
                 </a>
                 <small>
@@ -111,9 +91,10 @@
                     <c:if test="${msg.hasImg}">(pic)</c:if>
                 </small>
                 <a class="search"
-                   href="msg?site=${msg.site.num}&num=${msg.num}<%--<c:if test="${not empty hl.wordsStr}">&hw=${hl.wordsStr}</c:if>--%>">
+                   href="msg?site=${msg.site.num}&num=${msg.num}">
                     <fmt:message key="link.saved.msg"/></a>
             </display:column>
+            <display:column title="Всего&nbsp;сообщ." property="count" style="text-align:center" />
             <display:column title="Ник">
                 <tiles:insertDefinition name="nick">
                     <tiles:putAttribute name="reg" value="${msg.reg}"/>
@@ -127,7 +108,7 @@
                     <tiles:putAttribute name="site" value="${site}"/>
                 </tiles:insertDefinition>
             </display:column>
-            <display:column title="Дата" property="date" class="small nowrap"/>
+            <display:column title="Дата" property="msgDate" format="{0,date,dd/MM/yyyy HH:mm}" class="small nowrap"/>
         </display:table>
     </div>
 </div>
