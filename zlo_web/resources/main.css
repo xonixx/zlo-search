@@ -117,3 +117,6 @@ h3 {
 
 a.brwsr:link, a.brwsr:visited { color:blue; text-decoration:none }
 a.brwsr:hover { text-decoration:underline }
+
+#header .adminLinks a {color:red;}
+#header .adminLinks a:hover {color:white;}

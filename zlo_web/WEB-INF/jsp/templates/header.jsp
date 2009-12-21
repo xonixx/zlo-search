@@ -32,5 +32,15 @@
                 <c:if test="${activeScreen == 'faq'}">class="activeLink"</c:if>>FAQ</a></li>
         <li><a href="about.jsp"
                 <c:if test="${activeScreen == 'about'}">class="activeLink"</c:if>>About</a></li>
+
+        <c:if test="<%= RequestUtils.isLocalIp(request) %>">
+            <span class="adminLinks">
+                <%--admin menu items--%>
+                <li><a href="detectspam.jsp"
+                       <c:if test="${activeScreen == 'detectspam'}">class="activeLink"</c:if>>Spam</a></li>
+                <li><a href="admin.jsp"
+                       <c:if test="${activeScreen == 'admin'}">class="activeLink"</c:if>>Admin</a></li>
+            </span>
+        </c:if>
     </ul>
 </div>

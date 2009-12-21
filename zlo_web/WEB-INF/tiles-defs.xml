@@ -36,6 +36,15 @@
         <put-attribute name="activeScreen" value="forums" />
     </definition>
 
+    <!--admin headers-->
+    <definition name="header.detectspam" extends="header">
+        <put-attribute name="activeScreen" value="detectspam" />
+    </definition>
+
+    <definition name="header.admin" extends="header">
+        <put-attribute name="activeScreen" value="admin" />
+    </definition>
+
     <!-- nick -->
     <definition name="nick" template="/WEB-INF/jsp/templates/nick.jsp">
         <put-attribute name="host" value="" /> <!-- default -->
