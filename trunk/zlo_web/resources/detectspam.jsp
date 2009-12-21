@@ -25,6 +25,9 @@
        value="${param['checkLastNum'] == '2' ? 10000 : param['checkLastNum'] == '3' ? 20000 : 5000}"/>
 <c:set var="msgsMax"
        value="${param['msgsMax'] == '2' ? 10 : 5}"/>
+<c:set var="unreg" value="${not empty param['unreg']}" />
+<%--<c:set var="hasUrl" value="${not empty param['hasUrl']}" />--%>
+
 
 <%--maybe need optimize this--%>
 <sql:query var="res">
@@ -33,6 +36,9 @@
         (select sum(cnt) from ${nickhostTbl} n where m.nick=n.nick group by n.nick) AS count
     FROM ${messagesTbl} m
     WHERE m.num > (select max(num) FROM ${messagesTbl}) - ?
+    <c:if test="${unreg}">
+        AND m.reg = 0
+    </c:if>
     AND EXISTS (select sum(cnt) from ${nickhostTbl} n where m.nick=n.nick group by n.nick having sum(cnt) < ?)
     ORDER BY m.num DESC;
     <sql:param value="${checkLastNum}"/>
@@ -60,17 +66,18 @@
             <option value="3" <c:if test="${checkLastNum == 20000}">selected="selected"</c:if>>20'000</option>
         </select>
 
-        не более сообщ.
+        не более сообщ.:
         <select name="msgsMax"><%-- max messages for user --%>
             <option value="1" <c:if test="${msgsMax == 5}">selected="selected"</c:if>>5</option>
             <option value="2" <c:if test="${msgsMax == 10}">selected="selected"</c:if>>10</option>
         </select>
 
-        <input type="checkbox" name="reg" id="reg" <c:if test="${not empty param['reg']}">checked="checked"</c:if>/>
-        <label for="reg"><fmt:message key="label.search.in.reg"/></label>
-        <input type="checkbox" name="hasUrl" id="hasUrl"
-               <c:if test="${not empty param['hasUrl']}">checked="checked"</c:if>/> <label for="hasUrl"><fmt:message
-            key="label.search.in.has.url"/></label>
+        <input type="checkbox" name="unreg" id="unreg" <c:if test="${unreg}">checked="checked"</c:if>/>
+        <label for="unreg">от unreg</label>
+
+        <%--<input type="checkbox" name="hasUrl" id="hasUrl"
+               <c:if test="${not empty param['hasUrl']}">checked="checked"</c:if>/>
+        <label for="hasUrl"><fmt:message key="label.search.in.has.url"/></label>--%>
 
         <input type="submit" value="Показать!"/>
     </form>
@@ -91,10 +98,10 @@
                     <c:if test="${msg.hasImg}">(pic)</c:if>
                 </small>
                 <a class="search"
-                   href="msg?site=${msg.site.num}&num=${msg.num}">
+                   href="msg?site=${site.num}&num=${msg.num}">
                     <fmt:message key="link.saved.msg"/></a>
             </display:column>
-            <display:column title="Всего&nbsp;сообщ." property="count" style="text-align:center" />
+            <display:column title="Всего&nbsp;сообщ." property="count" style="text-align:center"/>
             <display:column title="Ник">
                 <tiles:insertDefinition name="nick">
                     <tiles:putAttribute name="reg" value="${msg.reg}"/>
