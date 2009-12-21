@@ -52,6 +52,8 @@
 
 <title>${title}</title>
 
+<tiles:insertDefinition name="header.detectspam" />
+
 <div align="center">
     <h3>${title}</h3>
 
