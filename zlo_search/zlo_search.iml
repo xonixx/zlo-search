@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module relativePaths="true" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="Spring" name="Spring">
+      <configuration />
+    </facet>
+  </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/info/xonix/zlo/search/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/info/xonix/zlo/search/xmlfp/test" isTestSource="true" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -42,17 +49,13 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="commons-lang" level="project" />
-    <orderEntry type="library" name="mysql-connector-java-5.0.7-bin" level="project" />
     <orderEntry type="library" name="commons-collections-3.2" level="project" />
     <orderEntry type="library" name="displaytag-1.1.1" level="project" />
-    <orderEntry type="library" name="junit-4.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="junit-4.4" level="project" />
     <orderEntry type="library" name="log4j-1.2.15" level="project" />
-    <orderEntry type="library" name="spring" level="project" />
-    <orderEntryProperties />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <option name="ACTIVE_VCS_NAME" value="svn" />
-    <option name="USE_PROJECT_VCS" value="false" />
+    <orderEntry type="library" scope="RUNTIME" name="mysql-connector" level="project" />
+    <orderEntry type="library" name="dbcp-tomcat" level="application" />
+    <orderEntry type="library" name="spring" level="application" />
   </component>
 </module>
 
