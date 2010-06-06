@@ -17,7 +17,7 @@ public class SetCorrectLastIndexed extends App {
 
         if ("e".equals(siteName))
             return;
-        
+
         Site s = Site.forName(siteName);
 
         DoubleIndexSearcher dis = new DoubleIndexSearcher(s, null);
@@ -25,7 +25,6 @@ public class SetCorrectLastIndexed extends App {
 
         System.out.println(lastIndexedNum);
 
-        s.setDB_VIA_CONTAINER(false);
         s.getDbManager().setLastIndexedNumber(lastIndexedNum);
 
     }

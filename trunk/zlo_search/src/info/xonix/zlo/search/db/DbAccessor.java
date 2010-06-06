@@ -3,19 +3,20 @@ package info.xonix.zlo.search.db;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.DB;
 import info.xonix.zlo.search.site.Nameable;
+import info.xonix.zlo.search.spring.AppSpringConfig;
 import org.apache.log4j.Logger;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Properties;
 
 /**
+ * TODO: refactor this!!!
  * Author: Vovan
  * Date: 11.02.2008
  * Time: 18:18:05
  */
+@Deprecated
 public class DbAccessor implements Nameable {
 
     private static final Logger logger = Logger.getLogger(DbAccessor.class);
@@ -25,8 +26,7 @@ public class DbAccessor implements Nameable {
     private String DB_URL;
     private String DB_USER;
     private String DB_PASSWORD;
-    private boolean DB_VIA_CONTAINER;
-    
+
     private DataSource ds;
 
     private String name;
@@ -79,11 +79,8 @@ public class DbAccessor implements Nameable {
         return DB_PASSWORD;
     }
 
-    public boolean isDB_VIA_CONTAINER() {
-        return DB_VIA_CONTAINER;
-    }
-
     private DbManager dbManager;
+
     public DbManager getDbManager() {
         if (dbManager == null) {
             dbManager = new DbManager(this);
@@ -92,6 +89,7 @@ public class DbAccessor implements Nameable {
     }
 
     private DbDict dbDict;
+
     public DbDict getDbDict() {
         if (dbDict == null) {
             dbDict = new DbDict(this);
@@ -100,6 +98,7 @@ public class DbAccessor implements Nameable {
     }
 
     private DB db;
+
     public DB getDB() {
         if (db == null) {
             db = new DB(this);
@@ -108,7 +107,7 @@ public class DbAccessor implements Nameable {
     }
 
     public DataSource getDataSource() {
-        if (ds == null) {
+/*        if (ds == null) {
             if (isDB_VIA_CONTAINER()) {
                 try {
                     ds = ConnectionUtils.getDataSource(getJNDI_DS_NAME());
@@ -125,7 +124,8 @@ public class DbAccessor implements Nameable {
                 this.ds = ds;
             }
         }
-        return ds;
+        return ds;*/
+        return AppSpringConfig.getApplicationContext().getBean("dataSource", DataSource.class);
     }
 
     private void setJNDI_DS_NAME(String JNDI_DS_NAME) {
@@ -148,10 +148,6 @@ public class DbAccessor implements Nameable {
         this.DB_PASSWORD = DB_PASSWORD;
     }
 
-    public void setDB_VIA_CONTAINER(boolean DB_VIA_CONTAINER) {
-        this.DB_VIA_CONTAINER = DB_VIA_CONTAINER;
-    }
-
     protected void initDb(Properties p) {
         setJNDI_DS_NAME(Config.getProp("db.jndi.ds.name"));
 
@@ -159,7 +155,5 @@ public class DbAccessor implements Nameable {
         setDB_URL(Config.getProp("db.url"));
         setDB_USER(Config.getProp("db.user"));
         setDB_PASSWORD(Config.getProp("db.password"));
-
-        setDB_VIA_CONTAINER(Config.TRUE.equals(Config.getProp("db.use.container.pull")));
     }
 }

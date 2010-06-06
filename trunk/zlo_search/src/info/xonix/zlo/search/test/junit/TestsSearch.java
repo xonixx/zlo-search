@@ -8,11 +8,12 @@ import info.xonix.zlo.search.db.DbManager;
 import info.xonix.zlo.search.db.VarType;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import info.xonix.zlo.search.utils.TimeUtils;
-import static junit.framework.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Date;
+
+import static junit.framework.Assert.*;
 
 /**
  * Author: gubarkov
@@ -29,7 +30,6 @@ public class TestsSearch {
         new Config();
 
         Site site = Site.forName("zlo");
-        site.setDB_VIA_CONTAINER(false);
         dbm = site.getDbManager();
         dbDict = site.getDbDict();
     }
