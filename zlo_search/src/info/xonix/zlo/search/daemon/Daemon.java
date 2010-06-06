@@ -12,9 +12,9 @@ import sun.misc.Signal;
 import sun.misc.SignalHandler;
 
 import java.util.Date;
-import java.util.Vector;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Vector;
 
 /**
  * Author: Vovan
@@ -99,7 +99,7 @@ public abstract class Daemon extends SiteSource {
     protected void setExiting(boolean exiting) {
         this.exiting = exiting;
         if (exiting)
-            daemonState = DaemonState.EXITING; 
+            daemonState = DaemonState.EXITING;
     }
 
     protected boolean isExiting() {
@@ -250,7 +250,6 @@ public abstract class Daemon extends SiteSource {
 
     protected Daemon(Site site) {
         super(site);
-        site.setDB_VIA_CONTAINER(false);
         registerExitHandlers();
     }
 

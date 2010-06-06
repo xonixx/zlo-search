@@ -80,9 +80,12 @@ public class Config {
     }
 
     // configuring log4j
+
     static {
         PropertyConfigurator.configure(props);
     }
+
+    public static final String ENVIRONMENT = getProp("env.name");
 
     public static String[] NUMS_PER_PAGE = getProp("nums.per.page").split("\\|");
 
@@ -112,7 +115,7 @@ public class Config {
         if (USE_PROXY)
             logger.info("Starting using proxy: " + PROXY_HOST + ":" + PROXY_PORT);
     }
-    
+
     static {
         Analyzer _a = null;
         try {

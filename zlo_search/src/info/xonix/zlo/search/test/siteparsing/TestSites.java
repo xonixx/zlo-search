@@ -27,22 +27,16 @@ public class TestSites {
     @Before
     public void setUp() {
         velo = Site.forName("velo");
-        velo.setDB_VIA_CONTAINER(false);
 
         dev = Site.forName("dev");
-        dev.setDB_VIA_CONTAINER(false);
 
         zlo = Site.forName("zlo");
-        zlo.setDB_VIA_CONTAINER(false);
 
         takeoff = Site.forName("takeoff");
-        takeoff.setDB_VIA_CONTAINER(false);
 
         anime = Site.forName("anime");
-        anime.setDB_VIA_CONTAINER(false);
 
         np = Site.forName("np");
-        np.setDB_VIA_CONTAINER(false);
     }
 
     @Test
@@ -138,7 +132,7 @@ public class TestSites {
             int lmn = zlo.getLastMessageNumber();
             System.out.println(lmn);
 
-            ZloMessage m =  zlo.getMessage(4093778);
+            ZloMessage m = zlo.getMessage(4093778);
 
             Assert.assertEquals("QDiesel", m.getNick());
             Assert.assertEquals("nokia.7ka.mipt.ru", m.getHost());
@@ -147,7 +141,7 @@ public class TestSites {
 
             System.out.println(m);
 
-            m =  zlo.getMessage(4093788);
+            m = zlo.getMessage(4093788);
 
             Assert.assertEquals("Loki", m.getNick());
             Assert.assertEquals("loki.3ka.mipt.ru", m.getHost());
@@ -156,7 +150,7 @@ public class TestSites {
 
             System.out.println(m);
 
-            m =  zlo.getMessage(405573);
+            m = zlo.getMessage(405573);
 
             Assert.assertEquals("Demoney", m.getNick());
             Assert.assertEquals("morgue.7ka.mipt.ru", m.getHost());
@@ -186,7 +180,7 @@ public class TestSites {
             Assert.assertTrue(m.isReg());
             Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
 
-            System.out.println(m);            
+            System.out.println(m);
 
             m = takeoff.getMessage(14003);
 

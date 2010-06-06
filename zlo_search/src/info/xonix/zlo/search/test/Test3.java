@@ -55,7 +55,6 @@ public class Test3 {
                 "<DIV class = ots>";
 
         Site site = Site.forName("velo");
-        site.setDB_VIA_CONTAINER(false);
         PageParser p = new PageParser(site);
         ZloMessage m = p.parseMessage(msg, 123);
         System.out.println(m);

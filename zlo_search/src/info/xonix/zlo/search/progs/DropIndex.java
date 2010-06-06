@@ -24,7 +24,6 @@ public class DropIndex extends App {
                 System.out.println("Deleting...");
                 if (Config.USE_DOUBLE_INDEX) {
                     Site site = Site.forName(siteName);
-                    site.setDB_VIA_CONTAINER(false);
                     DoubleIndexSearcher dis = site.getZloSearcher().getDoubleIndexSearcher();
                     dis.drop();
                     dis.close();

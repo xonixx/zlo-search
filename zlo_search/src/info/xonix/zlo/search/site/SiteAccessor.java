@@ -5,8 +5,8 @@ import info.xonix.zlo.search.db.DbAccessor;
 import info.xonix.zlo.search.utils.TimeUtils;
 import org.apache.commons.lang.StringUtils;
 
-import java.util.Properties;
 import java.util.ArrayList;
+import java.util.Properties;
 
 
 /**
@@ -14,6 +14,7 @@ import java.util.ArrayList;
  * Date: 28.12.2007
  * Time: 2:45:21
  */
+@Deprecated
 public class SiteAccessor extends DbAccessor {
 
     public static final String SITE_CONFIG_PREFIX = "site.config.";
@@ -84,7 +85,7 @@ public class SiteAccessor extends DbAccessor {
         if (msgReGroups != null) {
             MSG_RE_GROUPS_ORDER = new ArrayList<Integer>();
             for (String s : StringUtils.split(msgReGroups, ',')) {
-                MSG_RE_GROUPS_ORDER.add(Integer.parseInt(s));    
+                MSG_RE_GROUPS_ORDER.add(Integer.parseInt(s));
             }
         }
 
@@ -129,6 +130,7 @@ public class SiteAccessor extends DbAccessor {
     }
 
     // getters & setters
+
     public String getMARK_END_MSG_1() {
         return MARK_END_MSG_1;
     }

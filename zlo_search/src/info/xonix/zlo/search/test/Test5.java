@@ -32,7 +32,6 @@ public class Test5 {
     public static void m3() {
         // test index
         Site zlo = Site.forName("zlo");
-        zlo.setDB_VIA_CONTAINER(false);
         ZloIndexer zi = new ZloIndexer(zlo);
 
         zi.setAnalyzer(new RussianWithNumbersAndSpecialStopWordsAnalyzer(new String[0])); // nos stopWords=empty index with all words
@@ -60,7 +59,7 @@ public class Test5 {
         Token t;
         TokenStream ts = analyzer.tokenStream("body", new StringReader(s));
         try {
-            while((t = ts.next()) != null) {
+            while ((t = ts.next()) != null) {
                 System.out.println(t.termText());
             }
         } catch (IOException e) {
@@ -78,18 +77,17 @@ public class Test5 {
         }
     }
 
-    public static void m4(){
+    public static void m4() {
 //        ZloSearcher zs = new ZloSearcher(Site.forName("zlo"));
 //        System.out.println(zs.search(-1, "тест", true, true, false, false, false, null, null).getHits().length());
         Site site = Site.forName("zlo");
-        site.setDB_VIA_CONTAINER(false);
         DoubleIndexSearcher dis = new DoubleIndexSearcher(site, null);
         IndexSearcher is = new IndexSearcher(dis.getBigReader());
         try {
             Hits hits = is.search(new QueryParser("body", ZloMessage.constructAnalyzer()).parse("body:тест title:тест"), Sort.INDEXORDER);
 
-            for (int i=1; i<10; i++) {
-                System.out.println(hits.doc(hits.length()-i).get("num"));
+            for (int i = 1; i < 10; i++) {
+                System.out.println(hits.doc(hits.length() - i).get("num"));
             }
 
             System.out.println(hits.length());
@@ -98,6 +96,5 @@ public class Test5 {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        ;
     }
 }
