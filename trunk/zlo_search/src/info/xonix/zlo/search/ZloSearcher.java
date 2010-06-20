@@ -1,10 +1,10 @@
 package info.xonix.zlo.search;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
 import info.xonix.zlo.search.model.ZloMessage;
-import info.xonix.zlo.search.site.SiteSource;
+//import info.xonix.zlo.search.site.SiteSource;
 import info.xonix.zlo.search.utils.TimeUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
@@ -22,13 +22,16 @@ import java.util.Date;
  * Date: 01.06.2007
  * Time: 2:24:05
  */
-public class ZloSearcher extends SiteSource {
+public class ZloSearcher /*extends SiteSource*/ {
     private static final Logger logger = Logger.getLogger(ZloSearcher.class);
 
     public static final int PERIOD_RECREATE_INDEXER = TimeUtils.parseToMilliSeconds(Config.getProp("searcher.period.recreate.indexer"));
 
+    private Site site;
+
     public ZloSearcher(Site site) {
-        super(site);
+//        super(site);
+        this.site = site;
     }
 
     public static void clean(IndexReader ir) {
@@ -149,7 +152,7 @@ public class ZloSearcher extends SiteSource {
 
     public DoubleIndexSearcher getDoubleIndexSearcher() {
         if (doubleIndexSearcher == null) {
-            doubleIndexSearcher = new DoubleIndexSearcher(getSite(), getDateSort());
+            doubleIndexSearcher = new DoubleIndexSearcher(site, getDateSort());
         }
         return doubleIndexSearcher;
     }

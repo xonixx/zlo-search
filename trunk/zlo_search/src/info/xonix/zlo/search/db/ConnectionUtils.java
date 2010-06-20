@@ -1,16 +1,10 @@
 package info.xonix.zlo.search.db;
 
-import info.xonix.zlo.search.config.Config;
 import org.apache.log4j.Logger;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.HashMap;
 
 /**
  * Author: Vovan
@@ -46,14 +40,15 @@ public class ConnectionUtils {
         return DB_CONNECTION;
     }*/
 
-    public static Connection getConnection(String jndiDsName) throws DbException, NamingException {
+/*    public static Connection getConnection(String jndiDsName) throws DbException, NamingException {
 //        if (jndiDsName == null)
 //            return getConnection();
 
         DataSource ds = getDataSource(jndiDsName);
         return ds != null ? getConnection(ds) : null;
-    }
+    }*/
 
+    @Deprecated
     public static Connection getConnection(DataSource ds) throws DbException {
         try {
             return ds.getConnection();
@@ -68,7 +63,7 @@ public class ConnectionUtils {
     }*/
 
 //    private static DataSource dataSource = null;
-    private static HashMap<String, DataSource> dsHashMap = new HashMap<String, DataSource>();
+/*    private static HashMap<String, DataSource> dsHashMap = new HashMap<String, DataSource>();
 
     public static DataSource getDataSource(String jndiDsName) throws NamingException {
         if (!dsHashMap.containsKey(jndiDsName)) {
@@ -139,5 +134,5 @@ public class ConnectionUtils {
             logger.info("Starting without db because of config...");
         }
         return _conn;
-    }
+    }*/
 }

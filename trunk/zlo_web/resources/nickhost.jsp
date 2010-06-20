@@ -13,7 +13,7 @@
 <%@ include file="/WEB-INF/jsp/setSite.jsp" %>
 
 <c:set var="siteNum" value="${site.num}" />
-<c:set var="siteUrl" value="${site.SITE_URL}" />
+<c:set var="siteUrl" value="${site.siteUrl}" />
 <sql:setDataSource dataSource="${site.dataSource}" />
 
 <c:set var="isHost" value="${param['w'] == 'h'}" />

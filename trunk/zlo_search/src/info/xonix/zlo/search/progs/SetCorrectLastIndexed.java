@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.progs;
 
-import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
 import org.apache.lucene.search.MatchAllDocsQuery;
 

@@ -1,11 +1,7 @@
 <%@ page import="info.xonix.zlo.search.daemon.Daemon" %>
-<%@ page import="info.xonix.zlo.search.daemon.DaemonLauncher" %>
 <%@ page import="info.xonix.zlo.search.progs.OptimizeAllIndexes" %>
-<%@ page import="java.io.IOException" %>
 <%@ page import="java.util.LinkedHashMap" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="java.util.Observable" %>
-<%@ page import="java.util.Observer" %>
 <%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 

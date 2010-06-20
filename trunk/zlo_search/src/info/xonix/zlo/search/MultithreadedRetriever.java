@@ -1,7 +1,7 @@
 package info.xonix.zlo.search;
 
 import info.xonix.zlo.search.dao.DAOException;
-import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.search.site.PageRetriever;
 import org.apache.log4j.Logger;
@@ -109,7 +109,7 @@ public class MultithreadedRetriever {
                 msgs.add(source.getMessageByNumber(i));
 
                 long delta = System.currentTimeMillis() - t1;
-                long toSleep = 1000/source.getINDEXER_LIMIT_PER_SECOND() - delta;
+                long toSleep = 1000/source.getIndexerLimitPerSecond() - delta;
                 if (toSleep > 0) {
                     try {
                         Thread.sleep(toSleep);

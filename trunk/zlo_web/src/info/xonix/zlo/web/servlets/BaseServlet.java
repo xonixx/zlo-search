@@ -1,6 +1,6 @@
 package info.xonix.zlo.web.servlets;
 
-import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.web.CookieUtils;
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 import info.xonix.zlo.web.servlets.helpful.ForwardingServlet;
@@ -35,7 +35,7 @@ public class BaseServlet extends ForwardingServlet {
 
         request.setParameter(QS_SITE, site.getNum().toString());
         request.setAttribute(QS_SITE, site);
-        request.setAttribute(REQ_SITE_ROOT, site.getSITE_URL());
+        request.setAttribute(REQ_SITE_ROOT, site.getSiteUrl());
     }
 
     private Site getSiteOrDefault(String siteNumStr) {

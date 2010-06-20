@@ -1,11 +1,10 @@
 package info.xonix.zlo.web.servlets;
 
-import info.xonix.zlo.search.*;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.config.ErrorMessage;
+import info.xonix.zlo.search.dao.DbManagerImpl;
 import info.xonix.zlo.search.db.DbAccessor;
 import info.xonix.zlo.search.db.DbException;
-import info.xonix.zlo.search.db.DbManager;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import info.xonix.zlo.web.CookieUtils;
 import info.xonix.zlo.web.RequestCache;
@@ -303,7 +302,7 @@ public class SearchServlet extends BaseServlet {
     }
 
     private void showStatistics(ForwardingRequest request) throws DbException {
-        DbManager dbm = getSite(request).getDbManager();
+        DbManagerImpl dbm = getSite(request).getDbManager();
         request.setAttribute(QS_LAST_MSGS, new int[]{dbm.getLastMessageNumber(), dbm.getLastIndexedNumber()});
         request.setAttribute(QS_LAST_MSGS_DATES, new Date[]{dbm.getLastSavedDate(), dbm.getLastIndexedDate()});
     }

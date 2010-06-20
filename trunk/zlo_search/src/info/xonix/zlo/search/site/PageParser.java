@@ -1,9 +1,8 @@
 package info.xonix.zlo.search.site;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.db.DbException;
-import info.xonix.zlo.search.db.DbManager;
 import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import org.apache.commons.lang.StringUtils;
@@ -24,21 +23,24 @@ import java.util.regex.Pattern;
  * Date: 30.05.2007
  * Time: 20:17:07
  */
-public class PageParser extends SiteSource {
+public class PageParser /*extends SiteSource*/ {
     public static final Logger logger = Logger.getLogger(PageParser.class);
 
-    private DbManager dbm;
+    private Site site;
+
+//    private DbManager dbm;
 
     private Pattern MSG_REG_RE;
     private Pattern MSG_UNREG_RE;
     private String MSG_DATE_PATTERN;
 
     public PageParser(Site site) {
-        super(site);
-        dbm = site.getDbManager();
-        MSG_REG_RE = site.getMSG_REG_RE_STR() == null ? null : Pattern.compile(site.getMSG_REG_RE_STR(), Pattern.DOTALL);
-        MSG_UNREG_RE = site.getMSG_UNREG_RE_STR() == null ? null : Pattern.compile(site.getMSG_UNREG_RE_STR(), Pattern.DOTALL);
-        MSG_DATE_PATTERN = site.getMSG_DATE_PATTERN();
+//        super(site);
+        this.site = site;
+//        dbm = site.getDbManager();
+        MSG_REG_RE = site.getMsgRegReStr() == null ? null : Pattern.compile(site.getMsgRegReStr(), Pattern.DOTALL);
+        MSG_UNREG_RE = site.getMsgUnregReStr() == null ? null : Pattern.compile(site.getMsgUnregReStr(), Pattern.DOTALL);
+        MSG_DATE_PATTERN = site.getMsgDatePattern();
     }
 
     public ZloMessage parseMessage(ZloMessage message, String msg) {
@@ -50,19 +52,19 @@ public class PageParser extends SiteSource {
         } else {
             m = MSG_REG_RE.matcher(msg);
             if (!m.find()) {
-                if (msg.contains(getSite().getMSG_NOT_EXIST_OR_WRONG())) {
+                if (msg.contains(site.getMsgNotExistOrWrong())) {
                     message.setStatus(ZloMessage.Status.DELETED);
                 } else {
                     message.setStatus(ZloMessage.Status.UNKNOWN);
-                    throw new PageParseException("Can't parse msg#:" + message.getNum() + " in site:" + getSiteName() + "... Possibly format changed!\n\n" + msg);
+                    throw new PageParseException("Can't parse msg#:" + message.getNum() + " in site:" + site.getName() + "... Possibly format changed!\n\n" + msg);
                 }
-                message.setSite(getSite());
+                message.setSite(site);
                 return message;
             }
             message.setReg(true);
         }
 
-        List<Integer> groupsOrder = getSite().getMSG_RE_GROUPS_ORDER();
+        List<Integer> groupsOrder = site.getMsgReGroupsOrder();
         if (groupsOrder == null)
             groupsOrder = Arrays.asList(0,
                     1, // topic
@@ -87,7 +89,7 @@ public class PageParser extends SiteSource {
             if (topicCode == null) {
                 topicCode = -1;
                 if (StringUtils.isNotEmpty(topic)) {
-                    logger.info("Unknown topic: " + topic + " while parsing msg#: " + message.getNum() + " in site:" + getSiteName() + "... Adding to title.");
+                    logger.info("Unknown topic: " + topic + " while parsing msg#: " + message.getNum() + " in site:" + site.getName() + "... Adding to title.");
                     title = "[" + topic + "] " + title;
                 }
             }
@@ -96,7 +98,7 @@ public class PageParser extends SiteSource {
             logger.error(e);
         }
 
-        message.setSite(getSite());
+        message.setSite(site);
         message.setTitle(title);
         message.setNick(StringUtils.trim(HtmlUtils.unescapeHtml(m.group(groupsOrder.get(3))))); // unescape nick
         message.setHost(m.group(groupsOrder.get(4)));

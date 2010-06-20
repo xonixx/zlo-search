@@ -1,8 +1,8 @@
 package info.xonix.zlo.search.progs;
 
-import info.xonix.zlo.search.ZloIndexer;
+import info.xonix.zlo.search.logic.IndexerLogicImpl;
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.IndexWriter;
@@ -21,7 +21,7 @@ public class OptimizeIndex {
         try {
             Site site = Site.forName(Config.getSiteEnvName());
             if (!Config.USE_DOUBLE_INDEX) {
-                IndexWriter w = new ZloIndexer(site).getWriter();
+                IndexWriter w = new IndexerLogicImpl(site).getWriter();
                 logger.info("Optimizing index...");
                 w.optimize();
                 w.close();

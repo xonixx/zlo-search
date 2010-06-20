@@ -2,7 +2,7 @@ package info.xonix.zlo.search.doubleindex;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.model.ZloMessage;
-import info.xonix.zlo.search.site.SiteAccessor;
+import info.xonix.zlo.search.model.SiteConfiguration;
 import info.xonix.zlo.search.utils.TimeUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.IndexReader;
@@ -51,8 +51,8 @@ public class DoubleIndexSearcher {
         renewDate = new Date();
     }
 
-    public DoubleIndexSearcher(SiteAccessor site, Sort renewingSort) {
-        this(site.getINDEX_DIR_DOUBLE(), renewingSort);
+    public DoubleIndexSearcher(SiteConfiguration site, Sort renewingSort) {
+        this(site.getIndexDirDouble(), renewingSort);
     }
 
     public String getIndexesDir() {

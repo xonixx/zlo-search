@@ -1,8 +1,8 @@
 package info.xonix.zlo.search.progs;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.dao.Site;
-import info.xonix.zlo.search.db.DbManager;
+import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.dao.DbManagerImpl;
 import info.xonix.zlo.search.model.ZloMessage;
 import org.apache.log4j.Logger;
 
@@ -38,7 +38,7 @@ public class FileToDb {
 
     private void start(boolean doWork) {
         Site site = Site.forName("zlo");
-        DbManager dbm = site.getDbManager();
+        DbManagerImpl dbm = site.getDbManager();
         String lastLine = "";
         int result;
         try {

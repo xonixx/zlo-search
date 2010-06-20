@@ -13,6 +13,8 @@ import java.util.List;
 public interface IndexingSource {
 
     public ZloMessage getMessageByNumber(int num) throws DAOException;
+
     public List<ZloMessage> getMessages(int from, int to) throws DAOException;
+
     public int getLastMessageNumber() throws DAOException;
 }

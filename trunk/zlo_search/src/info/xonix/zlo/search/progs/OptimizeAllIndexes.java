@@ -2,7 +2,7 @@ package info.xonix.zlo.search.progs;
 
 import info.xonix.zlo.search.daemon.Daemon;
 import info.xonix.zlo.search.daemon.DaemonLauncher;
-import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.ZloObservable;
 
 import java.io.IOException;
@@ -31,7 +31,7 @@ public class OptimizeAllIndexes {
 
     public void go() throws IOException {
         for (Site site : Site.getSites()) {
-            if (site.isPERFORM_INDEXING()) {
+            if (site.isPerformIndexing()) {
                 System.out.println("-----" + site.getName() + "-----");
                 OptimizeIndex.optimizeDoubleIndexForSite(site);
             }

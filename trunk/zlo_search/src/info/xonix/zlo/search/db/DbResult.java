@@ -12,7 +12,7 @@ public class DbResult implements Closeable {
     private ResultSet resultSet;
     private Statement statement;
     private Connection connection;
-    private DbAccessor dbAccessor;
+//    private DbAccessor dbAccessor;
 
     public DbResult(Connection connection, ResultSet resultSet, Statement statement) {
         this.connection = connection;
@@ -133,13 +133,13 @@ public class DbResult implements Closeable {
         }
     }
 
-    public DbAccessor getDbAccessor() {
+/*    public DbAccessor getDbAccessor() {
         return dbAccessor;
     }
 
     public void setDbAccessor(DbAccessor dbAccessor) {
         this.dbAccessor = dbAccessor;
-    }
+    }*/
 
     public void close() {
         CloseUtils.close(resultSet, statement);

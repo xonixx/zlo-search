@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.daemon;
 
-import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.model.Site;
 
 /**
  * Author: Vovan
@@ -10,7 +10,7 @@ import info.xonix.zlo.search.dao.Site;
 public class DaemonLauncher {
     public static void main(String[] args) {
         for (Site site : Site.getSites()) {
-            if (site.isPERFORM_INDEXING()) {
+            if (site.isPerformIndexing()) {
                 startInNewThread(new DbDaemon(site));
                 startInNewThread(new IndexerDaemon(site));
             }

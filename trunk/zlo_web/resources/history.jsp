@@ -1,4 +1,5 @@
 <%@ page import="java.util.Map" %>
+<%@ page import="info.xonix.zlo.search.model.Site" %>
 <%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
 <link rel="stylesheet" type="text/css" href="main.css" />
@@ -70,7 +71,7 @@
         <display:column title="Сайт">
             <% Site site = Site.getSite((Integer)((Map)row).get("site")); %>
             <c:if test="<%= site != null %>">
-                <a href="http://<%= site.getSITE_URL() %>">
+                <a href="http://<%= site.getSiteUrl() %>">
                     <%= site.getName() %></a>
             </c:if>
         </display:column>
