@@ -7,6 +7,7 @@ import info.xonix.zlo.search.dao.DAOException;
  * Date: 14.09.2007
  * Time: 14:32:12
  */
+@Deprecated
 public class DbException extends DAOException {
     public DbException(String message, Throwable cause) {
         super(message, cause);

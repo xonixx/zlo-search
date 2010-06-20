@@ -50,7 +50,7 @@
 </sql:query>
 
 <c:set var="title">
-    —татистика сайта ${site.SITE_URL} по <c:choose><c:when test="${byNick}">никам</c:when><c:otherwise>хостам</c:otherwise></c:choose>
+    —татистика сайта ${site.siteUrl} по <c:choose><c:when test="${byNick}">никам</c:when><c:otherwise>хостам</c:otherwise></c:choose>
     за последние ${period} суток
 </c:set>
 <title>${title}</title>

@@ -1,5 +1,7 @@
 package info.xonix.zlo.search.db;
 
+import org.apache.log4j.Logger;
+
 import java.io.Closeable;
 import java.io.IOException;
 import java.sql.Connection;
@@ -13,6 +15,8 @@ import java.sql.Statement;
  * Time: 16:06:50
  */
 public class CloseUtils {
+    private static Logger log = Logger.getLogger(CloseUtils.class);
+
     public static void close(Object obj) {
         if (obj == null)
             return;
@@ -31,14 +35,14 @@ public class CloseUtils {
                         String.format("Can't close object: %s of type: %s", obj, obj.getClass()));
             }
         } catch (SQLException e) {
-            ;
-        } catch(IOException e) {
-            ;
+            log.error("SQLException while closing " + obj, e);
+        } catch (IOException e) {
+            log.error("IOException while closing " + obj, e);
         }
     }
 
     public static void close(Object... all) {
-        for(Object obj : all) {
+        for (Object obj : all) {
             close(obj);
         }
     }

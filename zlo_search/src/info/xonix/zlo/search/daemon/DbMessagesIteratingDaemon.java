@@ -1,8 +1,8 @@
 package info.xonix.zlo.search.daemon;
 
 import info.xonix.zlo.search.dao.DAOException;
-import info.xonix.zlo.search.dao.Site;
-import info.xonix.zlo.search.db.DbDict;
+import info.xonix.zlo.search.dao.DbDictImpl;
+import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.model.ZloMessage;
 import org.apache.log4j.Logger;
@@ -18,7 +18,7 @@ public abstract class DbMessagesIteratingDaemon extends Daemon {
 
     private static final Logger logger = Logger.getLogger("DbMessagesIteratingDaemon");
     private int processPerTime = 1000; // default
-    private DbDict dbDict;
+    private DbDictImpl dbDict;
 
     private class DbMessagesIterationProcess extends Process {
 

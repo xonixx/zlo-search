@@ -2,7 +2,6 @@ package info.xonix.zlo.search.model;
 
 import info.xonix.zlo.search.FoundTextHighlighter;
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.dao.Site;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.analysis.Analyzer;

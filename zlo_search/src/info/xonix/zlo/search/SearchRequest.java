@@ -1,9 +1,9 @@
 package info.xonix.zlo.search;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.db.DbException;
-import info.xonix.zlo.search.site.SiteSource;
+//import info.xonix.zlo.search.site.SiteSource;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
@@ -14,7 +14,9 @@ import java.util.Date;
  * Date: 30.09.2007
  * Time: 3:08:16
  */
-public class SearchRequest extends SiteSource {
+public class SearchRequest /*extends SiteSource*/ {
+
+    private Site site;
 
     private String text;
 
@@ -39,7 +41,9 @@ public class SearchRequest extends SiteSource {
                          boolean inReg, boolean inHasUrl, boolean inHasImg,
                          String nick, String host, int topicCode, boolean isDateSet, Date fromDate, Date toDate,
                          boolean searchAll) {
-        super(site);
+//        super(site);
+        this.site = site;
+
         this.text = text;
         this.inTitle = inTitle;
         this.inBody = inBody;
@@ -55,6 +59,14 @@ public class SearchRequest extends SiteSource {
         this.toDate = toDate;
         
         this.searchAll = searchAll;
+    }
+
+    public Site getSite() {
+        return site;
+    }
+
+    public void setSite(Site site) {
+        this.site = site;
     }
 
     public String getText() {
@@ -170,7 +182,7 @@ public class SearchRequest extends SiteSource {
 
         SearchRequest req = (SearchRequest) obj;
 
-        return getSite().equals(req.getSite()) &&
+        return site.equals(req.getSite()) &&
                 topicCode == req.getTopicCode() &&
                 StringUtils.equals(text, req.getText()) &&
                 inTitle == req.isInTitle() &&
@@ -186,7 +198,7 @@ public class SearchRequest extends SiteSource {
     }
 
     public int hashCode() {
-        return StringUtils.join(new Object[]{text, inTitle, inBody, inReg, inHasUrl, inHasImg, nick, host, topicCode, searchAll, getSiteName()}, '|').hashCode();
+        return StringUtils.join(new Object[]{text, inTitle, inBody, inReg, inHasUrl, inHasImg, nick, host, topicCode, searchAll, site.getName()}, '|').hashCode();
     }
 
     public boolean isTheSameSearch(SearchRequest searchRequest) {
@@ -199,14 +211,14 @@ public class SearchRequest extends SiteSource {
 
     public String describeToString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("форум:(").append(getSite().getSITE_URL()).append(")");
+        sb.append("форум:(").append(getSite().getSiteUrl()).append(")");
 
         if (StringUtils.isNotEmpty(text)) sb.append(" текст:(").append(text).append(")");
         if (StringUtils.isNotEmpty(nick)) sb.append(" ник:(").append(nick).append(")");
         if (StringUtils.isNotEmpty(host)) sb.append(" хост:(").append(host).append(")");
 
         if (topicCode != -1) try {
-            sb.append(" категория:(").append(getSite().getDbManager().getTopics()[topicCode]).append(")");
+            sb.append(" категория:(").append(site.getDbManager().getTopics()[topicCode]).append(")");
         } catch (DbException e) {;}
 
         ArrayList<String> options = new ArrayList<String>(5);

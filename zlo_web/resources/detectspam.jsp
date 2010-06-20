@@ -14,7 +14,7 @@
 <%-- all from request properties --%>
 
 <c:set var="siteNum" value="${site.num}"/>
-<c:set var="siteUrl" value="${site.SITE_URL}"/>
+<c:set var="siteUrl" value="${site.siteUrl}"/>
 <sql:setDataSource dataSource="${site.dataSource}"/>
 
 <c:set var="nickhostTbl">${site.name}_nickhost</c:set>
@@ -90,7 +90,7 @@
             <display:column title="№"
                             class="small" style="text-align:center;width:1%;">${msg_rowNum}</display:column>
             <display:column title="Тема" style="width:67%">
-                <a href="http://${site.SITE_URL}${site.READ_QUERY}${msg.num}">
+                <a href="http://${site.siteUrl}${site.readQuery}${msg.num}">
                     <c:if test="${not empty msg.topic and msg.topic != 'без темы'}">[${msg.topic}]</c:if>
                     <c:out value="${msg.title}" escapeXml="false"/>
                 </a>

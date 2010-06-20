@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.daemon;
 
 import info.xonix.zlo.search.dao.DAOException;
-import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.db.DbException;
 import org.apache.log4j.Logger;
 
@@ -74,9 +74,9 @@ public class DbDaemon extends Daemon {
     }
 
     private void setParams() {
-        setDoPerTime(getSite().getDB_SCAN_PER_TIME());
-        setSleepPeriod(getSite().getDB_SCAN_PERIOD());
-        setRetryPeriod(getSite().getDB_RECONNECT_PERIOD());
+        setDoPerTime(getSite().getDbScanPerTime());
+        setSleepPeriod(getSite().getDbScanPeriod());
+        setRetryPeriod(getSite().getDbReconnectPeriod());
     }
 
     protected Process createProcess() {

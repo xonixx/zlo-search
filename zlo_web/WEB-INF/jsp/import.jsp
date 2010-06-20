@@ -1,5 +1,5 @@
 <%@ page
-        import="info.xonix.zlo.search.dao.Site, info.xonix.zlo.search.db.DbAccessor, info.xonix.zlo.web.servlets.BaseServlet, info.xonix.zlo.web.servlets.test.TestLazy1, info.xonix.zlo.web.servlets.test.t.Obj, info.xonix.zlo.web.utils.RequestUtils" %>
+        import="info.xonix.zlo.search.model.Site, info.xonix.zlo.search.db.DbAccessor, info.xonix.zlo.web.servlets.BaseServlet, info.xonix.zlo.web.servlets.test.TestLazy1, info.xonix.zlo.web.servlets.test.t.Obj, info.xonix.zlo.web.utils.RequestUtils" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>

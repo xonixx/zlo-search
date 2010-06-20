@@ -3,9 +3,9 @@ package info.xonix.zlo.search.progs;
 import info.xonix.zlo.search.MultithreadedRetriever;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.DAOException;
-import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.dao.DbManagerImpl;
+import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.db.DbException;
-import info.xonix.zlo.search.db.DbManager;
 import info.xonix.zlo.search.model.ZloMessage;
 
 import java.text.MessageFormat;
@@ -25,7 +25,7 @@ public class RescanUndefStatusMsgs {
     public static void main(String[] args) throws DbException, DAOException {
         new Config();
 
-        DbManager dbm = Site.forName("zlo").getDbManager();
+        DbManagerImpl dbm = Site.forName("zlo").getDbManager();
 
         int n=420000;
 

@@ -1,3 +1,4 @@
+<%@ page import="info.xonix.zlo.search.model.Site" %>
 <%--
   User: Vovan
   Date: 01.06.2008

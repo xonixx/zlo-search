@@ -9,7 +9,7 @@ import info.xonix.zlo.search.SearchRequest;
 import info.xonix.zlo.search.SearchResult;
 import info.xonix.zlo.search.ZloPaginatedList;
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import info.xonix.zlo.web.servlets.SearchServlet;
@@ -103,7 +103,7 @@ public class RssFormer {
 
                         // let it point to forum msg, not saved msg
 //                        it.setLink(new URL(String.format("http://%s/msg?site=%s&num=%s&hw=%s", Config.WEBSITE_DOMAIN, s.getNum(), m.getNum(), HtmlUtils.urlencode(hl.getWordsStr()))));
-                        URL commentsUrl = new URL(String.format("http://%s%s%s", s.getSITE_URL(), s.getREAD_QUERY(), m.getNum()));
+                        URL commentsUrl = new URL(String.format("http://%s%s%s", s.getSiteUrl(), s.getReadQuery(), m.getNum()));
                         it.setLink(commentsUrl);
                         it.setComments(commentsUrl);
 

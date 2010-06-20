@@ -8,7 +8,7 @@ import java.net.URLEncoder;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.model.Site;
 
 /**
  * Author: Vovan
@@ -66,8 +66,8 @@ public class HtmlUtils {
 
         if (isFound &&
                 (site != null
-                        && StringUtils.isNotEmpty(site.getSITE_SMILES_PATH())
-                        && matcher.group(2).contains(site.getSITE_SMILES_PATH())))
+                        && StringUtils.isNotEmpty(site.getSiteSmilesPath())
+                        && matcher.group(2).contains(site.getSiteSmilesPath())))
             return false; // this is smile
         else
             return isFound;

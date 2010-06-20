@@ -2,7 +2,7 @@ package info.xonix.zlo.search.daemon;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.DAOException;
-import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
 import org.apache.log4j.Logger;
@@ -78,9 +78,9 @@ public class IndexerDaemon extends Daemon {
     }
 
     private void setParams() {
-        setDoPerTime(getSite().getINDEXER_INDEX_PER_TIME());
-        setSleepPeriod(getSite().getINDEXER_INDEX_PERIOD());
-        setRetryPeriod(getSite().getINDEXER_RECONNECT_PERIOD());
+        setDoPerTime(getSite().getIndexerIndexPerTime());
+        setSleepPeriod(getSite().getIndexerIndexPeriod());
+        setRetryPeriod(getSite().getIndexerReconnectPeriod());
     }
 
     public static void main(String[] args) {

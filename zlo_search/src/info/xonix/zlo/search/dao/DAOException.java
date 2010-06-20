@@ -9,6 +9,7 @@ import java.io.IOException;
 * Date: 11.01.2008
 * Time: 22:30:31
 */
+@Deprecated
 public class DAOException extends IOException {
     private IndexingSource source;
 

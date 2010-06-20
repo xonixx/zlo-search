@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.xmlfp;
 
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
-import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.xmlfp.xjccompiled.message.Author;
 import info.xonix.zlo.search.xmlfp.xjccompiled.message.Content;
 import info.xonix.zlo.search.xmlfp.xjccompiled.message.Info;
@@ -75,7 +75,7 @@ public class ZloJaxb {
             info.setDate(new XMLGregorianCalendarImpl(cal));
             info.setParentId(BigInteger.valueOf(m.getParentNum()));
             info.setId(BigInteger.valueOf(m.getNum()));
-            info.setMessageUrl("http://" + m.getSite().getSITE_URL() + site.getREAD_QUERY() + m.getNum());
+            info.setMessageUrl("http://" + m.getSite().getSiteUrl() + site.getReadQuery() + m.getNum());
 
             Author author = new Author();
             jaxbMessage.setAuthor(author);

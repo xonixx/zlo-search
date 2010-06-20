@@ -1,7 +1,8 @@
 package info.xonix.zlo.search.progs;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.dao.DbManagerImpl;
+import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.db.*;
 import info.xonix.zlo.search.model.ZloMessage;
 
@@ -25,7 +26,7 @@ public class InsertEmptyRows {
         int n=0;
 
         Site site = Site.forName("zlo");
-        DbManager dbm = site.getDbManager();
+        DbManagerImpl dbm = site.getDbManager();
 
         int addedEmpty = 0;
         while (n <= MAX_ALEXZAM + N) {

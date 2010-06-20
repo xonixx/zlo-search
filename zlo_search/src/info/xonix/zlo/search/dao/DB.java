@@ -13,6 +13,7 @@ import java.util.List;
 * Date: 11.01.2008
 * Time: 22:31:10
 */
+@Deprecated
 public class DB implements IndexingSource {
     private static Logger logger = Logger.getLogger("DB");
 

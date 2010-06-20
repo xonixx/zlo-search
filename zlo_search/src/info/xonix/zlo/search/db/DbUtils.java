@@ -9,6 +9,7 @@ import java.sql.*;
  * Date: 18.11.2007
  * Time: 0:23:01
  */
+@Deprecated
 public final class DbUtils {
 //    private static final Logger logger = Logger.getLogger(DbUtils.class);
 
@@ -67,19 +68,19 @@ public final class DbUtils {
         }
     }
 
-    private static DbResult executeSelect(String jndiDsName, String sqlString, Object[] params, VarType[] types) throws DbException {
+/*    private static DbResult executeSelect(String jndiDsName, String sqlString, Object[] params, VarType[] types) throws DbException {
         try {
             return executeSelect(ConnectionUtils.getConnection(jndiDsName), sqlString, params, types);
         } catch (NamingException e) {
             throw new DbException(e);
         }
-    }
+    }*/
 
-    private static DbResult executeSelect(DataSource ds, String sqlString, Object[] params, VarType[] types) throws DbException {
+    public static DbResult executeSelect(DataSource ds, String sqlString, Object[] params, VarType[] types) throws DbException {
         return executeSelect(ConnectionUtils.getConnection(ds), sqlString, params, types);
     }
 
-    public static DbResult executeSelect(DbAccessor dbAccessor, String sqlString, Object[] params, VarType[] types) throws DbException {
+/*    public static DbResult executeSelect(DbAccessor dbAccessor, String sqlString, Object[] params, VarType[] types) throws DbException {
         DbResult dbResult;
         dbResult = executeSelect(dbAccessor.getDataSource(), sqlString, params, types);
         dbResult.setDbAccessor(dbAccessor);
@@ -87,26 +88,26 @@ public final class DbUtils {
     }
 
     //--------------------------------------
-/*    private static DbResult executeSelect(String jndiDsName, String sqlString) throws DbException {
+    private static DbResult executeSelect(String jndiDsName, String sqlString) throws DbException {
         return executeSelect(jndiDsName, sqlString, new Object[0], new VarType[0]);
-    }
+    }  */
 
-    private static DbResult executeSelect(DataSource ds, String sqlString) throws DbException {
+    public static DbResult executeSelect(DataSource ds, String sqlString) throws DbException {
         return executeSelect(ds, sqlString, new Object[0], new VarType[0]);
-    }*/
-
+    }
+    /*
     public static DbResult executeSelect(DbAccessor dbAccessor, String sqlString) throws DbException {
         DbResult dbResult;
         dbResult = executeSelect(dbAccessor.getDataSource(), sqlString, new Object[0], new VarType[0]);
         dbResult.setDbAccessor(dbAccessor);
         return dbResult;
-    }
+    }*/
     /*
      Executes insert, update, delete
      */
     //======================================
 
-    public static void executeUpdate(Connection connection, String sqlString, Object[] params, VarType[] types, Integer expectedResult) throws DbException {
+    private static void executeUpdate(Connection connection, String sqlString, Object[] params, VarType[] types, Integer expectedResult) throws DbException {
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
@@ -124,7 +125,7 @@ public final class DbUtils {
         }
     }
 
-    private static void executeUpdate(String jndiDsName, String sqlString, Object[] params, VarType[] types, Integer expectedResult) throws DbException {
+/*    private static void executeUpdate(String jndiDsName, String sqlString, Object[] params, VarType[] types, Integer expectedResult) throws DbException {
         try {
             Connection con = ConnectionUtils.getConnection(jndiDsName);
             executeUpdate(con, sqlString, params, types, expectedResult);
@@ -132,15 +133,15 @@ public final class DbUtils {
         } catch (NamingException e) {
             throw new DbException(e);
         }
-    }
+    } */
 
-    private static void executeUpdate(DataSource ds, String sqlString, Object[] params, VarType[] types, Integer expectedResult) throws DbException {
+    public static void executeUpdate(DataSource ds, String sqlString, Object[] params, VarType[] types, Integer expectedResult) throws DbException {
         executeUpdate(ConnectionUtils.getConnection(ds), sqlString, params, types, expectedResult);
     }
-
+    /*
     public static void executeUpdate(DbAccessor dbAccessor, String sqlString, Object[] params, VarType[] types, Integer expectedResult) throws DbException {
         executeUpdate(dbAccessor.getDataSource(), sqlString, params, types, expectedResult);
-    }
+    }*/
     //--------------------------------------
 /*    private static void executeUpdate(String jndiDsName, String sqlString, Object[] params, VarType[] types) throws DbException {
         executeUpdate(jndiDsName, sqlString, params, types, null);
@@ -148,9 +149,9 @@ public final class DbUtils {
 
     private static void executeUpdate(DataSource ds, String sqlString, Object[] params, VarType[] types) throws DbException {
         executeUpdate(ds, sqlString, params, types, null);
-    }*/
-
-    public static void executeUpdate(DbAccessor dbAccessor, String sqlString, Object[] params, VarType[] types) throws DbException {
-        executeUpdate(dbAccessor.getDataSource(), sqlString, params, types, null);
+    }
+*/
+    public static void executeUpdate(DataSource dataSource, String sqlString, Object[] params, VarType[] types) throws DbException {
+        executeUpdate(dataSource, sqlString, params, types, null);
     }
 }

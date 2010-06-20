@@ -1,6 +1,6 @@
 package info.xonix.zlo.search;
 
-import info.xonix.zlo.search.dao.Site;
+import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.doubleindex.DoubleHits;
 import info.xonix.zlo.search.model.ZloMessage;

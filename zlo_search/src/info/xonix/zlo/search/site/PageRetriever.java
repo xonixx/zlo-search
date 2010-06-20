@@ -1,6 +1,7 @@
 package info.xonix.zlo.search.site;
 
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.model.SiteConfiguration;
 import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
@@ -27,7 +28,7 @@ public class PageRetriever {
 
     private static HttpClient HTTP_CLIENT;
 
-    private SiteAccessor siteAccessor;
+    private SiteConfiguration siteConfiguration;
     private Pattern INDEX_UNREG_RE;
 
     static {
@@ -40,13 +41,13 @@ public class PageRetriever {
         }
     }
 
-    public PageRetriever(SiteAccessor siteAccessor) {
-        this.siteAccessor = siteAccessor;
-        INDEX_UNREG_RE = Pattern.compile(siteAccessor.getLINK_INDEX_REGEX());
+    public PageRetriever(SiteConfiguration siteConfiguration) {
+        this.siteConfiguration = siteConfiguration;
+        INDEX_UNREG_RE = Pattern.compile(siteConfiguration.getLinkIndexRegex());
     }
 
     public String getPageContentByNumber(int num) throws IOException {
-        GetMethod getMethod = formGetMethod("http://" + siteAccessor.getSITE_URL() + siteAccessor.getREAD_QUERY() + num);
+        GetMethod getMethod = formGetMethod("http://" + siteConfiguration.getSiteUrl() + siteConfiguration.getReadQuery() + num);
 
         List<String> stringGroups = new ArrayList<String>();
         InputStream is = null;
@@ -81,9 +82,9 @@ public class PageRetriever {
                 currSize = stringGroups.size();
                 ending = stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1);
             } while (
-                    ending.indexOf(siteAccessor.getMARK_END_MSG_1()) == -1 &&
-                            ending.indexOf(siteAccessor.getMARK_END_MSG_2()) == -1 && // if user have sign - won't read it all
-                            ending.indexOf(siteAccessor.getMSG_NOT_EXIST_OR_WRONG()) == -1
+                    ending.indexOf(siteConfiguration.getMarkEndMsg1()) == -1 &&
+                            ending.indexOf(siteConfiguration.getMarkEndMsg2()) == -1 && // if user have sign - won't read it all
+                            ending.indexOf(siteConfiguration.getMsgNotExistOrWrong()) == -1
                     );
 
             // read till end - seems that closing while not end riached causes board crash
@@ -111,7 +112,7 @@ public class PageRetriever {
     *  returns last number of root-message or -1 if not found
      */
     public int getLastRootMessageNumber() throws IOException {
-        GetMethod getMethod = formGetMethod("http://" + siteAccessor.getSITE_URL());
+        GetMethod getMethod = formGetMethod("http://" + siteConfiguration.getSiteUrl());
 
         InputStream is = null;
         Matcher m = null;
@@ -152,7 +153,7 @@ public class PageRetriever {
 
     private GetMethod formGetMethod(String uri) {
         GetMethod getMethod = new GetMethod(uri);
-        getMethod.addRequestHeader("Host", siteAccessor.getSITE_URL());
+        getMethod.addRequestHeader("Host", siteConfiguration.getSiteUrl());
         getMethod.addRequestHeader("User-Agent", Config.USER_AGENT);
         getMethod.getParams().setVersion(HttpVersion.HTTP_1_0); // to prevent chunk transfer-encoding in reply
         return getMethod;

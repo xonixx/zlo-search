@@ -1,11 +1,11 @@
 package info.xonix.zlo.search.daemon;
 
-import info.xonix.zlo.search.ZloIndexer;
+import info.xonix.zlo.search.logic.IndexerLogicImpl;
 import info.xonix.zlo.search.ZloObservable;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.DAOException;
-import info.xonix.zlo.search.dao.Site;
-import info.xonix.zlo.search.site.SiteSource;
+import info.xonix.zlo.search.model.Site;
+//import info.xonix.zlo.search.site.SiteSource;
 import info.xonix.zlo.search.utils.TimeUtils;
 import org.apache.log4j.Logger;
 import sun.misc.Signal;
@@ -22,7 +22,7 @@ import java.util.Vector;
  * Time: 20:00:32
  * todo: create class DaemonGroup
  */
-public abstract class Daemon extends SiteSource {
+public abstract class Daemon /*extends SiteSource*/ {
     //    private static final Logger logger = Logger.getLogger("Daemon");
     private boolean exiting;
     private boolean isSleeping = false;
@@ -38,6 +38,8 @@ public abstract class Daemon extends SiteSource {
     private DaemonState daemonState;
 
     private static Observable observable = new ZloObservable();
+
+    private Site site;
 
     public static void on(Observer o) {
         observable.addObserver(o);
@@ -147,13 +149,13 @@ public abstract class Daemon extends SiteSource {
         }
 
 
-        private ZloIndexer zloIndexer;
+        private IndexerLogicImpl indexerLogic;
 
-        protected ZloIndexer getIndexer() {
-            if (zloIndexer == null) {
-                zloIndexer = new ZloIndexer(getSite());
+        protected IndexerLogicImpl getIndexer() {
+            if (indexerLogic == null) {
+                indexerLogic = new IndexerLogicImpl();// TODO: via spring
             }
-            return zloIndexer;
+            return indexerLogic;
         }
 
         public void run() {
@@ -249,8 +251,13 @@ public abstract class Daemon extends SiteSource {
     }
 
     protected Daemon(Site site) {
-        super(site);
+//        super(site);
+        this.site = site;
         registerExitHandlers();
+    }
+
+    private String getSiteName() {
+        return site.getName();
     }
 
     public void registerExitHandlers() {
