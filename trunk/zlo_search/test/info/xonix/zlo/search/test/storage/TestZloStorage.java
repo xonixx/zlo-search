@@ -1,4 +1,4 @@
-package storage;
+package info.xonix.zlo.search.test.storage;
 
 import info.xonix.zlo.search.dao.DAOException;
 
