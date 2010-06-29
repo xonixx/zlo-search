@@ -1,8 +1,6 @@
 package info.xonix.zlo.search.test.storage;
 
-import info.xonix.zlo.search.IndexingSource;
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
 
@@ -14,7 +12,7 @@ import java.util.*;
  * Date: 14.09.2007
  * Time: 15:19:58
  */
-public class ZloStorage implements Serializable, IndexingSource {
+public class ZloStorage implements Serializable {
     public static final String STORAGE_DIR = Config.getProp("test.storage");
     public static final int FROM = Integer.parseInt(Config.getProp("test.storage.from"));
     public static final int TO = Integer.parseInt(Config.getProp("test.storage.to"));
@@ -82,7 +80,7 @@ public class ZloStorage implements Serializable, IndexingSource {
         }
     }
 
-    public Message getMessageByNumber(int num) throws DAOException {
+    public Message getMessageByNumber(int num) {
 /*        for (int key : storedMsgs.keySet()) {
             if (key == num)
                 return storedMsgs.get(key);
@@ -93,7 +91,7 @@ public class ZloStorage implements Serializable, IndexingSource {
         return message;
     }
 
-    public List<Message> getMessages(int from, int to) throws DAOException {
+    public List<Message> getMessages(int from, int to) {
         List<Message> msgs = new ArrayList<Message>(to - from);
 /*        for (int key : storedMsgs.keySet()) {
             if (key >= from && key <= to) {
@@ -108,7 +106,7 @@ public class ZloStorage implements Serializable, IndexingSource {
         return msgs;
     }
 
-    public int getLastMessageNumber() throws DAOException {
+    public int getLastMessageNumber() {
         return Collections.max(storedMsgs.keySet());
     }
 

@@ -1,8 +1,6 @@
 package info.xonix.zlo.search.daemon;
 
-import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.model.Site;
-import info.xonix.zlo.search.db.DbException;
 import org.apache.log4j.Logger;
 
 import java.net.ConnectException;
@@ -26,15 +24,15 @@ public class DbDaemon extends Daemon {
             super();
         }
 
-        protected int getFromIndex() throws DAOException {
+        protected int getFromIndex() {
             return getSite().getDB().getLastMessageNumber();
         }
 
-        protected int getEndIndex() throws DAOException {
+        protected int getEndIndex() {
             return getSite().getLastMessageNumber();
         }
 
-        protected void perform(int from, int to) throws DAOException {
+        protected void perform(int from, int to) {
             getSite().getDB().saveMessages(getSite().getMessages(from, to + 1));
             getSite().getDbManager().setLastSavedDate(new Date());
         }
@@ -84,6 +82,6 @@ public class DbDaemon extends Daemon {
     }
 
     public static void main(String[] args) {
-        new DbDaemon().start();    
+        new DbDaemon().start();
     }
 }

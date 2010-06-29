@@ -1,10 +1,8 @@
 package info.xonix.zlo.search.daemon;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.dao.DAOException;
-import info.xonix.zlo.search.model.Site;
-import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
+import info.xonix.zlo.search.model.Site;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;

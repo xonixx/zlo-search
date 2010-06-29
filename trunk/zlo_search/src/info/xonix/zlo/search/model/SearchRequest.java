@@ -1,8 +1,6 @@
 package info.xonix.zlo.search.model;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.db.DbException;
-//import info.xonix.zlo.search.site.SiteSource;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
@@ -56,7 +54,7 @@ public class SearchRequest /*extends SiteSource*/ {
         this.isDateSet = isDateSet;
         this.fromDate = fromDate;
         this.toDate = toDate;
-        
+
         this.searchAll = searchAll;
     }
 
@@ -218,7 +216,9 @@ public class SearchRequest /*extends SiteSource*/ {
 
         if (topicCode != -1) try {
             sb.append(" категория:(").append(site.getDbManager().getTopics()[topicCode]).append(")");
-        } catch (DbException e) {;}
+        } catch (DbException e) {
+            ;
+        }
 
         ArrayList<String> options = new ArrayList<String>(5);
         if (inTitle) options.add("в заголовках");

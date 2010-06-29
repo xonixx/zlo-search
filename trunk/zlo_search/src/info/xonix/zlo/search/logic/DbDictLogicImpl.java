@@ -2,7 +2,6 @@ package info.xonix.zlo.search.logic;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.DbDict;
-import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.model.Site;
 
 import java.util.Date;
@@ -22,11 +21,12 @@ public class DbDictLogicImpl implements DbDictLogic {
     private DbDict dbDict;
 
     // todo inject
+
     public void setDbDict(DbDict dbDict) {
         this.dbDict = dbDict;
     }
 
-    public void setLastIndexedNumber(Site site, int num) throws DbException {
+    public void setLastIndexedNumber(Site site, int num) {
 //        DbDictImpl dbDict = dbAccessor.getDbDict();
         if (Config.USE_DOUBLE_INDEX) {
             dbDict.setInt(site, DB_DICT_LAST_INDEXED_DOUBLE, num);
@@ -37,19 +37,19 @@ public class DbDictLogicImpl implements DbDictLogic {
         }
     }
 
-    public int getLastIndexedNumber(Site site) throws DbException {
+    public int getLastIndexedNumber(Site site) {
         return dbDict.getInt(site, Config.USE_DOUBLE_INDEX ? DB_DICT_LAST_INDEXED_DOUBLE : DB_DICT_LAST_INDEXED, 0);
     }
 
-    public Date getLastIndexedDate(Site site) throws DbException {
+    public Date getLastIndexedDate(Site site) {
         return dbDict.getDate(site, Config.USE_DOUBLE_INDEX ? DB_DICT_LAST_INDEXED_DOUBLE_DATE : DB_DICT_LAST_INDEXED_DATE, new Date(0));
     }
 
-    public void setLastSavedDate(Site site, Date d) throws DbException {
+    public void setLastSavedDate(Site site, Date d) {
         dbDict.setDate(site, DB_DICT_LAST_SAVED_DATE, d);
     }
 
-    public Date getLastSavedDate(Site site) throws DbException {
+    public Date getLastSavedDate(Site site) {
         return dbDict.getDate(site, DB_DICT_LAST_SAVED_DATE, new Date(0));
     }
 }

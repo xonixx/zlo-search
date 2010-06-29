@@ -1,7 +1,6 @@
 package info.xonix.zlo.web.servlets;
 
 import info.xonix.zlo.search.config.ErrorMessage;
-import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;

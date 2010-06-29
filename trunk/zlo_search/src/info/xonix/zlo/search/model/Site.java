@@ -7,7 +7,7 @@ import info.xonix.zlo.search.utils.factory.Factory;
  * Date: 11.01.2008
  * Time: 22:30:46
  */
-public class Site extends SiteConfiguration /*implements IndexingSource*/ {
+public class Site extends SiteConfiguration {
     private static Factory<String, Site> siteFactory = new Factory<String, Site>() {
         @Override
         protected Site create(String siteName) {

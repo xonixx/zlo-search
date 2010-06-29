@@ -1,6 +1,5 @@
 package info.xonix.zlo.search.daemon;
 
-import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
 import org.apache.log4j.Logger;
@@ -39,7 +38,7 @@ public class DbMessagesPrintDaemon extends DbMessagesIteratingDaemon {
         return "lastPrintIter";
     }
 
-    public static void main(String[] args) throws DbException {
+    public static void main(String[] args) {
         DbMessagesPrintDaemon d = new DbMessagesPrintDaemon(Site.forName("zlo"), 10);
         d.reset();
         d.start();

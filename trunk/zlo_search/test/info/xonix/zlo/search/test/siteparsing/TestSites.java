@@ -1,6 +1,5 @@
 package info.xonix.zlo.search.test.siteparsing;
 
-import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
 import junit.framework.Assert;

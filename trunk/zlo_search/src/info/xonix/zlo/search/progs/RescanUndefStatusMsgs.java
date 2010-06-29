@@ -1,9 +1,7 @@
 package info.xonix.zlo.search.progs;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.dao.DbManagerImpl;
-import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.logic.site.MessageRetriever;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
@@ -23,7 +21,7 @@ public class RescanUndefStatusMsgs {
     private static int MAX_ALEXZAM = 4030808; // 4 030 808 - max alexzam db row
     private static int N = 10000;
 
-    public static void main(String[] args) throws DbException, DAOException {
+    public static void main(String[] args) {
         new Config();
 
         DbManagerImpl dbm = Site.forName("zlo").getDbManager();

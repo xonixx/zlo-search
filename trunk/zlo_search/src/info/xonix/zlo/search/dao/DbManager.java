@@ -1,6 +1,5 @@
 package info.xonix.zlo.search.dao;
 
-import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
 
@@ -12,21 +11,21 @@ import java.util.List;
  * Time: 1:19:55
  */
 public interface DbManager {
-    void saveMessagesFast(Site site, List<Message> msgs) throws DbException;
+    void saveMessagesFast(Site site, List<Message> msgs);
 
-    void saveMessagesFast(Site site, List<Message> msgs, boolean updateIfExists) throws DbException;
+    void saveMessagesFast(Site site, List<Message> msgs, boolean updateIfExists);
 
-    Message getMessageByNumber(Site site, int num) throws DbException;
+    Message getMessageByNumber(Site site, int num);
 
-    List<Message> getMessagesByRange(Site site, int start, int end) throws DbException;
+    List<Message> getMessagesByRange(Site site, int start, int end);
 
-    List<Message> getMessages(Site site, int[] nums, int fromIndex) throws DbException;
+    List<Message> getMessages(Site site, int[] nums, int fromIndex);
 
-    int getLastMessageNumber(Site site) throws DbException;
+    int getLastMessageNumber(Site site);
 
     // TODO: introduce right dmo
 
     void logRequest(int siteNum, String host, String userAgent,
                     String reqText, String reqNick, String reqHost,
-                    String reqQuery, String reqQueryString, String referer, boolean rssAsked) throws DbException;
+                    String reqQuery, String reqQueryString, String referer, boolean rssAsked);
 }

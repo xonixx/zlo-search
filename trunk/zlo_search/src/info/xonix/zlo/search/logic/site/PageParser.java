@@ -1,7 +1,6 @@
 package info.xonix.zlo.search.logic.site;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.model.Site;

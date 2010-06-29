@@ -1,9 +1,7 @@
 package info.xonix.zlo.search.logic;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.dao.DbManager;
-import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
@@ -100,7 +98,7 @@ public class IndexerLogicImpl /*extends SiteSource*/ implements IndexerLogic {
         }
     }
 
-    private void indexMsgs(final int startNum, final int endNum) throws DAOException, IOException {
+    private void indexMsgs(final int startNum, final int endNum) {
         int start = startNum, end;
         while (start < endNum) {
             if (start + indexPerTime > endNum) {
@@ -114,7 +112,7 @@ public class IndexerLogicImpl /*extends SiteSource*/ implements IndexerLogic {
         }
     }
 
-    private void addMessagesToIndex(int start, int end) throws DAOException, IOException {
+    private void addMessagesToIndex(int start, int end) {
         IndexWriter writer = getWriter();
         for (Message msg : getSite().getDB().getMessages(start, end)) {
             if (msg.getStatus() == MessageStatus.OK) {
@@ -132,13 +130,13 @@ public class IndexerLogicImpl /*extends SiteSource*/ implements IndexerLogic {
      * indexes end marks msgs in db as indexed
      * indexes [from, to] including...
      */
-    public void index(Site site, int from, int to) throws IOException {
+    public void index(Site site, int from, int to) {
         logger.info(String.format(site.getName() + " - Adding %s msgs [%s-%s] to index...", to - from + 1, from, to));
-        try {
-            addMessagesToIndex(from, to + 1);
-        } catch (DAOException e) {
-            throw new DbException(e.getCause());
-        }
+//        try {
+        addMessagesToIndex(from, to + 1);
+//        } catch (DAOException e) {
+//            throw new DbException(e.getCause());
+//        }
         logger.info(site.getName() + " - Setting last indexed: " + to);
         dbManager.setLastIndexedNumber(to);
     }

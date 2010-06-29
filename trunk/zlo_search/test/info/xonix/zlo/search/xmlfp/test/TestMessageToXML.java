@@ -1,6 +1,5 @@
 package info.xonix.zlo.search.xmlfp.test;
 
-import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.xmlfp.ZloJaxb;

@@ -8,6 +8,7 @@ import java.sql.*;
  * Date: 15.01.2008
  * Time: 22:44:48
  */
+@Deprecated
 public class DbResult implements Closeable {
     private ResultSet resultSet;
     private Statement statement;
@@ -20,7 +21,7 @@ public class DbResult implements Closeable {
         this.statement = statement;
     }
 
-    public boolean next() throws DbException {
+    public boolean next() {
         try {
             return resultSet.next();
         } catch (SQLException e) {
@@ -28,7 +29,7 @@ public class DbResult implements Closeable {
         }
     }
 
-    public int getOneInt() throws DbException {
+    public int getOneInt() {
         try {
             if (resultSet.next()) {
                 return resultSet.getInt(1);
@@ -41,7 +42,7 @@ public class DbResult implements Closeable {
 
     // by columnIndex
 
-    public Integer getInt(int n) throws DbException {
+    public Integer getInt(int n) {
         try {
             return resultSet.getInt(n);
         }
@@ -50,7 +51,7 @@ public class DbResult implements Closeable {
         }
     }
 
-    public String getString(int n) throws DbException {
+    public String getString(int n) {
         try {
             return resultSet.getString(n);
         }
@@ -59,7 +60,7 @@ public class DbResult implements Closeable {
         }
     }
 
-    public Boolean getBoolean(int n) throws DbException {
+    public Boolean getBoolean(int n) {
         try {
             return resultSet.getBoolean(n);
         }
@@ -68,7 +69,7 @@ public class DbResult implements Closeable {
         }
     }
 
-    public Timestamp getTimestamp(int n) throws DbException {
+    public Timestamp getTimestamp(int n) {
         try {
             return resultSet.getTimestamp(n);
         }
@@ -77,7 +78,7 @@ public class DbResult implements Closeable {
         }
     }
 
-    public Object getObject(int n) throws DbException {
+    public Object getObject(int n) {
         try {
             return resultSet.getObject(n);
         }
@@ -88,7 +89,7 @@ public class DbResult implements Closeable {
 
     // by columnName
 
-    public Integer getInt(String s) throws DbException {
+    public Integer getInt(String s) {
         try {
             return resultSet.getInt(s);
         }
@@ -97,7 +98,7 @@ public class DbResult implements Closeable {
         }
     }
 
-    public String getString(String s) throws DbException {
+    public String getString(String s) {
         try {
             return resultSet.getString(s);
         }
@@ -106,7 +107,7 @@ public class DbResult implements Closeable {
         }
     }
 
-    public Boolean getBoolean(String s) throws DbException {
+    public Boolean getBoolean(String s) {
         try {
             return resultSet.getBoolean(s);
         }
@@ -115,7 +116,7 @@ public class DbResult implements Closeable {
         }
     }
 
-    public Timestamp getTimestamp(String s) throws DbException {
+    public Timestamp getTimestamp(String s) {
         try {
             return resultSet.getTimestamp(s);
         }
@@ -124,7 +125,7 @@ public class DbResult implements Closeable {
         }
     }
 
-    public Object getObject(String s) throws DbException {
+    public Object getObject(String s) {
         try {
             return resultSet.getObject(s);
         }

@@ -3,7 +3,6 @@ package info.xonix.zlo.search.test.junit;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.DbDictImpl;
 import info.xonix.zlo.search.dao.DbManagerImpl;
-import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.db.VarType;
 import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.utils.HtmlUtils;

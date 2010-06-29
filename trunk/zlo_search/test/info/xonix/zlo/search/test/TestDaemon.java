@@ -2,7 +2,6 @@ package info.xonix.zlo.search.test;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.daemon.Daemon;
-import info.xonix.zlo.search.dao.DAOException;
 import org.apache.log4j.Logger;
 
 /**
@@ -23,7 +22,7 @@ public class TestDaemon extends Daemon {
 
     private class MyProcess extends Process {
 
-        private int i=0;
+        private int i = 0;
 
         public MyProcess() {
             super();

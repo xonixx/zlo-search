@@ -2,7 +2,6 @@ package info.xonix.zlo.search.progs;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.DbManagerImpl;
-import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.db.DbResult;
 import info.xonix.zlo.search.db.DbUtils;
 import info.xonix.zlo.search.db.VarType;
@@ -25,7 +24,7 @@ public class InsertEmptyRows {
     private static int MAX_ALEXZAM = 4030808; // 4 030 808 - max alexzam db row
     private static int N = 10000;
 
-    public static void main(String[] args) throws DbException {
+    public static void main(String[] args) {
         new Config();
         int n = 0;
 
