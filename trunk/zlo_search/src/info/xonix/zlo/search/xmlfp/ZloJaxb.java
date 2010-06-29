@@ -2,6 +2,7 @@ package info.xonix.zlo.search.xmlfp;
 
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.xmlfp.xjccompiled.lastMessageNumber.ObjectFactory;
 import info.xonix.zlo.search.xmlfp.xjccompiled.message.Author;
@@ -52,10 +53,10 @@ public class ZloJaxb {
         info.xonix.zlo.search.xmlfp.xjccompiled.message.Message jaxbMessage = new info.xonix.zlo.search.xmlfp.xjccompiled.message.Message();
 
         jaxbMessage.setStatus(
-                m.getStatus() == Message.Status.DELETED ? "deleted"
-                        : m.getStatus() == Message.Status.SPAM ? "spam"
+                m.getStatus() == MessageStatus.DELETED ? "deleted"
+                        : m.getStatus() == MessageStatus.SPAM ? "spam"
                         : m.getStatus() == null ? "notExists"
-                        : m.getStatus() == Message.Status.OK ? "ok" : "unknown"
+                        : m.getStatus() == MessageStatus.OK ? "ok" : "unknown"
         );
 
         if ("ok".equals(jaxbMessage.getStatus())) {

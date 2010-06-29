@@ -6,6 +6,7 @@ import info.xonix.zlo.search.dao.DbManager;
 import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
 import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.model.Site;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
@@ -116,7 +117,7 @@ public class IndexerLogicImpl /*extends SiteSource*/ implements IndexerLogic {
     private void addMessagesToIndex(int start, int end) throws DAOException, IOException {
         IndexWriter writer = getWriter();
         for (Message msg : getSite().getDB().getMessages(start, end)) {
-            if (msg.getStatus() == Message.Status.OK) {
+            if (msg.getStatus() == MessageStatus.OK) {
                 logger.debug(getSiteName() + " - Addind: " + (Config.DEBUG ? msg : msg.getNum()));
                 writer.addDocument(msg.getDocument());
             } else {

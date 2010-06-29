@@ -2,10 +2,7 @@ package info.xonix.zlo.search.logic;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
-import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.model.SearchRequest;
-import info.xonix.zlo.search.model.SearchResult;
-import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.model.*;
 import info.xonix.zlo.search.utils.TimeUtils;
 import info.xonix.zlo.search.utils.factory.SiteFactory;
 import org.apache.log4j.Logger;
@@ -108,7 +105,7 @@ public class ZloSearcher /*extends SiteSource*/ {
     public static Sort getDateSort() {
         // sort causes slow first search & lot memory used!
         return Config.SEARCH_PERFORM_SORT
-                ? new Sort(new SortField(Message.FIELDS.DATE, SortField.STRING, true))
+                ? new Sort(new SortField(MessageFields.DATE, SortField.STRING, true))
                 : null;
     }
 
@@ -128,7 +125,7 @@ public class ZloSearcher /*extends SiteSource*/ {
         try {
             Analyzer analyzer = Message.constructAnalyzer();
 
-            QueryParser parser = new QueryParser(Message.FIELDS.BODY, analyzer);
+            QueryParser parser = new QueryParser(MessageFields.BODY, analyzer);
             parser.setDefaultOperator(searchAll ? QueryParser.AND_OPERATOR : QueryParser.OR_OPERATOR);
 
             Query query = parser.parse(queryStr);

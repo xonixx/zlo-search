@@ -6,6 +6,7 @@ import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.dao.DbManagerImpl;
 import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.model.Site;
 
 import java.text.MessageFormat;
@@ -35,7 +36,7 @@ public class RescanUndefStatusMsgs {
 
             Set<Integer> newNums = new HashSet<Integer>();
             for (Message m : msgs_n_N) {
-                if (m.getStatus() == Message.Status.UNKNOWN) {
+                if (m.getStatus() == MessageStatus.UNKNOWN) {
                     newNums.add(m.getNum());
                 }
             }

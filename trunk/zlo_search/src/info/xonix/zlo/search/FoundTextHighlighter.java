@@ -1,6 +1,7 @@
 package info.xonix.zlo.search;
 
 import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.model.MessageFields;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.Term;
@@ -106,8 +107,8 @@ public class FoundTextHighlighter {
 
         Query query = null;
         try {
-            String queryStr = MessageFormat.format("{0}:({1})", Message.FIELDS.BODY, txt);
-            QueryParser parser = new QueryParser(Message.FIELDS.BODY, Message.constructAnalyzer());
+            String queryStr = MessageFormat.format("{0}:({1})", MessageFields.BODY, txt);
+            QueryParser parser = new QueryParser(MessageFields.BODY, Message.constructAnalyzer());
             query = parser.parse(queryStr);
             Set<Term> set = new HashSet<Term>();
             query.extractTerms(set);
@@ -121,7 +122,7 @@ public class FoundTextHighlighter {
             logger.error(e);
         } catch (UnsupportedOperationException e) {
             // for wildcard query
-            String qs = query.toString(Message.FIELDS.BODY);
+            String qs = query.toString(MessageFields.BODY);
             qs = qs.replaceAll("-\\b.+?(?:\\s|$)", " ").replaceAll("\\(|\\)|\\+|\\[|\\]|\\{|\\}|\"", " ");
             return qs.trim().split("\\s+");
         }
