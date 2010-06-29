@@ -3,6 +3,7 @@ package info.xonix.zlo.search.site;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import org.apache.commons.lang.StringUtils;
@@ -53,9 +54,9 @@ public class PageParser /*extends SiteSource*/ {
             m = MSG_REG_RE.matcher(msg);
             if (!m.find()) {
                 if (msg.contains(site.getMsgNotExistOrWrong())) {
-                    message.setStatus(Message.Status.DELETED);
+                    message.setStatus(MessageStatus.DELETED);
                 } else {
-                    message.setStatus(Message.Status.UNKNOWN);
+                    message.setStatus(MessageStatus.UNKNOWN);
                     throw new PageParseException("Can't parse msg#:" + message.getNum() + " in site:" + site.getName() + "... Possibly format changed!\n\n" + msg);
                 }
                 message.setSite(site);
@@ -107,7 +108,7 @@ public class PageParser /*extends SiteSource*/ {
         message.setDate(StringUtils.isEmpty(dateStr) ? new Date(0) : prepareDate(dateStr));
 
         message.setBody(m.group(groupsOrder.get(6)));
-        message.setStatus(Message.Status.OK);
+        message.setStatus(MessageStatus.OK);
 
         return message;
     }

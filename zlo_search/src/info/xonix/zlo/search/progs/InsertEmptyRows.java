@@ -7,6 +7,7 @@ import info.xonix.zlo.search.db.DbResult;
 import info.xonix.zlo.search.db.DbUtils;
 import info.xonix.zlo.search.db.VarType;
 import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.model.Site;
 
 import java.text.MessageFormat;
@@ -49,7 +50,7 @@ public class InsertEmptyRows {
                 if (!nums_n_N.contains(j)) {
                     Message m = new Message();
                     m.setNum(j);
-                    m.setStatus(Message.Status.UNKNOWN);
+                    m.setStatus(MessageStatus.UNKNOWN);
                     needToAdd.add(m);
                 }
             }

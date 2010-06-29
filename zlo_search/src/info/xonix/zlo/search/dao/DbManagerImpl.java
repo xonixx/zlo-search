@@ -3,6 +3,7 @@ package info.xonix.zlo.search.dao;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.db.*;
 import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.model.MessageFields;
 import info.xonix.zlo.search.model.Site;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -26,16 +27,17 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
     // TODO: remove
     private static Properties props = Config.loadProperties("info/xonix/zlo/search/db/sql.properties");
 
-    public static final String MSG_NICK = Message.FIELDS.NICK;
+    // TODO: make this not use MessageFields!
+    public static final String MSG_NICK = MessageFields.NICK;
     public static final String MSG_ALT_NAME = "altName";
-    public static final String MSG_HOST = Message.FIELDS.HOST;
+    public static final String MSG_HOST = MessageFields.HOST;
     public static final String MSG_TOPIC = "topic";
     public static final String MSG_TOPIC_CODE = "topicCode";
     public static final String MSG_TITLE = "title"; // with html
     public static final String MSG_BODY = "body"; // with html
     public static final String MSG_DATE = "msgDate";
-    public static final String MSG_REG = Message.FIELDS.REG;
-    public static final String MSG_URL_NUM = Message.FIELDS.URL_NUM;
+    public static final String MSG_REG = MessageFields.REG;
+    public static final String MSG_URL_NUM = MessageFields.URL_NUM;
     public static final String MSG_PARENT_NUM = "parentNum";
     public static final String MSG_STATUS = Message.STATUS;
 
