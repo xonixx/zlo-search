@@ -127,12 +127,11 @@ public class IndexerLogicImpl /*extends SiteSource*/ implements IndexerLogic {
         writer.flush();
     }
 
-    /*
-    for use in indexing daemon
-    indexes end marks msgs in db as indexed
-    indexes [from, to] including...
+    /**
+     * for use in indexing daemon
+     * indexes end marks msgs in db as indexed
+     * indexes [from, to] including...
      */
-
     public void index(Site site, int from, int to) throws IOException {
         logger.info(String.format(site.getName() + " - Adding %s msgs [%s-%s] to index...", to - from + 1, from, to));
         try {

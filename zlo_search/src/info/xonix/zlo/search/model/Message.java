@@ -19,6 +19,9 @@ import java.text.NumberFormat;
 import java.util.Comparator;
 import java.util.Date;
 
+import static org.apache.lucene.document.Field.Index;
+import static org.apache.lucene.document.Field.Store;
+
 /**
  * Author: gubarkov
  * Date: 30.05.2007
@@ -336,16 +339,16 @@ public class Message implements Serializable, ZloMessageAccessor {
 
         Document doc = new Document();
 
-        doc.add(new Field(MessageFields.URL_NUM, URL_NUM_FORMAT.format(num), Field.Store.YES, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(MessageFields.TOPIC_CODE, Integer.toString(topicCode), Field.Store.NO, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(MessageFields.TITLE, getCleanTitle(), Field.Store.NO, Field.Index.TOKENIZED)); // "чистый" - индексируем, не храним
-        doc.add(new Field(MessageFields.NICK, nick.toLowerCase(), Field.Store.NO, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(MessageFields.REG, reg ? TRUE : FALSE, Field.Store.NO, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(MessageFields.HOST, host.toLowerCase(), Field.Store.NO, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(MessageFields.DATE, DateTools.dateToString(date, DateTools.Resolution.MINUTE), Field.Store.NO, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(MessageFields.BODY, getCleanBody(), Field.Store.NO, Field.Index.TOKENIZED)); // "чистый" - индексируем, не храним
-        doc.add(new Field(MessageFields.HAS_URL, isHasUrl() ? TRUE : FALSE, Field.Store.NO, Field.Index.UN_TOKENIZED));
-        doc.add(new Field(MessageFields.HAS_IMG, isHasImg() ? TRUE : FALSE, Field.Store.NO, Field.Index.UN_TOKENIZED));
+        doc.add(new Field(MessageFields.URL_NUM, URL_NUM_FORMAT.format(num), Store.YES, Index.UN_TOKENIZED));
+        doc.add(new Field(MessageFields.TOPIC_CODE, Integer.toString(topicCode), Store.NO, Index.UN_TOKENIZED));
+        doc.add(new Field(MessageFields.TITLE, getCleanTitle(), Store.NO, Index.TOKENIZED)); // "чистый" - индексируем, не храним
+        doc.add(new Field(MessageFields.NICK, nick.toLowerCase(), Store.NO, Index.UN_TOKENIZED));
+        doc.add(new Field(MessageFields.REG, reg ? TRUE : FALSE, Store.NO, Index.UN_TOKENIZED));
+        doc.add(new Field(MessageFields.HOST, host.toLowerCase(), Store.NO, Index.UN_TOKENIZED));
+        doc.add(new Field(MessageFields.DATE, DateTools.dateToString(date, DateTools.Resolution.MINUTE), Store.NO, Index.UN_TOKENIZED));
+        doc.add(new Field(MessageFields.BODY, getCleanBody(), Store.NO, Index.TOKENIZED)); // "чистый" - индексируем, не храним
+        doc.add(new Field(MessageFields.HAS_URL, isHasUrl() ? TRUE : FALSE, Store.NO, Index.UN_TOKENIZED));
+        doc.add(new Field(MessageFields.HAS_IMG, isHasImg() ? TRUE : FALSE, Store.NO, Index.UN_TOKENIZED));
 
         return doc;
     }
