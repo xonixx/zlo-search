@@ -1,20 +1,24 @@
 package info.xonix.zlo.search.dao;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.db.*;
+import info.xonix.zlo.search.db.DbResult;
+import info.xonix.zlo.search.db.DbUtils;
 import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.model.MessageFields;
 import info.xonix.zlo.search.model.Site;
-import org.apache.commons.lang.StringUtils;
+import info.xonix.zlo.search.model.Topic;
 import org.apache.log4j.Logger;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.util.Assert;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Properties;
 
-import static info.xonix.zlo.search.db.VarType.*;
+import static info.xonix.zlo.search.db.DbUtils.timestamp;
+import static org.apache.commons.lang.StringUtils.substring;
 
 /**
  * User: boost
@@ -27,38 +31,8 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
     // TODO: remove
     private static Properties props = Config.loadProperties("info/xonix/zlo/search/db/sql.properties");
 
-    // TODO: make this not use MessageFields!
-    public static final String MSG_NICK = MessageFields.NICK;
-    public static final String MSG_ALT_NAME = "altName";
-    public static final String MSG_HOST = MessageFields.HOST;
-    public static final String MSG_TOPIC = "topic";
-    public static final String MSG_TOPIC_CODE = "topicCode";
-    public static final String MSG_TITLE = "title"; // with html
-    public static final String MSG_BODY = "body"; // with html
-    public static final String MSG_DATE = "msgDate";
-    public static final String MSG_REG = MessageFields.REG;
-    public static final String MSG_URL_NUM = MessageFields.URL_NUM;
-    public static final String MSG_PARENT_NUM = "parentNum";
-    public static final String MSG_STATUS = Message.STATUS;
-
-//    private DbAccessor dbAccessor;
-
-/*
-    private final String SQL_INSERT_MSG;// =            props.getProperty("sql.insert.msg");
-    private final String SQL_INSERT_UPDATE_MSG;// =     props.getProperty("sql.insert.update.msg");
-    private final String SQL_UPDATE_MSG;// =            props.getProperty("sql.update.msg");
-    private final String SQL_DELETE_MSG;// =            props.getProperty("sql.delete.msg");
-    private final String SQL_SELECT_MSG_BY_ID;// =      props.getProperty("sql.select.msg.by.id");
-    private final String SQL_SELECT_MSG_IN_RANGE;// =   props.getProperty("sql.select.msg.in.range");
-    private final String SQL_SELECT_LAST_MSG_NUM;// =   props.getProperty("sql.select.last.msg.num");
-    private final String SQL_SELECT_SET;// =            props.getProperty("sql.select.set");
-    private final String SQL_SELECT_ALL_TOPICS;// =     props.getProperty("sql.select.all.topics");
-    private final String SQL_SELECT_NEW_TOPICS;// =     props.getProperty("sql.select.new.topics");
-*/
-
     private final String SQL_LOG_REQUEST = props.getProperty("sql.log.request");
 
-//    private Site site;
     private QueryProvider queryProvider;
 
     public void setQueryProvider(QueryProvider queryProvider) {
@@ -67,32 +41,6 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
 
     @Deprecated
     public DbManagerImpl(/*DbAccessor dbAcessor*/) {
-//        this.dbAccessor = dbAcessor;
-
-//        this.site = site;
-//        String name = site.getName();
-/*        SQL_INSERT_MSG = MessageFormat.format(props.getProperty("sql.insert.msg"), name);
-        SQL_INSERT_UPDATE_MSG = MessageFormat.format(props.getProperty("sql.insert.update.msg"), name);
-
-        SQL_UPDATE_MSG = MessageFormat.format(props.getProperty("sql.update.msg"), name);
-        SQL_DELETE_MSG = MessageFormat.format(props.getProperty("sql.delete.msg"), name);
-
-        SQL_SELECT_MSG_BY_ID = MessageFormat.format(props.getProperty("sql.select.msg.by.id"), name);
-        SQL_SELECT_MSG_IN_RANGE = MessageFormat.format(props.getProperty("sql.select.msg.in.range"), name);
-        SQL_SELECT_LAST_MSG_NUM = MessageFormat.format(props.getProperty("sql.select.last.msg.num"), name);
-        SQL_SELECT_SET = MessageFormat.format(props.getProperty("sql.select.set"), name);
-
-        SQL_SELECT_ALL_TOPICS = MessageFormat.format(props.getProperty("sql.select.all.topics"), name);
-        SQL_SELECT_NEW_TOPICS = MessageFormat.format(props.getProperty("sql.select.new.topics"), name);*/
-    }
-
-    @Deprecated
-    private void fillPreparedStatement(PreparedStatement pstmt, Message msg) {
-        DbUtils.setParams(pstmt,
-                new Object[]{msg.getNum(), msg.getParentNum(), msg.getHost(), msg.getTopicCode(), msg.getTitle(), msg.getNick(),
-                        msg.getAltName(), msg.getTimestamp(), msg.isReg(), msg.getBody(), msg.getStatus().getInt()},
-                new VarType[]{INTEGER, INTEGER, STRING, INTEGER, STRING, STRING,
-                        STRING, DATE, BOOLEAN, STRING, INTEGER});
     }
 
     @Override
@@ -101,46 +49,45 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
     }
 
     @Override
-    public void saveMessagesFast(Site site, List<Message> msgs, boolean updateIfExists) {
-        PreparedStatement insertPstmt = null;
-        ResultSet rs = null;
-        Connection conn = null;
-        try {
-            conn = ConnectionUtils.getConnection(getDataSource());
-            conn.setAutoCommit(false);
-            insertPstmt = conn.prepareStatement(updateIfExists
-                    ? queryProvider.getInsertUpdateMsgQuery(site)
-                    : queryProvider.getInsertMsgQuery(site));
+    public void saveMessagesFast(Site site, final List<Message> msgs, boolean updateIfExists) {
+        Assert.isTrue(!updateIfExists, "updating not implemented!");
 
-            for (Message msg : msgs) {
-                logger.debug("Adding msg: " + msg.getNum() + " to batch... ");
-
-                if (!updateIfExists)
-                    fillPreparedStatement(insertPstmt, msg);
-                else {
-                    DbUtils.setParams(insertPstmt,
-                            new Object[]{msg.getNum(), msg.getParentNum(), msg.getHost(), msg.getTopicCode(), msg.getTitle(), msg.getNick(), msg.getAltName(), msg.getTimestamp(), msg.isReg(), msg.getBody(), msg.getStatus().getInt(),
-                                    msg.getParentNum(), msg.getHost(), msg.getTopicCode(), msg.getTitle(), msg.getNick(), msg.getAltName(), msg.getTimestamp(), msg.isReg(), msg.getBody(), msg.getStatus().getInt()},
-                            new VarType[]{INTEGER, INTEGER, STRING, INTEGER, STRING, STRING, STRING, DATE, BOOLEAN, STRING, INTEGER,
-                                    INTEGER, STRING, INTEGER, STRING, STRING, STRING, DATE, BOOLEAN, STRING, INTEGER});
-                }
-
-                insertPstmt.addBatch();
+        getJdbcTemplate().batchUpdate(queryProvider.getInsertMsgQuery(site), new BatchPreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement ps, int i) throws SQLException {
+                Message msg = msgs.get(i);
+                /*
+                num,\
+                parentNum,\
+                host,\
+                topicCode,\
+                title,\
+                nick,\
+                altName,\
+                msgDate,\
+                reg,\
+                body,\
+                status)
+                */
+                int j = 1;
+                ps.setInt(j++, msg.getNum());
+                ps.setInt(j++, msg.getParentNum());
+                ps.setString(j++, msg.getHost());
+                ps.setInt(j++, msg.getTopicCode());
+                ps.setString(j++, msg.getTitle());
+                ps.setString(j++, msg.getNick());
+                ps.setString(j++, msg.getAltName());
+                ps.setTimestamp(j++, timestamp(msg.getDate()));
+                ps.setBoolean(j++, msg.isReg());
+                ps.setString(j++, msg.getBody());
+                ps.setInt(j, msg.getStatus().getInt());
             }
 
-            insertPstmt.executeBatch();
-            conn.commit();
-            conn.setAutoCommit(true);
-        } catch (SQLException e) {
-            try {
-                conn.setAutoCommit(true);
-            } catch (SQLException e1) {
-                throw new DbException(e1);
+            @Override
+            public int getBatchSize() {
+                return msgs.size();
             }
-            throw new DbException(e);
-        } finally {
-            CloseUtils.close(insertPstmt, rs);
-        }
+        });
     }
 
 /*    public void saveMessages(List<Message> msgs) {
@@ -151,37 +98,17 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
 
     @Override
     public Message getMessageByNumber(Site site, int num) {
-        DbResult res = DbUtils.executeSelect(
-                getDataSource(),
+        return getSimpleJdbcTemplate().queryForObject(
                 queryProvider.getSelectMsgByIdQuery(site),
-                new Object[]{num},
-                new VarType[]{INTEGER});
-
-        Message zm = null;
-        if (res.next())
-            zm = getMessage(res, site);
-
-        res.close();
-        return zm;
+                getRowMappersHelper().beanRowMapper(Message.class));
     }
 
     @Override
     public List<Message> getMessagesByRange(Site site, int start, int end) {
-        DbResult res = DbUtils.executeSelect(
-                getDataSource(),
+        return getSimpleJdbcTemplate().query(
                 queryProvider.getSelectMsgsInRangeQuery(site),
-                new Object[]{start, end},
-                new VarType[]{INTEGER, INTEGER});
-        try {
-            List<Message> msgs = new ArrayList<Message>();
-
-            while (res.next())
-                msgs.add(getMessage(res, site));
-
-            return msgs;
-        } finally {
-            res.close();
-        }
+                getRowMappersHelper().beanRowMapper(Message.class),
+                start, end);
     }
 
     @Override
@@ -211,12 +138,7 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
 
     @Override
     public int getLastMessageNumber(Site site) {
-        DbResult res = DbUtils.executeSelect(getDataSource(), queryProvider.getSelectLastMsgNumQuery(site));
-        try {
-            return res.getOneInt();
-        } finally {
-            res.close();
-        }
+        return getSimpleJdbcTemplate().queryForInt(queryProvider.getSelectLastMsgNumQuery(site));
     }
 
     private HashMap<String, Integer> topicsHashMap;
@@ -224,17 +146,20 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
 
     public HashMap<String, Integer> getTopicsHashMap(Site site) {
         if (topicsHashMap == null) {
-            DbResult res = DbUtils.executeSelect(getDataSource(), queryProvider.getSelectAllTopicsQuery(site));
-            try {
-                topicsHashMap = new HashMap<String, Integer>();
-                while (res.next()) {
-                    topicsHashMap.put(res.getString(2), res.getInt(1));
-                }
-            } finally {
-                res.close();
+            List<Topic> topicList = getTopicList(site);
+            topicsHashMap = new HashMap<String, Integer>();
+
+            for (Topic topic : topicList) {
+                topicsHashMap.put(topic.getName(), topic.getId());
             }
         }
         return topicsHashMap;
+    }
+
+    private List<Topic> getTopicList(Site site) {
+        return getSimpleJdbcTemplate().query(
+                queryProvider.getSelectAllTopicsQuery(site),
+                getRowMappersHelper().beanRowMapper(Topic.class));
     }
 
     // returns only "new" topics - current posible topics on site
@@ -242,16 +167,11 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
 
     public String[] getTopics(Site site) {
         if (topics == null) {
-            Map<Integer, String> topicsMap = new HashMap<Integer, String>();
-            DbResult res = DbUtils.executeSelect(getDataSource(), queryProvider.getSelectNewTopicsQuery(site));
-            while (res.next()) {
-                topicsMap.put(res.getInt(1), res.getString(2));
+            List<Topic> topicList = getTopicList(site);
+            topics = new String[topicList.size()];
+            for (Topic topic : topicList) {
+                topics[topic.getId()] = topic.getName();
             }
-            topics = new String[topicsMap.size()];
-            for (int id : topicsMap.keySet()) {
-                topics[id] = topicsMap.get(id);
-            }
-            res.close();
         }
         return topics;
     }
@@ -260,40 +180,18 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
     public void logRequest(int siteNum, String host, String userAgent,
                            String reqText, String reqNick, String reqHost,
                            String reqQuery, String reqQueryString, String referer, boolean rssAsked) {
-        DbUtils.executeUpdate(
-                getDataSource(),
-                SQL_LOG_REQUEST
-                , new Object[]{
-                        siteNum,
-                        StringUtils.substring(host, 0, 100),
-                        StringUtils.substring(userAgent, 0, 200),
+        getSimpleJdbcTemplate().update(SQL_LOG_REQUEST,
+                siteNum,
+                substring(host, 0, 100),
+                substring(userAgent, 0, 200),
 
-                        StringUtils.substring(reqText, 0, 200),
-                        StringUtils.substring(reqNick, 0, 100),
-                        StringUtils.substring(reqHost, 0, 100),
+                substring(reqText, 0, 200),
+                substring(reqNick, 0, 100),
+                substring(reqHost, 0, 100),
 
-                        StringUtils.substring(reqQuery, 0, 200),
-                        StringUtils.substring(reqQueryString, 0, 400),
-                        StringUtils.substring(referer, 0, 100),
-                        rssAsked}
-                , new VarType[]{INTEGER, STRING, STRING, STRING, STRING, STRING, STRING, STRING, STRING, BOOLEAN}
-                , 1);
-    }
-
-    private Message getMessage(DbResult rs, Site site) {
-        return new Message(
-                site,
-                rs.getString(MSG_NICK)
-                , rs.getString(MSG_ALT_NAME)
-                , rs.getString(MSG_HOST)
-                , rs.getString(MSG_TOPIC)
-                , rs.getInt(MSG_TOPIC_CODE)
-                , rs.getString(MSG_TITLE)
-                , rs.getString(MSG_BODY)
-                , rs.getTimestamp(MSG_DATE)
-                , rs.getBoolean(MSG_REG)
-                , rs.getInt(MSG_URL_NUM)
-                , rs.getInt(MSG_PARENT_NUM)
-                , rs.getInt(MSG_STATUS));
+                substring(reqQuery, 0, 200),
+                substring(reqQueryString, 0, 400),
+                substring(referer, 0, 100),
+                rssAsked);
     }
 }

@@ -12,6 +12,10 @@ import java.sql.*;
 public final class DbUtils {
 //    private static final Logger logger = Logger.getLogger(DbUtils.class);
 
+    public static Timestamp timestamp(java.util.Date date) {
+        return new Timestamp(date.getTime());
+    }
+
     public static void setParams(PreparedStatement st, Object[] params, VarType[] types) {
         if (params.length != types.length)
             throw new IllegalArgumentException("Number of params and types does not match");
