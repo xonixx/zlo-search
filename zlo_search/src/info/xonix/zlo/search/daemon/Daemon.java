@@ -1,11 +1,9 @@
 package info.xonix.zlo.search.daemon;
 
-import info.xonix.zlo.search.logic.IndexerLogicImpl;
 import info.xonix.zlo.search.ZloObservable;
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.dao.DAOException;
+import info.xonix.zlo.search.logic.IndexerLogicImpl;
 import info.xonix.zlo.search.model.Site;
-//import info.xonix.zlo.search.site.SiteSource;
 import info.xonix.zlo.search.utils.TimeUtils;
 import org.apache.log4j.Logger;
 import sun.misc.Signal;
@@ -175,11 +173,11 @@ public abstract class Daemon /*extends SiteSource*/ {
             }
         }
 
-        protected abstract int getFromIndex() throws DAOException;
+        protected abstract int getFromIndex();
 
-        protected abstract int getEndIndex() throws DAOException;
+        protected abstract int getEndIndex();
 
-        protected abstract void perform(int from, int to) throws DAOException;
+        protected abstract void perform(int from, int to);
 
         protected abstract boolean processException(Exception ex);
 
@@ -235,7 +233,7 @@ public abstract class Daemon /*extends SiteSource*/ {
             isSleeping = false;
         }
 
-        private void doPerform(int from, int to) throws DAOException {
+        private void doPerform(int from, int to) {
             daemonState = DaemonState.PERFORMING;
             perform(from, to);
         }

@@ -1,6 +1,5 @@
 package info.xonix.zlo.search.db;
 
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.*;
 
@@ -13,7 +12,7 @@ import java.sql.*;
 public final class DbUtils {
 //    private static final Logger logger = Logger.getLogger(DbUtils.class);
 
-    public static void setParams(PreparedStatement st, Object[] params, VarType[] types) throws DbException {
+    public static void setParams(PreparedStatement st, Object[] params, VarType[] types) {
         if (params.length != types.length)
             throw new IllegalArgumentException("Number of params and types does not match");
 
@@ -57,7 +56,7 @@ public final class DbUtils {
 
     //======================================
 
-    private static DbResult executeSelect(Connection connection, String sqlString, Object[] params, VarType[] types) throws DbException {
+    private static DbResult executeSelect(Connection connection, String sqlString, Object[] params, VarType[] types) {
         PreparedStatement st;
         try {
             st = connection.prepareStatement(sqlString);
@@ -68,7 +67,7 @@ public final class DbUtils {
         }
     }
 
-/*    private static DbResult executeSelect(String jndiDsName, String sqlString, Object[] params, VarType[] types) throws DbException {
+/*    private static DbResult executeSelect(String jndiDsName, String sqlString, Object[] params, VarType[] types) {
         try {
             return executeSelect(ConnectionUtils.getConnection(jndiDsName), sqlString, params, types);
         } catch (NamingException e) {
@@ -76,11 +75,11 @@ public final class DbUtils {
         }
     }*/
 
-    public static DbResult executeSelect(DataSource ds, String sqlString, Object[] params, VarType[] types) throws DbException {
+    public static DbResult executeSelect(DataSource ds, String sqlString, Object[] params, VarType[] types) {
         return executeSelect(ConnectionUtils.getConnection(ds), sqlString, params, types);
     }
 
-/*    public static DbResult executeSelect(DbAccessor dbAccessor, String sqlString, Object[] params, VarType[] types) throws DbException {
+/*    public static DbResult executeSelect(DbAccessor dbAccessor, String sqlString, Object[] params, VarType[] types) {
         DbResult dbResult;
         dbResult = executeSelect(dbAccessor.getDataSource(), sqlString, params, types);
         dbResult.setDbAccessor(dbAccessor);
@@ -88,15 +87,15 @@ public final class DbUtils {
     }
 
     //--------------------------------------
-    private static DbResult executeSelect(String jndiDsName, String sqlString) throws DbException {
+    private static DbResult executeSelect(String jndiDsName, String sqlString) {
         return executeSelect(jndiDsName, sqlString, new Object[0], new VarType[0]);
     }  */
 
-    public static DbResult executeSelect(DataSource ds, String sqlString) throws DbException {
+    public static DbResult executeSelect(DataSource ds, String sqlString) {
         return executeSelect(ds, sqlString, new Object[0], new VarType[0]);
     }
     /*
-    public static DbResult executeSelect(DbAccessor dbAccessor, String sqlString) throws DbException {
+    public static DbResult executeSelect(DbAccessor dbAccessor, String sqlString) {
         DbResult dbResult;
         dbResult = executeSelect(dbAccessor.getDataSource(), sqlString, new Object[0], new VarType[0]);
         dbResult.setDbAccessor(dbAccessor);
@@ -107,7 +106,7 @@ public final class DbUtils {
      */
     //======================================
 
-    private static void executeUpdate(Connection connection, String sqlString, Object[] params, VarType[] types, Integer expectedResult) throws DbException {
+    private static void executeUpdate(Connection connection, String sqlString, Object[] params, VarType[] types, Integer expectedResult) {
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
@@ -125,7 +124,7 @@ public final class DbUtils {
         }
     }
 
-/*    private static void executeUpdate(String jndiDsName, String sqlString, Object[] params, VarType[] types, Integer expectedResult) throws DbException {
+/*    private static void executeUpdate(String jndiDsName, String sqlString, Object[] params, VarType[] types, Integer expectedResult) {
         try {
             Connection con = ConnectionUtils.getConnection(jndiDsName);
             executeUpdate(con, sqlString, params, types, expectedResult);
@@ -135,23 +134,24 @@ public final class DbUtils {
         }
     } */
 
-    public static void executeUpdate(DataSource ds, String sqlString, Object[] params, VarType[] types, Integer expectedResult) throws DbException {
+    public static void executeUpdate(DataSource ds, String sqlString, Object[] params, VarType[] types, Integer expectedResult) {
         executeUpdate(ConnectionUtils.getConnection(ds), sqlString, params, types, expectedResult);
     }
     /*
-    public static void executeUpdate(DbAccessor dbAccessor, String sqlString, Object[] params, VarType[] types, Integer expectedResult) throws DbException {
+    public static void executeUpdate(DbAccessor dbAccessor, String sqlString, Object[] params, VarType[] types, Integer expectedResult) {
         executeUpdate(dbAccessor.getDataSource(), sqlString, params, types, expectedResult);
     }*/
     //--------------------------------------
-/*    private static void executeUpdate(String jndiDsName, String sqlString, Object[] params, VarType[] types) throws DbException {
+/*    private static void executeUpdate(String jndiDsName, String sqlString, Object[] params, VarType[] types) {
         executeUpdate(jndiDsName, sqlString, params, types, null);
     }
 
-    private static void executeUpdate(DataSource ds, String sqlString, Object[] params, VarType[] types) throws DbException {
+    private static void executeUpdate(DataSource ds, String sqlString, Object[] params, VarType[] types) {
         executeUpdate(ds, sqlString, params, types, null);
     }
 */
-    public static void executeUpdate(DataSource dataSource, String sqlString, Object[] params, VarType[] types) throws DbException {
+
+    public static void executeUpdate(DataSource dataSource, String sqlString, Object[] params, VarType[] types) {
         executeUpdate(dataSource, sqlString, params, types, null);
     }
 }

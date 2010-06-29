@@ -87,7 +87,7 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
     }
 
     @Deprecated
-    private void fillPreparedStatement(PreparedStatement pstmt, Message msg) throws DbException {
+    private void fillPreparedStatement(PreparedStatement pstmt, Message msg) {
         DbUtils.setParams(pstmt,
                 new Object[]{msg.getNum(), msg.getParentNum(), msg.getHost(), msg.getTopicCode(), msg.getTitle(), msg.getNick(),
                         msg.getAltName(), msg.getTimestamp(), msg.isReg(), msg.getBody(), msg.getStatus().getInt()},
@@ -96,12 +96,12 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
     }
 
     @Override
-    public void saveMessagesFast(Site site, List<Message> msgs) throws DbException {
+    public void saveMessagesFast(Site site, List<Message> msgs) {
         saveMessagesFast(site, msgs, false);
     }
 
     @Override
-    public void saveMessagesFast(Site site, List<Message> msgs, boolean updateIfExists) throws DbException {
+    public void saveMessagesFast(Site site, List<Message> msgs, boolean updateIfExists) {
         PreparedStatement insertPstmt = null;
         ResultSet rs = null;
         Connection conn = null;
@@ -143,14 +143,14 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
         }
     }
 
-/*    public void saveMessages(List<Message> msgs) throws DbException {
+/*    public void saveMessages(List<Message> msgs) {
         saveMessages(msgs, false);
     }*/
 
     // todo: test
 
     @Override
-    public Message getMessageByNumber(Site site, int num) throws DbException {
+    public Message getMessageByNumber(Site site, int num) {
         DbResult res = DbUtils.executeSelect(
                 getDataSource(),
                 queryProvider.getSelectMsgByIdQuery(site),
@@ -166,7 +166,7 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
     }
 
     @Override
-    public List<Message> getMessagesByRange(Site site, int start, int end) throws DbException {
+    public List<Message> getMessagesByRange(Site site, int start, int end) {
         DbResult res = DbUtils.executeSelect(
                 getDataSource(),
                 queryProvider.getSelectMsgsInRangeQuery(site),
@@ -185,7 +185,7 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
     }
 
     @Override
-    public List<Message> getMessages(Site site, int[] nums, int fromIndex) throws DbException {
+    public List<Message> getMessages(Site site, int[] nums, int fromIndex) {
         StringBuilder sbNums = new StringBuilder(Integer.toString(nums[0]));
 
         for (int i = 1; i < nums.length; i++) {
@@ -210,7 +210,7 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
     }
 
     @Override
-    public int getLastMessageNumber(Site site) throws DbException {
+    public int getLastMessageNumber(Site site) {
         DbResult res = DbUtils.executeSelect(getDataSource(), queryProvider.getSelectLastMsgNumQuery(site));
         try {
             return res.getOneInt();
@@ -222,7 +222,7 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
     private HashMap<String, Integer> topicsHashMap;
     // returns <topic name, topic code> where "topic name"s also include old codes
 
-    public HashMap<String, Integer> getTopicsHashMap(Site site) throws DbException {
+    public HashMap<String, Integer> getTopicsHashMap(Site site) {
         if (topicsHashMap == null) {
             DbResult res = DbUtils.executeSelect(getDataSource(), queryProvider.getSelectAllTopicsQuery(site));
             try {
@@ -240,7 +240,7 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
     // returns only "new" topics - current posible topics on site
     private String[] topics = null;
 
-    public String[] getTopics(Site site) throws DbException {
+    public String[] getTopics(Site site) {
         if (topics == null) {
             Map<Integer, String> topicsMap = new HashMap<Integer, String>();
             DbResult res = DbUtils.executeSelect(getDataSource(), queryProvider.getSelectNewTopicsQuery(site));
@@ -259,7 +259,7 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
     @Override
     public void logRequest(int siteNum, String host, String userAgent,
                            String reqText, String reqNick, String reqHost,
-                           String reqQuery, String reqQueryString, String referer, boolean rssAsked) throws DbException {
+                           String reqQuery, String reqQueryString, String referer, boolean rssAsked) {
         DbUtils.executeUpdate(
                 getDataSource(),
                 SQL_LOG_REQUEST
@@ -280,7 +280,7 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
                 , 1);
     }
 
-    private Message getMessage(DbResult rs, Site site) throws DbException {
+    private Message getMessage(DbResult rs, Site site) {
         return new Message(
                 site,
                 rs.getString(MSG_NICK)

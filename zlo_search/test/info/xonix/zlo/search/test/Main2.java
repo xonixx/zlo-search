@@ -2,7 +2,6 @@ package info.xonix.zlo.search.test;
 
 import info.xonix.zlo.search.dao.DbManagerImpl;
 import info.xonix.zlo.search.model.Site;
-import info.xonix.zlo.search.db.DbException;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.ru.RussianAnalyzer;
 import org.apache.lucene.index.IndexReader;
@@ -22,14 +21,14 @@ public class Main2 {
 
     public static void main(String[] args) {
         final String[][] DATA = {
-            {"10", "hello world", "Hello world!! 123 one two three George Bush"},
-            {"27", "google", "Google da best!"},
-            {"254", "firefox", "Firefox rules!!! IE must die!"},
-            {"177", "привет", "Иванов Иван Иванович"},
-            {"178", "превед", "Ктулху Фхтагн мальчика"},
-            {"179", "превед медвед", "Йа Креведко!"},
-            //{"Развлечения", "Развлечения", "Абракадабра абырвалг Даздраперма"},
-            //{"123123123", "Развлечения", "Абракадабра абырвалг Даздраперма"},
+                {"10", "hello world", "Hello world!! 123 one two three George Bush"},
+                {"27", "google", "Google da best!"},
+                {"254", "firefox", "Firefox rules!!! IE must die!"},
+                {"177", "привет", "Иванов Иван Иванович"},
+                {"178", "превед", "Ктулху Фхтагн мальчика"},
+                {"179", "превед медвед", "Йа Креведко!"},
+                //{"Развлечения", "Развлечения", "Абракадабра абырвалг Даздраперма"},
+                //{"123123123", "Развлечения", "Абракадабра абырвалг Даздраперма"},
         };
         try {
             // indexing

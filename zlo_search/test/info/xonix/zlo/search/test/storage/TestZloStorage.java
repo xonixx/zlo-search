@@ -1,7 +1,5 @@
 package info.xonix.zlo.search.test.storage;
 
-import info.xonix.zlo.search.dao.DAOException;
-
 /**
  * Author: gubarkov
  * Date: 14.09.2007

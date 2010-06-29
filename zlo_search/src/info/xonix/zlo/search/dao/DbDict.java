@@ -1,6 +1,5 @@
 package info.xonix.zlo.search.dao;
 
-import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.model.Site;
 
 import java.util.Date;
@@ -11,29 +10,29 @@ import java.util.Date;
  * Time: 23:50:40
  */
 public interface DbDict {
-    void setInt(Site site, String name, Integer val) throws DbException;
+    void setInt(Site site, String name, Integer val);
 
-    void setStr(Site site, String name, String val) throws DbException;
+    void setStr(Site site, String name, String val);
 
-    void setBool(Site site, String name, Boolean val) throws DbException;
+    void setBool(Site site, String name, Boolean val);
 
-    void setDate(Site site, String name, Date val) throws DbException;
+    void setDate(Site site, String name, Date val);
 
-    Integer getInt(Site site, String name) throws DbException;
+    Integer getInt(Site site, String name);
 
-    int getInt(Site site, String name, int defaultVal) throws DbException;
+    int getInt(Site site, String name, int defaultVal);
 
-    String getStr(Site site, String name) throws DbException;
+    String getStr(Site site, String name);
 
-    String getStr(Site site, String name, String defaultVal) throws DbException;
+    String getStr(Site site, String name, String defaultVal);
 
-    Boolean getBool(Site site, String name) throws DbException;
+    Boolean getBool(Site site, String name);
 
-    boolean getBool(Site site, String name, boolean defaultVal) throws DbException;
+    boolean getBool(Site site, String name, boolean defaultVal);
 
-    Date getDate(Site site, String name) throws DbException;
+    Date getDate(Site site, String name);
 
-    Date getDate(Site site, String name, Date defaultVal) throws DbException;
+    Date getDate(Site site, String name, Date defaultVal);
 
-    void remove(Site site, String name) throws DbException;
+    void remove(Site site, String name);
 }

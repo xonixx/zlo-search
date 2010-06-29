@@ -1,8 +1,6 @@
 package info.xonix.zlo.search.daemon;
 
-import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.dao.DbDictImpl;
-import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
 import org.apache.log4j.Logger;
@@ -22,15 +20,15 @@ public abstract class DbMessagesIteratingDaemon extends Daemon {
 
     private class DbMessagesIterationProcess extends Process {
 
-        protected int getFromIndex() throws DAOException {
+        protected int getFromIndex() {
             return dbDict.getInt(getIteratingVariableName(), 0);
         }
 
-        protected int getEndIndex() throws DAOException {
+        protected int getEndIndex() {
             return getSite().getLastMessageNumber();
         }
 
-        protected void perform(int from, int to) throws DAOException {
+        protected void perform(int from, int to) {
             doWithMessages(getSite().getDB().getMessages(from, to + 1));
             dbDict.setInt(getIteratingVariableName(), to);
         }
@@ -57,7 +55,7 @@ public abstract class DbMessagesIteratingDaemon extends Daemon {
         return new DbMessagesIterationProcess();
     }
 
-    protected void reset() throws DbException {
+    protected void reset() {
         dbDict.setInt(getIteratingVariableName(), 0);
     }
 

@@ -4,7 +4,6 @@ import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.config.ErrorMessage;
 import info.xonix.zlo.search.dao.DbManagerImpl;
 import info.xonix.zlo.search.db.DbAccessor;
-import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import info.xonix.zlo.web.CookieUtils;
 import info.xonix.zlo.web.RequestCache;

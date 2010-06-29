@@ -1,8 +1,6 @@
 package info.xonix.zlo.search.dao;
 
-import info.xonix.zlo.search.IndexingSource;
 import info.xonix.zlo.search.db.DbAccessor;
-import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.model.Message;
 import org.apache.log4j.Logger;
 
@@ -23,11 +21,11 @@ public class DB implements IndexingSource {
         this.dbAccessor = dbAccessor;
     }
 
-    public void saveMessages(List<Message> msgs) throws DAOException {
+    public void saveMessages(List<Message> msgs) {
         saveMessages(msgs, true);
     }
 
-    public void saveMessages(List<Message> msgs, boolean fast) throws DAOException {
+    public void saveMessages(List<Message> msgs, boolean fast) {
         try {
             logger.info(dbAccessor.getName() + " - Saving (" + msgs.get(0).getNum() + " - " + msgs.get(msgs.size() - 1).getNum() + ") msgs to DB...");
             if (fast)
@@ -41,7 +39,7 @@ public class DB implements IndexingSource {
         }
     }
 
-    public Message getMessageByNumber(int num) throws DAOException {
+    public Message getMessageByNumber(int num) {
         try {
             return dbAccessor.getDbManager().getMessageByNumber(num);
         } catch (DbException e) {
@@ -49,7 +47,7 @@ public class DB implements IndexingSource {
         }
     }
 
-    public List<Message> getMessages(int start, int end) throws DAOException {
+    public List<Message> getMessages(int start, int end) {
         try {
             return dbAccessor.getDbManager().getMessagesByRange(start, end);
         } catch (DbException e) {
@@ -57,7 +55,7 @@ public class DB implements IndexingSource {
         }
     }
 
-    public int getLastMessageNumber() throws DAOException {
+    public int getLastMessageNumber() {
         try {
             return dbAccessor.getDbManager().getLastMessageNumber();
         } catch (DbException e) {

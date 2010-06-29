@@ -1,7 +1,6 @@
 package info.xonix.zlo.search;
 
 import info.xonix.zlo.search.dao.DbManager;
-import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.doubleindex.DoubleHits;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageFields;
@@ -40,7 +39,7 @@ public class ZloPaginatedList /*extends SiteSource*/ implements PaginatedList {
         return currentList;
     }
 
-    public List<Message> subList(int fromIndex, int toIndex) throws DbException {
+    public List<Message> subList(int fromIndex, int toIndex) {
         if (fromIndex == toIndex)
             return null;
 
@@ -56,7 +55,7 @@ public class ZloPaginatedList /*extends SiteSource*/ implements PaginatedList {
         return dbManager.getMessages(site, indexes, fromIndex);
     }
 
-    public void refreshCurrentList() throws DbException {
+    public void refreshCurrentList() {
         int from = (pageNumber - 1) * objectsPerPage;
         currentList = subList(from, Math.min(from + objectsPerPage, getFullListSize()));
     }

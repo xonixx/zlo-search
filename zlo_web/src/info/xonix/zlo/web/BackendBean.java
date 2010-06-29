@@ -1,7 +1,6 @@
 package info.xonix.zlo.web;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
 import org.apache.commons.lang.StringUtils;

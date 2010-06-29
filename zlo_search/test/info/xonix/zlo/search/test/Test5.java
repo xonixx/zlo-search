@@ -1,7 +1,6 @@
 package info.xonix.zlo.search.test;
 
 import info.xonix.zlo.search.RussianWithNumbersAndSpecialStopWordsAnalyzer;
-import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
 import info.xonix.zlo.search.logic.IndexerLogicImpl;
 import info.xonix.zlo.search.model.Message;
