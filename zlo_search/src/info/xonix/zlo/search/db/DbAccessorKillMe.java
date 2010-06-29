@@ -5,7 +5,7 @@ import info.xonix.zlo.search.dao.DB;
 import info.xonix.zlo.search.dao.DbDictImpl;
 import info.xonix.zlo.search.dao.DbManagerImpl;
 import info.xonix.zlo.search.site.Nameable;
-import info.xonix.zlo.search.spring.AppSpringConfig;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
@@ -127,7 +127,7 @@ public class DbAccessorKillMe implements Nameable {
             }
         }
         return ds;*/
-        return AppSpringConfig.getApplicationContext().getBean("dataSource", DataSource.class);
+        return AppSpringContext.getApplicationContext().getBean("dataSource", DataSource.class);
     }
 
     private void setJNDI_DS_NAME(String JNDI_DS_NAME) {

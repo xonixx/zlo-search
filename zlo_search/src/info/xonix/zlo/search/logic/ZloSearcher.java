@@ -1,14 +1,16 @@
-package info.xonix.zlo.search;
+package info.xonix.zlo.search.logic;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
+import info.xonix.zlo.search.model.SearchRequest;
+import info.xonix.zlo.search.model.SearchResult;
+import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.model.ZloMessage;
-//import info.xonix.zlo.search.site.SiteSource;
 import info.xonix.zlo.search.utils.TimeUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
@@ -40,19 +42,6 @@ public class ZloSearcher /*extends SiteSource*/ {
                 ir.close();
         } catch (IOException e) {
             logger.error("Error while closing index reader: " + e.getClass());
-        }
-    }
-
-    public static class ParseException extends RuntimeException {
-        private String query;
-
-        public ParseException(String query, Throwable cause) {
-            super(cause);
-            this.query = query;
-        }
-
-        public String getQuery() {
-            return query;
         }
     }
 
@@ -140,8 +129,8 @@ public class ZloSearcher /*extends SiteSource*/ {
             result.setDoubleIndexSearcher(dis);
             result.setHits(dis.search(query));
             result.setSearchDateNow();
-        } catch (org.apache.lucene.queryParser.ParseException e) {
-            throw new ParseException(queryStr, e);
+        } catch (ParseException e) {
+            throw new SearchException(queryStr, e);
         } catch (IOException e) {
             logger.error(e);
         }

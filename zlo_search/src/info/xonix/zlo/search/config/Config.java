@@ -101,6 +101,7 @@ public class Config {
 
     public static final boolean DEBUG = TRUE.equals(getProp("debug"));
     public static final boolean SEARCH_PERFORM_SORT = TRUE.equals(getProp("search.perform.sort"));
+    // todo:
     public static boolean USE_DOUBLE_INDEX = TRUE.equals(getProp("search.use.double.index"));
 
     public static final String WEBSITE_DOMAIN = getProp("website.domain");
