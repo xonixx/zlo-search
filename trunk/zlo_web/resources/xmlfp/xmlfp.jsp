@@ -1,4 +1,5 @@
-<%@ page import="info.xonix.zlo.search.model.ZloMessage, org.apache.commons.lang.StringUtils, info.xonix.zlo.search.xmlfp.ZloJaxb" %>
+<%@ page
+        import="info.xonix.zlo.search.model.Message, info.xonix.zlo.search.xmlfp.ZloJaxb, org.apache.commons.lang.StringUtils" %>
 <%--
   User: Vovan
   Date: 13.08.2008
@@ -11,7 +12,7 @@
 
 <c:choose>
     <c:when test="${empty param}">
-        <%@ include file="xmlfpInfo.jsp"%>
+        <%@ include file="xmlfpInfo.jsp" %>
     </c:when>
     <c:otherwise>
         <%
@@ -20,7 +21,7 @@
                 response.setContentType("text/xml; charset=windows-1251");
 
                 if (StringUtils.isNotEmpty(request.getParameter("num"))) {
-                    ZloMessage m = site.getDB().getMessageByNumber(Integer.parseInt(request.getParameter("num")));
+                    Message m = site.getDB().getMessageByNumber(Integer.parseInt(request.getParameter("num")));
                     response.getWriter().write(ZloJaxb.zloMessageToXml(m));
                 } else if (request.getParameter("lastMessageNumber") != null) {
                     response.getWriter().write(ZloJaxb.lastNessageNumberToXml(

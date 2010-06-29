@@ -2,9 +2,9 @@ package info.xonix.zlo.search.daemon;
 
 import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.dao.DbDictImpl;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.db.DbException;
-import info.xonix.zlo.search.model.ZloMessage;
+import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.model.Site;
 import org.apache.log4j.Logger;
 
 import java.util.List;
@@ -61,6 +61,7 @@ public abstract class DbMessagesIteratingDaemon extends Daemon {
         dbDict.setInt(getIteratingVariableName(), 0);
     }
 
-    protected abstract void doWithMessages(List<ZloMessage> msgs);
+    protected abstract void doWithMessages(List<Message> msgs);
+
     protected abstract String getIteratingVariableName();
 }

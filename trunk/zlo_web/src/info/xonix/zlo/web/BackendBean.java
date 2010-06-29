@@ -1,11 +1,11 @@
 package info.xonix.zlo.web;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.db.DbException;
-import info.xonix.zlo.search.model.ZloMessage;
-import org.apache.commons.lang.math.NumberUtils;
+import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.model.Site;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ public class BackendBean {
             ;
         }
         return HtmlConstructor.constructSelector(SN_TOPIC, null,
-                new String[]{ZloMessage.ALL_TOPICS}, topics, getTopicInt(), true);
+                new String[]{Message.ALL_TOPICS}, topics, getTopicInt(), true);
     }
 
     public String getSiteSelector() {

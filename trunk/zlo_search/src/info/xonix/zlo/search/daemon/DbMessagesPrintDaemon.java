@@ -1,8 +1,8 @@
 package info.xonix.zlo.search.daemon;
 
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.db.DbException;
-import info.xonix.zlo.search.model.ZloMessage;
+import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.model.Site;
 import org.apache.log4j.Logger;
 
 import java.util.List;
@@ -24,8 +24,8 @@ public class DbMessagesPrintDaemon extends DbMessagesIteratingDaemon {
         setDoPerTime(perTime);
     }
 
-    protected void doWithMessages(List<ZloMessage> msgs) {
-        for (ZloMessage m : msgs) {
+    protected void doWithMessages(List<Message> msgs) {
+        for (Message m : msgs) {
             logger.info(m);
         }
         try {
@@ -34,6 +34,7 @@ public class DbMessagesPrintDaemon extends DbMessagesIteratingDaemon {
             e.printStackTrace();
         }
     }
+
     protected String getIteratingVariableName() {
         return "lastPrintIter";
     }

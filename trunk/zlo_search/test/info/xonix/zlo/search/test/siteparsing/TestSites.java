@@ -1,8 +1,8 @@
 package info.xonix.zlo.search.test.siteparsing;
 
 import info.xonix.zlo.search.dao.DAOException;
+import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
-import info.xonix.zlo.search.model.ZloMessage;
 import junit.framework.Assert;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
@@ -45,7 +45,7 @@ public class TestSites {
             int lmn = velo.getLastMessageNumber();
             System.out.println("lmn: " + lmn);
 
-            ZloMessage m = velo.getMessage(19490);
+            Message m = velo.getMessage(19490);
 
             System.out.println(m);
 
@@ -88,7 +88,7 @@ public class TestSites {
             int lmn = dev.getLastMessageNumber();
             System.out.println(lmn);
 
-            ZloMessage m = dev.getMessage(9404);
+            Message m = dev.getMessage(9404);
 
             Assert.assertEquals(9404, m.getNum());
             Assert.assertEquals("Berk", m.getNick());
@@ -132,7 +132,7 @@ public class TestSites {
             int lmn = zlo.getLastMessageNumber();
             System.out.println(lmn);
 
-            ZloMessage m = zlo.getMessage(4093778);
+            Message m = zlo.getMessage(4093778);
 
             Assert.assertEquals("QDiesel", m.getNick());
             Assert.assertEquals("nokia.7ka.mipt.ru", m.getHost());
@@ -173,7 +173,7 @@ public class TestSites {
 
             System.out.println(lmn);
 
-            ZloMessage m = takeoff.getMessage(13996);
+            Message m = takeoff.getMessage(13996);
 
             Assert.assertEquals("Слава", m.getNick());
             Assert.assertEquals("gluk.2ka.mipt.ru", m.getHost());
@@ -225,7 +225,7 @@ public class TestSites {
             int lmn = np.getLastMessageNumber();
             System.out.println(lmn);
 
-            ZloMessage m = np.getMessage(96119);
+            Message m = np.getMessage(96119);
             System.out.println(m);
 
             Assert.assertEquals("там сочинение на страницу или больше", m.getTitle());
