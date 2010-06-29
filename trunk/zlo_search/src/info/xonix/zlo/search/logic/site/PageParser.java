@@ -1,4 +1,4 @@
-package info.xonix.zlo.search.site;
+package info.xonix.zlo.search.logic.site;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.db.DbException;
@@ -17,7 +17,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Author: gubarkov
@@ -27,14 +26,15 @@ import java.util.regex.Pattern;
 public class PageParser /*extends SiteSource*/ {
     public static final Logger logger = Logger.getLogger(PageParser.class);
 
-    private Site site;
+//    private Site site;
 
 //    private DbManager dbm;
 
-    private Pattern MSG_REG_RE;
-    private Pattern MSG_UNREG_RE;
-    private String MSG_DATE_PATTERN;
+//    private Pattern MSG_REG_RE;
+//    private Pattern MSG_UNREG_RE;
+//    private String MSG_DATE_PATTERN;
 
+/*
     public PageParser(Site site) {
 //        super(site);
         this.site = site;
@@ -43,15 +43,16 @@ public class PageParser /*extends SiteSource*/ {
         MSG_UNREG_RE = site.getMsgUnregReStr() == null ? null : Pattern.compile(site.getMsgUnregReStr(), Pattern.DOTALL);
         MSG_DATE_PATTERN = site.getMsgDatePattern();
     }
+*/
 
-    public Message parseMessage(Message message, String msg) {
+    private Message parseMessage(Site site, Message message, String msg) {
 
-        Matcher m = MSG_UNREG_RE.matcher(msg);
+        Matcher m = site.getMsgUnregRe().matcher(msg);
 
         if (m.find()) {
             message.setReg(false);
         } else {
-            m = MSG_REG_RE.matcher(msg);
+            m = site.getMsgRegRe().matcher(msg);
             if (!m.find()) {
                 if (msg.contains(site.getMsgNotExistOrWrong())) {
                     message.setStatus(MessageStatus.DELETED);
@@ -105,7 +106,7 @@ public class PageParser /*extends SiteSource*/ {
         message.setHost(m.group(groupsOrder.get(4)));
 
         String dateStr = m.group(groupsOrder.get(5));
-        message.setDate(StringUtils.isEmpty(dateStr) ? new Date(0) : prepareDate(dateStr));
+        message.setDate(StringUtils.isEmpty(dateStr) ? new Date(0) : prepareDate(site, dateStr));
 
         message.setBody(m.group(groupsOrder.get(6)));
         message.setStatus(MessageStatus.OK);
@@ -113,19 +114,20 @@ public class PageParser /*extends SiteSource*/ {
         return message;
     }
 
-    public Message parseMessage(String msg, int urlNum) {
+    public Message parseMessage(Site site, String msg, int urlNum) {
         Message zm = new Message();
         zm.setNum(urlNum);
-        parseMessage(zm, msg);
+        parseMessage(site, zm, msg);
         return zm;
     }
 
-    private Date prepareDate(String s) {
+    private Date prepareDate(Site site, String s) {
         DateFormat df;
         Date d = null;
         try {
-            if (StringUtils.isNotEmpty(MSG_DATE_PATTERN)) {
-                df = new SimpleDateFormat(MSG_DATE_PATTERN);
+            String msgDatePattern = site.getMsgDatePattern();
+            if (StringUtils.isNotEmpty(msgDatePattern)) {
+                df = new SimpleDateFormat(msgDatePattern);
                 return df.parse(s);
             }
 

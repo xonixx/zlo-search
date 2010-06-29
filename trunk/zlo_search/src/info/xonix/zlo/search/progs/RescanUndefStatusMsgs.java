@@ -1,10 +1,10 @@
 package info.xonix.zlo.search.progs;
 
-import info.xonix.zlo.search.MultithreadedRetriever;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.dao.DbManagerImpl;
 import info.xonix.zlo.search.db.DbException;
+import info.xonix.zlo.search.logic.site.MessageRetriever;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.model.Site;
@@ -46,7 +46,7 @@ public class RescanUndefStatusMsgs {
 
             if (newNums.size() > 0) {
                 System.out.print("Getting from site... ");
-                List<Message> newMsgs = MultithreadedRetriever.getMessages(Site.forName("zlo"), newNums);
+                List<Message> newMsgs = MessageRetriever.getMessages(Site.forName("zlo"), newNums);
 
                 System.out.print("Saving... ");
                 dbm.saveMessagesFast(newMsgs, true);

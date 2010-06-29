@@ -2,7 +2,7 @@ package info.xonix.zlo.search.doubleindex;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.model.SiteConfiguration;
+import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.utils.TimeUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.IndexReader;
@@ -25,7 +25,7 @@ import java.util.Date;
  * Time: 2:57:59
  */
 public class DoubleIndexSearcher {
-    private static final Logger logger = Logger.getLogger(DoubleIndexSearcher.class);
+    private static final Logger log = Logger.getLogger(DoubleIndexSearcher.class);
 
     public static final int PERIOD_RECREATE_INDEXER = TimeUtils.parseToMilliSeconds(Config.getProp("searcher.period.recreate.indexer"));
 
@@ -51,7 +51,7 @@ public class DoubleIndexSearcher {
         renewDate = new Date();
     }
 
-    public DoubleIndexSearcher(SiteConfiguration site, Sort renewingSort) {
+    public DoubleIndexSearcher(Site site, Sort renewingSort) {
         this(site.getIndexDirDouble(), renewingSort);
     }
 
@@ -91,9 +91,9 @@ public class DoubleIndexSearcher {
     private void createDirIfAbsent(String path) {
         File f = new File(path);
         if (!f.exists()) {
-            logger.info("Creating dir: " + path);
+            log.info("Creating dir: " + path);
             if (!f.mkdirs()) {
-                logger.warn("Error creating dir...");
+                log.warn("Error creating dir...");
             }
         }
     }
@@ -105,12 +105,12 @@ public class DoubleIndexSearcher {
             try {
                 bigReader = IndexReader.open(getBigPath());
             } catch (IOException e) {
-                logger.error("Can't create bigReader... Creating empty one...");
+                log.error("Can't create bigReader... Creating empty one...");
                 try {
                     createEmptyIndex(getBigPath());
                     bigReader = IndexReader.open(getBigPath());
                 } catch (IOException e1) {
-                    logger.error("Can't create empty big reader: ", e1);
+                    log.error("Can't create empty big reader: ", e1);
                 }
             }
         } else {
@@ -131,12 +131,12 @@ public class DoubleIndexSearcher {
                 smallReader = IndexReader.open(getSmallPath());
                 renewDate = new Date();
             } catch (IOException e) {
-                logger.error("Can't create smallReader... Creating empty one...");
+                log.error("Can't create smallReader... Creating empty one...");
                 try {
                     createEmptyIndex(getSmallPath());
                     smallReader = IndexReader.open(getSmallPath());
                 } catch (IOException e1) {
-                    logger.error("Can't create empty small reader: ", e1);
+                    log.error("Can't create empty small reader: ", e1);
                 }
             }
         } else {
@@ -173,14 +173,14 @@ public class DoubleIndexSearcher {
                 return !bigReader.isCurrent()
                         && !isReopeningBig;
         } catch (IOException e) {
-            logger.error(e);
+            log.error(e);
             return true;
         }
     }
 
     private void performReopen(IndexReader r) {
         boolean isSmall = r == smallReader;
-        logger.debug(MessageFormat.format("Start recreating {0} indexReader...", isSmall ? "small" : "big"));
+        log.debug(MessageFormat.format("Start recreating {0} indexReader...", isSmall ? "small" : "big"));
         if (isSmall)
             isReopeningSmall = true;
         else
@@ -195,7 +195,7 @@ public class DoubleIndexSearcher {
                             ? getSmallPath()
                             : getBigPath());
         } catch (IOException e) {
-            logger.error("Error while recreating index reader: " + e);
+            log.error("Error while recreating index reader: " + e);
         }
 
         // search to form memory caches
@@ -204,7 +204,7 @@ public class DoubleIndexSearcher {
             is = new IndexSearcher(ir);
             is.search(new MatchAllDocsQuery(), renewingSort);
         } catch (IOException e) {
-            logger.error("Problems recreating smallReader: ", e);
+            log.error("Problems recreating smallReader: ", e);
             return;
         } finally {
             if (is != null) {
@@ -227,7 +227,7 @@ public class DoubleIndexSearcher {
             clean(oldIndexReader);
         }
 
-        logger.info("Successfuly recreated.");
+        log.info("Successfuly recreated.");
 
         if (isSmall)
             isReopeningSmall = false;
@@ -254,7 +254,7 @@ public class DoubleIndexSearcher {
             if (ir != null)
                 ir.close();
         } catch (IOException e) {
-            logger.error("Error while closing index reader: " + e.getClass());
+            log.error("Error while closing index reader: " + e.getClass());
         }
     }
 
@@ -276,31 +276,31 @@ public class DoubleIndexSearcher {
     }
 
     public void moveSmallToBig() throws IOException {
-        logger.info("Start moving small to big...");
+        log.info("Start moving small to big...");
 
         IndexWriter bigIndexWriter = new IndexWriter(getBigPath(), Message.constructAnalyzer());
         IndexReader smlR = getSmallReader();
-        logger.info("Moving small to big...");
+        log.info("Moving small to big...");
         bigIndexWriter.addIndexesNoOptimize(new Directory[]{FSDirectory.getDirectory(getSmallPath())}); // add small to big, w/o optimize
 
         smlR.close();
         smallReader = null;
         bigIndexWriter.close();
 
-        logger.info("Cleaning small index...");
+        log.info("Cleaning small index...");
         createEmptyIndex(getSmallPath()); // empty small index
-        logger.info("Done moving small to big.");
+        log.info("Done moving small to big.");
     }
 
     public void optimize() throws IOException {
-        logger.info("Optimizing...");
+        log.info("Optimizing...");
         IndexWriter iw = new IndexWriter(getBigPath(), Message.constructAnalyzer());
         iw.optimize();
         iw.close();
         iw = new IndexWriter(getSmallPath(), Message.constructAnalyzer());
         iw.optimize();
         iw.close();
-        logger.info("Done.");
+        log.info("Done.");
     }
 
     private void createEmptyIndex(String path) throws IOException {

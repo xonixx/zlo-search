@@ -17,6 +17,7 @@ import java.util.Properties;
  * TODO: turn this to bean!!!
  */
 public class Config {
+    public static final String SITE_CONFIG_PREFIX = "site.config.";
 
     public static class DateFormats {
         public static final DateFormat DF_1 = new SimpleDateFormat("dd/MM/yyyy HH:mm");

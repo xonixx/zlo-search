@@ -1,8 +1,8 @@
 package info.xonix.zlo.search.test;
 
+import info.xonix.zlo.search.logic.site.PageParser;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
-import info.xonix.zlo.search.site.PageParser;
 
 /**
  * Author: Vovan

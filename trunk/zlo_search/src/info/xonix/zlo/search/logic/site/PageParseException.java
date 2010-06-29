@@ -1,4 +1,4 @@
-package info.xonix.zlo.search.site;
+package info.xonix.zlo.search.logic.site;
 
 /**
  * Author: Vovan

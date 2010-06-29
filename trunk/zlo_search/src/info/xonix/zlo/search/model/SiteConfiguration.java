@@ -6,6 +6,7 @@ import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 
 /**
@@ -15,8 +16,6 @@ import java.util.Properties;
  */
 abstract class SiteConfiguration /*extends DbAccessor*/ {
 
-    public static final String SITE_CONFIG_PREFIX = "site.config.";
-
     private String markEndMsg1;
     private String markEndMsg2;
     private String msgNotExistOrWrong;
@@ -25,7 +24,13 @@ abstract class SiteConfiguration /*extends DbAccessor*/ {
     // regexes
     private String msgRegReStr;
     private String msgUnregReStr;
-    private String linkIndexRegex;
+
+    private Pattern msgRegRe;
+    private Pattern msgUnregRe;
+
+    private String linkIndexReStr;
+
+    private Pattern linkIndexRe;
 
     private ArrayList<Integer> msgReGroupsOrder = null;
 
@@ -60,15 +65,15 @@ abstract class SiteConfiguration /*extends DbAccessor*/ {
         Properties p = new Properties();
 
         try {
-            for (String propFile : Config.getProp(SITE_CONFIG_PREFIX + name).split(";")) {
+            for (String propFile : Config.getProp(Config.SITE_CONFIG_PREFIX + name).split(";")) {
                 Config.loadProperties(p, "info/xonix/zlo/search/config/" + propFile);
             }
         } catch (NullPointerException e) {
-            System.err.println("Can't locate: " + SITE_CONFIG_PREFIX + name);
+            System.err.println("Can't locate: " + Config.SITE_CONFIG_PREFIX + name);
             throw e;
         }
 
-        setName(name);
+        this.name = name;
 
         markEndMsg1 = p.getProperty("str.mark.end.1");
         markEndMsg2 = p.getProperty("str.mark.end.2");
@@ -79,6 +84,9 @@ abstract class SiteConfiguration /*extends DbAccessor*/ {
         msgRegReStr = p.getProperty("regex.msg.reg");
         msgUnregReStr = p.getProperty("regex.msg.unreg");
 
+        msgRegRe = msgRegReStr == null ? null : Pattern.compile(msgRegReStr, Pattern.DOTALL);
+        msgUnregRe = msgUnregReStr == null ? null : Pattern.compile(msgUnregReStr, Pattern.DOTALL);
+
         String msgReGroups = p.getProperty("regex.msg.groups");
         if (msgReGroups != null) {
             msgReGroupsOrder = new ArrayList<Integer>();
@@ -87,7 +95,9 @@ abstract class SiteConfiguration /*extends DbAccessor*/ {
             }
         }
 
-        linkIndexRegex = p.getProperty("regex.link.index");
+        linkIndexReStr = p.getProperty("regex.link.index");
+
+        linkIndexRe = Pattern.compile(linkIndexReStr);
 
         siteUrl = p.getProperty("site.url");
         siteSmilesPath = p.getProperty("site.smiles.path");
@@ -128,102 +138,114 @@ abstract class SiteConfiguration /*extends DbAccessor*/ {
     }
 
     // getters & setters
+    // setters commented-out - object is immutable!
 
     public String getMarkEndMsg1() {
         return markEndMsg1;
     }
 
-    public void setMarkEndMsg1(String markEndMsg1) {
+/*    public void setMarkEndMsg1(String markEndMsg1) {
         this.markEndMsg1 = markEndMsg1;
-    }
+    }*/
 
     public String getMarkEndMsg2() {
         return markEndMsg2;
     }
 
-    public void setMarkEndMsg2(String markEndMsg2) {
+/*    public void setMarkEndMsg2(String markEndMsg2) {
         this.markEndMsg2 = markEndMsg2;
-    }
+    }*/
 
     public String getMsgNotExistOrWrong() {
         return msgNotExistOrWrong;
     }
 
-    public void setMsgNotExistOrWrong(String msgNotExistOrWrong) {
+/*    public void setMsgNotExistOrWrong(String msgNotExistOrWrong) {
         this.msgNotExistOrWrong = msgNotExistOrWrong;
-    }
+    }*/
 
     public String getWithoutTopic() {
         return withoutTopic;
     }
 
-    public void setWithoutTopic(String withoutTopic) {
+/*    public void setWithoutTopic(String withoutTopic) {
         this.withoutTopic = withoutTopic;
-    }
+    }*/
 
     public String getMsgRegReStr() {
         return msgRegReStr;
     }
 
-    public void setMsgRegReStr(String msgRegReStr) {
+/*    public void setMsgRegReStr(String msgRegReStr) {
         this.msgRegReStr = msgRegReStr;
-    }
+    }*/
 
     public String getMsgUnregReStr() {
         return msgUnregReStr;
     }
 
-    public void setMsgUnregReStr(String msgUnregReStr) {
+    public Pattern getMsgRegRe() {
+        return msgRegRe;
+    }
+
+    public Pattern getMsgUnregRe() {
+        return msgUnregRe;
+    }
+
+    /*    public void setMsgUnregReStr(String msgUnregReStr) {
         this.msgUnregReStr = msgUnregReStr;
+    }*/
+
+    public String getLinkIndexReStr() {
+        return linkIndexReStr;
     }
 
-    public String getLinkIndexRegex() {
-        return linkIndexRegex;
+    public Pattern getLinkIndexRe() {
+        return linkIndexRe;
     }
-
-    public void setLinkIndexRegex(String linkIndexRegex) {
-        this.linkIndexRegex = linkIndexRegex;
-    }
+/*    public void setLinkIndexRegex(String linkIndexReStr) {
+        this.linkIndexReStr = linkIndexReStr;
+    }*/
 
     public ArrayList<Integer> getMsgReGroupsOrder() {
         return msgReGroupsOrder;
     }
 
-    public void setMsgReGroupsOrder(ArrayList<Integer> msgReGroupsOrder) {
+/*    public void setMsgReGroupsOrder(ArrayList<Integer> msgReGroupsOrder) {
         this.msgReGroupsOrder = msgReGroupsOrder;
-    }
+    }*/
 
     public String getSiteUrl() {
         return siteUrl;
     }
 
-    public void setSiteUrl(String siteUrl) {
+/*    public void setSiteUrl(String siteUrl) {
         this.siteUrl = siteUrl;
-    }
+    }*/
 
     public String getSiteSmilesPath() {
         return siteSmilesPath;
     }
 
-    public void setSiteSmilesPath(String siteSmilesPath) {
+/*    public void setSiteSmilesPath(String siteSmilesPath) {
         this.siteSmilesPath = siteSmilesPath;
-    }
+    }*/
 
     public String getSiteDescription() {
         return siteDescription;
     }
 
-    public void setSiteDescription(String siteDescription) {
+/*    public void setSiteDescription(String siteDescription) {
         this.siteDescription = siteDescription;
-    }
+    }*/
 
     public String getReadQuery() {
         return readQuery;
     }
 
-    public void setReadQuery(String readQuery) {
+/*    public void setReadQuery(String readQuery) {
         this.readQuery = readQuery;
-    }
+    }*/
 
     public String getMsgDatePattern() {
         return msgDatePattern;
@@ -233,87 +255,87 @@ abstract class SiteConfiguration /*extends DbAccessor*/ {
         return performIndexing;
     }
 
-    public void setPerformIndexing(boolean performIndexing) {
+/*    public void setPerformIndexing(boolean performIndexing) {
         this.performIndexing = performIndexing;
-    }
+    }*/
 
     public String getIndexDirDouble() {
         return indexDirDouble;
     }
 
-    public void setIndexDirDouble(String indexDirDouble) {
+/*    public void setIndexDirDouble(String indexDirDouble) {
         this.indexDirDouble = indexDirDouble;
-    }
+    }*/
 
     public int getIndexerIndexPerTime() {
         return indexerIndexPerTime;
     }
 
-    public void setIndexerIndexPerTime(int indexerIndexPerTime) {
+/*    public void setIndexerIndexPerTime(int indexerIndexPerTime) {
         this.indexerIndexPerTime = indexerIndexPerTime;
-    }
+    }*/
 
     public int getIndexerIndexPeriod() {
         return indexerIndexPeriod;
     }
 
-    public void setIndexerIndexPeriod(int indexerIndexPeriod) {
+/*    public void setIndexerIndexPeriod(int indexerIndexPeriod) {
         this.indexerIndexPeriod = indexerIndexPeriod;
-    }
+    }*/
 
     public int getIndexerReconnectPeriod() {
         return indexerReconnectPeriod;
     }
 
-    public void setIndexerReconnectPeriod(int indexerReconnectPeriod) {
+/*    public void setIndexerReconnectPeriod(int indexerReconnectPeriod) {
         this.indexerReconnectPeriod = indexerReconnectPeriod;
-    }
+    }*/
 
     public int getIndexerLimitPerSecond() {
         return indexerLimitPerSecond;
     }
 
-    public void setIndexerLimitPerSecond(int indexerLimitPerSecond) {
+/*    public void setIndexerLimitPerSecond(int indexerLimitPerSecond) {
         this.indexerLimitPerSecond = indexerLimitPerSecond;
-    }
+    }*/
 
     public int getDbScanPerTime() {
         return dbScanPerTime;
     }
 
-    public void setDbScanPerTime(int dbScanPerTime) {
+/*    public void setDbScanPerTime(int dbScanPerTime) {
         this.dbScanPerTime = dbScanPerTime;
-    }
+    }*/
 
     public int getDbScanPeriod() {
         return dbScanPeriod;
     }
 
-    public void setDbScanPeriod(int dbScanPeriod) {
+/*    public void setDbScanPeriod(int dbScanPeriod) {
         this.dbScanPeriod = dbScanPeriod;
-    }
+    }*/
 
     public int getDbReconnectPeriod() {
         return dbReconnectPeriod;
     }
 
-    public void setDbReconnectPeriod(int dbReconnectPeriod) {
+/*    public void setDbReconnectPeriod(int dbReconnectPeriod) {
         this.dbReconnectPeriod = dbReconnectPeriod;
-    }
+    }*/
 
     public Integer getSiteNumber() {
         return siteNumber;
     }
 
-    public void setSiteNumber(Integer siteNumber) {
+/*    public void setSiteNumber(Integer siteNumber) {
         this.siteNumber = siteNumber;
-    }
+    }*/
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+/*    public void setName(String name) {
         this.name = name;
-    }
+    }*/
 }
