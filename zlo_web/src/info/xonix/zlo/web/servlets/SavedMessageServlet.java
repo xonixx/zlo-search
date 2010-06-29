@@ -2,7 +2,7 @@ package info.xonix.zlo.web.servlets;
 
 import info.xonix.zlo.search.config.ErrorMessage;
 import info.xonix.zlo.search.dao.DAOException;
-import info.xonix.zlo.search.model.ZloMessage;
+import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 import org.apache.commons.lang.StringUtils;
 
@@ -41,10 +41,10 @@ public class SavedMessageServlet extends BaseServlet {
 
         setSiteInReq(request, response);
 
-        ZloMessage msg;
+        Message msg;
         try {
             msg = getSite(request).getDB().getMessageByNumber(num);
-            if (msg != null && msg.getStatus() != ZloMessage.Status.DELETED) {
+            if (msg != null && msg.getStatus() != Message.Status.DELETED) {
                 request.setAttribute(SAVED_MSG, msg);
             } else {
                 request.setAttribute(ERROR, ErrorMessage.MessageNotFound);

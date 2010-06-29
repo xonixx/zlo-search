@@ -1,20 +1,19 @@
 package info.xonix.zlo.search.xmlfp;
 
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
+import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.xmlfp.xjccompiled.lastMessageNumber.ObjectFactory;
 import info.xonix.zlo.search.xmlfp.xjccompiled.message.Author;
 import info.xonix.zlo.search.xmlfp.xjccompiled.message.Content;
 import info.xonix.zlo.search.xmlfp.xjccompiled.message.Info;
-import info.xonix.zlo.search.xmlfp.xjccompiled.message.Message;
-import info.xonix.zlo.search.xmlfp.xjccompiled.lastMessageNumber.ObjectFactory;
-import info.xonix.zlo.search.model.ZloMessage;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import java.io.StringWriter;
 import java.math.BigInteger;
 import java.util.GregorianCalendar;
-import java.io.StringWriter;
 
 /**
  * Author: Vovan
@@ -35,7 +34,7 @@ public class ZloJaxb {
             jaxbContext = JAXBContext.newInstance("info.xonix.zlo.search.xmlfp.xjccompiled.lastMessageNumber");
             LAST_MSG_NUM_MARSHALLER = jaxbContext.createMarshaller();
 
-            for (Marshaller mar : new Marshaller[] {MESSAGE_MARSHALLER, LAST_MSG_NUM_MARSHALLER}) {
+            for (Marshaller mar : new Marshaller[]{MESSAGE_MARSHALLER, LAST_MSG_NUM_MARSHALLER}) {
                 mar.setProperty("jaxb.encoding", "windows-1251");
                 mar.setProperty("jaxb.formatted.output", true); // pretty-print
             }
@@ -45,18 +44,18 @@ public class ZloJaxb {
     }
 
 
-    public static String zloMessageToXml(ZloMessage m) {
+    public static String zloMessageToXml(Message m) {
         if (m == null) {
-            m = new ZloMessage();
+            m = new Message();
         }
         Site site = m.getSite();
-        Message jaxbMessage = new Message();
+        info.xonix.zlo.search.xmlfp.xjccompiled.message.Message jaxbMessage = new info.xonix.zlo.search.xmlfp.xjccompiled.message.Message();
 
         jaxbMessage.setStatus(
-                m.getStatus() == ZloMessage.Status.DELETED ? "deleted"
-                        : m.getStatus() == ZloMessage.Status.SPAM ? "spam"
+                m.getStatus() == Message.Status.DELETED ? "deleted"
+                        : m.getStatus() == Message.Status.SPAM ? "spam"
                         : m.getStatus() == null ? "notExists"
-                        : m.getStatus() == ZloMessage.Status.OK ? "ok" : "unknown"
+                        : m.getStatus() == Message.Status.OK ? "ok" : "unknown"
         );
 
         if ("ok".equals(jaxbMessage.getStatus())) {

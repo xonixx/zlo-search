@@ -1,11 +1,11 @@
 package info.xonix.zlo.search.test.junit;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.dao.DbManagerImpl;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.dao.DbDictImpl;
+import info.xonix.zlo.search.dao.DbManagerImpl;
 import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.db.VarType;
+import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import info.xonix.zlo.search.utils.TimeUtils;
 import org.junit.Before;
@@ -81,7 +81,7 @@ public class TestsSearch {
     @Test
     public void testGetMessages() {
 /*        try {
-            for (ZloMessage m : dbm.getMessages(new int[] {1,2,3,100,2000,1000050}, -1)) {
+            for (Message m : dbm.getMessages(new int[] {1,2,3,100,2000,1000050}, -1)) {
                 System.out.println(m);
             }
         } catch (DbException e) {

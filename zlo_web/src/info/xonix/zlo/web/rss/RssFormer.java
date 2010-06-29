@@ -5,12 +5,12 @@ import de.nava.informa.core.ChannelIF;
 import de.nava.informa.impl.basic.Category;
 import de.nava.informa.impl.basic.Channel;
 import de.nava.informa.impl.basic.Item;
-import info.xonix.zlo.search.model.SearchRequest;
-import info.xonix.zlo.search.model.SearchResult;
 import info.xonix.zlo.search.ZloPaginatedList;
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.model.SearchRequest;
+import info.xonix.zlo.search.model.SearchResult;
 import info.xonix.zlo.search.model.Site;
-import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import info.xonix.zlo.web.servlets.SearchServlet;
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
@@ -44,7 +44,7 @@ public class RssFormer {
             SearchResult searchResult = (SearchResult) request.getAttribute(SearchServlet.REQ_SEARCH_RESULT);
             ZloPaginatedList pl = (ZloPaginatedList) searchResult.getPaginatedList();
             List msgsList = pl.getList();
-            Date lastModifiedDateCurrent = msgsList != null && msgsList.size() > 0 ? ((ZloMessage) msgsList.get(0)).getDate() : null; // the youngest msg (max date)
+            Date lastModifiedDateCurrent = msgsList != null && msgsList.size() > 0 ? ((Message) msgsList.get(0)).getDate() : null; // the youngest msg (max date)
 
             logger.info("RSS request. User-Agent: " + request.getHeader("User-Agent") + ", If-Modified-Since: " + request.getHeader("If-Modified-Since"));
 
@@ -85,7 +85,7 @@ public class RssFormer {
 
                 if (msgsList != null) {
                     for (Object m1 : msgsList) {
-                        ZloMessage m = (ZloMessage) m1;
+                        Message m = (Message) m1;
                         Item it = new Item();
 
                         Site s = m.getSite();

@@ -1,8 +1,8 @@
 package info.xonix.zlo.search.xmlfp.test;
 
 import info.xonix.zlo.search.dao.DAOException;
+import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
-import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.search.xmlfp.ZloJaxb;
 import org.junit.Test;
 
@@ -16,7 +16,7 @@ public class TestMessageToXML {
     @Test
     public void test1() throws DAOException {
         Site s = Site.forName("zlo");
-        ZloMessage m = s.getDB().getMessageByNumber(3333333);
+        Message m = s.getDB().getMessageByNumber(3333333);
         System.out.println(m);
         System.out.println("======================");
         System.out.println(ZloJaxb.zloMessageToXml(m));

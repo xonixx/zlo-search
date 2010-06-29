@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.doubleindex;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.model.ZloMessage;
+import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.SiteConfiguration;
 import info.xonix.zlo.search.utils.TimeUtils;
 import org.apache.log4j.Logger;
@@ -29,8 +29,8 @@ public class DoubleIndexSearcher {
 
     public static final int PERIOD_RECREATE_INDEXER = TimeUtils.parseToMilliSeconds(Config.getProp("searcher.period.recreate.indexer"));
 
-    public static final String BIG_INDEX_DIR =      "1";
-    public static final String SMALL_INDEX_DIR =    "2";
+    public static final String BIG_INDEX_DIR = "1";
+    public static final String SMALL_INDEX_DIR = "2";
 
     private String indexesDir;
 
@@ -99,6 +99,7 @@ public class DoubleIndexSearcher {
     }
 
     private IndexReader bigReader;
+
     public IndexReader getBigReader() {
         if (bigReader == null) {
             try {
@@ -123,6 +124,7 @@ public class DoubleIndexSearcher {
     }
 
     private IndexReader smallReader;
+
     public IndexReader getSmallReader() {
         if (smallReader == null) {
             try {
@@ -152,7 +154,7 @@ public class DoubleIndexSearcher {
 
     private void startRecreatingReaderIfNeeded(IndexReader r) {
         if (needToRecreateReader(r)) {
-            synchronized(this) {
+            synchronized (this) {
                 if (needToRecreateReader(r)) {
                     startReopeningThread(r);
                 }
@@ -185,7 +187,7 @@ public class DoubleIndexSearcher {
             isReopeningBig = true;
 
         IndexReader ir = null,
-                    oldIndexReader = isSmall ? smallReader : bigReader;
+                oldIndexReader = isSmall ? smallReader : bigReader;
 
         try {
             ir = IndexReader.open(
@@ -221,7 +223,7 @@ public class DoubleIndexSearcher {
             bigReader = ir;
         }
 
-        synchronized(closeLock) { // to give ability to perform searh if oldReader already used
+        synchronized (closeLock) { // to give ability to perform searh if oldReader already used
             clean(oldIndexReader);
         }
 
@@ -264,7 +266,7 @@ public class DoubleIndexSearcher {
     }
 
     public void drop() throws IOException {
-        createEmptyIndex(getBigPath());    
+        createEmptyIndex(getBigPath());
         createEmptyIndex(getSmallPath());
     }
 
@@ -276,7 +278,7 @@ public class DoubleIndexSearcher {
     public void moveSmallToBig() throws IOException {
         logger.info("Start moving small to big...");
 
-        IndexWriter bigIndexWriter = new IndexWriter(getBigPath(), ZloMessage.constructAnalyzer());
+        IndexWriter bigIndexWriter = new IndexWriter(getBigPath(), Message.constructAnalyzer());
         IndexReader smlR = getSmallReader();
         logger.info("Moving small to big...");
         bigIndexWriter.addIndexesNoOptimize(new Directory[]{FSDirectory.getDirectory(getSmallPath())}); // add small to big, w/o optimize
@@ -292,17 +294,17 @@ public class DoubleIndexSearcher {
 
     public void optimize() throws IOException {
         logger.info("Optimizing...");
-        IndexWriter iw = new IndexWriter(getBigPath(), ZloMessage.constructAnalyzer());
+        IndexWriter iw = new IndexWriter(getBigPath(), Message.constructAnalyzer());
         iw.optimize();
         iw.close();
-        iw = new IndexWriter(getSmallPath(), ZloMessage.constructAnalyzer());
+        iw = new IndexWriter(getSmallPath(), Message.constructAnalyzer());
         iw.optimize();
         iw.close();
         logger.info("Done.");
     }
 
     private void createEmptyIndex(String path) throws IOException {
-        IndexWriter indexWriter = new IndexWriter(path, ZloMessage.constructAnalyzer(), true);
+        IndexWriter indexWriter = new IndexWriter(path, Message.constructAnalyzer(), true);
         indexWriter.setUseCompoundFile(true);
         indexWriter.close();
     }
