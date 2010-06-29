@@ -1,10 +1,10 @@
 package info.xonix.zlo.search.test;
 
 import info.xonix.zlo.search.ZloSearcher;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.doubleindex.DoubleHits;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
-import info.xonix.zlo.search.model.ZloMessage;
+import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.model.Site;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.search.MatchAllDocsQuery;
 
@@ -25,7 +25,7 @@ public class DoubleIndexTest {
         DoubleIndexSearcher dis = getDIS();
         System.out.println(dis.getBigReader().isOptimized());
         try {
-            System.out.println(new IndexWriter("D:\\TEST\\JAVA\\ZloSearcher\\__test\\1", ZloMessage.constructAnalyzer()).getUseCompoundFile());
+            System.out.println(new IndexWriter("D:\\TEST\\JAVA\\ZloSearcher\\__test\\1", Message.constructAnalyzer()).getUseCompoundFile());
         } catch (IOException e) {
             e.printStackTrace();
         }

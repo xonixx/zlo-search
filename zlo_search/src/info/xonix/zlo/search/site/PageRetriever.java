@@ -1,11 +1,11 @@
 package info.xonix.zlo.search.site;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.model.SiteConfiguration;
+import info.xonix.zlo.search.model.Site;
 import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.HttpVersion;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.log4j.Logger;
 
@@ -22,13 +22,13 @@ import java.util.regex.Pattern;
  * Time: 17:36:44
  */
 public class PageRetriever {
-    private static final Logger logger = Logger.getLogger(PageRetriever.class);
+    private static final Logger log = Logger.getLogger(PageRetriever.class);
 
     public static final int THREADS_NUMBER = Integer.parseInt(Config.getProp("retriever.threads"));
 
     private static HttpClient HTTP_CLIENT;
 
-    private SiteConfiguration siteConfiguration;
+    private Site site;
     private Pattern INDEX_UNREG_RE;
 
     static {
@@ -41,13 +41,13 @@ public class PageRetriever {
         }
     }
 
-    public PageRetriever(SiteConfiguration siteConfiguration) {
-        this.siteConfiguration = siteConfiguration;
-        INDEX_UNREG_RE = Pattern.compile(siteConfiguration.getLinkIndexRegex());
+    public PageRetriever(Site site) {
+        this.site = site;
+        INDEX_UNREG_RE = Pattern.compile(site.getLinkIndexRegex());
     }
 
     public String getPageContentByNumber(int num) throws IOException {
-        GetMethod getMethod = formGetMethod("http://" + siteConfiguration.getSiteUrl() + siteConfiguration.getReadQuery() + num);
+        GetMethod getMethod = formGetMethod("http://" + site.getSiteUrl() + site.getReadQuery() + num);
 
         List<String> stringGroups = new ArrayList<String>();
         InputStream is = null;
@@ -68,11 +68,11 @@ public class PageRetriever {
                 lenRead = is.read(buff);
                 /*
                 if (lenRead != buff.length) {
-                    logger.warn("buff.length=" + buff.length + " but lenRead=" + lenRead); // <-- 4, 120
+                    log.warn("buff.length=" + buff.length + " but lenRead=" + lenRead); // <-- 4, 120
                 }
                 */
                 if (lenRead <= 0) {
-                    logger.warn("lenRead = " + lenRead + " while receiving " + num + ". It possibly means that message can't be parsed correctly...");
+                    log.warn("lenRead = " + lenRead + " while receiving " + num + ". It possibly means that message can't be parsed correctly...");
                     break;
                 }
 
@@ -82,9 +82,9 @@ public class PageRetriever {
                 currSize = stringGroups.size();
                 ending = stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1);
             } while (
-                    ending.indexOf(siteConfiguration.getMarkEndMsg1()) == -1 &&
-                            ending.indexOf(siteConfiguration.getMarkEndMsg2()) == -1 && // if user have sign - won't read it all
-                            ending.indexOf(siteConfiguration.getMsgNotExistOrWrong()) == -1
+                    ending.indexOf(site.getMarkEndMsg1()) == -1 &&
+                            ending.indexOf(site.getMarkEndMsg2()) == -1 && // if user have sign - won't read it all
+                            ending.indexOf(site.getMsgNotExistOrWrong()) == -1
                     );
 
             // read till end - seems that closing while not end riached causes board crash
@@ -111,8 +111,9 @@ public class PageRetriever {
     /* load page until first root-message found
     *  returns last number of root-message or -1 if not found
      */
+
     public int getLastRootMessageNumber() throws IOException {
-        GetMethod getMethod = formGetMethod("http://" + siteConfiguration.getSiteUrl());
+        GetMethod getMethod = formGetMethod("http://" + site.getSiteUrl());
 
         InputStream is = null;
         Matcher m = null;
@@ -129,7 +130,7 @@ public class PageRetriever {
             do {
                 lenRead = is.read(buff);
                 if (lenRead <= 0) {
-                    logger.warn("lenRead = " + lenRead);
+                    log.warn("lenRead = " + lenRead);
                     throw new IOException("lenRead = " + lenRead);
                 }
                 stringGroups.add(new String(buff, 0, lenRead, Config.CHARSET_NAME));
@@ -153,7 +154,7 @@ public class PageRetriever {
 
     private GetMethod formGetMethod(String uri) {
         GetMethod getMethod = new GetMethod(uri);
-        getMethod.addRequestHeader("Host", siteConfiguration.getSiteUrl());
+        getMethod.addRequestHeader("Host", site.getSiteUrl());
         getMethod.addRequestHeader("User-Agent", Config.USER_AGENT);
         getMethod.getParams().setVersion(HttpVersion.HTTP_1_0); // to prevent chunk transfer-encoding in reply
         return getMethod;

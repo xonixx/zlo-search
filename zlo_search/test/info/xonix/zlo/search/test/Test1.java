@@ -3,8 +3,8 @@ package info.xonix.zlo.search.test;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.dao.DB;
+import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
-import info.xonix.zlo.search.model.ZloMessage;
 import org.apache.lucene.analysis.SimpleAnalyzer;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
@@ -48,14 +48,14 @@ public class Test1 {
     }
 
     public static void m20() {
-        System.out.println(new ArrayList<Integer>(Arrays.asList(1,2,3,4,5)).contains(6));    
+        System.out.println(new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5)).contains(6));
     }
 
     public static void m19() {
         /*try {
             String queryStr = "body:(+(Привет медведь т?ст) +Путин -извращенец педофил)";
-            Analyzer analyzer = ZloMessage.constructAnalyzer();
-            QueryParser parser = new QueryParser(ZloMessage.FIELDS.BODY, analyzer);
+            Analyzer analyzer = Message.constructAnalyzer();
+            QueryParser parser = new QueryParser(Message.FIELDS.BODY, analyzer);
             Query query = parser.parse(queryStr);
             Set set = new HashSet();
             query.extractTerms(set);
@@ -75,9 +75,9 @@ public class Test1 {
     public static void m18() {
         try {
 //            System.out.println(new IndexSearcher(ZloSearcher.getIndexReader()).search(new TermQuery(new Term("nick", "abcdef"))).length());
-//            System.out.println(new IndexSearcher(ZloSearcher.getIndexReader()).search(new TermQuery(new Term("nick", "abcdef")), new Sort(new SortField(ZloMessage.FIELDS.DATE, SortField.STRING, true))).length());
+//            System.out.println(new IndexSearcher(ZloSearcher.getIndexReader()).search(new TermQuery(new Term("nick", "abcdef")), new Sort(new SortField(Message.FIELDS.DATE, SortField.STRING, true))).length());
 //            System.out.println(ZloSearcher.search("nick:abcdef").getHits().length());
-            System.out.println(new IndexSearcher(ZloSearcher.getIndexReader()).search(new MatchAllDocsQuery(), new Sort(new SortField(ZloMessage.FIELDS.DATE, SortField.STRING, true))));
+            System.out.println(new IndexSearcher(ZloSearcher.getIndexReader()).search(new MatchAllDocsQuery(), new Sort(new SortField(Message.FIELDS.DATE, SortField.STRING, true))));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -118,7 +118,7 @@ public class Test1 {
 //            System.out.println(DbManager.getMessageByNumber(4149183));
 //            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(648064));
 //            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(4199196));
-           Site site = Site.forName("sport");
+            Site site = Site.forName("sport");
 /*             System.out.println(site.getMessageByNumber(61353));
             System.out.println(site.getMessageByNumber(62212));
             System.out.println(site.getMessageByNumber(622120));*/
@@ -178,7 +178,7 @@ public class Test1 {
 
     public static void m12() {
         try {
-            for (ZloMessage m : Site.forName("zlo").getMessages(10000, 10042)) {
+            for (Message m : Site.forName("zlo").getMessages(10000, 10042)) {
                 System.out.println(m);
             }
         } catch (DAOException e) {
@@ -276,7 +276,7 @@ public class Test1 {
 
     public static void m7() {
         try {
-            for (ZloMessage m : Site.forName("zlo").getMessages(10, 110)) {
+            for (Message m : Site.forName("zlo").getMessages(10, 110)) {
                 System.out.println(m);
             }
         } catch (DAOException e) {
@@ -340,14 +340,14 @@ public class Test1 {
 
     public static void m9() {
         try {
-            List<ZloMessage> l = Site.forName("zlo").getMessages(3999995, 3999999);
+            List<Message> l = Site.forName("zlo").getMessages(3999995, 3999999);
 //            Collections.
-            for (ZloMessage m : l) {
+            for (Message m : l) {
                 System.out.println(m);
             }
             System.out.println("#############################################");
-            List<ZloMessage> l1 = Site.forName("zlo").getMessages(4000000, 4000005);
-            for (ZloMessage m : l1) {
+            List<Message> l1 = Site.forName("zlo").getMessages(4000000, 4000005);
+            for (Message m : l1) {
                 System.out.println(m);
             }
         } catch (DAOException e) {

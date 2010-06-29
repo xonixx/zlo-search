@@ -13,7 +13,7 @@ import java.util.Properties;
  * Date: 28.12.2007
  * Time: 2:45:21
  */
-public abstract class SiteConfiguration /*extends DbAccessor*/ {
+abstract class SiteConfiguration /*extends DbAccessor*/ {
 
     public static final String SITE_CONFIG_PREFIX = "site.config.";
 

@@ -1,11 +1,11 @@
 package info.xonix.zlo.search.test;
 
-import info.xonix.zlo.search.logic.IndexerLogicImpl;
 import info.xonix.zlo.search.RussianWithNumbersAndSpecialStopWordsAnalyzer;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
-import info.xonix.zlo.search.model.ZloMessage;
+import info.xonix.zlo.search.logic.IndexerLogicImpl;
+import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.model.Site;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenStream;
@@ -48,7 +48,7 @@ public class Test5 {
     public static void m2() {
         String s = "в чем смысл жизни?";
 
-        Analyzer analyzer = ZloMessage.constructAnalyzer();
+        Analyzer analyzer = Message.constructAnalyzer();
 //        Analyzer analyzer = new RussianWithNumbersAndSpecialStopWordsAnalyzer(new String[0]);
 
         showTokens(s, analyzer);
@@ -68,7 +68,7 @@ public class Test5 {
     }
 
     private static void m1() {
-        Analyzer analyzer = ZloMessage.constructAnalyzer();
+        Analyzer analyzer = Message.constructAnalyzer();
         QueryParser qp = new QueryParser("body", analyzer);
         try {
             System.out.println(qp.parse("nick:\"\\\\/\\\\/0\\\\/\\\\/KA\""));
@@ -84,7 +84,7 @@ public class Test5 {
         DoubleIndexSearcher dis = new DoubleIndexSearcher(site, null);
         IndexSearcher is = new IndexSearcher(dis.getBigReader());
         try {
-            Hits hits = is.search(new QueryParser("body", ZloMessage.constructAnalyzer()).parse("body:тест title:тест"), Sort.INDEXORDER);
+            Hits hits = is.search(new QueryParser("body", Message.constructAnalyzer()).parse("body:тест title:тест"), Sort.INDEXORDER);
 
             for (int i = 1; i < 10; i++) {
                 System.out.println(hits.doc(hits.length() - i).get("num"));

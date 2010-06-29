@@ -2,11 +2,8 @@ package info.xonix.zlo.search.dao;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.db.*;
+import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
-
-import static info.xonix.zlo.search.db.VarType.*;
-
-import info.xonix.zlo.search.model.ZloMessage;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -15,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+
+import static info.xonix.zlo.search.db.VarType.*;
 
 /**
  * User: boost
@@ -27,18 +26,18 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
     // TODO: remove
     private static Properties props = Config.loadProperties("info/xonix/zlo/search/db/sql.properties");
 
-    public static final String MSG_NICK = ZloMessage.FIELDS.NICK;
+    public static final String MSG_NICK = Message.FIELDS.NICK;
     public static final String MSG_ALT_NAME = "altName";
-    public static final String MSG_HOST = ZloMessage.FIELDS.HOST;
+    public static final String MSG_HOST = Message.FIELDS.HOST;
     public static final String MSG_TOPIC = "topic";
     public static final String MSG_TOPIC_CODE = "topicCode";
     public static final String MSG_TITLE = "title"; // with html
     public static final String MSG_BODY = "body"; // with html
     public static final String MSG_DATE = "msgDate";
-    public static final String MSG_REG = ZloMessage.FIELDS.REG;
-    public static final String MSG_URL_NUM = ZloMessage.FIELDS.URL_NUM;
+    public static final String MSG_REG = Message.FIELDS.REG;
+    public static final String MSG_URL_NUM = Message.FIELDS.URL_NUM;
     public static final String MSG_PARENT_NUM = "parentNum";
-    public static final String MSG_STATUS = ZloMessage.STATUS;
+    public static final String MSG_STATUS = Message.STATUS;
 
 //    private DbAccessor dbAccessor;
 
@@ -86,7 +85,7 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
     }
 
     @Deprecated
-    private void fillPreparedStatement(PreparedStatement pstmt, ZloMessage msg) throws DbException {
+    private void fillPreparedStatement(PreparedStatement pstmt, Message msg) throws DbException {
         DbUtils.setParams(pstmt,
                 new Object[]{msg.getNum(), msg.getParentNum(), msg.getHost(), msg.getTopicCode(), msg.getTitle(), msg.getNick(),
                         msg.getAltName(), msg.getTimestamp(), msg.isReg(), msg.getBody(), msg.getStatus().getInt()},
@@ -95,12 +94,12 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
     }
 
     @Override
-    public void saveMessagesFast(Site site, List<ZloMessage> msgs) throws DbException {
+    public void saveMessagesFast(Site site, List<Message> msgs) throws DbException {
         saveMessagesFast(site, msgs, false);
     }
 
     @Override
-    public void saveMessagesFast(Site site, List<ZloMessage> msgs, boolean updateIfExists) throws DbException {
+    public void saveMessagesFast(Site site, List<Message> msgs, boolean updateIfExists) throws DbException {
         PreparedStatement insertPstmt = null;
         ResultSet rs = null;
         Connection conn = null;
@@ -111,7 +110,7 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
                     ? queryProvider.getInsertUpdateMsgQuery(site)
                     : queryProvider.getInsertMsgQuery(site));
 
-            for (ZloMessage msg : msgs) {
+            for (Message msg : msgs) {
                 logger.debug("Adding msg: " + msg.getNum() + " to batch... ");
 
                 if (!updateIfExists)
@@ -142,21 +141,21 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
         }
     }
 
-/*    public void saveMessages(List<ZloMessage> msgs) throws DbException {
+/*    public void saveMessages(List<Message> msgs) throws DbException {
         saveMessages(msgs, false);
     }*/
 
     // todo: test
 
     @Override
-    public ZloMessage getMessageByNumber(Site site, int num) throws DbException {
+    public Message getMessageByNumber(Site site, int num) throws DbException {
         DbResult res = DbUtils.executeSelect(
                 getDataSource(),
                 queryProvider.getSelectMsgByIdQuery(site),
                 new Object[]{num},
                 new VarType[]{INTEGER});
 
-        ZloMessage zm = null;
+        Message zm = null;
         if (res.next())
             zm = getMessage(res, site);
 
@@ -165,14 +164,14 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
     }
 
     @Override
-    public List<ZloMessage> getMessagesByRange(Site site, int start, int end) throws DbException {
+    public List<Message> getMessagesByRange(Site site, int start, int end) throws DbException {
         DbResult res = DbUtils.executeSelect(
                 getDataSource(),
                 queryProvider.getSelectMsgsInRangeQuery(site),
                 new Object[]{start, end},
                 new VarType[]{INTEGER, INTEGER});
         try {
-            List<ZloMessage> msgs = new ArrayList<ZloMessage>();
+            List<Message> msgs = new ArrayList<Message>();
 
             while (res.next())
                 msgs.add(getMessage(res, site));
@@ -184,7 +183,7 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
     }
 
     @Override
-    public List<ZloMessage> getMessages(Site site, int[] nums, int fromIndex) throws DbException {
+    public List<Message> getMessages(Site site, int[] nums, int fromIndex) throws DbException {
         StringBuilder sbNums = new StringBuilder(Integer.toString(nums[0]));
 
         for (int i = 1; i < nums.length; i++) {
@@ -195,10 +194,10 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
 
         DbResult res = DbUtils.executeSelect(getDataSource(), sql);
 
-        List<ZloMessage> msgs = new ArrayList<ZloMessage>();
+        List<Message> msgs = new ArrayList<Message>();
 
         while (res.next()) {
-            ZloMessage msg = getMessage(res, site);
+            Message msg = getMessage(res, site);
             msg.setHitId(fromIndex++);
             msg.setSite(site);
             msgs.add(msg);
@@ -279,8 +278,8 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
                 , 1);
     }
 
-    private ZloMessage getMessage(DbResult rs, Site site) throws DbException {
-        return new ZloMessage(
+    private Message getMessage(DbResult rs, Site site) throws DbException {
+        return new Message(
                 site,
                 rs.getString(MSG_NICK)
                 , rs.getString(MSG_ALT_NAME)

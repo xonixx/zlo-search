@@ -1,9 +1,9 @@
 package info.xonix.zlo.search.site;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.db.DbException;
-import info.xonix.zlo.search.model.ZloMessage;
+import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -11,10 +11,10 @@ import org.apache.log4j.Logger;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,7 +43,7 @@ public class PageParser /*extends SiteSource*/ {
         MSG_DATE_PATTERN = site.getMsgDatePattern();
     }
 
-    public ZloMessage parseMessage(ZloMessage message, String msg) {
+    public Message parseMessage(Message message, String msg) {
 
         Matcher m = MSG_UNREG_RE.matcher(msg);
 
@@ -53,9 +53,9 @@ public class PageParser /*extends SiteSource*/ {
             m = MSG_REG_RE.matcher(msg);
             if (!m.find()) {
                 if (msg.contains(site.getMsgNotExistOrWrong())) {
-                    message.setStatus(ZloMessage.Status.DELETED);
+                    message.setStatus(Message.Status.DELETED);
                 } else {
-                    message.setStatus(ZloMessage.Status.UNKNOWN);
+                    message.setStatus(Message.Status.UNKNOWN);
                     throw new PageParseException("Can't parse msg#:" + message.getNum() + " in site:" + site.getName() + "... Possibly format changed!\n\n" + msg);
                 }
                 message.setSite(site);
@@ -107,13 +107,13 @@ public class PageParser /*extends SiteSource*/ {
         message.setDate(StringUtils.isEmpty(dateStr) ? new Date(0) : prepareDate(dateStr));
 
         message.setBody(m.group(groupsOrder.get(6)));
-        message.setStatus(ZloMessage.Status.OK);
+        message.setStatus(Message.Status.OK);
 
         return message;
     }
 
-    public ZloMessage parseMessage(String msg, int urlNum) {
-        ZloMessage zm = new ZloMessage();
+    public Message parseMessage(String msg, int urlNum) {
+        Message zm = new Message();
         zm.setNum(urlNum);
         parseMessage(zm, msg);
         return zm;

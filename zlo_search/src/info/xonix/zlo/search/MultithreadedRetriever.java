@@ -1,8 +1,8 @@
 package info.xonix.zlo.search;
 
 import info.xonix.zlo.search.dao.DAOException;
+import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
-import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.search.site.PageRetriever;
 import org.apache.log4j.Logger;
 
@@ -20,18 +20,19 @@ public class MultithreadedRetriever {
 //    private static final int LIMIT_PER_SECOND = Integer.parseInt(Config.getProp("retriever.limit.per.second"));
 
     // todo: not tested
+
     private static class MessageRetriever extends Thread {
         private static int threadNum = 0;
 
-        private List<ZloMessage> msgs;
-        private List<ZloMessage> myMsgs = new ArrayList<ZloMessage>();
+        private List<Message> msgs;
+        private List<Message> myMsgs = new ArrayList<Message>();
         private IndexingSource source;
 
         private static Exception exception = null;
 
         private static Iterator<Integer> numsIterator = null;
 
-        public MessageRetriever(IndexingSource source, Iterable<Integer> numsToSave, List<ZloMessage> msgs) {
+        public MessageRetriever(IndexingSource source, Iterable<Integer> numsToSave, List<Message> msgs) {
             super("MessageRetriever #" + threadNum);
 
             if (threadNum == 0 && exception != null) {
@@ -85,23 +86,23 @@ public class MultithreadedRetriever {
         }
     }
 
-    public static List<ZloMessage> getMessages(Site source, int from, int to) throws DAOException {
+    public static List<Message> getMessages(Site source, int from, int to) throws DAOException {
         Set<Integer> nums = new HashSet<Integer>(to - from);
-        for(int i=from; i<to; i++) {
+        for (int i = from; i < to; i++) {
             nums.add(i);
         }
         return getMessages(source, nums);
     }
 
-    public static List<ZloMessage> getMessages(Site source, Iterable<Integer> numsToSave) throws DAOException {
+    public static List<Message> getMessages(Site source, Iterable<Integer> numsToSave) throws DAOException {
         return getMessages(source, numsToSave, PageRetriever.THREADS_NUMBER);
     }
 
-    public static List<ZloMessage> getMessages(Site source, Iterable<Integer> numsToSave, int threadsNum) throws DAOException {
-        final List<ZloMessage> msgs;
+    public static List<Message> getMessages(Site source, Iterable<Integer> numsToSave, int threadsNum) throws DAOException {
+        final List<Message> msgs;
 
         if (threadsNum == 1) {
-            msgs = new ArrayList<ZloMessage>();
+            msgs = new ArrayList<Message>();
 
             for (int i : numsToSave) {
                 long t1 = System.currentTimeMillis();
@@ -109,7 +110,7 @@ public class MultithreadedRetriever {
                 msgs.add(source.getMessageByNumber(i));
 
                 long delta = System.currentTimeMillis() - t1;
-                long toSleep = 1000/source.getIndexerLimitPerSecond() - delta;
+                long toSleep = 1000 / source.getIndexerLimitPerSecond() - delta;
                 if (toSleep > 0) {
                     try {
                         Thread.sleep(toSleep);
@@ -119,7 +120,7 @@ public class MultithreadedRetriever {
                 }
             }
         } else {
-            msgs = new Vector<ZloMessage>();
+            msgs = new Vector<Message>();
             List<Thread> threads = new ArrayList<Thread>();
 
             // starting all threads
@@ -131,7 +132,7 @@ public class MultithreadedRetriever {
 
             // joining them - main thread waits for all
             try {
-                for(Thread t: threads)
+                for (Thread t : threads)
                     t.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -141,8 +142,8 @@ public class MultithreadedRetriever {
                 throw new DAOException(source, MessageRetriever.getException());
         }
 
-        Collections.sort(msgs, ZloMessage.NUM_COMPARATOR);
-        
+        Collections.sort(msgs, Message.NUM_COMPARATOR);
+
         return msgs;
     }
 }

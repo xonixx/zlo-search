@@ -94,7 +94,7 @@ public class SearchResult implements Iterable {
         }
 
         public ZloMessageAccessor next() {
-//            return ZloMessage.fromHit((Hit) hitsIterator.next());
+//            return Message.fromHit((Hit) hitsIterator.next());
             return new ZloMessageLazy((Hit) hitsIterator.next());
         }
 
@@ -124,6 +124,7 @@ public class SearchResult implements Iterable {
     }
 
     private PaginatedList paginatedList;
+
     public PaginatedList createPaginatedList(Site site) {
         if (paginatedList == null) {
             paginatedList = new ZloPaginatedList(doubleHits, site);
@@ -152,6 +153,7 @@ public class SearchResult implements Iterable {
 
     /**
      * if creationDate is before renewing indexReader -> reader will be closed
+     *
      * @return
      */
     public boolean isOld() {

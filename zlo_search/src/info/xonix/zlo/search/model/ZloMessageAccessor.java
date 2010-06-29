@@ -12,18 +12,22 @@ public interface ZloMessageAccessor {
     public int getNum();
 
     public String getNick();
+
     public String getHost();
 
     public String getTopic();
 
     public String getTitle();
+
     public String getBody();
 
     public boolean isReg();
+
     public boolean isHasUrl();
+
     public boolean isHasImg();
 
     public Date getDate();
 
-    public ZloMessage getMessage();
+    public Message getMessage();
 }

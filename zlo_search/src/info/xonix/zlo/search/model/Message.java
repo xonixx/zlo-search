@@ -24,7 +24,7 @@ import java.util.Date;
  * Date: 30.05.2007
  * Time: 20:18:10
  */
-public class ZloMessage implements Serializable, ZloMessageAccessor {
+public class Message implements Serializable, ZloMessageAccessor {
     private static final String TRUE = "1";
     private static final String FALSE = "0";
 
@@ -67,11 +67,11 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
 
     private Site site;
 
-    public static Comparator<ZloMessage> NUM_COMPARATOR = new Comparator<ZloMessage>() {
-            public int compare(ZloMessage m1, ZloMessage m2) {
-                return new Integer(m1.getNum()).compareTo(m2.getNum());
-            }
-        };
+    public static Comparator<Message> NUM_COMPARATOR = new Comparator<Message>() {
+        public int compare(Message m1, Message m2) {
+            return new Integer(m1.getNum()).compareTo(m2.getNum());
+        }
+    };
 
     private Status status = Status.UNKNOWN; // default
 
@@ -79,15 +79,14 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
         OK,
         DELETED,
         SPAM,
-        UNKNOWN,
-        ;
+        UNKNOWN,;
 
         public static Status fromInt(int id) {
             return Status.values()[id];
         }
 
         public int getInt() {
-            for(int i=0; i<Status.values().length; i++) {
+            for (int i = 0; i < Status.values().length; i++) {
                 if (this == Status.values()[i])
                     return i;
             }
@@ -96,7 +95,7 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
     }
 
     public static String formQueryString(String text, boolean inTitle, boolean inBody, int topicCode, String nick, String host, Date fromDate, Date toDate, boolean inReg, boolean inHasUrl, boolean inHasImg) {
-        text = FoundTextHighlighter.escapeColon(text); 
+        text = FoundTextHighlighter.escapeColon(text);
 
         StringBuilder queryStr = new StringBuilder();
 
@@ -146,14 +145,14 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
 
     public static NumberFormat URL_NUM_FORMAT = new DecimalFormat("0000000000"); // 10 zeros
 
-    public ZloMessage() {
+    public Message() {
     }
 
-    public ZloMessage(Site site, String nick, String altName, String host, String topic, int topicCode,
-                      String title, String body, Date msgDate,
-                      boolean reg, int num, int parentNum,
-                      Boolean hasUrl, Boolean hasImg,
-                      Status status) {
+    public Message(Site site, String nick, String altName, String host, String topic, int topicCode,
+                   String title, String body, Date msgDate,
+                   boolean reg, int num, int parentNum,
+                   Boolean hasUrl, Boolean hasImg,
+                   Status status) {
         this.site = site;
         this.nick = nick;
         this.altName = altName;
@@ -171,27 +170,27 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
         this.status = status;
     }
 
-    public ZloMessage(Site site, String nick, String altName, String host, String topic, int topicCode,
-                      String title, String body, Date msgDate,
-                      boolean reg, int num, int parentNum,
-                      int status) {
+    public Message(Site site, String nick, String altName, String host, String topic, int topicCode,
+                   String title, String body, Date msgDate,
+                   boolean reg, int num, int parentNum,
+                   int status) {
         this(site,
-            nick,
-            altName,
-            host,
-            topic,
-            topicCode,
-            title,
-            body,
-            msgDate,
-            reg,
-            num,
-            parentNum,
-            null,
-            null,
-            Status.fromInt(status));
+                nick,
+                altName,
+                host,
+                topic,
+                topicCode,
+                title,
+                body,
+                msgDate,
+                reg,
+                num,
+                parentNum,
+                null,
+                null,
+                Status.fromInt(status));
     }
-    
+
     public String getNick() {
         return nick;
     }
@@ -334,29 +333,29 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
         this.site = site;
     }
 
-    public ZloMessage getMessage() {
+    public Message getMessage() {
         return this;
     }
 
     public String toString() {
         if (status == Status.OK)
             return MessageFormat.format(
-                    "ZloMessage(" +
-                    "\n\tnum={0},\n\tparentNum={1},\n\ttopicCode={2},\n\ttopic={3}," +
-                    "\n\ttitle={4},\n\tnick={5},\n\taltName={6},\n\treg={7}," +
-                    "\n\thost={8},\n\tdate={9,date,MMMM, d HH:mm:ss yyyy},\n\thasUrl={10},\n\thasImg={11}," +
-                    "\n\tsite={12}," +
-                    "\n\tbody={13}\n)",
+                    "Message(" +
+                            "\n\tnum={0},\n\tparentNum={1},\n\ttopicCode={2},\n\ttopic={3}," +
+                            "\n\ttitle={4},\n\tnick={5},\n\taltName={6},\n\treg={7}," +
+                            "\n\thost={8},\n\tdate={9,date,MMMM, d HH:mm:ss yyyy},\n\thasUrl={10},\n\thasImg={11}," +
+                            "\n\tsite={12}," +
+                            "\n\tbody={13}\n)",
                     num, parentNum, topicCode, topic, title,
                     nick, altName, reg, host, date,
                     isHasUrl() ? TRUE : FALSE,
                     isHasImg() ? TRUE : FALSE,
                     site == null ? "" : site.getName(),
-                    body.replaceAll("\n","\n\t\t"));
+                    body.replaceAll("\n", "\n\t\t"));
         else
             return MessageFormat.format(
-                    "ZloMessage(" +
-                    "\n\tnum={0},\n\tstatus={1}," +
+                    "Message(" +
+                            "\n\tnum={0},\n\tstatus={1}," +
                             "\n\tsite={2}" +
                             "\n)",
                     num, status,
@@ -384,6 +383,7 @@ public class ZloMessage implements Serializable, ZloMessageAccessor {
     }
 
     private static Analyzer analyzer;
+
     public static Analyzer constructAnalyzer() {
         if (analyzer == null) {
             PerFieldAnalyzerWrapper a = new PerFieldAnalyzerWrapper(new KeywordAnalyzer());

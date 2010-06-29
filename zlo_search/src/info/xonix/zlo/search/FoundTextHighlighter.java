@@ -1,6 +1,6 @@
 package info.xonix.zlo.search;
 
-import info.xonix.zlo.search.model.ZloMessage;
+import info.xonix.zlo.search.model.Message;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.Term;
@@ -59,6 +59,7 @@ public class FoundTextHighlighter {
     }
 
     // todo: works, but very slow
+
     public String getHighlightedText() {
         String txt = text;
 
@@ -79,17 +80,18 @@ public class FoundTextHighlighter {
                         "(\\b" + w + "[^\\s]*?)\\b", preHl + "$1" + postHl);               // highlight;
             }
         } catch (PatternSyntaxException ex) {
-            logger.error("Regex parse error: ", ex);        
+            logger.error("Regex parse error: ", ex);
         }
         return txt;
     }
 
     /**
      * to fix search with : f.e. url search, "." is for gluing together into exact phrase
+     *
      * @param text
      * @return
      */
-    public static String escapeColon(String text){
+    public static String escapeColon(String text) {
         if (text != null && !StringUtils.equals(text, "*:*")) { // matchAllQuery
             return text.replace(":", ".");
         } else
@@ -104,8 +106,8 @@ public class FoundTextHighlighter {
 
         Query query = null;
         try {
-            String queryStr = MessageFormat.format("{0}:({1})", ZloMessage.FIELDS.BODY, txt);
-            QueryParser parser = new QueryParser(ZloMessage.FIELDS.BODY, ZloMessage.constructAnalyzer());
+            String queryStr = MessageFormat.format("{0}:({1})", Message.FIELDS.BODY, txt);
+            QueryParser parser = new QueryParser(Message.FIELDS.BODY, Message.constructAnalyzer());
             query = parser.parse(queryStr);
             Set<Term> set = new HashSet<Term>();
             query.extractTerms(set);
@@ -119,7 +121,7 @@ public class FoundTextHighlighter {
             logger.error(e);
         } catch (UnsupportedOperationException e) {
             // for wildcard query
-            String qs = query.toString(ZloMessage.FIELDS.BODY);
+            String qs = query.toString(Message.FIELDS.BODY);
             qs = qs.replaceAll("-\\b.+?(?:\\s|$)", " ").replaceAll("\\(|\\)|\\+|\\[|\\]|\\{|\\}|\"", " ");
             return qs.trim().split("\\s+");
         }
