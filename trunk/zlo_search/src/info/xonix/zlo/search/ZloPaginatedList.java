@@ -1,10 +1,12 @@
 package info.xonix.zlo.search;
 
+import info.xonix.zlo.search.dao.DbManager;
 import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.doubleindex.DoubleHits;
 import info.xonix.zlo.search.model.ZloMessage;
-import info.xonix.zlo.search.site.SiteSource;
+//import info.xonix.zlo.search.site.SiteSource;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 import org.displaytag.pagination.PaginatedList;
 import org.displaytag.properties.SortOrderEnum;
@@ -17,16 +19,20 @@ import java.util.List;
  * Date: 26.09.2007
  * Time: 16:39:25
  */
-public class ZloPaginatedList extends SiteSource implements PaginatedList {
+public class ZloPaginatedList /*extends SiteSource*/ implements PaginatedList {
+    private static final Logger logger = Logger.getLogger(ZloPaginatedList.class);
+
     private List currentList;
     private int pageNumber;
     private int objectsPerPage;
     private DoubleHits hits;
 
-    private static final Logger logger = Logger.getLogger(ZloPaginatedList.class);
+    private Site site;
+    private DbManager dbManager = AppSpringContext.get(DbManager.class);
 
     public ZloPaginatedList(DoubleHits hits, Site site) {
-        super(site);
+//        super(site);
+        this.site = site;
         this.hits = hits;
     }
 
@@ -47,7 +53,7 @@ public class ZloPaginatedList extends SiteSource implements PaginatedList {
             logger.error("Error while getting doc from index: " + e);
         }
 
-        return getSite().getDbManager().getMessages(indexes, fromIndex);
+        return dbManager.getMessages(site, indexes, fromIndex);
     }
 
     public void refreshCurrentList() throws DbException {
