@@ -3,10 +3,10 @@ package info.xonix.zlo.search.logic;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.DAOException;
 import info.xonix.zlo.search.dao.DbManager;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
-import info.xonix.zlo.search.model.ZloMessage;
+import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.model.Site;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.IndexWriter;
@@ -34,11 +34,12 @@ public class IndexerLogicImpl /*extends SiteSource*/ implements IndexerLogic {
     public IndexerLogicImpl(/*Site site*/) {
 //        super(site);
         setIndexPerTime(100);
-        setAnalyzer(ZloMessage.constructAnalyzer());
+        setAnalyzer(Message.constructAnalyzer());
         setIndexDir(new File(Config.USE_DOUBLE_INDEX ? site.getIndexDirDouble() + "/" + DoubleIndexSearcher.SMALL_INDEX_DIR : Config.INDEX_DIR));
     }
 
     // todo: inject
+
     public void setDbManager(DbManager dbManager) {
         this.dbManager = dbManager;
     }
@@ -114,8 +115,8 @@ public class IndexerLogicImpl /*extends SiteSource*/ implements IndexerLogic {
 
     private void addMessagesToIndex(int start, int end) throws DAOException, IOException {
         IndexWriter writer = getWriter();
-        for (ZloMessage msg : getSite().getDB().getMessages(start, end)) {
-            if (msg.getStatus() == ZloMessage.Status.OK) {
+        for (Message msg : getSite().getDB().getMessages(start, end)) {
+            if (msg.getStatus() == Message.Status.OK) {
                 logger.debug(getSiteName() + " - Addind: " + (Config.DEBUG ? msg : msg.getNum()));
                 writer.addDocument(msg.getDocument());
             } else {
@@ -130,6 +131,7 @@ public class IndexerLogicImpl /*extends SiteSource*/ implements IndexerLogic {
     indexes end marks msgs in db as indexed
     indexes [from, to] including...
      */
+
     public void index(Site site, int from, int to) throws IOException {
         logger.info(String.format(site.getName() + " - Adding %s msgs [%s-%s] to index...", to - from + 1, from, to));
         try {

@@ -1,11 +1,10 @@
 package info.xonix.zlo.search;
 
 import info.xonix.zlo.search.dao.DbManager;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.db.DbException;
 import info.xonix.zlo.search.doubleindex.DoubleHits;
-import info.xonix.zlo.search.model.ZloMessage;
-//import info.xonix.zlo.search.site.SiteSource;
+import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 import org.displaytag.pagination.PaginatedList;
@@ -40,14 +39,14 @@ public class ZloPaginatedList /*extends SiteSource*/ implements PaginatedList {
         return currentList;
     }
 
-    public List<ZloMessage> subList(int fromIndex, int toIndex) throws DbException {
+    public List<Message> subList(int fromIndex, int toIndex) throws DbException {
         if (fromIndex == toIndex)
             return null;
 
         int[] indexes = new int[toIndex - fromIndex];
         try {
-            for (int i=fromIndex; i<toIndex; i++) {
-                indexes[i-fromIndex] = Integer.parseInt(hits.doc(i).get(ZloMessage.FIELDS.URL_NUM));
+            for (int i = fromIndex; i < toIndex; i++) {
+                indexes[i - fromIndex] = Integer.parseInt(hits.doc(i).get(Message.FIELDS.URL_NUM));
             }
         } catch (IOException e) {
             logger.error("Error while getting doc from index: " + e);

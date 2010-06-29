@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.test;
 
+import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
-import info.xonix.zlo.search.model.ZloMessage;
 import info.xonix.zlo.search.site.PageParser;
 
 /**
@@ -56,7 +56,7 @@ public class Test3 {
 
         Site site = Site.forName("velo");
         PageParser p = new PageParser(site);
-        ZloMessage m = p.parseMessage(msg, 123);
+        Message m = p.parseMessage(msg, 123);
         System.out.println(m);
     }
 }

@@ -10,7 +10,7 @@ import java.util.Date;
  * Time: 16:49:51
  */
 public class ZloMessageLazy implements ZloMessageAccessor {
-    private ZloMessage msg = null;
+    private Message msg = null;
     private Hit hit;
 
     public ZloMessageLazy(Hit hit) {
@@ -19,7 +19,7 @@ public class ZloMessageLazy implements ZloMessageAccessor {
 
     private void init() {
         if (msg == null) {
-            //msg = ZloMessage.fromHit(hit);
+            //msg = Message.fromHit(hit);
         }
     }
 
@@ -73,7 +73,7 @@ public class ZloMessageLazy implements ZloMessageAccessor {
         return msg.getDate();
     }
 
-    public ZloMessage getMessage() {
+    public Message getMessage() {
         init();
         return msg;
     }
