@@ -2,11 +2,9 @@ package info.xonix.zlo.search.dao;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.utils.factory.SiteFactory;
 
 import java.text.MessageFormat;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -32,55 +30,53 @@ public class QueryProvider {
         public String DICT_SQL_REMOVE_VAL;
     }
 
-    private Map<String, SiteQueries> siteNameToSiteQueries;
+    private SiteFactory<SiteQueries> siteQueriesSiteFactory = new SiteFactory<SiteQueries>() {
+        @Override
+        protected SiteQueries create(Site site) {
+            String name = site.getName();
+
+            SiteQueries sq = new SiteQueries();
+
+            fillSiteQueries(sq, name);
+
+            return sq;
+        }
+
+        private void fillSiteQueries(SiteQueries sq, String name) {
+            sq.INSERT_MSG = MessageFormat.format(props.getProperty("sql.insert.msg"), name);
+            sq.INSERT_UPDATE_MSG = MessageFormat.format(props.getProperty("sql.insert.update.msg"), name);
+
+            sq.UPDATE_MSG = MessageFormat.format(props.getProperty("sql.update.msg"), name);
+            sq.DELETE_MSG = MessageFormat.format(props.getProperty("sql.delete.msg"), name);
+
+            sq.SELECT_MSG_BY_ID = MessageFormat.format(props.getProperty("sql.select.msg.by.id"), name);
+            sq.SELECT_MSGS_IN_RANGE = MessageFormat.format(props.getProperty("sql.select.msg.in.range"), name);
+            sq.SELECT_LAST_MSG_NUM = MessageFormat.format(props.getProperty("sql.select.last.msg.num"), name);
+            sq.SELECT_MSGS_SET = MessageFormat.format(props.getProperty("sql.select.set"), name);
+
+            sq.SELECT_ALL_TOPICS = MessageFormat.format(props.getProperty("sql.select.all.topics"), name);
+            sq.SELECT_NEW_TOPICS = MessageFormat.format(props.getProperty("sql.select.new.topics"), name);
+
+            sq.DICT_SQL_SET_VAL = MessageFormat.format(dbDictProps.getProperty("sql.set.val"), name);
+            sq.DICT_SQL_GET_VAL = MessageFormat.format(dbDictProps.getProperty("sql.get.val"), name);
+            sq.DICT_SQL_REMOVE_VAL = MessageFormat.format(dbDictProps.getProperty("sql.remove.val"), name);
+        }
+    };
 
     private Properties props;
     private Properties dbDictProps;
 
 
     public QueryProvider() {
-        siteNameToSiteQueries = new HashMap<String, SiteQueries>();
         props = Config.loadProperties("info/xonix/zlo/search/db/sql.properties");
         dbDictProps = Config.loadProperties("info/xonix/zlo/search/db/db_dict.sql.properties");
-
-        List<Site> sites = Site.getSites();
-        for (Site site : sites) {
-            init(site);
-        }
-    }
-
-    private void init(Site site) {
-        String name = site.getName();
-        SiteQueries sq = new SiteQueries();
-
-        siteNameToSiteQueries.put(name, sq);
-
-        fillSiteQueries(sq, name);
-    }
-
-    private void fillSiteQueries(SiteQueries sq, String name) {
-        sq.INSERT_MSG = MessageFormat.format(props.getProperty("sql.insert.msg"), name);
-        sq.INSERT_UPDATE_MSG = MessageFormat.format(props.getProperty("sql.insert.update.msg"), name);
-
-        sq.UPDATE_MSG = MessageFormat.format(props.getProperty("sql.update.msg"), name);
-        sq.DELETE_MSG = MessageFormat.format(props.getProperty("sql.delete.msg"), name);
-
-        sq.SELECT_MSG_BY_ID = MessageFormat.format(props.getProperty("sql.select.msg.by.id"), name);
-        sq.SELECT_MSGS_IN_RANGE = MessageFormat.format(props.getProperty("sql.select.msg.in.range"), name);
-        sq.SELECT_LAST_MSG_NUM = MessageFormat.format(props.getProperty("sql.select.last.msg.num"), name);
-        sq.SELECT_MSGS_SET = MessageFormat.format(props.getProperty("sql.select.set"), name);
-
-        sq.SELECT_ALL_TOPICS = MessageFormat.format(props.getProperty("sql.select.all.topics"), name);
-        sq.SELECT_NEW_TOPICS = MessageFormat.format(props.getProperty("sql.select.new.topics"), name);
-
-        sq.DICT_SQL_SET_VAL = MessageFormat.format(dbDictProps.getProperty("sql.set.val"), name);
-        sq.DICT_SQL_GET_VAL = MessageFormat.format(dbDictProps.getProperty("sql.get.val"), name);
-        sq.DICT_SQL_REMOVE_VAL = MessageFormat.format(dbDictProps.getProperty("sql.remove.val"), name);
     }
 
     private SiteQueries getSiteQueries(Site site) {
-        return siteNameToSiteQueries.get(site.getName());
+        return siteQueriesSiteFactory.get(site);
     }
+
+    // queries
 
     public String getInsertMsgQuery(Site site) {
         return getSiteQueries(site).INSERT_MSG;
