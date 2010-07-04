@@ -1,9 +1,14 @@
 package info.xonix.zlo.web.servlets;
 
+import info.xonix.zlo.search.FoundTextHighlighter;
+import info.xonix.zlo.search.ZloPaginatedList;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.config.ErrorMessage;
 import info.xonix.zlo.search.dao.DbManagerImpl;
 import info.xonix.zlo.search.db.DbAccessor;
+import info.xonix.zlo.search.logic.ZloSearcher;
+import info.xonix.zlo.search.model.SearchRequest;
+import info.xonix.zlo.search.model.SearchResult;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import info.xonix.zlo.web.CookieUtils;
 import info.xonix.zlo.web.RequestCache;

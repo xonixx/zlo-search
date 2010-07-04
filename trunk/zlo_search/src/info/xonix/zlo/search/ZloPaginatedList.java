@@ -19,7 +19,7 @@ import java.util.List;
  * Time: 16:39:25
  */
 public class ZloPaginatedList /*extends SiteSource*/ implements PaginatedList {
-    private static final Logger logger = Logger.getLogger(ZloPaginatedList.class);
+    private static final Logger log = Logger.getLogger(ZloPaginatedList.class);
 
     private List currentList;
     private int pageNumber;
@@ -49,7 +49,7 @@ public class ZloPaginatedList /*extends SiteSource*/ implements PaginatedList {
                 indexes[i - fromIndex] = Integer.parseInt(hits.doc(i).get(MessageFields.URL_NUM));
             }
         } catch (IOException e) {
-            logger.error("Error while getting doc from index: " + e);
+            log.error("Error while getting doc from index: " + e);
         }
 
         return dbManager.getMessages(site, indexes, fromIndex);

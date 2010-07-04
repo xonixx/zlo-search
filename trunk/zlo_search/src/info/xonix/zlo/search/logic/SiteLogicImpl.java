@@ -77,9 +77,10 @@ public class SiteLogicImpl implements SiteLogic, InitializingBean {
         return getRetriever().getLastRootMessageNumber();
     }*/
 
-    private static List<Site> sites;
+    private List<Site> sites;
 
-    public static List<Site> getSites() {
+    @Override
+    public List<Site> getSites() {
         if (sites == null) {
             sites = new LinkedList<Site>();
 
@@ -98,7 +99,8 @@ public class SiteLogicImpl implements SiteLogic, InitializingBean {
         return sites;
     }
 
-    public static String[] getSiteNames() {
+    @Override
+    public String[] getSiteNames() {
         List<Site> allSites = getSites();
         String[] sites = new String[allSites.size()];
         for (int i = 0; i < allSites.size(); i++) {
@@ -107,7 +109,8 @@ public class SiteLogicImpl implements SiteLogic, InitializingBean {
         return sites;
     }
 
-    public static Site getSite(int num) {
+    @Override
+    public Site getSite(int num) {
         for (Site site : getSites()) {
             if (site.getSiteNumber() == num) {
                 return site;

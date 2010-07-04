@@ -2,7 +2,10 @@ package info.xonix.zlo.web.servlets;
 
 import info.xonix.zlo.search.daemon.DaemonLauncher;
 
-import javax.servlet.*;
+import javax.servlet.GenericServlet;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import java.io.IOException;
 
 /**
@@ -21,7 +24,7 @@ public class DaemonsStartingServlet extends GenericServlet {
         super.init();
         if ("1".equals(getInitParameter("startDaemons"))) {
             log("Starting daemons...");
-            DaemonLauncher.main(new String[0]);
+            new DaemonLauncher().main(new String[0]);
         } else {
             log("Daemons not started.");
         }

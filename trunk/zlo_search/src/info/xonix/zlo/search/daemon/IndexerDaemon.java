@@ -14,7 +14,7 @@ import java.text.MessageFormat;
  * Time: 19:25:04
  */
 public class IndexerDaemon extends Daemon {
-    private static Logger logger = Logger.getLogger("IndexerDaemon");
+    private static Logger logger = Logger.getLogger(IndexerDaemon.class);
 
     protected Logger getLogger() {
         return logger;
@@ -25,15 +25,15 @@ public class IndexerDaemon extends Daemon {
             super();
         }
 
-        protected int getFromIndex() throws DAOException {
+        protected int getFromIndex() {
             return getSite().getDbManager().getLastIndexedNumber();
         }
 
-        protected int getEndIndex() throws DAOException {
+        protected int getEndIndex() {
             return getSite().getDbManager().getLastMessageNumber();
         }
 
-        protected void perform(int from, int to) throws DAOException {
+        protected void perform(int from, int to) {
             try {
                 getIndexer().index(from, to);
             } catch (IOException e) {

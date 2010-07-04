@@ -1,6 +1,8 @@
 package info.xonix.zlo.search.daemon;
 
+import info.xonix.zlo.search.logic.SiteLogic;
 import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.spring.AppSpringContext;
 
 /**
  * Author: Vovan
@@ -8,8 +10,10 @@ import info.xonix.zlo.search.model.Site;
  * Time: 18:18:59
  */
 public class DaemonLauncher {
-    public static void main(String[] args) {
-        for (Site site : Site.getSites()) {
+    private SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
+
+    public void main(String[] args) {
+        for (Site site : siteLogic.getSites()) {
             if (site.isPerformIndexing()) {
                 startInNewThread(new DbDaemon(site));
                 startInNewThread(new IndexerDaemon(site));
@@ -18,7 +22,7 @@ public class DaemonLauncher {
     }
 
     private static void startInNewThread(final Daemon d) {
-        Thread t = new Thread(new Runnable(){
+        Thread t = new Thread(new Runnable() {
             public void run() {
                 d.start();
             }
