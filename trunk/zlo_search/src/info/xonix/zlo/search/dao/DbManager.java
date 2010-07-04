@@ -25,7 +25,7 @@ public interface DbManager {
 
     // TODO: introduce right dmo
 
-    void logRequest(int siteNum, String host, String userAgent,
-                    String reqText, String reqNick, String reqHost,
-                    String reqQuery, String reqQueryString, String referer, boolean rssAsked);
+    void saveSearchRequest(int siteNum, String host, String userAgent,
+                           String reqText, String reqNick, String reqHost,
+                           String reqQuery, String reqQueryString, String referer, boolean rssAsked);
 }

@@ -197,7 +197,7 @@ public class Test1 {
 
     public static void m10() {
         try {
-//            System.out.println(new ZloStorage().getLastMessageNumber());
+//            System.out.println(new ZloStorage().getLastSavedMessageNumber());
             System.out.println(new DB(Site.forName("zlo")).getLastMessageNumber());
         } catch (DAOException e) {
             e.printStackTrace();

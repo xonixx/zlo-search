@@ -36,7 +36,7 @@ public class IndexerDaemon extends Daemon {
         }
 
         protected int getEndIndex() {
-            return appLogic.getLastMessageNumber(getSite());
+            return appLogic.getLastSavedMessageNumber(getSite());
         }
 
         protected void perform(int from, int to) {

@@ -28,5 +28,5 @@ public interface AppLogic {
 
     List<Message> getMessages(Site site, int start, int end);
 
-    int getLastMessageNumber(Site site);
+    int getLastSavedMessageNumber(Site site);
 }

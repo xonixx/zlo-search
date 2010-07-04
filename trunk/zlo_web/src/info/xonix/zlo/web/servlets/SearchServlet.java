@@ -4,11 +4,14 @@ import info.xonix.zlo.search.FoundTextHighlighter;
 import info.xonix.zlo.search.ZloPaginatedList;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.config.ErrorMessage;
-import info.xonix.zlo.search.dao.DbManagerImpl;
-import info.xonix.zlo.search.db.DbAccessor;
+import info.xonix.zlo.search.logic.AppLogic;
+import info.xonix.zlo.search.logic.AuditLogic;
 import info.xonix.zlo.search.logic.ZloSearcher;
+import info.xonix.zlo.search.model.SearchLogEvent;
 import info.xonix.zlo.search.model.SearchRequest;
 import info.xonix.zlo.search.model.SearchResult;
+import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import info.xonix.zlo.web.CookieUtils;
 import info.xonix.zlo.web.RequestCache;
@@ -36,7 +39,10 @@ import java.util.GregorianCalendar;
  * TODO: Refactor this!!!
  */
 public class SearchServlet extends BaseServlet {
-    private static final Logger logger = Logger.getLogger(SearchServlet.class);
+    private static final Logger log = Logger.getLogger(SearchServlet.class);
+
+    private AppLogic appLogic = AppSpringContext.get(AppLogic.class);
+    private AuditLogic auditLogic = AppSpringContext.get(AuditLogic.class);
 
     public static final String ON = "on";
     // query string params
@@ -242,7 +248,7 @@ public class SearchServlet extends BaseServlet {
                 } else {
                     searchResult = prevSearchResult;
                     searchResult.setNewSearch(false); // means we use result of previous search
-                    logger.info("Cached search: " + searchResult.getQuery());
+                    log.info("Cached search: " + searchResult.getQuery());
                 }
 
                 if (searchResult != null) {
@@ -276,7 +282,7 @@ public class SearchServlet extends BaseServlet {
 
                     paginatedList.refreshCurrentList();
                 } else {
-                    logger.error("searchResult == null. This should not happen!");
+                    log.error("searchResult == null. This should not happen!");
                 }
             } else if (StringUtils.isNotEmpty(request.getParameter(QS_SUBMIT))) {
                 errorMsg = ErrorMessage.MustSelectCriterion;
@@ -287,11 +293,11 @@ public class SearchServlet extends BaseServlet {
             }
         } catch (DbException e) {
             errorMsg = ErrorMessage.DbError;
-            logger.error(e);
+            log.error(e);
         } catch (Exception e) {
             if (errorMsg == null) {
                 // unknown error
-                logger.error("Unknown error", e);
+                log.error("Unknown error", e);
                 throw new ServletException(e);
             }
         }
@@ -305,28 +311,47 @@ public class SearchServlet extends BaseServlet {
             request.forwardTo(JSP_SEARCH);
     }
 
-    private void showStatistics(ForwardingRequest request) throws DbException {
-        DbManagerImpl dbm = getSite(request).getDbManager();
-        request.setAttribute(QS_LAST_MSGS, new int[]{dbm.getLastMessageNumber(), dbm.getLastIndexedNumber()});
-        request.setAttribute(QS_LAST_MSGS_DATES, new Date[]{dbm.getLastSavedDate(), dbm.getLastIndexedDate()});
+    private void showStatistics(ForwardingRequest request) {
+        Site site = getSite(request);
+//        DbManagerImpl dbm = site.getDbManager();
+        request.setAttribute(QS_LAST_MSGS,
+                new int[]{appLogic.getLastSavedMessageNumber(site),
+                        appLogic.getLastIndexedNumber(site)});
+        request.setAttribute(QS_LAST_MSGS_DATES,
+                new Date[]{appLogic.getLastSavedDate(site),
+                        appLogic.getLastIndexedDate(site)});
     }
 
     private void logRequest(ForwardingRequest request, String query, boolean rssAsked) {
-        try {
-            DbAccessor.getInstance("search_log").getDbManager().logRequest(
-                    getSite(request).getNum(),
-                    RequestUtils.getClientIp(request),
-                    request.getHeader("User-Agent"),
-                    request.getParameter(QS_TEXT),
-                    request.getParameter(QS_NICK),
-                    request.getParameter(QS_HOST),
-                    query,
-                    request.getQueryString(),
-                    request.getHeader("Referer"),
-                    rssAsked);
-        } catch (DbException e) {
-            logger.error(e);
-        }
+        SearchLogEvent searchLogEvent = new SearchLogEvent();
+
+        searchLogEvent.setSite(getSite(request));
+        searchLogEvent.setClientIp(RequestUtils.getClientIp(request));
+        searchLogEvent.setUserAgent(request.getHeader("User-Agent"));
+
+        searchLogEvent.setSearchText(request.getParameter(QS_TEXT));
+        searchLogEvent.setSearchNick(request.getParameter(QS_NICK));
+        searchLogEvent.setSearchHost(request.getParameter(QS_HOST));
+
+        searchLogEvent.setSearchQuery(query);
+        searchLogEvent.setSearchQueryString(request.getQueryString());
+
+        searchLogEvent.setRssAsked(rssAsked);
+
+        auditLogic.logSearchEvent(searchLogEvent);
+
+
+        /*DbAccessor.getInstance("search_log").getDbManager().logRequest(
+        getSite(request).getSiteNumber(),
+        RequestUtils.getClientIp(request),
+        request.getHeader("User-Agent"),
+        request.getParameter(QS_TEXT),
+        request.getParameter(QS_NICK),
+        request.getParameter(QS_HOST),
+        query,
+        request.getQueryString(),
+        request.getHeader("Referer"),
+        rssAsked);*/
     }
 
     private String preprocessSearchText(String text, String searchType) {
