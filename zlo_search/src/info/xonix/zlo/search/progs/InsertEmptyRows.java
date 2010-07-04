@@ -2,9 +2,6 @@ package info.xonix.zlo.search.progs;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.DbManagerImpl;
-import info.xonix.zlo.search.db.DbResult;
-import info.xonix.zlo.search.db.DbUtils;
-import info.xonix.zlo.search.db.VarType;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.model.Site;
@@ -35,10 +32,10 @@ public class InsertEmptyRows {
         while (n <= MAX_ALEXZAM + N) {
             ArrayList<Integer> nums_n_N = new ArrayList<Integer>();
 
-            DbResult r = DbUtils.executeSelect(
+/*            DbResult r = DbUtils.executeSelect(
                     site,
                     "select num from messages where num>=? and num<?;",
-                    new Object[]{n, n + N}, new VarType[]{VarType.INTEGER, VarType.INTEGER});
+                    new Object[]{n, n + N}, new VarType[]{VarType.INTEGER, VarType.INTEGER});*/
             int num;
             while ((num = r.getOneInt()) != -1) {
                 nums_n_N.add(num);

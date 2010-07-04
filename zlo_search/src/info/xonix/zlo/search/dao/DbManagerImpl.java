@@ -1,8 +1,6 @@
 package info.xonix.zlo.search.dao;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.db.DbResult;
-import info.xonix.zlo.search.db.DbUtils;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.model.Topic;
@@ -12,7 +10,6 @@ import org.springframework.util.Assert;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
@@ -121,7 +118,8 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
 
         String sql = String.format(queryProvider.getSelectSetQuery(site), sbNums.toString());
 
-        DbResult res = DbUtils.executeSelect(getDataSource(), sql);
+        return getSimpleJdbcTemplate().query(sql, getRowMappersHelper().beanRowMapper(Message.class));
+/*        DbResult res = DbUtils.executeSelect(getDataSource(), sql);
 
         List<Message> msgs = new ArrayList<Message>();
 
@@ -133,7 +131,7 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
         }
 
         res.close();
-        return msgs;
+        return msgs;*/
     }
 
     @Override

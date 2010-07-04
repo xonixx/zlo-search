@@ -1,9 +1,8 @@
 package info.xonix.zlo.search.dao;
 
-import info.xonix.zlo.search.db.DbResult;
-import info.xonix.zlo.search.db.DbUtils;
 import info.xonix.zlo.search.db.VarType;
 import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.utils.Check;
 
 import java.util.Date;
 
@@ -15,32 +14,16 @@ import static info.xonix.zlo.search.db.VarType.*;
  * Time: 17:05:56
  */
 public class DbDictImpl extends DaoImplBase implements DbDict {
-//    private static final Logger logger = Logger.getLogger(DbDictImpl.class);
-
-//    private static Properties props = Config.loadProperties("info/xonix/zlo/search/db/db_dict.sql.properties");
-
-//    private final String SQL_SET_VAL;// = props.getProperty("sql.set.val");
-//    private final String SQL_GET_VAL;// = props.getProperty("sql.get.val");
-//    private final String SQL_REMOVE_VAL;// = props.getProperty("sql.remove.val");
-
-//    private DbAccessor dbAccessor;
-
-/*    public DbDictImpl(DbAccessor dbAccessor) {
-        this.dbAccessor = dbAccessor;
-
-        String name = dbAccessor.getName();
-
-        SQL_SET_VAL = MessageFormat.format(props.getProperty("sql.set.val"), name);
-        SQL_GET_VAL = MessageFormat.format(props.getProperty("sql.get.val"), name);
-        SQL_REMOVE_VAL = MessageFormat.format(props.getProperty("sql.remove.val"), name);
-    }*/
-
     private QueryProvider queryProvider;
-
-    // todo inject
 
     public void setQueryProvider(QueryProvider queryProvider) {
         this.queryProvider = queryProvider;
+    }
+
+    @Override
+    protected void checkDaoConfig() {
+        super.checkDaoConfig();
+        Check.isSet(queryProvider, "queryProvider");
     }
 
     private void setVal(Site site, String name, Object val, VarType type) {
@@ -48,13 +31,17 @@ public class DbDictImpl extends DaoImplBase implements DbDict {
         Object[] vals = new Object[]{null, null, null, null};
         vals[getValIndex(type)] = val;
 
-        DbUtils.executeUpdate(
+        getSimpleJdbcTemplate().update(queryProvider.getDbDictSetValQuery(site),
+                name, type.getInt(), vals[0], vals[1], vals[2], vals[3],
+                type.getInt(), vals[0], vals[1], vals[2], vals[3]);
+
+/*        DbUtils.executeUpdate(
                 getDataSource(),
                 queryProvider.getDbDictSetValQuery(site),
                 new Object[]{name, type.getInt(), vals[0], vals[1], vals[2], vals[3],
                         type.getInt(), vals[0], vals[1], vals[2], vals[3]},
                 new VarType[]{STRING, INTEGER, INTEGER, STRING, BOOLEAN, DATE,
-                        INTEGER, INTEGER, STRING, BOOLEAN, DATE});
+                        INTEGER, INTEGER, STRING, BOOLEAN, DATE});*/
     }
 
     @Override
@@ -78,7 +65,10 @@ public class DbDictImpl extends DaoImplBase implements DbDict {
     }
 
     private Object getVal(Site site, String name) {
-        DbResult res = DbUtils.executeSelect(getDataSource(),
+        return getSimpleJdbcTemplate().queryForObject(queryProvider.getDbDictGetValQuery(site),
+                Object.class,
+                name);
+/*        DbResult res = DbUtils.executeSelect(getDataSource(),
                 queryProvider.getDbDictGetValQuery(site),
                 new Object[]{name}, new VarType[]{STRING});
         try {
@@ -90,7 +80,7 @@ public class DbDictImpl extends DaoImplBase implements DbDict {
             }
         } finally {
             res.close();
-        }
+        }*/
     }
 
     @Override
@@ -139,9 +129,10 @@ public class DbDictImpl extends DaoImplBase implements DbDict {
 
     @Override
     public void remove(Site site, String name) {
-        DbUtils.executeUpdate(getDataSource(),
+        getSimpleJdbcTemplate().update(queryProvider.getDbDictRemoveValQuery(site), name);
+/*        DbUtils.executeUpdate(getDataSource(),
                 queryProvider.getDbDictRemoveValQuery(site),
-                new Object[]{name}, new VarType[]{STRING});
+                new Object[]{name}, new VarType[]{STRING});*/
     }
 
     private int getValIndex(VarType type) {
