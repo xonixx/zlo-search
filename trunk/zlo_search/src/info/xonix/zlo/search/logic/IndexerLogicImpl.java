@@ -17,8 +17,9 @@ import java.io.IOException;
  * Author: gubarkov
  * Date: 01.06.2007
  * Time: 1:07:38
+ * TODO: handle clean-up
  */
-public class IndexerLogicImpl /*extends SiteSource*/ implements IndexerLogic {
+public class IndexerLogicImpl implements IndexerLogic {
     private static Logger logger = Logger.getLogger(IndexerLogicImpl.class);
 
 //    private File indexDir;
@@ -130,6 +131,7 @@ public class IndexerLogicImpl /*extends SiteSource*/ implements IndexerLogic {
      * indexes end marks msgs in db as indexed
      * indexes [from, to] including...
      */
+    @Override
     public void index(Site site, int from, int to) {
         logger.info(String.format(site.getName() + " - Adding %s msgs [%s-%s] to index...", to - from + 1, from, to));
 //        try {

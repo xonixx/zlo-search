@@ -2,10 +2,12 @@ package info.xonix.zlo.search.daemon;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
+import info.xonix.zlo.search.logic.AppLogic;
+import info.xonix.zlo.search.logic.IndexerLogic;
 import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 
-import java.io.IOException;
 import java.text.MessageFormat;
 
 /**
@@ -14,10 +16,14 @@ import java.text.MessageFormat;
  * Time: 19:25:04
  */
 public class IndexerDaemon extends Daemon {
-    private static Logger logger = Logger.getLogger(IndexerDaemon.class);
+    private static Logger log = Logger.getLogger(IndexerDaemon.class);
+
+//    private Site site;
+    private AppLogic appLogic = AppSpringContext.get(AppLogic.class);
+    private IndexerLogic indexerLogic = AppSpringContext.get(IndexerLogic.class);
 
     protected Logger getLogger() {
-        return logger;
+        return log;
     }
 
     private class IndexingProcess extends Process {
@@ -26,38 +32,40 @@ public class IndexerDaemon extends Daemon {
         }
 
         protected int getFromIndex() {
-            return getSite().getDbManager().getLastIndexedNumber();
+            return appLogic.getLastIndexedNumber(getSite());
         }
 
         protected int getEndIndex() {
-            return getSite().getDbManager().getLastMessageNumber();
+            return appLogic.getLastMessageNumber(getSite());
         }
 
         protected void perform(int from, int to) {
-            try {
-                getIndexer().index(from, to);
-            } catch (IOException e) {
-                throw new DAOException(e);
-            }
+//            try {
+            indexerLogic.index(getSite(), from, to);
+//            } catch (IOException e) {
+//                throw new DAOException(e);
+//            }
         }
 
         protected boolean processException(Exception e) {
-            if (e instanceof DbException) {
+/*            if (e instanceof DbException) {
                 getLogger().warn(getSiteName() + " - Problem with db: " + e.getClass());
                 return true;
             } else if (e instanceof IOException) {
-                logger.error(getSiteName() + " - IOException while indexing, probably something with index...", e);
+                log.error(getSiteName() + " - IOException while indexing, probably something with index...", e);
                 return true;
             }
-            return false;
+            return false;*/
+            log.error("Exception while indexing", e);
+            return true;
         }
 
         protected void cleanUp() {
-            try {
+/*            try {
                 getIndexer().getWriter().close();
             } catch (IOException e) {
-                logger.warn(getSiteName() + " - Can't close writer: ", e);
-            }
+                log.warn(getSiteName() + " - Can't close writer: ", e);
+            }*/
         }
     }
 
@@ -65,10 +73,10 @@ public class IndexerDaemon extends Daemon {
         return new IndexingProcess();
     }
 
-    public IndexerDaemon() {
+/*    public IndexerDaemon() {
         super();
         setParams();
-    }
+    }*/
 
     protected IndexerDaemon(Site site) {
         super(site);
@@ -81,16 +89,16 @@ public class IndexerDaemon extends Daemon {
         setRetryPeriod(getSite().getIndexerReconnectPeriod());
     }
 
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         new IndexerDaemon().start();
-    }
+    }*/
 
     protected void start() {
-        logger.info(MessageFormat.format("Starting indexing to {0} index...", Config.USE_DOUBLE_INDEX ? "double" : "simple"));
+        log.info(MessageFormat.format("Starting indexing to {0} index...", Config.USE_DOUBLE_INDEX ? "double" : "simple"));
 
         // this is for clearing in case of not graceful exit
         if (Config.USE_DOUBLE_INDEX) {
-            logger.info("Clearing lock...");
+            log.info("Clearing lock...");
             new DoubleIndexSearcher(getSite(), null).clearLocks();
         }
         super.start();
