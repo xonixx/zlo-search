@@ -1,7 +1,6 @@
 package info.xonix.zlo.search.test;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.dao.DB;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
 import org.apache.lucene.analysis.SimpleAnalyzer;
