@@ -4,6 +4,7 @@ import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.model.Topic;
+import info.xonix.zlo.search.utils.Check;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.util.Assert;
@@ -15,7 +16,6 @@ import java.util.List;
 import java.util.Properties;
 
 import static info.xonix.zlo.search.db.DbUtils.timestamp;
-import static org.apache.commons.lang.StringUtils.substring;
 
 /**
  * User: boost
@@ -36,8 +36,10 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
         this.queryProvider = queryProvider;
     }
 
-    @Deprecated
-    public DbManagerImpl(/*DbAccessor dbAcessor*/) {
+    @Override
+    protected void checkDaoConfig() {
+        super.checkDaoConfig();
+        Check.isSet(queryProvider, "queryProvider");
     }
 
     @Override
@@ -175,21 +177,21 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
     }
 
     @Override
-    public void logRequest(int siteNum, String host, String userAgent,
-                           String reqText, String reqNick, String reqHost,
-                           String reqQuery, String reqQueryString, String referer, boolean rssAsked) {
+    public void saveSearchRequest(int siteNum, String host, String userAgent,
+                                  String reqText, String reqNick, String reqHost,
+                                  String reqQuery, String reqQueryString, String referer, boolean rssAsked) {
         getSimpleJdbcTemplate().update(SQL_LOG_REQUEST,
                 siteNum,
-                substring(host, 0, 100),
-                substring(userAgent, 0, 200),
+                host,
+                userAgent,
 
-                substring(reqText, 0, 200),
-                substring(reqNick, 0, 100),
-                substring(reqHost, 0, 100),
+                reqText,
+                reqNick,
+                reqHost,
 
-                substring(reqQuery, 0, 200),
-                substring(reqQueryString, 0, 400),
-                substring(referer, 0, 100),
+                reqQuery,
+                reqQueryString,
+                referer,
                 rssAsked);
     }
 }

@@ -40,7 +40,6 @@ public class AppLogicImpl implements AppLogic, InitializingBean {
 
     @Override
     public void setLastIndexedNumber(Site site, int num) {
-//        DbDictImpl dbDict = dbAccessor.getDbDict();
         if (Config.USE_DOUBLE_INDEX) {
             dbDict.setInt(site, DbDictFields.DB_DICT_LAST_INDEXED_DOUBLE, num);
             dbDict.setDate(site, DbDictFields.DB_DICT_LAST_INDEXED_DOUBLE_DATE, new Date());
@@ -90,7 +89,7 @@ public class AppLogicImpl implements AppLogic, InitializingBean {
     }
 
     @Override
-    public int getLastMessageNumber(Site site) {
+    public int getLastSavedMessageNumber(Site site) {
         return dbManager.getLastMessageNumber(site);
     }
 }
