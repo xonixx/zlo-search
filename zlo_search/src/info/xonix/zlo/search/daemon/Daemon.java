@@ -2,7 +2,6 @@ package info.xonix.zlo.search.daemon;
 
 import info.xonix.zlo.search.ZloObservable;
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.logic.IndexerLogicImpl;
 import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.utils.TimeUtils;
 import org.apache.log4j.Logger;
@@ -147,14 +146,14 @@ public abstract class Daemon /*extends SiteSource*/ {
         }
 
 
-        private IndexerLogicImpl indexerLogic;
+/*        private IndexerLogicImpl indexerLogic;
 
         protected IndexerLogicImpl getIndexer() {
             if (indexerLogic == null) {
                 indexerLogic = new IndexerLogicImpl();// TODO: via spring
             }
             return indexerLogic;
-        }
+        }*/
 
         public void run() {
             while (true) {
@@ -254,7 +253,11 @@ public abstract class Daemon /*extends SiteSource*/ {
         registerExitHandlers();
     }
 
-    private String getSiteName() {
+    public Site getSite() {
+        return site;
+    }
+
+    public String getSiteName() {
         return site.getName();
     }
 
