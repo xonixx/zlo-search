@@ -38,6 +38,7 @@ public class SiteLogicImpl implements SiteLogic, InitializingBean {
         return messageRetriever.getMessage(site, num);
     }
 
+    @Override
     public List<Message> getMessages(Site site, int from, int to) {
         log.info(site.getName() + " - Downloading messages from " + from + " to " + to + "...");
         long begin = System.currentTimeMillis();
@@ -50,6 +51,7 @@ public class SiteLogicImpl implements SiteLogic, InitializingBean {
         return msgs;
     }
 
+    @Override
     public int getLastMessageNumber(Site site) {
         return messageRetriever.getLastMessageNumber(site);
     }

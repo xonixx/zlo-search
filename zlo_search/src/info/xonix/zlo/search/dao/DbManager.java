@@ -4,6 +4,7 @@ import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.model.Topic;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -33,4 +34,6 @@ public interface DbManager {
     List<Topic> getTopicList(Site site);
 
     String[] getTopics(Site site);
+
+    HashMap<String, Integer> getTopicsHashMap(Site site);
 }

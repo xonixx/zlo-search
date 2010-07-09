@@ -144,6 +144,7 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
     private HashMap<String, Integer> topicsHashMap;
     // returns <topic name, topic code> where "topic name"s also include old codes
 
+    @Override
     public HashMap<String, Integer> getTopicsHashMap(Site site) {
         if (topicsHashMap == null) {
             List<Topic> topicList = getTopicList(site);

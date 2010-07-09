@@ -1,10 +1,11 @@
 package info.xonix.zlo.search.daemon;
 
+import info.xonix.zlo.search.logic.AppLogic;
+import info.xonix.zlo.search.logic.SiteLogic;
 import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 
-import java.net.ConnectException;
-import java.sql.BatchUpdateException;
 import java.util.Date;
 
 /**
@@ -13,7 +14,10 @@ import java.util.Date;
  * Time: 10:35:37
  */
 public class DbDaemon extends Daemon {
-    private static Logger logger = Logger.getLogger("DbDaemon");
+    private static Logger logger = Logger.getLogger(DbDaemon.class);
+
+    private AppLogic appLogic = AppSpringContext.get(AppLogic.class);
+    private SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
 
     protected Logger getLogger() {
         return logger;
@@ -25,20 +29,22 @@ public class DbDaemon extends Daemon {
         }
 
         protected int getFromIndex() {
-            return getSite().getDB().getLastMessageNumber();
+            return appLogic.getLastSavedMessageNumber(getSite());
         }
 
         protected int getEndIndex() {
-            return getSite().getLastMessageNumber();
+            return siteLogic.getLastMessageNumber(getSite());
         }
 
         protected void perform(int from, int to) {
-            getSite().getDB().saveMessages(getSite().getMessages(from, to + 1));
-            getSite().getDbManager().setLastSavedDate(new Date());
+            Site site = getSite();
+            appLogic.saveMessages(site, siteLogic.getMessages(site, from, to + 1));
+            appLogic.setLastSavedDate(site, new Date());
         }
 
         protected boolean processException(Exception e) {
-            if (e instanceof DbException) {
+            // TODO!!!
+/*            if (e instanceof DbException) {
                 logger.warn(getSiteName() + " - Problem with db: " + e.getClass(), e);
                 return true;
             } else if (e instanceof DAOException) {
@@ -52,7 +58,7 @@ public class DbDaemon extends Daemon {
                     logger.error(getSiteName(), e);
                 }
                 return true;
-            }
+            }*/
 
             return false;
         }

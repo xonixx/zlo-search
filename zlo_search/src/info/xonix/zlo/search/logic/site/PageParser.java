@@ -1,9 +1,11 @@
 package info.xonix.zlo.search.logic.site;
 
 import info.xonix.zlo.search.config.DateFormats;
+import info.xonix.zlo.search.dao.DbManager;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -22,8 +24,10 @@ import java.util.regex.Matcher;
  * Date: 30.05.2007
  * Time: 20:17:07
  */
-public class PageParser /*extends SiteSource*/ {
-    public static final Logger logger = Logger.getLogger(PageParser.class);
+public class PageParser {
+    public static final Logger log = Logger.getLogger(PageParser.class);
+
+    private DbManager dbManager = AppSpringContext.get(DbManager.class);
 
 //    private Site site;
 
@@ -85,19 +89,19 @@ public class PageParser /*extends SiteSource*/ {
         String title = m.group(groupsOrder.get(2));
 
         message.setTopic(topic);
-        try {
-            Integer topicCode = dbm.getTopicsHashMap().get(topic);
-            if (topicCode == null) {
-                topicCode = -1;
-                if (StringUtils.isNotEmpty(topic)) {
-                    logger.info("Unknown topic: " + topic + " while parsing msg#: " + message.getNum() + " in site:" + site.getName() + "... Adding to title.");
-                    title = "[" + topic + "] " + title;
-                }
+//        try {
+        Integer topicCode = dbManager.getTopicsHashMap(site).get(topic);
+        if (topicCode == null) {
+            topicCode = -1;
+            if (StringUtils.isNotEmpty(topic)) {
+                log.info("Unknown topic: " + topic + " while parsing msg#: " + message.getNum() + " in site:" + site.getName() + "... Adding to title.");
+                title = "[" + topic + "] " + title;
             }
-            message.setTopicCode(topicCode);
-        } catch (DbException e) {
-            logger.error(e);
         }
+        message.setTopicCode(topicCode);
+//        } catch (DbException e) {
+//            log.error(e);
+//        }
 
         message.setSite(site);
         message.setTitle(title);
