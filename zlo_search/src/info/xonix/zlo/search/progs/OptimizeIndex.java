@@ -1,13 +1,10 @@
 package info.xonix.zlo.search.progs;
 
-import info.xonix.zlo.search.logic.IndexerLogicImpl;
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.logic.ZloSearcher;
 import info.xonix.zlo.search.model.Site;
-import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
-import org.apache.lucene.index.IndexWriter;
-
-import java.io.IOException;
 
 /**
  * Author: Vovan
@@ -15,37 +12,31 @@ import java.io.IOException;
  * Time: 19:27:49
  */
 public class OptimizeIndex {
-    public static final Logger logger = Logger.getLogger(OptimizeIndex.class);
+    public static final Logger log = Logger.getLogger(OptimizeIndex.class);
+
+    private ZloSearcher zloSearcher = AppSpringContext.get(ZloSearcher.class);
 
     public static void main(String[] args) {
-        try {
-            Site site = Site.forName(Config.getSiteEnvName());
-            if (!Config.USE_DOUBLE_INDEX) {
-                IndexWriter w = new IndexerLogicImpl(site).getWriter();
-                logger.info("Optimizing index...");
-                w.optimize();
-                w.close();
-                logger.info("Done.");
-            } else {
-                optimizeDoubleIndexForSite(site);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        new OptimizeIndex().main();
+    }
+
+    public void main() {
+        Site site = Site.forName(Config.getSiteEnvName());
+        if (!Config.USE_DOUBLE_INDEX) {
+            throw new IllegalArgumentException("Not supported!");
+            /*IndexWriter w = new IndexerLogicImpl(site).getWriter();
+            log.info("Optimizing index...");
+            w.optimize();
+            w.close();
+            log.info("Done.");*/
+        } else {
+            optimizeDoubleIndexForSite(site);
         }
     }
 
-    public static void optimizeDoubleIndexForSite(Site site) throws IOException {
-        logger.info("Optimizing index for " + site.getName());
-        DoubleIndexSearcher dis = site.getZloSearcher().getDoubleIndexSearcher();
-/*                int lastIndexedInDb = DbManager.getLastIndexedNumber();
-                int lastIndexedInIndex = ZloSearcher.getLastIndexedNumber();
-                if (lastIndexedInIndex != lastIndexedInDb) {
-                    logger.warn(MessageFormat.format("Last indexed nums not equal! db={0}, index={1}", lastIndexedInDb, lastIndexedInIndex));
-                    DbManager.setLastIndexedNumber(lastIndexedInIndex);
-                }*/
-        dis.moveSmallToBig();
-        dis.optimize();
-        // VVV --- won't close - as it closes dis for websearch
-//        dis.close();
+    public void optimizeDoubleIndexForSite(Site site) {
+        log.info("Optimizing index for " + site.getName());
+
+        zloSearcher.optimizeIndex(site);
     }
 }

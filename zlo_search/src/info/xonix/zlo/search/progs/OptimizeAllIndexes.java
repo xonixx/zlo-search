@@ -1,9 +1,11 @@
 package info.xonix.zlo.search.progs;
 
+import info.xonix.zlo.search.ZloObservable;
 import info.xonix.zlo.search.daemon.Daemon;
 import info.xonix.zlo.search.daemon.DaemonLauncher;
+import info.xonix.zlo.search.logic.SiteLogic;
 import info.xonix.zlo.search.model.Site;
-import info.xonix.zlo.search.ZloObservable;
+import info.xonix.zlo.search.spring.AppSpringContext;
 
 import java.io.IOException;
 import java.util.Observable;
@@ -15,6 +17,7 @@ import java.util.Observer;
  * Time: 0:53:31
  */
 public class OptimizeAllIndexes {
+    private SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
     private Observable observable = new ZloObservable();
 
     public void on(Observer o) {
@@ -30,10 +33,11 @@ public class OptimizeAllIndexes {
     }
 
     public void go() throws IOException {
-        for (Site site : Site.getSites()) {
+        OptimizeIndex optimizeIndex = new OptimizeIndex();
+        for (Site site : siteLogic.getSites()) {
             if (site.isPerformIndexing()) {
                 System.out.println("-----" + site.getName() + "-----");
-                OptimizeIndex.optimizeDoubleIndexForSite(site);
+                optimizeIndex.optimizeDoubleIndexForSite(site);
             }
         }
         observable.notifyObservers("optimized");
@@ -59,7 +63,7 @@ public class OptimizeAllIndexes {
 
                     System.out.println("Optimized... Starting daemons...");
 
-                    DaemonLauncher.main(new String[0]);
+                    new DaemonLauncher().main(new String[0]);
                 }
             }
         });

@@ -159,4 +159,22 @@ public class ZloSearcher /*extends SiteSource*/ {
         }
         return doubleIndexSearcher;
     }*/
+
+    public void optimizeIndex(Site site) {
+        DoubleIndexSearcher dis = doubleIndexSearcherFactory.get(site);
+/*                int lastIndexedInDb = DbManager.getLastIndexedNumber();
+                int lastIndexedInIndex = ZloSearcher.getLastIndexedNumber();
+                if (lastIndexedInIndex != lastIndexedInDb) {
+                    logger.warn(MessageFormat.format("Last indexed nums not equal! db={0}, index={1}", lastIndexedInDb, lastIndexedInIndex));
+                    DbManager.setLastIndexedNumber(lastIndexedInIndex);
+                }*/
+        try {
+            dis.moveSmallToBig();
+            dis.optimize();
+        } catch (IOException e) {
+            log.error("Error while optimizingIndex", e);
+        }
+        // VVV --- won't close - as it closes dis for websearch
+//        dis.close();
+    }
 }
