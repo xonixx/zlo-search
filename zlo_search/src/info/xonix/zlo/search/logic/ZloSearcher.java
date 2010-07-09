@@ -177,4 +177,10 @@ public class ZloSearcher /*extends SiteSource*/ {
         // VVV --- won't close - as it closes dis for websearch
 //        dis.close();
     }
+
+    public void dropIndex(Site site) throws IOException {
+        DoubleIndexSearcher dis = doubleIndexSearcherFactory.get(site);
+        dis.drop();
+        dis.close();
+    }
 }

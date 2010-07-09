@@ -1,8 +1,10 @@
 package info.xonix.zlo.search.test;
 
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.lucene.analysis.SimpleAnalyzer;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
@@ -33,6 +35,9 @@ class B extends A {
 }
 
 public class Test1 {
+    private static AppLogic appLogic = AppSpringContext.get(AppLogic.class);
+    private static Site zlo = Site.forName("zlo");
+
     public static void main(String[] args) {
         new Config();
         m15();
@@ -83,7 +88,7 @@ public class Test1 {
 */
 
 /*    public static void m17() {
-        System.out.println(Site.forName("zlo").getZloSearcher().getLastIndexedNumber());
+        System.out.println(zlo.getZloSearcher().getLastIndexedNumber());
 *//*        int from =4000000;
         int to=4000019;
         System.out.println((int)MessageFormat.format("{0}", 4000).charAt(1));
@@ -112,19 +117,18 @@ public class Test1 {
     }
 
     public static void m15() {
-        try {
 //            System.out.println(DbManager.getMessageByNumber(4149183));
 //            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(648064));
 //            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(4199196));
-            Site site = Site.forName("sport");
+        Site site = Site.forName("sport");
 /*             System.out.println(site.getMessageByNumber(61353));
             System.out.println(site.getMessageByNumber(62212));
             System.out.println(site.getMessageByNumber(622120));*/
 
-            site = Site.forName("zlo");
-            System.out.println(site.getMessageByNumber(4235814));
-            System.out.println(site.getMessageByNumber(4235806));
-            System.out.println(site.getMessageByNumber(42358140));
+        site = zlo;
+        System.out.println(appLogic.getMessageByNumber(site, 4235814));
+        System.out.println(appLogic.getMessageByNumber(site, 4235806));
+        System.out.println(appLogic.getMessageByNumber(site, 42358140));
 
 /*            site = Site.forName("anime");
             System.out.println(site.getMessageByNumber(24));
@@ -137,12 +141,6 @@ public class Test1 {
 /*            System.out.println(site.getMessageByNumber(11009));
             System.out.println(site.getMessageByNumber(11010));
             System.out.println(site.getMessageByNumber(110100));*/
-
-        } /*catch (DbException e) {
-            e.printStackTrace();
-        } */ catch (DAOException e) {
-            e.printStackTrace();
-        }
     }
 
 /*
@@ -175,33 +173,24 @@ public class Test1 {
     }
 
     public static void m12() {
-        try {
-            for (Message m : Site.forName("zlo").getMessages(10000, 10042)) {
-                System.out.println(m);
-            }
-        } catch (DAOException e) {
-            e.printStackTrace();
+        for (Message m : appLogic.getMessages(zlo, 10000, 10042)) {
+            System.out.println(m);
         }
+
     }
 
     public static void m11() {
-        Site site = Site.forName("zlo");
-        try {
-            for (int i = 0; i < 6000; i++) {
-                site.getMessageByNumber(i);
-            }
-        } catch (DAOException e) {
-            e.printStackTrace();
+        for (int i = 0; i < 6000; i++) {
+            appLogic.getMessageByNumber(zlo, i);
         }
+
     }
 
     public static void m10() {
-        try {
+
 //            System.out.println(new ZloStorage().getLastSavedMessageNumber());
-            System.out.println(new DB(Site.forName("zlo")).getLastMessageNumber());
-        } catch (DAOException e) {
-            e.printStackTrace();
-        }
+        System.out.println(appLogic.getLastSavedMessageNumber(zlo));
+
     }
 
     public static void m1() {
@@ -229,18 +218,16 @@ public class Test1 {
 //        System.out.println(f.format(-123));
 //        System.out.println(Integer.parseInt(f.format(-123)));
 //        System.out.println(ZloSearcher.searchMsgByNum(3765011));
-        for (Object o : Site.forName("zlo").getZloSearcher().searchInNumRange(3765002, 3765007)) {
+        for (Object o : zlo.getZloSearcher().searchInNumRange(3765002, 3765007)) {
             System.out.println(o);
         }
     }*/
 
     public static void m5() {
         for (int i = 0; i < 10; i++) {
-            try {
-                System.out.println(">" + Site.forName("zlo").getLastMessageNumber());
-            } catch (DAOException e) {
-                e.printStackTrace();
-            }
+
+            System.out.println(">" + appLogic.getLastSavedMessageNumber(zlo));
+
         }
     }
 
@@ -273,21 +260,17 @@ public class Test1 {
     }
 
     public static void m7() {
-        try {
-            for (Message m : Site.forName("zlo").getMessages(10, 110)) {
-                System.out.println(m);
-            }
-        } catch (DAOException e) {
-            e.printStackTrace();
+
+        for (Message m : appLogic.getMessages(zlo, 10, 110)) {
+            System.out.println(m);
         }
+
     }
 
     public static void m8() {
-        try {
-            System.out.println(Site.forName("zlo").getMessageByNumber(3960198));
-        } catch (DAOException e) {
-            e.printStackTrace();
-        }
+
+        System.out.println(appLogic.getMessageByNumber(zlo, 3960198));
+
         /*System.out.println(PageParser.parseMessage("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" +
                 "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=windows-1251\" /><link rel=\"shortcut icon\" href=\"/favicon.ico\" /><link rel=\"stylesheet\" type=\"text/css\" href=\"/main.css\" /><meta http-equiv=\"Page-Exit\" content=\"progid:DXImageTransform.Microsoft.Fade(Duration=0.2)\" /><title>Форум-ФРТК-МФТИ : Программирование : я говорю про коды на FORTRAN-87, какие RPC?</title></head><body>\n" +
                 "<script language=\"JavaScript\" type=\"text/javascript\">function popup(action, value, w, h){wnd=window.open(\"?\"+action+\"=\"+value,\"popup\",\"resizable=no,menubars=no,scrollbars=yes,width=\"+w+\",height=\"+h); }</script><div class=\"menu\"><A HREF=\"#3975000\">Перейти к ответам</A><A HREF=\"#Reply\">Ответить</A><A HREF=\"?index#3974909\" style=\"color:red;\">На главную страницу</A><a HREF=\"http://boards.alexzam.ru\">Поиск</A><A HREF=\"?register=form\">Регистрация</A><A HREF=\"?login=form\">Вход</A><A HREF=\"?rules\">Правила</A></div><BR><DIV ALIGN=CENTER><BIG>[Программирование]</BIG>&nbsp;&nbsp;<BIG>я говорю про коды на FORTRAN-87, какие RPC?</BIG><BR>Сообщение было послано: <b>Ник0лай</b><SMALL> (unreg)</SMALL> <small>(88.84.192.198)</small><BR>Дата: Пятница, Сентябрь 14 22:11:33 2007</DIV><BR><br /><div class=\"body\">Я говорю о синтаксисе вроде<BR><PRE STYLE=\"margin-left:25px\">\n" +
@@ -337,19 +320,17 @@ public class Test1 {
     }
 
     public static void m9() {
-        try {
-            List<Message> l = Site.forName("zlo").getMessages(3999995, 3999999);
+
+        List<Message> l = appLogic.getMessages(zlo, 3999995, 3999999);
 //            Collections.
-            for (Message m : l) {
-                System.out.println(m);
-            }
-            System.out.println("#############################################");
-            List<Message> l1 = Site.forName("zlo").getMessages(4000000, 4000005);
-            for (Message m : l1) {
-                System.out.println(m);
-            }
-        } catch (DAOException e) {
-            e.printStackTrace();
+        for (Message m : l) {
+            System.out.println(m);
         }
+        System.out.println("#############################################");
+        List<Message> l1 = appLogic.getMessages(zlo, 4000000, 4000005);
+        for (Message m : l1) {
+            System.out.println(m);
+        }
+
     }
 }

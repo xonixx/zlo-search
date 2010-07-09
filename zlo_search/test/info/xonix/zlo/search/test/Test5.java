@@ -1,8 +1,6 @@
 package info.xonix.zlo.search.test;
 
-import info.xonix.zlo.search.RussianWithNumbersAndSpecialStopWordsAnalyzer;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
-import info.xonix.zlo.search.logic.IndexerLogicImpl;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
 import org.apache.lucene.analysis.Analyzer;
@@ -14,7 +12,6 @@ import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Sort;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 
@@ -28,7 +25,7 @@ public class Test5 {
         m4();
     }
 
-    public static void m3() {
+/*    public static void m3() {
         // test index
         Site zlo = Site.forName("zlo");
         IndexerLogicImpl zi = new IndexerLogicImpl(zlo);
@@ -42,7 +39,7 @@ public class Test5 {
         } catch (DbException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public static void m2() {
         String s = "в чем смысл жизни?";

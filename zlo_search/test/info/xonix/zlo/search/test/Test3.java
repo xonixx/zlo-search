@@ -55,8 +55,8 @@ public class Test3 {
                 "<DIV class = ots>";
 
         Site site = Site.forName("velo");
-        PageParser p = new PageParser(site);
-        Message m = p.parseMessage(msg, 123);
+        PageParser p = new PageParser();
+        Message m = p.parseMessage(site, msg, 123);
         System.out.println(m);
     }
 }

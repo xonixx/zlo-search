@@ -28,15 +28,15 @@ public class TestDaemon extends Daemon {
             super();
         }
 
-        protected int getFromIndex() throws DAOException {
+        protected int getFromIndex() {
             return 0;
         }
 
-        protected int getEndIndex() throws DAOException {
+        protected int getEndIndex() {
             return 0;
         }
 
-        protected void perform(int from, int to) throws DAOException {
+        protected void perform(int from, int to) {
         }
 
         protected boolean processException(Exception ex) {

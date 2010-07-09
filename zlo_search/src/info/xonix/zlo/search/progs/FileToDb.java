@@ -1,9 +1,10 @@
 package info.xonix.zlo.search.progs;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.dao.DbManagerImpl;
+import info.xonix.zlo.search.dao.DbManager;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 
 import java.io.*;
@@ -38,7 +39,7 @@ public class FileToDb {
 
     private void start(boolean doWork) {
         Site site = Site.forName("zlo");
-        DbManagerImpl dbm = site.getDbManager();
+        DbManager dbm = AppSpringContext.get(DbManager.class);
         String lastLine = "";
         int result;
         try {
@@ -110,7 +111,7 @@ public class FileToDb {
                     lastLine = s;
                 }
                 if (doWork)
-                    dbm.saveMessagesFast(msgs);
+                    dbm.saveMessagesFast(site, msgs);
                 else {
                     for (Message m : msgs) {
                         System.out.println(m);

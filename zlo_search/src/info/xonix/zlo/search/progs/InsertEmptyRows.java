@@ -1,15 +1,5 @@
 package info.xonix.zlo.search.progs;
 
-import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.dao.DbManagerImpl;
-import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.model.MessageStatus;
-import info.xonix.zlo.search.model.Site;
-
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Author: Vovan
  * Date: 17.12.2007
@@ -21,21 +11,21 @@ public class InsertEmptyRows {
     private static int MAX_ALEXZAM = 4030808; // 4 030 808 - max alexzam db row
     private static int N = 10000;
 
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         new Config();
         int n = 0;
 
         Site site = Site.forName("zlo");
-        DbManagerImpl dbm = site.getDbManager();
+        DbManager dbm = AppSpringContext.get(DbManager.class);
 
         int addedEmpty = 0;
         while (n <= MAX_ALEXZAM + N) {
             ArrayList<Integer> nums_n_N = new ArrayList<Integer>();
 
-/*            DbResult r = DbUtils.executeSelect(
+*//*            DbResult r = DbUtils.executeSelect(
                     site,
                     "select num from messages where num>=? and num<?;",
-                    new Object[]{n, n + N}, new VarType[]{VarType.INTEGER, VarType.INTEGER});*/
+                    new Object[]{n, n + N}, new VarType[]{VarType.INTEGER, VarType.INTEGER});*//*
             int num;
             while ((num = r.getOneInt()) != -1) {
                 nums_n_N.add(num);
@@ -60,5 +50,5 @@ public class InsertEmptyRows {
             n = n + N;
         }
         System.out.println("Added empty: " + addedEmpty);
-    }
+    }*/
 }

@@ -1,7 +1,9 @@
 package info.xonix.zlo.search.xmlfp.test;
 
+import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.xmlfp.ZloJaxb;
 import org.junit.Test;
 
@@ -12,10 +14,12 @@ import org.junit.Test;
  */
 public class TestMessageToXML {
 
+    AppLogic appLogic = AppSpringContext.get(AppLogic.class);
+
     @Test
-    public void test1() throws DAOException {
-        Site s = Site.forName("zlo");
-        Message m = s.getDB().getMessageByNumber(3333333);
+    public void test1() {
+        Site site = Site.forName("zlo");
+        Message m = appLogic.getMessageByNumber(site, 3333333);
         System.out.println(m);
         System.out.println("======================");
         System.out.println(ZloJaxb.zloMessageToXml(m));

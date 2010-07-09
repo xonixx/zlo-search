@@ -123,14 +123,15 @@ public class SearchResult implements Iterable {
         return !isTheSameSearch(searchRequest);
     }
 
-    private PaginatedList paginatedList;
+    private ZloPaginatedList paginatedList;
 
     public PaginatedList createPaginatedList(Site site) {
         if (paginatedList == null) {
             paginatedList = new ZloPaginatedList(doubleHits, site);
-            ((ZloPaginatedList) paginatedList).setPageNumber(1);
+            paginatedList.setPageNumber(1);
         } else {
-            ((ZloPaginatedList) paginatedList).setSite(site);
+            // TODO: ???
+            paginatedList.setSite(site);
         }
         return paginatedList;
     }

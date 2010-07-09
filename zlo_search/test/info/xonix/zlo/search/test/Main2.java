@@ -1,7 +1,8 @@
 package info.xonix.zlo.search.test;
 
-import info.xonix.zlo.search.dao.DbManagerImpl;
+import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.ru.RussianAnalyzer;
 import org.apache.lucene.index.IndexReader;
@@ -43,12 +44,9 @@ public class Main2 {
                 wr.addDocument(d);
             }
             */
-            DbManagerImpl dbm = Site.forName("zlo").getDbManager();
-            try {
-                wr.addDocument(dbm.getMessageByNumber(3001403).getDocument());
-            } catch (DbException e) {
-                e.printStackTrace();
-            }
+            Site site = Site.forName("zlo");
+            AppLogic appLogic = AppSpringContext.get(AppLogic.class);
+            wr.addDocument(appLogic.getMessageByNumber(site, 3001403).getDocument());
 
 
             wr.optimize();

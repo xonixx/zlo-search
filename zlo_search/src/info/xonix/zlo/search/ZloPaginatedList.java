@@ -35,6 +35,10 @@ public class ZloPaginatedList /*extends SiteSource*/ implements PaginatedList {
         this.hits = hits;
     }
 
+    public void setSite(Site site) {
+        this.site = site;
+    }
+
     public List getList() {
         return currentList;
     }
