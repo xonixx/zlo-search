@@ -7,7 +7,7 @@ import info.xonix.zlo.search.config.DateFormats;
 import info.xonix.zlo.search.config.ErrorMessage;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.logic.AuditLogic;
-import info.xonix.zlo.search.logic.ZloSearcher;
+import info.xonix.zlo.search.logic.SearchException;
 import info.xonix.zlo.search.model.SearchLogEvent;
 import info.xonix.zlo.search.model.SearchRequest;
 import info.xonix.zlo.search.model.SearchResult;
@@ -239,7 +239,7 @@ public class SearchServlet extends BaseServlet {
                     } catch (BooleanQuery.TooManyClauses e) { // например как в поиске текста +с*
                         errorMsg = ErrorMessage.TooComplexSearch;
                         throw e;
-                    } catch (ZloSearcher.ParseException e) {
+                    } catch (SearchException e) {
                         errorMsg = ErrorMessage.InvalidQueryString;
                         errorMsg.setData(e.getQuery());
                         throw e;
@@ -292,10 +292,10 @@ public class SearchServlet extends BaseServlet {
                 request.setAttribute(REQ_SEARCH_RESULT, null);
                 showStatistics(request);
             }
-        } catch (DbException e) {
+        } /*catch (DbException e) { // TODO: handle
             errorMsg = ErrorMessage.DbError;
             log.error(e);
-        } catch (Exception e) {
+        }*/ catch (Exception e) {
             if (errorMsg == null) {
                 // unknown error
                 log.error("Unknown error", e);

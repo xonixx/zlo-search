@@ -1,8 +1,11 @@
 package info.xonix.zlo.web;
 
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.dao.DbManager;
+import info.xonix.zlo.search.logic.SiteLogic;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 
@@ -29,32 +32,35 @@ public class BackendBean {
     public static final String SN_PAGE_SIZE = "pageSize";
     public static final int SITE_URL_MAX_LEN = 30;
 
+    private SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
+//    private AppLogic appLogic = AppSpringContext.get(AppLogic.class);
+    private DbManager dbManager = AppSpringContext.get(DbManager.class);
+
     public BackendBean() {
     }
 
     public String getTopicSelector() {
         String[] topics = new String[0];
-        try {
-            // todo: check
-            topics = Site.getSite(getSiteInt()).getDbManager().getTopics();
-        } catch (DbException e) {
-            ;
-        }
+
+        // todo: check
+        Site site1 = siteLogic.getSite(getSiteInt());
+        topics = dbManager.getTopics(site1);
+
         return HtmlConstructor.constructSelector(SN_TOPIC, null,
                 new String[]{Message.ALL_TOPICS}, topics, getTopicInt(), true);
     }
 
     public String getSiteSelector() {
         return HtmlConstructor.constructSelector(SN_SITE, null, null,
-                formSiteNums(Site.getSites()),
-                formSiteHosts(Site.getSiteNames()), getSiteInt(), true);
+                formSiteNums(siteLogic.getSites()),
+                formSiteHosts(siteLogic.getSiteNames()), getSiteInt(), true);
     }
 
     private String[] formSiteNums(List<Site> sites) {
         String[] siteNums = new String[sites.size()];
         int i = 0;
         for (Site site1 : sites) {
-            siteNums[i++] = site1.getNum().toString();
+            siteNums[i++] = site1.getSiteNumber().toString();
         }
         return siteNums;
     }

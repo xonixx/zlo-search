@@ -1,8 +1,11 @@
 package info.xonix.zlo.web.servlets;
 
 import info.xonix.zlo.search.config.ErrorMessage;
+import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
+import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 import org.apache.commons.lang.StringUtils;
 
@@ -21,6 +24,8 @@ public class SavedMessageServlet extends BaseServlet {
     public static final String SAVED_MSG = "msg";
 
     public static final String JSP_SAVED_MSG = "/WEB-INF/jsp/SavedMsg.jsp";
+
+    private AppLogic appLogic = AppSpringContext.get(AppLogic.class);
 
     protected void doGet(ForwardingRequest request, HttpServletResponse response) throws ServletException, IOException {
         int num = -1;
@@ -42,16 +47,18 @@ public class SavedMessageServlet extends BaseServlet {
         setSiteInReq(request, response);
 
         Message msg;
-        try {
-            msg = getSite(request).getDB().getMessageByNumber(num);
-            if (msg != null && msg.getStatus() != MessageStatus.DELETED) {
-                request.setAttribute(SAVED_MSG, msg);
-            } else {
-                request.setAttribute(ERROR, ErrorMessage.MessageNotFound);
-            }
-        } catch (DAOException e) {
-            request.setAttribute(ERROR, ErrorMessage.DbError);
+//        try {
+        Site site = getSite(request);
+        msg = appLogic.getMessageByNumber(site, num);
+        if (msg != null && msg.getStatus() != MessageStatus.DELETED) {
+            request.setAttribute(SAVED_MSG, msg);
+        } else {
+            request.setAttribute(ERROR, ErrorMessage.MessageNotFound);
         }
+        // TODO: handle db error
+//        } catch (DAOException e) {
+//            request.setAttribute(ERROR, ErrorMessage.DbError);
+//        }
 
         request.forwardTo(JSP_SAVED_MSG);
     }
