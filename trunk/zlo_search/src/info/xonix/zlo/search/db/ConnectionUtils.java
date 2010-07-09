@@ -2,9 +2,7 @@ package info.xonix.zlo.search.db;
 
 import org.apache.log4j.Logger;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.SQLException;
 
 /**
  * Author: Vovan
@@ -48,6 +46,7 @@ public class ConnectionUtils {
         return ds != null ? getConnection(ds) : null;
     }*/
 
+/*
     @Deprecated
     public static Connection getConnection(DataSource ds) throws DbException {
         try {
@@ -56,6 +55,7 @@ public class ConnectionUtils {
             throw new DbException(e);
         }
     }
+*/
 
     // todo: tmp
 /*    private static DataSource getDataSource() throws NamingException {

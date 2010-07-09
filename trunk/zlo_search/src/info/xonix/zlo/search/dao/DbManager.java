@@ -2,6 +2,7 @@ package info.xonix.zlo.search.dao;
 
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.model.Topic;
 
 import java.util.List;
 
@@ -28,4 +29,8 @@ public interface DbManager {
     void saveSearchRequest(int siteNum, String host, String userAgent,
                            String reqText, String reqNick, String reqHost,
                            String reqQuery, String reqQueryString, String referer, boolean rssAsked);
+
+    List<Topic> getTopicList(Site site);
+
+    String[] getTopics(Site site);
 }

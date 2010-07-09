@@ -23,7 +23,7 @@ import static info.xonix.zlo.search.db.DbUtils.timestamp;
  * Time: 11:33:31 PM
  */
 public class DbManagerImpl extends DaoImplBase implements DbManager {
-    private static final Logger logger = Logger.getLogger(DbManagerImpl.class);
+    private static final Logger log = Logger.getLogger(DbManagerImpl.class);
 
     // TODO: remove
     private static Properties props = Config.loadProperties("info/xonix/zlo/search/db/sql.properties");
@@ -156,7 +156,8 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
         return topicsHashMap;
     }
 
-    private List<Topic> getTopicList(Site site) {
+    @Override
+    public List<Topic> getTopicList(Site site) {
         return getSimpleJdbcTemplate().query(
                 queryProvider.getSelectAllTopicsQuery(site),
                 getRowMappersHelper().beanRowMapper(Topic.class));
@@ -165,6 +166,7 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
     // returns only "new" topics - current posible topics on site
     private String[] topics = null;
 
+    @Override
     public String[] getTopics(Site site) {
         if (topics == null) {
             List<Topic> topicList = getTopicList(site);

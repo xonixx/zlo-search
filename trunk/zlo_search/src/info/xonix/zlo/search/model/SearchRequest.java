@@ -1,6 +1,9 @@
 package info.xonix.zlo.search.model;
 
-import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.config.DateFormats;
+import info.xonix.zlo.search.dao.DbManager;
+import info.xonix.zlo.search.logic.ZloSearcher;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
@@ -12,6 +15,9 @@ import java.util.Date;
  * Time: 3:08:16
  */
 public class SearchRequest /*extends SiteSource*/ {
+
+    private DbManager dbManager = AppSpringContext.get(DbManager.class);
+    private ZloSearcher zloSearcher = AppSpringContext.get(ZloSearcher.class);
 
     private Site site;
 
@@ -214,10 +220,12 @@ public class SearchRequest /*extends SiteSource*/ {
         if (StringUtils.isNotEmpty(nick)) sb.append(" ник:(").append(nick).append(")");
         if (StringUtils.isNotEmpty(host)) sb.append(" хост:(").append(host).append(")");
 
-        if (topicCode != -1) try {
-            sb.append(" категория:(").append(site.getDbManager().getTopics()[topicCode]).append(")");
-        } catch (DbException e) {
-            ;
+        if (topicCode != -1) {
+//            try {
+            sb.append(" категория:(").append(dbManager.getTopics(site)[topicCode]).append(")");
+//            } catch (DbException e) {
+//                ;
+//            }
         }
 
         ArrayList<String> options = new ArrayList<String>(5);
@@ -233,8 +241,8 @@ public class SearchRequest /*extends SiteSource*/ {
         options.clear();
 
         if (fromDate != null || toDate != null) {
-            options.add(fromDate != null ? Config.DateFormats.DF_2.format(fromDate) : "-inf");
-            options.add(toDate != null ? Config.DateFormats.DF_2.format(toDate) : "inf");
+            options.add(fromDate != null ? DateFormats.ddMMyyyy.format(fromDate) : "-inf");
+            options.add(toDate != null ? DateFormats.ddMMyyyy.format(toDate) : "inf");
             sb.append(" в промежутке дат:(").append(StringUtils.join(options, ", ")).append(")");
         }
 
@@ -243,7 +251,7 @@ public class SearchRequest /*extends SiteSource*/ {
 
     public SearchResult performSearch() {
         // just to throw exception if db connection broken and can't be fixed
-        SearchResult result = getSite().getZloSearcher().search(this);
+        SearchResult result = zloSearcher.search(this);
         result.setLastSearch(this);
         return result;
     }

@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.test;
 
+import info.xonix.zlo.search.config.DateFormats;
 import org.junit.Test;
-import info.xonix.zlo.search.config.Config;
 
 import java.text.ParseException;
 
@@ -13,11 +13,11 @@ import java.text.ParseException;
 public class TestParse {
 
     @Test
-    public void test1 () {
+    public void test1() {
         try {
-            System.out.println(Config.DateFormats.DF_BOARD_MSG.parse("2 16 13:14:10 2009"));
-            System.out.println(Config.DateFormats.DF_BOARD_MSG.parse("2 16 12:14:10 2009"));
-            System.out.println(Config.DateFormats.DF_BOARD_MSG.parse("2 16 11:14:10 2009"));
+            System.out.println(DateFormats.DF_BOARD_MSG.parse("2 16 13:14:10 2009"));
+            System.out.println(DateFormats.DF_BOARD_MSG.parse("2 16 12:14:10 2009"));
+            System.out.println(DateFormats.DF_BOARD_MSG.parse("2 16 11:14:10 2009"));
         } catch (ParseException e) {
             e.printStackTrace();
         }

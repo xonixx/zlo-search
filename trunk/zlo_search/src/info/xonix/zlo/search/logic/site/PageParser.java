@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.logic.site;
 
-import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.config.DateFormats;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.model.Site;
@@ -138,7 +138,7 @@ public class PageParser /*extends SiteSource*/ {
             for (int i = 0; i < RUS_MONTHS.length; i++) {
                 s = s.replaceFirst(RUS_MONTHS[i], Integer.toString(i + 1));
             }
-            d = Config.DateFormats.DF_BOARD_MSG.parse(s);
+            d = DateFormats.DF_BOARD_MSG.parse(s);
         } catch (ParseException e) {
             e.printStackTrace();
         }
