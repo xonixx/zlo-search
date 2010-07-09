@@ -1,6 +1,6 @@
 package info.xonix.zlo.web.decorators;
 
-import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.config.DateFormats;
 import info.xonix.zlo.search.model.ZloMessageAccessor;
 import org.displaytag.decorator.TableDecorator;
 
@@ -12,6 +12,6 @@ import org.displaytag.decorator.TableDecorator;
 public class SearchResultLineDecorator extends TableDecorator {
     public String getDate() {
         ZloMessageAccessor msg = (ZloMessageAccessor) getCurrentRowObject();
-        return Config.DateFormats.DF_1.format(msg.getDate());
+        return DateFormats.ddMMyyyyy_HHmm.format(msg.getDate());
     }
 }

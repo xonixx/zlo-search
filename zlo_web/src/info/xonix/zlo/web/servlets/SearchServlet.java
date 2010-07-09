@@ -3,6 +3,7 @@ package info.xonix.zlo.web.servlets;
 import info.xonix.zlo.search.FoundTextHighlighter;
 import info.xonix.zlo.search.ZloPaginatedList;
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.config.DateFormats;
 import info.xonix.zlo.search.config.ErrorMessage;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.logic.AuditLogic;
@@ -86,7 +87,7 @@ public class SearchServlet extends BaseServlet {
 
     public static final String JSP_SEARCH = "/WEB-INF/jsp/Search.jsp";
 
-    public static DateFormat FROM_TO_DATE_FORMAT = Config.DateFormats.DF_3;
+    public static DateFormat FROM_TO_DATE_FORMAT = DateFormats.ddMMyyyy_dots;
 
     private static final RequestCache cache = new RequestCache();
     private final RssFormer rssFormer = new RssFormer();

@@ -1,6 +1,6 @@
 package info.xonix.zlo.web.decorators;
 
-import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.config.DateFormats;
 import info.xonix.zlo.web.utils.RequestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.displaytag.decorator.TableDecorator;
@@ -19,7 +19,7 @@ public class HistoryTableDecorator extends TableDecorator {
 
     private String shortenString(String s, int len) {
         if (s.length() > len) {
-            s = StringUtils.substring(s, 0, len-3) + "...";
+            s = StringUtils.substring(s, 0, len - 3) + "...";
         }
 
         return s;
@@ -45,7 +45,7 @@ public class HistoryTableDecorator extends TableDecorator {
     }
 
     public String getReqDate() {
-        return Config.DateFormats.DF_1.format(((TreeMap) getCurrentRowObject()).get("req_date"));
+        return DateFormats.ddMMyyyyy_HHmm.format(((TreeMap) getCurrentRowObject()).get("req_date"));
     }
 
     public String getUserAgentSmall() {

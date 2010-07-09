@@ -13,6 +13,7 @@ import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
+import org.springframework.util.Assert;
 
 import java.io.IOException;
 
@@ -110,6 +111,8 @@ public class ZloSearcher /*extends SiteSource*/ {
     }
 
     private SearchResult search(Site site, String queryStr, boolean searchAll) {
+        Assert.notNull(site, "site can't be null!");
+
         if (!Config.USE_DOUBLE_INDEX) {
             throw new RuntimeException("Old!!!");
         } else {
