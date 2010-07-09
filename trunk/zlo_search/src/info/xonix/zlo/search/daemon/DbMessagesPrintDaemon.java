@@ -12,7 +12,7 @@ import java.util.List;
  * Time: 21:19:09
  */
 public class DbMessagesPrintDaemon extends DbMessagesIteratingDaemon {
-    private static final Logger logger = Logger.getLogger("DbMessagesPrintDaemon");
+    private static final Logger logger = Logger.getLogger(DbMessagesPrintDaemon.class);
 
     protected DbMessagesPrintDaemon(Site site) {
         super(site);

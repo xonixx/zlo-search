@@ -8,11 +8,7 @@ package info.xonix.zlo.search.test.storage;
 public class TestZloStorage {
     public static void main(String[] args) {
         ZloStorage zs = new ZloStorage();
-        try {
-            System.out.println(zs.getMessageByNumber(5000000));
-        } catch (DAOException e) {
-            e.printStackTrace();
-        }
+        System.out.println(zs.getMessageByNumber(5000000));
         System.exit(0);
     }
 }

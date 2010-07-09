@@ -1,10 +1,10 @@
 package info.xonix.zlo.search.test.junit;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.dao.DbDictImpl;
-import info.xonix.zlo.search.dao.DbManagerImpl;
-import info.xonix.zlo.search.db.VarType;
+import info.xonix.zlo.search.dao.DbDict;
+import info.xonix.zlo.search.dao.DbManager;
 import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import info.xonix.zlo.search.utils.TimeUtils;
 import org.junit.Before;
@@ -21,16 +21,17 @@ import static junit.framework.Assert.*;
  */
 public class TestsSearch {
 
-    DbManagerImpl dbm;
-    DbDictImpl dbDict;
+    DbManager dbManager;
+    DbDict dbDict;
+    Site site;
 
     @Before
     public void setUp() throws Exception {
         new Config();
 
-        Site site = Site.forName("zlo");
-        dbm = site.getDbManager();
-        dbDict = site.getDbDict();
+        site = Site.forName("zlo");
+        dbManager = AppSpringContext.get(DbManager.class);
+        dbDict = AppSpringContext.get(DbDict.class);
     }
 
     @Test
@@ -80,7 +81,7 @@ public class TestsSearch {
     @Test
     public void testGetMessages() {
 /*        try {
-            for (Message m : dbm.getMessages(new int[] {1,2,3,100,2000,1000050}, -1)) {
+            for (Message m : dbManager.getMessages(new int[] {1,2,3,100,2000,1000050}, -1)) {
                 System.out.println(m);
             }
         } catch (DbException e) {
@@ -91,12 +92,7 @@ public class TestsSearch {
     @Test
     public void testGetTopics() {
         new Config();
-        String[] topics = new String[0];
-        try {
-            topics = dbm.getTopics();
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
+        String[] topics = dbManager.getTopics(site);
         assertEquals("без темы", topics[0]);
         assertEquals("Учеба", topics[1]);
         assertEquals("Работа", topics[2]);
@@ -106,26 +102,26 @@ public class TestsSearch {
 
     @Test
     public void testDbDict() {
-        try {
-            dbDict.setVal("name1", 123, VarType.INTEGER);
-            dbDict.setVal("name1", 246, VarType.INTEGER);
-            assertEquals(246, dbDict.getVal("name1"));
-            dbDict.setInt("name1", null);
-            assertEquals(null, dbDict.getInt("name1"));
-            dbDict.setStr("s", "Hello");
-            assertEquals("Hello", dbDict.getStr("s"));
-            Date d = new Date();
-            dbDict.setDate("d", d);
-            Date dd = dbDict.getDate("d");
-            System.out.println(d + " " + dd + " " + d.getTime() + " " + dd.getTime());
-            assertEquals(true, d.getTime() - dd.getTime() < 1000);
+//        try {
+//        dbDict.setVal("name1", 123, VarType.INTEGER);
+//        dbDict.setVal("name1", 246, VarType.INTEGER);
+//        assertEquals(246, dbDict.getVal("name1"));
+        dbDict.setInt(site, "name1", null);
+        assertEquals(null, dbDict.getInt(site, "name1"));
+        dbDict.setStr(site, "s", "Hello");
+        assertEquals("Hello", dbDict.getStr(site, "s"));
+        Date d = new Date();
+        dbDict.setDate(site, "d", d);
+        Date dd = dbDict.getDate(site, "d");
+        System.out.println(d + " " + dd + " " + d.getTime() + " " + dd.getTime());
+        assertEquals(true, d.getTime() - dd.getTime() < 1000);
 
-            dbDict.remove("name1");
-            dbDict.remove("s");
-            dbDict.remove("d");
-            assertEquals(null, dbDict.getStr("s"));
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
+        dbDict.remove(site, "name1");
+        dbDict.remove(site, "s");
+        dbDict.remove(site, "d");
+        assertEquals(null, dbDict.getStr(site, "s"));
+//        } catch (DbException e) {
+//            e.printStackTrace();
+//        }
     }
 }

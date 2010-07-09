@@ -1,8 +1,10 @@
 package info.xonix.zlo.search.progs;
 
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.logic.AppLogic;
+import info.xonix.zlo.search.logic.ZloSearcher;
 import info.xonix.zlo.search.model.Site;
-import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
+import info.xonix.zlo.search.spring.AppSpringContext;
 
 import java.io.IOException;
 
@@ -13,7 +15,11 @@ import java.io.IOException;
  */
 public class DropIndex extends App {
     public static void main(String[] args) {
+        AppLogic appLogic = AppSpringContext.get(AppLogic.class);
+        ZloSearcher zloSearcher = AppSpringContext.get(ZloSearcher.class);
+
         System.out.print("Are you sure you want to drop index ? (y/n): ");
+
         byte[] reply = new byte[1];
         try {
             System.in.read(reply);
@@ -24,10 +30,12 @@ public class DropIndex extends App {
                 System.out.println("Deleting...");
                 if (Config.USE_DOUBLE_INDEX) {
                     Site site = Site.forName(siteName);
-                    DoubleIndexSearcher dis = site.getZloSearcher().getDoubleIndexSearcher();
-                    dis.drop();
-                    dis.close();
-                    site.getDbManager().setLastIndexedNumber(-1);
+
+                    zloSearcher.dropIndex(site);
+
+                    appLogic.setLastIndexedNumber(site, -1);
+                } else {
+                    throw new IllegalArgumentException();
                 }
             }
         } catch (IOException e) {

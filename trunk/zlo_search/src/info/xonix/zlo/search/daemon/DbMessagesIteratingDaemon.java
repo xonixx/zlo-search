@@ -1,8 +1,10 @@
 package info.xonix.zlo.search.daemon;
 
-import info.xonix.zlo.search.dao.DbDictImpl;
+import info.xonix.zlo.search.dao.DbDict;
+import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 
 import java.util.List;
@@ -14,23 +16,25 @@ import java.util.List;
  */
 public abstract class DbMessagesIteratingDaemon extends Daemon {
 
-    private static final Logger logger = Logger.getLogger("DbMessagesIteratingDaemon");
+    private DbDict dbDict = AppSpringContext.get(DbDict.class);
+    private AppLogic appLogic = AppSpringContext.get(AppLogic.class);
+
+    private static final Logger logger = Logger.getLogger(DbMessagesIteratingDaemon.class);
     private int processPerTime = 1000; // default
-    private DbDictImpl dbDict;
 
     private class DbMessagesIterationProcess extends Process {
 
         protected int getFromIndex() {
-            return dbDict.getInt(getIteratingVariableName(), 0);
+            return dbDict.getInt(getSite(), getIteratingVariableName(), 0);
         }
 
         protected int getEndIndex() {
-            return getSite().getLastMessageNumber();
+            return appLogic.getLastSavedMessageNumber(getSite());
         }
 
         protected void perform(int from, int to) {
-            doWithMessages(getSite().getDB().getMessages(from, to + 1));
-            dbDict.setInt(getIteratingVariableName(), to);
+            doWithMessages(appLogic.getMessages(getSite(), from, to + 1));
+            dbDict.setInt(getSite(), getIteratingVariableName(), to);
         }
 
         protected boolean processException(Exception ex) {
@@ -43,7 +47,6 @@ public abstract class DbMessagesIteratingDaemon extends Daemon {
 
     protected DbMessagesIteratingDaemon(Site site) {
         super(site);
-        dbDict = getSite().getDbDict();
         setDoPerTime(processPerTime);
     }
 
@@ -56,7 +59,7 @@ public abstract class DbMessagesIteratingDaemon extends Daemon {
     }
 
     protected void reset() {
-        dbDict.setInt(getIteratingVariableName(), 0);
+        dbDict.setInt(getSite(), getIteratingVariableName(), 0);
     }
 
     protected abstract void doWithMessages(List<Message> msgs);

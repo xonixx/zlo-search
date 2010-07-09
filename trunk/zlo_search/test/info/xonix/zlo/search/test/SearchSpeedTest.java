@@ -1,10 +1,6 @@
 package info.xonix.zlo.search.test;
 
-import info.xonix.zlo.search.ZloSearcher;
-import info.xonix.zlo.search.model.Site;
-
 import java.io.IOException;
-import java.util.Random;
 
 /**
  * Author: Vovan
@@ -13,7 +9,7 @@ import java.util.Random;
  */
 public class SearchSpeedTest {
     public static void main(String[] args) throws IOException {
-        ZloSearcher zs = Site.forName("zlo").getZloSearcher();
+/*        ZloSearcher zs = Site.forName("zlo").getZloSearcher();
         String w = "жопа";
         int len = zs.search(-1, w, true, true, false, false, false, null, null).getHits().length();
         System.out.println(len);
@@ -24,6 +20,6 @@ public class SearchSpeedTest {
         for (int i = 0; i < N; i++) {
             zs.search(-1, w, true, true, false, false, false, null, null).getHits().doc(r.nextInt(len));
         }
-        System.out.println("Avg: " + (System.currentTimeMillis() - t0) / N);
+        System.out.println("Avg: " + (System.currentTimeMillis() - t0) / N);*/
     }
 }

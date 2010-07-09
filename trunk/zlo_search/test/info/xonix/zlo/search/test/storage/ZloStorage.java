@@ -1,8 +1,10 @@
 package info.xonix.zlo.search.test.storage;
 
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.spring.AppSpringContext;
 
 import java.io.*;
 import java.util.*;
@@ -56,7 +58,9 @@ public class ZloStorage implements Serializable {
     private void retrieveAndSerialize() {
         System.out.println("Retrieving...");
         try {
-            for (Message m : Site.forName("zlo").getMessages(FROM, TO)) {
+            Site site = Site.forName("zlo");
+            AppLogic appLogic = AppSpringContext.get(AppLogic.class);
+            for (Message m : appLogic.getMessages(site, FROM, TO)) {
                 if (m != null)
                     storedMsgs.put(m.getNum(), m);
             }

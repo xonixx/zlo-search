@@ -1,8 +1,8 @@
 package info.xonix.zlo.search.test;
 
-import info.xonix.zlo.search.ZloSearcher;
 import info.xonix.zlo.search.doubleindex.DoubleHits;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
+import info.xonix.zlo.search.logic.ZloSearcher;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
 import org.apache.lucene.index.IndexWriter;

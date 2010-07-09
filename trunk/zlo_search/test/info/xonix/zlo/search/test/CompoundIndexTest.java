@@ -1,11 +1,5 @@
 package info.xonix.zlo.search.test;
 
-import info.xonix.zlo.search.logic.IndexerLogicImpl;
-import info.xonix.zlo.search.model.Site;
-import org.apache.lucene.index.IndexWriter;
-
-import java.io.IOException;
-
 /**
  * Author: Vovan
  * Date: 01.12.2007
@@ -13,8 +7,9 @@ import java.io.IOException;
  */
 public class CompoundIndexTest {
     public static void main(String[] args) {
-        IndexerLogicImpl zi = new IndexerLogicImpl(Site.forName("zlo"));
-        IndexWriter indexWriter = zi.getWriter();
+        /*Site site = Site.forName("zlo");
+        IndexerLogic indexerLogic = AppSpringContext.get(IndexerLogic.class);
+        IndexWriter indexWriter = indexerLogic.getWriter();
         System.out.println(indexWriter.getUseCompoundFile());
         indexWriter.setUseCompoundFile(true);
         try {
@@ -22,6 +17,6 @@ public class CompoundIndexTest {
             indexWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }
