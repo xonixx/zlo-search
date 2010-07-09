@@ -21,7 +21,7 @@ import java.util.Iterator;
  */
 public class SearchResult implements Iterable {
 
-    public static final Logger logger = Logger.getLogger(SearchResult.class);
+    public static final Logger log = Logger.getLogger(SearchResult.class);
 
     private DoubleHits doubleHits;
     private IndexSearcher searcher;
@@ -159,7 +159,7 @@ public class SearchResult implements Iterable {
     public boolean isOld() {
         boolean old = searchDate.before(doubleIndexSearcher.getRenewDate());
         if (old)
-            logger.info("Search result for " + query + " is old.");
+            log.info("Search result for " + query + " is old.");
         return old;
     }
 }

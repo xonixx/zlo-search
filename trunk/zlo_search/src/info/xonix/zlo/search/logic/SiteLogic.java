@@ -1,5 +1,6 @@
 package info.xonix.zlo.search.logic;
 
+import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
 
 import java.util.List;
@@ -15,4 +16,8 @@ public interface SiteLogic {
     String[] getSiteNames();
 
     Site getSite(int num);
+
+    int getLastMessageNumber(Site site);
+
+    List<Message> getMessages(Site site, int from, int to);
 }
