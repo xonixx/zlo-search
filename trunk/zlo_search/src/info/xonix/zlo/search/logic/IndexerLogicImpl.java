@@ -161,6 +161,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
      * for use in indexing daemon
      * indexes end marks msgs in db as indexed
      * indexes [from, to] including...
+     * TODO: this must be transactional!
      */
     @Override
     public void index(Site site, int from, int to) {
