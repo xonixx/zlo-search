@@ -1,8 +1,9 @@
 package info.xonix.zlo.web.test.junit;
 
 import info.xonix.zlo.web.HtmlConstructor;
-import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Author: Vovan

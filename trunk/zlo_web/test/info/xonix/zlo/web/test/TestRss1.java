@@ -36,7 +36,7 @@ public class TestRss1 {
             it.setDescription("Descr 1");
             it.setLink(new URL("http://searcher.link/"));
             it.setComments(new URL("http://board.link/"));
-            it.setCategories(Arrays.asList((CategoryIF)new Category("cat1")));
+            it.setCategories(Arrays.asList((CategoryIF) new Category("cat1")));
 //            it.setCategories((Collection<? extends CategoryIF>) Arrays.asList(new Category("cat1")));
 
             it.setCreator("Nick 1");
