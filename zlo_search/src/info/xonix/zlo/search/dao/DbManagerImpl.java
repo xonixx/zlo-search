@@ -7,9 +7,11 @@ import info.xonix.zlo.search.model.Topic;
 import info.xonix.zlo.search.utils.Check;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.util.Assert;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +43,26 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
         super.checkDaoConfig();
         Check.isSet(queryProvider, "queryProvider");
     }
+
+    private RowMapper<Message> messageRowMapper = new RowMapper<Message>() {
+        @Override
+        public Message mapRow(ResultSet rs, int i) throws SQLException {
+            return new Message(
+                    Site.forName(rs.getString("site")),
+                    rs.getString("nick")
+                    , rs.getString("altName")
+                    , rs.getString("host")
+                    , rs.getString("topic")
+                    , rs.getInt("topicCode")
+                    , rs.getString("title")
+                    , rs.getString("body")
+                    , rs.getTimestamp("msgDate")
+                    , rs.getBoolean("reg")
+                    , rs.getInt("num")
+                    , rs.getInt("parentNum")
+                    , rs.getInt("status"));
+        }
+    };
 
     @Override
     public void saveMessagesFast(Site site, List<Message> msgs) {
@@ -99,14 +121,14 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
     public Message getMessageByNumber(Site site, int num) {
         return getSimpleJdbcTemplate().queryForObject(
                 queryProvider.getSelectMsgByIdQuery(site),
-                getRowMappersHelper().beanRowMapper(Message.class));
+                messageRowMapper);
     }
 
     @Override
     public List<Message> getMessagesByRange(Site site, int start, int end) {
         return getSimpleJdbcTemplate().query(
                 queryProvider.getSelectMsgsInRangeQuery(site),
-                getRowMappersHelper().beanRowMapper(Message.class),
+                messageRowMapper,
                 start, end);
     }
 
@@ -120,7 +142,7 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
 
         String sql = String.format(queryProvider.getSelectSetQuery(site), sbNums.toString());
 
-        return getSimpleJdbcTemplate().query(sql, getRowMappersHelper().beanRowMapper(Message.class));
+        return getSimpleJdbcTemplate().query(sql, messageRowMapper);
 /*        DbResult res = DbUtils.executeSelect(getDataSource(), sql);
 
         List<Message> msgs = new ArrayList<Message>();
