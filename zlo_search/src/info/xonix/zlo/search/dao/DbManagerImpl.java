@@ -121,7 +121,8 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
     public Message getMessageByNumber(Site site, int num) {
         return getSimpleJdbcTemplate().queryForObject(
                 queryProvider.getSelectMsgByIdQuery(site),
-                messageRowMapper);
+                messageRowMapper,
+                num);
     }
 
     @Override
