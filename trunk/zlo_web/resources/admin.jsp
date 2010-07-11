@@ -1,9 +1,18 @@
 <%@ page import="info.xonix.zlo.search.daemon.Daemon" %>
+<%@ page import="info.xonix.zlo.search.logic.SiteLogic" %>
+<%@ page import="info.xonix.zlo.search.logic.ZloSearcher" %>
+<%@ page import="info.xonix.zlo.search.model.Site" %>
 <%@ page import="info.xonix.zlo.search.progs.OptimizeAllIndexes" %>
+<%@ page import="info.xonix.zlo.web.utils.RequestUtils" %>
 <%@ page import="java.util.LinkedHashMap" %>
 <%@ page import="java.util.Map" %>
 <%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=windows-1251" %>
+
+<%!
+    SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
+    ZloSearcher zloSearcher = AppSpringContext.get(ZloSearcher.class);
+%>
 
 <%
     if (!RequestUtils.isLocalIp(request)) {
@@ -89,13 +98,13 @@
         </display:column>
     </display:table>
 
-    <display:table id="site" name="<%= Site.getSites() %>">
-        <c:set var="dis" value="${site.zloSearcher.doubleIndexSearcher}"/>
+    <display:table id="site" name="<%= siteLogic.getSites() %>">
+        <c:set var="dis" value="<%= zloSearcher.getDoubleIndexSearcher((Site) site) %>"/>
         <display:caption>Sites</display:caption>
 
         <display:column title="#">${site_rowNum}</display:column>
         <display:column title="Name" property="name"/>
-        <display:column title="Url"><a href="http://${site.SITE_URL}/">${site.SITE_URL}</a></display:column>
+        <display:column title="Url"><a href="http://${site.siteUrl}/">${site.siteUrl}</a></display:column>
         <display:column title="Index">${dis.indexesDir}</display:column>
         <display:column title="Renew Date"><fmt:formatDate value="${dis.renewDate}"
                                                            pattern="dd.MM.yy hh:mm"/></display:column>

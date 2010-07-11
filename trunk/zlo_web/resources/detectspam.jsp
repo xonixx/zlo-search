@@ -13,7 +13,7 @@
 <jsp:setProperty name="backendBean" property="*"/>
 <%-- all from request properties --%>
 
-<c:set var="siteNum" value="${site.num}"/>
+<c:set var="siteNum" value="${site.siteNumber}"/>
 <c:set var="siteUrl" value="${site.siteUrl}"/>
 
 <c:set var="nickhostTbl">${site.name}_nickhost</c:set>
@@ -99,7 +99,7 @@
                     <c:if test="${msg.hasImg}">(pic)</c:if>
                 </small>
                 <a class="search"
-                   href="msg?site=${site.num}&num=${msg.num}">
+                   href="msg?site=${site.siteNumber}&num=${msg.num}">
                     <fmt:message key="link.saved.msg"/></a>
             </display:column>
             <display:column title="Всего&nbsp;сообщ." property="count" style="text-align:center"/>
