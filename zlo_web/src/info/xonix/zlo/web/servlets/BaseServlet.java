@@ -20,7 +20,7 @@ public class BaseServlet extends ForwardingServlet {
     public static final String REQ_SITE_ROOT = "siteRoot";
     public static final String QS_SITE = "site";
 
-    private SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
+    private static SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
 
     protected void setSiteInReq(ForwardingRequest request, HttpServletResponse response) {
         String siteInCookie;
@@ -56,7 +56,7 @@ public class BaseServlet extends ForwardingServlet {
         return site;
     }
 
-    public Site getSite(HttpServletRequest req) {
+    public static Site getSite(HttpServletRequest req) {
         // todo: tmp
         String sn = req.getParameter(QS_SITE);
         int siteId;

@@ -61,8 +61,10 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
 
     public IndexerLogicImpl(/*Site site*/) {
 //        super(site);
-        setIndexPerTime(100);
-        setAnalyzer(Message.constructAnalyzer());
+
+        indexPerTime = 100;
+        analyzer = Message.constructAnalyzer();
+
 //        setIndexDir();
     }
 
@@ -75,9 +77,9 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
         Check.isSet(appLogic, "appLogic");
     }
 
-    public void setAnalyzer(Analyzer analyzer) {
+/*    public void setAnalyzer(Analyzer analyzer) {
         this.analyzer = analyzer;
-    }
+    }*/
 
 /*   public File getIndexDir(Site site) {
         return siteToIndexDir.get(site);
@@ -92,9 +94,9 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
     }
 */
 
-    public void setIndexPerTime(int indexPerTime) {
+/*    public void setIndexPerTime(int indexPerTime) {
         this.indexPerTime = indexPerTime;
-    }
+    }*/
 
     private IndexWriter getWriter(Site site) {
         return siteToIndexWriter.get(site);

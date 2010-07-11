@@ -5,10 +5,11 @@ import info.xonix.zlo.search.dao.DbManager;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.model.Site;
-import info.xonix.zlo.search.spring.AppSpringContext;
+import info.xonix.zlo.search.utils.Check;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.InitializingBean;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -24,10 +25,10 @@ import java.util.regex.Matcher;
  * Date: 30.05.2007
  * Time: 20:17:07
  */
-public class PageParser {
+public class PageParser implements InitializingBean {
     public static final Logger log = Logger.getLogger(PageParser.class);
 
-    private DbManager dbManager = AppSpringContext.get(DbManager.class);
+    private DbManager dbManager;
 
 //    private Site site;
 
@@ -47,6 +48,15 @@ public class PageParser {
         MSG_DATE_PATTERN = site.getMsgDatePattern();
     }
 */
+
+    public void setDbManager(DbManager dbManager) {
+        this.dbManager = dbManager;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        Check.isSet(dbManager, "dbManager");
+    }
 
     private Message parseMessage(Site site, Message message, String msg) {
 

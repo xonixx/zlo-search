@@ -55,4 +55,8 @@ public final class AppSpringContext {
     public static <T> T get(String name, Class<T> clazz) {
         return getApplicationContext().getBean(name, clazz);
     }
+
+    public static Object get(String name) {
+        return getApplicationContext().getBean(name);
+    }
 }

@@ -1,6 +1,7 @@
 package info.xonix.zlo.search.spring.db;
 
 import info.xonix.zlo.search.config.Config;
+import org.apache.log4j.Logger;
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 import org.springframework.beans.factory.FactoryBean;
 
@@ -12,17 +13,23 @@ import javax.sql.DataSource;
  * Time: 19:40:35
  */
 public class DataSourceFactory implements FactoryBean<DataSource> {
+    private static final Logger log = Logger.getLogger(DataSourceFactory.class);
+
     private BasicDataSource dataSourceLocal;
     private BasicDataSource dataSourceRt;
 
     @Override
     public DataSource getObject() throws Exception {
         String env = Config.ENVIRONMENT;
+
+        log.info("Using datasource for env=" + env);
+
         if ("rt".equals(env)) {
             return dataSourceRt;
         } else if ("local".equals(env)) {
             return dataSourceLocal;
         }
+
         throw new IllegalArgumentException("Can't determine db settings for environment: " + env);
     }
 
