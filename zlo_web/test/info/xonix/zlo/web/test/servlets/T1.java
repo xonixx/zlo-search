@@ -1,11 +1,11 @@
-package info.xonix.zlo.web.servlets.test;
+package info.xonix.zlo.web.test.servlets;
 
 /**
  * Author: Vovan
  * Date: 22.01.2008
  * Time: 4:32:05
  */
-public class T1{
+public class T1 {
 /* public static void main(String[] args) {
    int x = 5, y = 7;
    swap(x, y);
@@ -23,9 +23,10 @@ public class T1{
          }
      };
  }*/
+
     public static void main(String[] args) {
         Object a = (Integer) null;
-    System.out.println(a);
+        System.out.println(a);
     }
 }
 
