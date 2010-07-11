@@ -1,4 +1,4 @@
-package info.xonix.zlo.web.servlets.test;
+package info.xonix.zlo.web.test.servlets;
 
 import org.displaytag.decorator.TableDecorator;
 
@@ -9,9 +9,9 @@ import org.displaytag.decorator.TableDecorator;
  */
 public class TestLazy1Decorator extends TableDecorator {
 
-    public Object getVal1 () {
+    public Object getVal1() {
         Object o = getCurrentRowObject();
         Object d = getDecoratedObject();
-        return "{"+((TestLazy1.Val)o).getField()+"}";
+        return "{" + ((TestLazy1.Val) o).getField() + "}";
     }
 }

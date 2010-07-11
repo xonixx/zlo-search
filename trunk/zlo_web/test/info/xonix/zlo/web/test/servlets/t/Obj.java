@@ -1,4 +1,4 @@
-package info.xonix.zlo.web.servlets.test.t;
+package info.xonix.zlo.web.test.servlets.t;
 
 public class Obj {
     private int n;
@@ -21,6 +21,6 @@ public class Obj {
     }
 
     public String[] getStrArr() {
-        return new String[] {"q", "w", "zzz"};
+        return new String[]{"q", "w", "zzz"};
     }
 }

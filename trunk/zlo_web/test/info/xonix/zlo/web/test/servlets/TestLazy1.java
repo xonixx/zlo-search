@@ -1,4 +1,4 @@
-package info.xonix.zlo.web.servlets.test;
+package info.xonix.zlo.web.test.servlets;
 
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 import info.xonix.zlo.web.servlets.helpful.ForwardingServlet;
@@ -39,8 +39,9 @@ public class TestLazy1 extends ForwardingServlet {
 
     private class PaginatedListImpl1 implements PaginatedList {
         private int pageNumber = 1;
+
         public List getList() {
-            int from = (pageNumber-1) * getObjectsPerPage();
+            int from = (pageNumber - 1) * getObjectsPerPage();
             return list.subList(from, from + getObjectsPerPage());
         }
 
@@ -74,7 +75,7 @@ public class TestLazy1 extends ForwardingServlet {
     }
 
     protected void doGet(ForwardingRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Val [] res = new Val[10];
+        Val[] res = new Val[10];
 
         for (int i = 0; i < res.length; i++) {
             res[i] = new Val(i);

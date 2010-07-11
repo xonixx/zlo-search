@@ -1,4 +1,4 @@
-package info.xonix.zlo.web.servlets.test.t;
+package info.xonix.zlo.web.test.servlets.t;
 
 import org.displaytag.decorator.TableDecorator;
 

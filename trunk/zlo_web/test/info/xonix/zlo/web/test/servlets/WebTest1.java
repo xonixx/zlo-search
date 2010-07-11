@@ -1,4 +1,4 @@
-package info.xonix.zlo.web.servlets.test;
+package info.xonix.zlo.web.test.servlets;
 
 import info.xonix.zlo.search.FoundTextHighlighter;
 import info.xonix.zlo.search.config.Config;
