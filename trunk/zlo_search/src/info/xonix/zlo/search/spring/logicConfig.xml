@@ -3,6 +3,37 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="indexerLogic" class="info.xonix.zlo.search.logic.IndexerLogicImpl"/>
+    <bean id="appLogic" class="info.xonix.zlo.search.logic.AppLogicImpl">
+        <property name="dbDict" ref="dbDict"/>
+        <property name="dbManager" ref="dbManager"/>
+    </bean>
+
+    <bean id="indexerLogic" class="info.xonix.zlo.search.logic.IndexerLogicImpl">
+        <property name="appLogic" ref="appLogic"/>
+    </bean>
+
+    <!--site logic-->
+    <bean id="pageParser" class="info.xonix.zlo.search.logic.site.PageParser">
+        <property name="dbManager" ref="dbManager"/>
+    </bean>
+
+    <bean id="pageRetriever" class="info.xonix.zlo.search.logic.site.PageRetriever"/>
+
+    <bean id="messageRetriever" class="info.xonix.zlo.search.logic.site.MessageRetriever">
+        <property name="pageParser" ref="pageParser"/>
+        <property name="pageRetriever" ref="pageRetriever"/>
+    </bean>
+
+    <bean id="siteLogic" class="info.xonix.zlo.search.logic.SiteLogicImpl">
+        <property name="messageRetriever" ref="messageRetriever"/>
+    </bean>
+
+    <!--search logic-->
+    <bean id="zloSearcher" class="info.xonix.zlo.search.logic.ZloSearcher"/>
+
+    <!--audit logic-->
+    <bean id="auditLogic" class="info.xonix.zlo.search.logic.AuditLogicImpl">
+        <property name="dbManager" ref="dbManager"/>
+    </bean>
 
 </beans>

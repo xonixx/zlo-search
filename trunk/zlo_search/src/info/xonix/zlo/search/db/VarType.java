@@ -1,6 +1,7 @@
 package info.xonix.zlo.search.db;
 
 import java.sql.Types;
+import java.util.Date;
 
 /**
  * Author: Vovan
@@ -24,7 +25,22 @@ public enum VarType {
             case DATE:
                 return Types.DATE;
             default:
-                return -1;
+                throw new IllegalArgumentException("Unknown vartype:" + this);
+        }
+    }
+
+    public Class getJavaType() {
+        switch (this) {
+            case INTEGER:
+                return Integer.class;
+            case STRING:
+                return String.class;
+            case BOOLEAN:
+                return Boolean.class;
+            case DATE:
+                return Date.class;
+            default:
+                throw new IllegalArgumentException("Unknown vartype:" + this);
         }
     }
 

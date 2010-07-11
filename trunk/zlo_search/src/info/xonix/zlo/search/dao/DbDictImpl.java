@@ -64,9 +64,9 @@ public class DbDictImpl extends DaoImplBase implements DbDict {
         setVal(site, name, val, DATE);
     }
 
-    private Object getVal(Site site, String name) {
+    private Object getVal(Site site, String name, VarType varType) {
         return getSimpleJdbcTemplate().queryForObject(queryProvider.getDbDictGetValQuery(site),
-                Object.class,
+                varType.getJavaType(),
                 name);
 /*        DbResult res = DbUtils.executeSelect(getDataSource(),
                 queryProvider.getDbDictGetValQuery(site),
@@ -85,7 +85,7 @@ public class DbDictImpl extends DaoImplBase implements DbDict {
 
     @Override
     public Integer getInt(Site site, String name) {
-        return (Integer) getVal(site, name);
+        return (Integer) getVal(site, name, INTEGER);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class DbDictImpl extends DaoImplBase implements DbDict {
 
     @Override
     public String getStr(Site site, String name) {
-        return (String) getVal(site, name);
+        return (String) getVal(site, name, STRING);
     }
 
     @Override
@@ -107,7 +107,7 @@ public class DbDictImpl extends DaoImplBase implements DbDict {
 
     @Override
     public Boolean getBool(Site site, String name) {
-        return (Boolean) getVal(site, name);
+        return (Boolean) getVal(site, name, BOOLEAN);
     }
 
     @Override
@@ -118,7 +118,7 @@ public class DbDictImpl extends DaoImplBase implements DbDict {
 
     @Override
     public Date getDate(Site site, String name) {
-        return (Date) getVal(site, name);
+        return (Date) getVal(site, name, DATE);
     }
 
     @Override

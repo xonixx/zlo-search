@@ -15,7 +15,6 @@
 
 <c:set var="siteNum" value="${site.num}"/>
 <c:set var="siteUrl" value="${site.siteUrl}"/>
-<sql:setDataSource dataSource="${site.dataSource}"/>
 
 <c:set var="nickhostTbl">${site.name}_nickhost</c:set>
 <c:set var="messagesTbl">${site.name}_messages</c:set>
@@ -25,15 +24,15 @@
        value="${param['checkLastNum'] == '2' ? 10000 : param['checkLastNum'] == '3' ? 20000 : 5000}"/>
 <c:set var="msgsMax"
        value="${param['msgsMax'] == '2' ? 10 : 5}"/>
-<c:set var="unreg" value="${not empty param['unreg']}" />
+<c:set var="unreg" value="${not empty param['unreg']}"/>
 <%--<c:set var="hasUrl" value="${not empty param['hasUrl']}" />--%>
 
 
 <%--maybe need optimize this--%>
 <sql:query var="res">
     SELECT
-        m.*,
-        (select sum(cnt) from ${nickhostTbl} n where m.nick=n.nick group by n.nick) AS count
+    m.*,
+    (select sum(cnt) from ${nickhostTbl} n where m.nick=n.nick group by n.nick) AS count
     FROM ${messagesTbl} m
     WHERE m.num > (select max(num) FROM ${messagesTbl}) - ?
     <c:if test="${unreg}">
@@ -52,7 +51,7 @@
 
 <title>${title}</title>
 
-<tiles:insertDefinition name="header.detectspam" />
+<tiles:insertDefinition name="header.detectspam"/>
 
 <div align="center">
     <h3>${title}</h3>

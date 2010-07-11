@@ -123,7 +123,6 @@ abstract class SiteConfiguration /*extends DbAccessor*/ {
         dbReconnectPeriod = TimeUtils.parseToMilliSeconds(p.getProperty("db.daemon.period.to.reconnect"));
 
         siteNumber = Integer.parseInt(p.getProperty("site.number"));
-        this.name = p.getProperty("site.name");
 
         msgDatePattern = p.getProperty("str.date.pattern");
     }

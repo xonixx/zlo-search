@@ -3,4 +3,19 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean id="rowMappersHelper" class="info.xonix.zlo.search.dao.rowmappers.RowMappersHelper"/>
+
+    <bean id="queryProvider" class="info.xonix.zlo.search.dao.QueryProvider"/>
+
+    <bean id="dbDict" class="info.xonix.zlo.search.dao.DbDictImpl">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="rowMappersHelper" ref="rowMappersHelper"/>
+        <property name="queryProvider" ref="queryProvider"/>
+    </bean>
+
+    <bean id="dbManager" class="info.xonix.zlo.search.dao.DbManagerImpl">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="rowMappersHelper" ref="rowMappersHelper"/>
+        <property name="queryProvider" ref="queryProvider"/>
+    </bean>
 </beans>
