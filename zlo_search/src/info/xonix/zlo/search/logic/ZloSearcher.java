@@ -135,7 +135,7 @@ public class ZloSearcher /*extends SiteSource*/ {
 
             log.info("query: " + query);
 
-            DoubleIndexSearcher dis = doubleIndexSearcherFactory.get(site);
+            DoubleIndexSearcher dis = getDoubleIndexSearcher(site);
 
             result.setAnalyzer(analyzer);
             result.setQueryParser(parser);
@@ -161,7 +161,7 @@ public class ZloSearcher /*extends SiteSource*/ {
     }*/
 
     public void optimizeIndex(Site site) {
-        DoubleIndexSearcher dis = doubleIndexSearcherFactory.get(site);
+        DoubleIndexSearcher dis = getDoubleIndexSearcher(site);
 /*                int lastIndexedInDb = DbManager.getLastIndexedNumber();
                 int lastIndexedInIndex = ZloSearcher.getLastIndexedNumber();
                 if (lastIndexedInIndex != lastIndexedInDb) {
@@ -179,8 +179,18 @@ public class ZloSearcher /*extends SiteSource*/ {
     }
 
     public void dropIndex(Site site) throws IOException {
-        DoubleIndexSearcher dis = doubleIndexSearcherFactory.get(site);
+        DoubleIndexSearcher dis = getDoubleIndexSearcher(site);
         dis.drop();
         dis.close();
+    }
+
+    /**
+     * TODO: make private!
+     *
+     * @param site
+     * @return
+     */
+    public DoubleIndexSearcher getDoubleIndexSearcher(Site site) {
+        return doubleIndexSearcherFactory.get(site);
     }
 }
