@@ -14,7 +14,7 @@ import java.util.Date;
  * Date: 30.09.2007
  * Time: 3:08:16
  */
-public class SearchRequest /*extends SiteSource*/ {
+public class SearchRequest {
 
     private DbManager dbManager = AppSpringContext.get(DbManager.class);
     private ZloSearcher zloSearcher = AppSpringContext.get(ZloSearcher.class);
@@ -44,7 +44,6 @@ public class SearchRequest /*extends SiteSource*/ {
                          boolean inReg, boolean inHasUrl, boolean inHasImg,
                          String nick, String host, int topicCode, boolean isDateSet, Date fromDate, Date toDate,
                          boolean searchAll) {
-//        super(site);
         this.site = site;
 
         this.text = text;

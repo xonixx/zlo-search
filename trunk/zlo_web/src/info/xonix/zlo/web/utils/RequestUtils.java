@@ -10,14 +10,15 @@ import javax.servlet.http.HttpServletRequest;
  * Date: 01.05.2008
  * Time: 5:11:18
  */
-public class RequestUtils {
+public final class RequestUtils {
     /**
-     *  Weather the ip of client sending request is local ip
+     * Weather the ip of client sending request is local ip
+     *
      * @param request
      * @param localIps
      * @return
      */
-    public static String [][] BROWSERS = {
+    public static String[][] BROWSERS = {
             {"MSIE", "Internet Explorer"},
             {"Firefox", "Firefox"},
             {"Opera", "Opera"},
@@ -59,7 +60,7 @@ public class RequestUtils {
             if (userAgent.contains(br[0]))
                 return br[1];
         }
-        
+
         return "other";
     }
 }

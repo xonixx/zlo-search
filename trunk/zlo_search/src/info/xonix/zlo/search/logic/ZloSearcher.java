@@ -22,17 +22,11 @@ import java.io.IOException;
  * Date: 01.06.2007
  * Time: 2:24:05
  */
-public class ZloSearcher /*extends SiteSource*/ {
+public class ZloSearcher {
     private static final Logger log = Logger.getLogger(ZloSearcher.class);
 
     public static final int PERIOD_RECREATE_INDEXER = TimeUtils.parseToMilliSeconds(Config.getProp("searcher.period.recreate.indexer"));
 
-/*    private Site site;
-
-    public ZloSearcher(Site site) {
-//        super(site);
-        this.site = site;
-    }*/
     private SiteFactory<DoubleIndexSearcher> doubleIndexSearcherFactory = new SiteFactory<DoubleIndexSearcher>() {
         @Override
         protected DoubleIndexSearcher create(Site site) {
@@ -49,37 +43,7 @@ public class ZloSearcher /*extends SiteSource*/ {
         }
     }
 
-/*    public SearchResult search(int topicCode,
-                               String text,
-                               boolean inTitle,
-                               boolean inBody,
-                               boolean inReg,
-                               boolean inHasUrl,
-                               boolean inHasImg,
-                               String nick,
-                               String host,
-                               Date fromDate,
-                               Date toDate,
-                               boolean searchAll) {
-
-        return search(Message.formQueryString(text, inTitle, inBody, topicCode, nick, host, fromDate, toDate, inReg, inHasUrl, inHasImg), searchAll);
-    }*/
-
     public SearchResult search(SearchRequest req) {
-        /*return search(
-                req.getTopicCode(),
-                req.getText(),
-                req.isInTitle(),
-                req.isInBody(),
-                req.isInReg(),
-                req.isInHasUrl(),
-                req.isInHasImg(),
-                req.getNick(),
-                req.getHost(),
-                req.getFromDate(),
-                req.getToDate(),
-                req.isSearchAll()
-        );*/
         return search(
                 req.getSite(),
                 Message.formQueryString(
@@ -89,19 +53,6 @@ public class ZloSearcher /*extends SiteSource*/ {
                         req.isInReg(), req.isInHasUrl(), req.isInHasImg()),
                 req.isSearchAll());
     }
-
-/*    public SearchResult search(int topicCode,
-                               String text,
-                               boolean inTitle,
-                               boolean inBody,
-                               boolean inReg,
-                               boolean inHasUrl,
-                               boolean inHasImg,
-                               String nick,
-                               String host) {
-        return search(topicCode, text, inTitle, inBody,
-                inReg, inHasUrl, inHasImg, nick, host, null, null, false);
-    }*/
 
     public static Sort getDateSort() {
         // sort causes slow first search & lot memory used!
@@ -151,23 +102,9 @@ public class ZloSearcher /*extends SiteSource*/ {
         return result;
     }
 
-/*    private DoubleIndexSearcher doubleIndexSearcher;
-
-    public DoubleIndexSearcher getDoubleIndexSearcher() {
-        if (doubleIndexSearcher == null) {
-            doubleIndexSearcher = new DoubleIndexSearcher(site, getDateSort());
-        }
-        return doubleIndexSearcher;
-    }*/
-
     public void optimizeIndex(Site site) {
         DoubleIndexSearcher dis = getDoubleIndexSearcher(site);
-/*                int lastIndexedInDb = DbManager.getLastIndexedNumber();
-                int lastIndexedInIndex = ZloSearcher.getLastIndexedNumber();
-                if (lastIndexedInIndex != lastIndexedInDb) {
-                    logger.warn(MessageFormat.format("Last indexed nums not equal! db={0}, index={1}", lastIndexedInDb, lastIndexedInIndex));
-                    DbManager.setLastIndexedNumber(lastIndexedInIndex);
-                }*/
+
         try {
             dis.moveSmallToBig();
             dis.optimize();

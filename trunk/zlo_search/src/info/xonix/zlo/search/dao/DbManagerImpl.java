@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
-import static info.xonix.zlo.search.db.DbUtils.timestamp;
+import static info.xonix.zlo.search.utils.DbUtils.timestamp;
 
 /**
  * User: boost
@@ -111,10 +111,6 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
         });
     }
 
-/*    public void saveMessages(List<Message> msgs) {
-        saveMessages(msgs, false);
-    }*/
-
     // todo: test
 
     @Override
@@ -144,19 +140,6 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
         String sql = String.format(queryProvider.getSelectSetQuery(site), sbNums.toString());
 
         return getSimpleJdbcTemplate().query(sql, messageRowMapper);
-/*        DbResult res = DbUtils.executeSelect(getDataSource(), sql);
-
-        List<Message> msgs = new ArrayList<Message>();
-
-        while (res.next()) {
-            Message msg = getMessage(res, site);
-            msg.setHitId(fromIndex++);
-            msg.setSite(site);
-            msgs.add(msg);
-        }
-
-        res.close();
-        return msgs;*/
     }
 
     @Override

@@ -1,4 +1,4 @@
-package info.xonix.zlo.web;
+package info.xonix.zlo.web.utils;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -23,12 +23,12 @@ public final class CookieUtils {
     }
 
     public static String recallFromCookie(HttpServletRequest request, String fieldname) {
-        Cookie [] cookies = request.getCookies();
+        Cookie[] cookies = request.getCookies();
 
         if (cookies == null)
             return StringUtils.EMPTY;
 
-        for (Cookie cookie: cookies) {
+        for (Cookie cookie : cookies) {
             if (fieldname.equals(cookie.getName()))
                 return cookie.getValue();
         }

@@ -14,10 +14,10 @@ import info.xonix.zlo.search.model.SearchResult;
 import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.utils.HtmlUtils;
-import info.xonix.zlo.web.CookieUtils;
 import info.xonix.zlo.web.RequestCache;
 import info.xonix.zlo.web.rss.RssFormer;
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
+import info.xonix.zlo.web.utils.CookieUtils;
 import info.xonix.zlo.web.utils.RequestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -281,7 +281,7 @@ public class SearchServlet extends BaseServlet {
                         }
                     }
 
-                    paginatedList.refreshCurrentList();
+                    paginatedList.refreshCurrentList();// todo: handle java.lang.NegativeArraySizeException here
                 } else {
                     log.error("searchResult == null. This should not happen!");
                 }
@@ -340,19 +340,6 @@ public class SearchServlet extends BaseServlet {
         searchLogEvent.setRssAsked(rssAsked);
 
         auditLogic.logSearchEvent(searchLogEvent);
-
-
-        /*DbAccessor.getInstance("search_log").getDbManager().logRequest(
-        getSite(request).getSiteNumber(),
-        RequestUtils.getClientIp(request),
-        request.getHeader("User-Agent"),
-        request.getParameter(QS_TEXT),
-        request.getParameter(QS_NICK),
-        request.getParameter(QS_HOST),
-        query,
-        request.getQueryString(),
-        request.getHeader("Referer"),
-        rssAsked);*/
     }
 
     private String preprocessSearchText(String text, String searchType) {
