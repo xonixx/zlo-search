@@ -21,7 +21,6 @@ import java.util.List;
 public class SiteLogicImpl implements SiteLogic, InitializingBean {
     private static final Logger log = Logger.getLogger(SiteLogicImpl.class);
 
-//    private PageParser pageParser;
     private MessageRetriever messageRetriever;
 
     public void setMessageRetriever(MessageRetriever messageRetriever) {
@@ -56,28 +55,6 @@ public class SiteLogicImpl implements SiteLogic, InitializingBean {
         return messageRetriever.getLastMessageNumber(site);
     }
 
-
-/*    private PageRetriever retreiver;
-
-    private PageRetriever getRetriever() {
-        if (retreiver == null) {
-            retreiver = new PageRetriever(this);
-        }
-        return retreiver;
-    }
-
-    private PageParser parser;
-
-    private PageParser getParser() {
-        if (parser == null) {
-            parser = new PageParser(this);
-        }
-        return parser;
-    }*/
-
-/*    public int getLastRootMessageNumber() throws IOException {
-        return getRetriever().getLastRootMessageNumber();
-    }*/
 
     private List<Site> sites;
 
@@ -120,16 +97,4 @@ public class SiteLogicImpl implements SiteLogic, InitializingBean {
         }
         return null;
     }
-
-/*    private ZloSearcher zloSearcher;
-
-    public ZloSearcher getZloSearcher() {
-        if (zloSearcher == null) {
-            if (getName() != null) {
-                zloSearcher = Site.forName(getName()).getZloSearcher();
-            } else
-                zloSearcher = new ZloSearcher(this);
-        }
-        return zloSearcher;
-    }*/
 }

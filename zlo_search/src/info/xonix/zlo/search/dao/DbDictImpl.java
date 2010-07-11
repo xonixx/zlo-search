@@ -34,14 +34,6 @@ public class DbDictImpl extends DaoImplBase implements DbDict {
         getSimpleJdbcTemplate().update(queryProvider.getDbDictSetValQuery(site),
                 name, type.getInt(), vals[0], vals[1], vals[2], vals[3],
                 type.getInt(), vals[0], vals[1], vals[2], vals[3]);
-
-/*        DbUtils.executeUpdate(
-                getDataSource(),
-                queryProvider.getDbDictSetValQuery(site),
-                new Object[]{name, type.getInt(), vals[0], vals[1], vals[2], vals[3],
-                        type.getInt(), vals[0], vals[1], vals[2], vals[3]},
-                new VarType[]{STRING, INTEGER, INTEGER, STRING, BOOLEAN, DATE,
-                        INTEGER, INTEGER, STRING, BOOLEAN, DATE});*/
     }
 
     @Override
@@ -68,19 +60,6 @@ public class DbDictImpl extends DaoImplBase implements DbDict {
         return getSimpleJdbcTemplate().queryForObject(queryProvider.getDbDictGetValQuery(site),
                 varType.getJavaType(),
                 name);
-/*        DbResult res = DbUtils.executeSelect(getDataSource(),
-                queryProvider.getDbDictGetValQuery(site),
-                new Object[]{name}, new VarType[]{STRING});
-        try {
-            if (res.next()) {
-                int type = res.getInt(1);
-                return res.getObject(2 + type);
-            } else {
-                return null;
-            }
-        } finally {
-            res.close();
-        }*/
     }
 
     @Override
@@ -130,9 +109,6 @@ public class DbDictImpl extends DaoImplBase implements DbDict {
     @Override
     public void remove(Site site, String name) {
         getSimpleJdbcTemplate().update(queryProvider.getDbDictRemoveValQuery(site), name);
-/*        DbUtils.executeUpdate(getDataSource(),
-                queryProvider.getDbDictRemoveValQuery(site),
-                new Object[]{name}, new VarType[]{STRING});*/
     }
 
     private int getValIndex(VarType type) {

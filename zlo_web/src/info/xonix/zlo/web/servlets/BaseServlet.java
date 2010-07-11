@@ -3,9 +3,9 @@ package info.xonix.zlo.web.servlets;
 import info.xonix.zlo.search.logic.SiteLogic;
 import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.spring.AppSpringContext;
-import info.xonix.zlo.web.CookieUtils;
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 import info.xonix.zlo.web.servlets.helpful.ForwardingServlet;
+import info.xonix.zlo.web.utils.CookieUtils;
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
