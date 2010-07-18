@@ -21,7 +21,7 @@ public interface DbManager {
 
     List<Message> getMessagesByRange(Site site, int start, int end);
 
-    List<Message> getMessages(Site site, int[] nums, int fromIndex);
+    List<Message> getMessages(Site site, int[] nums);
 
     int getLastMessageNumber(Site site);
 

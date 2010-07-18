@@ -88,8 +88,8 @@ public class ZloSearcher {
 
             DoubleIndexSearcher dis = getDoubleIndexSearcher(site);
 
-            result.setAnalyzer(analyzer);
-            result.setQueryParser(parser);
+//            result.setAnalyzer(analyzer);
+//            result.setQueryParser(parser);
             result.setQuery(query);
             result.setDoubleIndexSearcher(dis);
             result.setHits(dis.search(query));
@@ -98,6 +98,7 @@ public class ZloSearcher {
             throw new SearchException(queryStr, e);
         } catch (IOException e) {
             log.error(e);
+            throw new SearchException(queryStr, e);
         }
         return result;
     }

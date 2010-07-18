@@ -18,7 +18,7 @@ import java.util.List;
  * Date: 26.09.2007
  * Time: 16:39:25
  */
-public class ZloPaginatedList /*extends SiteSource*/ implements PaginatedList {
+public class ZloPaginatedList implements PaginatedList {
     private static final Logger log = Logger.getLogger(ZloPaginatedList.class);
 
     private List currentList;
@@ -30,7 +30,6 @@ public class ZloPaginatedList /*extends SiteSource*/ implements PaginatedList {
     private DbManager dbManager = AppSpringContext.get(DbManager.class);
 
     public ZloPaginatedList(DoubleHits hits, Site site) {
-//        super(site);
         this.site = site;
         this.hits = hits;
     }
@@ -56,7 +55,13 @@ public class ZloPaginatedList /*extends SiteSource*/ implements PaginatedList {
             log.error("Error while getting doc from index: " + e);
         }
 
-        return dbManager.getMessages(site, indexes, fromIndex);
+        List<Message> messages = dbManager.getMessages(site, indexes);
+
+        for (Message message : messages) {
+            message.setHitId(fromIndex++);
+        }
+
+        return messages;
     }
 
     public void refreshCurrentList() {
