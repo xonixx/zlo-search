@@ -75,7 +75,7 @@ public class ZloSearcher {
         if (sort == null)
             sort = getDateSort();
 
-        SearchResult result = new SearchResult();
+        SearchResult result;
         try {
             Analyzer analyzer = Message.constructAnalyzer();
 
@@ -88,12 +88,7 @@ public class ZloSearcher {
 
             DoubleIndexSearcher dis = getDoubleIndexSearcher(site);
 
-//            result.setAnalyzer(analyzer);
-//            result.setQueryParser(parser);
-            result.setQuery(query);
-            result.setDoubleIndexSearcher(dis);
-            result.setHits(dis.search(query));
-            result.setSearchDateNow();
+            result = new SearchResult(site, query, dis, dis.search(query));
         } catch (ParseException e) {
             throw new SearchException(queryStr, e);
         } catch (IOException e) {

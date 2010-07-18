@@ -5,7 +5,6 @@ import info.xonix.zlo.search.doubleindex.DoubleHits;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
 import org.apache.log4j.Logger;
 import org.apache.lucene.search.Query;
-import org.displaytag.pagination.PaginatedList;
 
 import java.util.Date;
 
@@ -24,30 +23,17 @@ public class SearchResult {
     private SearchRequest lastSearch;
 
     private boolean newSearch = true; // by default after created
+
+    private Site site;
     private Date searchDate;
     private DoubleIndexSearcher doubleIndexSearcher;
 
-    public SearchResult() {
-    }
-
-/*    public DoubleHits getHits() {
-        return doubleHits;
-    }*/
-
-    public void setHits(DoubleHits doubleHits) {
-        this.doubleHits = doubleHits;
-    }
-
-    public void setSearchDateNow() {
-        searchDate = new Date(); // now
-    }
-
-/*    public void setHits(Hits hits) {
-        setHits(new DoubleHits(hits));
-    }*/
-
-    public void setQuery(Query query) {
+    public SearchResult(Site site, Query query, DoubleIndexSearcher dis, DoubleHits doubleHits) {
+        this.site = site;
+        this.doubleIndexSearcher = dis;
         this.query = query;
+        this.doubleHits = doubleHits;
+        searchDate = new Date(); // now
     }
 
     public Query getQuery() {
@@ -70,21 +56,10 @@ public class SearchResult {
         return !isTheSameSearch(searchRequest);
     }
 
-    private ZloPaginatedList paginatedList;
+    // paginated list can't be cached as it should not be shared among users
 
-    public PaginatedList createPaginatedList(Site site) {
-        if (paginatedList == null) {
-            paginatedList = new ZloPaginatedList(doubleHits, site);
-            paginatedList.setPageNumber(1);
-        } else {
-            // TODO: ???
-            paginatedList.setSite(site);
-        }
-        return paginatedList;
-    }
-
-    public PaginatedList getPaginatedList() {
-        return paginatedList;
+    public ZloPaginatedList createPaginatedList() {
+        return new ZloPaginatedList(doubleHits, site);
     }
 
     public boolean isNewSearch() {
@@ -93,10 +68,6 @@ public class SearchResult {
 
     public void setNewSearch(boolean newSearch) {
         this.newSearch = newSearch;
-    }
-
-    public void setDoubleIndexSearcher(DoubleIndexSearcher dis) {
-        this.doubleIndexSearcher = dis;
     }
 
     /**

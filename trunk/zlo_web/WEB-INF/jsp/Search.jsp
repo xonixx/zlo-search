@@ -144,7 +144,7 @@
     <c:when test="${not isError}">
         <c:if test="${isSearchResultPresent}">
             <div class="searchResOuter">
-                <display:table name="requestScope.searchResult.paginatedList" id="msg" htmlId="resultTable"
+                <display:table name="requestScope.paginatedList" id="msg" htmlId="resultTable"
                                decorator="info.xonix.zlo.web.decorators.SearchResultLineDecorator" requestURI="search"
                                class="searchRes">
                     <c:set var="site" value="${msg.site}"/>
