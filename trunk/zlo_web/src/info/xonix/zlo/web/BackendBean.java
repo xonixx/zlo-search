@@ -8,6 +8,8 @@ import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.log4j.Logger;
+import org.springframework.dao.DataAccessException;
 
 import java.util.List;
 
@@ -17,6 +19,8 @@ import java.util.List;
  * Time: 20:03:46
  */
 public class BackendBean {
+    private final static Logger log = Logger.getLogger(BackendBean.class);
+
     private String topic;
     private String title;
     private String body;
@@ -44,7 +48,11 @@ public class BackendBean {
 
         // todo: check
         Site site1 = siteLogic.getSite(getSiteInt());
-        topics = dbManager.getTopics(site1);
+        try {
+            topics = dbManager.getTopics(site1);
+        } catch (DataAccessException e) {
+            log.warn("Can't get topics, as db exception occurred: " + e);
+        }
 
         return HtmlConstructor.constructSelector(SN_TOPIC, null,
                 new String[]{Message.ALL_TOPICS}, topics, getTopicInt(), true);

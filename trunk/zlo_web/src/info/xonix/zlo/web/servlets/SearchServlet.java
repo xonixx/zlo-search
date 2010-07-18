@@ -22,6 +22,7 @@ import info.xonix.zlo.web.utils.RequestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.search.BooleanQuery;
+import org.springframework.dao.DataAccessException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
@@ -294,10 +295,10 @@ public class SearchServlet extends BaseServlet {
                 request.setAttribute(REQ_SEARCH_RESULT, null);
                 showStatistics(request);
             }
-        } /*catch (DbException e) { // TODO: handle
+        } catch (DataAccessException e) { // TODO: handle
             errorMsg = ErrorMessage.DbError;
-            log.error(e);
-        }*/ catch (Exception e) {
+            log.error("Database error", e);
+        } catch (Exception e) {
             if (errorMsg == null) {
                 // unknown error
                 log.error("Unknown error", e);
