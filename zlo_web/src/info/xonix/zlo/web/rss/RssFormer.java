@@ -16,6 +16,7 @@ import info.xonix.zlo.web.servlets.SearchServlet;
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.util.Assert;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -42,7 +43,11 @@ public class RssFormer {
             response.setCharacterEncoding("windows-1251");
 
             SearchResult searchResult = (SearchResult) request.getAttribute(SearchServlet.REQ_SEARCH_RESULT);
-            ZloPaginatedList pl = (ZloPaginatedList) searchResult.getPaginatedList();
+            Assert.notNull(searchResult, "SearchResult must be already set in SearchServlet!");
+
+            ZloPaginatedList pl = (ZloPaginatedList) request.getAttribute(SearchServlet.REQ_PAGINATED_LIST);
+            Assert.notNull(pl, "Paginated list must be already set in SearchServlet!");
+
             List msgsList = pl.getList();
             Date lastModifiedDateCurrent = msgsList != null && msgsList.size() > 0 ? ((Message) msgsList.get(0)).getDate() : null; // the youngest msg (max date)
 

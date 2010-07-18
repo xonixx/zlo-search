@@ -80,6 +80,7 @@ public class SearchServlet extends BaseServlet {
 
     // request keys
     public static final String REQ_SEARCH_RESULT = "searchResult";
+    public static final String REQ_PAGINATED_LIST = "paginatedList";
     public static final String REQ_PAGE_SIZE = QS_PAGE_SIZE;
 
     public static final String ERROR = "error";
@@ -261,7 +262,8 @@ public class SearchServlet extends BaseServlet {
 
                     request.setAttribute(REQ_SEARCH_RESULT, searchResult);
 
-                    ZloPaginatedList paginatedList = (ZloPaginatedList) searchResult.createPaginatedList(getSite(request));
+                    ZloPaginatedList paginatedList = searchResult.createPaginatedList();
+                    request.setAttribute(REQ_PAGINATED_LIST, paginatedList);
 
                     if (isRssAsked) {
                         paginatedList.setPageNumber(1);
@@ -314,7 +316,6 @@ public class SearchServlet extends BaseServlet {
 
     private void showStatistics(ForwardingRequest request) {
         Site site = getSite(request);
-//        DbManagerImpl dbm = site.getDbManager();
         request.setAttribute(QS_LAST_MSGS,
                 new int[]{appLogic.getLastSavedMessageNumber(site),
                         appLogic.getLastIndexedNumber(site)});
