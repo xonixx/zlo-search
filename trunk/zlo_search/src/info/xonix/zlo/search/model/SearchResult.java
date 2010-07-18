@@ -4,29 +4,21 @@ import info.xonix.zlo.search.ZloPaginatedList;
 import info.xonix.zlo.search.doubleindex.DoubleHits;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
 import org.apache.log4j.Logger;
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.search.Hits;
-import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.displaytag.pagination.PaginatedList;
 
 import java.util.Date;
-import java.util.Iterator;
 
 /**
  * Author: gubarkov
  * Date: 31.08.2007
  * Time: 16:59:08
  */
-public class SearchResult implements Iterable {
+public class SearchResult {
 
     public static final Logger log = Logger.getLogger(SearchResult.class);
 
     private DoubleHits doubleHits;
-    private IndexSearcher searcher;
-    private Analyzer analyzer;
-    private QueryParser parser;
     private Query query;
 
     private SearchRequest lastSearch;
@@ -38,9 +30,9 @@ public class SearchResult implements Iterable {
     public SearchResult() {
     }
 
-    public DoubleHits getHits() {
+/*    public DoubleHits getHits() {
         return doubleHits;
-    }
+    }*/
 
     public void setHits(DoubleHits doubleHits) {
         this.doubleHits = doubleHits;
@@ -50,61 +42,16 @@ public class SearchResult implements Iterable {
         searchDate = new Date(); // now
     }
 
-    public void setHits(Hits hits) {
+/*    public void setHits(Hits hits) {
         setHits(new DoubleHits(hits));
-    }
-
-    public void setSearcher(IndexSearcher searcher) {
-        this.searcher = searcher;
-    }
-
-    public void setAnalyzer(Analyzer analyzer) {
-        this.analyzer = analyzer;
-    }
-
-    public void setQueryParser(QueryParser parser) {
-        this.parser = parser;
-    }
+    }*/
 
     public void setQuery(Query query) {
         this.query = query;
     }
 
-    public IndexSearcher getSearcher() {
-        return searcher;
-    }
-
-    public Analyzer getAnalyzer() {
-        return analyzer;
-    }
-
-    public QueryParser getParser() {
-        return parser;
-    }
-
     public Query getQuery() {
         return query;
-    }
-
-/*    private class MsgsIterator implements Iterator<ZloMessageAccessor> {
-        Iterator hitsIterator = doubleHits.iterator();
-
-        public boolean hasNext() {
-            return hitsIterator.hasNext();
-        }
-
-        public ZloMessageAccessor next() {
-//            return Message.fromHit((Hit) hitsIterator.next());
-            return new ZloMessageLazy((Hit) hitsIterator.next());
-        }
-
-        public void remove() {
-        }
-    }*/
-
-    public Iterator<ZloMessageAccessor> iterator() {
-//        return new MsgsIterator();
-        return null;
     }
 
     public SearchRequest getLastSearch() {

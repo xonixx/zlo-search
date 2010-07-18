@@ -130,7 +130,7 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
     }
 
     @Override
-    public List<Message> getMessages(Site site, int[] nums, int fromIndex) {
+    public List<Message> getMessages(Site site, int[] nums) {
         StringBuilder sbNums = new StringBuilder(Integer.toString(nums[0]));
 
         for (int i = 1; i < nums.length; i++) {
