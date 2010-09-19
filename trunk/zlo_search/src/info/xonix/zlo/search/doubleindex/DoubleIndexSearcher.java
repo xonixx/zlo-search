@@ -1,9 +1,8 @@
 package info.xonix.zlo.search.doubleindex;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
-import info.xonix.zlo.search.utils.TimeUtils;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
@@ -27,7 +26,7 @@ import java.util.Date;
 public class DoubleIndexSearcher {
     private static final Logger log = Logger.getLogger(DoubleIndexSearcher.class);
 
-    public static final int PERIOD_RECREATE_INDEXER = TimeUtils.parseToMilliSeconds(Config.getProp("searcher.period.recreate.indexer"));
+    private final static Config config = AppSpringContext.get(Config.class);
 
     public static final String BIG_INDEX_DIR = "1";
     public static final String SMALL_INDEX_DIR = "2";
@@ -168,7 +167,7 @@ public class DoubleIndexSearcher {
             if (isSmall)
                 return !smallReader.isCurrent()
                         && !isReopeningSmall
-                        && System.currentTimeMillis() - lastCreateTime > PERIOD_RECREATE_INDEXER;
+                        && System.currentTimeMillis() - lastCreateTime > config.getPeriodRecreateIndexer();
             else // big
                 return !bigReader.isCurrent()
                         && !isReopeningBig;
@@ -278,7 +277,7 @@ public class DoubleIndexSearcher {
     public void moveSmallToBig() throws IOException {
         log.info("Start moving small to big...");
 
-        IndexWriter bigIndexWriter = new IndexWriter(getBigPath(), Message.constructAnalyzer());
+        IndexWriter bigIndexWriter = new IndexWriter(getBigPath(), config.getMessageAnalyzer());
         IndexReader smlR = getSmallReader();
         log.info("Moving small to big...");
         bigIndexWriter.addIndexesNoOptimize(new Directory[]{FSDirectory.getDirectory(getSmallPath())}); // add small to big, w/o optimize
@@ -294,17 +293,17 @@ public class DoubleIndexSearcher {
 
     public void optimize() throws IOException {
         log.info("Optimizing...");
-        IndexWriter iw = new IndexWriter(getBigPath(), Message.constructAnalyzer());
+        IndexWriter iw = new IndexWriter(getBigPath(), config.getMessageAnalyzer());
         iw.optimize();
         iw.close();
-        iw = new IndexWriter(getSmallPath(), Message.constructAnalyzer());
+        iw = new IndexWriter(getSmallPath(), config.getMessageAnalyzer());
         iw.optimize();
         iw.close();
         log.info("Done.");
     }
 
     private void createEmptyIndex(String path) throws IOException {
-        IndexWriter indexWriter = new IndexWriter(path, Message.constructAnalyzer(), true);
+        IndexWriter indexWriter = new IndexWriter(path, config.getMessageAnalyzer(), true);
         indexWriter.setUseCompoundFile(true);
         indexWriter.close();
     }

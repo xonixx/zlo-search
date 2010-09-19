@@ -1,8 +1,10 @@
 package info.xonix.zlo.search.model;
 
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.utils.TimeUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Properties;
@@ -14,7 +16,11 @@ import java.util.regex.Pattern;
  * Date: 28.12.2007
  * Time: 2:45:21
  */
-abstract class SiteConfiguration /*extends DbAccessor*/ {
+abstract class SiteConfiguration {
+
+    private static final Logger log = Logger.getLogger(SiteConfiguration.class);
+
+    private static final Config config = AppSpringContext.get(Config.class);
 
     private String markEndMsg1;
     private String markEndMsg2;
@@ -65,11 +71,11 @@ abstract class SiteConfiguration /*extends DbAccessor*/ {
         Properties p = new Properties();
 
         try {
-            for (String propFile : Config.getProp(Config.SITE_CONFIG_PREFIX + name).split(";")) {
+            for (String propFile : config.getProp(Config.SITE_CONFIG_PREFIX + name).split(";")) {
                 Config.loadProperties(p, "info/xonix/zlo/search/config/" + propFile);
             }
         } catch (NullPointerException e) {
-            System.err.println("Can't locate: " + Config.SITE_CONFIG_PREFIX + name);
+            log.error("Can't locate: " + Config.SITE_CONFIG_PREFIX + name);
             throw e;
         }
 
@@ -110,7 +116,7 @@ abstract class SiteConfiguration /*extends DbAccessor*/ {
 
         // indexer-----
         performIndexing = Config.TRUE.equals(p.getProperty("indexer.perform.indexing"));
-        indexDirDouble = Config.getProp("indexer.dir.double") + "/index_" + name;
+        indexDirDouble = config.getProp("indexer.dir.double") + "/index_" + name;
 
         indexerIndexPerTime = Integer.parseInt(p.getProperty("indexer.daemon.index.per.time"));
         indexerIndexPeriod = TimeUtils.parseToMilliSeconds(p.getProperty("indexer.daemon.period.to.index"));

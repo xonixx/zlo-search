@@ -1,6 +1,5 @@
 package info.xonix.zlo.search.progs;
 
-import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.logic.ZloSearcher;
 import info.xonix.zlo.search.model.Site;
@@ -28,15 +27,11 @@ public class DropIndex extends App {
                 System.in.read(reply);
                 String siteName = getSiteName();
                 System.out.println("Deleting...");
-                if (Config.USE_DOUBLE_INDEX) {
-                    Site site = Site.forName(siteName);
+                Site site = Site.forName(siteName);
 
-                    zloSearcher.dropIndex(site);
+                zloSearcher.dropIndex(site);
 
-                    appLogic.setLastIndexedNumber(site, -1);
-                } else {
-                    throw new IllegalArgumentException();
-                }
+                appLogic.setLastIndexedNumber(site, -1);
             }
         } catch (IOException e) {
             e.printStackTrace();

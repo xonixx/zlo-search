@@ -22,16 +22,8 @@ public class OptimizeIndex {
 
     public void main() {
         Site site = Site.forName(Config.getSiteEnvName());
-        if (!Config.USE_DOUBLE_INDEX) {
-            throw new IllegalArgumentException("Not supported!");
-            /*IndexWriter w = new IndexerLogicImpl(site).getWriter();
-            log.info("Optimizing index...");
-            w.optimize();
-            w.close();
-            log.info("Done.");*/
-        } else {
-            optimizeDoubleIndexForSite(site);
-        }
+
+        optimizeDoubleIndexForSite(site);
     }
 
     public void optimizeDoubleIndexForSite(Site site) {

@@ -11,6 +11,7 @@ import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.SearchRequest;
 import info.xonix.zlo.search.model.SearchResult;
 import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import info.xonix.zlo.web.servlets.SearchServlet;
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
@@ -33,7 +34,9 @@ import java.util.List;
  * Time: 20:53:36
  */
 public class RssFormer {
-    private Logger logger = Logger.getLogger(RssFormer.class);
+    private static final Logger log = Logger.getLogger(RssFormer.class);
+
+    private static final Config config = AppSpringContext.get(Config.class);
 
     public void formRss(ForwardingRequest request, HttpServletResponse response) {
         if (request.getAttribute(SearchServlet.ERROR) != null) {
@@ -51,16 +54,16 @@ public class RssFormer {
             List msgsList = pl.getList();
             Date lastModifiedDateCurrent = msgsList != null && msgsList.size() > 0 ? ((Message) msgsList.get(0)).getDate() : null; // the youngest msg (max date)
 
-            logger.info("RSS request. User-Agent: " + request.getHeader("User-Agent") + ", If-Modified-Since: " + request.getHeader("If-Modified-Since"));
+            log.info("RSS request. User-Agent: " + request.getHeader("User-Agent") + ", If-Modified-Since: " + request.getHeader("If-Modified-Since"));
 
             if (lastModifiedDateCurrent != null) {
                 Date lastModifiedDateOld = new Date(request.getDateHeader("If-Modified-Since"));
 
                 if (lastModifiedDateCurrent.after(lastModifiedDateOld)) {
                     response.setDateHeader("Last-Modified", lastModifiedDateCurrent.getTime());
-                    logger.info("Feed is modified: If-Modified-Since Date=" + lastModifiedDateOld + ", lastMsgFeedDate=" + lastModifiedDateCurrent);
+                    log.info("Feed is modified: If-Modified-Since Date=" + lastModifiedDateOld + ", lastMsgFeedDate=" + lastModifiedDateCurrent);
                 } else {
-                    logger.info("Sending 304 Not modified: If-Modified-Since Date=" + lastModifiedDateOld + " is _not before_ lastMsgFeedDate=" + lastModifiedDateCurrent);
+                    log.info("Sending 304 Not modified: If-Modified-Since Date=" + lastModifiedDateOld + " is _not before_ lastMsgFeedDate=" + lastModifiedDateCurrent);
                     response.setStatus(304); // Not Modified
                     return;
                 }
@@ -80,7 +83,7 @@ public class RssFormer {
             ch.setTitle(chTitle);
 
             try {
-                ch.setLocation(new URL(String.format("http://%s/search?%s", Config.WEBSITE_DOMAIN, request.getQueryString().replace("rss&", ""))));
+                ch.setLocation(new URL(String.format("http://%s/search?%s", config.getWebsiteDomain(), request.getQueryString().replace("rss&", ""))));
                 ch.setDescription(lastSearch.describeToString());
                 ch.setLanguage("ru");
                 ch.setTtl(120); // 2 hours

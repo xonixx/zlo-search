@@ -1,12 +1,8 @@
 package info.xonix.zlo.search.model;
 
 import info.xonix.zlo.search.FoundTextHighlighter;
-import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.KeywordAnalyzer;
-import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
 import org.apache.lucene.document.DateTools;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -351,18 +347,6 @@ public class Message implements Serializable, ZloMessageAccessor {
         doc.add(new Field(MessageFields.HAS_IMG, isHasImg() ? TRUE : FALSE, Store.NO, Index.UN_TOKENIZED));
 
         return doc;
-    }
-
-    private static Analyzer analyzer;
-
-    public static Analyzer constructAnalyzer() {
-        if (analyzer == null) {
-            PerFieldAnalyzerWrapper a = new PerFieldAnalyzerWrapper(new KeywordAnalyzer());
-            a.addAnalyzer(MessageFields.TITLE, Config.ANALYZER);
-            a.addAnalyzer(MessageFields.BODY, Config.ANALYZER);
-            analyzer = a;
-        }
-        return analyzer;
     }
 
     static final long serialVersionUID = -3231624250115810539L; // for deserialization

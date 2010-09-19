@@ -3,7 +3,7 @@ package info.xonix.zlo.search.logic;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
 import info.xonix.zlo.search.model.*;
-import info.xonix.zlo.search.utils.TimeUtils;
+import info.xonix.zlo.search.utils.Check;
 import info.xonix.zlo.search.utils.factory.SiteFactory;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
@@ -13,6 +13,7 @@ import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
@@ -22,11 +23,22 @@ import java.io.IOException;
  * Date: 01.06.2007
  * Time: 2:24:05
  */
-public class ZloSearcher {
+public class ZloSearcher implements InitializingBean {
     private static final Logger log = Logger.getLogger(ZloSearcher.class);
 
-    public static final int PERIOD_RECREATE_INDEXER = TimeUtils.parseToMilliSeconds(Config.getProp("searcher.period.recreate.indexer"));
+//    public static final int PERIOD_RECREATE_INDEXER = TimeUtils.parseToMilliSeconds(Config.getProp("searcher.period.recreate.indexer"));
+    private Config config;
 
+    public void setConfig(Config config) {
+        this.config = config;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        Check.isSet(config, "config");
+    }
+
+    // TODO: move this to Site as it belongs to it
     private SiteFactory<DoubleIndexSearcher> doubleIndexSearcherFactory = new SiteFactory<DoubleIndexSearcher>() {
         @Override
         protected DoubleIndexSearcher create(Site site) {
@@ -54,9 +66,9 @@ public class ZloSearcher {
                 req.isSearchAll());
     }
 
-    public static Sort getDateSort() {
+    public Sort getDateSort() {
         // sort causes slow first search & lot memory used!
-        return Config.SEARCH_PERFORM_SORT
+        return config.isSearchPerformSort()
                 ? new Sort(new SortField(MessageFields.DATE, SortField.STRING, true))
                 : null;
     }
@@ -64,20 +76,21 @@ public class ZloSearcher {
     private SearchResult search(Site site, String queryStr, boolean searchAll) {
         Assert.notNull(site, "site can't be null!");
 
-        if (!Config.USE_DOUBLE_INDEX) {
-            throw new RuntimeException("Old!!!");
-        } else {
-            return searchDoubleIndex(site, queryStr, null, searchAll);
-        }
+//        if (!Config.USE_DOUBLE_INDEX) {
+//            throw new RuntimeException("Old!!!");
+//        } else {
+        return searchDoubleIndex(site, queryStr, null, searchAll);
+//        }
     }
 
     private SearchResult searchDoubleIndex(Site site, String queryStr, Sort sort, boolean searchAll) {
+        // TODO: do we need sorting here???
         if (sort == null)
             sort = getDateSort();
 
         SearchResult result;
         try {
-            Analyzer analyzer = Message.constructAnalyzer();
+            Analyzer analyzer = config.getMessageAnalyzer();
 
             QueryParser parser = new QueryParser(MessageFields.BODY, analyzer);
             parser.setDefaultOperator(searchAll ? QueryParser.AND_OPERATOR : QueryParser.OR_OPERATOR);

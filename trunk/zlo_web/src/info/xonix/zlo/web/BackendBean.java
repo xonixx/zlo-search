@@ -36,9 +36,9 @@ public class BackendBean {
     public static final String SN_PAGE_SIZE = "pageSize";
     public static final int SITE_URL_MAX_LEN = 30;
 
-    private SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
-//    private AppLogic appLogic = AppSpringContext.get(AppLogic.class);
-    private DbManager dbManager = AppSpringContext.get(DbManager.class);
+    private static final Config config = AppSpringContext.get(Config.class);
+    private static final SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
+    private static final DbManager dbManager = AppSpringContext.get(DbManager.class);
 
     public BackendBean() {
     }
@@ -88,7 +88,7 @@ public class BackendBean {
     }
 
     public String getPageSizeSelector() {
-        return HtmlConstructor.constructSelector(SN_PAGE_SIZE, null, Config.NUMS_PER_PAGE, getPageSizeInt(), true);
+        return HtmlConstructor.constructSelector(SN_PAGE_SIZE, null, config.getNumsPerPage(), getPageSizeInt(), true);
     }
 
     public String getSite() {

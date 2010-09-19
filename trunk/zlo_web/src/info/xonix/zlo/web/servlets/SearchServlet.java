@@ -43,8 +43,9 @@ import java.util.GregorianCalendar;
 public class SearchServlet extends BaseServlet {
     private static final Logger log = Logger.getLogger(SearchServlet.class);
 
-    private AppLogic appLogic = AppSpringContext.get(AppLogic.class);
-    private AuditLogic auditLogic = AppSpringContext.get(AuditLogic.class);
+    private static final Config config = AppSpringContext.get(Config.class);
+    private static final AppLogic appLogic = AppSpringContext.get(AppLogic.class);
+    private static final AuditLogic auditLogic = AppSpringContext.get(AuditLogic.class);
 
     public static final String ON = "on";
     // query string params
@@ -114,7 +115,7 @@ public class SearchServlet extends BaseServlet {
         String pageSizeStrInd = request.getParameter(QS_PAGE_SIZE);
 
         ErrorMessage errorMsg = null;
-        request.setAttribute(DEBUG, Config.DEBUG);
+        request.setAttribute(DEBUG, config.isDebug());
 
         // to refresh site from cookies to req
         setSiteInReq(request, response);
@@ -148,7 +149,7 @@ public class SearchServlet extends BaseServlet {
             int pageSize = 100; // default
             if (StringUtils.isNotEmpty(pageSizeStrInd)) {
                 try {
-                    pageSize = Integer.parseInt(Config.NUMS_PER_PAGE[Integer.parseInt(pageSizeStrInd)]);
+                    pageSize = Integer.parseInt(config.getNumsPerPage()[Integer.parseInt(pageSizeStrInd)]);
                     CookieUtils.rememberInCookie(response, QS_PAGE_SIZE, pageSizeStrInd);
                 } catch (NumberFormatException ex) {
                     ;
@@ -159,7 +160,7 @@ public class SearchServlet extends BaseServlet {
                 String pageSizeStrIndCookie = CookieUtils.recallFromCookie(request, QS_PAGE_SIZE);
                 if (StringUtils.isNotEmpty(pageSizeStrIndCookie)) {
                     try {
-                        pageSize = Integer.parseInt(Config.NUMS_PER_PAGE[Integer.parseInt(pageSizeStrIndCookie)]);
+                        pageSize = Integer.parseInt(config.getNumsPerPage()[Integer.parseInt(pageSizeStrIndCookie)]);
                         request.setParameter(QS_PAGE_SIZE, pageSizeStrIndCookie);
                     } catch (NumberFormatException ex) {
                         ;
@@ -167,7 +168,7 @@ public class SearchServlet extends BaseServlet {
                         ;
                     }
                 } else {
-                    pageSize = Integer.parseInt(Config.NUMS_PER_PAGE[0]);
+                    pageSize = Integer.parseInt(config.getNumsPerPage()[0]);
                 }
             }
             request.setAttribute(REQ_PAGE_SIZE, pageSize);

@@ -1,7 +1,8 @@
 package info.xonix.zlo.search;
 
-import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.model.MessageFields;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.Term;
@@ -18,9 +19,12 @@ import java.util.regex.PatternSyntaxException;
  * Date: 14.12.2007
  * Time: 16:49:08
  */
+// TODO: turn to bean(?)
 public class FoundTextHighlighter {
+    private static final Logger log = Logger.getLogger(FoundTextHighlighter.class);
 
-    private static final Logger logger = Logger.getLogger(FoundTextHighlighter.class);
+    private static Config config = AppSpringContext.get(Config.class);
+
     public static final String WORDS_SEPARATOR = "/";
 
     private String[] highlightWords;
@@ -81,7 +85,7 @@ public class FoundTextHighlighter {
                         "(\\b" + w + "[^\\s]*?)\\b", preHl + "$1" + postHl);               // highlight;
             }
         } catch (PatternSyntaxException ex) {
-            logger.error("Regex parse error: ", ex);
+            log.error("Regex parse error: ", ex);
         }
         return txt;
     }
@@ -108,7 +112,7 @@ public class FoundTextHighlighter {
         Query query = null;
         try {
             String queryStr = MessageFormat.format("{0}:({1})", MessageFields.BODY, txt);
-            QueryParser parser = new QueryParser(MessageFields.BODY, Message.constructAnalyzer());
+            QueryParser parser = new QueryParser(MessageFields.BODY, config.getMessageAnalyzer());
             query = parser.parse(queryStr);
             Set<Term> set = new HashSet<Term>();
             query.extractTerms(set);
@@ -119,7 +123,7 @@ public class FoundTextHighlighter {
             }
             return res;
         } catch (org.apache.lucene.queryParser.ParseException e) {
-            logger.error(e);
+            log.error(e);
         } catch (UnsupportedOperationException e) {
             // for wildcard query
             String qs = query.toString(MessageFields.BODY);

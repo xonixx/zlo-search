@@ -1,6 +1,7 @@
 package info.xonix.zlo.search;
 
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.spring.AppSpringContext;
 
 /**
  * Author: Vovan
@@ -9,9 +10,10 @@ import info.xonix.zlo.search.config.Config;
  */
 public class RussianWithNumbersAndSpecialStopWordsAnalyzer extends RussianWithNumbersAnalyzer {
     private String[] stopWords;
+    private static Config config = AppSpringContext.get(Config.class);
 
     public RussianWithNumbersAndSpecialStopWordsAnalyzer() {
-        this.stopWords = Config.getProp("analyzer.stop.words").split("|");
+        this.stopWords = config.getProp("analyzer.stop.words").split("|");
         initialize();
     }
 

@@ -19,4 +19,8 @@ public final class Check {
     public static void isSet(Object obj, String objName) {
         Assert.notNull(obj, objName + " is not set!");
     }
+
+    public static void isSet(Object obj) {
+        Assert.notNull(obj, "property is not set!");
+    }
 }

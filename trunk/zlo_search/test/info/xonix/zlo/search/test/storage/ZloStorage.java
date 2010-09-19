@@ -14,10 +14,13 @@ import java.util.*;
  * Date: 14.09.2007
  * Time: 15:19:58
  */
+@Deprecated
 public class ZloStorage implements Serializable {
-    public static final String STORAGE_DIR = Config.getProp("test.storage");
-    public static final int FROM = Integer.parseInt(Config.getProp("test.storage.from"));
-    public static final int TO = Integer.parseInt(Config.getProp("test.storage.to"));
+    private static final Config config = AppSpringContext.get(Config.class);
+
+    public static final String STORAGE_DIR = config.getProp("test.storage");
+    public static final int FROM = Integer.parseInt(config.getProp("test.storage.from"));
+    public static final int TO = Integer.parseInt(config.getProp("test.storage.to"));
     public static final String SERIALIZE_FILE_NAME = "serialized.bin";
 
     private Map<Integer, Message> storedMsgs = new HashMap<Integer, Message>(TO - FROM);

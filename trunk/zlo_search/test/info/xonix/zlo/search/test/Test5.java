@@ -1,8 +1,9 @@
 package info.xonix.zlo.search.test;
 
+import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
-import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenStream;
@@ -21,6 +22,8 @@ import java.io.StringReader;
  * Time: 0:24:44
  */
 public class Test5 {
+    private static final Config config = AppSpringContext.get(Config.class);
+
     public static void main(String[] args) {
         m4();
     }
@@ -44,7 +47,7 @@ public class Test5 {
     public static void m2() {
         String s = "в чем смысл жизни?";
 
-        Analyzer analyzer = Message.constructAnalyzer();
+        Analyzer analyzer = config.getMessageAnalyzer();
 //        Analyzer analyzer = new RussianWithNumbersAndSpecialStopWordsAnalyzer(new String[0]);
 
         showTokens(s, analyzer);
@@ -64,7 +67,7 @@ public class Test5 {
     }
 
     private static void m1() {
-        Analyzer analyzer = Message.constructAnalyzer();
+        Analyzer analyzer = config.getMessageAnalyzer();
         QueryParser qp = new QueryParser("body", analyzer);
         try {
             System.out.println(qp.parse("nick:\"\\\\/\\\\/0\\\\/\\\\/KA\""));
@@ -80,7 +83,7 @@ public class Test5 {
         DoubleIndexSearcher dis = new DoubleIndexSearcher(site, null);
         IndexSearcher is = new IndexSearcher(dis.getBigReader());
         try {
-            Hits hits = is.search(new QueryParser("body", Message.constructAnalyzer()).parse("body:тест title:тест"), Sort.INDEXORDER);
+            Hits hits = is.search(new QueryParser("body", config.getMessageAnalyzer()).parse("body:тест title:тест"), Sort.INDEXORDER);
 
             for (int i = 1; i < 10; i++) {
                 System.out.println(hits.doc(hits.length() - i).get("num"));
