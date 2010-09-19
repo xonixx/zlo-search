@@ -3,9 +3,5 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <import resource="appConfig.xml"/>
-    <import resource="databaseConfig.xml"/>
-    <import resource="daoConfig.xml"/>
-    <import resource="logicConfig.xml"/>
-
+    <bean id="appConfig" class="info.xonix.zlo.search.config.Config"/>
 </beans>

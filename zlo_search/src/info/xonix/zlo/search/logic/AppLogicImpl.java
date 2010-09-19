@@ -1,6 +1,5 @@
 package info.xonix.zlo.search.logic;
 
-import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.DbDict;
 import info.xonix.zlo.search.dao.DbDictFields;
 import info.xonix.zlo.search.dao.DbManager;
@@ -40,23 +39,18 @@ public class AppLogicImpl implements AppLogic, InitializingBean {
 
     @Override
     public void setLastIndexedNumber(Site site, int num) {
-        if (Config.USE_DOUBLE_INDEX) {
-            dbDict.setInt(site, DbDictFields.DB_DICT_LAST_INDEXED_DOUBLE, num);
-            dbDict.setDate(site, DbDictFields.DB_DICT_LAST_INDEXED_DOUBLE_DATE, new Date());
-        } else {
-            dbDict.setInt(site, DbDictFields.DB_DICT_LAST_INDEXED, num);
-            dbDict.setDate(site, DbDictFields.DB_DICT_LAST_INDEXED_DATE, new Date());
-        }
+        dbDict.setInt(site, DbDictFields.DB_DICT_LAST_INDEXED_DOUBLE, num);
+        dbDict.setDate(site, DbDictFields.DB_DICT_LAST_INDEXED_DOUBLE_DATE, new Date());
     }
 
     @Override
     public int getLastIndexedNumber(Site site) {
-        return dbDict.getInt(site, Config.USE_DOUBLE_INDEX ? DbDictFields.DB_DICT_LAST_INDEXED_DOUBLE : DbDictFields.DB_DICT_LAST_INDEXED, 0);
+        return dbDict.getInt(site, DbDictFields.DB_DICT_LAST_INDEXED_DOUBLE, 0);
     }
 
     @Override
     public Date getLastIndexedDate(Site site) {
-        return dbDict.getDate(site, Config.USE_DOUBLE_INDEX ? DbDictFields.DB_DICT_LAST_INDEXED_DOUBLE_DATE : DbDictFields.DB_DICT_LAST_INDEXED_DATE, new Date(0));
+        return dbDict.getDate(site, DbDictFields.DB_DICT_LAST_INDEXED_DOUBLE_DATE, new Date(0));
     }
 
     @Override

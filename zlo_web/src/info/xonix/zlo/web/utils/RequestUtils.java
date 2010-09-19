@@ -1,6 +1,7 @@
 package info.xonix.zlo.web.utils;
 
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
  * Time: 5:11:18
  */
 public final class RequestUtils {
+    private static final Config config = AppSpringContext.get(Config.class);
+
     /**
      * Weather the ip of client sending request is local ip
      *
@@ -44,7 +47,7 @@ public final class RequestUtils {
     }
 
     public static boolean isLocalIp(HttpServletRequest request) {
-        return isLocalIp(request, Config.getProp("localIps").split("\\|"));
+        return isLocalIp(request, config.getProp("localIps").split("\\|"));
     }
 
     public static String getClientIp(HttpServletRequest request) {

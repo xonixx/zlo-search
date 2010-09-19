@@ -21,7 +21,12 @@ import java.util.List;
 public class SiteLogicImpl implements SiteLogic, InitializingBean {
     private static final Logger log = Logger.getLogger(SiteLogicImpl.class);
 
+    private Config config;
     private MessageRetriever messageRetriever;
+
+    public void setConfig(Config config) {
+        this.config = config;
+    }
 
     public void setMessageRetriever(MessageRetriever messageRetriever) {
         this.messageRetriever = messageRetriever;
@@ -30,6 +35,7 @@ public class SiteLogicImpl implements SiteLogic, InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         Check.isSet(messageRetriever, "messageRetriever");
+        Check.isSet(config, "config");
     }
 
     public Message getMessageByNumber(Site site, int num) {
@@ -63,7 +69,7 @@ public class SiteLogicImpl implements SiteLogic, InitializingBean {
         if (sites == null) {
             sites = new LinkedList<Site>();
 
-            for (Object key : Config.getAppProperties().keySet()) {
+            for (Object key : config.getAppProperties().keySet()) {
                 String k = (String) key;
                 if (k.startsWith(Config.SITE_CONFIG_PREFIX)) {
                     sites.add(Site.forName(k.replaceFirst(Config.SITE_CONFIG_PREFIX, "")));

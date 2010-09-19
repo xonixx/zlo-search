@@ -1,5 +1,6 @@
 package info.xonix.zlo.search.logic.site;
 
+import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.utils.Check;
@@ -18,8 +19,13 @@ public class MessageRetriever implements InitializingBean {
 //    private static final int LIMIT_PER_SECOND = Integer.parseInt(Config.getProp("retriever.limit.per.second"));
     private static Logger log = Logger.getLogger(MessageRetriever.class);
 
+    private Config config;
     private PageParser pageParser;
     private PageRetriever pageRetriever;
+
+    public void setConfig(Config config) {
+        this.config = config;
+    }
 
     public void setPageParser(PageParser pageParser) {
         this.pageParser = pageParser;
@@ -31,6 +37,7 @@ public class MessageRetriever implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        Check.isSet(config, "config");
         Check.isSet(pageParser, "pageParser");
         Check.isSet(pageRetriever, "pageRetriever");
     }
@@ -48,7 +55,7 @@ public class MessageRetriever implements InitializingBean {
     }
 
     public List<Message> getMessages(Site source, Iterable<Integer> numsToSave) {
-        return getMessages(source, numsToSave, PageRetriever.THREADS_NUMBER);
+        return getMessages(source, numsToSave, config.getRetrieverThreadNum());
     }
 
     public List<Message> getMessages(Site site, Iterable<Integer> numsToSave, int threadsNum) {

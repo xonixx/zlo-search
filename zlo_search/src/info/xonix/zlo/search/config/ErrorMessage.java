@@ -1,10 +1,12 @@
 package info.xonix.zlo.search.config;
 
+import info.xonix.zlo.search.spring.AppSpringContext;
+
 /**
  * Author: gubarkov
-* Date: 11.09.2007
-* Time: 17:56:07
-*/
+ * Date: 11.09.2007
+ * Time: 17:56:07
+ */
 public enum ErrorMessage {
     ToDateInvalid("error.toDate"),
     FromDateInvalid("error.fromDate"),
@@ -18,22 +20,22 @@ public enum ErrorMessage {
 
     DbError("error.db.connection"),
 
-    UnknownError("error.unknown"),
-    
-    ;
+    UnknownError("error.unknown"),;
+
+    private Config config = AppSpringContext.get(Config.class);
 
     private String val;
     private String data = null;
 
     ErrorMessage(String key) {
-        this.val = Config.getProp(key);
+        this.val = config.getProp(key);
     }
 
     public String toString() {
         return val +
                 (data == null
                         ? ""
-                        : !Config.DEBUG
+                        : !config.isDebug()
                         ? ""
                         : ":<br/> " + data);
     }

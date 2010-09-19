@@ -1,10 +1,6 @@
 package info.xonix.zlo.search.rmi;
 
-import info.xonix.zlo.search.config.Config;
-
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 /**
@@ -18,8 +14,10 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
     }
 
     public void main() {
-        try{
+        //todo
+/*        try{
             System.setProperty("java.rmi.server.ignoreStubClasses", "true");
+
             Registry registry = LocateRegistry.createRegistry(Integer.parseInt(Config.getProp("rmi.port")));
 
             registry.rebind("SearchServer", this);
@@ -32,7 +30,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
             }
         } catch (RemoteException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public static void main(String[] args) throws RemoteException {

@@ -2,12 +2,14 @@ package info.xonix.zlo.search.logic.site;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.utils.Check;
 import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpVersion;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.InitializingBean;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,30 +23,33 @@ import java.util.regex.Matcher;
  * Date: 30.05.2007
  * Time: 17:36:44
  */
-public class PageRetriever {
+public class PageRetriever implements InitializingBean {
     private static final Logger log = Logger.getLogger(PageRetriever.class);
-
-    public static final int THREADS_NUMBER = Integer.parseInt(Config.getProp("retriever.threads"));
 
     private static HttpClient HTTP_CLIENT;
 
-//    private Site site;
-//    private Pattern INDEX_UNREG_RE;
+    private Config config;
 
-    static {
+    public void setConfig(Config config) {
+        this.config = config;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        Check.isSet(config, "config");
+    }
+
+    public PageRetriever() {
         MultiThreadedHttpConnectionManager connectionManager = new MultiThreadedHttpConnectionManager();
         // 100 - so many, because we will manage concurrancy ourselves
         connectionManager.getParams().setMaxConnectionsPerHost(HostConfiguration.ANY_HOST_CONFIGURATION, 100);
         HTTP_CLIENT = new HttpClient(connectionManager);
-        if (Config.USE_PROXY) {
-            HTTP_CLIENT.getHostConfiguration().setProxy(Config.PROXY_HOST, Config.PROXY_PORT);
+        if (config.isUseProxy()) {
+            HTTP_CLIENT.getHostConfiguration().setProxy(
+                    config.getProxyHost(),
+                    config.getProxyPort());
         }
     }
-
-/*    public PageRetriever(Site site) {
-        this.site = site;
-        INDEX_UNREG_RE = Pattern.compile(site.getLinkIndexReStr());
-    }*/
 
     public String getPageContentByNumber(Site site, int num) {
         GetMethod getMethod = formGetMethod(site, "http://" + site.getSiteUrl() + site.getReadQuery() + num);
@@ -61,7 +66,7 @@ public class PageRetriever {
 
             int currSize, lenRead;
             String ending;
-            byte[] buff = new byte[Config.BUFFER];
+            byte[] buff = new byte[config.getBuffer()];
 
             do {
                 lenRead = is.read(buff);
@@ -77,7 +82,7 @@ public class PageRetriever {
 
                 totalRead += lenRead;
 
-                stringGroups.add(new String(buff, 0, lenRead, Config.CHARSET_NAME));
+                stringGroups.add(new String(buff, 0, lenRead, config.getCharsetName()));
                 currSize = stringGroups.size();
                 ending = stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1);
             } while (
@@ -136,14 +141,14 @@ public class PageRetriever {
             stringGroups.add("");
 
             int currSize, lenRead;
-            byte[] buff = new byte[Config.BUFFER];
+            byte[] buff = new byte[config.getBuffer()];
             do {
                 lenRead = is.read(buff);
                 if (lenRead <= 0) {
                     log.warn("lenRead = " + lenRead);
                     throw new RetrieverException("lenRead = " + lenRead);
                 }
-                stringGroups.add(new String(buff, 0, lenRead, Config.CHARSET_NAME));
+                stringGroups.add(new String(buff, 0, lenRead, config.getCharsetName()));
                 currSize = stringGroups.size();
                 m = site.getLinkIndexRe().matcher(stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1));
             } while (!m.find());
@@ -188,7 +193,7 @@ public class PageRetriever {
     private GetMethod formGetMethod(Site site, String uri) {
         GetMethod getMethod = new GetMethod(uri);
         getMethod.addRequestHeader("Host", site.getSiteUrl());
-        getMethod.addRequestHeader("User-Agent", Config.USER_AGENT);
+        getMethod.addRequestHeader("User-Agent", config.getUserAgent());
         getMethod.getParams().setVersion(HttpVersion.HTTP_1_0); // to prevent chunk transfer-encoding in reply
         return getMethod;
     }

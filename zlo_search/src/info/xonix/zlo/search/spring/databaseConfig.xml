@@ -23,6 +23,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
         <property name="password" value="${jdbc.password.rt}"/>
     </bean>
     <bean id="dataSource" class="info.xonix.zlo.search.spring.db.DataSourceFactory">
+        <property name="config" ref="appConfig"/>
         <property name="dataSourceLocal" ref="dataSourceLocal"/>
         <property name="dataSourceRt" ref="dataSourceRt"/>
     </bean>

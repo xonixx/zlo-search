@@ -1,14 +1,11 @@
 package info.xonix.zlo.search.daemon;
 
-import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.logic.IndexerLogic;
 import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
-
-import java.text.MessageFormat;
 
 /**
  * Author: Vovan
@@ -94,13 +91,13 @@ public class IndexerDaemon extends Daemon {
     }*/
 
     protected void start() {
-        log.info(MessageFormat.format("Starting indexing to {0} index...", Config.USE_DOUBLE_INDEX ? "double" : "simple"));
+        log.info("Starting indexing to {0} index (double index)...");
 
         // this is for clearing in case of not graceful exit
-        if (Config.USE_DOUBLE_INDEX) {
-            log.info("Clearing lock...");
-            new DoubleIndexSearcher(getSite(), null).clearLocks();
-        }
+//        if (Config.USE_DOUBLE_INDEX) {
+        log.info("Clearing lock...");
+        new DoubleIndexSearcher(getSite(), null).clearLocks();
+//        }
         super.start();
     }
 }

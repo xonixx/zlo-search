@@ -9,6 +9,7 @@
     </bean>
 
     <bean id="indexerLogic" class="info.xonix.zlo.search.logic.IndexerLogicImpl">
+        <property name="config" ref="appConfig"/>
         <property name="appLogic" ref="appLogic"/>
     </bean>
 
@@ -17,14 +18,18 @@
         <property name="dbManager" ref="dbManager"/>
     </bean>
 
-    <bean id="pageRetriever" class="info.xonix.zlo.search.logic.site.PageRetriever"/>
+    <bean id="pageRetriever" class="info.xonix.zlo.search.logic.site.PageRetriever">
+        <property name="config" ref="appConfig"/>
+    </bean>
 
     <bean id="messageRetriever" class="info.xonix.zlo.search.logic.site.MessageRetriever">
+        <property name="config" ref="appConfig"/>
         <property name="pageParser" ref="pageParser"/>
         <property name="pageRetriever" ref="pageRetriever"/>
     </bean>
 
     <bean id="siteLogic" class="info.xonix.zlo.search.logic.SiteLogicImpl">
+        <property name="config" ref="appConfig"/>
         <property name="messageRetriever" ref="messageRetriever"/>
     </bean>
 

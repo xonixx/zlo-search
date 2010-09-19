@@ -32,6 +32,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
     private Analyzer analyzer;
 
 //    private DbManager dbManager;
+    private Config config;
     private AppLogic appLogic;
 
     private SiteFactory<IndexWriter> siteToIndexWriter = new SiteFactory<IndexWriter>() {
@@ -54,7 +55,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
         }
 
         private File getIndexDir(Site site) {
-            return new File(Config.USE_DOUBLE_INDEX ? site.getIndexDirDouble() + "/" + DoubleIndexSearcher.SMALL_INDEX_DIR : Config.INDEX_DIR);
+            return new File(site.getIndexDirDouble() + "/" + DoubleIndexSearcher.SMALL_INDEX_DIR);
         }
     };
 
@@ -63,9 +64,13 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
 //        super(site);
 
         indexPerTime = 100;
-        analyzer = Message.constructAnalyzer();
+        analyzer = config.getMessageAnalyzer();
 
 //        setIndexDir();
+    }
+
+    public void setConfig(Config config) {
+        this.config = config;
     }
 
     public void setAppLogic(AppLogic appLogic) {
@@ -74,6 +79,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        Check.isSet(config, "config");
         Check.isSet(appLogic, "appLogic");
     }
 
@@ -146,7 +152,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
         try {
             for (Message msg : appLogic.getMessages(site, start, end)) {
                 if (msg.getStatus() == MessageStatus.OK) {
-                    log.debug(site.getName() + " - Addind: " + (Config.DEBUG ? msg : msg.getNum()));
+                    log.debug(site.getName() + " - Addind: " + (config.isDebug() ? msg : msg.getNum()));
                     writer.addDocument(msg.getDocument());
                 } else {
                     log.debug(site.getName() + " - Not adding: " + msg.getNum() + " with status: " + msg.getStatus());
