@@ -8,7 +8,6 @@ import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.utils.Check;
 import info.xonix.zlo.search.utils.factory.SiteFactory;
 import org.apache.log4j.Logger;
-import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.IndexWriter;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -29,7 +28,6 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
     private int indexPerTime;
 //    private IndexWriter writer;
     private boolean reindex;
-    private Analyzer analyzer;
 
 //    private DbManager dbManager;
     private Config config;
@@ -44,7 +42,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
                 if (indexDir.list().length == 0)
                     reindex = true;
 
-                writer = new IndexWriter(indexDir, analyzer, reindex);
+                writer = new IndexWriter(indexDir, config.getMessageAnalyzer(), reindex);
                 // TODO!!!
 //                writer.setMergeFactor();
             } catch (IOException e) {
@@ -60,13 +58,9 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
     };
 
 
-    public IndexerLogicImpl(/*Site site*/) {
-//        super(site);
-
+    public IndexerLogicImpl() {
+        // TODO: move to config
         indexPerTime = 100;
-        analyzer = config.getMessageAnalyzer();
-
-//        setIndexDir();
     }
 
     public void setConfig(Config config) {

@@ -34,7 +34,9 @@
     </bean>
 
     <!--search logic-->
-    <bean id="zloSearcher" class="info.xonix.zlo.search.logic.ZloSearcher"/>
+    <bean id="zloSearcher" class="info.xonix.zlo.search.logic.ZloSearcher">
+        <property name="config" ref="appConfig"/>
+    </bean>
 
     <!--audit logic-->
     <bean id="auditLogic" class="info.xonix.zlo.search.logic.AuditLogicImpl">

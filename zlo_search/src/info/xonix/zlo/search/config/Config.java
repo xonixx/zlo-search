@@ -28,37 +28,32 @@ public class Config {
     private Properties props;
 
     // app props
-    private final String environment = getProp("env.name");
+    private String environment;
 
-    private String[] numsPerPage = getProp("nums.per.page").split("\\|");
+    private String[] numsPerPage;
 
-    private final int buffer = Integer.parseInt(getProp("buffer", "512"));
-    private final int retrieverThreadNum = Integer.parseInt(getProp("retriever.threads"));
+    private int buffer;
+    private int retrieverThreadNum;
 
     // TODO: this should be site-specific
-    private final String charsetName = "windows-1251";
+    private String charsetName;
 
-    // todo: remove
-//    public static final String INDEX_DIR = getProp("indexer.dir");
-    private final String userAgent = getProp("user.agent");
+    private String userAgent;
 
-    private final boolean debug = TRUE.equals(getProp("debug"));
-    private final boolean searchPerformSort = TRUE.equals(getProp("search.perform.sort"));
+    private boolean debug;
+    private boolean searchPerformSort;
 
-    // todo:
-//    private boolean USE_DOUBLE_INDEX = TRUE.equals(getProp("search.use.double.index"));
+    private int periodRecreateIndexer;
 
-    private final int periodRecreateIndexer = TimeUtils.parseToMilliSeconds(getProp("searcher.period.recreate.indexer"));
-
-    private final String websiteDomain = getProp("website.domain");
+    private String websiteDomain;
 
     private Analyzer analyzer;
     private Analyzer messageAnalyzer;
 
-    private final boolean useProxy = TRUE.equals(getProp("proxy.use"));
+    private boolean useProxy;
 
-    private final String proxyHost = useProxy ? getProp("proxy.host") : null;
-    private final int proxyPort = useProxy ? Integer.parseInt(getProp("proxy.port")) : -1;
+    private String proxyHost;
+    private int proxyPort;
     // end app props
 
     public Config() {
@@ -77,6 +72,7 @@ public class Config {
         PropertyConfigurator.configure(props);
 
         initAnalyzers();
+        initOtherProps();
 
         if (useProxy)
             log.info("Starting using proxy: " + proxyHost + ":" + proxyPort);
@@ -93,6 +89,32 @@ public class Config {
         _messageAnalyzer.addAnalyzer(MessageFields.TITLE, analyzer);
         _messageAnalyzer.addAnalyzer(MessageFields.BODY, analyzer);
         messageAnalyzer = _messageAnalyzer;
+    }
+
+    private void initOtherProps() {
+        environment = getProp("env.name");
+
+        numsPerPage = getProp("nums.per.page").split("\\|");
+
+        buffer = Integer.parseInt(getProp("buffer", "512"));
+        retrieverThreadNum = Integer.parseInt(getProp("retriever.threads"));
+
+        // TODO: this should be site-specific
+        charsetName = "windows-1251";
+
+        userAgent = getProp("user.agent");
+
+        debug = TRUE.equals(getProp("debug"));
+        searchPerformSort = TRUE.equals(getProp("search.perform.sort"));
+
+        periodRecreateIndexer = TimeUtils.parseToMilliSeconds(getProp("searcher.period.recreate.indexer"));
+
+        websiteDomain = getProp("website.domain");
+
+        useProxy = TRUE.equals(getProp("proxy.use"));
+
+        proxyHost = useProxy ? getProp("proxy.host") : null;
+        proxyPort = useProxy ? Integer.parseInt(getProp("proxy.port")) : -1;
     }
 
     public static void loadProperties(Properties pr, String path) {

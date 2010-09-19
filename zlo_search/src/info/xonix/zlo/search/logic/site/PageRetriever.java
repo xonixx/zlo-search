@@ -37,9 +37,11 @@ public class PageRetriever implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         Check.isSet(config, "config");
+
+        init();
     }
 
-    public PageRetriever() {
+    private void init() {
         MultiThreadedHttpConnectionManager connectionManager = new MultiThreadedHttpConnectionManager();
         // 100 - so many, because we will manage concurrancy ourselves
         connectionManager.getParams().setMaxConnectionsPerHost(HostConfiguration.ANY_HOST_CONFIGURATION, 100);
