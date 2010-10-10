@@ -1,0 +1,72 @@
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/tiles-config_2_0.dtd">
+
+
+<tiles-definitions>
+    <!-- header -->
+    <definition name="header" template="/WEB-INF/jsp/templates/header.jsp">
+    </definition>
+
+    <definition name="header.search" extends="header">
+        <put-attribute name="activeScreen" value="search"/>
+    </definition>
+
+    <definition name="header.stats" extends="header">
+        <put-attribute name="activeScreen" value="stats"/>
+    </definition>
+
+    <definition name="header.history" extends="header">
+        <put-attribute name="activeScreen" value="history"/>
+    </definition>
+
+    <definition name="header.nickhost" extends="header">
+        <put-attribute name="activeScreen" value="nickhost"/>
+    </definition>
+
+    <definition name="header.about" extends="header">
+        <put-attribute name="activeScreen" value="about"/>
+    </definition>
+
+    <definition name="header.faq" extends="header">
+        <put-attribute name="activeScreen" value="faq"/>
+    </definition>
+
+    <definition name="header.forums" extends="header">
+        <put-attribute name="activeScreen" value="forums"/>
+    </definition>
+
+    <!--admin headers-->
+    <definition name="header.detectspam" extends="header">
+        <put-attribute name="activeScreen" value="detectspam"/>
+    </definition>
+
+    <definition name="header.admin" extends="header">
+        <put-attribute name="activeScreen" value="admin"/>
+    </definition>
+
+    <!-- nick -->
+    <definition name="nick" template="/WEB-INF/jsp/templates/nick.jsp">
+        <put-attribute name="host" value=""/>
+        <!-- default -->
+    </definition>
+
+    <!-- host -->
+    <definition name="host" template="/WEB-INF/jsp/templates/host.jsp">
+        <put-attribute name="nick" value=""/>
+        <!-- default -->
+        <put-attribute name="brackets" value=""/>
+    </definition>
+
+    <!-- google analitics -->
+    <definition name="ga" template="/WEB-INF/jsp/templates/_ga.jsp">
+    </definition>
+
+    <definition name="suggest.anotherBrowser" template="/WEB-INF/jsp/templates/anotherBrowser.jsp">
+    </definition>
+
+    <!-- test -->
+    <definition name="test" template="/test/t/tmp.jsp">
+        <put-attribute name="a" value="BBB"/>
+    </definition>
+</tiles-definitions>
