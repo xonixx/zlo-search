@@ -75,6 +75,13 @@
             <groupId>displaytag</groupId>
             <artifactId>displaytag</artifactId>
             <version>1.2</version>
+            <exclusions>
+                <exclusion>
+                    <!--as we are not using PDF-->
+                    <groupId>com.lowagie</groupId>
+                    <artifactId>itext</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!--todo: consider change dbcp (c3p0?)-->
