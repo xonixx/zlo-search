@@ -62,6 +62,13 @@
         </dependency>
         <!--end j2ee API-->
 
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+            <scope>runtime</scope>
+        </dependency>
+
         <!--tiles-->
         <dependency>
             <groupId>org.apache.tiles</groupId>
@@ -80,12 +87,43 @@
         </dependency>
         <!--end tiles-->
 
+        <!--consider remove-->
         <dependency>
             <groupId>informa</groupId>
             <artifactId>informa</artifactId>
             <version>0.6.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>lucene</groupId>
+                    <artifactId>lucene</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>hibernate</groupId>
+                    <artifactId>hibernate</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>ehcache</groupId>
+                    <artifactId>ehcache</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>hsqldb</groupId>
+                    <artifactId>hsqldb</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>odmg</groupId>
+                    <artifactId>odmg</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
+        <!--testing-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.2</version>
+            <scope>test</scope>
+        </dependency>
+        <!--end testing-->
     </dependencies>
 
 </project>
