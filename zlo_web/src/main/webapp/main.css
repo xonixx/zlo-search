@@ -1,0 +1,156 @@
+a img {
+    border: 0;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+big {
+    font-size: 120%;
+    font-weight: bold;
+}
+
+h3 {
+    margin: 5px auto;
+}
+
+#header {
+    background: #e1e1e1;
+}
+
+#header ul {
+    margin: 0;
+    list-style: none;
+    padding: 0;
+}
+
+#header ul li {
+    display: inline;
+    margin: 0 0.2em;
+}
+
+#header a:link, #header a:visited {
+    color: blue
+}
+
+#header a.activeLink {
+    color: blue;
+    font-weight: bold;
+}
+
+#header a:hover {
+    background-color: #cc3300;
+    color: white;
+}
+
+#debug {
+    background-color: blanchedalmond;
+}
+
+#resultTable {
+    border-collapse: collapse;
+}
+
+#resultTable .odd {
+    background-color: #e9e9e9;
+}
+
+#resultTable .even {
+    background-color: #f0f0f0;
+}
+
+#resultTable .odd,
+#resultTable .even {
+    border-bottom: 1px solid #CCC;
+}
+
+#resultTable th {
+    background-color: #ccc;
+}
+
+#body {
+    padding: 0 25px;
+}
+
+.content {
+    padding: 0 10px;
+}
+
+.nick {
+    font-weight: bold;
+}
+
+.error {
+    font-weight: bold;
+    color: red;
+    text-align: center;
+}
+
+.search {
+    font-weight: bold;
+    color: green;
+    font-size: small;
+}
+
+.searchResOuter {
+    position: relative;
+    margin: 0 10px;
+}
+
+.searchRes {
+    width: 100%;
+}
+
+.quote {
+    background-color: #E9E9E9;
+    border: 1px solid #CCCCCC;
+}
+
+.inquote {
+    color: #E9E9E9;
+}
+
+.small {
+    font-size: small;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.attention {
+    color: red;
+    font-weight: bold;
+}
+
+.hl0 {
+    color: red;
+}
+
+.hl {
+    background-color: yellow;
+}
+
+.center {
+    text-align: center;
+}
+
+a.brwsr:link, a.brwsr:visited {
+    color: blue;
+    text-decoration: none
+}
+
+a.brwsr:hover {
+    text-decoration: underline
+}
+
+#header .adminLinks a {
+    color: red;
+}
+
+#header .adminLinks a:hover {
+    color: white;
+}
