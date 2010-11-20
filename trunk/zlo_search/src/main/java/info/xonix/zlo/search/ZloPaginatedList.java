@@ -1,10 +1,10 @@
 package info.xonix.zlo.search;
 
-import info.xonix.zlo.search.dao.DbManager;
+import info.xonix.zlo.search.dao.MessagesDao;
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.doubleindex.DoubleHits;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageFields;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 import org.displaytag.pagination.PaginatedList;
@@ -27,7 +27,7 @@ public class ZloPaginatedList implements PaginatedList {
     private DoubleHits hits;
 
     private Site site;
-    private DbManager dbManager = AppSpringContext.get(DbManager.class);
+    private MessagesDao messagesDao = AppSpringContext.get(MessagesDao.class);
 
     public ZloPaginatedList(DoubleHits hits, Site site) {
         this.site = site;
@@ -51,7 +51,7 @@ public class ZloPaginatedList implements PaginatedList {
             log.error("Error while getting doc from index: " + e);
         }
 
-        List<Message> messages = dbManager.getMessages(site, indexes);
+        List<Message> messages = messagesDao.getMessages(site, indexes);
 
         for (Message message : messages) {
             message.setHitId(fromIndex++);

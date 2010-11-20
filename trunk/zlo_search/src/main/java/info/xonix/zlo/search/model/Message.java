@@ -1,6 +1,7 @@
 package info.xonix.zlo.search.model;
 
 import info.xonix.zlo.search.FoundTextHighlighter;
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.document.DateTools;
@@ -27,10 +28,10 @@ public class Message implements Serializable, ZloMessageAccessor {
     private static final String TRUE = "1";
     private static final String FALSE = "0";
 
-    public static final String TOPIC = "topic";
+/*    public static final String TOPIC = "topic";
     public static final String TITLE_HTML = "titleHtml";
     public static final String BODY_HTML = "bodyHtml";
-    public static final String STATUS = "status";
+    public static final String STATUS = "status";*/
 
     private String nick;
     private String altName;

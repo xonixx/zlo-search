@@ -1,9 +1,9 @@
 package info.xonix.zlo.search.test;
 
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.lucene.analysis.SimpleAnalyzer;
 import org.apache.lucene.queryParser.ParseException;
@@ -117,7 +117,7 @@ public class Test1 {
     }
 
     public static void m15() {
-//            System.out.println(DbManager.getMessageByNumber(4149183));
+//            System.out.println(MessagesDao.getMessageByNumber(4149183));
 //            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(648064));
 //            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(4199196));
         Site site = Site.forName("sport");

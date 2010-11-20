@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.logic.site;
 
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.model.Site;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;

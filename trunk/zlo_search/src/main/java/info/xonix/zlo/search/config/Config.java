@@ -16,7 +16,6 @@ import java.util.Properties;
  * Author: gubarkov
  * Date: 30.05.2007
  * Time: 18:06:03
- * TODO: turn this to bean!!!
  */
 public class Config {
     public static final String SITE_CONFIG_PREFIX = "site.config.";

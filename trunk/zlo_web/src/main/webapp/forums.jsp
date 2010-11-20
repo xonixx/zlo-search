@@ -1,6 +1,6 @@
+<%@ page import="info.xonix.zlo.search.domainobj.Site" %>
 <%@ page import="info.xonix.zlo.search.logic.AppLogic" %>
 <%@ page import="info.xonix.zlo.search.logic.SiteLogic" %>
-<%@ page import="info.xonix.zlo.search.model.Site" %>
 <%--
   User: Vovan
   Date: 01.06.2008

@@ -1,4 +1,4 @@
-package info.xonix.zlo.search.model;
+package info.xonix.zlo.search.domainobj;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.spring.AppSpringContext;

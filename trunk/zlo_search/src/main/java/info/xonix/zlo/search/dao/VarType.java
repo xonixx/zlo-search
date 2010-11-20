@@ -1,4 +1,4 @@
-package info.xonix.zlo.search.db;
+package info.xonix.zlo.search.dao;
 
 import java.sql.Types;
 import java.util.Date;
@@ -8,7 +8,7 @@ import java.util.Date;
  * Date: 05.12.2007
  * Time: 18:46:54
  */
-public enum VarType {
+enum VarType {
     INTEGER,
     STRING,
     BOOLEAN,

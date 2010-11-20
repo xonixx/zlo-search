@@ -1,11 +1,13 @@
 package info.xonix.zlo.search.progs;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.dao.DbManager;
+import info.xonix.zlo.search.dao.MessagesDao;
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.site.MessageRetriever;
+import info.xonix.zlo.search.logic.site.PageParseException;
+import info.xonix.zlo.search.logic.site.RetrieverException;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.spring.AppSpringContext;
 
 import java.text.MessageFormat;
@@ -22,7 +24,7 @@ public class RescanUndefStatusMsgs {
     private static int MAX_ALEXZAM = 4030808; // 4 030 808 - max alexzam db row
     private static int N = 10000;
 
-    private static DbManager dbm = AppSpringContext.get(DbManager.class);
+    private static MessagesDao dbm = AppSpringContext.get(MessagesDao.class);
     private static MessageRetriever messageRetriever = AppSpringContext.get(MessageRetriever.class);
 
 
@@ -49,7 +51,14 @@ public class RescanUndefStatusMsgs {
 
             if (newNums.size() > 0) {
                 System.out.print("Getting from site... ");
-                List<Message> newMsgs = messageRetriever.getMessages(Site.forName("zlo"), newNums);
+                List<Message> newMsgs = null;
+                try {
+                    newMsgs = messageRetriever.getMessages(Site.forName("zlo"), newNums);
+                } catch (RetrieverException e) {
+                    e.printStackTrace();
+                } catch (PageParseException e) {
+                    e.printStackTrace();
+                }
 
                 System.out.print("Saving... ");
                 dbm.saveMessagesFast(site, newMsgs, true);

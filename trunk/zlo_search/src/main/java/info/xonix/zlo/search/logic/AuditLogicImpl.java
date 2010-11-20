@@ -1,11 +1,9 @@
 package info.xonix.zlo.search.logic;
 
-import info.xonix.zlo.search.dao.DbManager;
-import info.xonix.zlo.search.model.SearchLogEvent;
+import info.xonix.zlo.search.dao.AuditDao;
+import info.xonix.zlo.search.model.SearchLog;
 import info.xonix.zlo.search.utils.Check;
 import org.springframework.beans.factory.InitializingBean;
-
-import static org.apache.commons.lang.StringUtils.substring;
 
 /**
  * User: Vovan
@@ -13,32 +11,22 @@ import static org.apache.commons.lang.StringUtils.substring;
  * Time: 0:35:08
  */
 public class AuditLogicImpl implements AuditLogic, InitializingBean {
-    private DbManager dbManager;
+    private AuditDao auditDao;
 
-    public void setDbManager(DbManager dbManager) {
-        this.dbManager = dbManager;
+    public void setAuditDao(AuditDao auditDao) {
+        this.auditDao = auditDao;
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        Check.isSet(dbManager, "dbManager");
+        Check.isSet(auditDao, "auditDao");
     }
 
     @Override
-    public void logSearchEvent(SearchLogEvent searchLogEvent) {
-        dbManager.saveSearchRequest(
-                searchLogEvent.getSite().getSiteNumber(),
-                substring(searchLogEvent.getClientIp(), 0, 100),
-                substring(searchLogEvent.getUserAgent(), 0, 200),
-
-                substring(searchLogEvent.getSearchText(), 0, 200),
-                substring(searchLogEvent.getSearchNick(), 0, 100),
-                substring(searchLogEvent.getSearchHost(), 0, 100),
-
-                substring(searchLogEvent.getSearchQuery(), 0, 200),
-                substring(searchLogEvent.getSearchQueryString(), 0, 400),
-                substring(searchLogEvent.getReferer(), 0, 100),
-                searchLogEvent.isRssAsked());
+    public void logSearchEvent(SearchLog searchLog) {
+        auditDao.saveSearchRequest(
+                searchLog.getSite().getSiteNumber(),
+                searchLog);
 
     }
 }

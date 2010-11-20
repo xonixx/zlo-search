@@ -3,8 +3,8 @@ package info.xonix.zlo.search.progs;
 import info.xonix.zlo.search.ZloObservable;
 import info.xonix.zlo.search.daemon.Daemon;
 import info.xonix.zlo.search.daemon.DaemonLauncher;
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.SiteLogic;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.spring.AppSpringContext;
 
 import java.io.IOException;

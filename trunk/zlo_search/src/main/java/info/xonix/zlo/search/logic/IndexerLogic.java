@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.logic;
 
-import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.domainobj.Site;
 
 /**
  * User: Vovan
@@ -8,5 +8,5 @@ import info.xonix.zlo.search.model.Site;
  * Time: 0:16:10
  */
 public interface IndexerLogic {
-    void index(Site site, int from, int to);
+    void index(Site site, int from, int to) throws IndexerException;
 }

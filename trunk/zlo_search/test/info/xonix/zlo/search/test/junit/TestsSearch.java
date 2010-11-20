@@ -2,8 +2,8 @@ package info.xonix.zlo.search.test.junit;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.DbDict;
-import info.xonix.zlo.search.dao.DbManager;
-import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.dao.MessagesDao;
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import info.xonix.zlo.search.utils.TimeUtils;
@@ -21,7 +21,7 @@ import static junit.framework.Assert.*;
  */
 public class TestsSearch {
 
-    DbManager dbManager;
+    MessagesDao messagesDao;
     DbDict dbDict;
     Site site;
 
@@ -30,7 +30,7 @@ public class TestsSearch {
         new Config();
 
         site = Site.forName("zlo");
-        dbManager = AppSpringContext.get(DbManager.class);
+        messagesDao = AppSpringContext.get(MessagesDao.class);
         dbDict = AppSpringContext.get(DbDict.class);
     }
 
@@ -81,7 +81,7 @@ public class TestsSearch {
     @Test
     public void testGetMessages() {
 /*        try {
-            for (Message m : dbManager.getMessages(new int[] {1,2,3,100,2000,1000050}, -1)) {
+            for (Message m : messagesDao.getMessages(new int[] {1,2,3,100,2000,1000050}, -1)) {
                 System.out.println(m);
             }
         } catch (DbException e) {
@@ -92,7 +92,7 @@ public class TestsSearch {
     @Test
     public void testGetTopics() {
         new Config();
-        String[] topics = dbManager.getTopics(site);
+        String[] topics = messagesDao.getTopics(site);
         assertEquals("без темы", topics[0]);
         assertEquals("Учеба", topics[1]);
         assertEquals("Работа", topics[2]);

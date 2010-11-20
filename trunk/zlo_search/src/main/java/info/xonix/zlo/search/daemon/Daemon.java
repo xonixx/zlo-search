@@ -2,7 +2,9 @@ package info.xonix.zlo.search.daemon;
 
 import info.xonix.zlo.search.ZloObservable;
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.domainobj.Site;
+import info.xonix.zlo.search.logic.exceptions.ExceptionsLogger;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.utils.TimeUtils;
 import org.apache.log4j.Logger;
 import sun.misc.Signal;
@@ -19,8 +21,11 @@ import java.util.Vector;
  * Time: 20:00:32
  * todo: create class DaemonGroup
  */
-public abstract class Daemon /*extends SiteSource*/ {
-    //    private static final Logger logger = Logger.getLogger("Daemon");
+public abstract class Daemon {
+    private static final Logger log = Logger.getLogger(Daemon.class);
+
+    protected ExceptionsLogger exceptionsLogger = AppSpringContext.get(ExceptionsLogger.class);
+
     private boolean exiting;
     private boolean isSleeping = false;
     private Process process;
@@ -89,7 +94,7 @@ public abstract class Daemon /*extends SiteSource*/ {
     private static void processExited(Daemon daemon) {
         daemons.remove(daemon);
         if (daemons.isEmpty()) {
-            System.out.println("!!!!!!!!!All exited");
+            log.info("!!!!!!!!!All exited");
             observable.notifyObservers("exited");
         }
     }
@@ -145,16 +150,6 @@ public abstract class Daemon /*extends SiteSource*/ {
             super();
         }
 
-
-/*        private IndexerLogicImpl indexerLogic;
-
-        protected IndexerLogicImpl getIndexer() {
-            if (indexerLogic == null) {
-                indexerLogic = new IndexerLogicImpl();// TODO: via spring
-            }
-            return indexerLogic;
-        }*/
-
         public void run() {
             while (true) {
                 try {
@@ -172,11 +167,11 @@ public abstract class Daemon /*extends SiteSource*/ {
             }
         }
 
-        protected abstract int getFromIndex();
+        protected abstract int getFromIndex() throws Exception;
 
-        protected abstract int getEndIndex();
+        protected abstract int getEndIndex() throws Exception;
 
-        protected abstract void perform(int from, int to);
+        protected abstract void perform(int from, int to) throws Exception;
 
         protected abstract boolean processException(Exception ex);
 
@@ -215,9 +210,11 @@ public abstract class Daemon /*extends SiteSource*/ {
                 throw e;
             } catch (Exception e) {
                 saveLastException(e);
+
                 if (!processException(e)) {
                     getLogger().error("Unknown exception", e);
                 }
+
                 getLogger().info(getSiteName() + " - Retry in " + TimeUtils.toMinutesSeconds(retryPeriod));
                 doSleep(retryPeriod);
             }
@@ -232,7 +229,7 @@ public abstract class Daemon /*extends SiteSource*/ {
             isSleeping = false;
         }
 
-        private void doPerform(int from, int to) {
+        private void doPerform(int from, int to) throws Exception {
             daemonState = DaemonState.PERFORMING;
             perform(from, to);
         }

@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.logic;
 
-import info.xonix.zlo.search.model.SearchLogEvent;
+import info.xonix.zlo.search.model.SearchLog;
 
 /**
  * User: Vovan
@@ -8,5 +8,5 @@ import info.xonix.zlo.search.model.SearchLogEvent;
  * Time: 0:34:58
  */
 public interface AuditLogic {
-    void logSearchEvent(SearchLogEvent searchLogEvent);
+    void logSearchEvent(SearchLog searchLog);
 }

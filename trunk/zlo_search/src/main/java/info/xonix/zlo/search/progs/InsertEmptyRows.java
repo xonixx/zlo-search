@@ -16,7 +16,7 @@ public class InsertEmptyRows {
         int n = 0;
 
         Site site = Site.forName("zlo");
-        DbManager dbm = AppSpringContext.get(DbManager.class);
+        MessagesDao dbm = AppSpringContext.get(MessagesDao.class);
 
         int addedEmpty = 0;
         while (n <= MAX_ALEXZAM + N) {

@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.logic.site;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.utils.Check;
 import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpClient;
@@ -26,7 +26,7 @@ import java.util.regex.Matcher;
 public class PageRetriever implements InitializingBean {
     private static final Logger log = Logger.getLogger(PageRetriever.class);
 
-    private static HttpClient HTTP_CLIENT;
+    private HttpClient httpClient;
 
     private Config config;
 
@@ -45,15 +45,15 @@ public class PageRetriever implements InitializingBean {
         MultiThreadedHttpConnectionManager connectionManager = new MultiThreadedHttpConnectionManager();
         // 100 - so many, because we will manage concurrancy ourselves
         connectionManager.getParams().setMaxConnectionsPerHost(HostConfiguration.ANY_HOST_CONFIGURATION, 100);
-        HTTP_CLIENT = new HttpClient(connectionManager);
+        httpClient = new HttpClient(connectionManager);
         if (config.isUseProxy()) {
-            HTTP_CLIENT.getHostConfiguration().setProxy(
+            httpClient.getHostConfiguration().setProxy(
                     config.getProxyHost(),
                     config.getProxyPort());
         }
     }
 
-    public String getPageContentByNumber(Site site, int num) {
+    public String getPageContentByNumber(Site site, int num) throws RetrieverException {
         GetMethod getMethod = formGetMethod(site, "http://" + site.getSiteUrl() + site.getReadQuery() + num);
 
         List<String> stringGroups = new ArrayList<String>();
@@ -127,10 +127,11 @@ public class PageRetriever implements InitializingBean {
      * load page until first root-message found
      * returns last number of root-message or -1 if not found
      *
-     * @param site
-     * @return
+     * @param site site
+     * @return number of last msg
+     * @throws RetrieverException on i/o exception
      */
-    public int getLastRootMessageNumber(Site site) {
+    public int getLastRootMessageNumber(Site site) throws RetrieverException {
         GetMethod getMethod = formGetMethod(site, "http://" + site.getSiteUrl());
 
         InputStream is = null;
@@ -178,9 +179,9 @@ public class PageRetriever implements InitializingBean {
         return Integer.parseInt(m.group(1));
     }
 
-    private InputStream getInputStream(GetMethod getMethod) {
+    private InputStream getInputStream(GetMethod getMethod) throws RetrieverException {
         try {
-            HTTP_CLIENT.executeMethod(getMethod);
+            httpClient.executeMethod(getMethod);
         } catch (IOException e) {
             throw new RetrieverException("Error while executing http request", e);
         }

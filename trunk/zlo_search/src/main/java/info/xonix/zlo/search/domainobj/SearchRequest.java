@@ -1,7 +1,7 @@
-package info.xonix.zlo.search.model;
+package info.xonix.zlo.search.domainobj;
 
 import info.xonix.zlo.search.config.DateFormats;
-import info.xonix.zlo.search.dao.DbManager;
+import info.xonix.zlo.search.dao.MessagesDao;
 import info.xonix.zlo.search.logic.ZloSearcher;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.commons.lang.StringUtils;
@@ -16,7 +16,7 @@ import java.util.Date;
  */
 public class SearchRequest {
 
-    private DbManager dbManager = AppSpringContext.get(DbManager.class);
+    private MessagesDao messagesDao = AppSpringContext.get(MessagesDao.class);
     private ZloSearcher zloSearcher = AppSpringContext.get(ZloSearcher.class);
 
     private Site site;
@@ -221,7 +221,7 @@ public class SearchRequest {
 
         if (topicCode != -1) {
 //            try {
-            sb.append(" категория:(").append(dbManager.getTopics(site)[topicCode]).append(")");
+            sb.append(" категория:(").append(messagesDao.getTopics(site)[topicCode]).append(")");
 //            } catch (DbException e) {
 //                ;
 //            }

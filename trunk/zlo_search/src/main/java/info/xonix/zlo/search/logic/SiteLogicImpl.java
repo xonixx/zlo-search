@@ -1,9 +1,12 @@
 package info.xonix.zlo.search.logic;
 
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.site.MessageRetriever;
+import info.xonix.zlo.search.logic.site.PageParseException;
+import info.xonix.zlo.search.logic.site.RetrieverException;
+import info.xonix.zlo.search.logic.site.SiteException;
 import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.utils.Check;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
@@ -38,13 +41,13 @@ public class SiteLogicImpl implements SiteLogic, InitializingBean {
         Check.isSet(config, "config");
     }
 
-    public Message getMessageByNumber(Site site, int num) {
+    public Message getMessageByNumber(Site site, int num) throws SiteException {
         log.debug(site.getName() + " - Receiving from site: " + num);
         return messageRetriever.getMessage(site, num);
     }
 
     @Override
-    public List<Message> getMessages(Site site, int from, int to) {
+    public List<Message> getMessages(Site site, int from, int to) throws RetrieverException, PageParseException {
         log.info(site.getName() + " - Downloading messages from " + from + " to " + to + "...");
         long begin = System.currentTimeMillis();
 
@@ -57,10 +60,9 @@ public class SiteLogicImpl implements SiteLogic, InitializingBean {
     }
 
     @Override
-    public int getLastMessageNumber(Site site) {
+    public int getLastMessageNumber(Site site) throws RetrieverException {
         return messageRetriever.getLastMessageNumber(site);
     }
-
 
     private List<Site> sites;
 

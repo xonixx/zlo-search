@@ -1,5 +1,5 @@
+<%@ page import="info.xonix.zlo.search.domainobj.Site" %>
 <%@ page import="info.xonix.zlo.search.logic.SiteLogic" %>
-<%@ page import="info.xonix.zlo.search.model.Site" %>
 <%@ page import="info.xonix.zlo.web.utils.RequestUtils" %>
 <%@ page import="java.util.Map" %>
 

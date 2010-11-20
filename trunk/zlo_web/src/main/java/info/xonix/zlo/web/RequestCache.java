@@ -1,6 +1,6 @@
 package info.xonix.zlo.web;
 
-import info.xonix.zlo.search.model.SearchResult;
+import info.xonix.zlo.search.domainobj.SearchResult;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;

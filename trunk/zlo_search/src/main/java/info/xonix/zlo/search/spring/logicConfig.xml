@@ -5,7 +5,7 @@
 
     <bean id="appLogic" class="info.xonix.zlo.search.logic.AppLogicImpl">
         <property name="dbDict" ref="dbDict"/>
-        <property name="dbManager" ref="dbManager"/>
+        <property name="messagesDao" ref="messagesDao"/>
     </bean>
 
     <bean id="indexerLogic" class="info.xonix.zlo.search.logic.IndexerLogicImpl">
@@ -15,7 +15,7 @@
 
     <!--site logic-->
     <bean id="pageParser" class="info.xonix.zlo.search.logic.site.PageParser">
-        <property name="dbManager" ref="dbManager"/>
+        <property name="messagesDao" ref="messagesDao"/>
     </bean>
 
     <bean id="pageRetriever" class="info.xonix.zlo.search.logic.site.PageRetriever">
@@ -40,7 +40,11 @@
 
     <!--audit logic-->
     <bean id="auditLogic" class="info.xonix.zlo.search.logic.AuditLogicImpl">
-        <property name="dbManager" ref="dbManager"/>
+        <property name="auditDao" ref="auditDao"/>
+    </bean>
+
+    <bean id="exceptionLogger" class="info.xonix.zlo.search.logic.exceptions.ExceptionsLoggerImpl">
+        <property name="auditDao" ref="auditDao"/>
     </bean>
 
 </beans>

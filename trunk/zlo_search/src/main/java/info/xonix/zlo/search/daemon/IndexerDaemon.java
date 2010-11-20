@@ -1,9 +1,11 @@
 package info.xonix.zlo.search.daemon;
 
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
 import info.xonix.zlo.search.logic.AppLogic;
+import info.xonix.zlo.search.logic.IndexerException;
 import info.xonix.zlo.search.logic.IndexerLogic;
-import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.logic.exceptions.ExceptionCategory;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 
@@ -24,26 +26,22 @@ public class IndexerDaemon extends Daemon {
     }
 
     private class IndexingProcess extends Process {
-        public IndexingProcess() {
-            super();
-        }
-
+        @Override
         protected int getFromIndex() {
             return appLogic.getLastIndexedNumber(getSite());
         }
 
+        @Override
         protected int getEndIndex() {
             return appLogic.getLastSavedMessageNumber(getSite());
         }
 
-        protected void perform(int from, int to) {
-//            try {
+        @Override
+        protected void perform(int from, int to) throws IndexerException {
             indexerLogic.index(getSite(), from, to);
-//            } catch (IOException e) {
-//                throw new DAOException(e);
-//            }
         }
 
+        @Override
         protected boolean processException(Exception e) {
 /*            if (e instanceof DbException) {
                 getLogger().warn(getSiteName() + " - Problem with db: " + e.getClass());
@@ -54,7 +52,13 @@ public class IndexerDaemon extends Daemon {
             }
             return false;*/
             log.error("Exception while indexing", e);
-            return true;
+
+            exceptionsLogger.logException(e,
+                    "Exception in indexer daemon: " + getSiteName(),
+                    getClass(),
+                    ExceptionCategory.DAEMON);
+
+            return false;
         }
 
         protected void cleanUp() {

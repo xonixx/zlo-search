@@ -1,10 +1,10 @@
 package info.xonix.zlo.search.logic;
 
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.utils.Check;
 import info.xonix.zlo.search.utils.factory.SiteFactory;
 import org.apache.log4j.Logger;
@@ -29,14 +29,13 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
 //    private IndexWriter writer;
     private boolean reindex;
 
-//    private DbManager dbManager;
     private Config config;
     private AppLogic appLogic;
 
     private SiteFactory<IndexWriter> siteToIndexWriter = new SiteFactory<IndexWriter>() {
         @Override
         protected IndexWriter create(Site site) {
-            IndexWriter writer;
+            IndexWriter writer = null;
             try {
                 File indexDir = getIndexDir(site);
                 if (indexDir.list().length == 0)
@@ -47,7 +46,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
 //                writer.setMergeFactor();
             } catch (IOException e) {
                 log.error("Can't create writer", e);
-                throw new IndexerException(e);
+//                throw new IndexerException(e);
             }
             return writer;
         }
@@ -102,7 +101,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
         return siteToIndexWriter.get(site);
     }
 
-    public void indexRange(Site site, int startNum, int endNum) {
+    public void indexRange(Site site, int startNum, int endNum) throws IndexerException {
 //        Exception ex = null;
         try {
             IndexWriter writer = getWriter(site);
@@ -127,7 +126,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
         }*/
     }
 
-    private void indexMsgs(Site site, final int startNum, final int endNum) {
+    private void indexMsgs(Site site, final int startNum, final int endNum) throws IndexerException {
         int start = startNum, end;
         while (start < endNum) {
             if (start + indexPerTime > endNum) {
@@ -141,7 +140,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
         }
     }
 
-    private void addMessagesToIndex(Site site, int start, int end) {
+    private void addMessagesToIndex(Site site, int start, int end) throws IndexerException {
         IndexWriter writer = getWriter(site);
         try {
             for (Message msg : appLogic.getMessages(site, start, end)) {
@@ -166,7 +165,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
      * TODO: this must be transactional!
      */
     @Override
-    public void index(Site site, int from, int to) {
+    public void index(Site site, int from, int to) throws IndexerException {
         log.info(String.format(site.getName() + " - Adding %s msgs [%s-%s] to index...", to - from + 1, from, to));
 //        try {
         addMessagesToIndex(site, from, to + 1);
