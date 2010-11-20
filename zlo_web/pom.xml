@@ -6,7 +6,7 @@
 
     <groupId>ZloSearcher</groupId>
     <artifactId>zlo_web</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.2</version>
 
     <packaging>war</packaging>
 
@@ -24,6 +24,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
@@ -33,9 +34,15 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
+                <version>2.4.3</version>
                 <configuration>
                     <encoding>windows-1251</encoding>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>1.2</version>
             </plugin>
         </plugins>
     </build>
@@ -44,7 +51,7 @@
         <dependency>
             <groupId>ZloSearcher</groupId>
             <artifactId>zlo_search</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>0.2</version>
         </dependency>
 
         <!--j2ee API-->
