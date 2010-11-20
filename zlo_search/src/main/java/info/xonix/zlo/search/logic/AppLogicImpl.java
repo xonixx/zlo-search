@@ -2,9 +2,9 @@ package info.xonix.zlo.search.logic;
 
 import info.xonix.zlo.search.dao.DbDict;
 import info.xonix.zlo.search.dao.DbDictFields;
-import info.xonix.zlo.search.dao.DbManager;
+import info.xonix.zlo.search.dao.MessagesDao;
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.utils.Check;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
@@ -21,20 +21,20 @@ public class AppLogicImpl implements AppLogic, InitializingBean {
     private final static Logger log = Logger.getLogger(AppLogicImpl.class);
 
     private DbDict dbDict;
-    private DbManager dbManager;
+    private MessagesDao messagesDao;
 
     public void setDbDict(DbDict dbDict) {
         this.dbDict = dbDict;
     }
 
-    public void setDbManager(DbManager dbManager) {
-        this.dbManager = dbManager;
+    public void setMessagesDao(MessagesDao messagesDao) {
+        this.messagesDao = messagesDao;
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
         Check.isSet(dbDict, "dbDict");
-        Check.isSet(dbManager, "dbManager");
+        Check.isSet(messagesDao, "messagesDao");
     }
 
     @Override
@@ -68,22 +68,22 @@ public class AppLogicImpl implements AppLogic, InitializingBean {
     @Override
     public void saveMessages(Site site, List<Message> msgs) {
         log.info(site.getName() + " - Saving (" + msgs.get(0).getNum() + " - " + msgs.get(msgs.size() - 1).getNum() + ") msgs to DB...");
-        dbManager.saveMessagesFast(site, msgs);
+        messagesDao.saveMessagesFast(site, msgs);
         log.info(site.getName() + " - Successfully saved " + msgs.size() + " msgs to DB.");
     }
 
     @Override
     public Message getMessageByNumber(Site site, int num) {
-        return dbManager.getMessageByNumber(site, num);
+        return messagesDao.getMessageByNumber(site, num);
     }
 
     @Override
     public List<Message> getMessages(Site site, int start, int end) {
-        return dbManager.getMessagesByRange(site, start, end);
+        return messagesDao.getMessagesByRange(site, start, end);
     }
 
     @Override
     public int getLastSavedMessageNumber(Site site) {
-        return dbManager.getLastMessageNumber(site);
+        return messagesDao.getLastMessageNumber(site);
     }
 }

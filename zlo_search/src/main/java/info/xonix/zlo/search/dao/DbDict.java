@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.dao;
 
-import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.domainobj.Site;
 
 import java.util.Date;
 

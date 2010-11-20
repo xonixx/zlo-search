@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.doubleindex;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.IndexReader;

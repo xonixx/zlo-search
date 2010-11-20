@@ -1,8 +1,8 @@
 package info.xonix.zlo.search.progs;
 
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
 import info.xonix.zlo.search.logic.AppLogic;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.lucene.search.MatchAllDocsQuery;
 

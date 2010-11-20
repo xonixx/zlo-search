@@ -5,13 +5,15 @@ import info.xonix.zlo.search.ZloPaginatedList;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.config.DateFormats;
 import info.xonix.zlo.search.config.ErrorMessage;
+import info.xonix.zlo.search.domainobj.SearchRequest;
+import info.xonix.zlo.search.domainobj.SearchResult;
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.logic.AuditLogic;
 import info.xonix.zlo.search.logic.SearchException;
-import info.xonix.zlo.search.model.SearchLogEvent;
-import info.xonix.zlo.search.model.SearchRequest;
-import info.xonix.zlo.search.model.SearchResult;
-import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.logic.exceptions.ExceptionCategory;
+import info.xonix.zlo.search.logic.exceptions.ExceptionsLogger;
+import info.xonix.zlo.search.model.SearchLog;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import info.xonix.zlo.web.RequestCache;
@@ -43,9 +45,10 @@ import java.util.GregorianCalendar;
 public class SearchServlet extends BaseServlet {
     private static final Logger log = Logger.getLogger(SearchServlet.class);
 
-    private static final Config config = AppSpringContext.get(Config.class);
-    private static final AppLogic appLogic = AppSpringContext.get(AppLogic.class);
-    private static final AuditLogic auditLogic = AppSpringContext.get(AuditLogic.class);
+    private final Config config = AppSpringContext.get(Config.class);
+    private final AppLogic appLogic = AppSpringContext.get(AppLogic.class);
+    private final AuditLogic auditLogic = AppSpringContext.get(AuditLogic.class);
+    private final ExceptionsLogger exceptionsLogger = AppSpringContext.get(ExceptionsLogger.class);
 
     public static final String ON = "on";
     // query string params
@@ -119,6 +122,8 @@ public class SearchServlet extends BaseServlet {
 
         // to refresh site from cookies to req
         setSiteInReq(request, response);
+
+        SearchRequest searchRequest = null;
 
         try {
             // set default topic code
@@ -209,7 +214,7 @@ public class SearchServlet extends BaseServlet {
             text = preprocessSearchText(text, searchType);
             nick = preprocessSearchNick(nick);
 
-            SearchRequest searchRequest = new SearchRequest(
+            searchRequest = new SearchRequest(
                     getSite(request), text,
                     inTitle, inBody, inReg, inHasUrl, inHasImg,
                     nick, host, topicCode,
@@ -299,10 +304,24 @@ public class SearchServlet extends BaseServlet {
         } catch (DataAccessException e) { // TODO: handle
             errorMsg = ErrorMessage.DbError;
             log.error("Database error", e);
+
+            exceptionsLogger.logException(e,
+                    "Database exception while user search: " +
+                            searchRequest != null ? searchRequest.describeToString() : "N/A",
+                    "Search servlet",
+                    ExceptionCategory.WEB);
+
         } catch (Exception e) {
             if (errorMsg == null) {
                 // unknown error
                 log.error("Unknown error", e);
+
+                exceptionsLogger.logException(e,
+                        "Unknown exception while user search: " +
+                                searchRequest != null ? searchRequest.describeToString() : "N/A",
+                        "Search servlet",
+                        ExceptionCategory.WEB);
+
                 throw new ServletException(e);
             }
         }
@@ -327,22 +346,22 @@ public class SearchServlet extends BaseServlet {
     }
 
     private void logRequest(ForwardingRequest request, String query, boolean rssAsked) {
-        SearchLogEvent searchLogEvent = new SearchLogEvent();
+        SearchLog searchLog = new SearchLog();
 
-        searchLogEvent.setSite(getSite(request));
-        searchLogEvent.setClientIp(RequestUtils.getClientIp(request));
-        searchLogEvent.setUserAgent(request.getHeader("User-Agent"));
+        searchLog.setSite(getSite(request));
+        searchLog.setClientIp(RequestUtils.getClientIp(request));
+        searchLog.setUserAgent(request.getHeader("User-Agent"));
 
-        searchLogEvent.setSearchText(request.getParameter(QS_TEXT));
-        searchLogEvent.setSearchNick(request.getParameter(QS_NICK));
-        searchLogEvent.setSearchHost(request.getParameter(QS_HOST));
+        searchLog.setSearchText(request.getParameter(QS_TEXT));
+        searchLog.setSearchNick(request.getParameter(QS_NICK));
+        searchLog.setSearchHost(request.getParameter(QS_HOST));
 
-        searchLogEvent.setSearchQuery(query);
-        searchLogEvent.setSearchQueryString(request.getQueryString());
+        searchLog.setSearchQuery(query);
+        searchLog.setSearchQueryString(request.getQueryString());
 
-        searchLogEvent.setRssAsked(rssAsked);
+        searchLog.setRssAsked(rssAsked);
 
-        auditLogic.logSearchEvent(searchLogEvent);
+        auditLogic.logSearchEvent(searchLog);
     }
 
     private String preprocessSearchText(String text, String searchType) {

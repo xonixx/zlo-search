@@ -1,10 +1,10 @@
 package info.xonix.zlo.web;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.dao.DbManager;
+import info.xonix.zlo.search.dao.MessagesDao;
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.SiteLogic;
 import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
@@ -38,7 +38,7 @@ public class BackendBean {
 
     private static final Config config = AppSpringContext.get(Config.class);
     private static final SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
-    private static final DbManager dbManager = AppSpringContext.get(DbManager.class);
+    private static final MessagesDao MESSAGES_DAO = AppSpringContext.get(MessagesDao.class);
 
     public BackendBean() {
     }
@@ -49,7 +49,7 @@ public class BackendBean {
         // todo: check
         Site site1 = siteLogic.getSite(getSiteInt());
         try {
-            topics = dbManager.getTopics(site1);
+            topics = MESSAGES_DAO.getTopics(site1);
         } catch (DataAccessException e) {
             log.warn("Can't get topics, as db exception occurred: " + e);
         }

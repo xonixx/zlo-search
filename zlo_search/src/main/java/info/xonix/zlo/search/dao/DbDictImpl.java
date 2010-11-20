@@ -1,12 +1,11 @@
 package info.xonix.zlo.search.dao;
 
-import info.xonix.zlo.search.db.VarType;
-import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.utils.Check;
 
 import java.util.Date;
 
-import static info.xonix.zlo.search.db.VarType.*;
+import static info.xonix.zlo.search.dao.VarType.*;
 
 /**
  * Author: Vovan

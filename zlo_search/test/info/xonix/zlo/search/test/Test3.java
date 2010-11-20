@@ -1,8 +1,9 @@
 package info.xonix.zlo.search.test;
 
+import info.xonix.zlo.search.domainobj.Site;
+import info.xonix.zlo.search.logic.site.PageParseException;
 import info.xonix.zlo.search.logic.site.PageParser;
 import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.model.Site;
 
 /**
  * Author: Vovan
@@ -10,7 +11,7 @@ import info.xonix.zlo.search.model.Site;
  * Time: 22:05:23
  */
 public class Test3 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws PageParseException {
         String msg;
         msg = "</CENTER>\n" +
                 "<BR>\n" +

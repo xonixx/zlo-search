@@ -5,8 +5,7 @@ package info.xonix.zlo.search.logic.site;
  * Date: 16.01.2008
  * Time: 23:15:13
  */
-public class PageParseException extends RuntimeException {
-
+public class PageParseException extends SiteException {
     public PageParseException(String message) {
         super(message);
     }

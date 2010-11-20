@@ -13,9 +13,14 @@
         <property name="queryProvider" ref="queryProvider"/>
     </bean>
 
-    <bean id="dbManager" class="info.xonix.zlo.search.dao.DbManagerImpl">
+    <bean id="messagesDao" class="info.xonix.zlo.search.dao.MessagesDaoImpl">
         <property name="dataSource" ref="dataSource"/>
         <property name="rowMappersHelper" ref="rowMappersHelper"/>
         <property name="queryProvider" ref="queryProvider"/>
+    </bean>
+
+    <bean id="auditDao" class="info.xonix.zlo.search.dao.AuditDaoImpl">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="rowMappersHelper" ref="rowMappersHelper"/>
     </bean>
 </beans>

@@ -1,10 +1,10 @@
 package info.xonix.zlo.search.logic.site;
 
 import info.xonix.zlo.search.config.DateFormats;
-import info.xonix.zlo.search.dao.DbManager;
+import info.xonix.zlo.search.dao.MessagesDao;
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.utils.Check;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import org.apache.commons.lang.StringUtils;
@@ -28,11 +28,11 @@ import java.util.regex.Matcher;
 public class PageParser implements InitializingBean {
     public static final Logger log = Logger.getLogger(PageParser.class);
 
-    private DbManager dbManager;
+    private MessagesDao messagesDao;
 
 //    private Site site;
 
-//    private DbManager dbm;
+//    private MessagesDao dbm;
 
 //    private Pattern MSG_REG_RE;
 //    private Pattern MSG_UNREG_RE;
@@ -49,16 +49,16 @@ public class PageParser implements InitializingBean {
     }
 */
 
-    public void setDbManager(DbManager dbManager) {
-        this.dbManager = dbManager;
+    public void setMessagesDao(MessagesDao messagesDao) {
+        this.messagesDao = messagesDao;
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        Check.isSet(dbManager, "dbManager");
+        Check.isSet(messagesDao, "messagesDao");
     }
 
-    private Message parseMessage(Site site, Message message, String msg) {
+    private Message parseMessage(Site site, Message message, String msg) throws PageParseException {
 
         Matcher m = site.getMsgUnregRe().matcher(msg);
 
@@ -100,7 +100,7 @@ public class PageParser implements InitializingBean {
 
         message.setTopic(topic);
 //        try {
-        Integer topicCode = dbManager.getTopicsHashMap(site).get(topic);
+        Integer topicCode = messagesDao.getTopicsHashMap(site).get(topic);
         if (topicCode == null) {
             topicCode = -1;
             if (StringUtils.isNotEmpty(topic)) {
@@ -127,7 +127,7 @@ public class PageParser implements InitializingBean {
         return message;
     }
 
-    public Message parseMessage(Site site, String msg, int urlNum) {
+    public Message parseMessage(Site site, String msg, int urlNum) throws PageParseException {
         Message zm = new Message();
         zm.setNum(urlNum);
         parseMessage(site, zm, msg);

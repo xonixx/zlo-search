@@ -1,8 +1,12 @@
 package info.xonix.zlo.search.logic;
 
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.domainobj.SearchRequest;
+import info.xonix.zlo.search.domainobj.SearchResult;
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
-import info.xonix.zlo.search.model.*;
+import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.model.MessageFields;
 import info.xonix.zlo.search.utils.Check;
 import info.xonix.zlo.search.utils.factory.SiteFactory;
 import org.apache.log4j.Logger;

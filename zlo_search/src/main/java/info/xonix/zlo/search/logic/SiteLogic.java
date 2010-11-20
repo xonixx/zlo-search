@@ -1,7 +1,9 @@
 package info.xonix.zlo.search.logic;
 
+import info.xonix.zlo.search.domainobj.Site;
+import info.xonix.zlo.search.logic.site.PageParseException;
+import info.xonix.zlo.search.logic.site.RetrieverException;
 import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.model.Site;
 
 import java.util.List;
 
@@ -17,7 +19,7 @@ public interface SiteLogic {
 
     Site getSite(int num);
 
-    int getLastMessageNumber(Site site);
+    int getLastMessageNumber(Site site) throws RetrieverException;
 
-    List<Message> getMessages(Site site, int from, int to);
+    List<Message> getMessages(Site site, int from, int to) throws RetrieverException, PageParseException;
 }

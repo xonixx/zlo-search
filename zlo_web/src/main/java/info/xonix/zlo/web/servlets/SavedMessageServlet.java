@@ -1,10 +1,10 @@
 package info.xonix.zlo.web.servlets;
 
 import info.xonix.zlo.search.config.ErrorMessage;
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 import org.apache.commons.lang.StringUtils;

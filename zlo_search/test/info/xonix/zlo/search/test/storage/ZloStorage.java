@@ -1,9 +1,9 @@
 package info.xonix.zlo.search.test.storage;
 
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.spring.AppSpringContext;
 
 import java.io.*;

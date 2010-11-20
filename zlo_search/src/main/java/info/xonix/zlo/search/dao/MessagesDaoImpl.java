@@ -1,8 +1,7 @@
 package info.xonix.zlo.search.dao;
 
-import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.model.Topic;
 import info.xonix.zlo.search.utils.Check;
 import org.apache.log4j.Logger;
@@ -15,7 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
 
 import static info.xonix.zlo.search.utils.DbUtils.timestamp;
 
@@ -24,13 +22,8 @@ import static info.xonix.zlo.search.utils.DbUtils.timestamp;
  * Date: Sep 13, 2007
  * Time: 11:33:31 PM
  */
-public class DbManagerImpl extends DaoImplBase implements DbManager {
-    private static final Logger log = Logger.getLogger(DbManagerImpl.class);
-
-    // TODO: remove
-    private static Properties props = Config.loadProperties("info/xonix/zlo/search/db/sql.properties");
-
-    private final String SQL_LOG_REQUEST = props.getProperty("sql.log.request");
+public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
+    private static final Logger log = Logger.getLogger(MessagesDaoImpl.class);
 
     private QueryProvider queryProvider;
 
@@ -183,24 +176,5 @@ public class DbManagerImpl extends DaoImplBase implements DbManager {
             }
         }
         return topics;
-    }
-
-    @Override
-    public void saveSearchRequest(int siteNum, String host, String userAgent,
-                                  String reqText, String reqNick, String reqHost,
-                                  String reqQuery, String reqQueryString, String referer, boolean rssAsked) {
-        getSimpleJdbcTemplate().update(SQL_LOG_REQUEST,
-                siteNum,
-                host,
-                userAgent,
-
-                reqText,
-                reqNick,
-                reqHost,
-
-                reqQuery,
-                reqQueryString,
-                referer,
-                rssAsked);
     }
 }

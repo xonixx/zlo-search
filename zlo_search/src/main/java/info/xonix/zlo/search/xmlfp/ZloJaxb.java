@@ -1,9 +1,9 @@
 package info.xonix.zlo.search.xmlfp;
 
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.xmlfp.xjccompiled.lastMessageNumber.ObjectFactory;
 import info.xonix.zlo.search.xmlfp.xjccompiled.message.Author;
 import info.xonix.zlo.search.xmlfp.xjccompiled.message.Content;

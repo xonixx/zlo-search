@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.daemon;
 
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.SiteLogic;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.spring.AppSpringContext;
 
 /**

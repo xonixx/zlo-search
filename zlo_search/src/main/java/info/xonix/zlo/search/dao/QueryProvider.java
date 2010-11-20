@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.dao;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.model.Site;
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.utils.factory.SiteFactory;
 
 import java.text.MessageFormat;

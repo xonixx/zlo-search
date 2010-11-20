@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.logic;
 
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.model.Site;
 
 import java.util.Date;
 import java.util.List;

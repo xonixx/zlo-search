@@ -1,8 +1,8 @@
 package info.xonix.zlo.search.xmlfp.test;
 
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.xmlfp.ZloJaxb;
 import org.junit.Test;

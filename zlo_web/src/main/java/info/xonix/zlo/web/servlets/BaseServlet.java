@@ -1,7 +1,7 @@
 package info.xonix.zlo.web.servlets;
 
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.SiteLogic;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 import info.xonix.zlo.web.servlets.helpful.ForwardingServlet;

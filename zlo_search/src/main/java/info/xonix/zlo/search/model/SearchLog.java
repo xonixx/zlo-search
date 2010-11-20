@@ -1,11 +1,13 @@
 package info.xonix.zlo.search.model;
 
+import info.xonix.zlo.search.domainobj.Site;
+
 /**
  * User: Vovan
  * Date: 04.07.2010
  * Time: 17:06:26
  */
-public class SearchLogEvent {
+public class SearchLog {
     private Site site;
 
     private String clientIp;

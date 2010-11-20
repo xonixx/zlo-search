@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.test;
 
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.AppLogic;
-import info.xonix.zlo.search.model.Site;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.ru.RussianAnalyzer;
