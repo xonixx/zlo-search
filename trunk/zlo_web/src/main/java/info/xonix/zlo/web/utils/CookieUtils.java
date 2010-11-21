@@ -1,7 +1,5 @@
 package info.xonix.zlo.web.utils;
 
-import org.apache.commons.lang.StringUtils;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,16 +20,30 @@ public final class CookieUtils {
         rememberInCookie(response, fieldname, value, Integer.MAX_VALUE); // forever
     }
 
+    public static void forgetCookie(HttpServletResponse response, String fieldName) {
+        rememberInCookie(response, fieldName, "", 0);
+    }
+
+    /**
+     * @param request   http request
+     * @param fieldname cookie name
+     * @return null if no cookie with this name present
+     */
     public static String recallFromCookie(HttpServletRequest request, String fieldname) {
         Cookie[] cookies = request.getCookies();
 
         if (cookies == null)
-            return StringUtils.EMPTY;
+            return null;
 
         for (Cookie cookie : cookies) {
             if (fieldname.equals(cookie.getName()))
                 return cookie.getValue();
         }
-        return StringUtils.EMPTY;
+
+        return null;
+    }
+
+    public static boolean isCookiePresent(HttpServletRequest request, String fieldName) {
+        return recallFromCookie(request, fieldName) != null;
     }
 }

@@ -15,7 +15,7 @@
 %>
 
 <%
-    if (!RequestUtils.isLocalIp(request)) {
+    if (!RequestUtils.isPowerUser(request)) {
         response.sendError(404);
         return;
     }

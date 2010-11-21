@@ -14,13 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 public final class RequestUtils {
     private static final Config config = AppSpringContext.get(Config.class);
 
-    /**
-     * Weather the ip of client sending request is local ip
-     *
-     * @param request
-     * @param localIps
-     * @return
-     */
     public static String[][] BROWSERS = {
             {"MSIE", "Internet Explorer"},
             {"Firefox", "Firefox"},
@@ -37,6 +30,13 @@ public final class RequestUtils {
             {"Mozilla", "Mozilla"},
     };
 
+    /**
+     * Weather the ip of client sending request is local ip
+     *
+     * @param request  http request
+     * @param localIps list of local ips from settings
+     * @return true if local
+     */
     private static boolean isLocalIp(HttpServletRequest request, String[] localIps) {
         String clientIp = getClientIp(request);
         for (String localIp : localIps) {
@@ -46,8 +46,25 @@ public final class RequestUtils {
         return false;
     }
 
+    /**
+     * use {@link #isPowerUser} instead
+     *
+     * @param request request
+     * @return true if local
+     */
+    @Deprecated
     public static boolean isLocalIp(HttpServletRequest request) {
         return isLocalIp(request, config.getProp("localIps").split("\\|"));
+    }
+
+    /**
+     * checking power user rights based on secret key presence in cookie
+     *
+     * @param request http request
+     * @return true if secret key present
+     */
+    public static boolean isPowerUser(HttpServletRequest request) {
+        return CookieUtils.isCookiePresent(request, config.getPowerUserKey());
     }
 
     public static String getClientIp(HttpServletRequest request) {

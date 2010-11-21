@@ -12,11 +12,11 @@
 %>
 
 <c:set var="localIps"><fmt:message key="localIps"/></c:set>
-<c:set var="isLocalIp" value='<%= RequestUtils.isLocalIp(request) %>'/>
-<c:set var="showAll" value="${ param['all'] != null and isLocalIp }"/>
+<c:set var="isPowerUser" value='<%= RequestUtils.isPowerUser(request) %>'/>
+<c:set var="showAll" value="${ param['all'] != null and isPowerUser }"/>
 
 <c:set var="lastHours" value="6"/>
-<c:if test="${isLocalIp and not empty param['n']}">
+<c:if test="${isPowerUser and not empty param['n']}">
     <c:set var="lastHours" value="${param['n']}"/>
 </c:if>
 
@@ -55,7 +55,7 @@
 
 <div align="center" class="content">
     <h3>История запросов
-        <c:if test="${isLocalIp}">
+        <c:if test="${isPowerUser}">
             <c:choose>
                 <c:when test="${!showAll}"><a href="history.jsp?all" class="search">(подробно)</a></c:when>
                 <c:otherwise><a href="history.jsp" class="search">(кратко)</a></c:otherwise>

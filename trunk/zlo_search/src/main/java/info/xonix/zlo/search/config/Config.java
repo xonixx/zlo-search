@@ -55,6 +55,8 @@ public class Config {
     private int proxyPort;
     // end app props
 
+    private String powerUserKey;
+
     public Config() {
         props = new Properties();
         if (!loadPropertiesFromEnv(props)) {
@@ -114,6 +116,8 @@ public class Config {
 
         proxyHost = useProxy ? getProp("proxy.host") : null;
         proxyPort = useProxy ? Integer.parseInt(getProp("proxy.port")) : -1;
+
+        powerUserKey = getProp("powerUserKey");
     }
 
     public static void loadProperties(Properties pr, String path) {
@@ -239,5 +243,9 @@ public class Config {
 
     public int getPeriodRecreateIndexer() {
         return periodRecreateIndexer;
+    }
+
+    public String getPowerUserKey() {
+        return powerUserKey;
     }
 }

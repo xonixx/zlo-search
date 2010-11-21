@@ -27,6 +27,7 @@ import org.apache.lucene.search.BooleanQuery;
 import org.springframework.dao.DataAccessException;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -122,6 +123,7 @@ public class SearchServlet extends BaseServlet {
 
         // to refresh site from cookies to req
         setSiteInReq(request, response);
+        setPowerUserInCookies(request, response);
 
         SearchRequest searchRequest = null;
 
@@ -333,6 +335,21 @@ public class SearchServlet extends BaseServlet {
             rssFormer.formRss(request, response);
         else
             request.forwardTo(JSP_SEARCH);
+    }
+
+    private void setPowerUserInCookies(HttpServletRequest request, HttpServletResponse response) {
+        final String powerUserKey = config.getPowerUserKey();
+        final String powerUserValue = request.getParameter(powerUserKey);
+
+        if ("0".equals(powerUserValue)) {
+            log.info("Forgetting power user, ip=" + RequestUtils.getClientIp(request));
+
+            CookieUtils.forgetCookie(response, powerUserKey);
+        } else if (powerUserValue != null) {
+            log.info("Power user enters, ip=" + RequestUtils.getClientIp(request));
+
+            CookieUtils.rememberInCookie(response, powerUserKey, "1");
+        }
     }
 
     private void showStatistics(ForwardingRequest request) {
