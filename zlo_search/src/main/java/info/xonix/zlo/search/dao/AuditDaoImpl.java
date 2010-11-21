@@ -3,6 +3,8 @@ package info.xonix.zlo.search.dao;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.model.SearchLog;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Properties;
 
 /**
@@ -15,6 +17,7 @@ public class AuditDaoImpl extends DaoImplBase
 
     private static Properties props = Config.loadProperties("info/xonix/zlo/search/db/sql.properties");
     private final String SQL_LOG_REQUEST = props.getProperty("sql.log.request");
+    private final String SQL_LOG_EXCEPTION = props.getProperty("sql.log.exception");
 
     @Override
     public void saveSearchRequest(int siteNum, SearchLog searchLog) {
@@ -35,7 +38,13 @@ public class AuditDaoImpl extends DaoImplBase
 
     @Override
     public void storeException(String exception, String stackTrace, String msg, String source, String category) {
-        System.out.println("Storing exception: " + exception + " source=" + source + " category=" + category);
-        // TODO
+//        System.out.println("Storing exception: " + exception + " source=" + source + " category=" + category);
+        getSimpleJdbcTemplate().update(SQL_LOG_EXCEPTION,
+                exception,
+                stackTrace,
+                msg,
+                source,
+                category,
+                new Timestamp(new Date().getTime()));
     }
 }
