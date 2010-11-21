@@ -34,7 +34,7 @@
         <li><a href="about.jsp"
                <c:if test="${activeScreen == 'about'}">class="activeLink"</c:if>>About</a></li>
 
-        <c:if test="<%= RequestUtils.isLocalIp(request) %>">
+        <c:if test="<%= RequestUtils.isPowerUser(request) %>">
             <span class="adminLinks">
                 <%--admin menu items--%>
                 <li><a href="detectspam.jsp"
