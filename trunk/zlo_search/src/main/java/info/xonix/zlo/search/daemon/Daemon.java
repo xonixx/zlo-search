@@ -144,10 +144,14 @@ public abstract class Daemon {
         return process;
     }
 
+    public String describe() {
+        return getClass().getSimpleName() + "-" + getSiteName();
+    }
+
     protected abstract class Process extends Thread {
 
         public Process() {
-            super(Daemon.this.getClass().getSimpleName() + "-" + getSiteName());
+            super(describe());
         }
 
         public void run() {
