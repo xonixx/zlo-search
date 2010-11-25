@@ -28,6 +28,11 @@
                 <jsp:setProperty name="hl" property="text" value="${msg.title}"/>
                 <c:out value="${hl.highlightedText}" escapeXml="false"/>
                 <a href="http://${siteRoot}/?read=${msg.num}">?</a>
+
+                    <%--paul7 link--%>
+                <c:if test="${msg.site.name == 'zlo'}">
+                    <a href="http://zlo.paul7.net/${msg.num}">paul7</a>
+                </c:if>
             </big>
             <br/>Сообщение было послано:
             <tiles:insertDefinition name="nick">
