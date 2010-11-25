@@ -3,7 +3,9 @@ package info.xonix.zlo.search.logic.exceptions;
 import info.xonix.zlo.search.dao.AuditDao;
 import info.xonix.zlo.search.utils.Check;
 import info.xonix.zlo.search.utils.ExceptionUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.dao.DataAccessException;
 
 /**
  * User: Vovan
@@ -11,6 +13,8 @@ import org.springframework.beans.factory.InitializingBean;
  * Time: 0:48:36
  */
 public class ExceptionsLoggerImpl implements ExceptionsLogger, InitializingBean {
+    private final static Logger log = Logger.getLogger(ExceptionsLoggerImpl.class);
+
     private AuditDao auditDao;
 
     public void setAuditDao(AuditDao auditDao) {
@@ -24,12 +28,21 @@ public class ExceptionsLoggerImpl implements ExceptionsLogger, InitializingBean 
 
     @Override
     public void logException(Throwable throwable, String msg, String source, ExceptionCategory category) {
-        auditDao.storeException(
-                throwable.toString(),
-                ExceptionUtils.getStackTrace(throwable),
-                msg != null ? msg : throwable.getLocalizedMessage(),
-                source,
-                category.toString());
+        try {
+            auditDao.storeException(
+                    throwable.toString(),
+                    ExceptionUtils.getStackTrace(throwable),
+                    msg != null ? msg : throwable.getLocalizedMessage(),
+                    source,
+                    category.toString());
+
+        } catch (DataAccessException e) {
+            log.error("Error occured while storing exception info:" + e +
+                    "\n\tmsg=" + msg +
+                    "\n\tsource=" + source +
+                    "\n\tcategory=" + category +
+                    "\n\tthrowable=" + throwable);
+        }
     }
 
     @Override
