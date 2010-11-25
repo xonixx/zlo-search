@@ -4,8 +4,8 @@ import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.Topic;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * User: Vovan
@@ -31,5 +31,5 @@ public interface MessagesDao {
 
     String[] getTopics(Site site);
 
-    HashMap<String, Integer> getTopicsHashMap(Site site);
+    Map<String, Integer> getTopicsHashMap(Site site);
 }
