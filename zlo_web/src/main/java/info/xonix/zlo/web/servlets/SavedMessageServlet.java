@@ -8,6 +8,8 @@ import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.springframework.dao.DataAccessException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +21,8 @@ import java.io.IOException;
  * Time: 17:23:38
  */
 public class SavedMessageServlet extends BaseServlet {
+    private final Logger log = Logger.getLogger(SavedMessageServlet.class);
+
     public static final String QS_NUM = "num";
     public static final String ERROR = "error";
     public static final String SAVED_MSG = "msg";
@@ -47,18 +51,20 @@ public class SavedMessageServlet extends BaseServlet {
         setSiteInReq(request, response);
 
         Message msg;
-//        try {
-        Site site = getSite(request);
-        msg = appLogic.getMessageByNumber(site, num);
-        if (msg != null && msg.getStatus() != MessageStatus.DELETED) {
-            request.setAttribute(SAVED_MSG, msg);
-        } else {
-            request.setAttribute(ERROR, ErrorMessage.MessageNotFound);
+        try {
+            Site site = getSite(request);
+
+            msg = appLogic.getMessageByNumber(site, num);
+
+            if (msg != null && msg.getStatus() != MessageStatus.DELETED) {
+                request.setAttribute(SAVED_MSG, msg);
+            } else {
+                request.setAttribute(ERROR, ErrorMessage.MessageNotFound);
+            }
+        } catch (DataAccessException e) {
+            request.setAttribute(ERROR, ErrorMessage.DbError);
+            log.error("DB error while accessing saved msg", e);
         }
-        // TODO: handle db error
-//        } catch (DAOException e) {
-//            request.setAttribute(ERROR, ErrorMessage.DbError);
-//        }
 
         request.forwardTo(JSP_SAVED_MSG);
     }
