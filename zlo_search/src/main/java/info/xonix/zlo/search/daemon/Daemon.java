@@ -147,7 +147,7 @@ public abstract class Daemon {
     protected abstract class Process extends Thread {
 
         public Process() {
-            super();
+            super(Daemon.this.getClass().getSimpleName() + "-" + getSiteName());
         }
 
         public void run() {
@@ -212,7 +212,7 @@ public abstract class Daemon {
                 saveLastException(e);
 
                 if (!processException(e)) {
-                    getLogger().error("Unknown exception", e);
+                    getLogger().error("(" + getSiteName() + ") Unknown exception", e);
                 }
 
                 getLogger().info(getSiteName() + " - Retry in " + TimeUtils.toMinutesSeconds(retryPeriod));

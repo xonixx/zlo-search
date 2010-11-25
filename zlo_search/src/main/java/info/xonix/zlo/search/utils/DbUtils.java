@@ -11,6 +11,6 @@ public final class DbUtils {
 //    private static final Logger logger = Logger.getLogger(DbUtils.class);
 
     public static Timestamp timestamp(java.util.Date date) {
-        return new Timestamp(date.getTime());
+        return date != null ? new Timestamp(date.getTime()) : null;
     }
 }

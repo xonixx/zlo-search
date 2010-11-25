@@ -99,7 +99,7 @@ public class PageParser implements InitializingBean {
         String title = m.group(groupsOrder.get(2));
 
         message.setTopic(topic);
-//        try {
+
         Integer topicCode = messagesDao.getTopicsHashMap(site).get(topic);
         if (topicCode == null) {
             topicCode = -1;
@@ -109,9 +109,6 @@ public class PageParser implements InitializingBean {
             }
         }
         message.setTopicCode(topicCode);
-//        } catch (DbException e) {
-//            log.error(e);
-//        }
 
         message.setSite(site);
         message.setTitle(title);
