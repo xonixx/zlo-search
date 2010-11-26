@@ -1,5 +1,6 @@
 package info.xonix.zlo.search.logic.site;
 
+import info.xonix.zlo.search.HttpHeader;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.utils.Check;
@@ -195,8 +196,8 @@ public class PageRetriever implements InitializingBean {
 
     private GetMethod formGetMethod(Site site, String uri) {
         GetMethod getMethod = new GetMethod(uri);
-        getMethod.addRequestHeader("Host", site.getSiteUrl());
-        getMethod.addRequestHeader("User-Agent", config.getUserAgent());
+        getMethod.addRequestHeader(HttpHeader.HOST, site.getSiteUrl());
+        getMethod.addRequestHeader(HttpHeader.USER_AGENT, config.getUserAgent());
         getMethod.getParams().setVersion(HttpVersion.HTTP_1_0); // to prevent chunk transfer-encoding in reply
         return getMethod;
     }
