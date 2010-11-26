@@ -115,7 +115,7 @@ abstract class SiteConfiguration {
 //        initDb(p);
 
         // indexer-----
-        performIndexing = Config.TRUE.equals(p.getProperty("indexer.perform.indexing"));
+        performIndexing = Config.isTrue(p.getProperty("indexer.perform.indexing"));
         indexDirDouble = config.getProp("indexer.dir.double") + "/index_" + name;
 
         indexerIndexPerTime = Integer.parseInt(p.getProperty("indexer.daemon.index.per.time"));

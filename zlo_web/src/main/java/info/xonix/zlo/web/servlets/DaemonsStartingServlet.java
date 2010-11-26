@@ -1,6 +1,9 @@
 package info.xonix.zlo.web.servlets;
 
+import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.daemon.DaemonLauncher;
+import info.xonix.zlo.search.spring.AppSpringContext;
+import org.apache.log4j.Logger;
 
 import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
@@ -14,6 +17,10 @@ import java.io.IOException;
  * Time: 0:53:55
  */
 public class DaemonsStartingServlet extends GenericServlet {
+    private final static Logger log = Logger.getLogger(DaemonsStartingServlet.class);
+
+    private Config config = AppSpringContext.get(Config.class);
+
     @Override
     public void service(ServletRequest servletRequest, ServletResponse servletResponse) throws ServletException, IOException {
         ;
@@ -22,11 +29,11 @@ public class DaemonsStartingServlet extends GenericServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        if ("1".equals(getInitParameter("startDaemons"))) {
-            log("Starting daemons...");
+        if (config.isStartDaemons()) {
+            log.info("Starting daemons...");
             new DaemonLauncher().main(new String[0]);
         } else {
-            log("Daemons not started.");
+            log.info("Daemons not started.");
         }
     }
 

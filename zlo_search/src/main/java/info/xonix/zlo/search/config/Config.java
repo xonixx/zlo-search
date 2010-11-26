@@ -1,6 +1,7 @@
 package info.xonix.zlo.search.config;
 
 import info.xonix.zlo.search.model.MessageFields;
+import info.xonix.zlo.search.utils.EnvUtils;
 import info.xonix.zlo.search.utils.TimeUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -22,7 +23,9 @@ public class Config {
 
     private static final Logger log = Logger.getLogger(Config.class);
     private static final String CONFIG_PATH_ENV_NAME = "ZLO_CONFIG";
-    public final static String TRUE = "true";
+
+    private final static String TRUE = "true";
+    private final static String TRUE1 = "1";
 
     private Properties props;
 
@@ -57,15 +60,21 @@ public class Config {
 
     private String powerUserKey;
 
+    private boolean startDaemons;
+
     public Config() {
         props = new Properties();
         if (!loadPropertiesFromEnv(props)) {
             System.out.println("Loading internal config...");
             loadProperties(props, "info/xonix/zlo/search/config/config.properties");
 
-            String additionalConfigPath = props.getProperty("config.additional");
+            final String additionalConfName = "config.additional." + EnvUtils.getHostName();
+            final String additionalConfigPath = props.getProperty(additionalConfName);
+
             if (additionalConfigPath != null) {
                 loadProperties(props, additionalConfigPath);
+            } else {
+                throw new IllegalStateException("Can't get additional config path: " + additionalConfName);
             }
         }
 
@@ -105,19 +114,29 @@ public class Config {
 
         userAgent = getProp("user.agent");
 
-        debug = TRUE.equals(getProp("debug"));
-        searchPerformSort = TRUE.equals(getProp("search.perform.sort"));
+        debug = getBoolProp("debug");
+        searchPerformSort = getBoolProp("search.perform.sort");
 
         periodRecreateIndexer = TimeUtils.parseToMilliSeconds(getProp("searcher.period.recreate.indexer"));
 
         websiteDomain = getProp("website.domain");
 
-        useProxy = TRUE.equals(getProp("proxy.use"));
+        useProxy = getBoolProp("proxy.use");
 
         proxyHost = useProxy ? getProp("proxy.host") : null;
         proxyPort = useProxy ? Integer.parseInt(getProp("proxy.port")) : -1;
 
         powerUserKey = getProp("powerUserKey");
+
+        startDaemons = getBoolProp("daemons.start");
+    }
+
+    private boolean getBoolProp(String key) {
+        return isTrue(getProp(key));
+    }
+
+    public static boolean isTrue(String val) {
+        return TRUE.equals(val) || TRUE1.equals(val);
     }
 
     public static void loadProperties(Properties pr, String path) {
@@ -164,6 +183,9 @@ public class Config {
 //    public static final int TIME_PERIOD_MONTHS = Integer.parseInt(TIME_PERIOD.split("y")[1].split("m")[0]);
 
     public String getProp(String key) {
+        if (!props.containsKey(key)) {
+            throw new IllegalArgumentException("Key not found: " + key);
+        }
         return props.getProperty(key);
     }
 
@@ -247,5 +269,9 @@ public class Config {
 
     public String getPowerUserKey() {
         return powerUserKey;
+    }
+
+    public boolean isStartDaemons() {
+        return startDaemons;
     }
 }
