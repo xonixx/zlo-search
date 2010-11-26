@@ -94,7 +94,7 @@ public abstract class Daemon {
     private static void processExited(Daemon daemon) {
         daemons.remove(daemon);
         if (daemons.isEmpty()) {
-            log.info("!!!!!!!!!All exited");
+            log.info("All daemons have exited.");
             observable.notifyObservers("exited");
         }
     }
@@ -268,9 +268,10 @@ public abstract class Daemon {
         getLogger().info(getSiteName() + " - Registering exit handlers...");
         setExiting(false);
 
-        SignalHandler exitHandler = new SignalHandler() {
+        final SignalHandler exitHandler = new SignalHandler() {
             public void handle(Signal signal) {
-                getLogger().info(getSiteName() + " - Exit handler for " + signal.getName() + "...");
+                // getLogger().info(...) gaves NPE at rt
+                log.info(getSiteName() + " - Exit handler for " + signal.getName() + "...");
                 setExitingAll();
             }
         };
