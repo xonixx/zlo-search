@@ -5,6 +5,7 @@ import de.nava.informa.core.ChannelIF;
 import de.nava.informa.impl.basic.Category;
 import de.nava.informa.impl.basic.Channel;
 import de.nava.informa.impl.basic.Item;
+import info.xonix.zlo.search.HttpHeader;
 import info.xonix.zlo.search.ZloPaginatedList;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.domainobj.SearchRequest;
@@ -54,7 +55,7 @@ public class RssFormer {
             List msgsList = pl.getList();
             Date lastModifiedDateCurrent = msgsList != null && msgsList.size() > 0 ? ((Message) msgsList.get(0)).getDate() : null; // the youngest msg (max date)
 
-            log.info("RSS request. User-Agent: " + request.getHeader("User-Agent") + ", If-Modified-Since: " + request.getHeader("If-Modified-Since"));
+            log.info("RSS request. User-Agent: " + request.getHeader(HttpHeader.USER_AGENT) + ", If-Modified-Since: " + request.getHeader(HttpHeader.IF_MODIFIED_SINCE));
 
             if (lastModifiedDateCurrent != null) {
                 Date lastModifiedDateOld = new Date(request.getDateHeader("If-Modified-Since"));

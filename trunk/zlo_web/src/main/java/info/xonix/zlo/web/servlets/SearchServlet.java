@@ -1,6 +1,7 @@
 package info.xonix.zlo.web.servlets;
 
 import info.xonix.zlo.search.FoundTextHighlighter;
+import info.xonix.zlo.search.HttpHeader;
 import info.xonix.zlo.search.ZloPaginatedList;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.config.DateFormats;
@@ -367,7 +368,8 @@ public class SearchServlet extends BaseServlet {
 
         searchLog.setSite(getSite(request));
         searchLog.setClientIp(RequestUtils.getClientIp(request));
-        searchLog.setUserAgent(request.getHeader("User-Agent"));
+        searchLog.setUserAgent(request.getHeader(HttpHeader.USER_AGENT));
+        searchLog.setReferer(request.getHeader(HttpHeader.REFERER));
 
         searchLog.setSearchText(request.getParameter(QS_TEXT));
         searchLog.setSearchNick(request.getParameter(QS_NICK));

@@ -148,6 +148,7 @@
                                decorator="info.xonix.zlo.web.decorators.SearchResultLineDecorator" requestURI="search"
                                class="searchRes">
                     <c:set var="site" value="${msg.site}"/>
+                    <c:set var="siteRootUrl" value="${xonix:getSiteRoot(header['Referer'], site)}"/>
 
                     <display:setProperty name="basic.msg.empty_list"><span class="pagebanner">Сообщения, соответствующие введенным критериям поиска не найдены. </span></display:setProperty>
                     <display:setProperty name="paging.banner.one_item_found"><span class="pagebanner">Найдено одно сообщение. ${rssLinkHtml}</span></display:setProperty>
@@ -172,7 +173,7 @@
                     <display:column title="№"
                                     class="small" style="text-align:center;width:1%;">${msg.hitId + 1}</display:column>
                     <display:column title="Тема" style="width:67%">
-                        <a href="http://${site.siteUrl}${site.readQuery}${msg.num}">
+                        <a href="http://${siteRootUrl}${site.readQuery}${msg.num}">
                             <c:if test="${not empty msg.topic and msg.topic != 'без темы'}">[${msg.topic}]</c:if>
                             <jsp:setProperty name="hl" property="text" value="${msg.title}"/>
                             <c:out value="${hl.highlightedText}" escapeXml="false"/></a>

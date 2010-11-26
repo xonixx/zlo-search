@@ -1,6 +1,9 @@
 package info.xonix.zlo.web.utils;
 
+import info.xonix.zlo.search.HttpHeader;
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.config.SiteName;
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.commons.lang.StringUtils;
 
@@ -68,7 +71,7 @@ public final class RequestUtils {
     }
 
     public static String getClientIp(HttpServletRequest request) {
-        String remoteAddr = request.getHeader("x-forwarded-for");
+        String remoteAddr = request.getHeader(HttpHeader.X_FORWARDED_FOR);
         return StringUtils.isNotEmpty(remoteAddr) ? remoteAddr : request.getRemoteAddr();
     }
 
@@ -82,5 +85,36 @@ public final class RequestUtils {
         }
 
         return "other";
+    }
+
+    /**
+     * @param referer referer header
+     * @param site    site
+     * @return site root url, based on Host header
+     */
+    public static String getSiteRoot(String referer, Site site) {
+        if (SiteName.ZLO.equals(site.getName())) {
+            final String zloRoot = "zlo.rt.mipt.ru";
+            final String boardRoot = "board.rt.mipt.ru";
+
+            if (StringUtils.isNotEmpty(referer)) {
+                if (referer.indexOf(zloRoot) != -1) {
+                    return zloRoot;
+                } else if (referer.indexOf(boardRoot) != -1) {
+                    return boardRoot;
+                }
+            }
+        }
+
+        return site.getSiteUrl();
+    }
+
+    /**
+     * @param request http request
+     * @param site    site
+     * @return site root url, based on Host header
+     */
+    public static String getSiteRoot(HttpServletRequest request, Site site) {
+        return getSiteRoot(request.getHeader(HttpHeader.REFERER), site);
     }
 }
