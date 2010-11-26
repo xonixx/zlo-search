@@ -9,4 +9,6 @@ CREATE TABLE exception_log (
     source VARCHAR(100) NULL,
     category VARCHAR(25) NOT NULL,
     date_created DATETIME NOT NULL
-);
+)
+ENGINE=INNODB
+DEFAULT CHARSET=cp1251;
