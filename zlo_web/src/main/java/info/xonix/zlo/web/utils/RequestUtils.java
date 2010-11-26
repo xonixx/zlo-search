@@ -87,6 +87,9 @@ public final class RequestUtils {
         return "other";
     }
 
+    // TODO: VVV--- improve or del
+    // TODO: store users site in cookie
+
     /**
      * @param referer referer header
      * @param site    site
