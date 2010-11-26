@@ -13,4 +13,4 @@
 <fmt:setBundle basename="info.xonix.zlo.search.config.config"/>
 <fmt:setLocale value="ru_RU" scope="request"/>
 
-<sql:setDataSource dataSource="<%= AppSpringContext.get("dataSource") %>"/>
+<sql:setDataSource dataSource='<%= AppSpringContext.get("dataSource") %>'/>

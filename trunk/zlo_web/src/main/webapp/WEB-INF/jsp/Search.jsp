@@ -17,8 +17,9 @@
 <c:set var="isError" value="${not empty requestScope['error']}"/>
 <c:set var="isSearchResultPresent" value="${not empty requestScope['searchResult']}"/>
 <c:set var="rssUrl" value='<%= String.format("search?rss&%s", request.getQueryString()) %>'/>
-<c:set var="rssLinkHtml"><a href="${rssUrl}" title="RSS для этого запроса"><img src="feed-icon-14x14.png"
-                                                                                alt="RSS для этого запроса"/></a></c:set>
+<c:set var="rssLinkHtml"><a href="${rssUrl}" title="RSS для этого запроса">
+    <img src="feed-icon-14x14.png" alt="RSS для этого запроса"/></a>
+</c:set>
 
 <!-- ПРЕВЕД -->
 <html>
