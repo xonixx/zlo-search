@@ -7,6 +7,8 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Properties;
 
+import static org.apache.commons.lang.StringUtils.substring;
+
 /**
  * User: Vovan
  * Date: 21.11.2010
@@ -23,16 +25,16 @@ public class AuditDaoImpl extends DaoImplBase
     public void saveSearchRequest(int siteNum, SearchLog searchLog) {
         getSimpleJdbcTemplate().update(SQL_LOG_REQUEST,
                 siteNum,
-                searchLog.getClientIp(),
-                searchLog.getUserAgent(),
+                substring(searchLog.getClientIp(), 0, 100),
+                substring(searchLog.getUserAgent(), 0, 200),
 
-                searchLog.getSearchText(),
-                searchLog.getSearchNick(),
-                searchLog.getSearchHost(),
+                substring(searchLog.getSearchText(), 0, 200),
+                substring(searchLog.getSearchNick(), 0, 100),
+                substring(searchLog.getSearchHost(), 0, 100),
 
-                searchLog.getSearchQuery(),
-                searchLog.getSearchQueryString(),
-                searchLog.getReferer(),
+                substring(searchLog.getSearchQuery(), 0, 200),
+                substring(searchLog.getSearchQueryString(), 0, 400),
+                substring(searchLog.getReferer(), 0, 100),
                 searchLog.isRssAsked());
     }
 
