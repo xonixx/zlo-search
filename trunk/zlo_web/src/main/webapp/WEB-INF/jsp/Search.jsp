@@ -148,8 +148,10 @@
                 <display:table name="requestScope.paginatedList" id="msg" htmlId="resultTable"
                                decorator="info.xonix.zlo.web.decorators.SearchResultLineDecorator" requestURI="search"
                                class="searchRes">
-                    <c:set var="site" value="${msg.site}"/>
-                    <c:set var="siteRootUrl" value="${xonix:getSiteRoot(header['Referer'], site)}"/>
+                    <c:if test="${msg != null}">
+                        <c:set var="site" value="${msg.site}"/>
+                        <c:set var="siteRootUrl" value="${xonix:getSiteRoot(header['Referer'], site)}"/>
+                    </c:if>
 
                     <display:setProperty name="basic.msg.empty_list"><span class="pagebanner">Сообщения, соответствующие введенным критериям поиска не найдены. </span></display:setProperty>
                     <display:setProperty name="paging.banner.one_item_found"><span class="pagebanner">Найдено одно сообщение. ${rssLinkHtml}</span></display:setProperty>
