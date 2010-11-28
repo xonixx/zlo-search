@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.daemon;
 
 import info.xonix.zlo.search.domainobj.Site;
-import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
+import info.xonix.zlo.search.doubleindex.DoubleIndexManager;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.logic.IndexerException;
 import info.xonix.zlo.search.logic.IndexerLogic;
@@ -96,13 +96,12 @@ public class IndexerDaemon extends Daemon {
 
     protected void start() {
         final Site site = getSite();
-        log.info("Starting indexing to {0} index (double index)..." + site.getName());
+        log.info("Starting indexing to " + site.getName() + " index (double index)...");
 
         // this is for clearing in case of not graceful exit
-//        if (Config.USE_DOUBLE_INDEX) {
         log.info("Clearing lock...");
-        new DoubleIndexSearcher(site, null).clearLocks();
-//        }
+        new DoubleIndexManager(site, null).clearLocks();
+
         super.start();
     }
 }

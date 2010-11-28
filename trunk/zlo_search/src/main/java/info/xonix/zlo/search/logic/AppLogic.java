@@ -33,6 +33,14 @@ public interface AppLogic {
      */
     Message getMessageByNumber(Site site, int num);
 
+    /**
+     * get messages, saved in DB for site in given range
+     *
+     * @param site  site
+     * @param start start index
+     * @param end   end index
+     * @return result messages
+     */
     List<Message> getMessages(Site site, int start, int end);
 
     int getLastSavedMessageNumber(Site site);

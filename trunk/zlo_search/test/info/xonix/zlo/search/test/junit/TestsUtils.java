@@ -1,6 +1,5 @@
 package info.xonix.zlo.search.test.junit;
 
-import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.DbDict;
 import info.xonix.zlo.search.dao.MessagesDao;
 import info.xonix.zlo.search.domainobj.Site;
@@ -19,16 +18,14 @@ import static junit.framework.Assert.*;
  * Date: 03.10.2007
  * Time: 22:56:24
  */
-public class TestsSearch {
+public class TestsUtils {
 
-    MessagesDao messagesDao;
-    DbDict dbDict;
-    Site site;
+    private MessagesDao messagesDao;
+    private DbDict dbDict;
+    private Site site;
 
     @Before
     public void setUp() throws Exception {
-        new Config();
-
         site = Site.forName("zlo");
         messagesDao = AppSpringContext.get(MessagesDao.class);
         dbDict = AppSpringContext.get(DbDict.class);
@@ -79,33 +76,30 @@ public class TestsSearch {
     }
 
     @Test
-    public void testGetMessages() {
-/*        try {
-            for (Message m : messagesDao.getMessages(new int[] {1,2,3,100,2000,1000050}, -1)) {
-                System.out.println(m);
-            }
-        } catch (DbException e) {
-            e.printStackTrace();
-        }*/
+    public void testHtmlUtils_extractUrls() {
+        assertEquals("aaa bbb", HtmlUtils.extractUrls("<A HrEf=\"aaa\">bbb"));
+        assertEquals("aaa bbb", HtmlUtils.extractUrls("<a \t\t href='aaa' \t \t>bbb"));
+        assertEquals("http://yandex.ru bbb", HtmlUtils.extractUrls("<a \t\t href=\"http://yandex.ru\" \t \t>bbb"));
+        assertEquals("https://qqq.qq.q/q?qq=qqq bbb", HtmlUtils.extractUrls("<A \t\t HREF='https://qqq.qq.q/q?qq=qqq' \t \t>bbb"));
+        assertEquals("http://board.rt.mipt.ru/?read=1542955 ссылка QQQ zzz",
+                HtmlUtils.cleanHtml("<A \n \t\n HREF=\"http://board.rt.mipt.ru/?read=1542955\" >ссылка</a> <b>QQQ<i>zzz</i></b>")
+                        .replaceAll("\\s+", " ")
+                        .trim()
+        );
     }
 
     @Test
     public void testGetTopics() {
-        new Config();
         String[] topics = messagesDao.getTopics(site);
         assertEquals("без темы", topics[0]);
         assertEquals("Учеба", topics[1]);
         assertEquals("Работа", topics[2]);
         assertEquals("Temp", topics[18]);
-        assertEquals(19, topics.length);
+        assertEquals(20, topics.length);
     }
 
     @Test
     public void testDbDict() {
-//        try {
-//        dbDict.setVal("name1", 123, VarType.INTEGER);
-//        dbDict.setVal("name1", 246, VarType.INTEGER);
-//        assertEquals(246, dbDict.getVal("name1"));
         dbDict.setInt(site, "name1", null);
         assertEquals(null, dbDict.getInt(site, "name1"));
         dbDict.setStr(site, "s", "Hello");
@@ -120,8 +114,5 @@ public class TestsSearch {
         dbDict.remove(site, "s");
         dbDict.remove(site, "d");
         assertEquals(null, dbDict.getStr(site, "s"));
-//        } catch (DbException e) {
-//            e.printStackTrace();
-//        }
     }
 }

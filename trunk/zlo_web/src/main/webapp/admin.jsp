@@ -99,7 +99,7 @@
     </display:table>
 
     <display:table id="site" name="<%= siteLogic.getSites() %>">
-        <c:set var="dis" value="<%= zloSearcher.getDoubleIndexSearcher((Site) site) %>"/>
+        <c:set var="dis" value="<%= zloSearcher.getDoubleIndexManager((Site) site) %>"/>
         <display:caption>Sites</display:caption>
 
         <display:column title="#">${site_rowNum}</display:column>

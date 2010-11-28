@@ -7,6 +7,7 @@ import java.util.Date;
  * Date: 23.09.2007
  * Time: 16:51:54
  */
+@Deprecated
 public interface ZloMessageAccessor {
 
     public int getNum();

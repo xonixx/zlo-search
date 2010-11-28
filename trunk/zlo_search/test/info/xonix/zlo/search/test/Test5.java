@@ -2,7 +2,7 @@ package info.xonix.zlo.search.test;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.domainobj.Site;
-import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
+import info.xonix.zlo.search.doubleindex.DoubleIndexManager;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.Token;
@@ -80,7 +80,7 @@ public class Test5 {
 //        ZloSearcher zs = new ZloSearcher(Site.forName("zlo"));
 //        System.out.println(zs.search(-1, "тест", true, true, false, false, false, null, null).getHits().length());
         Site site = Site.forName("zlo");
-        DoubleIndexSearcher dis = new DoubleIndexSearcher(site, null);
+        DoubleIndexManager dis = new DoubleIndexManager(site, null);
         IndexSearcher is = new IndexSearcher(dis.getBigReader());
         try {
             Hits hits = is.search(new QueryParser("body", config.getMessageAnalyzer()).parse("body:тест title:тест"), Sort.INDEXORDER);

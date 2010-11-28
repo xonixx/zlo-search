@@ -2,7 +2,7 @@ package info.xonix.zlo.search.domainobj;
 
 import info.xonix.zlo.search.ZloPaginatedList;
 import info.xonix.zlo.search.doubleindex.DoubleHits;
-import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
+import info.xonix.zlo.search.doubleindex.DoubleIndexManager;
 import org.apache.log4j.Logger;
 import org.apache.lucene.search.Query;
 
@@ -26,11 +26,11 @@ public class SearchResult {
 
     private Site site;
     private Date searchDate;
-    private DoubleIndexSearcher doubleIndexSearcher;
+    private DoubleIndexManager doubleIndexManager;
 
-    public SearchResult(Site site, Query query, DoubleIndexSearcher dis, DoubleHits doubleHits) {
+    public SearchResult(Site site, Query query, DoubleIndexManager dis, DoubleHits doubleHits) {
         this.site = site;
-        this.doubleIndexSearcher = dis;
+        this.doubleIndexManager = dis;
         this.query = query;
         this.doubleHits = doubleHits;
         searchDate = new Date(); // now
@@ -76,7 +76,7 @@ public class SearchResult {
      * @return
      */
     public boolean isOld() {
-        boolean old = searchDate.before(doubleIndexSearcher.getRenewDate());
+        boolean old = searchDate.before(doubleIndexManager.getRenewDate());
         if (old)
             log.info("Search result for " + query + " is old.");
         return old;

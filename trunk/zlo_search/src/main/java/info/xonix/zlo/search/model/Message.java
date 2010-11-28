@@ -274,14 +274,16 @@ public class Message implements Serializable, ZloMessageAccessor {
     }
 
     public boolean isHasUrl() {
-        if (hasUrl == null)
-            hasUrl = HtmlUtils.hasUrl(body);
+        if (hasUrl == null) {
+            hasUrl = StringUtils.isNotEmpty(body) && HtmlUtils.hasUrl(body);
+        }
         return hasUrl;
     }
 
     public boolean isHasImg() {
-        if (hasImg == null)
-            hasImg = HtmlUtils.hasImg(body, getSite());
+        if (hasImg == null) {
+            hasImg = StringUtils.isNotEmpty(body) && HtmlUtils.hasImg(body, site);
+        }
         return hasImg;
     }
 
@@ -306,7 +308,7 @@ public class Message implements Serializable, ZloMessageAccessor {
     }
 
     public String toString() {
-        if (status == MessageStatus.OK)
+        if (isOk())
             return MessageFormat.format(
                     "Message(" +
                             "\n\tnum={0},\n\tparentNum={1},\n\ttopicCode={2},\n\ttopic={3}," +
@@ -330,25 +332,29 @@ public class Message implements Serializable, ZloMessageAccessor {
                     site == null ? "" : site.getName());
     }
 
+    public boolean isOk() {
+        return status == MessageStatus.OK;
+    }
+
     public Document getDocument() {
-        if (status != MessageStatus.OK) // index only OK messages
+        if (!isOk()) // index only OK messages
             return null;
 
         Document doc = new Document();
 
-        doc.add(new Field(MessageFields.URL_NUM, URL_NUM_FORMAT.format(num), Store.YES, Index.UN_TOKENIZED));
-        doc.add(new Field(MessageFields.TOPIC_CODE, Integer.toString(topicCode), Store.NO, Index.UN_TOKENIZED));
-        doc.add(new Field(MessageFields.TITLE, getCleanTitle(), Store.NO, Index.TOKENIZED)); // "чистый" - индексируем, не храним
-        doc.add(new Field(MessageFields.NICK, nick.toLowerCase(), Store.NO, Index.UN_TOKENIZED));
-        doc.add(new Field(MessageFields.REG, reg ? TRUE : FALSE, Store.NO, Index.UN_TOKENIZED));
-        doc.add(new Field(MessageFields.HOST, host.toLowerCase(), Store.NO, Index.UN_TOKENIZED));
-        doc.add(new Field(MessageFields.DATE, DateTools.dateToString(date, DateTools.Resolution.MINUTE), Store.NO, Index.UN_TOKENIZED));
-        doc.add(new Field(MessageFields.BODY, getCleanBody(), Store.NO, Index.TOKENIZED)); // "чистый" - индексируем, не храним
-        doc.add(new Field(MessageFields.HAS_URL, isHasUrl() ? TRUE : FALSE, Store.NO, Index.UN_TOKENIZED));
-        doc.add(new Field(MessageFields.HAS_IMG, isHasImg() ? TRUE : FALSE, Store.NO, Index.UN_TOKENIZED));
+        doc.add(new Field(MessageFields.URL_NUM, URL_NUM_FORMAT.format(num), Store.YES, Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.TOPIC_CODE, Integer.toString(topicCode), Store.NO, Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.TITLE, getCleanTitle(), Store.NO, Index.ANALYZED)); // "чистый" - индексируем, не храним
+        doc.add(new Field(MessageFields.NICK, nick.toLowerCase(), Store.NO, Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.REG, reg ? TRUE : FALSE, Store.NO, Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.HOST, host.toLowerCase(), Store.NO, Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.DATE, DateTools.dateToString(date, DateTools.Resolution.MINUTE), Store.NO, Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.BODY, getCleanBody(), Store.NO, Index.ANALYZED)); // "чистый" - индексируем, не храним
+        doc.add(new Field(MessageFields.HAS_URL, isHasUrl() ? TRUE : FALSE, Store.NO, Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.HAS_IMG, isHasImg() ? TRUE : FALSE, Store.NO, Index.NOT_ANALYZED));
 
         return doc;
     }
 
-    static final long serialVersionUID = -3231624250115810539L; // for deserialization
+    private static final long serialVersionUID = -3231624250115810539L; // for deserialization
 }
