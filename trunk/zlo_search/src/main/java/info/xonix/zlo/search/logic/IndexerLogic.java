@@ -9,4 +9,8 @@ import info.xonix.zlo.search.domainobj.Site;
  */
 public interface IndexerLogic {
     void index(Site site, int from, int to) throws IndexerException;
+
+    void closeIndexWriter(Site site);
+
+    void closeIndexWriters();
 }

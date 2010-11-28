@@ -24,8 +24,6 @@ import java.io.IOException;
 public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
     private static Logger log = Logger.getLogger(IndexerLogicImpl.class);
 
-//    private boolean reindex;
-
     private Config config;
     private AppLogic appLogic;
     private ZloSearcher zloSearcher;
@@ -35,11 +33,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
         protected IndexWriter create(Site site) {
             IndexWriter writer;
             try {
-                File indexDir = getIndexDir(site);
-//                if (indexDir.list().length == 0)
-//                    reindex = true;
-
-                writer = new IndexWriter(FSDirectory.open(indexDir), config.getMessageAnalyzer(),
+                writer = new IndexWriter(FSDirectory.open(getIndexDir(site)), config.getMessageAnalyzer(),
                         IndexWriter.MaxFieldLength.UNLIMITED); // for unlimited - see http://www.gossamer-threads.com/lists/lucene/java-user/91611
 
                 writer.setMergeFactor(7); // optimized for search
@@ -47,6 +41,16 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
                 throw new RuntimeException("Can't create writer", e);
             }
             return writer;
+        }
+
+        @Override
+        protected void close(Site site, IndexWriter indexWriter) {
+            log.info("Closing indexWriter for site: " + site.getName());
+            try {
+                indexWriter.close();
+            } catch (IOException e) {
+                log.error("Problem closing indexWriter for site: " + site.getName(), e);
+            }
         }
 
         private File getIndexDir(Site site) {
@@ -123,5 +127,15 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
         log.info(siteName + " - Setting last indexed: " + to);
 
         appLogic.setLastIndexedNumber(site, to);
+    }
+
+    @Override
+    public void closeIndexWriter(Site site) {
+        siteToIndexWriter.reset(site);
+    }
+
+    @Override
+    public void closeIndexWriters() {
+        siteToIndexWriter.reset();
     }
 }
