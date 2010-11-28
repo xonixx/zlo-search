@@ -4,8 +4,10 @@ import info.xonix.zlo.search.ZloObservable;
 import info.xonix.zlo.search.daemon.Daemon;
 import info.xonix.zlo.search.daemon.DaemonLauncher;
 import info.xonix.zlo.search.domainobj.Site;
+import info.xonix.zlo.search.logic.IndexerLogic;
 import info.xonix.zlo.search.logic.SiteLogic;
 import info.xonix.zlo.search.spring.AppSpringContext;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.Observable;
@@ -17,7 +19,11 @@ import java.util.Observer;
  * Time: 0:53:31
  */
 public class OptimizeAllIndexes {
+    private final static Logger log = Logger.getLogger(OptimizeAllIndexes.class);
+
     private SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
+    private IndexerLogic indexerLogic = AppSpringContext.get(IndexerLogic.class);
+
     private Observable observable = new ZloObservable();
 
     public void on(Observer o) {
@@ -33,10 +39,9 @@ public class OptimizeAllIndexes {
     }
 
     public void go() throws IOException {
-        OptimizeIndex optimizeIndex = new OptimizeIndex();
+        final OptimizeIndex optimizeIndex = new OptimizeIndex();
         for (Site site : siteLogic.getSites()) {
             if (site.isPerformIndexing()) {
-                System.out.println("-----" + site.getName() + "-----");
                 optimizeIndex.optimizeDoubleIndexForSite(site);
             }
         }
@@ -54,6 +59,9 @@ public class OptimizeAllIndexes {
 
                     optimizeAllIndexes.on(this);
                     try {
+                        log.info("Closing all index writers before optimize...");
+                        indexerLogic.closeIndexWriters();
+
                         optimizeAllIndexes.go();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -61,7 +69,7 @@ public class OptimizeAllIndexes {
                 } else if ("optimized".equals(arg)) {
                     optimizeAllIndexes.un(this);
 
-                    System.out.println("Optimized... Starting daemons...");
+                    log.info("Optimized... Starting daemons...");
 
                     new DaemonLauncher().main(new String[0]);
                 }
