@@ -22,4 +22,6 @@ public interface SiteLogic {
     int getLastMessageNumber(Site site) throws RetrieverException;
 
     List<Message> getMessages(Site site, int from, int to) throws RetrieverException, PageParseException;
+
+    Message getMessageByNumber(Site site, int num) throws RetrieverException, PageParseException;
 }

@@ -5,7 +5,6 @@ import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.site.MessageRetriever;
 import info.xonix.zlo.search.logic.site.PageParseException;
 import info.xonix.zlo.search.logic.site.RetrieverException;
-import info.xonix.zlo.search.logic.site.SiteException;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.utils.Check;
 import org.apache.log4j.Logger;
@@ -41,7 +40,8 @@ public class SiteLogicImpl implements SiteLogic, InitializingBean {
         Check.isSet(config, "config");
     }
 
-    public Message getMessageByNumber(Site site, int num) throws SiteException {
+    @Override
+    public Message getMessageByNumber(Site site, int num) throws RetrieverException, PageParseException {
         log.debug(site.getName() + " - Receiving from site: " + num);
         return messageRetriever.getMessage(site, num);
     }

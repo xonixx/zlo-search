@@ -14,4 +14,9 @@ public class Test1 {
         System.out.println(EnvUtils.getHostName());
         System.out.println(EnvUtils.getUserName());
     }
+
+    @Test
+    public void test2() throws ClassNotFoundException {
+        System.out.println(Class.forName("info.xonix.zlo.search.dao.MessagesDaoImpl$1"));
+    }
 }
