@@ -11,6 +11,7 @@
     <bean id="indexerLogic" class="info.xonix.zlo.search.logic.IndexerLogicImpl">
         <property name="config" ref="appConfig"/>
         <property name="appLogic" ref="appLogic"/>
+        <property name="zloSearcher" ref="zloSearcher"/>
     </bean>
 
     <!--site logic-->

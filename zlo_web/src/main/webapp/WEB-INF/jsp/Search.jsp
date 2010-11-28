@@ -1,3 +1,4 @@
+<%@ page import="java.util.Date" %>
 <%--
   User: gubarkov
   Date: 14.08.2007
@@ -42,18 +43,19 @@
             <tr>
                 <td>
                     <input type="radio" name="st" id="st1" value="all"
-                           <c:if test="${param['st'] == 'all'}">checked="checked"</c:if> /><label for="st1"><fmt:message
-                        key="label.search.all"/></label>
+                           <c:if test="${param['st'] == 'all'}">checked="checked"</c:if> />
+                    <label for="st1"><fmt:message key="label.search.all"/></label>
                     <input type="radio" name="st" id="st2" value="exct"
-                           <c:if test="${param['st'] == 'exct'}">checked="checked"</c:if> /><label
-                        for="st2"><fmt:message key="label.search.exact.phrase"/></label>
+                           <c:if test="${param['st'] == 'exct'}">checked="checked"</c:if> />
+                    <label for="st2"><fmt:message key="label.search.exact.phrase"/></label>
                     <input type="radio" name="st" id="st3" value="adv"
-                           <c:if test="${param['st'] == 'adv'}">checked="checked"</c:if> /><label for="st3"><fmt:message
-                        key="label.search.advanced"/></label>
+                           <c:if test="${param['st'] == 'adv'}">checked="checked"</c:if> />
+                    <label for="st3"><fmt:message key="label.search.advanced"/></label>
                     <br/>
-                    <fmt:message key="label.text"/> <input type="text" name="text"
-                                                           <c:if test="${not empty param['text']}">value="<c:out value="${param['text']}" />"
-                                                           </c:if>style="width:450px;"/>
+                    <fmt:message key="label.text"/>
+                    <input type="text" name="text"
+                           <c:if test="${not empty param['text']}">value='<c:out value="${param['text']}" />'
+                    </c:if> style="width:450px;"/>
                 </td>
                 <td valign="bottom" style="padding-left:10px;">
                     <fmt:message key="label.topic"/>
@@ -151,6 +153,13 @@
                     <c:if test="${msg != null}">
                         <c:set var="site" value="${msg.site}"/>
                         <c:set var="siteRootUrl" value="${xonix:getSiteRoot(header['Referer'], site)}"/>
+
+                        <c:if test="${not msg.ok}">
+                            <c:set target="${msg}" property="title" value="${msg.status}"/>
+                            <c:set target="${msg}" property="nick" value=""/>
+                            <c:set target="${msg}" property="host" value=""/>
+                            <c:set target="${msg}" property="date" value="<%=new Date(0)%>"/>
+                        </c:if>
                     </c:if>
 
                     <display:setProperty name="basic.msg.empty_list"><span class="pagebanner">Сообщения, соответствующие введенным критериям поиска не найдены. </span></display:setProperty>

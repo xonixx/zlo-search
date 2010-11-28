@@ -23,9 +23,13 @@ public class HtmlUtils {
     // суть в том, чтоб не считать смайлы за картинки, потому важно http
     private static final Pattern IMG = Pattern.compile("(?i)<img.*?src\\s*=\\s*(\"?|\'?)https?://(.*)(\\1).*?>", Pattern.CASE_INSENSITIVE);
     private static final Pattern URL = Pattern.compile("(?i)<a\\s.+?>", Pattern.CASE_INSENSITIVE);
+    private static final Pattern URL_EXTRACTOR = Pattern.compile("(?i)<a\\s+href=(\"|\')(.+?)(\\1).*?>", Pattern.CASE_INSENSITIVE);
+
+    private static final String POSIBLE_SPACE_AND_ATTRIBS = "(\\s*?|\\s+.*?)";
 
     public static String cleanHtml(String s) {
-        final String POSIBLE_SPACE_AND_ATTRIBS = "(\\s*?|\\s+.*?)";
+        s = extractUrls(s);
+
         for (String tag : BOTH_TAGS) {
             s = s.replaceAll("(?i)<" + tag + POSIBLE_SPACE_AND_ATTRIBS + ">", SPACE)
                     .replaceAll("(?i)</" + tag + ">", SPACE);
@@ -39,6 +43,10 @@ public class HtmlUtils {
         s = unescapeHtml(s);
 
         return s;
+    }
+
+    public static String extractUrls(String s) {
+        return URL_EXTRACTOR.matcher(s).replaceAll("$2 ");
     }
 
     public static String unescapeHtml(String s) {

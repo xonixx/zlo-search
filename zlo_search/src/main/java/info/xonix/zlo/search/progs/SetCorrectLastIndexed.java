@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.progs;
 
 import info.xonix.zlo.search.domainobj.Site;
-import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
+import info.xonix.zlo.search.doubleindex.DoubleIndexManager;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.lucene.search.MatchAllDocsQuery;
@@ -24,7 +24,7 @@ public class SetCorrectLastIndexed extends App {
 
         Site site = Site.forName(siteName);
 
-        DoubleIndexSearcher dis = new DoubleIndexSearcher(site, null);
+        DoubleIndexManager dis = new DoubleIndexManager(site, null);
         int lastIndexedNum = Integer.parseInt(dis.search(new MatchAllDocsQuery()).doc(0).get("num"));
 
         System.out.println(lastIndexedNum);

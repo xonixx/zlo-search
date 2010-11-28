@@ -4,7 +4,7 @@ import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.domainobj.SearchRequest;
 import info.xonix.zlo.search.domainobj.SearchResult;
 import info.xonix.zlo.search.domainobj.Site;
-import info.xonix.zlo.search.doubleindex.DoubleIndexSearcher;
+import info.xonix.zlo.search.doubleindex.DoubleIndexManager;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageFields;
 import info.xonix.zlo.search.utils.Check;
@@ -43,10 +43,10 @@ public class ZloSearcher implements InitializingBean {
     }
 
     // TODO: move this to Site as it belongs to it
-    private SiteFactory<DoubleIndexSearcher> doubleIndexSearcherFactory = new SiteFactory<DoubleIndexSearcher>() {
+    private SiteFactory<DoubleIndexManager> doubleIndexManagerFactory = new SiteFactory<DoubleIndexManager>() {
         @Override
-        protected DoubleIndexSearcher create(Site site) {
-            return new DoubleIndexSearcher(site, getDateSort());
+        protected DoubleIndexManager create(Site site) {
+            return new DoubleIndexManager(site, getDateSort());
         }
     };
 
@@ -103,7 +103,7 @@ public class ZloSearcher implements InitializingBean {
 
             log.info("query: " + query);
 
-            DoubleIndexSearcher dis = getDoubleIndexSearcher(site);
+            DoubleIndexManager dis = getDoubleIndexManager(site);
 
             result = new SearchResult(site, query, dis, dis.search(query));
         } catch (ParseException e) {
@@ -116,7 +116,7 @@ public class ZloSearcher implements InitializingBean {
     }
 
     public void optimizeIndex(Site site) {
-        DoubleIndexSearcher dis = getDoubleIndexSearcher(site);
+        DoubleIndexManager dis = getDoubleIndexManager(site);
 
         try {
             dis.moveSmallToBig();
@@ -129,7 +129,7 @@ public class ZloSearcher implements InitializingBean {
     }
 
     public void dropIndex(Site site) throws IOException {
-        DoubleIndexSearcher dis = getDoubleIndexSearcher(site);
+        final DoubleIndexManager dis = getDoubleIndexManager(site);
         dis.drop();
         dis.close();
     }
@@ -137,10 +137,10 @@ public class ZloSearcher implements InitializingBean {
     /**
      * TODO: make private!
      *
-     * @param site
-     * @return
+     * @param site site
+     * @return dis
      */
-    public DoubleIndexSearcher getDoubleIndexSearcher(Site site) {
-        return doubleIndexSearcherFactory.get(site);
+    public DoubleIndexManager getDoubleIndexManager(Site site) {
+        return doubleIndexManagerFactory.get(site);
     }
 }
