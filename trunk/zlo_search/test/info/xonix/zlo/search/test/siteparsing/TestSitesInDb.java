@@ -14,16 +14,16 @@ import org.junit.Test;
  * Date: 22.03.2008
  * Time: 20:17:05
  */
-public class TestSites {
+public class TestSitesInDb {
 
-    Site velo;
-    Site dev;
-    Site zlo;
-    Site takeoff;
-    Site anime;
-    Site np;
+    private Site velo = null;
+    private Site dev = null;
+    private Site zlo = null;
+    private Site takeoff = null;
+    private Site anime = null;
+    private Site np = null;
 
-    AppLogic appLogic = AppSpringContext.get(AppLogic.class);
+    private AppLogic appLogic = AppSpringContext.get(AppLogic.class);
 
     @Before
     public void setUp() {
@@ -37,7 +37,7 @@ public class TestSites {
 
         anime = Site.forName("anime");
 
-        np = Site.forName("np");
+//        np = Site.forName("np");
     }
 
     @Test
@@ -124,7 +124,6 @@ public class TestSites {
         Assert.assertEquals("nokia.7ka.mipt.ru", m.getHost());
         Assert.assertTrue(m.isReg());
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
-
         System.out.println(m);
 
         m = appLogic.getMessageByNumber(zlo, 4093788);
@@ -133,7 +132,6 @@ public class TestSites {
         Assert.assertEquals("loki.3ka.mipt.ru", m.getHost());
         Assert.assertTrue(m.isReg());
         Assert.assertTrue(StringUtils.isEmpty(m.getBody()));
-
         System.out.println(m);
 
         m = appLogic.getMessageByNumber(zlo, 405573);
@@ -142,8 +140,15 @@ public class TestSites {
         Assert.assertEquals("morgue.7ka.mipt.ru", m.getHost());
         Assert.assertTrue(!m.isReg());
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
-
         System.out.println(m);
+
+/*        m = appLogic.getMessageByNumber(zlo, 999999999);
+
+        Assert.assertEquals(null, m.getNick());
+        Assert.assertEquals(null, m.getHost());
+        Assert.assertEquals(null, m.getBody());
+        Assert.assertEquals(MessageStatus.DELETED, m.getStatus());
+        System.out.println(m);*/
     }
 
     @Test
@@ -188,7 +193,8 @@ public class TestSites {
         System.out.println(lmn);
     }
 
-    @Test
+//    @Test
+
     public void testNp() {
         int lmn = appLogic.getLastSavedMessageNumber(np);
         System.out.println(lmn);

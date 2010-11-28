@@ -24,6 +24,13 @@ public interface AppLogic {
 
     void saveMessages(Site site, List<Message> msgs);
 
+    /**
+     * get message, saved in DB
+     *
+     * @param site site
+     * @param num  message id
+     * @return message obj
+     */
     Message getMessageByNumber(Site site, int num);
 
     List<Message> getMessages(Site site, int start, int end);
