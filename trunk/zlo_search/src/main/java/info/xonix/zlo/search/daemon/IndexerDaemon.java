@@ -95,12 +95,13 @@ public class IndexerDaemon extends Daemon {
     }*/
 
     protected void start() {
-        log.info("Starting indexing to {0} index (double index)...");
+        final Site site = getSite();
+        log.info("Starting indexing to {0} index (double index)..." + site.getName());
 
         // this is for clearing in case of not graceful exit
 //        if (Config.USE_DOUBLE_INDEX) {
         log.info("Clearing lock...");
-        new DoubleIndexSearcher(getSite(), null).clearLocks();
+        new DoubleIndexSearcher(site, null).clearLocks();
 //        }
         super.start();
     }

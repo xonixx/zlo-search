@@ -43,7 +43,30 @@ public class MessageRetriever implements InitializingBean {
     }
 
     public Message getMessage(Site site, int num) throws RetrieverException, PageParseException {
-        return pageParser.parseMessage(site, pageRetriever.getPageContentByNumber(site, num), num);
+        return getMessage(site, num, 3);
+    }
+
+    public Message getMessage(Site site, int num, int retries) throws RetrieverException, PageParseException {
+        SiteException lastException = null;
+
+        for (int i = 0; i <= retries; i++) {
+            try {
+                return pageParser.parseMessage(site, pageRetriever.getPageContentByNumber(site, num), num);
+            } catch (SiteException ex) {
+                lastException = ex;
+
+                if (i < retries) {
+                    log.warn("Failed to receive msg#: " + num + " from site: (" + site.getName() +
+                            "). Retry # " + (i + 1) + "... Reason: " + ex);
+                }
+            }
+        }
+
+        // TODO: improve--VVV
+        if (lastException instanceof RetrieverException) {
+            throw (RetrieverException) lastException;
+        }
+        throw (PageParseException) lastException;
     }
 
     public List<Message> getMessages(Site source, int from, int to) throws RetrieverException, PageParseException {
