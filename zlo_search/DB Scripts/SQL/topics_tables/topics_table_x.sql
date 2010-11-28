@@ -3,14 +3,17 @@
 --USE zlo_storage;
 
 -- create
-CREATE TABLE x_topics (id INT,
-                        name CHAR(50),
-                        isNew BOOL
-                    );
+CREATE TABLE x_topics (
+  id INT NOT NULL /*AUTO_INCREMENT*/ PRIMARY KEY,
+  name CHAR(50),
+  isNew BOOL
+  )
+ENGINE=INNODB
+DEFAULT CHARSET=cp1251;
 
 -- index
-ALTER TABLE x_topics
-  ADD INDEX (id);
+-- ALTER TABLE x_topics
+--  ADD INDEX (id);
 
 -- insert
 INSERT INTO x_topics (id, name, isNew) VALUES (0, 'без темы',         1);

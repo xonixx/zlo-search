@@ -80,17 +80,13 @@ public class ZloSearcher implements InitializingBean {
     private SearchResult search(Site site, String queryStr, boolean searchAll) {
         Assert.notNull(site, "site can't be null!");
 
-//        if (!Config.USE_DOUBLE_INDEX) {
-//            throw new RuntimeException("Old!!!");
-//        } else {
-        return searchDoubleIndex(site, queryStr, null, searchAll);
-//        }
+        return searchDoubleIndex(site, queryStr/*, null*/, searchAll);
     }
 
-    private SearchResult searchDoubleIndex(Site site, String queryStr, Sort sort, boolean searchAll) {
+    private SearchResult searchDoubleIndex(Site site, String queryStr/*, Sort sort*/, boolean searchAll) {
         // TODO: do we need sorting here???
-        if (sort == null)
-            sort = getDateSort();
+//        if (sort == null)
+//            sort = getDateSort();
 
         SearchResult result;
         try {
