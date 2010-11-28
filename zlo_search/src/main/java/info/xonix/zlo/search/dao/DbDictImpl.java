@@ -2,6 +2,7 @@ package info.xonix.zlo.search.dao;
 
 import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.utils.Check;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.Date;
 
@@ -56,9 +57,13 @@ public class DbDictImpl extends DaoImplBase implements DbDict {
     }
 
     private Object getVal(Site site, String name, VarType varType) {
-        return getSimpleJdbcTemplate().queryForObject(queryProvider.getDbDictGetValQuery(site),
-                varType.getJavaType(),
-                name);
+        try {
+            return getSimpleJdbcTemplate().queryForObject(queryProvider.getDbDictGetValQuery(site),
+                    varType.getJavaType(),
+                    name);
+        } catch (EmptyResultDataAccessException ignore) {
+            return null;
+        }
     }
 
     @Override
