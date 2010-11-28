@@ -1,10 +1,12 @@
 
 DROP TABLE IF EXISTS nickhost;
 CREATE TABLE nickhost (
-                        nick VARCHAR(100),
-                        host VARCHAR(100),
-                        reg BOOL,
-                        cnt int);
+  nick VARCHAR(100),
+  host VARCHAR(100),
+  reg BOOL,
+  cnt int)
+ENGINE=INNODB
+DEFAULT CHARSET=cp1251;  
 
 -- idx
 ALTER TABLE nickhost ADD INDEX idx_nick (nick);

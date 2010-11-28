@@ -11,4 +11,6 @@ CREATE TABLE db_dict (
 
     date_created DATETIME,
     date_changed DATETIME
-);
+)
+ENGINE=INNODB
+DEFAULT CHARSET=cp1251;

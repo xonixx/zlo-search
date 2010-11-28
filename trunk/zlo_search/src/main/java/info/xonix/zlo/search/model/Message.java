@@ -24,14 +24,9 @@ import static org.apache.lucene.document.Field.Store;
  * Date: 30.05.2007
  * Time: 20:18:10
  */
-public class Message implements Serializable, ZloMessageAccessor {
+public class Message implements Serializable {
     private static final String TRUE = "1";
     private static final String FALSE = "0";
-
-/*    public static final String TOPIC = "topic";
-    public static final String TITLE_HTML = "titleHtml";
-    public static final String BODY_HTML = "bodyHtml";
-    public static final String STATUS = "status";*/
 
     private String nick;
     private String altName;
