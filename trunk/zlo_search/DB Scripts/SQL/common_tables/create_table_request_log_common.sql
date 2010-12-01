@@ -1,8 +1,8 @@
-use mysql;
-create database searcher_logs;
-use searcher_logs;
+-- use mysql;
+-- create database searcher_logs;
+-- use searcher_logs;
 
-drop table if exists request_log;
+-- drop table if exists request_log;
 
 CREATE TABLE request_log (
     id INT UNIQUE PRIMARY KEY AUTO_INCREMENT,
@@ -18,13 +18,16 @@ CREATE TABLE request_log (
     req_date DATETIME
 );
 
-ALTER TABLE searcher_logs.request_log
+ALTER TABLE request_log
  CHANGE user_agent user_agent VARCHAR(200);
 
-ALTER TABLE searcher_logs.request_log
+ALTER TABLE request_log
     ADD is_rss_req BOOL;
 
-ALTER TABLE searcher_logs.request_log
+ALTER TABLE request_log
   ADD INDEX req_date_idx (req_date);
+
+ALTER TABLE request_log
+  ADD is_admin_req BOOL;
     
 --update request_log set is_rss_req=if(req_query_str like 'rss&%', 1, 0)

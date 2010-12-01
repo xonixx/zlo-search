@@ -342,12 +342,14 @@ public class SearchServlet extends BaseServlet {
         final String powerUserKey = config.getPowerUserKey();
         final String powerUserValue = request.getParameter(powerUserKey);
 
+        final String clientIp = RequestUtils.getClientIp(request);
+
         if ("0".equals(powerUserValue)) {
-            log.info("Forgetting power user, ip=" + RequestUtils.getClientIp(request));
+            log.info("Forgetting power user, ip=" + clientIp);
 
             CookieUtils.forgetCookie(response, powerUserKey);
         } else if (powerUserValue != null) {
-            log.info("Power user enters, ip=" + RequestUtils.getClientIp(request));
+            log.info("Power user enters, ip=" + clientIp);
 
             CookieUtils.rememberInCookie(response, powerUserKey, "1");
         }
@@ -379,6 +381,7 @@ public class SearchServlet extends BaseServlet {
         searchLog.setSearchQueryString(request.getQueryString());
 
         searchLog.setRssAsked(rssAsked);
+        searchLog.setAdminRequest(RequestUtils.isPowerUser(request));
 
         auditLogic.logSearchEvent(searchLog);
     }
