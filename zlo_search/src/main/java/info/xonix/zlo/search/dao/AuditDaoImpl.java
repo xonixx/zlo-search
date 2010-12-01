@@ -35,7 +35,8 @@ public class AuditDaoImpl extends DaoImplBase
                 substring(searchLog.getSearchQuery(), 0, 200),
                 substring(searchLog.getSearchQueryString(), 0, 400),
                 substring(searchLog.getReferer(), 0, 100),
-                searchLog.isRssAsked());
+                searchLog.isRssAsked(),
+                searchLog.isAdminRequest());
     }
 
     @Override

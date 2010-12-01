@@ -11,7 +11,7 @@
     SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
 %>
 
-<c:set var="localIps"><fmt:message key="localIps"/></c:set>
+<%--<c:set var="localIps"><fmt:message key="localIps"/></c:set>--%>
 <c:set var="isPowerUser" value='<%= RequestUtils.isPowerUser(request) %>'/>
 <c:set var="showAll" value="${ param['all'] != null and isPowerUser }"/>
 
@@ -41,7 +41,7 @@
         <sql:query var="res">
             SELECT * FROM request_log USE INDEX (req_date_idx)
             ${reqDateWhereClause}
-            AND host not in ${xonix:mysqlRange(localIps)}
+            AND is_admin_req <> 1
             AND is_rss_req = 0
             order by id DESC
             <sql:param value="${lastHours}"/>

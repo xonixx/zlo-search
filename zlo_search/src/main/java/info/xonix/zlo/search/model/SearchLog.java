@@ -22,6 +22,7 @@ public class SearchLog {
     private String searchQueryString;
 
     private boolean rssAsked;
+    private boolean adminRequest;
 
     public Site getSite() {
         return site;
@@ -101,5 +102,13 @@ public class SearchLog {
 
     public void setRssAsked(boolean rssAsked) {
         this.rssAsked = rssAsked;
+    }
+
+    public boolean isAdminRequest() {
+        return adminRequest;
+    }
+
+    public void setAdminRequest(boolean adminRequest) {
+        this.adminRequest = adminRequest;
     }
 }
