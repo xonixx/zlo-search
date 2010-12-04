@@ -17,6 +17,8 @@ if not exists(SITE):
 
 import re
 
+all_sql = []
+
 for sql_file in SQLS:
     with open(sql_file) as inp:
         sql = inp.read()
@@ -25,7 +27,11 @@ for sql_file in SQLS:
             sql = re.sub('\\b(messages)\\b', SITE + '_\\1', sql)
             sql = re.sub('\\b(nickhost)\\b', SITE + '_\\1', sql)
             sql = re.sub('\\b(trigger_nickhost)\\b', SITE + '_\\1', sql)
+            all_sql.append(sql)
             out.write(sql)
+
+with open(join(CWD, join(SITE, '__all.sql')), 'w') as out:
+    out.write('\n\n'.join(all_sql))
 
 
 

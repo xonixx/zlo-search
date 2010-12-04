@@ -197,6 +197,22 @@ public class TestSitesRetrieving {
         Assert.assertTrue(!m.isReg());
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
 
+        m = siteLogic.getMessageByNumber(site, 138004);
+
+        System.out.println(m);
+        Assert.assertEquals("FIPS", m.getNick());
+        Assert.assertEquals("", m.getHost());
+        Assert.assertEquals("А кинологи в окресностях ближайших есть?", m.getTitle());
+        Assert.assertEquals("Вопрос", m.getTopic());
+        Assert.assertTrue(!m.isReg());
+        Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
+        Assert.assertEquals("С овчаркой позаниматься.", m.getBody());
+
+        m = siteLogic.getMessageByNumber(site, 199);
+        System.out.println(m);
+        Assert.assertEquals("<P>Люди кто нить знает что за проводок кинули с Лих 4 на Чайку уж не сетку ли?????", m.getBody());
+
+
         m = siteLogic.getMessageByNumber(site, 999999999);
 
         System.out.println(m);

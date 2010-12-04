@@ -57,7 +57,7 @@ public class PageRetriever implements InitializingBean {
     public String getPageContentByNumber(Site site, int num) throws RetrieverException {
         GetMethod getMethod = formGetMethod(site, "http://" + site.getSiteUrl() + site.getReadQuery() + num);
 
-        List<String> stringGroups = new ArrayList<String>();
+        final List<String> stringGroups = new ArrayList<String>();
         InputStream is = null;
         int totalRead = 0;
 
