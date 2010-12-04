@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  * Date: 28.12.2007
  * Time: 2:45:21
  */
-abstract class SiteConfiguration {
+public abstract class SiteConfiguration {
 
     private static final Logger log = Logger.getLogger(SiteConfiguration.class);
 
@@ -65,6 +65,8 @@ abstract class SiteConfiguration {
     private Integer siteNumber;
 
     private String name;
+
+    private boolean noHost;
 
 
     public SiteConfiguration(String name) {
@@ -131,6 +133,8 @@ abstract class SiteConfiguration {
         siteNumber = Integer.parseInt(p.getProperty("site.number"));
 
         msgDatePattern = p.getProperty("str.date.pattern");
+
+        noHost = Config.isTrue(p.getProperty("site.no.host", "0"));
     }
 
     public boolean equals(Object obj) {
@@ -343,4 +347,8 @@ abstract class SiteConfiguration {
 /*    public void setName(String name) {
         this.name = name;
     }*/
+
+    public boolean isNoHost() {
+        return noHost;
+    }
 }

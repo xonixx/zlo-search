@@ -205,12 +205,14 @@
                             <tiles:putAttribute name="site" value="${msg.site}"/>
                         </tiles:insertDefinition>
                     </display:column>
-                    <display:column title="Хост" class="small">
-                        <tiles:insertDefinition name="host">
-                            <tiles:putAttribute name="host" value="${msg.host}"/>
-                            <tiles:putAttribute name="site" value="${msg.site}"/>
-                        </tiles:insertDefinition>
-                    </display:column>
+                    <c:if test="${not site.noHost}">
+                        <display:column title="Хост" class="small">
+                            <tiles:insertDefinition name="host">
+                                <tiles:putAttribute name="host" value="${msg.host}"/>
+                                <tiles:putAttribute name="site" value="${msg.site}"/>
+                            </tiles:insertDefinition>
+                        </display:column>
+                    </c:if>
                     <display:column title="Дата" property="date" class="small nowrap"/>
                 </display:table>
             </div>
