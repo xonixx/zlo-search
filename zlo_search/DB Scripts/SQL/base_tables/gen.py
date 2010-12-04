@@ -1,7 +1,8 @@
 from os.path import exists, join
 import os
 
-SITE = 'x'
+#SITE = 'x'
+SITE = 'dolgopa'
 
 SQLS = [ 'create_db_dict.sql',
          'create_messages_table.sql',

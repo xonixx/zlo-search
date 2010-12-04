@@ -164,43 +164,46 @@ public class TestSitesRetrieving {
 
     @Test
     public void testDolgopa() throws RetrieverException, PageParseException {
-        int lmn = siteLogic.getLastMessageNumber(x);
+        final Site site = dolgopa;
+
+        int lmn = siteLogic.getLastMessageNumber(site);
         System.out.println(lmn);
 
-        Message m = siteLogic.getMessageByNumber(x, 55177);
+        Message m = siteLogic.getMessageByNumber(site, 138080);
 
-        Assert.assertEquals("uberdude", m.getNick());
-        Assert.assertEquals("wimax-client.yota.ru", m.getHost());
-        Assert.assertEquals("Почему?", m.getTitle());
+        System.out.println(m);
+        Assert.assertEquals("Rook", m.getNick());
+        Assert.assertEquals("", m.getHost());
+        Assert.assertEquals("Не, ну чо тут сказать? Как обычно: Слава ЕР! И ныне и присно и во веки веков!", m.getTitle());
         Assert.assertTrue(m.isReg());
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
+        Assert.assertEquals("И да не кончатся богом данные бюллетени в ее поддержку!", m.getBody());
+
+        m = siteLogic.getMessageByNumber(site, 138026);
+
         System.out.println(m);
-
-        m = siteLogic.getMessageByNumber(x, 55182);
-
-        Assert.assertEquals("Митя", m.getNick());
-        Assert.assertEquals("ip-46-73-158-249.bb.netbynet.ru", m.getHost());
-        Assert.assertEquals("+ к", m.getTitle());
+        Assert.assertEquals("@LuCiFeRsHa@", m.getNick());
+        Assert.assertEquals("", m.getHost());
+        Assert.assertEquals("Спасибо!!!!!!!!!!!!!!!!", m.getTitle());
         Assert.assertTrue(m.isReg());
         Assert.assertTrue(StringUtils.isEmpty(m.getBody()));
+
+        m = siteLogic.getMessageByNumber(site, 138034);
+
         System.out.println(m);
-
-        m = siteLogic.getMessageByNumber(x, 55207);
-
-        Assert.assertEquals("demerzel", m.getNick());
-        Assert.assertEquals("93.175.15.182", m.getHost());
-        Assert.assertEquals("+", m.getTitle());
+        Assert.assertEquals("\\/", m.getNick());
+        Assert.assertEquals("", m.getHost());
+        Assert.assertEquals("пожелаем им скорейшего ВЫЗДОРОВЛЕНИЯ, а будут выёживацо-пусть роют себе свой коллектор", m.getTitle());
         Assert.assertTrue(!m.isReg());
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
+
+        m = siteLogic.getMessageByNumber(site, 999999999);
+
         System.out.println(m);
-
-        m = siteLogic.getMessageByNumber(x, 999999999);
-
         Assert.assertEquals(null, m.getNick());
         Assert.assertEquals(null, m.getHost());
         Assert.assertEquals(null, m.getBody());
         Assert.assertEquals(MessageStatus.DELETED, m.getStatus());
-        System.out.println(m);
     }
 
     @Test
