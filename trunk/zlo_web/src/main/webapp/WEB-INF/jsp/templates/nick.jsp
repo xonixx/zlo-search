@@ -23,7 +23,12 @@
         </c:choose>
     </span>
     <a class="search" href="search?site=${site.siteNumber}&nick=${nickUrlencoded}">?</a>
-    <c:if test="${not empty host}"><a href="search?site=${site.siteNumber}&host=${host}&nick=${nickUrlencoded}"
-                                      class="search" title="поиск по нику и хосту">?nh</a></c:if>
-    <a class="search" href="nickhost.jsp?site=${site.siteNumber}&w=n&t=${nickUrlencoded}" title="хосты этого ника">h</a>
+    <c:if test="${not empty host}">
+        <a href="search?site=${site.siteNumber}&host=${host}&nick=${nickUrlencoded}"
+           class="search" title="поиск по нику и хосту">?nh</a>
+    </c:if>
+    <c:if test="${not site.noHost}">
+        <a class="search" href="nickhost.jsp?site=${site.siteNumber}&w=n&t=${nickUrlencoded}"
+           title="хосты этого ника">h</a>
+    </c:if>
 </c:if>
