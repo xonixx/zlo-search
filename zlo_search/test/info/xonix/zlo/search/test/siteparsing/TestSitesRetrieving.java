@@ -26,6 +26,7 @@ public class TestSitesRetrieving {
     private Site anime = null;
     private Site np = null;
     private Site x = null;
+    private Site dolgopa = null;
 
     private SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
 
@@ -43,6 +44,8 @@ public class TestSitesRetrieving {
 
 //        np = Site.forName("np");
         x = Site.forName("x");
+
+        dolgopa = Site.forName("dolgopa");
     }
 
     @Test
@@ -120,6 +123,47 @@ public class TestSitesRetrieving {
 
     @Test
     public void testX() throws RetrieverException, PageParseException {
+        int lmn = siteLogic.getLastMessageNumber(x);
+        System.out.println(lmn);
+
+        Message m = siteLogic.getMessageByNumber(x, 55177);
+
+        Assert.assertEquals("uberdude", m.getNick());
+        Assert.assertEquals("wimax-client.yota.ru", m.getHost());
+        Assert.assertEquals("Почему?", m.getTitle());
+        Assert.assertTrue(m.isReg());
+        Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
+        System.out.println(m);
+
+        m = siteLogic.getMessageByNumber(x, 55182);
+
+        Assert.assertEquals("Митя", m.getNick());
+        Assert.assertEquals("ip-46-73-158-249.bb.netbynet.ru", m.getHost());
+        Assert.assertEquals("+ к", m.getTitle());
+        Assert.assertTrue(m.isReg());
+        Assert.assertTrue(StringUtils.isEmpty(m.getBody()));
+        System.out.println(m);
+
+        m = siteLogic.getMessageByNumber(x, 55207);
+
+        Assert.assertEquals("demerzel", m.getNick());
+        Assert.assertEquals("93.175.15.182", m.getHost());
+        Assert.assertEquals("+", m.getTitle());
+        Assert.assertTrue(!m.isReg());
+        Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
+        System.out.println(m);
+
+        m = siteLogic.getMessageByNumber(x, 999999999);
+
+        Assert.assertEquals(null, m.getNick());
+        Assert.assertEquals(null, m.getHost());
+        Assert.assertEquals(null, m.getBody());
+        Assert.assertEquals(MessageStatus.DELETED, m.getStatus());
+        System.out.println(m);
+    }
+
+    @Test
+    public void testDolgopa() throws RetrieverException, PageParseException {
         int lmn = siteLogic.getLastMessageNumber(x);
         System.out.println(lmn);
 
