@@ -26,7 +26,14 @@
 
     <display:table id="site" htmlId="resultTable" name="${sites}">
         <display:column title="Ññûëêà">
-            <c:set var="url" value="http://${site.siteUrl}/"/>
+            <c:set var="siteUrl" value="${site.siteUrl}"/>
+            <c:if test="${
+                not f:endsWith(siteUrl, '.cgi') and
+                not f:endsWith(siteUrl, '.exe')
+            }">
+                <c:set var="siteUrl" value="${siteUrl}/"/>
+            </c:if>
+            <c:set var="url" value="http://${siteUrl}"/>
             <a href="${url}">${url}</a>
         </display:column>
         <display:column title="Îïèñàíèå" property="siteDescription"/>
