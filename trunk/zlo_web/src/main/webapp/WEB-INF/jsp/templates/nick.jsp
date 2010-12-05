@@ -18,7 +18,7 @@
         <c:choose>
             <c:when test="${not reg}">${nickEscaped}</c:when>
             <c:otherwise>
-                <a href="http://${site.siteUrl}/?uinfo=${nickUrlencoded}">${nickEscaped}</a>
+                <a href="http://${site.siteUrl}${site.uinfoQuery}${nickUrlencoded}">${nickEscaped}</a>
             </c:otherwise>
         </c:choose>
     </span>

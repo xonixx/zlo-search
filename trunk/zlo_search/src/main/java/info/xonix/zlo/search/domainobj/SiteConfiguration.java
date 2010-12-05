@@ -45,6 +45,7 @@ public abstract class SiteConfiguration {
     private String siteDescription;
 
     private String readQuery;
+    private String uinfoQuery;
 
     private String msgDatePattern;
 
@@ -111,7 +112,8 @@ public abstract class SiteConfiguration {
         siteSmilesPath = p.getProperty("site.smiles.path");
         siteDescription = p.getProperty("site.description");
 
-        readQuery = p.getProperty("site.read.query");
+        readQuery = p.getProperty("site.query.read");
+        uinfoQuery = p.getProperty("site.query.uinfo");
 
         // db -----
 //        initDb(p);
@@ -252,6 +254,9 @@ public abstract class SiteConfiguration {
         return readQuery;
     }
 
+    public String getUinfoQuery() {
+        return uinfoQuery;
+    }
 /*    public void setReadQuery(String readQuery) {
         this.readQuery = readQuery;
     }*/
