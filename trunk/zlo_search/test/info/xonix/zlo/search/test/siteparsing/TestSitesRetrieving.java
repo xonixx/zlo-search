@@ -50,11 +50,12 @@ public class TestSitesRetrieving {
 
     @Test
     public void testVelo() throws RetrieverException, PageParseException {
-        int lmn = siteLogic.getLastMessageNumber(velo);
+        final Site site = velo;
+
+        int lmn = siteLogic.getLastMessageNumber(site);
         System.out.println("lmn: " + lmn);
 
-        Message m = siteLogic.getMessageByNumber(velo, 19490);
-
+        Message m = siteLogic.getMessageByNumber(site, 19490);
         System.out.println(m);
 
         Assert.assertEquals(19490, m.getNum());
@@ -63,8 +64,7 @@ public class TestSitesRetrieving {
         Assert.assertEquals("gw.zunet.ru", m.getHost());
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
 
-        m = siteLogic.getMessageByNumber(velo, 19580);
-
+        m = siteLogic.getMessageByNumber(site, 19580);
         System.out.println(m);
 
         Assert.assertEquals(19580, m.getNum());
@@ -73,16 +73,25 @@ public class TestSitesRetrieving {
         Assert.assertEquals("ppp85-140-32-253.pppoe.mtu-net.ru", m.getHost());
         Assert.assertTrue(StringUtils.isEmpty(m.getBody()));
 
-        m = siteLogic.getMessageByNumber(velo, 18869);
-
+        m = siteLogic.getMessageByNumber(site, 18869);
         System.out.println(m);
 
+        Assert.assertEquals("а многие собирают себе титановые ригиды на ХТЯ.....", m.getTitle());
+        Assert.assertEquals("Tormentor", m.getNick());
         Assert.assertTrue(StringUtils.isEmpty(m.getBody()));
         Assert.assertTrue(m.isReg());
 
-        System.out.println(siteLogic.getMessageByNumber(velo, 33));
+        m = siteLogic.getMessageByNumber(site, 25597);
+        System.out.println(m);
+        Assert.assertEquals("Велотуризм", m.getTopic());
+        Assert.assertEquals("Отчет по походу по Карелии, который обещал выложить", m.getTitle());
+        Assert.assertEquals("timm", m.getNick());
+        Assert.assertTrue(m.isReg());
+        Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
+        Assert.assertTrue(m.isHasUrl());
+        Assert.assertEquals("localhost.localdomain", m.getHost());
 
-
+        checkMsgNotExists(site);
     }
 
     @Test
@@ -212,10 +221,14 @@ public class TestSitesRetrieving {
         System.out.println(m);
         Assert.assertEquals("<P>Люди кто нить знает что за проводок кинули с Лих 4 на Чайку уж не сетку ли?????", m.getBody());
 
+        checkMsgNotExists(site);
+    }
 
-        m = siteLogic.getMessageByNumber(site, 999999999);
+    private void checkMsgNotExists(Site site) throws RetrieverException, PageParseException {
+        final Message m = siteLogic.getMessageByNumber(site, 999999999);
 
         System.out.println(m);
+
         Assert.assertEquals(null, m.getNick());
         Assert.assertEquals(null, m.getHost());
         Assert.assertEquals(null, m.getBody());
