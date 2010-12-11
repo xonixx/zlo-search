@@ -122,6 +122,18 @@
             </exclusions>
         </dependency>
 
+        <!--ws: apache cxf-->
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxws</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+
         <!--testing-->
         <dependency>
             <groupId>junit</groupId>

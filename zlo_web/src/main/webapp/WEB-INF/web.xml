@@ -60,6 +60,20 @@
         <load-on-startup>2</load-on-startup>
     </servlet>
 
+    <!--apache csf ws-->
+    <servlet>
+        <display-name>CXF Servlet</display-name>
+        <servlet-name>CXFServlet</servlet-name>
+        <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CXFServlet</servlet-name>
+        <url-pattern>/ws/*</url-pattern>
+    </servlet-mapping>
+
+
     <!-- test -->
     <!--servlet>
         <servlet-name>test2</servlet-name>
