@@ -12,33 +12,15 @@
 
     <description>ZloSearcher web module</description>
 
-    <developers>
-        <developer>
-            <name>Vladimir Gubarkov</name>
-            <email>xonixx@gmail.com</email>
-        </developer>
-    </developers>
+    <parent>
+        <groupId>ZloSearcher</groupId>
+        <artifactId>root</artifactId>
+        <version>0.2</version>
+        <relativePath>..</relativePath>
+    </parent>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                    <encoding>windows-1251</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.4.3</version>
-                <configuration>
-                    <encoding>windows-1251</encoding>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -48,11 +30,6 @@
                     <!--<webXml>src/main/webapp/WEB-INF/web.xml</webXml>
                     <excludes>**/web.xml</excludes>-->
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>versions-maven-plugin</artifactId>
-                <version>1.2</version>
             </plugin>
         </plugins>
     </build>
