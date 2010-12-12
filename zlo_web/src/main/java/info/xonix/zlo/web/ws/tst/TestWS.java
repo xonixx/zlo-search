@@ -1,4 +1,4 @@
-package info.xonix.zlo.web.ws;
+package info.xonix.zlo.web.ws.tst;
 
 import javax.jws.WebService;
 
