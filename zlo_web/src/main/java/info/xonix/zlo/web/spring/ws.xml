@@ -7,9 +7,9 @@ http://www.springframework.org/schema/beans/spring-beans.xsd
 http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 
     <!--TODO VVV -->
-    <!--<import resource="classpath:META-INF/cxf/cxf.xml"/>
-    <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml"/>
-    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>-->
+    <!--<import resource="classpath:META-INF/cxf/cxf.xml"/>-->
+    <!--<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml"/>-->
+    <!--<import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>-->
 
     <jaxws:endpoint
             id="test"
@@ -27,6 +27,10 @@ http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
     <jaxws:endpoint
             id="boardSearchService"
             implementor="#boardSearchServiceImpl"
-            address="/search"/>
+            address="/search">
+        <!--<jaxws:dataBinding>
+            <bean class="org.apache.cxf.xmlbeans.XmlBeansDataBinding"/>
+        </jaxws:dataBinding>-->
+    </jaxws:endpoint>
 
 </beans>

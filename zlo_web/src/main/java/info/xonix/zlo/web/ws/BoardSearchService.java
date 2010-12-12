@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Nullable;
 import javax.jws.WebMethod;
+import javax.jws.WebResult;
 import javax.jws.WebService;
-import javax.jws.soap.SOAPBinding;
 
 /**
  * User: Vovan
@@ -17,7 +17,6 @@ import javax.jws.soap.SOAPBinding;
  * Time: 18:53
  */
 @WebService
-@SOAPBinding(style = SOAPBinding.Style.RPC, use = SOAPBinding.Use.LITERAL)
 public class BoardSearchService {
 
     @Autowired
@@ -52,6 +51,7 @@ public class BoardSearchService {
     }
 
     @WebMethod
+    @WebResult
     public Message getMessage(int siteId, int msgId) {
         final Site site = site(siteId);
         if (site != null) {
