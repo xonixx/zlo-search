@@ -5,6 +5,7 @@ import info.xonix.zlo.search.logic.site.PageParseException;
 import info.xonix.zlo.search.logic.site.RetrieverException;
 import info.xonix.zlo.search.model.Message;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -17,6 +18,7 @@ public interface SiteLogic {
 
     String[] getSiteNames();
 
+    @Nullable
     Site getSite(int num);
 
     int getLastMessageNumber(Site site) throws RetrieverException;

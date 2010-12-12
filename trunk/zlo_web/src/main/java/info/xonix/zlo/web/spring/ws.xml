@@ -13,12 +13,20 @@ http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 
     <jaxws:endpoint
             id="test"
-            implementor="info.xonix.zlo.web.ws.TestWSImpl"
+            implementor="info.xonix.zlo.web.ws.tst.TestWSImpl"
             address="/test"/>
 
     <jaxws:endpoint
             id="test1"
-            implementor="info.xonix.zlo.web.ws.TestWSImpl1"
+            implementor="info.xonix.zlo.web.ws.tst.TestWSImpl1"
             address="/test1"/>
+
+    <!--to make spring autowire-->
+    <bean id="boardSearchServiceImpl" class="info.xonix.zlo.web.ws.BoardSearchService"/>
+
+    <jaxws:endpoint
+            id="boardSearchService"
+            implementor="#boardSearchServiceImpl"
+            address="/search"/>
 
 </beans>
