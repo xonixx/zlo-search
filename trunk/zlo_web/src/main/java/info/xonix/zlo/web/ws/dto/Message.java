@@ -81,4 +81,44 @@ public class Message {
     public boolean isHasImg() {
         return hasImg;
     }
+
+    public void setNick(String nick) {
+        this.nick = nick;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setReg(boolean reg) {
+        this.reg = reg;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
+
+    public void setHasUrl(boolean hasUrl) {
+        this.hasUrl = hasUrl;
+    }
+
+    public void setHasImg(boolean hasImg) {
+        this.hasImg = hasImg;
+    }
 }
