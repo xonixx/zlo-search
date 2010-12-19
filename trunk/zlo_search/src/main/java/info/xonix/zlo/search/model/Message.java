@@ -1,6 +1,5 @@
 package info.xonix.zlo.search.model;
 
-import info.xonix.zlo.search.FoundTextHighlighter;
 import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import org.apache.commons.lang.StringUtils;
@@ -57,53 +56,6 @@ public class Message implements Serializable {
     };
 
     private MessageStatus status = MessageStatus.UNKNOWN; // default
-
-    public static String formQueryString(String text, boolean inTitle, boolean inBody, int topicCode, String nick, String host, Date fromDate, Date toDate, boolean inReg, boolean inHasUrl, boolean inHasImg) {
-        text = FoundTextHighlighter.escapeColon(text);
-
-        StringBuilder queryStr = new StringBuilder();
-
-        nick = StringUtils.lowerCase(nick);
-        host = StringUtils.lowerCase(host);
-
-        if (StringUtils.isNotEmpty(text)) {
-            if (inTitle && !inBody)
-                queryStr.append(MessageFormat.format(" +{0}:({1})", MessageFields.TITLE, text));
-
-            else if (!inTitle && inBody)
-                queryStr.append(MessageFormat.format(" +{0}:({1})", MessageFields.BODY, text));
-
-            else if (inTitle && inBody)
-                queryStr.append(MessageFormat.format(" +({0}:({2}) OR {1}:({2}))", MessageFields.TITLE, MessageFields.BODY, text));
-
-            else // !inTitle && !inBody
-                queryStr.append(MessageFormat.format(" +{0}:({2}) +{1}:({2})", MessageFields.TITLE, MessageFields.BODY, text));
-        }
-
-        if (-1 != topicCode) {
-            queryStr.append(MessageFormat.format(" +{0}:{1}", MessageFields.TOPIC_CODE, topicCode));
-        }
-
-        if (StringUtils.isNotEmpty(nick))
-            queryStr.append(MessageFormat.format(" +{0}:(\"{1}\")", MessageFields.NICK, nick));
-
-        if (StringUtils.isNotEmpty(host))
-            queryStr.append(MessageFormat.format(" +{0}:({1})", MessageFields.HOST, host));
-
-        if (fromDate != null && toDate != null)
-            queryStr.append(MessageFormat.format(" +{0}:[{1,date,yyyyMMdd} TO {2,date,yyyyMMdd}]", MessageFields.DATE, fromDate, toDate));
-
-        if (inReg)
-            queryStr.append(MessageFormat.format(" +{0}:1", MessageFields.REG));
-
-        if (inHasUrl)
-            queryStr.append(MessageFormat.format(" +{0}:1", MessageFields.HAS_URL));
-
-        if (inHasImg)
-            queryStr.append(MessageFormat.format(" +{0}:1", MessageFields.HAS_IMG));
-
-        return queryStr.toString();
-    }
 
     public static final String ALL_TOPICS = "Все темы";
 

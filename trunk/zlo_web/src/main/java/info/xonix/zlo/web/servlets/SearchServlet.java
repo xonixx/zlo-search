@@ -9,9 +9,7 @@ import info.xonix.zlo.search.config.ErrorMessage;
 import info.xonix.zlo.search.domainobj.SearchRequest;
 import info.xonix.zlo.search.domainobj.SearchResult;
 import info.xonix.zlo.search.domainobj.Site;
-import info.xonix.zlo.search.logic.AppLogic;
-import info.xonix.zlo.search.logic.AuditLogic;
-import info.xonix.zlo.search.logic.SearchException;
+import info.xonix.zlo.search.logic.*;
 import info.xonix.zlo.search.logic.exceptions.ExceptionCategory;
 import info.xonix.zlo.search.logic.exceptions.ExceptionsLogger;
 import info.xonix.zlo.search.model.SearchLog;
@@ -51,6 +49,7 @@ public class SearchServlet extends BaseServlet {
     private final AppLogic appLogic = AppSpringContext.get(AppLogic.class);
     private final AuditLogic auditLogic = AppSpringContext.get(AuditLogic.class);
     private final ExceptionsLogger exceptionsLogger = AppSpringContext.get(ExceptionsLogger.class);
+    private SearchLogic searchLogic = AppSpringContext.get(SearchLogicImpl.class);
 
     public static final String ON = "on";
     // query string params
@@ -246,7 +245,7 @@ public class SearchServlet extends BaseServlet {
                         ) {
 
                     try {
-                        searchResult = searchRequest.performSearch();
+                        searchResult = searchLogic.search(searchRequest);
                     } catch (BooleanQuery.TooManyClauses e) { // например как в поиске текста +с*
                         errorMsg = ErrorMessage.TooComplexSearch;
                         throw e;

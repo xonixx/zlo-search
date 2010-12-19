@@ -1,14 +1,15 @@
 package info.xonix.zlo.search.logic;
 
+import info.xonix.zlo.search.FoundTextHighlighter;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.domainobj.SearchRequest;
 import info.xonix.zlo.search.domainobj.SearchResult;
 import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.doubleindex.DoubleIndexManager;
-import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageFields;
 import info.xonix.zlo.search.utils.Check;
 import info.xonix.zlo.search.utils.factory.SiteFactory;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.queryParser.ParseException;
@@ -20,6 +21,8 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.Date;
 
 /**
  * Author: gubarkov
@@ -31,6 +34,53 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
 
     //    public static final int PERIOD_RECREATE_INDEXER = TimeUtils.parseToMilliSeconds(Config.getProp("searcher.period.recreate.indexer"));
     private Config config;
+
+    public static String formQueryString(String text, boolean inTitle, boolean inBody, int topicCode, String nick, String host, Date fromDate, Date toDate, boolean inReg, boolean inHasUrl, boolean inHasImg) {
+        text = FoundTextHighlighter.escapeColon(text);
+
+        StringBuilder queryStr = new StringBuilder();
+
+        nick = StringUtils.lowerCase(nick);
+        host = StringUtils.lowerCase(host);
+
+        if (StringUtils.isNotEmpty(text)) {
+            if (inTitle && !inBody)
+                queryStr.append(MessageFormat.format(" +{0}:({1})", MessageFields.TITLE, text));
+
+            else if (!inTitle && inBody)
+                queryStr.append(MessageFormat.format(" +{0}:({1})", MessageFields.BODY, text));
+
+            else if (inTitle && inBody)
+                queryStr.append(MessageFormat.format(" +({0}:({2}) OR {1}:({2}))", MessageFields.TITLE, MessageFields.BODY, text));
+
+            else // !inTitle && !inBody
+                queryStr.append(MessageFormat.format(" +{0}:({2}) +{1}:({2})", MessageFields.TITLE, MessageFields.BODY, text));
+        }
+
+        if (-1 != topicCode) {
+            queryStr.append(MessageFormat.format(" +{0}:{1}", MessageFields.TOPIC_CODE, topicCode));
+        }
+
+        if (StringUtils.isNotEmpty(nick))
+            queryStr.append(MessageFormat.format(" +{0}:(\"{1}\")", MessageFields.NICK, nick));
+
+        if (StringUtils.isNotEmpty(host))
+            queryStr.append(MessageFormat.format(" +{0}:({1})", MessageFields.HOST, host));
+
+        if (fromDate != null && toDate != null)
+            queryStr.append(MessageFormat.format(" +{0}:[{1,date,yyyyMMdd} TO {2,date,yyyyMMdd}]", MessageFields.DATE, fromDate, toDate));
+
+        if (inReg)
+            queryStr.append(MessageFormat.format(" +{0}:1", MessageFields.REG));
+
+        if (inHasUrl)
+            queryStr.append(MessageFormat.format(" +{0}:1", MessageFields.HAS_URL));
+
+        if (inHasImg)
+            queryStr.append(MessageFormat.format(" +{0}:1", MessageFields.HAS_IMG));
+
+        return queryStr.toString();
+    }
 
     public void setConfig(Config config) {
         this.config = config;
@@ -60,14 +110,16 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
 
     @Override
     public SearchResult search(SearchRequest req) {
-        return search(
+        final SearchResult searchResult = search(
                 req.getSite(),
-                Message.formQueryString(
+                formQueryString(
                         req.getText(), req.isInTitle(), req.isInBody(),
                         req.getTopicCode(), req.getNick(), req.getHost(),
                         req.getFromDate(), req.getToDate(),
                         req.isInReg(), req.isInHasUrl(), req.isInHasImg()),
                 req.isSearchAll());
+        searchResult.setLastSearch(req);
+        return searchResult;
     }
 
     @Override
