@@ -5,7 +5,7 @@ package info.xonix.zlo.search.logic;
  * Date: 09.07.2010
  * Time: 22:54:59
  */
-public class IndexerException extends /*RuntimeException*/Exception {
+public class IndexerException extends Exception {
     public IndexerException(String message) {
         super(message);
     }

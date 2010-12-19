@@ -73,7 +73,7 @@ public class SearchResult {
     /**
      * if creationDate is before renewing indexReader -> reader will be closed
      *
-     * @return
+     * @return old or not
      */
     public boolean isOld() {
         boolean old = searchDate.before(doubleIndexManager.getRenewDate());
