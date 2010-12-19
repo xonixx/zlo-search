@@ -13,6 +13,7 @@ import java.util.Properties;
  * Time: 1:15:18
  */
 public class QueryProvider {
+
     private static final class SiteQueries {
         public String INSERT_MSG;
         public String INSERT_UPDATE_MSG;
@@ -22,6 +23,8 @@ public class QueryProvider {
         public String SELECT_MSGS_IN_RANGE;
         public String SELECT_LAST_MSG_NUM;
         public String SELECT_MSGS_SET;
+        public String SELECT_MSGS_SET_SHALLOW;
+
         public String SELECT_ALL_TOPICS;
         public String SELECT_NEW_TOPICS;
 
@@ -53,6 +56,7 @@ public class QueryProvider {
             sq.SELECT_MSGS_IN_RANGE = MessageFormat.format(props.getProperty("sql.select.msg.in.range"), name);
             sq.SELECT_LAST_MSG_NUM = MessageFormat.format(props.getProperty("sql.select.last.msg.num"), name);
             sq.SELECT_MSGS_SET = MessageFormat.format(props.getProperty("sql.select.set"), name);
+            sq.SELECT_MSGS_SET_SHALLOW = MessageFormat.format(props.getProperty("sql.select.set.shallow"), name);
 
             sq.SELECT_ALL_TOPICS = MessageFormat.format(props.getProperty("sql.select.all.topics"), name);
             sq.SELECT_NEW_TOPICS = MessageFormat.format(props.getProperty("sql.select.new.topics"), name);
@@ -108,6 +112,10 @@ public class QueryProvider {
 
     public String getSelectSetQuery(Site site) {
         return getSiteQueries(site).SELECT_MSGS_SET;
+    }
+
+    public String getSelectShallowSetQuery(Site site) {
+        return getSiteQueries(site).SELECT_MSGS_SET_SHALLOW;
     }
 
     public String getSelectAllTopicsQuery(Site site) {

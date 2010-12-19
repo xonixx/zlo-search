@@ -2,6 +2,7 @@ package info.xonix.zlo.search.dao;
 
 import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.model.MessageShallow;
 import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.model.Topic;
 import info.xonix.zlo.search.utils.Check;
@@ -86,6 +87,20 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
         }
     };
 
+    private RowMapper<MessageShallow> messageShallowRowMapper = new RowMapper<MessageShallow>() {
+        @Override
+        public MessageShallow mapRow(ResultSet rs, int i) throws SQLException {
+            return new MessageShallow(
+                    rs.getInt("num")
+                    , rs.getString("nick")
+                    , rs.getString("host")
+                    , rs.getBoolean("reg")
+                    , rs.getString("topic")
+                    , rs.getString("title")
+                    , rs.getTimestamp("msgDate"));
+        }
+    };
+
     @Override
     public void saveMessagesFast(Site site, List<Message> msgs) {
         saveMessagesFast(site, msgs, false);
@@ -167,15 +182,26 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
 
     @Override
     public List<Message> getMessages(Site site, int[] nums) {
+        String sql = String.format(queryProvider.getSelectSetQuery(site), joinByComma(nums));
+
+        return getSimpleJdbcTemplate().query(sql, messageRowMapper);
+    }
+
+    @Override
+    public List<MessageShallow> getShallowMessages(Site site, int[] nums) {
+        String sql = String.format(queryProvider.getSelectShallowSetQuery(site), joinByComma(nums));
+
+        return getSimpleJdbcTemplate().query(sql, messageShallowRowMapper);
+    }
+
+    private String joinByComma(int[] nums) {
         StringBuilder sbNums = new StringBuilder(Integer.toString(nums[0]));
 
         for (int i = 1; i < nums.length; i++) {
             sbNums.append(",").append(nums[i]);
         }
 
-        String sql = String.format(queryProvider.getSelectSetQuery(site), sbNums.toString());
-
-        return getSimpleJdbcTemplate().query(sql, messageRowMapper);
+        return sbNums.toString();
     }
 
     @Override

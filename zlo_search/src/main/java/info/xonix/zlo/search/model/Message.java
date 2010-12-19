@@ -24,20 +24,13 @@ import static org.apache.lucene.document.Field.Store;
  * Date: 30.05.2007
  * Time: 20:18:10
  */
-public class Message implements Serializable {
+public class Message extends MessageShallow implements Serializable {
     private static final String TRUE = "1";
     private static final String FALSE = "0";
 
-    private String nick;
     private String altName;
-    private String host;
-    private String topic;
     private int topicCode;
-    private String title;
     private String body;
-    private Date date;
-    private boolean reg = false;
-    private int num = -1; // default
     private int parentNum = -1; // default
 
     private String titleClean;
@@ -62,6 +55,7 @@ public class Message implements Serializable {
     public static NumberFormat URL_NUM_FORMAT = new DecimalFormat("0000000000"); // 10 zeros
 
     public Message() {
+        super();
     }
 
     public Message(Site site, String nick, String altName, String host, String topic, int topicCode,
@@ -69,17 +63,13 @@ public class Message implements Serializable {
                    boolean reg, int num, int parentNum,
                    Boolean hasUrl, Boolean hasImg,
                    MessageStatus status) {
+
+        super(num, nick, host, reg, topic, title, msgDate);
+
         this.site = site;
-        this.nick = nick;
         this.altName = altName;
-        this.host = host;
-        this.topic = topic;
         this.topicCode = topicCode;
-        this.title = title;
         this.body = body;
-        this.date = msgDate;
-        this.reg = reg;
-        this.num = num;
         this.parentNum = parentNum;
         this.hasUrl = hasUrl;
         this.hasImg = hasImg;
@@ -107,14 +97,6 @@ public class Message implements Serializable {
                 MessageStatus.fromInt(status));
     }
 
-    public String getNick() {
-        return nick;
-    }
-
-    public void setNick(String nick) {
-        this.nick = nick;
-    }
-
     public String getAltName() {
         return altName;
     }
@@ -123,36 +105,12 @@ public class Message implements Serializable {
         this.altName = altName;
     }
 
-    public String getHost() {
-        return host;
-    }
-
-    public void setHost(String host) {
-        this.host = host;
-    }
-
-    public String getTopic() {
-        return topic;
-    }
-
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
-
     public int getTopicCode() {
         return topicCode;
     }
 
     public void setTopicCode(int topicCode) {
         this.topicCode = topicCode;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getCleanTitle() {
@@ -175,34 +133,10 @@ public class Message implements Serializable {
         return bodyClean;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public Timestamp getTimestamp() {
         return getDate() == null
                 ? null
                 : new Timestamp(getDate().getTime());
-    }
-
-    public boolean isReg() {
-        return reg;
-    }
-
-    public void setReg(boolean reg) {
-        this.reg = reg;
-    }
-
-    public int getNum() {
-        return num;
-    }
-
-    public void setNum(int num) {
-        this.num = num;
     }
 
     public int getParentNum() {
