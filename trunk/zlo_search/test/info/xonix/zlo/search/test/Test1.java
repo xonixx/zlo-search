@@ -77,10 +77,10 @@ public class Test1 {
 /*
     public static void m18() {
         try {
-//            System.out.println(new IndexSearcher(ZloSearcher.getIndexReader()).search(new TermQuery(new Term("nick", "abcdef"))).length());
-//            System.out.println(new IndexSearcher(ZloSearcher.getIndexReader()).search(new TermQuery(new Term("nick", "abcdef")), new Sort(new SortField(Message.FIELDS.DATE, SortField.STRING, true))).length());
-//            System.out.println(ZloSearcher.search("nick:abcdef").getHits().length());
-            System.out.println(new IndexSearcher(ZloSearcher.getIndexReader()).search(new MatchAllDocsQuery(), new Sort(new SortField(Message.FIELDS.DATE, SortField.STRING, true))));
+//            System.out.println(new IndexSearcher(SearchLogicImpl.getIndexReader()).search(new TermQuery(new Term("nick", "abcdef"))).length());
+//            System.out.println(new IndexSearcher(SearchLogicImpl.getIndexReader()).search(new TermQuery(new Term("nick", "abcdef")), new Sort(new SortField(Message.FIELDS.DATE, SortField.STRING, true))).length());
+//            System.out.println(SearchLogicImpl.search("nick:abcdef").getHits().length());
+            System.out.println(new IndexSearcher(SearchLogicImpl.getIndexReader()).search(new MatchAllDocsQuery(), new Sort(new SortField(Message.FIELDS.DATE, SortField.STRING, true))));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -146,16 +146,16 @@ public class Test1 {
 /*
     public static void m14() {
 //        System.out.println(new int[2] instanceof Array);
-//        System.out.println(ZloSearcher.search(9, null, true, true, false, false, false, null, null, null, null).getHits().length());
+//        System.out.println(SearchLogicImpl.search(9, null, true, true, false, false, false, null, null, null, null).getHits().length());
 //        System.out.println(String.format("%1$tB, %1$td %1$tH:%1$tm:%1$tS %1$tY", new Date()));
 //        System.out.println(String.format("%d{dd/MM/yy HH:mm:ss,SSS}", new Date()));
         for (int i = 0; i < 10; i++) {
             System.out.println("Cleaning...");
-            ZloSearcher.clean();
+            SearchLogicImpl.clean();
             System.out.println("Creating " + i + " ...");
-            ZloSearcher.getIndexReader();
+            SearchLogicImpl.getIndexReader();
             System.out.print("Searching... ");
-            System.out.println(ZloSearcher.searchIndexReader(null, " +nick:Borisych", null).getHits().length());
+            System.out.println(SearchLogicImpl.searchIndexReader(null, " +nick:Borisych", null).getHits().length());
         }
     }
 */
@@ -217,7 +217,7 @@ public class Test1 {
 //        NumberFormat f = new DecimalFormat("0000000000");
 //        System.out.println(f.format(-123));
 //        System.out.println(Integer.parseInt(f.format(-123)));
-//        System.out.println(ZloSearcher.searchMsgByNum(3765011));
+//        System.out.println(SearchLogicImpl.searchMsgByNum(3765011));
         for (Object o : zlo.getZloSearcher().searchInNumRange(3765002, 3765007)) {
             System.out.println(o);
         }

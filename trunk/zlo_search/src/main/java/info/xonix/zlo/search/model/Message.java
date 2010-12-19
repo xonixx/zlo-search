@@ -8,6 +8,7 @@ import org.apache.lucene.document.DateTools;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 
+import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
@@ -331,6 +332,7 @@ public class Message implements Serializable {
         return status == MessageStatus.OK;
     }
 
+    @Nullable
     public Document getDocument() {
         if (!isOk()) // index only OK messages
             return null;

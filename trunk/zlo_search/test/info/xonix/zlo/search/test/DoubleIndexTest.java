@@ -4,7 +4,8 @@ import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.doubleindex.DoubleHits;
 import info.xonix.zlo.search.doubleindex.DoubleIndexManager;
-import info.xonix.zlo.search.logic.ZloSearcher;
+import info.xonix.zlo.search.logic.SearchLogic;
+import info.xonix.zlo.search.logic.SearchLogicImpl;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.search.MatchAllDocsQuery;
@@ -18,7 +19,7 @@ import java.io.IOException;
  */
 public class DoubleIndexTest {
     private static final Config config = AppSpringContext.get(Config.class);
-    private static final ZloSearcher zloSearcher = AppSpringContext.get(ZloSearcher.class);
+    private static final SearchLogic SEARCH_LOGIC = AppSpringContext.get(SearchLogicImpl.class);
 
     public static void main(String[] args) {
         m2();
@@ -36,7 +37,7 @@ public class DoubleIndexTest {
     }
 
     private static DoubleIndexManager getDIS() {
-        return new DoubleIndexManager(Site.forName("test"), zloSearcher.getDateSort());
+        return new DoubleIndexManager(Site.forName("test"), SEARCH_LOGIC.getDateSort());
     }
 
     public static void m1() {

@@ -1,7 +1,8 @@
 <%@ page import="info.xonix.zlo.search.daemon.Daemon" %>
 <%@ page import="info.xonix.zlo.search.domainobj.Site" %>
+<%@ page import="info.xonix.zlo.search.logic.SearchLogic" %>
+<%@ page import="info.xonix.zlo.search.logic.SearchLogicImpl" %>
 <%@ page import="info.xonix.zlo.search.logic.SiteLogic" %>
-<%@ page import="info.xonix.zlo.search.logic.ZloSearcher" %>
 <%@ page import="info.xonix.zlo.search.progs.OptimizeAllIndexes" %>
 <%@ page import="info.xonix.zlo.web.utils.RequestUtils" %>
 <%@ page import="java.util.LinkedHashMap" %>
@@ -11,7 +12,7 @@
 
 <%!
     SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
-    ZloSearcher zloSearcher = AppSpringContext.get(ZloSearcher.class);
+    SearchLogic searchLogic = AppSpringContext.get(SearchLogicImpl.class);
 %>
 
 <%
@@ -99,7 +100,7 @@
     </display:table>
 
     <display:table id="site" name="<%= siteLogic.getSites() %>">
-        <c:set var="dis" value="<%= zloSearcher.getDoubleIndexManager((Site) site) %>"/>
+        <c:set var="dis" value="<%= searchLogic.getDoubleIndexManager((Site) site) %>"/>
         <display:caption>Sites</display:caption>
 
         <display:column title="#">${site_rowNum}</display:column>

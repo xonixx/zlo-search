@@ -2,7 +2,8 @@ package info.xonix.zlo.search.progs;
 
 import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.AppLogic;
-import info.xonix.zlo.search.logic.ZloSearcher;
+import info.xonix.zlo.search.logic.SearchLogic;
+import info.xonix.zlo.search.logic.SearchLogicImpl;
 import info.xonix.zlo.search.spring.AppSpringContext;
 
 import java.io.IOException;
@@ -15,7 +16,7 @@ import java.io.IOException;
 public class DropIndex extends App {
     public static void main(String[] args) {
         AppLogic appLogic = AppSpringContext.get(AppLogic.class);
-        ZloSearcher zloSearcher = AppSpringContext.get(ZloSearcher.class);
+        SearchLogic searchLogic = AppSpringContext.get(SearchLogicImpl.class);
 
         System.out.print("Are you sure you want to drop index ? (y/n): ");
 
@@ -29,7 +30,7 @@ public class DropIndex extends App {
                 System.out.println("Deleting...");
                 Site site = Site.forName(siteName);
 
-                zloSearcher.dropIndex(site);
+                searchLogic.dropIndex(site);
 
                 appLogic.setLastIndexedNumber(site, -1);
             }

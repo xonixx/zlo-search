@@ -11,7 +11,7 @@
     <bean id="indexerLogic" class="info.xonix.zlo.search.logic.IndexerLogicImpl">
         <property name="config" ref="appConfig"/>
         <property name="appLogic" ref="appLogic"/>
-        <property name="zloSearcher" ref="zloSearcher"/>
+        <property name="searchLogic" ref="searchLogic"/>
     </bean>
 
     <!--site logic-->
@@ -35,7 +35,7 @@
     </bean>
 
     <!--search logic-->
-    <bean id="zloSearcher" class="info.xonix.zlo.search.logic.ZloSearcher">
+    <bean id="searchLogic" class="info.xonix.zlo.search.logic.SearchLogicImpl">
         <property name="config" ref="appConfig"/>
     </bean>
 
