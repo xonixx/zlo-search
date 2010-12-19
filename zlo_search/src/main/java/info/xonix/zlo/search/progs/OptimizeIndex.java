@@ -2,7 +2,8 @@ package info.xonix.zlo.search.progs;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.domainobj.Site;
-import info.xonix.zlo.search.logic.ZloSearcher;
+import info.xonix.zlo.search.logic.SearchLogic;
+import info.xonix.zlo.search.logic.SearchLogicImpl;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 
@@ -14,7 +15,7 @@ import org.apache.log4j.Logger;
 public class OptimizeIndex {
     public static final Logger log = Logger.getLogger(OptimizeIndex.class);
 
-    private ZloSearcher zloSearcher = AppSpringContext.get(ZloSearcher.class);
+    private SearchLogic searchLogic = AppSpringContext.get(SearchLogicImpl.class);
 
     public static void main(String[] args) {
         new OptimizeIndex().main();
@@ -29,6 +30,6 @@ public class OptimizeIndex {
     public void optimizeDoubleIndexForSite(Site site) {
         log.info("Optimizing index for " + site.getName());
 
-        zloSearcher.optimizeIndex(site);
+        searchLogic.optimizeIndex(site);
     }
 }

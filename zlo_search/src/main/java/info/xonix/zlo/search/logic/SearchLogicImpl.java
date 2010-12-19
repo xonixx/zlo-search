@@ -11,7 +11,6 @@ import info.xonix.zlo.search.utils.Check;
 import info.xonix.zlo.search.utils.factory.SiteFactory;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Query;
@@ -27,10 +26,10 @@ import java.io.IOException;
  * Date: 01.06.2007
  * Time: 2:24:05
  */
-public class ZloSearcher implements InitializingBean {
-    private static final Logger log = Logger.getLogger(ZloSearcher.class);
+public class SearchLogicImpl implements SearchLogic, InitializingBean {
+    private static final Logger log = Logger.getLogger(SearchLogicImpl.class);
 
-//    public static final int PERIOD_RECREATE_INDEXER = TimeUtils.parseToMilliSeconds(Config.getProp("searcher.period.recreate.indexer"));
+    //    public static final int PERIOD_RECREATE_INDEXER = TimeUtils.parseToMilliSeconds(Config.getProp("searcher.period.recreate.indexer"));
     private Config config;
 
     public void setConfig(Config config) {
@@ -50,15 +49,16 @@ public class ZloSearcher implements InitializingBean {
         }
     };
 
-    public static void clean(IndexReader ir) {
+/*    public static void clean(IndexReader ir) {
         try {
             if (ir != null)
                 ir.close();
         } catch (IOException e) {
             log.error("Error while closing index reader: " + e.getClass());
         }
-    }
+    }*/
 
+    @Override
     public SearchResult search(SearchRequest req) {
         return search(
                 req.getSite(),
@@ -70,6 +70,7 @@ public class ZloSearcher implements InitializingBean {
                 req.isSearchAll());
     }
 
+    @Override
     public Sort getDateSort() {
         // sort causes slow first search & lot memory used!
         return config.isSearchPerformSort()
@@ -111,6 +112,7 @@ public class ZloSearcher implements InitializingBean {
         return result;
     }
 
+    @Override
     public void optimizeIndex(Site site) {
         DoubleIndexManager dis = getDoubleIndexManager(site);
 
@@ -124,6 +126,7 @@ public class ZloSearcher implements InitializingBean {
 //        dis.close();
     }
 
+    @Override
     public void dropIndex(Site site) throws IOException {
         final DoubleIndexManager dis = getDoubleIndexManager(site);
         dis.drop();
@@ -136,6 +139,7 @@ public class ZloSearcher implements InitializingBean {
      * @param site site
      * @return dis
      */
+    @Override
     public DoubleIndexManager getDoubleIndexManager(Site site) {
         return doubleIndexManagerFactory.get(site);
     }

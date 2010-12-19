@@ -26,7 +26,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
 
     private Config config;
     private AppLogic appLogic;
-    private ZloSearcher zloSearcher;
+    private SearchLogic searchLogic;
 
     private SiteFactory<IndexWriter> siteToIndexWriter = new SiteFactory<IndexWriter>() {
         @Override
@@ -66,15 +66,15 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
         this.appLogic = appLogic;
     }
 
-    public void setZloSearcher(ZloSearcher zloSearcher) {
-        this.zloSearcher = zloSearcher;
+    public void setSearchLogic(SearchLogicImpl searchLogic) {
+        this.searchLogic = searchLogic;
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
         Check.isSet(config, "config");
         Check.isSet(appLogic, "appLogic");
-        Check.isSet(zloSearcher, "zloSearcher");
+        Check.isSet(searchLogic, "searchLogic");
     }
 
     private IndexWriter getWriter(Site site) {
@@ -114,7 +114,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
         if (from <= 1) {
             log.info("[!] Dropping index for site: " + siteName + ", as from index=" + from);
             try {
-                zloSearcher.dropIndex(site);
+                searchLogic.dropIndex(site);
             } catch (IOException e) {
                 log.error("Error while dropping index for site: " + siteName, e);
             }

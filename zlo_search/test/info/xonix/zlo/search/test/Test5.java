@@ -35,7 +35,7 @@ public class Test5 {
 
         zi.setAnalyzer(new RussianWithNumbersAndSpecialStopWordsAnalyzer(new String[0])); // nos stopWords=empty index with all words
         zi.setIndexPerTime(10000);
-        zi.setIndexDir(new File("D:\\TEST\\JAVA\\ZloSearcher\\indexes\\__test\\no_stop_words"));
+        zi.setIndexDir(new File("D:\\TEST\\JAVA\\SearchLogicImpl\\indexes\\__test\\no_stop_words"));
 
         try {
             zi.indexRange(0, zlo.getDbManager().getLastMessageNumber());
@@ -77,7 +77,7 @@ public class Test5 {
     }
 
     public static void m4() {
-//        ZloSearcher zs = new ZloSearcher(Site.forName("zlo"));
+//        SearchLogicImpl zs = new SearchLogicImpl(Site.forName("zlo"));
 //        System.out.println(zs.search(-1, "тест", true, true, false, false, false, null, null).getHits().length());
         Site site = Site.forName("zlo");
         DoubleIndexManager dis = new DoubleIndexManager(site, null);

@@ -2,7 +2,8 @@ package info.xonix.zlo.search.domainobj;
 
 import info.xonix.zlo.search.config.DateFormats;
 import info.xonix.zlo.search.dao.MessagesDao;
-import info.xonix.zlo.search.logic.ZloSearcher;
+import info.xonix.zlo.search.logic.SearchLogic;
+import info.xonix.zlo.search.logic.SearchLogicImpl;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.commons.lang.StringUtils;
 
@@ -17,7 +18,7 @@ import java.util.Date;
 public class SearchRequest {
 
     private MessagesDao messagesDao = AppSpringContext.get(MessagesDao.class);
-    private ZloSearcher zloSearcher = AppSpringContext.get(ZloSearcher.class);
+    private SearchLogic searchLogic = AppSpringContext.get(SearchLogicImpl.class);
 
     private Site site;
 
@@ -250,7 +251,7 @@ public class SearchRequest {
 
     public SearchResult performSearch() {
         // just to throw exception if db connection broken and can't be fixed
-        SearchResult result = zloSearcher.search(this);
+        SearchResult result = searchLogic.search(this);
         result.setLastSearch(this);
         return result;
     }
