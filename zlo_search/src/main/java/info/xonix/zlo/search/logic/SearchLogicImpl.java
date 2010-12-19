@@ -230,7 +230,8 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     }
 
     private int[] search(IndexSearcher smallSearcher, Query query, int limit) throws IOException {
-        final TopDocs topDocs = smallSearcher.search(query, null, limit, Sort.INDEXORDER);
+        final TopDocs topDocs = smallSearcher.search(query, null, limit,
+                new Sort(new SortField(null, SortField.DOC, true))); // reversed index order
 
         int[] ids = new int[topDocs.scoreDocs.length];
         for (int i = 0; i < ids.length; i++) {
