@@ -48,7 +48,7 @@ public class ZloPaginatedList implements PaginatedList {
                 indexes[i - fromIndex] = Integer.parseInt(hits.doc(i).get(MessageFields.URL_NUM));
             }
         } catch (IOException e) {
-            log.error("Error while getting doc from index: " + e);
+            log.error("Error while getting doc from index: " + e, e);
         }
 
         List<Message> messages = messagesDao.getMessages(site, indexes);

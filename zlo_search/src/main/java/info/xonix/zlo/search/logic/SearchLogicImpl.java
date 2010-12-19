@@ -109,7 +109,7 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     }*/
 
     @Override
-    public SearchResult search(SearchRequest req) {
+    public SearchResult search(SearchRequest req) throws SearchException {
         final SearchResult searchResult = search(
                 req.getSite(),
                 formQueryString(
@@ -130,13 +130,13 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
                 : null;
     }
 
-    private SearchResult search(Site site, String queryStr, boolean searchAll) {
+    private SearchResult search(Site site, String queryStr, boolean searchAll) throws SearchException {
         Assert.notNull(site, "site can't be null!");
 
         return searchDoubleIndex(site, queryStr/*, null*/, searchAll);
     }
 
-    private SearchResult searchDoubleIndex(Site site, String queryStr/*, Sort sort*/, boolean searchAll) {
+    private SearchResult searchDoubleIndex(Site site, String queryStr/*, Sort sort*/, boolean searchAll) throws SearchException {
         // TODO: do we need sorting here???
 //        if (sort == null)
 //            sort = getDateSort();
