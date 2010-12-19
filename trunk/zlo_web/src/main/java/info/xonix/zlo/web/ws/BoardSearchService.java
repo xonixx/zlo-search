@@ -7,6 +7,7 @@ import info.xonix.zlo.search.logic.SearchException;
 import info.xonix.zlo.search.logic.SearchLogic;
 import info.xonix.zlo.search.logic.SiteLogic;
 import info.xonix.zlo.web.ws.dto.Message;
+import info.xonix.zlo.web.ws.dto.MessageShallow;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Nonnull;
@@ -58,6 +59,17 @@ public class BoardSearchService {
                 messageModel.isHasImg());
     }
 
+    private MessageShallow fromMessageModelShallow(info.xonix.zlo.search.model.MessageShallow message) {
+        return new MessageShallow(
+                message.getNum(),
+                message.getNick(),
+                message.getHost(),
+                message.isReg(),
+                message.getDate(),
+                message.getTopic(),
+                message.getTitle());
+    }
+
     @WebMethod
     public int getLastSavedMsgNumber(int siteId) throws ServiceException {
         return appLogic.getLastSavedMessageNumber(site(siteId));
@@ -77,13 +89,7 @@ public class BoardSearchService {
     public List<Message> search(int siteId, String searchString, int limit) throws ServiceException {
         final Site site = site(siteId);
 
-        final int[] resultIds;
-
-        try {
-            resultIds = searchLogic.search(site, searchString, limit);
-        } catch (SearchException e) {
-            throw new ServiceException("Search error", e);
-        }
+        final int[] resultIds = search(site, searchString, limit);
 
         final List<info.xonix.zlo.search.model.Message> messages = messagesDao.getMessages(site, resultIds);
 
@@ -94,5 +100,33 @@ public class BoardSearchService {
         }
 
         return resultMessages;
+    }
+
+    @WebMethod
+    public List<MessageShallow> searchShallow(int siteId, String searchString, int limit) throws ServiceException {
+        final Site site = site(siteId);
+
+        final int[] resultIds = search(site, searchString, limit);
+
+        final List<info.xonix.zlo.search.model.MessageShallow> messages = messagesDao.getShallowMessages(site, resultIds);
+
+        List<MessageShallow> resultMessages = new ArrayList<MessageShallow>(messages.size());
+
+        for (info.xonix.zlo.search.model.MessageShallow message : messages) {
+            resultMessages.add(fromMessageModelShallow(message));
+        }
+
+        return resultMessages;
+    }
+
+    private int[] search(Site site, String searchString, int limit) throws ServiceException {
+        final int[] resultIds;
+
+        try {
+            resultIds = searchLogic.search(site, searchString, limit);
+        } catch (SearchException e) {
+            throw new ServiceException("Search error:" + e, e);
+        }
+        return resultIds;
     }
 }

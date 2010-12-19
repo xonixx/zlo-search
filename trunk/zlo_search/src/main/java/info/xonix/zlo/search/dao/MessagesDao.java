@@ -2,6 +2,7 @@ package info.xonix.zlo.search.dao;
 
 import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.model.MessageShallow;
 import info.xonix.zlo.search.model.Topic;
 
 import java.util.List;
@@ -22,6 +23,8 @@ public interface MessagesDao {
     List<Message> getMessagesByRange(Site site, int start, int end);
 
     List<Message> getMessages(Site site, int[] nums);
+
+    List<MessageShallow> getShallowMessages(Site site, int[] nums);
 
     int getLastMessageNumber(Site site);
 
