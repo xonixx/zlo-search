@@ -9,14 +9,13 @@ import info.xonix.zlo.search.doubleindex.DoubleIndexManager;
 import info.xonix.zlo.search.model.MessageFields;
 import info.xonix.zlo.search.utils.Check;
 import info.xonix.zlo.search.utils.factory.SiteFactory;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.Sort;
-import org.apache.lucene.search.SortField;
+import org.apache.lucene.search.*;
+import org.apache.lucene.util.Version;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
@@ -143,9 +142,7 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
 
         SearchResult result;
         try {
-            Analyzer analyzer = config.getMessageAnalyzer();
-
-            QueryParser parser = new QueryParser(MessageFields.BODY, analyzer);
+            QueryParser parser = getQueryParser();
             parser.setDefaultOperator(searchAll ? QueryParser.AND_OPERATOR : QueryParser.OR_OPERATOR);
 
             Query query = parser.parse(queryStr);
@@ -162,6 +159,10 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
             throw new SearchException(queryStr, e);
         }
         return result;
+    }
+
+    private QueryParser getQueryParser() {
+        return new QueryParser(Version.LUCENE_29, MessageFields.BODY, config.getMessageAnalyzer());
     }
 
     @Override
@@ -183,6 +184,60 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
         final DoubleIndexManager dis = getDoubleIndexManager(site);
         dis.drop();
         dis.close();
+    }
+
+    @Override
+    public int[] search(Site site, String searchString, int limit) throws SearchException {
+        final QueryParser queryParser = getQueryParser();
+
+        final Query query;
+        try {
+            query = queryParser.parse(searchString);
+        } catch (ParseException e) {
+            throw new SearchException("search: Wrong searchString", e);
+        }
+
+        if (limit == 0) {
+            limit = 1000;
+        } else if (limit == -1) {
+            limit = Integer.MAX_VALUE;
+        }
+        final DoubleIndexManager doubleIndexManager = getDoubleIndexManager(site);
+
+        final IndexSearcher smallSearcher = new IndexSearcher(doubleIndexManager.getSmallReader());
+
+        try {
+            final int[] ids = search(smallSearcher, query, limit);
+
+            if (ids.length == limit) {
+                return ids;
+            }
+
+            limit = limit - ids.length;
+
+            if (limit <= 0) {
+                throw new IllegalStateException();
+            }
+
+            final IndexSearcher bigSearcher = new IndexSearcher(doubleIndexManager.getBigReader());
+
+            final int[] idsBig = search(bigSearcher, query, limit);
+            return ArrayUtils.addAll(ids, idsBig);
+
+        } catch (IOException e) {
+            throw new SearchException("search: I/O exception", e);
+        }
+    }
+
+    private int[] search(IndexSearcher smallSearcher, Query query, int limit) throws IOException {
+        final TopDocs topDocs = smallSearcher.search(query, null, limit, Sort.INDEXORDER);
+
+        int[] ids = new int[topDocs.scoreDocs.length];
+        for (int i = 0; i < ids.length; i++) {
+            final ScoreDoc scoreDoc = topDocs.scoreDocs[i];
+            ids[i] = Integer.parseInt(smallSearcher.doc(scoreDoc.doc).get(MessageFields.URL_NUM));
+        }
+        return ids;
     }
 
     /**
