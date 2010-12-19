@@ -7,7 +7,7 @@ import java.util.Date;
  * Date: 12.12.10
  * Time: 19:09
  */
-public class Message {
+public class Message extends MessageShallow {
     private String nick;
     private String host;
 
@@ -17,11 +17,7 @@ public class Message {
 
     private String body;
 
-    private Date date;
-
     private boolean reg = false;
-
-    private int num = -1; // default
 
     private boolean hasUrl;
     private boolean hasImg;
@@ -29,7 +25,7 @@ public class Message {
     public Message() {
     }
 
-    public Message(int num, String nick, String host, boolean reg, String topic, String title, String body, Date date, boolean hasUrl, boolean hasImg) {
+    public Message(int id, String nick, String host, boolean reg, String topic, String title, String body, Date date, boolean hasUrl, boolean hasImg) {
         this.nick = nick;
         this.host = host;
         this.topic = topic;
@@ -37,7 +33,7 @@ public class Message {
         this.body = body;
         this.date = date;
         this.reg = reg;
-        this.num = num;
+        this.id = id;
         this.hasUrl = hasUrl;
         this.hasImg = hasImg;
     }
@@ -62,16 +58,8 @@ public class Message {
         return body;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
     public boolean isReg() {
         return reg;
-    }
-
-    public int getNum() {
-        return num;
     }
 
     public boolean isHasUrl() {
@@ -102,16 +90,8 @@ public class Message {
         this.body = body;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public void setReg(boolean reg) {
         this.reg = reg;
-    }
-
-    public void setNum(int num) {
-        this.num = num;
     }
 
     public void setHasUrl(boolean hasUrl) {

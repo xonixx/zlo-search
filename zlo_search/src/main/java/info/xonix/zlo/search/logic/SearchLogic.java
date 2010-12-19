@@ -23,4 +23,6 @@ public interface SearchLogic {
     Sort getDateSort();
 
     void dropIndex(Site site) throws IOException;
+
+    int[] search(Site site, String searchString, int limit) throws SearchException;
 }
