@@ -8,6 +8,7 @@ import info.xonix.zlo.search.logic.SearchLogic;
 import info.xonix.zlo.search.logic.SiteLogic;
 import info.xonix.zlo.web.ws.dto.Message;
 import info.xonix.zlo.web.ws.dto.MessageShallow;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Nonnull;
@@ -24,6 +25,7 @@ import java.util.List;
  */
 @WebService
 public class BoardSearchService {
+    private static final Logger log = Logger.getLogger(BoardSearchService.class);
 
     @Autowired
     private AppLogic appLogic;
@@ -73,11 +75,15 @@ public class BoardSearchService {
 
     @WebMethod
     public int getLastSavedMsgNumber(@WebParam(name = "siteId") int siteId) throws ServiceException {
+        log.info("getLastSavedMsgNumber(" + siteId + ")");
+
         return appLogic.getLastSavedMessageNumber(site(siteId));
     }
 
     @WebMethod
     public int getLastIndexedMsgNumber(@WebParam(name = "siteId") int siteId) throws ServiceException {
+        log.info("getLastIndexedMsgNumber(" + siteId + ")");
+
         return appLogic.getLastIndexedNumber(site(siteId));
     }
 
@@ -85,6 +91,7 @@ public class BoardSearchService {
     public Message getMessage(
             @WebParam(name = "siteId") int siteId,
             @WebParam(name = "msgId") int msgId) throws ServiceException {
+        log.info("getMessage(" + siteId + ", " + msgId + ")");
 
         return fromMessageModel(appLogic.getMessageByNumber(site(siteId), msgId));
     }
@@ -95,6 +102,7 @@ public class BoardSearchService {
             @WebParam(name = "searchString") String searchString,
             @WebParam(name = "skip") int skip,
             @WebParam(name = "limit") int limit) throws ServiceException {
+        log.info("search(" + siteId + ", \"" + searchString + "\", " + skip + ", " + limit + ")");
 
         final Site site = site(siteId);
 
@@ -117,6 +125,7 @@ public class BoardSearchService {
             @WebParam(name = "searchString") String searchString,
             @WebParam(name = "skip") int skip,
             @WebParam(name = "limit") int limit) throws ServiceException {
+        log.info("searchShallow(" + siteId + ", \"" + searchString + "\", " + skip + ", " + limit + ")");
 
         final Site site = site(siteId);
 
