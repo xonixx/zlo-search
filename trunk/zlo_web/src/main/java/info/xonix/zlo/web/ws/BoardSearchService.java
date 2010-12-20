@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Nonnull;
 import javax.jws.WebMethod;
+import javax.jws.WebParam;
 import javax.jws.WebService;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,22 +72,27 @@ public class BoardSearchService {
     }
 
     @WebMethod
-    public int getLastSavedMsgNumber(int siteId) throws ServiceException {
+    public int getLastSavedMsgNumber(@WebParam(name = "siteId") int siteId) throws ServiceException {
         return appLogic.getLastSavedMessageNumber(site(siteId));
     }
 
     @WebMethod
-    public int getLastIndexedMsgNumber(int siteId) throws ServiceException {
+    public int getLastIndexedMsgNumber(@WebParam(name = "siteId") int siteId) throws ServiceException {
         return appLogic.getLastIndexedNumber(site(siteId));
     }
 
     @WebMethod
-    public Message getMessage(int siteId, int msgId) throws ServiceException {
+    public Message getMessage(
+            @WebParam(name = "siteId") int siteId,
+            @WebParam(name = "msgId") int msgId) throws ServiceException {
         return fromMessageModel(appLogic.getMessageByNumber(site(siteId), msgId));
     }
 
     @WebMethod
-    public List<Message> search(int siteId, String searchString, int limit) throws ServiceException {
+    public List<Message> search(
+            @WebParam(name = "siteId") int siteId,
+            @WebParam(name = "searchString") String searchString,
+            @WebParam(name = "limit") int limit) throws ServiceException {
         final Site site = site(siteId);
 
         final int[] resultIds = search(site, searchString, limit);
@@ -103,7 +109,21 @@ public class BoardSearchService {
     }
 
     @WebMethod
-    public List<MessageShallow> searchShallow(int siteId, String searchString, int limit) throws ServiceException {
+    public List<Message> searchStartingId(
+            @WebParam(name = "siteId") int siteId,
+            @WebParam(name = "searchString") String searchString,
+            @WebParam(name = "limit") int limit,
+            @WebParam(name = "startId") int startId) throws ServiceException {
+
+        return search(siteId, searchStringWithStartId(searchString, startId), limit);
+    }
+
+    @WebMethod
+    public List<MessageShallow> searchShallow(
+            @WebParam(name = "siteId") int siteId,
+            @WebParam(name = "searchString") String searchString,
+            @WebParam(name = "limit") int limit) throws ServiceException {
+
         final Site site = site(siteId);
 
         final int[] resultIds = search(site, searchString, limit);
@@ -119,6 +139,26 @@ public class BoardSearchService {
         return resultMessages;
     }
 
+    @WebMethod
+    public List<MessageShallow> searchShallowStartingId(
+            @WebParam(name = "siteId") int siteId,
+            @WebParam(name = "searchString") String searchString,
+            @WebParam(name = "limit") int limit,
+            @WebParam(name = "startId") int startId) throws ServiceException {
+
+        return searchShallow(siteId, searchStringWithStartId(searchString, startId), limit);
+    }
+
+    private String searchStringWithStartId(String searchString, int startId) {
+        final String startIdStr;
+        if (startId <= 0) {
+            startIdStr = "9999999999"; // 10 digits
+        } else {
+            startIdStr = info.xonix.zlo.search.model.Message.URL_NUM_FORMAT.format(startId);
+        }
+        return "(" + searchString + ")AND num:{0 TO " + startIdStr + "}";
+    }
+
     private int[] search(Site site, String searchString, int limit) throws ServiceException {
         final int[] resultIds;
 
@@ -127,6 +167,7 @@ public class BoardSearchService {
         } catch (SearchException e) {
             throw new ServiceException("Search error:" + e, e);
         }
+
         return resultIds;
     }
 }
