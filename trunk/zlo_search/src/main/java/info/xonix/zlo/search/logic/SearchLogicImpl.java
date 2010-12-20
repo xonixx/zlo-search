@@ -237,14 +237,14 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
         return limit;
     }
 
-    private int[] search(IndexSearcher smallSearcher, Query query, int limit) throws IOException {
-        final TopDocs topDocs = smallSearcher.search(query, null, limit,
+    private int[] search(IndexSearcher searcher, Query query, int limit) throws IOException {
+        final TopDocs topDocs = searcher.search(query, null, limit,
                 new Sort(new SortField(null, SortField.DOC, true))); // reversed index order
 
         int[] ids = new int[topDocs.scoreDocs.length];
         for (int i = 0; i < ids.length; i++) {
             final ScoreDoc scoreDoc = topDocs.scoreDocs[i];
-            ids[i] = Integer.parseInt(smallSearcher.doc(scoreDoc.doc).get(MessageFields.URL_NUM));
+            ids[i] = Integer.parseInt(searcher.doc(scoreDoc.doc).get(MessageFields.URL_NUM));
         }
         return ids;
     }
