@@ -195,6 +195,10 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
     }
 
     private String joinByComma(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return "-1";
+        }
+
         StringBuilder sbNums = new StringBuilder(Integer.toString(nums[0]));
 
         for (int i = 1; i < nums.length; i++) {

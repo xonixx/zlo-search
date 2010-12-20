@@ -30,6 +30,7 @@ import java.util.Date;
  */
 public class SearchLogicImpl implements SearchLogic, InitializingBean {
     private static final Logger log = Logger.getLogger(SearchLogicImpl.class);
+    private static final int MAX_LIMIT = 300;
 
     //    public static final int PERIOD_RECREATE_INDEXER = TimeUtils.parseToMilliSeconds(Config.getProp("searcher.period.recreate.indexer"));
     private Config config;
@@ -197,11 +198,8 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
             throw new SearchException("search: Wrong searchString", e);
         }
 
-        if (limit == 0) {
-            limit = 1000;
-        } else if (limit == -1) {
-            limit = Integer.MAX_VALUE;
-        }
+        limit = fixLimit(limit);
+
         final DoubleIndexManager doubleIndexManager = getDoubleIndexManager(site);
 
         final IndexSearcher smallSearcher = new IndexSearcher(doubleIndexManager.getSmallReader());
@@ -227,6 +225,16 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
         } catch (IOException e) {
             throw new SearchException("search: I/O exception", e);
         }
+    }
+
+    private int fixLimit(int limit) {
+        // TODO?
+        if (limit > MAX_LIMIT || limit <= 0) {
+            limit = MAX_LIMIT;
+        } /*else if (limit == -1) {
+            limit = Integer.MAX_VALUE;
+        }*/
+        return limit;
     }
 
     private int[] search(IndexSearcher smallSearcher, Query query, int limit) throws IOException {
