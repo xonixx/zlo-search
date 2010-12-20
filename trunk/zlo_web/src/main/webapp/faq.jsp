@@ -10,6 +10,7 @@
 <div class="content">
     <h3 class="attention">News</h3>
     <ul>
+        <li>Добавлен <a href="ws.jsp">веб-сервис поиска</a>;</li>
         <li>Добавлен поиск по <a href="http://forum.dolgopa.org/">http://forum.dolgopa.org/</a>;</li>
         <li>Добавлен поиск по <a href="http://x.zlowiki.ru/">http://x.zlowiki.ru/</a>;</li>
         <li>Добавлен поиск по форумам: <a href="http://takeoff.mipt.ru/cgi-bin/board/index.cgi?index">форум горной
