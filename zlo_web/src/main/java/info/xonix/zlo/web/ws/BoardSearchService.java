@@ -85,6 +85,7 @@ public class BoardSearchService {
     public Message getMessage(
             @WebParam(name = "siteId") int siteId,
             @WebParam(name = "msgId") int msgId) throws ServiceException {
+
         return fromMessageModel(appLogic.getMessageByNumber(site(siteId), msgId));
     }
 
@@ -92,10 +93,12 @@ public class BoardSearchService {
     public List<Message> search(
             @WebParam(name = "siteId") int siteId,
             @WebParam(name = "searchString") String searchString,
+            @WebParam(name = "skip") int skip,
             @WebParam(name = "limit") int limit) throws ServiceException {
+
         final Site site = site(siteId);
 
-        final int[] resultIds = search(site, searchString, limit);
+        final int[] resultIds = search(site, searchString, skip, limit);
 
         final List<info.xonix.zlo.search.model.Message> messages = messagesDao.getMessages(site, resultIds);
 
@@ -109,24 +112,15 @@ public class BoardSearchService {
     }
 
     @WebMethod
-    public List<Message> searchStartingId(
-            @WebParam(name = "siteId") int siteId,
-            @WebParam(name = "searchString") String searchString,
-            @WebParam(name = "limit") int limit,
-            @WebParam(name = "startId") int startId) throws ServiceException {
-
-        return search(siteId, searchStringWithStartId(searchString, startId), limit);
-    }
-
-    @WebMethod
     public List<MessageShallow> searchShallow(
             @WebParam(name = "siteId") int siteId,
             @WebParam(name = "searchString") String searchString,
+            @WebParam(name = "skip") int skip,
             @WebParam(name = "limit") int limit) throws ServiceException {
 
         final Site site = site(siteId);
 
-        final int[] resultIds = search(site, searchString, limit);
+        final int[] resultIds = search(site, searchString, skip, limit);
 
         final List<info.xonix.zlo.search.model.MessageShallow> messages = messagesDao.getShallowMessages(site, resultIds);
 
@@ -139,31 +133,11 @@ public class BoardSearchService {
         return resultMessages;
     }
 
-    @WebMethod
-    public List<MessageShallow> searchShallowStartingId(
-            @WebParam(name = "siteId") int siteId,
-            @WebParam(name = "searchString") String searchString,
-            @WebParam(name = "limit") int limit,
-            @WebParam(name = "startId") int startId) throws ServiceException {
-
-        return searchShallow(siteId, searchStringWithStartId(searchString, startId), limit);
-    }
-
-    private String searchStringWithStartId(String searchString, int startId) {
-        final String startIdStr;
-        if (startId <= 0) {
-            startIdStr = "9999999999"; // 10 digits
-        } else {
-            startIdStr = info.xonix.zlo.search.model.Message.URL_NUM_FORMAT.format(startId);
-        }
-        return "(" + searchString + ")AND num:{0 TO " + startIdStr + "}";
-    }
-
-    private int[] search(Site site, String searchString, int limit) throws ServiceException {
+    private int[] search(Site site, String searchString, int skip, int limit) throws ServiceException {
         final int[] resultIds;
 
         try {
-            resultIds = searchLogic.search(site, searchString, limit);
+            resultIds = searchLogic.search(site, searchString, skip, limit);
         } catch (SearchException e) {
             throw new ServiceException("Search error:" + e, e);
         }
