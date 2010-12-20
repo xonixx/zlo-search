@@ -24,5 +24,5 @@ public interface SearchLogic {
 
     void dropIndex(Site site) throws IOException;
 
-    int[] search(Site site, String searchString, int limit) throws SearchException;
+    int[] search(Site site, String searchString, int skip, int limit) throws SearchException;
 }

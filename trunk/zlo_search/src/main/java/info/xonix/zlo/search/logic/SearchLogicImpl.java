@@ -30,7 +30,7 @@ import java.util.Date;
  */
 public class SearchLogicImpl implements SearchLogic, InitializingBean {
     private static final Logger log = Logger.getLogger(SearchLogicImpl.class);
-    private static final int MAX_LIMIT = 300;
+    private static final int MAX_LIMIT = 500;
 
     //    public static final int PERIOD_RECREATE_INDEXER = TimeUtils.parseToMilliSeconds(Config.getProp("searcher.period.recreate.indexer"));
     private Config config;
@@ -188,7 +188,7 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     }
 
     @Override
-    public int[] search(Site site, String searchString, int limit) throws SearchException {
+    public int[] search(Site site, String searchString, int skip, int limit) throws SearchException {
         final QueryParser queryParser = getQueryParser();
 
         final Query query;
@@ -198,33 +198,44 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
             throw new SearchException("search: Wrong searchString", e);
         }
 
-        limit = fixLimit(limit);
+        int realLimit = skip + fixLimit(limit);
 
         final DoubleIndexManager doubleIndexManager = getDoubleIndexManager(site);
 
         final IndexSearcher smallSearcher = new IndexSearcher(doubleIndexManager.getSmallReader());
 
         try {
-            final int[] ids = search(smallSearcher, query, limit);
+            final int[] ids = search(smallSearcher, query, realLimit);
 
-            if (ids.length == limit) {
-                return ids;
+            if (ids.length == realLimit) {
+                return skip(ids, skip);
             }
 
-            limit = limit - ids.length;
+            realLimit -= ids.length;
 
-            if (limit <= 0) {
+            if (realLimit <= 0) {
                 throw new IllegalStateException();
             }
 
             final IndexSearcher bigSearcher = new IndexSearcher(doubleIndexManager.getBigReader());
 
-            final int[] idsBig = search(bigSearcher, query, limit);
-            return ArrayUtils.addAll(ids, idsBig);
+            final int[] idsBig = search(bigSearcher, query, realLimit);
+
+
+            final int[] idsAll = ArrayUtils.addAll(ids, idsBig);
+            return skip(idsAll, skip); // TODO: optimize
 
         } catch (IOException e) {
             throw new SearchException("search: I/O exception", e);
         }
+    }
+
+    private int[] last(int[] inp, int takeLast) {
+        return ArrayUtils.subarray(inp, inp.length - takeLast, inp.length);
+    }
+
+    private int[] skip(int[] inp, int skip) {
+        return ArrayUtils.subarray(inp, skip, inp.length);
     }
 
     private int fixLimit(int limit) {
