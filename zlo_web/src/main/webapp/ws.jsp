@@ -14,7 +14,8 @@
     выполненный на технологии <a href="http://cxf.apache.org/">Apache CXF</a>.
 
     Для работы из <a href="http://www.python.org/">python</a> рекомеднуется библиотека для WS
-    <a href="https://fedorahosted.org/suds/">suds</a>.
+    <a href="https://fedorahosted.org/suds/">suds</a>
+    (<a href="http://zlo.rt.mipt.ru/?read=6939422">пример использования</a>).
 
     Веб-метод search принимает поисковую строку, соответствующую формату
     <a href="http://lucene.apache.org/java/3_0_2/queryparsersyntax.html">Lucene query parser</a>'a, при этом
