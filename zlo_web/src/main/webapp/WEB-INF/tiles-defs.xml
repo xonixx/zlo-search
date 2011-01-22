@@ -36,6 +36,10 @@
         <put-attribute name="activeScreen" value="forums"/>
     </definition>
 
+    <definition name="header.ws" extends="header">
+        <put-attribute name="activeScreen" value="ws"/>
+    </definition>
+
     <!--admin headers-->
     <definition name="header.detectspam" extends="header">
         <put-attribute name="activeScreen" value="detectspam"/>

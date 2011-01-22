@@ -5,7 +5,7 @@
 
 <title>Web Service поиска</title>
 
-<tiles:insertDefinition name="header.faq"/>
+<tiles:insertDefinition name="header.ws"/>
 
 <div class="content">
     <h3>Web Service поиска</h3>
