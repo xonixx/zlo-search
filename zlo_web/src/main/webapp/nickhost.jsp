@@ -55,7 +55,7 @@
 </c:if>
 
 <c:set var="title">
-    Все ${isHost ? 'ники хоста' : 'хосты ника'} <c:out value="${text}"/> на сайте ${siteUrl}
+    Все ${isHost ? 'ники хоста' : 'хосты ника'} <c:out value="${text}"/> на форуме ${siteUrl}
 </c:set>
 <title>${title}</title>
 

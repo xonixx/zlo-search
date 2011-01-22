@@ -62,13 +62,16 @@
             </c:choose>
         </c:if>
     </h3>
-    <small>(всего запросов: ${totalNum.rows[0].last}, показано ${res.rowCount} ${
-            xonix:plural(res.rowCount, 'запрос', 'запроса', 'запросов')}, за последние ${lastHours} ${
-            xonix:plural(lastHours, 'час', 'часа', 'часов')})
+    <small>(всего запросов: ${totalNum.rows[0].last}, показано ${res.rowCount}
+        ${xonix:plural(res.rowCount, 'запрос', 'запроса', 'запросов')},
+        за последние ${lastHours} ${xonix:plural(lastHours, 'час', 'часа', 'часов')})
     </small>
 
     <display:table name="${res.rows}" id="row" htmlId="resultTable"
                    decorator="info.xonix.zlo.web.decorators.HistoryTableDecorator">
+
+        <display:setProperty name="basic.msg.empty_list"><%-- don't display empty msg --%></display:setProperty>
+
         <display:column title="№">
             <a href="search?<c:out value="${row.req_query_str}"/>" class="search">${row_rowNum}</a>
         </display:column>
