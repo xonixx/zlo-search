@@ -1,6 +1,7 @@
 from suds.client import Client
 
-c = Client('http://localhost:8080/ws/search?wsdl')
+#c = Client('http://localhost:8080/ws/search?wsdl')
+c = Client('http://zlo.rt.mipt.ru:7500/ws/search?wsdl')
 
 print c
 
@@ -27,7 +28,7 @@ while True:
     print 'fetching next %s msgs...' % STEP
     print
 
-    l = service.searchShallow(0, 'nick:xonix', total, STEP)
+    l = service.searchShallow(ZLO_ID, 'nick:xonix', total, STEP)
 
     if len(l) == 0:
         break
