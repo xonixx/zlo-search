@@ -54,7 +54,7 @@
 </sql:query>
 
 <c:set var="title">
-    Статистика сайта ${site.siteUrl} по <c:choose><c:when
+    Статистика форума ${site.siteUrl} по <c:choose><c:when
         test="${byNick}">никам</c:when><c:otherwise>хостам</c:otherwise></c:choose>
     за последние ${period.label}
 </c:set>
