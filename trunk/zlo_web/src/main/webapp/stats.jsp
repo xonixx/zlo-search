@@ -87,6 +87,8 @@
     <small>Всего сообщений за этот период: ${resTotal.rows[0].cnt}</small>
 
     <display:table name="${res.rows}" id="row" htmlId="resultTable">
+        <display:setProperty name="basic.msg.empty_list"><%-- don't display empty msg --%></display:setProperty>
+
         <display:column title="№" value="${row_rowNum}"/>
         <display:column title="${byNick ? 'Ник' : 'Хост'}">
             <c:choose>
