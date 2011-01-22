@@ -26,9 +26,11 @@
         <li><a href="nickhost.jsp?site=${site}"
                <c:if test="${activeScreen == 'nickhost'}">class="activeLink"</c:if>>Ники/Хосты</a></li>
         <li><a href="history.jsp"
-               <c:if test="${activeScreen == 'history'}">class="activeLink"</c:if>>История</a></li>
+               <c:if test="${activeScreen == 'history'}">class="activeLink"</c:if>>История запросов</a></li>
         <li><a href="forums.jsp"
                <c:if test="${activeScreen == 'forums'}">class="activeLink"</c:if>>Форумы</a></li>
+        <li><a href="ws.jsp"
+               <c:if test="${activeScreen == 'ws'}">class="activeLink"</c:if>>Web Service</a></li>
         <li><a href="faq.jsp"
                <c:if test="${activeScreen == 'faq'}">class="activeLink"</c:if>>FAQ</a></li>
         <li><a href="about.jsp"
