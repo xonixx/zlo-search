@@ -39,6 +39,12 @@
             <groupId>ZloSearcher</groupId>
             <artifactId>zlo_search</artifactId>
             <version>0.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-collections</groupId>
+                    <artifactId>commons-collections</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!--j2ee API-->
@@ -119,9 +125,18 @@
                     <groupId>commons-logging</groupId>
                     <artifactId>commons-logging</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>commons-collections</groupId>
+                    <artifactId>commons-collections</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.1</version>
+        </dependency>
         <!--ws: apache cxf-->
         <dependency>
             <groupId>org.apache.cxf</groupId>

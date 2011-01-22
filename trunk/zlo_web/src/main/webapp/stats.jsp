@@ -1,3 +1,4 @@
+<%@ page import="info.xonix.zlo.web.controlsdata.ControlsData" %>
 <%--
   User: Vovan
   Date: 20.01.2008
@@ -14,7 +15,10 @@
 <%@ include file="WEB-INF/jsp/setSite.jsp" %>
 
 <c:set var="byNick" value="${empty param['type'] or param['type'] == 'nick'}"/>
-<c:set var="period" value="${param['period'] == '2' ? 10 : param['period'] == '3' ? 30 : 2}"/>
+
+<c:set var="periodsMap" value="<%= ControlsData.STATS_PERIODS_MAP %>"/>
+<c:set var="period" value="${periodsMap[not empty param['period'] ? param['period'] : '']}"/>
+<c:set var="periodDays" value="${period.days}"/>
 
 <c:set var="messagesTbl">${site.name}_messages</c:set>
 
@@ -29,7 +33,7 @@
             ${msgDateWhereClause}
             group by nick
             order by cnt desc;
-            <sql:param>${period}</sql:param>
+            <sql:param>${periodDays}</sql:param>
         </sql:query>
     </c:when>
     <c:otherwise>
@@ -38,7 +42,7 @@
             ${msgDateWhereClause}
             group by host
             order by cnt desc;
-            <sql:param>${period}</sql:param>
+            <sql:param>${periodDays}</sql:param>
         </sql:query>
     </c:otherwise>
 </c:choose>
@@ -46,13 +50,13 @@
 <sql:query var="resTotal">
     select COUNT(*) cnt from ${messagesTbl}
     ${msgDateWhereClause}
-    <sql:param>${period}</sql:param>
+    <sql:param>${periodDays}</sql:param>
 </sql:query>
 
 <c:set var="title">
     —татистика сайта ${site.siteUrl} по <c:choose><c:when
         test="${byNick}">никам</c:when><c:otherwise>хостам</c:otherwise></c:choose>
-    за последние ${period} суток
+    за последние ${period.label}
 </c:set>
 <title>${title}</title>
 
@@ -67,17 +71,16 @@
         <br/>
         ѕо:
         <input type="radio" name="type" value="nick" id="tn"
-        <c:if test="${byNick}">checked="checked"</c:if> /><label for="tn">нику</label>
+               <c:if test="${byNick}">checked="checked"</c:if> /><label for="tn">нику</label>
         <input type="radio" name="type" value="host" id="th" <c:if test="${!byNick}">checked="checked"</c:if>/><label
             for="th">хосту</label>
         за последние:
         <select name="period">
-            <option value="1"
-            <c:if test="${period == 2}">selected="selected"</c:if>>2-е суток</option>
-            <option value="2"
-            <c:if test="${period == 10}">selected="selected"</c:if>>10 суток</option>
-            <option value="3"
-            <c:if test="${period == 30}">selected="selected"</c:if>>30 суток</option>
+            <c:forEach var="p" items="${periodsMap}">
+                <option value="${p.key}"
+                        <c:if test="${periodDays == p.value.days}">selected="selected"</c:if>>${p.value.label}
+                </option>
+            </c:forEach>
         </select>
         <input type="submit" value="ѕоказать!"/>
     </form>
