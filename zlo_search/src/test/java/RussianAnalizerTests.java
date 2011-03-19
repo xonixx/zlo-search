@@ -1,10 +1,11 @@
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.model.MessageFields;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.TermAttribute;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -18,12 +19,13 @@ import java.util.List;
  * Time: 22:02
  */
 public class RussianAnalizerTests {
-    private Analyzer analyzer;
+    private static Analyzer analyzer;
 
-    @Before
-    public void setUp() {
+    @BeforeClass
+    public static void setUp() {
         Config config = AppSpringContext.getApplicationContextForTesting().getBean(Config.class);
         analyzer = config.getMessageAnalyzer();
+        System.out.println("Using analyzer: " + analyzer.getClass());
     }
 
     @Test
@@ -46,7 +48,7 @@ public class RussianAnalizerTests {
 
     private void checkCorrectAnalyzing(String str, String[] expectedResult) throws IOException {
         System.out.println("-----");
-        final TokenStream tokenStream = analyzer.tokenStream("body", new StringReader(str));
+        final TokenStream tokenStream = analyzer.tokenStream(MessageFields.BODY, new StringReader(str));
 
         tokenStream.reset();
 
