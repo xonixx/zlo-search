@@ -1,6 +1,7 @@
 package info.xonix.zlo.search.logic;
 
 import info.xonix.zlo.search.FoundTextHighlighter;
+import info.xonix.zlo.search.LuceneVersion;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.domainobj.SearchRequest;
 import info.xonix.zlo.search.domainobj.SearchResult;
@@ -15,7 +16,6 @@ import org.apache.log4j.Logger;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.*;
-import org.apache.lucene.util.Version;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
@@ -163,7 +163,7 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     }
 
     private QueryParser getQueryParser() {
-        return new QueryParser(Version.LUCENE_29, MessageFields.BODY, config.getMessageAnalyzer());
+        return new QueryParser(LuceneVersion.VERSION, MessageFields.BODY, config.getMessageAnalyzer());
     }
 
     @Override

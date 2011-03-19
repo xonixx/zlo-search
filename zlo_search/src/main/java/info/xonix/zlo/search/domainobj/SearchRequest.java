@@ -176,6 +176,7 @@ public class SearchRequest {
                 ;
     }
 
+    // TODO: rfct equals + hashCode
     public boolean equals(Object obj) {
         if (!(obj instanceof SearchRequest))
             return false;

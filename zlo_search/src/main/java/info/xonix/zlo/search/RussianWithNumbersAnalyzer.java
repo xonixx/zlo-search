@@ -2,10 +2,11 @@ package info.xonix.zlo.search;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.ru.RussianAnalyzer;
-import org.apache.lucene.analysis.ru.RussianCharsets;
 
 import java.io.Reader;
+
+//import org.apache.lucene.analysis.ru.RussianAnalyzer;
+//import org.apache.lucene.analysis.ru.RussianCharsets;
 
 /**
  * Author: Vovan
@@ -16,6 +17,7 @@ public class RussianWithNumbersAnalyzer extends Analyzer {
 
     private Analyzer russianAnalyzer;
 
+/*
     public RussianWithNumbersAnalyzer() {
         initialize();
     }
@@ -44,6 +46,7 @@ public class RussianWithNumbersAnalyzer extends Analyzer {
         russianChars[length] = '9';
         return russianChars;
     }
+*/
 
     protected String[] getStopWords() {
         return null;

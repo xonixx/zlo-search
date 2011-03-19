@@ -77,8 +77,9 @@ public class SearchResult {
      */
     public boolean isOld() {
         boolean old = searchDate.before(doubleIndexManager.getRenewDate());
-        if (old)
+        if (old) {
             log.info("Search result for " + query + " is old.");
+        }
         return old;
     }
 }
