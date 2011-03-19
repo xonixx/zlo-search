@@ -12,6 +12,7 @@ import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Sort;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -24,9 +25,9 @@ import java.io.StringReader;
 public class Test5 {
     private static final Config config = AppSpringContext.get(Config.class);
 
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         m4();
-    }
+    }*/
 
 /*    public static void m3() {
         // test index
@@ -44,7 +45,8 @@ public class Test5 {
         }
     }*/
 
-    public static void m2() {
+    @Test
+    public void m2() {
         String s = "в чем смысл жизни?";
 
         Analyzer analyzer = config.getMessageAnalyzer();
