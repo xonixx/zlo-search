@@ -3,7 +3,6 @@ package info.xonix.zlo.search.spring.db;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.utils.Check;
 import org.apache.log4j.Logger;
-import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -18,8 +17,8 @@ public class DataSourceFactory implements FactoryBean<DataSource>, InitializingB
     private static final Logger log = Logger.getLogger(DataSourceFactory.class);
 
     private Config config;
-    private BasicDataSource dataSourceLocal;
-    private BasicDataSource dataSourceRt;
+    private DataSource dataSourceLocal;
+    private DataSource dataSourceRt;
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -57,7 +56,7 @@ public class DataSourceFactory implements FactoryBean<DataSource>, InitializingB
         this.config = config;
     }
 
-    public void setDataSourceLocal(BasicDataSource dataSourceLocal) {
+    public void setDataSourceLocal(DataSource dataSourceLocal) {
         this.dataSourceLocal = dataSourceLocal;
     }
 
@@ -65,7 +64,7 @@ public class DataSourceFactory implements FactoryBean<DataSource>, InitializingB
         return dataSourceLocal;
     }*/
 
-    public void setDataSourceRt(BasicDataSource dataSourceRt) {
+    public void setDataSourceRt(DataSource dataSourceRt) {
         this.dataSourceRt = dataSourceRt;
     }
 

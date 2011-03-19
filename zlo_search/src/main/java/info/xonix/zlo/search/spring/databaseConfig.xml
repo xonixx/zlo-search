@@ -8,7 +8,7 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 http://www.springframework.org/schema/context
 http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-    <bean id="dataSourceLocal" class="org.apache.tomcat.dbcp.dbcp.BasicDataSource"
+    <!--    <bean id="dataSourceLocal" class="org.apache.tomcat.dbcp.dbcp.BasicDataSource"
           destroy-method="close">
         <property name="driverClassName" value="${jdbc.driverClassName}"/>
         <property name="url" value="${jdbc.url.local}"/>
@@ -21,7 +21,34 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
         <property name="url" value="${jdbc.url.rt}"/>
         <property name="username" value="${jdbc.username.rt}"/>
         <property name="password" value="${jdbc.password.rt}"/>
+    </bean>-->
+
+    <bean id="dataSourceLocal" class="org.apache.tomcat.jdbc.pool.DataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url.local}"/>
+        <property name="username" value="${jdbc.username.local}"/>
+        <property name="password" value="${jdbc.password.local}"/>
+
+        <property name="defaultAutoCommit" value="${jdbc.pool.defaultAutoCommit}"/>
+        <property name="maxActive" value="${jdbc.pool.maxActive}"/>
+        <property name="validationInterval" value="${jdbc.pool.validationInterval}"/>
+        <property name="validationQuery" value="${jdbc.pool.validationQuery}"/>
     </bean>
+
+    <bean id="dataSourceRt" class="org.apache.tomcat.jdbc.pool.DataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url.rt}"/>
+        <property name="username" value="${jdbc.username.rt}"/>
+        <property name="password" value="${jdbc.password.rt}"/>
+
+        <property name="defaultAutoCommit" value="${jdbc.pool.defaultAutoCommit}"/>
+        <property name="maxActive" value="${jdbc.pool.maxActive}"/>
+        <property name="validationInterval" value="${jdbc.pool.validationInterval}"/>
+        <property name="validationQuery" value="${jdbc.pool.validationQuery}"/>
+    </bean>
+
     <bean id="dataSource" class="info.xonix.zlo.search.spring.db.DataSourceFactory">
         <property name="config" ref="appConfig"/>
         <property name="dataSourceLocal" ref="dataSourceLocal"/>
