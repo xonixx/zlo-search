@@ -1,5 +1,6 @@
 package info.xonix.zlo.search.test;
 
+import info.xonix.zlo.search.LuceneVersion;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.doubleindex.DoubleIndexManager;
@@ -9,12 +10,9 @@ import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Sort;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.io.StringReader;
 
 /**
@@ -59,18 +57,18 @@ public class Test5 {
     private static void showTokens(String s, Analyzer analyzer) {
         Token t;
         TokenStream ts = analyzer.tokenStream("body", new StringReader(s));
-        try {
+/*        try {
             while ((t = ts.next()) != null) {
                 System.out.println(t.termText());
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     private static void m1() {
         Analyzer analyzer = config.getMessageAnalyzer();
-        QueryParser qp = new QueryParser("body", analyzer);
+        QueryParser qp = new QueryParser(LuceneVersion.VERSION, "body", analyzer);
         try {
             System.out.println(qp.parse("nick:\"\\\\/\\\\/0\\\\/\\\\/KA\""));
         } catch (ParseException e) {
@@ -84,7 +82,7 @@ public class Test5 {
         Site site = Site.forName("zlo");
         DoubleIndexManager dis = new DoubleIndexManager(site, null);
         IndexSearcher is = new IndexSearcher(dis.getBigReader());
-        try {
+/*        try {
             Hits hits = is.search(new QueryParser("body", config.getMessageAnalyzer()).parse("body:тест title:тест"), Sort.INDEXORDER);
 
             for (int i = 1; i < 10; i++) {
@@ -96,6 +94,6 @@ public class Test5 {
             e.printStackTrace();
         } catch (ParseException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

@@ -112,7 +112,7 @@ public class FoundTextHighlighter {
         Query query = null;
         try {
             String queryStr = MessageFormat.format("{0}:({1})", MessageFields.BODY, txt);
-            QueryParser parser = new QueryParser(MessageFields.BODY, config.getMessageAnalyzer());
+            QueryParser parser = new QueryParser(LuceneVersion.VERSION, MessageFields.BODY, config.getMessageAnalyzer());
             query = parser.parse(queryStr);
             Set<Term> set = new HashSet<Term>();
             query.extractTerms(set);

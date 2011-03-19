@@ -158,10 +158,8 @@ public class SearchServlet extends BaseServlet {
                 try {
                     pageSize = Integer.parseInt(config.getNumsPerPage()[Integer.parseInt(pageSizeStrInd)]);
                     CookieUtils.rememberInCookie(response, QS_PAGE_SIZE, pageSizeStrInd);
-                } catch (NumberFormatException ex) {
-                    ;
-                } catch (ArrayIndexOutOfBoundsException ex) {
-                    ;
+                } catch (NumberFormatException ignored) {
+                } catch (ArrayIndexOutOfBoundsException ignored) {
                 }
             } else {
                 String pageSizeStrIndCookie = CookieUtils.recallFromCookie(request, QS_PAGE_SIZE);
@@ -169,10 +167,8 @@ public class SearchServlet extends BaseServlet {
                     try {
                         pageSize = Integer.parseInt(config.getNumsPerPage()[Integer.parseInt(pageSizeStrIndCookie)]);
                         request.setParameter(QS_PAGE_SIZE, pageSizeStrIndCookie);
-                    } catch (NumberFormatException ex) {
-                        ;
-                    } catch (ArrayIndexOutOfBoundsException ex) {
-                        ;
+                    } catch (NumberFormatException ignored) {
+                    } catch (ArrayIndexOutOfBoundsException ignored) {
                     }
                 } else {
                     pageSize = Integer.parseInt(config.getNumsPerPage()[0]);
@@ -235,8 +231,8 @@ public class SearchServlet extends BaseServlet {
 
                 int searchHash = searchRequest.hashCode();
 
-                SearchResult searchResult;
-                SearchResult prevSearchResult = cache.get(searchHash);
+                final SearchResult searchResult;
+                final SearchResult prevSearchResult = cache.get(searchHash);
 
                 if (prevSearchResult == null
                         || prevSearchResult.isNotTheSameSearch(searchRequest)
@@ -271,7 +267,7 @@ public class SearchServlet extends BaseServlet {
 
                     request.setAttribute(REQ_SEARCH_RESULT, searchResult);
 
-                    ZloPaginatedList paginatedList = searchResult.createPaginatedList();
+                    final ZloPaginatedList paginatedList = searchResult.createPaginatedList();
                     request.setAttribute(REQ_PAGINATED_LIST, paginatedList);
 
                     if (isRssAsked) {

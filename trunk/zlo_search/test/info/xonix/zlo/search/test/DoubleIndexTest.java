@@ -7,7 +7,6 @@ import info.xonix.zlo.search.doubleindex.DoubleIndexManager;
 import info.xonix.zlo.search.logic.SearchLogic;
 import info.xonix.zlo.search.logic.SearchLogicImpl;
 import info.xonix.zlo.search.spring.AppSpringContext;
-import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.search.MatchAllDocsQuery;
 
 import java.io.IOException;
@@ -29,11 +28,11 @@ public class DoubleIndexTest {
     private static void m3() {
         DoubleIndexManager dis = getDIS();
         System.out.println(dis.getBigReader().isOptimized());
-        try {
+/*        try {
             System.out.println(new IndexWriter("D:\\TEST\\JAVA\\ZloSearcher\\__test\\1", config.getMessageAnalyzer()).getUseCompoundFile());
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     private static DoubleIndexManager getDIS() {

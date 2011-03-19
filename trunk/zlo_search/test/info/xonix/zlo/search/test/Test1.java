@@ -1,5 +1,6 @@
 package info.xonix.zlo.search.test;
 
+import info.xonix.zlo.search.LuceneVersion;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.AppLogic;
@@ -194,7 +195,7 @@ public class Test1 {
     }
 
     public static void m1() {
-        QueryParser qp = new QueryParser("field1", new SimpleAnalyzer());
+        QueryParser qp = new QueryParser(LuceneVersion.VERSION, "field1", new SimpleAnalyzer());
         try {
             Query q = qp.parse("[1.1.04 TO 5.30.05]");
             System.out.println(q.toString());

@@ -179,13 +179,14 @@ public class DoubleIndexManager {
     private void performReopen(IndexReader r) {
         boolean isSmall = r == smallReader;
         log.debug(MessageFormat.format("Start recreating {0} indexReader...", isSmall ? "small" : "big"));
-        if (isSmall)
+        if (isSmall) {
             isReopeningSmall = true;
-        else
+        } else {
             isReopeningBig = true;
+        }
 
-        IndexReader ir = null,
-                oldIndexReader = isSmall ? smallReader : bigReader;
+        IndexReader ir = null;
+        IndexReader oldIndexReader = isSmall ? smallReader : bigReader;
 
         try {
             ir = IndexReader.open(
@@ -200,7 +201,7 @@ public class DoubleIndexManager {
         IndexSearcher is = null;
         try {
             is = new IndexSearcher(ir);
-            is.search(new MatchAllDocsQuery(), renewingSort);
+            is.search(new MatchAllDocsQuery(), null, 1, renewingSort);
         } catch (IOException e) {
             log.error("Problems recreating smallReader: ", e);
             return;
@@ -227,10 +228,11 @@ public class DoubleIndexManager {
 
         log.info("Successfuly recreated.");
 
-        if (isSmall)
+        if (isSmall) {
             isReopeningSmall = false;
-        else
+        } else {
             isReopeningBig = false;
+        }
 
         renewDate = new Date();
     }
@@ -251,18 +253,27 @@ public class DoubleIndexManager {
 
     public static void clean(IndexReader ir) {
         try {
-            if (ir != null)
+            if (ir != null) {
                 ir.close();
+            }
         } catch (IOException e) {
             log.error("Error while closing index reader: " + e.getClass());
         }
     }
 
     public DoubleHits search(Query query) throws IOException {
-        return new DoubleHits1( //TODO: optimize - lazy search big index
-                new IndexSearcher(getBigReader()).search(query, Sort.INDEXORDER),
-                new IndexSearcher(getSmallReader()).search(query, Sort.INDEXORDER)
-        );
+        final IndexReader bigReader = getBigReader();
+        final IndexReader smallReader = getSmallReader();
+
+        // TODO: optimize - lazy search big index
+        // TODO: optimize numDocs
+        final IndexSearcher indexSearcherBig = new IndexSearcher(bigReader);
+        final IndexSearcher indexSearcherSmall = new IndexSearcher(smallReader);
+        return new DoubleHitsImpl(
+                indexSearcherBig.search(query, null, bigReader.numDocs(), Sort.INDEXORDER),
+                indexSearcherBig,
+                indexSearcherSmall.search(query, null, smallReader.numDocs(), Sort.INDEXORDER),
+                indexSearcherSmall);
     }
 
     public void drop() throws IOException {

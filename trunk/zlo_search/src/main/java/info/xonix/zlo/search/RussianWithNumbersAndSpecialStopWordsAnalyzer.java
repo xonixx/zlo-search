@@ -12,6 +12,7 @@ public class RussianWithNumbersAndSpecialStopWordsAnalyzer extends RussianWithNu
     private String[] stopWords;
     private static Config config = AppSpringContext.get(Config.class);
 
+/*
     public RussianWithNumbersAndSpecialStopWordsAnalyzer() {
         this.stopWords = config.getProp("analyzer.stop.words").split("|");
         initialize();
@@ -21,6 +22,7 @@ public class RussianWithNumbersAndSpecialStopWordsAnalyzer extends RussianWithNu
         this.stopWords = stopWords;
         initialize();
     }
+*/
 
     protected String[] getStopWords() {
         return stopWords;

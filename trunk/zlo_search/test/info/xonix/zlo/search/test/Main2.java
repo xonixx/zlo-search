@@ -1,15 +1,11 @@
 package info.xonix.zlo.search.test;
 
+import info.xonix.zlo.search.LuceneVersion;
 import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.ru.RussianAnalyzer;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.search.IndexSearcher;
-
-import java.io.IOException;
 
 /**
  * Author: gubarkov
@@ -18,7 +14,7 @@ import java.io.IOException;
  */
 public class Main2 {
     public static final String TEST_INDEX = "test_index";
-    public static final Analyzer ANALYZER = new RussianAnalyzer();
+    public static final Analyzer ANALYZER = new RussianAnalyzer(LuceneVersion.VERSION);
 
     public static void main(String[] args) {
         final String[][] DATA = {
@@ -31,9 +27,9 @@ public class Main2 {
                 //{"Развлечения", "Развлечения", "Абракадабра абырвалг Даздраперма"},
                 //{"123123123", "Развлечения", "Абракадабра абырвалг Даздраперма"},
         };
-        try {
-            // indexing
-            IndexWriter wr = new IndexWriter(TEST_INDEX, ANALYZER, true);
+//        try {
+        // indexing
+//            IndexWriter wr = new IndexWriter(TEST_INDEX, ANALYZER, true);
 
 /*            for (String[] line : DATA) {
                 Document d = new Document();
@@ -44,9 +40,9 @@ public class Main2 {
                 wr.addDocument(d);
             }
             */
-            Site site = Site.forName("zlo");
-            AppLogic appLogic = AppSpringContext.get(AppLogic.class);
-            wr.addDocument(appLogic.getMessageByNumber(site, 3001403).getDocument());
+        Site site = Site.forName("zlo");
+        AppLogic appLogic = AppSpringContext.get(AppLogic.class);
+/*            wr.addDocument(appLogic.getMessageByNumber(site, 3001403).getDocument());
 
 
             wr.optimize();
@@ -54,7 +50,7 @@ public class Main2 {
 
             //searching
             IndexReader reader = IndexReader.open(TEST_INDEX);
-            IndexSearcher searcher = new IndexSearcher(reader);
+            IndexSearcher searcher = new IndexSearcher(reader);*/
 
 /*            QueryParser parser = new QueryParser("body", ANALYZER);
 
@@ -67,9 +63,9 @@ public class Main2 {
                 System.out.println("Found: {"+d.get("num")+", "+d.get("title")+", "+d.get("body")+"}");
             }*/
 //            System.out.println(SearchLogicImpl.searchIndexReader(reader, "topicCode:4", null).getHits().length());
-        } catch (IOException e) {
+        /*} catch (IOException e) {
             e.printStackTrace();
-        } /*catch (ParseException e) {
+        } catch (ParseException e) {
             e.printStackTrace();
         }*/
     }
