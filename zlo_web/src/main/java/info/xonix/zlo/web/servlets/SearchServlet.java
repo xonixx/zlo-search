@@ -100,22 +100,22 @@ public class SearchServlet extends BaseServlet {
     private final RssFormer rssFormer = new RssFormer();
 
     protected void doGet(ForwardingRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String topicCodeStr = request.getParameter(QS_TOPIC_CODE);
+        final String topicCodeStr = request.getParameter(QS_TOPIC_CODE);
         String text = request.getParameter(QS_TEXT);
 
-        boolean inTitle = StringUtils.isNotEmpty(request.getParameter(QS_IN_TITLE));
-        boolean inBody = StringUtils.isNotEmpty(request.getParameter(QS_IN_BODY));
+        final boolean inTitle = StringUtils.isNotEmpty(request.getParameter(QS_IN_TITLE));
+        final boolean inBody = StringUtils.isNotEmpty(request.getParameter(QS_IN_BODY));
 
-        boolean inReg = StringUtils.isNotEmpty(request.getParameter(QS_IN_REG));
-        boolean inHasUrl = StringUtils.isNotEmpty(request.getParameter(QS_IN_HAS_URL));
-        boolean inHasImg = StringUtils.isNotEmpty(request.getParameter(QS_IN_HAS_IMG));
+        final boolean inReg = StringUtils.isNotEmpty(request.getParameter(QS_IN_REG));
+        final boolean inHasUrl = StringUtils.isNotEmpty(request.getParameter(QS_IN_HAS_URL));
+        final boolean inHasImg = StringUtils.isNotEmpty(request.getParameter(QS_IN_HAS_IMG));
 
-        boolean isRssAsked = request.getParameter(QS_RSS) != null;
+        final boolean isRssAsked = request.getParameter(QS_RSS) != null;
 
         String nick = request.getParameter(QS_NICK);
         String host = request.getParameter(QS_HOST);
-        String fromDateStr = request.getParameter(QS_FROM_DATE);
-        String toDateStr = request.getParameter(QS_TO_DATE);
+        final String fromDateStr = request.getParameter(QS_FROM_DATE);
+        final String toDateStr = request.getParameter(QS_TO_DATE);
 
         ErrorMessage errorMsg = null;
         request.setAttribute(DEBUG, config.isDebug());
@@ -152,7 +152,7 @@ public class SearchServlet extends BaseServlet {
                 request.setParameter(QS_IN_BODY, ON);
             }
 
-            int pageSize = processPageSize(request, response);
+            final int pageSize = processPageSize(request, response);
 
             Date fromDate;
             Date toDate;
@@ -302,13 +302,15 @@ public class SearchServlet extends BaseServlet {
             }
         }
 
-        if (errorMsg != null)
+        if (errorMsg != null) {
             request.setAttribute(ERROR, errorMsg);
+        }
 
-        if (isRssAsked)
+        if (isRssAsked) {
             rssFormer.formRss(request, response);
-        else
+        } else {
             request.forwardTo(JSP_SEARCH);
+        }
     }
 
     private int processPageSize(ForwardingRequest request, HttpServletResponse response) {
