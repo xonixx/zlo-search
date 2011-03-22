@@ -1,6 +1,7 @@
 package info.xonix.zlo.search;
 
 import info.xonix.zlo.search.dao.MessagesDao;
+import info.xonix.zlo.search.domainobj.SearchResult;
 import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.doubleindex.DoubleHits;
 import info.xonix.zlo.search.model.Message;
@@ -29,9 +30,15 @@ public class ZloPaginatedList implements PaginatedList {
     private Site site;
     private MessagesDao messagesDao = AppSpringContext.get(MessagesDao.class);
 
-    public ZloPaginatedList(DoubleHits hits, Site site) {
+    ZloPaginatedList(DoubleHits hits, Site site) {
         this.site = site;
         this.hits = hits;
+    }
+
+    public static ZloPaginatedList fromSearchResult(SearchResult searchResult) {
+        return new ZloPaginatedList(
+                searchResult.getDoubleHits(),
+                searchResult.getSite());
     }
 
     public List getList() {

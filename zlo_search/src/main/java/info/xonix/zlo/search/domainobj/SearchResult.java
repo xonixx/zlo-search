@@ -1,6 +1,5 @@
 package info.xonix.zlo.search.domainobj;
 
-import info.xonix.zlo.search.ZloPaginatedList;
 import info.xonix.zlo.search.doubleindex.DoubleHits;
 import info.xonix.zlo.search.doubleindex.DoubleIndexManager;
 import org.apache.log4j.Logger;
@@ -36,6 +35,14 @@ public class SearchResult {
         searchDate = new Date(); // now
     }
 
+    public Site getSite() {
+        return site;
+    }
+
+    public DoubleHits getDoubleHits() {
+        return doubleHits;
+    }
+
     public Query getQuery() {
         return query;
     }
@@ -57,10 +64,6 @@ public class SearchResult {
     }
 
     // paginated list can't be cached as it should not be shared among users
-
-    public ZloPaginatedList createPaginatedList() {
-        return new ZloPaginatedList(doubleHits, site);
-    }
 
     public boolean isNewSearch() {
         return newSearch;
