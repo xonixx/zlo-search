@@ -25,7 +25,7 @@ public class SetCorrectLastIndexed extends App {
         Site site = Site.forName(siteName);
 
         DoubleIndexManager dis = new DoubleIndexManager(site, null);
-        int lastIndexedNum = Integer.parseInt(dis.search(new MatchAllDocsQuery()).doc(0).get("num"));
+        int lastIndexedNum = Integer.parseInt(dis.search(new MatchAllDocsQuery(), -1).doc(0).get("num"));
 
         System.out.println(lastIndexedNum);
 

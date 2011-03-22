@@ -42,7 +42,7 @@ public class DoubleIndexTest {
     public static void m1() {
         DoubleIndexManager dis = getDIS();
         try {
-            DoubleHits dh = dis.search(new MatchAllDocsQuery());
+            DoubleHits dh = dis.search(new MatchAllDocsQuery(), -1);
             System.out.println(dh.length());
         } catch (IOException e) {
             e.printStackTrace();

@@ -99,17 +99,8 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
         }
     };
 
-/*    public static void clean(IndexReader ir) {
-        try {
-            if (ir != null)
-                ir.close();
-        } catch (IOException e) {
-            log.error("Error while closing index reader: " + e.getClass());
-        }
-    }*/
-
     @Override
-    public SearchResult search(SearchRequest req) throws SearchException {
+    public SearchResult search(SearchRequest req, int limit) throws SearchException {
         final SearchResult searchResult = search(
                 req.getSite(),
                 formQueryString(
@@ -117,7 +108,8 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
                         req.getTopicCode(), req.getNick(), req.getHost(),
                         req.getFromDate(), req.getToDate(),
                         req.isInReg(), req.isInHasUrl(), req.isInHasImg()),
-                req.isSearchAll());
+                req.isSearchAll(),
+                limit);
         searchResult.setLastSearch(req);
         return searchResult;
     }
@@ -130,13 +122,13 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
                 : null;
     }
 
-    private SearchResult search(Site site, String queryStr, boolean searchAll) throws SearchException {
+    private SearchResult search(Site site, String queryStr, boolean searchAll, int limit) throws SearchException {
         Assert.notNull(site, "site can't be null!");
 
-        return searchDoubleIndex(site, queryStr/*, null*/, searchAll);
+        return searchDoubleIndex(site, queryStr/*, null*/, searchAll, limit);
     }
 
-    private SearchResult searchDoubleIndex(Site site, String queryStr/*, Sort sort*/, boolean searchAll) throws SearchException {
+    private SearchResult searchDoubleIndex(Site site, String queryStr/*, Sort sort*/, boolean searchAll, int limit) throws SearchException {
         // TODO: do we need sorting here???
 //        if (sort == null)
 //            sort = getDateSort();
@@ -152,7 +144,7 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
 
             DoubleIndexManager dis = getDoubleIndexManager(site);
 
-            result = new SearchResult(site, query, dis, dis.search(query));
+            result = new SearchResult(site, query, dis, dis.search(query, limit));
         } catch (ParseException e) {
             throw new SearchException(queryStr, e);
         } catch (IOException e) {
