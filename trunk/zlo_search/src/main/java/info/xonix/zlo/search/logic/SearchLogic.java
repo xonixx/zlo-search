@@ -18,7 +18,7 @@ public interface SearchLogic {
 
     void optimizeIndex(Site site);
 
-    SearchResult search(SearchRequest searchRequest) throws SearchException;
+    SearchResult search(SearchRequest searchRequest, int limit) throws SearchException;
 
     Sort getDateSort();
 

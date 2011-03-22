@@ -6,10 +6,7 @@ import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.MatchAllDocsQuery;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.*;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
@@ -261,7 +258,7 @@ public class DoubleIndexManager {
         }
     }
 
-    public DoubleHits search(Query query) throws IOException {
+    public DoubleHits search(Query query, int limit) throws IOException {
         final IndexReader bigReader = getBigReader();
         final IndexReader smallReader = getSmallReader();
 
@@ -269,11 +266,23 @@ public class DoubleIndexManager {
         // TODO: optimize numDocs
         final IndexSearcher indexSearcherBig = new IndexSearcher(bigReader);
         final IndexSearcher indexSearcherSmall = new IndexSearcher(smallReader);
+
+        final TopFieldDocs topFieldDocsBig;
+        final TopFieldDocs topFieldDocsSmall;
+
+        final Sort sort = Sort.INDEXORDER;
+
+        if (limit < 0) {
+            topFieldDocsSmall = indexSearcherSmall.search(query, null, smallReader.numDocs(), sort);
+            topFieldDocsBig = indexSearcherBig.search(query, null, bigReader.numDocs(), sort);
+        } else {
+            topFieldDocsSmall = indexSearcherSmall.search(query, null, limit, sort);
+            topFieldDocsBig = indexSearcherBig.search(query, null, limit - topFieldDocsSmall.scoreDocs.length, sort);
+        }
+
         return new DoubleHitsImpl(
-                indexSearcherBig.search(query, null, bigReader.numDocs(), Sort.INDEXORDER),
-                indexSearcherBig,
-                indexSearcherSmall.search(query, null, smallReader.numDocs(), Sort.INDEXORDER),
-                indexSearcherSmall);
+                topFieldDocsBig, indexSearcherBig,
+                topFieldDocsSmall, indexSearcherSmall);
     }
 
     public void drop() throws IOException {
@@ -293,7 +302,7 @@ public class DoubleIndexManager {
         IndexReader smlR = getSmallReader();
 
         log.info("Moving small to big...");
-        bigIndexWriter.addIndexesNoOptimize(new Directory[]{dir(getSmallPath())}); // add small to big, w/o optimize
+        bigIndexWriter.addIndexesNoOptimize(dir(getSmallPath())); // add small to big, w/o optimize
 
         smlR.close();
         smallReader = null;

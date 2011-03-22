@@ -220,7 +220,7 @@ public class SearchServlet extends BaseServlet {
                         ) {
 
                     try {
-                        searchResult = searchLogic.search(searchRequest);
+                        searchResult = searchLogic.search(searchRequest, -1);
                     } catch (BooleanQuery.TooManyClauses e) { // например как в поиске текста +с*
                         errorMsg = ErrorMessage.TooComplexSearch;
                         throw e;
