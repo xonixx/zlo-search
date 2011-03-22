@@ -26,6 +26,7 @@ import org.apache.lucene.search.BooleanQuery;
 import org.springframework.dao.DataAccessException;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -248,23 +249,19 @@ public class SearchServlet extends BaseServlet {
                     final ZloPaginatedList paginatedList = ZloPaginatedList.fromSearchResult(searchResult);
                     request.setAttribute(REQ_PAGINATED_LIST, paginatedList);
 
+                    final int pageNumber;
+                    final int objectsPerPage;
+
                     if (isRssAsked) {
-                        paginatedList.setPageNumber(1);
-                        paginatedList.setObjectsPerPage(50);
+                        pageNumber = 1;
+                        objectsPerPage = 50;
                     } else {
-                        paginatedList.setObjectsPerPage(pageSize);
-                        if (StringUtils.isNotEmpty(request.getParameter(QS_PAGE_NUMBER))) {
-                            try {
-                                int pageNumber = Integer.parseInt(request.getParameter(QS_PAGE_NUMBER));
-                                pageNumber = pageNumber <= 0 ? 1 : pageNumber;
-                                paginatedList.setPageNumber(pageNumber);
-                            } catch (NumberFormatException e) {
-                                paginatedList.setPageNumber(1);
-                            }
-                        } else {
-                            paginatedList.setPageNumber(1);
-                        }
+                        pageNumber = getPageNumber(request);
+                        objectsPerPage = pageSize;
                     }
+
+                    paginatedList.setPageNumber(pageNumber);
+                    paginatedList.setObjectsPerPage(objectsPerPage);
 
                     paginatedList.refreshCurrentList();// todo: handle java.lang.NegativeArraySizeException here
                 } else {
@@ -311,6 +308,22 @@ public class SearchServlet extends BaseServlet {
         } else {
             request.forwardTo(JSP_SEARCH);
         }
+    }
+
+    private int getPageNumber(ServletRequest request) {
+        int pageNumber;
+        final String pageNumberStr = request.getParameter(QS_PAGE_NUMBER);
+        if (StringUtils.isNotEmpty(pageNumberStr)) {
+            try {
+                pageNumber = Integer.parseInt(pageNumberStr);
+                pageNumber = pageNumber <= 0 ? 1 : pageNumber;
+            } catch (NumberFormatException e) {
+                pageNumber = 1;
+            }
+        } else {
+            pageNumber = 1;
+        }
+        return pageNumber;
     }
 
     private int processPageSize(ForwardingRequest request, HttpServletResponse response) {
