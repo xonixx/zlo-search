@@ -267,7 +267,7 @@ public class SearchServlet extends BaseServlet {
 
                     request.setAttribute(REQ_SEARCH_RESULT, searchResult);
 
-                    final ZloPaginatedList paginatedList = searchResult.createPaginatedList();
+                    final ZloPaginatedList paginatedList = ZloPaginatedList.fromSearchResult(searchResult);
                     request.setAttribute(REQ_PAGINATED_LIST, paginatedList);
 
                     if (isRssAsked) {
