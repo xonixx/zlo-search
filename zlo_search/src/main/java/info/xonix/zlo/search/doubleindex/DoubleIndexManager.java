@@ -287,19 +287,14 @@ public class DoubleIndexManager {
 
             int limitBig = limit - topFieldDocsSmall.scoreDocs.length;
             if (limitBig == 0) {
-                limitBig = 1;
+                limitBig = 1; // we have to search anyway to get totalHits
             }
             topFieldDocsBig = indexSearcherBig.search(query, null, limitBig, reversedIndexOrderSort);
 
-            /*if (limitBig > 0) {
-                topFieldDocsBig = indexSearcherBig.search(query, null, limitBig, reversedIndexOrderSort);
-            } else {
-                topFieldDocsBig = null;
-            }*/
-
             return new DoubleHitsReversedIndexSortImpl(
                     topFieldDocsBig, indexSearcherBig,
-                    topFieldDocsSmall, indexSearcherSmall);
+                    topFieldDocsSmall, indexSearcherSmall,
+                    limit);
         }
     }
 

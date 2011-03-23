@@ -224,14 +224,15 @@ public class SearchServlet extends BaseServlet {
                 final SearchResult searchResult;
                 final SearchResult prevSearchResult = cache.get(searchHash);
 
+                final int limit = getLimit(pageNumber, objectsPerPage);
                 if (prevSearchResult == null
                         || prevSearchResult.isNotTheSameSearch(searchRequest)
-                        || prevSearchResult.isOld() // this should enforce re-search while indexing, so VV seems not needed more
+                        || prevSearchResult.isOld(limit) // this should enforce re-search while indexing, so VV seems not needed more
 //                        || StringUtils.isEmpty(request.getParameter(QS_PAGE_NUMBER)) // not turning pages, but searching // commenting by now todo: check if this is not needed more
                         ) {
 
                     try {
-                        searchResult = searchLogic.search(searchRequest, getLimit(pageNumber, objectsPerPage));
+                        searchResult = searchLogic.search(searchRequest, limit);
                     } catch (BooleanQuery.TooManyClauses e) { // например как в поиске текста +с*
                         errorMsg = ErrorMessage.TooComplexSearch;
                         throw e;
