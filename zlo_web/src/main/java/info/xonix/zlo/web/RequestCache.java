@@ -12,18 +12,29 @@ import java.util.Map;
  * Time: 2:35:31
  */
 public class RequestCache {
-    public static int MAX_ENTRIES = 10;
-    private Map<Integer, SearchResult> cache = Collections.synchronizedMap(new LinkedHashMap<Integer, SearchResult>(MAX_ENTRIES + 1) {
-        protected boolean removeEldestEntry(Map.Entry<Integer, SearchResult> eldest) {
-            return size() > MAX_ENTRIES;
-        }
+    //    public static int MAX_ENTRIES = 10;
+    private Map<Integer, SearchResult> cache;
 
-        public SearchResult get(Object key) {
-            SearchResult o = remove(key);
-            put((Integer) key, o);
-            return o;
-        }
-    });
+    private final int maxEntries;
+
+    public RequestCache(int maxEntries) {
+        this.maxEntries = maxEntries;
+        init();
+    }
+
+    private void init() {
+        cache = Collections.synchronizedMap(new LinkedHashMap<Integer, SearchResult>(maxEntries + 1) {
+            protected boolean removeEldestEntry(Map.Entry<Integer, SearchResult> eldest) {
+                return size() > maxEntries;
+            }
+
+            public SearchResult get(Object key) {
+                SearchResult o = remove(key);
+                put((Integer) key, o);
+                return o;
+            }
+        });
+    }
 
     public SearchResult get(Integer key) {
         return cache.get(key);
