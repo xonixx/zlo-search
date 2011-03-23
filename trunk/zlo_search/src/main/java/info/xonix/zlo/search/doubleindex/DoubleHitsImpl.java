@@ -11,7 +11,10 @@ import java.io.IOException;
  * Author: Vovan
  * Date: 27.05.2008
  * Time: 21:01:23
+ *
+ * @deprecated from now on
  */
+@Deprecated
 public class DoubleHitsImpl extends DoubleHits {
     public DoubleHitsImpl(TopFieldDocs topFieldDocsBig, IndexSearcher indexSearcherBig, TopFieldDocs topFieldDocsSmall, IndexSearcher indexSearcherSmall) {
         super(topFieldDocsBig, indexSearcherBig, topFieldDocsSmall, indexSearcherSmall);
@@ -29,5 +32,10 @@ public class DoubleHitsImpl extends DoubleHits {
         } else {
             return indexSearcherBig.doc(scoreDocsBig[bl - 1 - (n - sl)].doc);
         }
+    }
+
+    @Override
+    public int getLimit() {
+        return -1; // no limit
     }
 }

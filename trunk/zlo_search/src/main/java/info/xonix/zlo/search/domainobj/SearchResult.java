@@ -75,14 +75,22 @@ public class SearchResult {
 
     /**
      * if creationDate is before renewing indexReader -> reader will be closed
+     * or previous search limit is less then new search limit
      *
+     * @param limit new search limit
      * @return old or not
      */
-    public boolean isOld() {
-        boolean old = searchDate.before(doubleIndexManager.getRenewDate());
-        if (old) {
-            log.info("Search result for " + query + " is old.");
+    public boolean isOld(int limit) {
+        boolean oldByDate = searchDate.before(doubleIndexManager.getRenewDate());
+        if (oldByDate) {
+            log.info("Search result for " + query + " is old by index.");
         }
-        return old;
+
+        boolean oldByLimit = doubleHits.oldByLimit(limit);
+        if (oldByLimit) {
+            log.info("Search result for " + query + " is old by limit.");
+        }
+
+        return oldByDate || oldByLimit;
     }
 }

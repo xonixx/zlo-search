@@ -14,11 +14,15 @@ import java.io.IOException;
  */
 public class DoubleHitsReversedIndexSortImpl extends DoubleHits {
     private final int totalHits;
+    private int limit;
 
-    public DoubleHitsReversedIndexSortImpl(TopFieldDocs topFieldDocsBig, IndexSearcher indexSearcherBig, TopFieldDocs topFieldDocsSmall, IndexSearcher indexSearcherSmall) {
+    public DoubleHitsReversedIndexSortImpl(TopFieldDocs topFieldDocsBig, IndexSearcher indexSearcherBig,
+                                           TopFieldDocs topFieldDocsSmall, IndexSearcher indexSearcherSmall,
+                                           int limit) {
         super(topFieldDocsBig, indexSearcherBig, topFieldDocsSmall, indexSearcherSmall);
 
         totalHits = topFieldDocsSmall.totalHits + topFieldDocsBig.totalHits;
+        this.limit = limit;
     }
 
     @Override
@@ -45,5 +49,10 @@ public class DoubleHitsReversedIndexSortImpl extends DoubleHits {
                 throw new IllegalStateException("n=" + n + " too big");
             }
         }
+    }
+
+    @Override
+    public int getLimit() {
+        return limit;
     }
 }
