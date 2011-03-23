@@ -97,7 +97,7 @@ public class SearchServlet extends BaseServlet {
 
     public static DateFormat FROM_TO_DATE_FORMAT = DateFormats.ddMMyyyy_dots;
 
-    private static final RequestCache cache = new RequestCache();
+    private static final RequestCache cache = new RequestCache(5);
     private final RssFormer rssFormer = new RssFormer();
 
     protected void doGet(ForwardingRequest request, HttpServletResponse response) throws ServletException, IOException {
