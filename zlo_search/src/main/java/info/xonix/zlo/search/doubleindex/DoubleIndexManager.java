@@ -285,13 +285,17 @@ public class DoubleIndexManager {
 
             topFieldDocsSmall = indexSearcherSmall.search(query, null, limit, reversedIndexOrderSort);
 
-            final int limitBig = limit - topFieldDocsSmall.scoreDocs.length;
+            int limitBig = limit - topFieldDocsSmall.scoreDocs.length;
+            if (limitBig == 0) {
+                limitBig = 1;
+            }
+            topFieldDocsBig = indexSearcherBig.search(query, null, limitBig, reversedIndexOrderSort);
 
-            if (limitBig > 0) {
+            /*if (limitBig > 0) {
                 topFieldDocsBig = indexSearcherBig.search(query, null, limitBig, reversedIndexOrderSort);
             } else {
                 topFieldDocsBig = null;
-            }
+            }*/
 
             return new DoubleHitsReversedIndexSortImpl(
                     topFieldDocsBig, indexSearcherBig,

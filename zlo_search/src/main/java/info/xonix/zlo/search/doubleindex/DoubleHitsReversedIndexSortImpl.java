@@ -13,14 +13,17 @@ import java.io.IOException;
  * Time: 16:07
  */
 public class DoubleHitsReversedIndexSortImpl extends DoubleHits {
+    private final int totalHits;
+
     public DoubleHitsReversedIndexSortImpl(TopFieldDocs topFieldDocsBig, IndexSearcher indexSearcherBig, TopFieldDocs topFieldDocsSmall, IndexSearcher indexSearcherSmall) {
         super(topFieldDocsBig, indexSearcherBig, topFieldDocsSmall, indexSearcherSmall);
+
+        totalHits = topFieldDocsSmall.totalHits + topFieldDocsBig.totalHits;
     }
 
     @Override
     public int length() {
-        return topFieldDocsSmall.scoreDocs.length +
-                (topFieldDocsBig != null ? topFieldDocsBig.scoreDocs.length : 0);
+        return totalHits;
     }
 
     @Override
