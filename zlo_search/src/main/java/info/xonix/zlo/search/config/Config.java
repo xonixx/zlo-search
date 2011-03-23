@@ -1,7 +1,9 @@
 package info.xonix.zlo.search.config;
 
+import info.xonix.zlo.search.analyzers.AnalyzerProvider;
 import info.xonix.zlo.search.model.MessageFields;
 import info.xonix.zlo.search.utils.EnvUtils;
+import info.xonix.zlo.search.utils.ExceptionUtils;
 import info.xonix.zlo.search.utils.TimeUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -90,15 +92,25 @@ public class Config {
 
     private void initAnalyzers() {
         try {
-            analyzer = (Analyzer) Class.forName(getProp("analyzer")).newInstance();
+            final Class<?> clazz = Class.forName(getProp("analyzer"));
+
+            if (AnalyzerProvider.class.isAssignableFrom(clazz)) {
+                final AnalyzerProvider analyzerProvider = (AnalyzerProvider) clazz.newInstance();
+                analyzer = analyzerProvider.getAnalyzer();
+            } else {
+                analyzer = (Analyzer) clazz.newInstance();
+            }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Can't create analyzer", e);
+            ExceptionUtils.rethrowAsRuntime(e);
         }
 
-        PerFieldAnalyzerWrapper _messageAnalyzer = new PerFieldAnalyzerWrapper(new KeywordAnalyzer());
-        _messageAnalyzer.addAnalyzer(MessageFields.TITLE, analyzer);
-        _messageAnalyzer.addAnalyzer(MessageFields.BODY, analyzer);
-        messageAnalyzer = _messageAnalyzer;
+        final PerFieldAnalyzerWrapper perFieldAnalyzerWrapper = new PerFieldAnalyzerWrapper(new KeywordAnalyzer());
+        perFieldAnalyzerWrapper.addAnalyzer(MessageFields.TITLE, analyzer);
+        perFieldAnalyzerWrapper.addAnalyzer(MessageFields.BODY, analyzer);
+        messageAnalyzer = perFieldAnalyzerWrapper;
+
+        log.info("Got analyzer: " + analyzer.getClass().getName());
     }
 
     private void initOtherProps() {

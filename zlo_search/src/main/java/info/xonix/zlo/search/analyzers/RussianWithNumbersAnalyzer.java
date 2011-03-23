@@ -1,4 +1,4 @@
-package info.xonix.zlo.search;
+package info.xonix.zlo.search.analyzers;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -13,6 +13,7 @@ import java.io.Reader;
  * Date: 09.09.2007
  * Time: 23:22:38
  */
+@Deprecated
 public class RussianWithNumbersAnalyzer extends Analyzer {
 
     private Analyzer russianAnalyzer;

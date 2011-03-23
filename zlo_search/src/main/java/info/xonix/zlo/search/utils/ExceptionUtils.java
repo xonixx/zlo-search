@@ -16,4 +16,13 @@ public class ExceptionUtils {
         throwable.printStackTrace(printWriter);
         return result.toString();
     }
+
+    public static void rethrowAsRuntime(Throwable throwable) {
+        if (throwable instanceof Error) {
+            throw (Error) throwable;
+        } else if (throwable instanceof RuntimeException) {
+            throw (RuntimeException) throwable;
+        }
+        throw new RuntimeException(throwable);
+    }
 }
