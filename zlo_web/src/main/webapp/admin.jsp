@@ -4,6 +4,7 @@
 <%@ page import="info.xonix.zlo.search.logic.SearchLogicImpl" %>
 <%@ page import="info.xonix.zlo.search.logic.SiteLogic" %>
 <%@ page import="info.xonix.zlo.search.progs.OptimizeAllIndexes" %>
+<%@ page import="info.xonix.zlo.search.utils.SysUtils" %>
 <%@ page import="info.xonix.zlo.web.utils.RequestUtils" %>
 <%@ page import="java.util.LinkedHashMap" %>
 <%@ page import="java.util.Map" %>
@@ -49,13 +50,19 @@
 <div class="content">
     <form action="admin.jsp" method="post">
         <input type="submit" name="command" value="Optimize"/>
+        <input type="submit" name="command" value="GC"/>
     </form>
 
     <%
         if ("POST".equals(request.getMethod())) {
-            if ("Optimize".equals(request.getParameter("command"))) {
+            final String command = request.getParameter("command");
+            if ("Optimize".equals(command)) {
                 new OptimizeAllIndexes().optimizeRestartDaemons();
 
+                response.sendRedirect("admin.jsp");
+                return;
+            } else if ("GC".equals(command)) {
+                SysUtils.gc();
                 response.sendRedirect("admin.jsp");
                 return;
             }
