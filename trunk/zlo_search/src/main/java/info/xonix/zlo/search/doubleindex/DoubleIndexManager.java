@@ -2,6 +2,7 @@ package info.xonix.zlo.search.doubleindex;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.domainobj.Site;
+import info.xonix.zlo.search.logic.SearchLogicImpl;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.IndexReader;
@@ -270,19 +271,32 @@ public class DoubleIndexManager {
         final TopFieldDocs topFieldDocsBig;
         final TopFieldDocs topFieldDocsSmall;
 
-        final Sort sort = Sort.INDEXORDER;
-
         if (limit < 0) {
+            final Sort sort = Sort.INDEXORDER;
+
             topFieldDocsSmall = indexSearcherSmall.search(query, null, smallReader.numDocs(), sort);
             topFieldDocsBig = indexSearcherBig.search(query, null, bigReader.numDocs(), sort);
-        } else {
-            topFieldDocsSmall = indexSearcherSmall.search(query, null, limit, sort);
-            topFieldDocsBig = indexSearcherBig.search(query, null, limit - topFieldDocsSmall.scoreDocs.length, sort);
-        }
 
-        return new DoubleHitsImpl(
-                topFieldDocsBig, indexSearcherBig,
-                topFieldDocsSmall, indexSearcherSmall);
+            return new DoubleHitsImpl(
+                    topFieldDocsBig, indexSearcherBig,
+                    topFieldDocsSmall, indexSearcherSmall);
+        } else {
+            final Sort reversedIndexOrderSort = SearchLogicImpl.REVERSED_INDEX_ORDER_SORT;
+
+            topFieldDocsSmall = indexSearcherSmall.search(query, null, limit, reversedIndexOrderSort);
+
+            final int limitBig = limit - topFieldDocsSmall.scoreDocs.length;
+
+            if (limitBig > 0) {
+                topFieldDocsBig = indexSearcherBig.search(query, null, limitBig, reversedIndexOrderSort);
+            } else {
+                topFieldDocsBig = null;
+            }
+
+            return new DoubleHitsReversedIndexSortImpl(
+                    topFieldDocsBig, indexSearcherBig,
+                    topFieldDocsSmall, indexSearcherSmall);
+        }
     }
 
     public void drop() throws IOException {

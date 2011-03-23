@@ -208,7 +208,18 @@ public class SearchServlet extends BaseServlet {
                     searchRequest.setToDate(null);
                 }
 
-                int searchHash = searchRequest.hashCode();
+                final int pageNumber;
+                final int objectsPerPage;
+
+                if (isRssAsked) {
+                    pageNumber = 1;
+                    objectsPerPage = 50;
+                } else {
+                    pageNumber = getPageNumber(request);
+                    objectsPerPage = pageSize;
+                }
+
+                final int searchHash = searchRequest.hashCode();
 
                 final SearchResult searchResult;
                 final SearchResult prevSearchResult = cache.get(searchHash);
@@ -220,7 +231,7 @@ public class SearchServlet extends BaseServlet {
                         ) {
 
                     try {
-                        searchResult = searchLogic.search(searchRequest, -1);
+                        searchResult = searchLogic.search(searchRequest, getLimit(pageNumber, objectsPerPage));
                     } catch (BooleanQuery.TooManyClauses e) { // например как в поиске текста +с*
                         errorMsg = ErrorMessage.TooComplexSearch;
                         throw e;
@@ -248,17 +259,6 @@ public class SearchServlet extends BaseServlet {
 
                     final ZloPaginatedList paginatedList = ZloPaginatedList.fromSearchResult(searchResult);
                     request.setAttribute(REQ_PAGINATED_LIST, paginatedList);
-
-                    final int pageNumber;
-                    final int objectsPerPage;
-
-                    if (isRssAsked) {
-                        pageNumber = 1;
-                        objectsPerPage = 50;
-                    } else {
-                        pageNumber = getPageNumber(request);
-                        objectsPerPage = pageSize;
-                    }
 
                     paginatedList.setPageNumber(pageNumber);
                     paginatedList.setObjectsPerPage(objectsPerPage);
@@ -308,6 +308,10 @@ public class SearchServlet extends BaseServlet {
         } else {
             request.forwardTo(JSP_SEARCH);
         }
+    }
+
+    private int getLimit(int pageNumber, int objectsPerPage) {
+        return pageNumber * objectsPerPage;
     }
 
     private int getPageNumber(ServletRequest request) {

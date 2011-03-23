@@ -31,6 +31,7 @@ import java.util.Date;
 public class SearchLogicImpl implements SearchLogic, InitializingBean {
     private static final Logger log = Logger.getLogger(SearchLogicImpl.class);
     private static final int MAX_LIMIT = 500;
+    public static final Sort REVERSED_INDEX_ORDER_SORT = new Sort(new SortField(null, SortField.DOC, true));
 
     //    public static final int PERIOD_RECREATE_INDEXER = TimeUtils.parseToMilliSeconds(Config.getProp("searcher.period.recreate.indexer"));
     private Config config;
@@ -241,8 +242,7 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     }
 
     private int[] search(IndexSearcher searcher, Query query, int limit) throws IOException {
-        final TopDocs topDocs = searcher.search(query, null, limit,
-                new Sort(new SortField(null, SortField.DOC, true))); // reversed index order
+        final TopDocs topDocs = searcher.search(query, null, limit, REVERSED_INDEX_ORDER_SORT);
 
         int[] ids = new int[topDocs.scoreDocs.length];
         for (int i = 0; i < ids.length; i++) {
