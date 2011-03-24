@@ -9,7 +9,7 @@ import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import junit.framework.Assert;
 import org.apache.commons.lang.StringUtils;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -19,19 +19,19 @@ import org.junit.Test;
  */
 public class TestSitesRetrieving {
 
-    private Site velo = null;
-    private Site dev = null;
-    private Site zlo = null;
-    private Site takeoff = null;
-    private Site anime = null;
-    private Site np = null;
-    private Site x = null;
-    private Site dolgopa = null;
+    private static Site velo = null;
+    private static Site dev = null;
+    private static Site zlo = null;
+    private static Site takeoff = null;
+    private static Site anime = null;
+    private static Site np = null;
+    private static Site x = null;
+    private static Site dolgopa = null;
 
-    private SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
+    private static SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
 
-    @Before
-    public void setUp() {
+    @BeforeClass
+    public static void setUp() {
         velo = Site.forName("velo");
 
         dev = Site.forName("dev");
@@ -310,9 +310,43 @@ public class TestSitesRetrieving {
     }
 
     @Test
-    public void testAnime() throws RetrieverException {
+    public void testAnime() throws RetrieverException, PageParseException {
         int lmn = siteLogic.getLastMessageNumber(anime);
+
         System.out.println(lmn);
+
+        Message m = siteLogic.getMessageByNumber(anime, 16825);
+        System.out.println(m);
+
+        Assert.assertTrue(m.isReg());
+        Assert.assertEquals("bestation", m.getNick());
+        Assert.assertEquals("10.55.110.140", m.getHost());
+        Assert.assertTrue(!m.isHasImg());
+        Assert.assertTrue(!m.isHasUrl());
+        Assert.assertEquals("В качестве бонуса могу выдать батч скаченный на 54.2% с полностью скаченной первой серией, оп и ед.", m.getBody());
+        Assert.assertEquals("Ну, что? Кто в локалке возмется кланнад 1-5 скачать?", m.getTitle());
+
+        m = siteLogic.getMessageByNumber(anime, 16376);
+        System.out.println(m);
+
+        Assert.assertTrue(m.isHasImg());
+        Assert.assertTrue(m.isHasUrl());
+        Assert.assertTrue(m.isReg());
+        Assert.assertEquals("fth", m.getNick());
+        Assert.assertEquals("10.55.103.181", m.getHost());
+        Assert.assertEquals("С наступающим Новым Годом!", m.getTitle());
+
+        m = siteLogic.getMessageByNumber(anime, 16799);
+        System.out.println(m);
+
+        Assert.assertFalse(m.isReg());
+        Assert.assertEquals("zuzzik_", m.getNick());
+        Assert.assertEquals("Фотки и отчет будут? Ж)", m.getTitle());
+
+        m = siteLogic.getMessageByNumber(anime, 2);
+        System.out.println(m);
+        Assert.assertFalse(m.isOk());
+        Assert.assertEquals(MessageStatus.DELETED, m.getStatus());
     }
 
 //    @Test
