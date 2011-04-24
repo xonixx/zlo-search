@@ -86,8 +86,8 @@ public class FoundTextHighlighter {
         try {
             for (String w : highlightWords) {
 
-                w = w.replaceAll("\\?", "[^\\\\s]{1}")
-                        .replaceAll("\\*", "[^\\\\s]*?");
+                w = StringUtils.replace(w, "?", "[^\\s]{1}");
+                w = StringUtils.replace(w, "*", "[^\\s]*?");
 
                 if (handleYoLetter) {
                     w = w.replaceAll("(?iu)[å¸]", "[å¸]");
