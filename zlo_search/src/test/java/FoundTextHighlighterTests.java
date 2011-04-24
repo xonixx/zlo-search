@@ -18,6 +18,11 @@ import static org.junit.Assert.assertThat;
 public class FoundTextHighlighterTests {
     private static FoundTextHighlighter foundTextHighlighter = new FoundTextHighlighter();
 
+    static {
+        foundTextHighlighter.setPreHl("{");
+        foundTextHighlighter.setPostHl("}");
+    }
+
     private String input;
     private String[] words;
     private String expected;
@@ -35,7 +40,12 @@ public class FoundTextHighlighterTests {
         params.add(new Object[]{
                 "Пять человек пострадали от задымления после взрыва на Охотном ряду",
                 new String[]{"п*да"},
-                "Пять человек <span class=\"hl\">пострадали</span> от задымления после взрыва на Охотном ряду"});
+                "Пять человек {пострадали} от задымления после взрыва на Охотном ряду"});
+
+        params.add(new Object[]{
+                "aaa hhhhhhh<bbb cccc dddddd>eee dddd fffffff GgGgGg</hhhh>",
+                "AAa ccc* ddd* hh* ggg*".split(" "),
+                "{aaa} {hhhhhhh}<bbb cccc dddddd>eee {dddd} fffffff {GgGgGg}</hhhh>"});
 
         return params;
     }
