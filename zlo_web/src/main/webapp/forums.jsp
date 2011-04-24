@@ -36,7 +36,14 @@
             <c:set var="url" value="http://${siteUrl}"/>
             <a href="${url}">${url}</a>
         </display:column>
-        <display:column title="Îïèñàíèå" property="siteDescription"/>
+        <display:column title="Îïèñàíèå">
+            <c:choose>
+                <c:when test="${not site.performIndexing}">
+                    <strike><c:out value="${site.siteDescription}"/></strike>
+                </c:when>
+                <c:otherwise><c:out value="${site.siteDescription}"/></c:otherwise>
+            </c:choose>
+        </display:column>
         <display:column title="Ñîîáùåíèé">
             <%= appLogic.getLastIndexedNumber((Site) site) %>
         </display:column>
