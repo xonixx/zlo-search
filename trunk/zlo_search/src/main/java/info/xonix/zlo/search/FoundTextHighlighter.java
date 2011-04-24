@@ -35,6 +35,12 @@ public class FoundTextHighlighter {
     private String preHl;
     private String postHl;
 
+    private boolean handleYoLetter = true;
+
+    public void setHandleYoLetter(boolean handleYoLetter) {
+        this.handleYoLetter = handleYoLetter;
+    }
+
     public String getHlClass() {
         return hlClass;
     }
@@ -82,6 +88,10 @@ public class FoundTextHighlighter {
 
                 w = w.replaceAll("\\?", "[^\\\\s]{1}")
                         .replaceAll("\\*", "[^\\\\s]*?");
+
+                if (handleYoLetter) {
+                    w = w.replaceAll("(?iu)[å¸]", "[å¸]");
+                }
 
                 txt = txt.replaceAll("(?iu)" +                                              // case insensetive, unicode
                         "(?<!<[^<>]{0,300})" +                                            // not to break html tags
