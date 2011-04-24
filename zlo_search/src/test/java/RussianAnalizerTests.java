@@ -43,7 +43,7 @@ public class RussianAnalizerTests {
     @Test
     public void test3() throws IOException {
         checkCorrectAnalyzing("в чем смысл жизни? ∆изнь это 01234567890 ®ж Єлка",
-                new String[]{"смысл", "жизн", "жизн", "01234567890", "Єж", "Єлка"});
+                new String[]{"смысл", "жизн", "жизн", "01234567890", "еж", "елка"});
     }
 
     private void checkCorrectAnalyzing(String str, String[] expectedResult) throws IOException {
