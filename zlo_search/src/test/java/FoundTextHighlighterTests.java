@@ -44,8 +44,18 @@ public class FoundTextHighlighterTests {
 
         params.add(new Object[]{
                 "aaa hhhhhhh<bbb cccc dddddd>eee dddd fffffff GgGgGg</hhhh>",
-                "AAa ccc* ddd* hh* ggg*".split(" "),
+                "AAa ccc ddd hh ggg".split(" "),
                 "{aaa} {hhhhhhh}<bbb cccc dddddd>eee {dddd} fffffff {GgGgGg}</hhhh>"});
+
+        params.add(new Object[]{
+                "ïïÏÏïïÏ å¨å¸Ååå öóÖÓöÓ",
+                "ïïï åååå*".split(" "),
+                "{ïïÏÏïïÏ} å¨å¸Ååå öóÖÓöÓ"});
+
+        params.add(new Object[]{
+                "ïïÏÏïïÏ å¨å¸Ååå öóÖÓöÓ",
+                "ïïï ¨¨¨¨*".split(" "),
+                "{ïïÏÏïïÏ} å¨å¸Ååå öóÖÓöÓ"});
 
         return params;
     }

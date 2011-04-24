@@ -84,7 +84,7 @@ public class FoundTextHighlighter {
                         .replaceAll("\\*", "[^\\\\s]*?");
 
                 txt = txt.replaceAll("(?iu)" +                                              // case insensetive, unicode
-                        "(?<!\\<[^<>]{0,300})" +                                            // not to break html tags
+                        "(?<!<[^<>]{0,300})" +                                            // not to break html tags
                         "(\\b" + w + "[^\\s]*?)\\b", preHl + "$1" + postHl);               // highlight;
             }
         } catch (PatternSyntaxException ex) {
