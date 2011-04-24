@@ -39,22 +39,22 @@ public class FoundTextHighlighterTests {
 
         params.add(new Object[]{
                 "ѕ€ть человек пострадали от задымлени€ после взрыва на ќхотном р€ду",
-                new String[]{"п*да"},
-                "ѕ€ть человек {пострадали} от задымлени€ после взрыва на ќхотном р€ду"});
+                new String[]{"п*да", "че??в"},
+                "ѕ€ть {человек} {пострадали} от задымлени€ после взрыва на ќхотном р€ду"});
 
         params.add(new Object[]{
                 "aaa hhhhhhh<bbb cccc dddddd>eee dddd fffffff GgGgGg</hhhh>",
-                "AAa ccc ddd hh ggg".split(" "),
+                "AAa ccc ddd h?h ggg".split(" "),
                 "{aaa} {hhhhhhh}<bbb cccc dddddd>eee {dddd} fffffff {GgGgGg}</hhhh>"});
 
         params.add(new Object[]{
                 "ппѕѕппѕ е®еЄ≈ее цу÷”ц”",
-                "ппп е≈≈е".split(" "),
+                "п??пп?п е≈≈е".split(" "),
                 "{ппѕѕппѕ} {е®еЄ≈ее} цу÷”ц”"});
 
         params.add(new Object[]{
                 "ппѕѕппѕ е®еЄ≈ее цу÷”ц”",
-                "ппп ®Є®®".split(" "),
+                "пппппп? ®Є®®".split(" "),
                 "{ппѕѕппѕ} {е®еЄ≈ее} цу÷”ц”"});
 
         return params;
