@@ -42,8 +42,8 @@ public class RussianAnalizerTests {
 
     @Test
     public void test3() throws IOException {
-        checkCorrectAnalyzing("в чем смысл жизни? ∆изнь это 01234567890",
-                new String[]{"смысл", "жизн", "жизн", "01234567890"});
+        checkCorrectAnalyzing("в чем смысл жизни? ∆изнь это 01234567890 ®ж Єлка",
+                new String[]{"смысл", "жизн", "жизн", "01234567890", "Єж", "Єлка"});
     }
 
     private void checkCorrectAnalyzing(String str, String[] expectedResult) throws IOException {
@@ -52,7 +52,7 @@ public class RussianAnalizerTests {
 
         tokenStream.reset();
 
-        final TermAttribute termAttribute = (TermAttribute) tokenStream.getAttribute(TermAttribute.class);
+        final TermAttribute termAttribute = tokenStream.getAttribute(TermAttribute.class);
 //        final PositionIncrementAttribute positionIncrementAttribute = (PositionIncrementAttribute) tokenStream.getAttribute(PositionIncrementAttribute.class);
 
         List<String> tokens = new LinkedList<String>();
