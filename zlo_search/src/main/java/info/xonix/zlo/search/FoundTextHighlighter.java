@@ -93,8 +93,8 @@ public class FoundTextHighlighter {
     /**
      * to fix search with : f.e. url search, "." is for gluing together into exact phrase
      *
-     * @param text
-     * @return
+     * @param text input string
+     * @return string with : replaced to .
      */
     public static String escapeColon(String text) {
         if (text != null && !StringUtils.equals(text, "*:*")) { // matchAllQuery
