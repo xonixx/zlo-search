@@ -21,6 +21,7 @@ import java.util.Date;
  * Date: 13.12.2007
  * Time: 2:57:59
  */
+@SuppressWarnings("unused")
 public class DoubleIndexManager {
     private static final Logger log = Logger.getLogger(DoubleIndexManager.class);
 
