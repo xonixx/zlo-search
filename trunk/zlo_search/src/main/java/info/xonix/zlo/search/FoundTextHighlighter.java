@@ -79,7 +79,10 @@ public class FoundTextHighlighter {
 
         try {
             for (String w : highlightWords) {
-                w = w.replaceAll("\\?", "[^\\\\s]{1}").replaceAll("\\*", "[^\\\\s]*?");
+
+                w = w.replaceAll("\\?", "[^\\\\s]{1}")
+                        .replaceAll("\\*", "[^\\\\s]*?");
+
                 txt = txt.replaceAll("(?iu)" +                                              // case insensetive, unicode
                         "(?<!\\<[^<>]{0,300})" +                                            // not to break html tags
                         "(\\b" + w + "[^\\s]*?)\\b", preHl + "$1" + postHl);               // highlight;
