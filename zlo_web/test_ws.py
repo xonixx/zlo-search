@@ -1,7 +1,7 @@
 from suds.client import Client
 
-#c = Client('http://localhost:8080/ws/search?wsdl')
-c = Client('http://zlo.rt.mipt.ru:7500/ws/search?wsdl')
+c = Client('http://localhost:8080/ws/search?wsdl')
+#c = Client('http://zlo.rt.mipt.ru:7500/ws/search?wsdl')
 
 print c
 
