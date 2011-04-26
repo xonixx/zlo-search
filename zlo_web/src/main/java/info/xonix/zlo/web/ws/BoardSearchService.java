@@ -24,6 +24,7 @@ import java.util.List;
  * Time: 18:53
  */
 @WebService
+@SuppressWarnings("unused")
 public class BoardSearchService {
     private static final Logger log = Logger.getLogger(BoardSearchService.class);
 
