@@ -25,7 +25,7 @@ public final class AppSpringContext {
         if (applicationContext == null) {
             synchronized (AppSpringContext.class) {
                 if (applicationContext == null) {
-                    applicationContext = new ClassPathXmlApplicationContext("beans.xml", AppSpringContext.class);
+                    applicationContext = new ClassPathXmlApplicationContext("all_beans.xml", AppSpringContext.class);
                 }
             }
         }
