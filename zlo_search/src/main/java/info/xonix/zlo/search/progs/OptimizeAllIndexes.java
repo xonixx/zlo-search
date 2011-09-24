@@ -38,7 +38,7 @@ public class OptimizeAllIndexes {
         new OptimizeAllIndexes().go();
     }
 
-    public void go() throws IOException {
+    public void go() {
         final OptimizeIndex optimizeIndex = new OptimizeIndex();
         for (Site site : siteLogic.getSites()) {
             if (site.isPerformIndexing()) {
@@ -50,31 +50,33 @@ public class OptimizeAllIndexes {
 
     public void optimizeRestartDaemons() {
         final OptimizeAllIndexes optimizeAllIndexes = this;
-        Daemon.on(new Observer() {
-            @Override
-            public void update(Observable o, Object arg) {
-                if ("exited".equals(arg)) {
-                    Daemon.un(this);
-                    System.out.println("Starting optimize...");
 
-                    optimizeAllIndexes.on(this);
-                    try {
+        if (Daemon.getDaemons().size() > 0) {
+            Daemon.on(new Observer() {
+                @Override
+                public void update(Observable o, Object arg) {
+                    if ("exited".equals(arg)) {
+                        Daemon.un(this);
+                        System.out.println("Starting optimize...");
+
+                        optimizeAllIndexes.on(this);
+
                         log.info("Closing all index writers before optimize...");
                         indexerLogic.closeIndexWriters();
 
                         optimizeAllIndexes.go();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    } else if ("optimized".equals(arg)) {
+                        optimizeAllIndexes.un(this);
+
+                        log.info("Optimized... Starting daemons...");
+
+                        new DaemonLauncher().main(new String[0]);
                     }
-                } else if ("optimized".equals(arg)) {
-                    optimizeAllIndexes.un(this);
-
-                    log.info("Optimized... Starting daemons...");
-
-                    new DaemonLauncher().main(new String[0]);
                 }
-            }
-        });
-        Daemon.setExitingAll();
+            });
+            Daemon.setExitingAll();
+        } else {
+            go();
+        }
     }
 }
