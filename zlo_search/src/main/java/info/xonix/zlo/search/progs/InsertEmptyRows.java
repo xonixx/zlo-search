@@ -8,7 +8,7 @@ package info.xonix.zlo.search.progs;
 
 public class InsertEmptyRows {
 
-    private static int MAX_ALEXZAM = 4030808; // 4 030 808 - max alexzam db row
+    private static int MAX_ALEXZAM = 4030808; // 4Â 030Â 808 - max alexzam db row
     private static int N = 10000;
 
 /*    public static void main(String[] args) {

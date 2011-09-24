@@ -20,7 +20,7 @@ public class HtmlUtils {
     private final static String SPACE = " ";
     private final static String NEW_LINE = "\n";
 
-    // суть в том, чтоб не считать смайлы за картинки, потому важно http
+    // СЃСѓС‚СЊ РІ С‚РѕРј, С‡С‚РѕР± РЅРµ СЃС‡РёС‚Р°С‚СЊ СЃРјР°Р№Р»С‹ Р·Р° РєР°СЂС‚РёРЅРєРё, РїРѕС‚РѕРјСѓ РІР°Р¶РЅРѕ http
     private static final Pattern IMG = Pattern.compile("(?i)<img.*?src\\s*=\\s*(\"?|\'?)https?://(.*)(\\1).*?>", Pattern.CASE_INSENSITIVE);
     private static final Pattern URL = Pattern.compile("(?i)<a\\s.+?>", Pattern.CASE_INSENSITIVE);
     private static final Pattern URL_EXTRACTOR = Pattern.compile("(?i)<a\\s+href=(\"|\')(.+?)(\\1).*?>", Pattern.CASE_INSENSITIVE);

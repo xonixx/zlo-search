@@ -13,12 +13,12 @@ ALTER TABLE topics
   ADD INDEX (id);
 
 -- insert
-INSERT INTO topics (id, name, isNew) VALUES (0, 'Без темы',         1);
-INSERT INTO topics (id, name, isNew) VALUES (1, 'Новость',           1);
-INSERT INTO topics (id, name, isNew) VALUES (2, 'Проблема',           1);
-INSERT INTO topics (id, name, isNew) VALUES (3, 'Обсуждение',        1);
-INSERT INTO topics (id, name, isNew) VALUES (4, 'Жалоба',         1);
-INSERT INTO topics (id, name, isNew) VALUES (5, 'Предложение',        1);
-INSERT INTO topics (id, name, isNew) VALUES (6, 'Администратору',      1);
+INSERT INTO topics (id, name, isNew) VALUES (0, 'Р‘РµР· С‚РµРјС‹',         1);
+INSERT INTO topics (id, name, isNew) VALUES (1, 'РќРѕРІРѕСЃС‚СЊ',           1);
+INSERT INTO topics (id, name, isNew) VALUES (2, 'РџСЂРѕР±Р»РµРјР°',           1);
+INSERT INTO topics (id, name, isNew) VALUES (3, 'РћР±СЃСѓР¶РґРµРЅРёРµ',        1);
+INSERT INTO topics (id, name, isNew) VALUES (4, 'Р–Р°Р»РѕР±Р°',         1);
+INSERT INTO topics (id, name, isNew) VALUES (5, 'РџСЂРµРґР»РѕР¶РµРЅРёРµ',        1);
+INSERT INTO topics (id, name, isNew) VALUES (6, 'РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂСѓ',      1);
 
 -- old

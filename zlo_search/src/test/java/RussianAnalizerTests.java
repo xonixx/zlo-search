@@ -30,20 +30,20 @@ public class RussianAnalizerTests {
 
     @Test
     public void test1() throws IOException {
-        checkCorrectAnalyzing("привет мир, !!! ййй qqq 123 123qw 123привет",
-                new String[]{"привет", "мир", "ййй", "qqq", "123", "123qw", "123привет"});
+        checkCorrectAnalyzing("РїСЂРёРІРµС‚ РјРёСЂ, !!! Р№Р№Р№ qqq 123 123qw 123РїСЂРёРІРµС‚",
+                new String[]{"РїСЂРёРІРµС‚", "РјРёСЂ", "Р№Р№Р№", "qqq", "123", "123qw", "123РїСЂРёРІРµС‚"});
     }
 
     @Test
     public void test2() throws IOException {
-        checkCorrectAnalyzing("бежать 777777 хотел Кровать? и как всЕгда ,,,во cisco",
-                new String[]{"бежа", "777777", "хотел", "крова", "всегд", "cisco"});
+        checkCorrectAnalyzing("Р±РµР¶Р°С‚СЊ 777777 С…РѕС‚РµР» РљСЂРѕРІР°С‚СЊ? Рё РєР°Рє РІСЃР•РіРґР° ,,,РІРѕ cisco",
+                new String[]{"Р±РµР¶Р°", "777777", "С…РѕС‚РµР»", "РєСЂРѕРІР°", "РІСЃРµРіРґ", "cisco"});
     }
 
     @Test
     public void test3() throws IOException {
-        checkCorrectAnalyzing("в чем смысл жизни? Жизнь это 01234567890 Ёж ёлка",
-                new String[]{"смысл", "жизн", "жизн", "01234567890", "еж", "елка"});
+        checkCorrectAnalyzing("РІ С‡РµРј СЃРјС‹СЃР» Р¶РёР·РЅРё? Р–РёР·РЅСЊ СЌС‚Рѕ 01234567890 РЃР¶ С‘Р»РєР°",
+                new String[]{"СЃРјС‹СЃР»", "Р¶РёР·РЅ", "Р¶РёР·РЅ", "01234567890", "РµР¶", "РµР»РєР°"});
     }
 
     private void checkCorrectAnalyzing(String str, String[] expectedResult) throws IOException {

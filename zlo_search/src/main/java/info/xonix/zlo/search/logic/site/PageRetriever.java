@@ -64,7 +64,7 @@ public class PageRetriever implements InitializingBean {
         try {
             is = getInputStream(getMethod);
 
-            // реализовано чтение до "<BIG>Сообщения в этом потоке</BIG>"
+            // СЂРµР°Р»РёР·РѕРІР°РЅРѕ С‡С‚РµРЅРёРµ РґРѕ "<BIG>РЎРѕРѕР±С‰РµРЅРёСЏ РІ СЌС‚РѕРј РїРѕС‚РѕРєРµ</BIG>"
             stringGroups.add("");
 
             int currSize, lenRead;
@@ -140,7 +140,7 @@ public class PageRetriever implements InitializingBean {
 
         try {
             is = getInputStream(getMethod);
-            // реализовано чтение до матча с site.getLinkIndexRe()
+            // СЂРµР°Р»РёР·РѕРІР°РЅРѕ С‡С‚РµРЅРёРµ РґРѕ РјР°С‚С‡Р° СЃ site.getLinkIndexRe()
             List<String> stringGroups = new ArrayList<String>();
             stringGroups.add("");
 

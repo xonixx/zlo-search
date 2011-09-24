@@ -90,7 +90,7 @@ public class FoundTextHighlighter {
                 w = StringUtils.replace(w, "*", "[^\\s]*?");
 
                 if (handleYoLetter) {
-                    w = w.replaceAll("(?iu)[�]", "[�]");
+                    w = w.replaceAll("(?iu)[её]", "[её]");
                 }
 
                 txt = txt.replaceAll("(?iu)" +                                              // case insensetive, unicode

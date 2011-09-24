@@ -45,7 +45,7 @@ public class Test5 {
 
     @Test
     public void m2() {
-        String s = "в чем смысл жизни?";
+        String s = "РІ С‡РµРј СЃРјС‹СЃР» Р¶РёР·РЅРё?";
 
         Analyzer analyzer = config.getMessageAnalyzer();
 //        Analyzer analyzer = new RussianWithNumbersAndSpecialStopWordsAnalyzer(new String[0]);
@@ -78,12 +78,12 @@ public class Test5 {
 
     public static void m4() {
 //        SearchLogicImpl zs = new SearchLogicImpl(Site.forName("zlo"));
-//        System.out.println(zs.search(-1, "тест", true, true, false, false, false, null, null).getHits().length());
+//        System.out.println(zs.search(-1, "С‚РµСЃС‚", true, true, false, false, false, null, null).getHits().length());
         Site site = Site.forName("zlo");
         DoubleIndexManager dis = new DoubleIndexManager(site, null);
         IndexSearcher is = new IndexSearcher(dis.getBigReader());
 /*        try {
-            Hits hits = is.search(new QueryParser("body", config.getMessageAnalyzer()).parse("body:тест title:тест"), Sort.INDEXORDER);
+            Hits hits = is.search(new QueryParser("body", config.getMessageAnalyzer()).parse("body:С‚РµСЃС‚ title:С‚РµСЃС‚"), Sort.INDEXORDER);
 
             for (int i = 1; i < 10; i++) {
                 System.out.println(hits.doc(hits.length() - i).get("num"));

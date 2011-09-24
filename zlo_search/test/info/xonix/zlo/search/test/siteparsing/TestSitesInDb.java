@@ -105,7 +105,7 @@ public class TestSitesInDb {
         m = appLogic.getMessageByNumber(dev, 10153);
 
         Assert.assertEquals(10153, m.getNum());
-        Assert.assertEquals("Рыбак", m.getNick());
+        Assert.assertEquals("Р С‹Р±Р°Рє", m.getNick());
         Assert.assertEquals("ppp91-77-164-91.pppoe.mtu-net.ru", m.getHost());
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
         Assert.assertTrue(!m.isReg());
@@ -159,7 +159,7 @@ public class TestSitesInDb {
 
         Message m = appLogic.getMessageByNumber(takeoff, 13996);
 
-        Assert.assertEquals("Слава", m.getNick());
+        Assert.assertEquals("РЎР»Р°РІР°", m.getNick());
         Assert.assertEquals("gluk.2ka.mipt.ru", m.getHost());
         Assert.assertTrue(m.isReg());
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
@@ -202,15 +202,15 @@ public class TestSitesInDb {
         Message m = appLogic.getMessageByNumber(np, 96119);
         System.out.println(m);
 
-        Assert.assertEquals("там сочинение на страницу или больше", m.getTitle());
-        Assert.assertEquals("а я почему-то могу писать или писать только иногда, когда настроение", m.getBody());
-        Assert.assertEquals("без темы", m.getTopic());
+        Assert.assertEquals("С‚Р°Рј СЃРѕС‡РёРЅРµРЅРёРµ РЅР° СЃС‚СЂР°РЅРёС†Сѓ РёР»Рё Р±РѕР»СЊС€Рµ", m.getTitle());
+        Assert.assertEquals("Р° СЏ РїРѕС‡РµРјСѓ-С‚Рѕ РјРѕРіСѓ РїРёСЃР°С‚СЊ РёР»Рё РїРёСЃР°С‚СЊ С‚РѕР»СЊРєРѕ РёРЅРѕРіРґР°, РєРѕРіРґР° РЅР°СЃС‚СЂРѕРµРЅРёРµ", m.getBody());
+        Assert.assertEquals("Р±РµР· С‚РµРјС‹", m.getTopic());
 
         m = appLogic.getMessageByNumber(np, 95933);
         System.out.println(m);
 
-        Assert.assertEquals("проверим", m.getTitle());
-        Assert.assertEquals("Кто здесь?", m.getTopic());
+        Assert.assertEquals("РїСЂРѕРІРµСЂРёРј", m.getTitle());
+        Assert.assertEquals("РљС‚Рѕ Р·РґРµСЃСЊ?", m.getTopic());
         Assert.assertEquals("", m.getBody());
     }
 }

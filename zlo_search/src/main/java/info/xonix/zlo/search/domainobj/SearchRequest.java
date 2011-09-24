@@ -212,36 +212,36 @@ public class SearchRequest {
 
     public String describeToString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("форум:(").append(getSite().getSiteUrl()).append(")");
+        sb.append("С„РѕСЂСѓРј:(").append(getSite().getSiteUrl()).append(")");
 
-        if (StringUtils.isNotEmpty(text)) sb.append(" текст:(").append(text).append(")");
-        if (StringUtils.isNotEmpty(nick)) sb.append(" ник:(").append(nick).append(")");
-        if (StringUtils.isNotEmpty(host)) sb.append(" хост:(").append(host).append(")");
+        if (StringUtils.isNotEmpty(text)) sb.append(" С‚РµРєСЃС‚:(").append(text).append(")");
+        if (StringUtils.isNotEmpty(nick)) sb.append(" РЅРёРє:(").append(nick).append(")");
+        if (StringUtils.isNotEmpty(host)) sb.append(" С…РѕСЃС‚:(").append(host).append(")");
 
         if (topicCode != -1) {
 //            try {
-            sb.append(" категория:(").append(messagesDao.getTopics(site)[topicCode]).append(")");
+            sb.append(" РєР°С‚РµРіРѕСЂРёСЏ:(").append(messagesDao.getTopics(site)[topicCode]).append(")");
 //            } catch (DbException e) {
 //                ;
 //            }
         }
 
         ArrayList<String> options = new ArrayList<String>(5);
-        if (inTitle) options.add("в заголовках");
-        if (inBody) options.add("в теле");
-        if (inHasImg) options.add("с картинками");
-        if (inHasUrl) options.add("со ссылками");
-        if (inReg) options.add("от регов");
+        if (inTitle) options.add("РІ Р·Р°РіРѕР»РѕРІРєР°С…");
+        if (inBody) options.add("РІ С‚РµР»Рµ");
+        if (inHasImg) options.add("СЃ РєР°СЂС‚РёРЅРєР°РјРё");
+        if (inHasUrl) options.add("СЃРѕ СЃСЃС‹Р»РєР°РјРё");
+        if (inReg) options.add("РѕС‚ СЂРµРіРѕРІ");
 
         if (options.size() > 0)
-            sb.append(" ищем:(").append(StringUtils.join(options, ", ")).append(")");
+            sb.append(" РёС‰РµРј:(").append(StringUtils.join(options, ", ")).append(")");
 
         options.clear();
 
         if (fromDate != null || toDate != null) {
             options.add(fromDate != null ? DateFormats.ddMMyyyy.format(fromDate) : "-inf");
             options.add(toDate != null ? DateFormats.ddMMyyyy.format(toDate) : "inf");
-            sb.append(" в промежутке дат:(").append(StringUtils.join(options, ", ")).append(")");
+            sb.append(" РІ РїСЂРѕРјРµР¶СѓС‚РєРµ РґР°С‚:(").append(StringUtils.join(options, ", ")).append(")");
         }
 
         return sb.toString();

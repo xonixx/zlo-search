@@ -23,7 +23,7 @@ public class TestXmlParseMessage {
             System.out.println(msg.getAuthor().getName());
             System.out.println(msg.getContent().getBody());
             System.out.println(msg.getContent().getTags().getTag().get(0));
-            msg.getContent().setTitle("Тест... Тест.. Тест");
+            msg.getContent().setTitle("РўРµСЃС‚... РўРµСЃС‚.. РўРµСЃС‚");
             msg.getContent().setBody("<h1>HELLO\n</h1>");
             System.out.println("==========================");
             marshaller.setProperty("jaxb.encoding", "windows-1251");

@@ -10,7 +10,7 @@ import java.io.IOException;
 public class SearchSpeedTest {
     public static void main(String[] args) throws IOException {
 /*        SearchLogicImpl zs = Site.forName("zlo").getZloSearcher();
-        String w = "æîïà";
+        String w = "Ð¶Ð¾Ð¿Ð°";
         int len = zs.search(-1, w, true, true, false, false, false, null, null).getHits().length();
         System.out.println(len);
         int N = 50;

@@ -12,6 +12,6 @@ import java.io.UnsupportedEncodingException;
  */
 public class T1 {
     public static void main(String[] args) throws SphinxException, UnsupportedEncodingException {
-        test.main(new String[]{"-e", "-i", "index_sport", "-l", "100", "-s", "msgDate DESC", "ÙÛÚ·Ó*"});    
+        test.main(new String[]{"-e", "-i", "index_sport", "-l", "100", "-s", "msgDate DESC", "—Ñ—É—Ç–±–æ*"});    
     }
 }

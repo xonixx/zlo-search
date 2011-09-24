@@ -102,7 +102,7 @@ public class RssFormer {
                         // highlighting of all feed takes to many time & cpu
 
                         String title = HtmlUtils.unescapeHtml(m.getTitle());
-                        if (!"без темы".equals(m.getTopic().toLowerCase()))
+                        if (!"Р±РµР· С‚РµРјС‹".equals(m.getTopic().toLowerCase()))
                             title = "[" + m.getTopic() + "] " + title;
                         it.setTitle(title);
                         it.setDescription(m.getBody());
