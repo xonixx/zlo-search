@@ -11,7 +11,7 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class Test6 {
     public static void main(String[] args) {
-        System.out.println(HtmlUtils.htmlEscape("<ïðèâåò>"));
+        System.out.println(HtmlUtils.htmlEscape("<Ð¿Ñ€Ð¸Ð²ÐµÑ‚>"));
     }
 
     public static void main1(String[] args) {

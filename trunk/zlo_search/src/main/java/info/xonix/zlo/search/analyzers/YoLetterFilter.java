@@ -26,8 +26,8 @@ public class YoLetterFilter extends TokenFilter {
             final char[] buffer = termAtt.termBuffer();
             final int length = termAtt.termLength();
             for (int i = 0; i < length; i++) {
-                if (buffer[i] == '¸' || buffer[i] == '¨') {
-                    buffer[i] = 'å';
+                if (buffer[i] == 'Ñ‘' || buffer[i] == 'Ð') {
+                    buffer[i] = 'Ðµ';
                 }
             }
 

@@ -50,7 +50,7 @@ public class Message extends MessageShallow implements Serializable {
 
     private MessageStatus status = MessageStatus.UNKNOWN; // default
 
-    public static final String ALL_TOPICS = "Все темы";
+    public static final String ALL_TOPICS = "Р’СЃРµ С‚РµРјС‹";
 
     public static NumberFormat URL_NUM_FORMAT = new DecimalFormat("0000000000"); // 10 zeros
 
@@ -227,12 +227,12 @@ public class Message extends MessageShallow implements Serializable {
 
         doc.add(new Field(MessageFields.URL_NUM, URL_NUM_FORMAT.format(num), Store.YES, Index.NOT_ANALYZED));
         doc.add(new Field(MessageFields.TOPIC_CODE, Integer.toString(topicCode), Store.NO, Index.NOT_ANALYZED));
-        doc.add(new Field(MessageFields.TITLE, getCleanTitle(), Store.NO, Index.ANALYZED)); // "чистый" - индексируем, не храним
+        doc.add(new Field(MessageFields.TITLE, getCleanTitle(), Store.NO, Index.ANALYZED)); // "С‡РёСЃС‚С‹Р№" - РёРЅРґРµРєСЃРёСЂСѓРµРј, РЅРµ С…СЂР°РЅРёРј
         doc.add(new Field(MessageFields.NICK, nick.toLowerCase(), Store.NO, Index.NOT_ANALYZED));
         doc.add(new Field(MessageFields.REG, reg ? TRUE : FALSE, Store.NO, Index.NOT_ANALYZED));
         doc.add(new Field(MessageFields.HOST, host.toLowerCase(), Store.NO, Index.NOT_ANALYZED));
         doc.add(new Field(MessageFields.DATE, DateTools.dateToString(date, DateTools.Resolution.MINUTE), Store.NO, Index.NOT_ANALYZED));
-        doc.add(new Field(MessageFields.BODY, getCleanBody(), Store.NO, Index.ANALYZED)); // "чистый" - индексируем, не храним
+        doc.add(new Field(MessageFields.BODY, getCleanBody(), Store.NO, Index.ANALYZED)); // "С‡РёСЃС‚С‹Р№" - РёРЅРґРµРєСЃРёСЂСѓРµРј, РЅРµ С…СЂР°РЅРёРј
         doc.add(new Field(MessageFields.HAS_URL, isHasUrl() ? TRUE : FALSE, Store.NO, Index.NOT_ANALYZED));
         doc.add(new Field(MessageFields.HAS_IMG, isHasImg() ? TRUE : FALSE, Store.NO, Index.NOT_ANALYZED));
 

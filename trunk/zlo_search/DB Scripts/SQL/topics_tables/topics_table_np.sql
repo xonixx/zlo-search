@@ -14,7 +14,7 @@ ALTER TABLE topics
   ADD INDEX (id);
 
 -- insert
-INSERT INTO topics (id, name, isNew) VALUES (0, 'без темы',         1);
-INSERT INTO topics (id, name, isNew) VALUES (1, 'Кто здесь?',           1);
+INSERT INTO topics (id, name, isNew) VALUES (0, 'Р±РµР· С‚РµРјС‹',         1);
+INSERT INTO topics (id, name, isNew) VALUES (1, 'РљС‚Рѕ Р·РґРµСЃСЊ?',           1);
 
 -- old

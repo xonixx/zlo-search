@@ -13,7 +13,7 @@ ALTER TABLE topics
   ADD INDEX (id);
 
 -- insert
--- вообще нет тем
-INSERT INTO topics (id, name, isNew) VALUES (0, 'без темы',         1);
+-- РІРѕРѕР±С‰Рµ РЅРµС‚ С‚РµРј
+INSERT INTO topics (id, name, isNew) VALUES (0, 'Р±РµР· С‚РµРјС‹',         1);
 
 -- old

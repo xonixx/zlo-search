@@ -14,6 +14,6 @@ DEFAULT CHARSET=cp1251;
 --  ADD INDEX (id);
 
 -- insert
-INSERT INTO dolgopa_topics (id, name, isNew) VALUES (0, 'без темы',         1);
-INSERT INTO dolgopa_topics (id, name, isNew) VALUES (1, 'Новости',            1);
-INSERT INTO dolgopa_topics (id, name, isNew) VALUES (2, 'Вопрос',           1);
+INSERT INTO dolgopa_topics (id, name, isNew) VALUES (0, 'Р±РµР· С‚РµРјС‹',         1);
+INSERT INTO dolgopa_topics (id, name, isNew) VALUES (1, 'РќРѕРІРѕСЃС‚Рё',            1);
+INSERT INTO dolgopa_topics (id, name, isNew) VALUES (2, 'Р’РѕРїСЂРѕСЃ',           1);

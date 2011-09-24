@@ -76,15 +76,15 @@ public class TestSitesRetrieving {
         m = siteLogic.getMessageByNumber(site, 18869);
         System.out.println(m);
 
-        Assert.assertEquals("а многие собирают себе титановые ригиды на ХТЯ.....", m.getTitle());
+        Assert.assertEquals("Р° РјРЅРѕРіРёРµ СЃРѕР±РёСЂР°СЋС‚ СЃРµР±Рµ С‚РёС‚Р°РЅРѕРІС‹Рµ СЂРёРіРёРґС‹ РЅР° РҐРўРЇ.....", m.getTitle());
         Assert.assertEquals("Tormentor", m.getNick());
         Assert.assertTrue(StringUtils.isEmpty(m.getBody()));
         Assert.assertTrue(m.isReg());
 
         m = siteLogic.getMessageByNumber(site, 25597);
         System.out.println(m);
-        Assert.assertEquals("Велотуризм", m.getTopic());
-        Assert.assertEquals("Отчет по походу по Карелии, который обещал выложить", m.getTitle());
+        Assert.assertEquals("Р’РµР»РѕС‚СѓСЂРёР·Рј", m.getTopic());
+        Assert.assertEquals("РћС‚С‡РµС‚ РїРѕ РїРѕС…РѕРґСѓ РїРѕ РљР°СЂРµР»РёРё, РєРѕС‚РѕСЂС‹Р№ РѕР±РµС‰Р°Р» РІС‹Р»РѕР¶РёС‚СЊ", m.getTitle());
         Assert.assertEquals("timm", m.getNick());
         Assert.assertTrue(m.isReg());
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
@@ -122,7 +122,7 @@ public class TestSitesRetrieving {
         m = siteLogic.getMessageByNumber(dev, 10153);
 
         Assert.assertEquals(10153, m.getNum());
-        Assert.assertEquals("Рыбак", m.getNick());
+        Assert.assertEquals("Р С‹Р±Р°Рє", m.getNick());
         Assert.assertEquals("ppp91-77-164-91.pppoe.mtu-net.ru", m.getHost());
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
         Assert.assertTrue(!m.isReg());
@@ -139,16 +139,16 @@ public class TestSitesRetrieving {
 
         Assert.assertEquals("uberdude", m.getNick());
         Assert.assertEquals("wimax-client.yota.ru", m.getHost());
-        Assert.assertEquals("Почему?", m.getTitle());
+        Assert.assertEquals("РџРѕС‡РµРјСѓ?", m.getTitle());
         Assert.assertTrue(m.isReg());
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
         System.out.println(m);
 
         m = siteLogic.getMessageByNumber(x, 55182);
 
-        Assert.assertEquals("Митя", m.getNick());
+        Assert.assertEquals("РњРёС‚СЏ", m.getNick());
         Assert.assertEquals("ip-46-73-158-249.bb.netbynet.ru", m.getHost());
-        Assert.assertEquals("+ к", m.getTitle());
+        Assert.assertEquals("+ Рє", m.getTitle());
         Assert.assertTrue(m.isReg());
         Assert.assertTrue(StringUtils.isEmpty(m.getBody()));
         System.out.println(m);
@@ -183,17 +183,17 @@ public class TestSitesRetrieving {
         System.out.println(m);
         Assert.assertEquals("Rook", m.getNick());
         Assert.assertEquals("", m.getHost());
-        Assert.assertEquals("Не, ну чо тут сказать? Как обычно: Слава ЕР! И ныне и присно и во веки веков!", m.getTitle());
+        Assert.assertEquals("РќРµ, РЅСѓ С‡Рѕ С‚СѓС‚ СЃРєР°Р·Р°С‚СЊ? РљР°Рє РѕР±С‹С‡РЅРѕ: РЎР»Р°РІР° Р•Р ! Р РЅС‹РЅРµ Рё РїСЂРёСЃРЅРѕ Рё РІРѕ РІРµРєРё РІРµРєРѕРІ!", m.getTitle());
         Assert.assertTrue(m.isReg());
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
-        Assert.assertEquals("И да не кончатся богом данные бюллетени в ее поддержку!", m.getBody());
+        Assert.assertEquals("Р РґР° РЅРµ РєРѕРЅС‡Р°С‚СЃСЏ Р±РѕРіРѕРј РґР°РЅРЅС‹Рµ Р±СЋР»Р»РµС‚РµРЅРё РІ РµРµ РїРѕРґРґРµСЂР¶РєСѓ!", m.getBody());
 
         m = siteLogic.getMessageByNumber(site, 138026);
 
         System.out.println(m);
         Assert.assertEquals("@LuCiFeRsHa@", m.getNick());
         Assert.assertEquals("", m.getHost());
-        Assert.assertEquals("Спасибо!!!!!!!!!!!!!!!!", m.getTitle());
+        Assert.assertEquals("РЎРїР°СЃРёР±Рѕ!!!!!!!!!!!!!!!!", m.getTitle());
         Assert.assertTrue(m.isReg());
         Assert.assertTrue(StringUtils.isEmpty(m.getBody()));
 
@@ -202,7 +202,7 @@ public class TestSitesRetrieving {
         System.out.println(m);
         Assert.assertEquals("\\/", m.getNick());
         Assert.assertEquals("", m.getHost());
-        Assert.assertEquals("пожелаем им скорейшего ВЫЗДОРОВЛЕНИЯ, а будут выёживацо-пусть роют себе свой коллектор", m.getTitle());
+        Assert.assertEquals("РїРѕР¶РµР»Р°РµРј РёРј СЃРєРѕСЂРµР№С€РµРіРѕ Р’Р«Р—Р”РћР РћР’Р›Р•РќРРЇ, Р° Р±СѓРґСѓС‚ РІС‹С‘Р¶РёРІР°С†Рѕ-РїСѓСЃС‚СЊ СЂРѕСЋС‚ СЃРµР±Рµ СЃРІРѕР№ РєРѕР»Р»РµРєС‚РѕСЂ", m.getTitle());
         Assert.assertTrue(!m.isReg());
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
 
@@ -211,15 +211,15 @@ public class TestSitesRetrieving {
         System.out.println(m);
         Assert.assertEquals("FIPS", m.getNick());
         Assert.assertEquals("", m.getHost());
-        Assert.assertEquals("А кинологи в окресностях ближайших есть?", m.getTitle());
-        Assert.assertEquals("Вопрос", m.getTopic());
+        Assert.assertEquals("Рђ РєРёРЅРѕР»РѕРіРё РІ РѕРєСЂРµСЃРЅРѕСЃС‚СЏС… Р±Р»РёР¶Р°Р№С€РёС… РµСЃС‚СЊ?", m.getTitle());
+        Assert.assertEquals("Р’РѕРїСЂРѕСЃ", m.getTopic());
         Assert.assertTrue(!m.isReg());
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
-        Assert.assertEquals("С овчаркой позаниматься.", m.getBody());
+        Assert.assertEquals("РЎ РѕРІС‡Р°СЂРєРѕР№ РїРѕР·Р°РЅРёРјР°С‚СЊСЃСЏ.", m.getBody());
 
         m = siteLogic.getMessageByNumber(site, 199);
         System.out.println(m);
-        Assert.assertEquals("<P>Люди кто нить знает что за проводок кинули с Лих 4 на Чайку уж не сетку ли?????", m.getBody());
+        Assert.assertEquals("<P>Р›СЋРґРё РєС‚Рѕ РЅРёС‚СЊ Р·РЅР°РµС‚ С‡С‚Рѕ Р·Р° РїСЂРѕРІРѕРґРѕРє РєРёРЅСѓР»Рё СЃ Р›РёС… 4 РЅР° Р§Р°Р№РєСѓ СѓР¶ РЅРµ СЃРµС‚РєСѓ Р»Рё?????", m.getBody());
 
         checkMsgNotExists(site);
     }
@@ -281,7 +281,7 @@ public class TestSitesRetrieving {
 
         Message m = siteLogic.getMessageByNumber(takeoff, 13996);
 
-        Assert.assertEquals("Слава", m.getNick());
+        Assert.assertEquals("РЎР»Р°РІР°", m.getNick());
         Assert.assertEquals("gluk.2ka.mipt.ru", m.getHost());
         Assert.assertTrue(m.isReg());
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
@@ -323,8 +323,8 @@ public class TestSitesRetrieving {
         Assert.assertEquals("10.55.110.140", m.getHost());
         Assert.assertTrue(!m.isHasImg());
         Assert.assertTrue(!m.isHasUrl());
-        Assert.assertEquals("В качестве бонуса могу выдать батч скаченный на 54.2% с полностью скаченной первой серией, оп и ед.", m.getBody());
-        Assert.assertEquals("Ну, что? Кто в локалке возмется кланнад 1-5 скачать?", m.getTitle());
+        Assert.assertEquals("Р’ РєР°С‡РµСЃС‚РІРµ Р±РѕРЅСѓСЃР° РјРѕРіСѓ РІС‹РґР°С‚СЊ Р±Р°С‚С‡ СЃРєР°С‡РµРЅРЅС‹Р№ РЅР° 54.2% СЃ РїРѕР»РЅРѕСЃС‚СЊСЋ СЃРєР°С‡РµРЅРЅРѕР№ РїРµСЂРІРѕР№ СЃРµСЂРёРµР№, РѕРї Рё РµРґ.", m.getBody());
+        Assert.assertEquals("РќСѓ, С‡С‚Рѕ? РљС‚Рѕ РІ Р»РѕРєР°Р»РєРµ РІРѕР·РјРµС‚СЃСЏ РєР»Р°РЅРЅР°Рґ 1-5 СЃРєР°С‡Р°С‚СЊ?", m.getTitle());
 
         m = siteLogic.getMessageByNumber(anime, 16376);
         System.out.println(m);
@@ -334,14 +334,14 @@ public class TestSitesRetrieving {
         Assert.assertTrue(m.isReg());
         Assert.assertEquals("fth", m.getNick());
         Assert.assertEquals("10.55.103.181", m.getHost());
-        Assert.assertEquals("С наступающим Новым Годом!", m.getTitle());
+        Assert.assertEquals("РЎ РЅР°СЃС‚СѓРїР°СЋС‰РёРј РќРѕРІС‹Рј Р“РѕРґРѕРј!", m.getTitle());
 
         m = siteLogic.getMessageByNumber(anime, 16799);
         System.out.println(m);
 
         Assert.assertFalse(m.isReg());
         Assert.assertEquals("zuzzik_", m.getNick());
-        Assert.assertEquals("Фотки и отчет будут? Ж)", m.getTitle());
+        Assert.assertEquals("Р¤РѕС‚РєРё Рё РѕС‚С‡РµС‚ Р±СѓРґСѓС‚? Р–)", m.getTitle());
 
         m = siteLogic.getMessageByNumber(anime, 2);
         System.out.println(m);
@@ -358,15 +358,15 @@ public class TestSitesRetrieving {
         Message m = siteLogic.getMessageByNumber(np, 96119);
         System.out.println(m);
 
-        Assert.assertEquals("там сочинение на страницу или больше", m.getTitle());
-        Assert.assertEquals("а я почему-то могу писать или писать только иногда, когда настроение", m.getBody());
-        Assert.assertEquals("без темы", m.getTopic());
+        Assert.assertEquals("С‚Р°Рј СЃРѕС‡РёРЅРµРЅРёРµ РЅР° СЃС‚СЂР°РЅРёС†Сѓ РёР»Рё Р±РѕР»СЊС€Рµ", m.getTitle());
+        Assert.assertEquals("Р° СЏ РїРѕС‡РµРјСѓ-С‚Рѕ РјРѕРіСѓ РїРёСЃР°С‚СЊ РёР»Рё РїРёСЃР°С‚СЊ С‚РѕР»СЊРєРѕ РёРЅРѕРіРґР°, РєРѕРіРґР° РЅР°СЃС‚СЂРѕРµРЅРёРµ", m.getBody());
+        Assert.assertEquals("Р±РµР· С‚РµРјС‹", m.getTopic());
 
         m = siteLogic.getMessageByNumber(np, 95933);
         System.out.println(m);
 
-        Assert.assertEquals("проверим", m.getTitle());
-        Assert.assertEquals("Кто здесь?", m.getTopic());
+        Assert.assertEquals("РїСЂРѕРІРµСЂРёРј", m.getTitle());
+        Assert.assertEquals("РљС‚Рѕ Р·РґРµСЃСЊ?", m.getTopic());
         Assert.assertEquals("", m.getBody());
     }
 }

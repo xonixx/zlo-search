@@ -13,7 +13,7 @@ public class Test4 {
     }
 
     public static void m1() {
-        for (String w: FoundTextHighlighter.formHighlightedWords("колон* s-90 ")){
+        for (String w: FoundTextHighlighter.formHighlightedWords("РєРѕР»РѕРЅ* s-90 ")){
             System.out.println(w);
         }
 

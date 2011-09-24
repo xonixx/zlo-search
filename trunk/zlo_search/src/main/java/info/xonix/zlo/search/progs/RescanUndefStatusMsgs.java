@@ -21,7 +21,7 @@ import java.util.Set;
  * Time: 23:52:24
  */
 public class RescanUndefStatusMsgs {
-    private static int MAX_ALEXZAM = 4030808; // 4 030 808 - max alexzam db row
+    private static int MAX_ALEXZAM = 4030808; // 4Â 030Â 808 - max alexzam db row
     private static int N = 10000;
 
     private static MessagesDao dbm = AppSpringContext.get(MessagesDao.class);

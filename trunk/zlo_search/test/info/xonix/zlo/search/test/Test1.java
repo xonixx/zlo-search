@@ -57,7 +57,7 @@ public class Test1 {
 
     public static void m19() {
         /*try {
-            String queryStr = "body:(+(Привет медведь т?ст) +Путин -извращенец педофил)";
+            String queryStr = "body:(+(РџСЂРёРІРµС‚ РјРµРґРІРµРґСЊ С‚?СЃС‚) +РџСѓС‚РёРЅ -РёР·РІСЂР°С‰РµРЅРµС† РїРµРґРѕС„РёР»)";
             Analyzer analyzer = Message.constructAnalyzer();
             QueryParser parser = new QueryParser(Message.FIELDS.BODY, analyzer);
             Query query = parser.parse(queryStr);
@@ -69,7 +69,7 @@ public class Test1 {
         } catch (ParseException e) {
             e.printStackTrace();
         }*/
-/*        String st = "+(Привет медведь т?ст) +Путин -извращенец педофил";
+/*        String st = "+(РџСЂРёРІРµС‚ РјРµРґРІРµРґСЊ С‚?СЃС‚) +РџСѓС‚РёРЅ -РёР·РІСЂР°С‰РµРЅРµС† РїРµРґРѕС„РёР»";
         for (String s : FoundTextHighlighter.formHighlightedWords(st)) {
             System.out.println(s);
         }*/
@@ -273,8 +273,8 @@ public class Test1 {
         System.out.println(appLogic.getMessageByNumber(zlo, 3960198));
 
         /*System.out.println(PageParser.parseMessage("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" +
-                "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=windows-1251\" /><link rel=\"shortcut icon\" href=\"/favicon.ico\" /><link rel=\"stylesheet\" type=\"text/css\" href=\"/main.css\" /><meta http-equiv=\"Page-Exit\" content=\"progid:DXImageTransform.Microsoft.Fade(Duration=0.2)\" /><title>Форум-ФРТК-МФТИ : Программирование : я говорю про коды на FORTRAN-87, какие RPC?</title></head><body>\n" +
-                "<script language=\"JavaScript\" type=\"text/javascript\">function popup(action, value, w, h){wnd=window.open(\"?\"+action+\"=\"+value,\"popup\",\"resizable=no,menubars=no,scrollbars=yes,width=\"+w+\",height=\"+h); }</script><div class=\"menu\"><A HREF=\"#3975000\">Перейти к ответам</A><A HREF=\"#Reply\">Ответить</A><A HREF=\"?index#3974909\" style=\"color:red;\">На главную страницу</A><a HREF=\"http://boards.alexzam.ru\">Поиск</A><A HREF=\"?register=form\">Регистрация</A><A HREF=\"?login=form\">Вход</A><A HREF=\"?rules\">Правила</A></div><BR><DIV ALIGN=CENTER><BIG>[Программирование]</BIG>&nbsp;&nbsp;<BIG>я говорю про коды на FORTRAN-87, какие RPC?</BIG><BR>Сообщение было послано: <b>Ник0лай</b><SMALL> (unreg)</SMALL> <small>(88.84.192.198)</small><BR>Дата: Пятница, Сентябрь 14 22:11:33 2007</DIV><BR><br /><div class=\"body\">Я говорю о синтаксисе вроде<BR><PRE STYLE=\"margin-left:25px\">\n" +
+                "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=windows-1251\" /><link rel=\"shortcut icon\" href=\"/favicon.ico\" /><link rel=\"stylesheet\" type=\"text/css\" href=\"/main.css\" /><meta http-equiv=\"Page-Exit\" content=\"progid:DXImageTransform.Microsoft.Fade(Duration=0.2)\" /><title>Р¤РѕСЂСѓРј-Р¤Р РўРљ-РњР¤РўР : РџСЂРѕРіСЂР°РјРјРёСЂРѕРІР°РЅРёРµ : СЏ РіРѕРІРѕСЂСЋ РїСЂРѕ РєРѕРґС‹ РЅР° FORTRAN-87, РєР°РєРёРµ RPC?</title></head><body>\n" +
+                "<script language=\"JavaScript\" type=\"text/javascript\">function popup(action, value, w, h){wnd=window.open(\"?\"+action+\"=\"+value,\"popup\",\"resizable=no,menubars=no,scrollbars=yes,width=\"+w+\",height=\"+h); }</script><div class=\"menu\"><A HREF=\"#3975000\">РџРµСЂРµР№С‚Рё Рє РѕС‚РІРµС‚Р°Рј</A><A HREF=\"#Reply\">РћС‚РІРµС‚РёС‚СЊ</A><A HREF=\"?index#3974909\" style=\"color:red;\">РќР° РіР»Р°РІРЅСѓСЋ СЃС‚СЂР°РЅРёС†Сѓ</A><a HREF=\"http://boards.alexzam.ru\">РџРѕРёСЃРє</A><A HREF=\"?register=form\">Р РµРіРёСЃС‚СЂР°С†РёСЏ</A><A HREF=\"?login=form\">Р’С…РѕРґ</A><A HREF=\"?rules\">РџСЂР°РІРёР»Р°</A></div><BR><DIV ALIGN=CENTER><BIG>[РџСЂРѕРіСЂР°РјРјРёСЂРѕРІР°РЅРёРµ]</BIG>&nbsp;&nbsp;<BIG>СЏ РіРѕРІРѕСЂСЋ РїСЂРѕ РєРѕРґС‹ РЅР° FORTRAN-87, РєР°РєРёРµ RPC?</BIG><BR>РЎРѕРѕР±С‰РµРЅРёРµ Р±С‹Р»Рѕ РїРѕСЃР»Р°РЅРѕ: <b>РќРёРє0Р»Р°Р№</b><SMALL> (unreg)</SMALL> <small>(88.84.192.198)</small><BR>Р”Р°С‚Р°: РџСЏС‚РЅРёС†Р°, РЎРµРЅС‚СЏР±СЂСЊ 14 22:11:33 2007</DIV><BR><br /><div class=\"body\">РЇ РіРѕРІРѕСЂСЋ Рѕ СЃРёРЅС‚Р°РєСЃРёСЃРµ РІСЂРѕРґРµ<BR><PRE STYLE=\"margin-left:25px\">\n" +
                 "\n" +
                 "\tSUBROUTINE RTMAP( JOPT, MSK, JER )\n" +
                 "\tCHARACTER FNAME*20,NAME*20,JNAME*20\n" +
@@ -311,7 +311,7 @@ public class Test1 {
                 "\t  NR=IABS(INDX(1,NK))+INDX(2,NK)+2\n" +
                 "\tENDIF\n" +
                 "\tKER(1)=ND(1)\n" +
-                "\tKER(2)=ND(2)</PRE><BR><BR>О чём Вы говорите! современный Фортран такое, уверен, не скомпилит даже.</div><P></P><BR><CENTER><BIG>Сообщения в этом потоке</BIG></CENTER><DIV class=w><span id=m3974909"))*/
+                "\tKER(2)=ND(2)</PRE><BR><BR>Рћ С‡С‘Рј Р’С‹ РіРѕРІРѕСЂРёС‚Рµ! СЃРѕРІСЂРµРјРµРЅРЅС‹Р№ Р¤РѕСЂС‚СЂР°РЅ С‚Р°РєРѕРµ, СѓРІРµСЂРµРЅ, РЅРµ СЃРєРѕРјРїРёР»РёС‚ РґР°Р¶Рµ.</div><P></P><BR><CENTER><BIG>РЎРѕРѕР±С‰РµРЅРёСЏ РІ СЌС‚РѕРј РїРѕС‚РѕРєРµ</BIG></CENTER><DIV class=w><span id=m3974909"))*/
         ;
 /*        try {
             System.out.println(new ZloStorage().getMessageByNumber(3960198));

@@ -13,15 +13,15 @@ ALTER TABLE topics
   ADD INDEX (id);
 
 -- insert
-INSERT INTO topics (id, name, isNew) VALUES (0, 'без темы',         1);
-INSERT INTO topics (id, name, isNew) VALUES (1, 'Футбол',           1);
-INSERT INTO topics (id, name, isNew) VALUES (2, 'Хоккей',           1);
-INSERT INTO topics (id, name, isNew) VALUES (3, 'Баскетбол',        1);
-INSERT INTO topics (id, name, isNew) VALUES (4, 'Волейбол',         1);
-INSERT INTO topics (id, name, isNew) VALUES (5, 'Формула 1',        1);
-INSERT INTO topics (id, name, isNew) VALUES (6, 'Зимние виды',      1);
-INSERT INTO topics (id, name, isNew) VALUES (7, 'Летние виды',      1);
-INSERT INTO topics (id, name, isNew) VALUES (8, 'Трансляция',       1);
+INSERT INTO topics (id, name, isNew) VALUES (0, 'Р±РµР· С‚РµРјС‹',         1);
+INSERT INTO topics (id, name, isNew) VALUES (1, 'Р¤СѓС‚Р±РѕР»',           1);
+INSERT INTO topics (id, name, isNew) VALUES (2, 'РҐРѕРєРєРµР№',           1);
+INSERT INTO topics (id, name, isNew) VALUES (3, 'Р‘Р°СЃРєРµС‚Р±РѕР»',        1);
+INSERT INTO topics (id, name, isNew) VALUES (4, 'Р’РѕР»РµР№Р±РѕР»',         1);
+INSERT INTO topics (id, name, isNew) VALUES (5, 'Р¤РѕСЂРјСѓР»Р° 1',        1);
+INSERT INTO topics (id, name, isNew) VALUES (6, 'Р—РёРјРЅРёРµ РІРёРґС‹',      1);
+INSERT INTO topics (id, name, isNew) VALUES (7, 'Р›РµС‚РЅРёРµ РІРёРґС‹',      1);
+INSERT INTO topics (id, name, isNew) VALUES (8, 'РўСЂР°РЅСЃР»СЏС†РёСЏ',       1);
 INSERT INTO topics (id, name, isNew) VALUES (9, 'Fans',             1);
 INSERT INTO topics (id, name, isNew) VALUES (10, 'Temp',            1);
 
