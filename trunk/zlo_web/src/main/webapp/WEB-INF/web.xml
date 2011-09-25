@@ -25,6 +25,21 @@
     </servlet-mapping>
 
     <servlet>
+        <description>Autocompletion servlet</description>
+        <servlet-name>ac</servlet-name>
+        <servlet-class>info.xonix.zlo.web.servlets.AutocompletionServlet</servlet-class>
+        <init-param>
+            <param-name>defaultRequestCharset</param-name>
+            <param-value>windows-1251</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ac</servlet-name>
+        <url-pattern>/ac</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <description>Saved message servlet</description>
         <servlet-name>msg</servlet-name>
         <servlet-class>info.xonix.zlo.web.servlets.SavedMessageServlet</servlet-class>
