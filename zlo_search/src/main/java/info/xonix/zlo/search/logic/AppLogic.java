@@ -47,5 +47,5 @@ public interface AppLogic {
 
     void saveSearchTextForAutocomplete(Site site, String text);
 
-    List<String> autoCompleteText(Site site, String test, int limit);
+    List<String> autoCompleteText(Site site, String text, int limit);
 }
