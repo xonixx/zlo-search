@@ -15,22 +15,24 @@ import java.util.Properties;
 public class QueryProvider {
 
     private static final class SiteQueries {
-        public String INSERT_MSG;
-        public String INSERT_UPDATE_MSG;
-        public String UPDATE_MSG;
-        public String DELETE_MSG;
-        public String SELECT_MSG_BY_ID;
-        public String SELECT_MSGS_IN_RANGE;
-        public String SELECT_LAST_MSG_NUM;
-        public String SELECT_MSGS_SET;
-        public String SELECT_MSGS_SET_SHALLOW;
+        private String INSERT_MSG;
+        //        private String INSERT_UPDATE_MSG;
+//        private String UPDATE_MSG;
+//        private String DELETE_MSG;
+        private String SELECT_MSG_BY_ID;
+        private String SELECT_MSGS_IN_RANGE;
+        private String SELECT_LAST_MSG_NUM;
+        private String SELECT_MSGS_SET;
+        private String SELECT_MSGS_SET_SHALLOW;
 
-        public String SELECT_ALL_TOPICS;
-        public String SELECT_NEW_TOPICS;
+        //        private String SELECT_ALL_TOPICS;
+        private String SELECT_NEW_TOPICS;
 
-        public String DICT_SQL_SET_VAL;
-        public String DICT_SQL_GET_VAL;
-        public String DICT_SQL_REMOVE_VAL;
+        private String DICT_SQL_SET_VAL;
+        private String DICT_SQL_GET_VAL;
+        private String DICT_SQL_REMOVE_VAL;
+
+        private String INSERT_UPDATE_AUTOCOMPLETE;
     }
 
     private SiteFactory<SiteQueries> siteQueriesSiteFactory = new SiteFactory<SiteQueries>() {
@@ -47,10 +49,10 @@ public class QueryProvider {
 
         private void fillSiteQueries(SiteQueries sq, String name) {
             sq.INSERT_MSG = MessageFormat.format(props.getProperty("sql.insert.msg"), name);
-            sq.INSERT_UPDATE_MSG = MessageFormat.format(props.getProperty("sql.insert.update.msg"), name);
-
-            sq.UPDATE_MSG = MessageFormat.format(props.getProperty("sql.update.msg"), name);
-            sq.DELETE_MSG = MessageFormat.format(props.getProperty("sql.delete.msg"), name);
+//            sq.INSERT_UPDATE_MSG = MessageFormat.format(props.getProperty("sql.insert.update.msg"), name);
+//
+//            sq.UPDATE_MSG = MessageFormat.format(props.getProperty("sql.update.msg"), name);
+//            sq.DELETE_MSG = MessageFormat.format(props.getProperty("sql.delete.msg"), name);
 
             sq.SELECT_MSG_BY_ID = MessageFormat.format(props.getProperty("sql.select.msg.by.id"), name);
             sq.SELECT_MSGS_IN_RANGE = MessageFormat.format(props.getProperty("sql.select.msg.in.range"), name);
@@ -58,12 +60,14 @@ public class QueryProvider {
             sq.SELECT_MSGS_SET = MessageFormat.format(props.getProperty("sql.select.set"), name);
             sq.SELECT_MSGS_SET_SHALLOW = MessageFormat.format(props.getProperty("sql.select.set.shallow"), name);
 
-            sq.SELECT_ALL_TOPICS = MessageFormat.format(props.getProperty("sql.select.all.topics"), name);
+//            sq.SELECT_ALL_TOPICS = MessageFormat.format(props.getProperty("sql.select.all.topics"), name);
             sq.SELECT_NEW_TOPICS = MessageFormat.format(props.getProperty("sql.select.new.topics"), name);
 
             sq.DICT_SQL_SET_VAL = MessageFormat.format(dbDictProps.getProperty("sql.set.val"), name);
             sq.DICT_SQL_GET_VAL = MessageFormat.format(dbDictProps.getProperty("sql.get.val"), name);
             sq.DICT_SQL_REMOVE_VAL = MessageFormat.format(dbDictProps.getProperty("sql.remove.val"), name);
+
+            sq.INSERT_UPDATE_AUTOCOMPLETE = MessageFormat.format(props.getProperty("sql.insert_or_update.autocomplete"), name);
         }
     };
 
@@ -86,7 +90,7 @@ public class QueryProvider {
         return getSiteQueries(site).INSERT_MSG;
     }
 
-    public String getInsertUpdateMsgQuery(Site site) {
+/*    public String getInsertUpdateMsgQuery(Site site) {
         return getSiteQueries(site).INSERT_UPDATE_MSG;
     }
 
@@ -96,7 +100,7 @@ public class QueryProvider {
 
     public String getDeleteMsgQuery(Site site) {
         return getSiteQueries(site).DELETE_MSG;
-    }
+    }*/
 
     public String getSelectMsgByIdQuery(Site site) {
         return getSiteQueries(site).SELECT_MSG_BY_ID;
@@ -118,9 +122,9 @@ public class QueryProvider {
         return getSiteQueries(site).SELECT_MSGS_SET_SHALLOW;
     }
 
-    public String getSelectTopicsIncludingObsoleteQuery(Site site) {
+/*    public String getSelectTopicsIncludingObsoleteQuery(Site site) {
         return getSiteQueries(site).SELECT_ALL_TOPICS;
-    }
+    }*/
 
     public String getSelectTopicsQuery(Site site) {
         return getSiteQueries(site).SELECT_NEW_TOPICS;
@@ -138,5 +142,9 @@ public class QueryProvider {
 
     public String getDbDictRemoveValQuery(Site site) {
         return getSiteQueries(site).DICT_SQL_REMOVE_VAL;
+    }
+
+    public String getInsertUpdateAutocompleteQuery(Site site) {
+        return getSiteQueries(site).INSERT_UPDATE_AUTOCOMPLETE;
     }
 }

@@ -13,7 +13,8 @@ TBLS = ['db_dict',
         'messages',
         'nickhost',
         'trigger_nickhost',
-        'autocomplete']
+        'autocomplete',
+        ]
 
 CWD = os.path.dirname(__file__)
 print('CWD:', CWD)
