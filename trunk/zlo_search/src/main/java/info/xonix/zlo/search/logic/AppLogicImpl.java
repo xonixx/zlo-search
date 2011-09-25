@@ -98,7 +98,7 @@ public class AppLogicImpl implements AppLogic, InitializingBean {
     }
 
     @Override
-    public List<String> autoCompleteText(Site site, String test, int limit) {
-        return messagesDao.autoCompleteText(site, test, limit);
+    public List<String> autoCompleteText(Site site, String text, int limit) {
+        return messagesDao.autoCompleteText(site, text, limit);
     }
 }
