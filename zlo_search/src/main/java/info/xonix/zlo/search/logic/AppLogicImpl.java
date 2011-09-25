@@ -96,4 +96,9 @@ public class AppLogicImpl implements AppLogic, InitializingBean {
 
         messagesDao.saveSearchTextForAutocomplete(site, text);
     }
+
+    @Override
+    public List<String> autoCompleteText(Site site, String test, int limit) {
+        return messagesDao.autoCompleteText(site, test, limit);
+    }
 }

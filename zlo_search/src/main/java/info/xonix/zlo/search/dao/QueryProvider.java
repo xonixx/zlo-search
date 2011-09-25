@@ -33,6 +33,7 @@ public class QueryProvider {
         private String DICT_SQL_REMOVE_VAL;
 
         private String INSERT_UPDATE_AUTOCOMPLETE;
+        private String SELECT_AUTOCOMPLETE;
     }
 
     private SiteFactory<SiteQueries> siteQueriesSiteFactory = new SiteFactory<SiteQueries>() {
@@ -68,6 +69,7 @@ public class QueryProvider {
             sq.DICT_SQL_REMOVE_VAL = MessageFormat.format(dbDictProps.getProperty("sql.remove.val"), name);
 
             sq.INSERT_UPDATE_AUTOCOMPLETE = MessageFormat.format(props.getProperty("sql.insert_or_update.autocomplete"), name);
+            sq.SELECT_AUTOCOMPLETE = MessageFormat.format(props.getProperty("sql.select.autocomplete"), name);
         }
     };
 
@@ -146,5 +148,9 @@ public class QueryProvider {
 
     public String getInsertUpdateAutocompleteQuery(Site site) {
         return getSiteQueries(site).INSERT_UPDATE_AUTOCOMPLETE;
+    }
+
+    public String getSelectAutocompleteQuery(Site site) {
+        return getSiteQueries(site).SELECT_AUTOCOMPLETE;
     }
 }

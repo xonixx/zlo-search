@@ -37,4 +37,6 @@ public interface MessagesDao {
     Map<String, Integer> getTopicsHashMap(Site site);
 
     void saveSearchTextForAutocomplete(Site site, String text);
+
+    List<String> autoCompleteText(Site site, String text, int limit);
 }

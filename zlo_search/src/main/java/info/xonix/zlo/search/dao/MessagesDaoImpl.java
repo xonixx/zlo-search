@@ -245,6 +245,16 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
     }
 
     @Override
+    public List<String> autoCompleteText(Site site, String text, int limit) {
+        return getJdbcTemplate().queryForList(
+                queryProvider.getSelectAutocompleteQuery(site),
+                String.class,
+                text + '%',
+                limit
+        );
+    }
+
+    @Override
     public List<Topic> getTopicList(Site site) {
         return getSimpleJdbcTemplate().query(
                 queryProvider.getSelectTopicsQuery(site),
