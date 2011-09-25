@@ -235,7 +235,7 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
     @Override
     public List<Topic> getTopicList(Site site) {
         return getSimpleJdbcTemplate().query(
-                queryProvider.getSelectAllTopicsQuery(site),
+                queryProvider.getSelectTopicsQuery(site),
                 getRowMappersHelper().beanRowMapper(Topic.class));
     }
 

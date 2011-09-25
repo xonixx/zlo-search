@@ -118,11 +118,11 @@ public class QueryProvider {
         return getSiteQueries(site).SELECT_MSGS_SET_SHALLOW;
     }
 
-    public String getSelectAllTopicsQuery(Site site) {
+    public String getSelectTopicsIncludingObsoleteQuery(Site site) {
         return getSiteQueries(site).SELECT_ALL_TOPICS;
     }
 
-    public String getSelectNewTopicsQuery(Site site) {
+    public String getSelectTopicsQuery(Site site) {
         return getSiteQueries(site).SELECT_NEW_TOPICS;
     }
 
