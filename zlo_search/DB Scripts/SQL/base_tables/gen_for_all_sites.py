@@ -1,38 +1,39 @@
-from os.path import exists, join
+from os.path import exists, join, splitext
 import os
+import re
 
-#SITE = 'x'
-SITE = 'dolgopa'
+import cfg
 
-SQLS = [ 'create_db_dict.sql',
-         'create_messages_table.sql',
-         'create_table_nickhost.sql',
-]
+SITES = cfg.ALL_SITE_NAMES
+
+SQLS = ['create_autocomplete.sql',
+        ]
+
+TBLS = ['db_dict',
+        'messages',
+        'nickhost',
+        'trigger_nickhost',
+        'autocomplete']
 
 CWD = os.path.dirname(__file__)
 print('CWD:', CWD)
 
-if not exists(SITE):
-    os.makedirs(SITE)
-
-import re
-
-all_sql = []
-
 for sql_file in SQLS:
-    with open(sql_file) as inp:
-        sql = inp.read()
-        with open(join(CWD, join(SITE, sql_file)), 'w') as out:
-            sql = re.sub('\\b(db_dict)\\b', SITE + '_\\1', sql)
-            sql = re.sub('\\b(messages)\\b', SITE + '_\\1', sql)
-            sql = re.sub('\\b(nickhost)\\b', SITE + '_\\1', sql)
-            sql = re.sub('\\b(trigger_nickhost)\\b', SITE + '_\\1', sql)
-            all_sql.append(sql)
+    a = splitext(sql_file)[0]
+    sql_all_file = a + '__all.sql'
+
+    base_sql_code = open(sql_file).read()
+
+    with open(sql_all_file, 'w') as out:
+        for site in SITES:
+            print 'Processing:', site
+
+            sql = base_sql_code
+
+            for t in TBLS:
+                sql = re.sub('\\b(%s)\\b' % t, site + '_\\1', sql)
+
+            out.write('-- === %s ===' % site)
             out.write(sql)
+            out.write('\n\n')
 
-with open(join(CWD, join(SITE, '__all.sql')), 'w') as out:
-    out.write('\n\n'.join(all_sql))
-
-
-
-    
