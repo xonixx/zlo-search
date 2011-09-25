@@ -44,4 +44,6 @@ public interface AppLogic {
     List<Message> getMessages(Site site, int start, int end);
 
     int getLastSavedMessageNumber(Site site);
+
+    void saveSearchTextForAutocomplete(Site site, String text);
 }

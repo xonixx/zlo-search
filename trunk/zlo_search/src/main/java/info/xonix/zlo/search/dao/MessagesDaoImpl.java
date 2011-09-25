@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import static info.xonix.zlo.search.utils.DbUtils.timestamp;
+import static org.apache.commons.lang.StringUtils.substring;
 
 /**
  * User: boost
@@ -230,6 +231,17 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
         }
         return topicsHashMap;*/
         return topicsMapFactory.get(site);
+    }
+
+    @Override
+    public void saveSearchTextForAutocomplete(Site site, String text) {
+        final int res = getSimpleJdbcTemplate().update(
+                queryProvider.getInsertUpdateAutocompleteQuery(site),
+                substring(text, 0, 255));
+
+        if (res != 1) {
+            log.error("saveSearchTextForAutocomplete: res=" + res);
+        }
     }
 
     @Override
