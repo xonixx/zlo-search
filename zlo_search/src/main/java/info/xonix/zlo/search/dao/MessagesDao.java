@@ -35,4 +35,6 @@ public interface MessagesDao {
     String[] getTopics(Site site);
 
     Map<String, Integer> getTopicsHashMap(Site site);
+
+    void saveSearchTextForAutocomplete(Site site, String text);
 }

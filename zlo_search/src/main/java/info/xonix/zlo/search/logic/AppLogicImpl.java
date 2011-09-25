@@ -6,6 +6,7 @@ import info.xonix.zlo.search.dao.MessagesDao;
 import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.utils.Check;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -85,5 +86,14 @@ public class AppLogicImpl implements AppLogic, InitializingBean {
     @Override
     public int getLastSavedMessageNumber(Site site) {
         return messagesDao.getLastMessageNumber(site);
+    }
+
+    @Override
+    public void saveSearchTextForAutocomplete(Site site, String text) {
+        if (StringUtils.isEmpty(text)) {
+            throw new IllegalArgumentException("text is empty");
+        }
+
+        messagesDao.saveSearchTextForAutocomplete(site, text);
     }
 }

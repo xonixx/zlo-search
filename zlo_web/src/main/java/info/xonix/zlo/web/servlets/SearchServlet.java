@@ -386,14 +386,17 @@ public class SearchServlet extends BaseServlet {
     }
 
     private void logRequest(ForwardingRequest request, String query, boolean rssAsked) {
+        final Site site = getSite(request);
+        final String searchText = request.getParameter(QS_TEXT);
+
         SearchLog searchLog = new SearchLog();
 
-        searchLog.setSite(getSite(request));
+        searchLog.setSite(site);
         searchLog.setClientIp(RequestUtils.getClientIp(request));
         searchLog.setUserAgent(request.getHeader(HttpHeader.USER_AGENT));
         searchLog.setReferer(request.getHeader(HttpHeader.REFERER));
 
-        searchLog.setSearchText(request.getParameter(QS_TEXT));
+        searchLog.setSearchText(searchText);
         searchLog.setSearchNick(request.getParameter(QS_NICK));
         searchLog.setSearchHost(request.getParameter(QS_HOST));
 
@@ -404,6 +407,10 @@ public class SearchServlet extends BaseServlet {
         searchLog.setAdminRequest(RequestUtils.isPowerUser(request));
 
         auditLogic.logSearchEvent(searchLog);
+
+        if (StringUtils.isNotEmpty(searchText)) {
+            appLogic.saveSearchTextForAutocomplete(site, searchText);
+        }
     }
 
     private String preprocessSearchText(String text, String searchType) {
