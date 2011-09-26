@@ -46,6 +46,7 @@ public class AutocompletionServlet extends HttpServlet {
         resp.setContentType("application/json");
 //        resp.setContentType("text/plain");
 
+        // see: http://stackoverflow.com/questions/1992400/how-to-send-through-servletoutputstream-characters-in-utf-8-encoding
         final PrintWriter writer = resp.getWriter();
 
         list.writeJSONString(writer);

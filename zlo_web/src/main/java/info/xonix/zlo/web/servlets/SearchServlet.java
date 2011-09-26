@@ -50,7 +50,7 @@ public class SearchServlet extends BaseServlet {
     private final AppLogic appLogic = AppSpringContext.get(AppLogic.class);
     private final AuditLogic auditLogic = AppSpringContext.get(AuditLogic.class);
     private final ExceptionsLogger exceptionsLogger = AppSpringContext.get(ExceptionsLogger.class);
-    private SearchLogic searchLogic = AppSpringContext.get(SearchLogicImpl.class);
+    private final SearchLogic searchLogic = AppSpringContext.get(SearchLogicImpl.class);
 
     public static final String ON = "on";
     // query string params

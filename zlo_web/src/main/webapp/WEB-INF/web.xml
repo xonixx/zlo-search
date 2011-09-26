@@ -92,6 +92,7 @@
     <!--
        - This is useful because current browsers typically do not
        - set a character encoding even if specified in the HTML page or form
+       see: http://wiki.apache.org/tomcat/FAQ/CharacterEncoding
     -->
     <filter>
         <filter-name>encodingFilter</filter-name>
