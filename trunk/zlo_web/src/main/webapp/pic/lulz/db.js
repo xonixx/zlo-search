@@ -25,7 +25,7 @@ function startSlide() {
     interv = setInterval(function () {
         moveStep(true,
                 function() {
-                    alert('Не-не-не-не-не!!! Нет!!\nЭто Дэвид Блэйн! ФАК МОЙ МОЗГ!!');
+                    alert('РќРµ-РЅРµ-РЅРµ-РЅРµ-РЅРµ!!! РќРµС‚!!\nР­С‚Рѕ Р”СЌРІРёРґ Р‘Р»СЌР№РЅ! Р¤РђРљ РњРћР™ РњРћР—Р“!!');
                     interv = setInterval(function () {
                         moveStep(false)
                     }, 50);
@@ -59,8 +59,8 @@ function dbInit() {
     var txt = document.getElementsByName("text")[0];
     if (txt) {
         var dbIntev = setInterval(function() {
-            if (['david blaine','дэвид блэйн','в рот мне ноги','фак мой мозг',
-                'печеньки','оранж сода','тэдди бир'].contains(txt.value.toLowerCase())) {
+            if (['david blaine','РґСЌРІРёРґ Р±Р»СЌР№РЅ','РІ СЂРѕС‚ РјРЅРµ РЅРѕРіРё','С„Р°Рє РјРѕР№ РјРѕР·Рі',
+                'РїРµС‡РµРЅСЊРєРё','РѕСЂР°РЅР¶ СЃРѕРґР°','С‚СЌРґРґРё Р±РёСЂ'].contains(txt.value.toLowerCase())) {
                 showDB();
                 clearInterval(dbIntev);
             }

@@ -9,7 +9,7 @@
 <%@ page import="java.util.LinkedHashMap" %>
 <%@ page import="java.util.Map" %>
 <%@ include file="WEB-INF/jsp/import.jsp" %>
-<%@ page contentType="text/html; charset=windows-1251" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <%!
     SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);

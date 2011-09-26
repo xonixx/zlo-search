@@ -4,7 +4,7 @@
   Time: 17:31:09
 --%>
 <%@ include file="import.jsp" %>
-<%@ page contentType="text/html; charset=windows-1251" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <jsp:useBean id="msg" scope="request" class="info.xonix.zlo.search.model.Message"/>
 <jsp:useBean id="siteRoot" class="java.lang.String" scope="request"/>
@@ -34,7 +34,7 @@
                     <a href="http://zlo.paul7.net/${msg.num}">paul7</a>
                 </c:if>
             </big>
-            <br/>Сообщение было послано:
+            <br/>РЎРѕРѕР±С‰РµРЅРёРµ Р±С‹Р»Рѕ РїРѕСЃР»Р°РЅРѕ:
             <tiles:insertDefinition name="nick">
                 <tiles:putAttribute name="reg" value="${msg.reg}"/>
                 <tiles:putAttribute name="nick" value="${msg.nick}"/>
@@ -45,7 +45,7 @@
                 <tiles:putAttribute name="site" value="${msg.site}"/>
                 <tiles:putAttribute name="brackets" value="${true}"/>
             </tiles:insertDefinition>
-            <br/>Дата:
+            <br/>Р”Р°С‚Р°:
             <fmt:formatDate value="${msg.date}" pattern="EEEE, MMMM d HH:mm:ss yyyy"/>
         </div>
         <br/>

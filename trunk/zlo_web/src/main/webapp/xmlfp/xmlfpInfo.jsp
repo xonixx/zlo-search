@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=windows-1251" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <h3>XML Forum Protocol</h3>
 
@@ -12,20 +12,20 @@
 </style>
 
 <form action="xmlfp.jsp" method="get" class="form">
-    Сайт:
+    РЎР°Р№С‚:
     <jsp:getProperty name="backendBean" property="siteSelector"/>
     <br/>
-    Номер сообщения: <input type="text" value="${param['num']}" name="num"/><br/>
+    РќРѕРјРµСЂ СЃРѕРѕР±С‰РµРЅРёСЏ: <input type="text" value="${param['num']}" name="num"/><br/>
 
-    <input type="submit" value="Получить XML"/>
+    <input type="submit" value="РџРѕР»СѓС‡РёС‚СЊ XML"/>
 </form>
 
 <form action="xmlfp.jsp" method="get" class="form">
     <input type="hidden" name="lastMessageNumber" value="true"/>
-    Сайт:
+    РЎР°Р№С‚:
     <jsp:getProperty name="backendBean" property="siteSelector"/>
     <br/>
-    <input type="submit" value="Получить номер последнего сообщения"/>
+    <input type="submit" value="РџРѕР»СѓС‡РёС‚СЊ РЅРѕРјРµСЂ РїРѕСЃР»РµРґРЅРµРіРѕ СЃРѕРѕР±С‰РµРЅРёСЏ"/>
 </form>
 
 <h3>XML Schemas</h3>

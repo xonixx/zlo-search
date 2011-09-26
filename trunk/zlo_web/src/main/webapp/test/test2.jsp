@@ -5,7 +5,7 @@
 --%>
 
 <%@ include file="../WEB-INF/jsp/import.jsp" %>
-<%@ page contentType="text/html; charset=windows-1251" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <display:table pagesize="2" name="res" id="row" requestURI="test2"
                decorator="info.xonix.zlo.web.test.servlets.TestLazy1Decorator">

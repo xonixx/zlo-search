@@ -4,7 +4,7 @@
   Time: 19:50:59
 --%>
 <%@ include file="/WEB-INF/jsp/import.jsp" %>
-<%@ page contentType="text/html; charset=windows-1251" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <tiles:useAttribute name="reg"/>
 <tiles:useAttribute name="nick"/>
@@ -25,10 +25,10 @@
     <a class="search" href="search?site=${site.siteNumber}&nick=${nickUrlencoded}">?</a>
     <c:if test="${not empty host}">
         <a href="search?site=${site.siteNumber}&host=${host}&nick=${nickUrlencoded}"
-           class="search" title="ïîèñê ïî íèêó è õîñòó">?nh</a>
+           class="search" title="Ğ¿Ğ¾Ğ¸ÑĞº Ğ¿Ğ¾ Ğ½Ğ¸ĞºÑƒ Ğ¸ Ñ…Ğ¾ÑÑ‚Ñƒ">?nh</a>
     </c:if>
     <c:if test="${not site.noHost}">
         <a class="search" href="nickhost.jsp?site=${site.siteNumber}&w=n&t=${nickUrlencoded}"
-           title="õîñòû ıòîãî íèêà">h</a>
+           title="Ñ…Ğ¾ÑÑ‚Ñ‹ ÑÑ‚Ğ¾Ğ³Ğ¾ Ğ½Ğ¸ĞºĞ°">h</a>
     </c:if>
 </c:if>

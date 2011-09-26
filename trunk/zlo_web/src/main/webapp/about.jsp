@@ -1,27 +1,27 @@
 <%@ include file="WEB-INF/jsp/import.jsp" %>
-<%@ page contentType="text/html; charset=windows-1251" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <link rel="stylesheet" type="text/css" href="main.css"/>
 
-<title>О системе</title>
+<title>Рћ СЃРёСЃС‚РµРјРµ</title>
 
 <tiles:insertDefinition name="header.about"/>
 
 <div class="content">
-    <h3>О системе</h3>
-    Поисковик использует следующие технологии:
+    <h3>Рћ СЃРёСЃС‚РµРјРµ</h3>
+    РџРѕРёСЃРєРѕРІРёРє РёСЃРїРѕР»СЊР·СѓРµС‚ СЃР»РµРґСѓСЋС‰РёРµ С‚РµС…РЅРѕР»РѕРіРёРё:
     <ul>
-        <li>Сервер <a href="http://tomcat.apache.org/">Apache Tomcat</a>, используются сервлеты, JSP, JSTL</li>
-        <li><a href="http://lucene.apache.org/">Lucene</a> - библиотека индексирования</li>
+        <li>РЎРµСЂРІРµСЂ <a href="http://tomcat.apache.org/">Apache Tomcat</a>, РёСЃРїРѕР»СЊР·СѓСЋС‚СЃСЏ СЃРµСЂРІР»РµС‚С‹, JSP, JSTL</li>
+        <li><a href="http://lucene.apache.org/">Lucene</a> - Р±РёР±Р»РёРѕС‚РµРєР° РёРЅРґРµРєСЃРёСЂРѕРІР°РЅРёСЏ</li>
         <li><a href="http://www.springsource.org/">Spring Framework</a></li>
-        <li>База данных <a href="http://www.mysql.com/">MySQL</a> для хранения сообщений</li>
+        <li>Р‘Р°Р·Р° РґР°РЅРЅС‹С… <a href="http://www.mysql.com/">MySQL</a> РґР»СЏ С…СЂР°РЅРµРЅРёСЏ СЃРѕРѕР±С‰РµРЅРёР№</li>
     </ul>
 
-    Просьба пожелания по улучшению системы, а также сообщения о найденных багах направлять на электронный адрес
-    (он же jabber)
+    РџСЂРѕСЃСЊР±Р° РїРѕР¶РµР»Р°РЅРёСЏ РїРѕ СѓР»СѓС‡С€РµРЅРёСЋ СЃРёСЃС‚РµРјС‹, Р° С‚Р°РєР¶Рµ СЃРѕРѕР±С‰РµРЅРёСЏ Рѕ РЅР°Р№РґРµРЅРЅС‹С… Р±Р°РіР°С… РЅР°РїСЂР°РІР»СЏС‚СЊ РЅР° СЌР»РµРєС‚СЂРѕРЅРЅС‹Р№ Р°РґСЂРµСЃ
+    (РѕРЅ Р¶Рµ jabber)
     <script type="text/javascript">document.write("<a href='mai" + "lto:xoni" + "xx@gmai" + "l.com'>");
     document.write("xoni" + "xx@gmai" + "l.com</a>,");</script>
-    или на ICQ 250-123-253.
+    РёР»Рё РЅР° ICQ 250-123-253.
 </div>
 
 <tiles:insertDefinition name="ga"/>

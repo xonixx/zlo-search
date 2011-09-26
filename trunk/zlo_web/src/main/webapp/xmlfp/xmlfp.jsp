@@ -8,7 +8,7 @@
   Time: 21:16:40
 --%>
 
-<%@ page contentType="text/html; charset=windows-1251" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="../WEB-INF/jsp/import.jsp" %>
 <%@ include file="/WEB-INF/jsp/setSite.jsp" %>
 
@@ -24,7 +24,7 @@
         <%
             try {
                 response.setStatus(200);
-                response.setContentType("text/xml; charset=windows-1251");
+                response.setContentType("text/xml; charset=UTF-8");
 
                 if (StringUtils.isNotEmpty(request.getParameter("num"))) {
                     Message m = appLogic.getMessageByNumber(site, Integer.parseInt(request.getParameter("num")));

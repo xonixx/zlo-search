@@ -7,7 +7,7 @@
   Time: 1:26:28
 --%>
 <%@ include file="WEB-INF/jsp/import.jsp" %>
-<%@ page contentType="text/html; charset=windows-1251" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <link rel="stylesheet" type="text/css" href="main.css"/>
 
 <%!
@@ -15,17 +15,17 @@
     AppLogic appLogic = AppSpringContext.get(AppLogic.class);
 %>
 
-<title>Индексируемые форумы</title>
+<title>РРЅРґРµРєСЃРёСЂСѓРµРјС‹Рµ С„РѕСЂСѓРјС‹</title>
 
 <tiles:insertDefinition name="header.forums"/>
 
 <div align="center" class="content">
-    <h3>Индексируемые форумы</h3>
+    <h3>РРЅРґРµРєСЃРёСЂСѓРµРјС‹Рµ С„РѕСЂСѓРјС‹</h3>
 
     <c:set var="sites" value="<%= siteLogic.getSites() %>"/>
 
     <display:table id="site" htmlId="resultTable" name="${sites}">
-        <display:column title="Ссылка">
+        <display:column title="РЎСЃС‹Р»РєР°">
             <c:set var="siteUrl" value="${site.siteUrl}"/>
             <c:if test="${
                 not f:endsWith(siteUrl, '.cgi') and
@@ -36,7 +36,7 @@
             <c:set var="url" value="http://${siteUrl}"/>
             <a href="${url}">${url}</a>
         </display:column>
-        <display:column title="Описание">
+        <display:column title="РћРїРёСЃР°РЅРёРµ">
             <c:choose>
                 <c:when test="${not site.performIndexing}">
                     <strike><c:out value="${site.siteDescription}"/></strike>
@@ -44,14 +44,14 @@
                 <c:otherwise><c:out value="${site.siteDescription}"/></c:otherwise>
             </c:choose>
         </display:column>
-        <display:column title="Сообщений">
+        <display:column title="РЎРѕРѕР±С‰РµРЅРёР№">
             <%= appLogic.getLastIndexedNumber((Site) site) %>
         </display:column>
 
-        <display:column title="Сервисы">
-            <a href="search?site=${site.siteNumber}" class="search">(Поиск)</a>
-            <a href="stats.jsp?site=${site.siteNumber}" class="search">(Статистика)</a>
-            <a href="nickhost.jsp?site=${site.siteNumber}" class="search">(Ники/Хосты)</a>
+        <display:column title="РЎРµСЂРІРёСЃС‹">
+            <a href="search?site=${site.siteNumber}" class="search">(РџРѕРёСЃРє)</a>
+            <a href="stats.jsp?site=${site.siteNumber}" class="search">(РЎС‚Р°С‚РёСЃС‚РёРєР°)</a>
+            <a href="nickhost.jsp?site=${site.siteNumber}" class="search">(РќРёРєРё/РҐРѕСЃС‚С‹)</a>
         </display:column>
 
     </display:table>

@@ -5,7 +5,7 @@
   Time: 16:46:12
 --%>
 <%@ include file="import.jsp" %>
-<%@ page contentType="text/html; charset=windows-1251" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <jsp:useBean id="backendBean" class="info.xonix.zlo.web.BackendBean" scope="request"/>
 <jsp:setProperty name="backendBean" property="*"/>
@@ -18,11 +18,11 @@
 <c:set var="isError" value="${not empty requestScope['error']}"/>
 <c:set var="isSearchResultPresent" value="${not empty requestScope['searchResult']}"/>
 <c:set var="rssUrl" value='<%= String.format("search?rss&%s", request.getQueryString()) %>'/>
-<c:set var="rssLinkHtml"><a href="${rssUrl}" title="RSS для этого запроса">
-    <img src="/feed-icon-14x14.png" alt="RSS для этого запроса"/></a>
+<c:set var="rssLinkHtml"><a href="${rssUrl}" title="RSS РґР»СЏ СЌС‚РѕРіРѕ Р·Р°РїСЂРѕСЃР°">
+    <img src="/feed-icon-14x14.png" alt="RSS РґР»СЏ СЌС‚РѕРіРѕ Р·Р°РїСЂРѕСЃР°"/></a>
 </c:set>
 
-<!-- ПРЕВЕД -->
+<!-- РџР Р•Р’Р•Р” -->
 <html>
 <head>
     <title><fmt:message key="page.title"/></title>
@@ -175,31 +175,31 @@
                         </c:if>
                     </c:if>
 
-                    <display:setProperty name="basic.msg.empty_list"><span class="pagebanner">Сообщения, соответствующие введенным критериям поиска не найдены. </span></display:setProperty>
-                    <display:setProperty name="paging.banner.one_item_found"><span class="pagebanner">Найдено одно сообщение. ${rssLinkHtml}</span></display:setProperty>
-                    <display:setProperty name="paging.banner.all_items_found"><span class="pagebanner">Найдено сообщений: {0}, показаны все. ${rssLinkHtml}</span></display:setProperty>
-                    <display:setProperty name="paging.banner.some_items_found"><span class="pagebanner">Найдено сообщений: {0}, показаны с {2} по {3}. </span></display:setProperty>
+                    <display:setProperty name="basic.msg.empty_list"><span class="pagebanner">РЎРѕРѕР±С‰РµРЅРёСЏ, СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёРµ РІРІРµРґРµРЅРЅС‹Рј РєСЂРёС‚РµСЂРёСЏРј РїРѕРёСЃРєР° РЅРµ РЅР°Р№РґРµРЅС‹. </span></display:setProperty>
+                    <display:setProperty name="paging.banner.one_item_found"><span class="pagebanner">РќР°Р№РґРµРЅРѕ РѕРґРЅРѕ СЃРѕРѕР±С‰РµРЅРёРµ. ${rssLinkHtml}</span></display:setProperty>
+                    <display:setProperty name="paging.banner.all_items_found"><span class="pagebanner">РќР°Р№РґРµРЅРѕ СЃРѕРѕР±С‰РµРЅРёР№: {0}, РїРѕРєР°Р·Р°РЅС‹ РІСЃРµ. ${rssLinkHtml}</span></display:setProperty>
+                    <display:setProperty name="paging.banner.some_items_found"><span class="pagebanner">РќР°Р№РґРµРЅРѕ СЃРѕРѕР±С‰РµРЅРёР№: {0}, РїРѕРєР°Р·Р°РЅС‹ СЃ {2} РїРѕ {3}. </span></display:setProperty>
                     <display:setProperty name="paging.banner.group_size" value="15"/>
                     <display:setProperty name="paging.banner.onepage" value=""/>
                     <display:setProperty name="paging.banner.placement" value="both"/>
                     <display:setProperty name="paging.banner.full">
-                        <span class="pagelinks">[<a href="{1}">Перв</a>/<a href="{2}">Пред</a>] {0} [<a
-                                href="{3}">След</a>/<a href="{4}">Последн</a>] ${rssLinkHtml}</span>
+                        <span class="pagelinks">[<a href="{1}">РџРµСЂРІ</a>/<a href="{2}">РџСЂРµРґ</a>] {0} [<a
+                                href="{3}">РЎР»РµРґ</a>/<a href="{4}">РџРѕСЃР»РµРґРЅ</a>] ${rssLinkHtml}</span>
                     </display:setProperty>
                     <display:setProperty name="paging.banner.first">
-                        <span class="pagelinks">[Перв/Пред] {0} [<a href="{3}">След</a>/<a
-                                href="{4}">Последн</a>] ${rssLinkHtml}</span>
+                        <span class="pagelinks">[РџРµСЂРІ/РџСЂРµРґ] {0} [<a href="{3}">РЎР»РµРґ</a>/<a
+                                href="{4}">РџРѕСЃР»РµРґРЅ</a>] ${rssLinkHtml}</span>
                     </display:setProperty>
                     <display:setProperty name="paging.banner.last">
-                        <span class="pagelinks">[<a href="{1}">Перв</a>/<a
-                                href="{2}">Пред</a>] {0} [След/Последн] ${rssLinkHtml}</span>
+                        <span class="pagelinks">[<a href="{1}">РџРµСЂРІ</a>/<a
+                                href="{2}">РџСЂРµРґ</a>] {0} [РЎР»РµРґ/РџРѕСЃР»РµРґРЅ] ${rssLinkHtml}</span>
                     </display:setProperty>
 
-                    <display:column title="№"
+                    <display:column title="в„–"
                                     class="small" style="text-align:center;width:1%;">${msg.hitId + 1}</display:column>
-                    <display:column title="Тема" style="width:67%">
+                    <display:column title="РўРµРјР°" style="width:67%">
                         <a href="http://${siteRootUrl}${site.readQuery}${msg.num}">
-                            <c:if test="${not empty msg.topic and msg.topic != 'без темы'}">[${msg.topic}]</c:if>
+                            <c:if test="${not empty msg.topic and msg.topic != 'Р±РµР· С‚РµРјС‹'}">[${msg.topic}]</c:if>
                             <jsp:setProperty name="hl" property="text" value="${msg.title}"/>
                             <c:out value="${hl.highlightedText}" escapeXml="false"/></a>
                         <small>
@@ -211,7 +211,7 @@
                            href="msg?site=${msg.site.siteNumber}&num=${msg.num}<c:if test="${not empty hl.wordsStr}">&hw=${hl.wordsStr}</c:if>"><fmt:message
                                 key="link.saved.msg"/></a>
                     </display:column>
-                    <display:column title="Ник">
+                    <display:column title="РќРёРє">
                         <tiles:insertDefinition name="nick">
                             <tiles:putAttribute name="reg" value="${msg.reg}"/>
                             <tiles:putAttribute name="nick" value="${msg.nick}"/>
@@ -219,14 +219,14 @@
                         </tiles:insertDefinition>
                     </display:column>
                     <c:if test="${not site.noHost}">
-                        <display:column title="Хост" class="small">
+                        <display:column title="РҐРѕСЃС‚" class="small">
                             <tiles:insertDefinition name="host">
                                 <tiles:putAttribute name="host" value="${msg.host}"/>
                                 <tiles:putAttribute name="site" value="${msg.site}"/>
                             </tiles:insertDefinition>
                         </display:column>
                     </c:if>
-                    <display:column title="Дата" property="date" class="small nowrap"/>
+                    <display:column title="Р”Р°С‚Р°" property="date" class="small nowrap"/>
                 </display:table>
             </div>
         </c:if>
@@ -240,4 +240,4 @@
 </body>
 <tiles:insertDefinition name="ga"/>
 </html>
-<!-- ПАКА -->
+<!-- РџРђРљРђ -->

@@ -5,7 +5,7 @@
   Time: 4:08:47
 --%>
 <%@ include file="WEB-INF/jsp/import.jsp" %>
-<%@ page contentType="text/html; charset=windows-1251" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <link rel="stylesheet" type="text/css" href="main.css"/>
 
 <jsp:useBean id="backendBean" class="info.xonix.zlo.web.BackendBean" scope="request"/>
@@ -54,9 +54,9 @@
 </sql:query>
 
 <c:set var="title">
-    Статистика форума ${site.siteUrl} по <c:choose><c:when
-        test="${byNick}">никам</c:when><c:otherwise>хостам</c:otherwise></c:choose>
-    за последние ${period.label}
+    РЎС‚Р°С‚РёСЃС‚РёРєР° С„РѕСЂСѓРјР° ${site.siteUrl} РїРѕ <c:choose><c:when
+        test="${byNick}">РЅРёРєР°Рј</c:when><c:otherwise>С…РѕСЃС‚Р°Рј</c:otherwise></c:choose>
+    Р·Р° РїРѕСЃР»РµРґРЅРёРµ ${period.label}
 </c:set>
 <title>${title}</title>
 
@@ -66,15 +66,15 @@
     <h3>${title}</h3>
 
     <form action="stats.jsp" method="get">
-        Сайт:
+        РЎР°Р№С‚:
         <jsp:getProperty name="backendBean" property="siteSelector"/>
         <br/>
-        По:
+        РџРѕ:
         <input type="radio" name="type" value="nick" id="tn"
-               <c:if test="${byNick}">checked="checked"</c:if> /><label for="tn">нику</label>
+               <c:if test="${byNick}">checked="checked"</c:if> /><label for="tn">РЅРёРєСѓ</label>
         <input type="radio" name="type" value="host" id="th" <c:if test="${!byNick}">checked="checked"</c:if>/><label
-            for="th">хосту</label>
-        за последние:
+            for="th">С…РѕСЃС‚Сѓ</label>
+        Р·Р° РїРѕСЃР»РµРґРЅРёРµ:
         <select name="period">
             <c:forEach var="p" items="${periodsMap}">
                 <option value="${p.key}"
@@ -82,15 +82,15 @@
                 </option>
             </c:forEach>
         </select>
-        <input type="submit" value="Показать!"/>
+        <input type="submit" value="РџРѕРєР°Р·Р°С‚СЊ!"/>
     </form>
-    <small>Всего сообщений за этот период: ${resTotal.rows[0].cnt}</small>
+    <small>Р’СЃРµРіРѕ СЃРѕРѕР±С‰РµРЅРёР№ Р·Р° СЌС‚РѕС‚ РїРµСЂРёРѕРґ: ${resTotal.rows[0].cnt}</small>
 
     <display:table name="${res.rows}" id="row" htmlId="resultTable">
         <display:setProperty name="basic.msg.empty_list"><%-- don't display empty msg --%></display:setProperty>
 
-        <display:column title="№" value="${row_rowNum}"/>
-        <display:column title="${byNick ? 'Ник' : 'Хост'}">
+        <display:column title="в„–" value="${row_rowNum}"/>
+        <display:column title="${byNick ? 'РќРёРє' : 'РҐРѕСЃС‚'}">
             <c:choose>
                 <c:when test="${byNick}">
                     <tiles:insertDefinition name="nick">
@@ -107,7 +107,7 @@
                 </c:otherwise>
             </c:choose>
         </display:column>
-        <display:column title="Число сообщений" value="${row.cnt}"/>
+        <display:column title="Р§РёСЃР»Рѕ СЃРѕРѕР±С‰РµРЅРёР№" value="${row.cnt}"/>
     </display:table>
 
 </div>
