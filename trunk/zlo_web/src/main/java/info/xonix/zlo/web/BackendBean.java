@@ -59,7 +59,7 @@ public class BackendBean {
     }
 
     public String getSiteSelector() {
-        return HtmlConstructor.constructSelector(SN_SITE, null, null,
+        return HtmlConstructor.constructSelector(SN_SITE, SN_SITE, null,
                 formSiteNums(siteLogic.getSites()),
                 formSiteHosts(siteLogic.getSiteNames()), getSiteInt(), true);
     }

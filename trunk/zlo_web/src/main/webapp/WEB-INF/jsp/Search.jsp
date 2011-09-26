@@ -41,7 +41,7 @@
     <script type="text/javascript" src="/jq/jquery.ui.widget.min.js"></script>
     <script type="text/javascript" src="/jq/jquery.ui.position.min.js"></script>
     <script type="text/javascript" src="/jq/jquery.ui.autocomplete.min.js"></script>
-    <%--jQiery ends--%>
+    <%--jQuery ends--%>
 
     <script type="text/javascript" src="/script.js"></script>
     <script type="text/javascript" src="/pic/lulz/db.js"></script>
