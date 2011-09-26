@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,6 +40,21 @@ public class AutocompletionServlet extends HttpServlet {
             strings = new LinkedList<String>();
         }
 
+        JSONArray list = formJson(strings);
+
+        resp.setStatus(HttpServletResponse.SC_OK);
+        resp.setContentType("application/json");
+//        resp.setContentType("text/plain");
+
+        final PrintWriter writer = resp.getWriter();
+
+        list.writeJSONString(writer);
+
+        writer.flush();
+    }
+
+    @SuppressWarnings("unchecked")
+    private JSONArray formJson(List<String> strings) {
         JSONArray list = new JSONArray();
 
         for (String string : strings) {
@@ -49,14 +64,7 @@ public class AutocompletionServlet extends HttpServlet {
 
             list.add(line);
         }
-
-        resp.setStatus(HttpServletResponse.SC_OK);
-        resp.setContentType("application/json");
-
-        final OutputStreamWriter writer = new OutputStreamWriter(resp.getOutputStream());
-        list.writeJSONString(writer);
-
-        writer.flush();
+        return list;
     }
 
     private boolean validForAutocompletions(String text) {

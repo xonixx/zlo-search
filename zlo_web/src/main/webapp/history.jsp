@@ -4,7 +4,7 @@
 <%@ page import="java.util.Map" %>
 
 <%@ include file="WEB-INF/jsp/import.jsp" %>
-<%@ page contentType="text/html; charset=windows-1251" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <link rel="stylesheet" type="text/css" href="main.css"/>
 
 <%!
@@ -49,22 +49,22 @@
     </c:otherwise>
 </c:choose>
 
-<title>История запросов</title>
+<title>РСЃС‚РѕСЂРёСЏ Р·Р°РїСЂРѕСЃРѕРІ</title>
 
 <tiles:insertDefinition name="header.history"/>
 
 <div align="center" class="content">
-    <h3>История запросов
+    <h3>РСЃС‚РѕСЂРёСЏ Р·Р°РїСЂРѕСЃРѕРІ
         <c:if test="${isPowerUser}">
             <c:choose>
-                <c:when test="${!showAll}"><a href="history.jsp?all" class="search">(подробно)</a></c:when>
-                <c:otherwise><a href="history.jsp" class="search">(кратко)</a></c:otherwise>
+                <c:when test="${!showAll}"><a href="history.jsp?all" class="search">(РїРѕРґСЂРѕР±РЅРѕ)</a></c:when>
+                <c:otherwise><a href="history.jsp" class="search">(РєСЂР°С‚РєРѕ)</a></c:otherwise>
             </c:choose>
         </c:if>
     </h3>
-    <small>(всего запросов: ${totalNum.rows[0].last}, показано ${res.rowCount}
-        ${xonix:plural(res.rowCount, 'запрос', 'запроса', 'запросов')},
-        за последние ${lastHours} ${xonix:plural(lastHours, 'час', 'часа', 'часов')})
+    <small>(РІСЃРµРіРѕ Р·Р°РїСЂРѕСЃРѕРІ: ${totalNum.rows[0].last}, РїРѕРєР°Р·Р°РЅРѕ ${res.rowCount}
+        ${xonix:plural(res.rowCount, 'Р·Р°РїСЂРѕСЃ', 'Р·Р°РїСЂРѕСЃР°', 'Р·Р°РїСЂРѕСЃРѕРІ')},
+        Р·Р° РїРѕСЃР»РµРґРЅРёРµ ${lastHours} ${xonix:plural(lastHours, 'С‡Р°СЃ', 'С‡Р°СЃР°', 'С‡Р°СЃРѕРІ')})
     </small>
 
     <display:table name="${res.rows}" id="row" htmlId="resultTable"
@@ -72,13 +72,13 @@
 
         <display:setProperty name="basic.msg.empty_list"><%-- don't display empty msg --%></display:setProperty>
 
-        <display:column title="№">
+        <display:column title="в„–">
             <a href="search?<c:out value="${row.req_query_str}"/>" class="search">${row_rowNum}</a>
         </display:column>
-        <display:column property="searchText" title="Текст"/>
-        <display:column property="searchNick" title="Ник поиска"/>
-        <display:column property="searchHost" title="Хост поиска"/>
-        <display:column title="Сайт">
+        <display:column property="searchText" title="РўРµРєСЃС‚"/>
+        <display:column property="searchNick" title="РќРёРє РїРѕРёСЃРєР°"/>
+        <display:column property="searchHost" title="РҐРѕСЃС‚ РїРѕРёСЃРєР°"/>
+        <display:column title="РЎР°Р№С‚">
             <% Site site = siteLogic.getSite((Integer) ((Map) row).get("site")); %>
             <c:if test="<%= site != null %>">
                 <a href="http://<%= site.getSiteUrl() %>">
@@ -86,12 +86,12 @@
                 </a>
             </c:if>
         </display:column>
-        <display:column property="reqDate" title="Дата" class="small"/>
+        <display:column property="reqDate" title="Р”Р°С‚Р°" class="small"/>
         <c:if test="${showAll}">
-            <display:column property="host" title="Хост" class="small"/>
+            <display:column property="host" title="РҐРѕСЃС‚" class="small"/>
             <display:column property="user_agent" title="User-Agent" class="small"/>
         </c:if>
-        <display:column property="userAgentSmall" title="Браузер" class="small center"/>
+        <display:column property="userAgentSmall" title="Р‘СЂР°СѓР·РµСЂ" class="small center"/>
     </display:table>
 </div>
 

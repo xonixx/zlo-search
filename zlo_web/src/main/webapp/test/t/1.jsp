@@ -4,7 +4,7 @@
   Time: 17:18:42
 --%>
 <%@ include file="/WEB-INF/jsp/import.jsp" %>
-<%@ page contentType="text/html; charset=windows-1251" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <tiles:insertTemplate template="tmp.jsp">
     <tiles:putAttribute name="a" value="AAA"/>

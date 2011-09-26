@@ -5,7 +5,7 @@
   Time: 18:01:15
 --%>
 <%@ include file="/WEB-INF/jsp/import.jsp" %>
-<%@ page contentType="text/html; charset=windows-1251" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <c:set var="activeScreen"><tiles:getAsString name="activeScreen"/></c:set>
 <jsp:useBean id="siteRoot" class="java.lang.String" scope="request"/>
@@ -20,15 +20,15 @@
 <div id="header" align="center">
     <ul>
         <li><a href="search"
-               <c:if test="${activeScreen == 'search'}">class="activeLink"</c:if>>Поиск</a></li>
+               <c:if test="${activeScreen == 'search'}">class="activeLink"</c:if>>РџРѕРёСЃРє</a></li>
         <li><a href="stats.jsp?site=${site}"
-               <c:if test="${activeScreen == 'stats'}">class="activeLink"</c:if>>Статистика</a></li>
+               <c:if test="${activeScreen == 'stats'}">class="activeLink"</c:if>>РЎС‚Р°С‚РёСЃС‚РёРєР°</a></li>
         <li><a href="nickhost.jsp?site=${site}"
-               <c:if test="${activeScreen == 'nickhost'}">class="activeLink"</c:if>>Ники/Хосты</a></li>
+               <c:if test="${activeScreen == 'nickhost'}">class="activeLink"</c:if>>РќРёРєРё/РҐРѕСЃС‚С‹</a></li>
         <li><a href="history.jsp"
-               <c:if test="${activeScreen == 'history'}">class="activeLink"</c:if>>История запросов</a></li>
+               <c:if test="${activeScreen == 'history'}">class="activeLink"</c:if>>РСЃС‚РѕСЂРёСЏ Р·Р°РїСЂРѕСЃРѕРІ</a></li>
         <li><a href="forums.jsp"
-               <c:if test="${activeScreen == 'forums'}">class="activeLink"</c:if>>Форумы</a></li>
+               <c:if test="${activeScreen == 'forums'}">class="activeLink"</c:if>>Р¤РѕСЂСѓРјС‹</a></li>
         <li><a href="ws.jsp"
                <c:if test="${activeScreen == 'ws'}">class="activeLink"</c:if>>Web Service</a></li>
         <li><a href="faq.jsp"

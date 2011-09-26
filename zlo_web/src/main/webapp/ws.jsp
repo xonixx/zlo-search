@@ -1,25 +1,25 @@
 <%@ include file="WEB-INF/jsp/import.jsp" %>
-<%@ page contentType="text/html; charset=windows-1251" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <link rel="stylesheet" type="text/css" href="main.css"/>
 
-<title>Web Service поиска</title>
+<title>Web Service РїРѕРёСЃРєР°</title>
 
 <tiles:insertDefinition name="header.ws"/>
 
 <div class="content">
-    <h3>Web Service поиска</h3>
+    <h3>Web Service РїРѕРёСЃРєР°</h3>
 
-    Бордопоиск предоставляет <a href="/ws/">веб-сервис</a> (<a href="ws/search?wsdl">wsdl</a>),
-    выполненный на технологии <a href="http://cxf.apache.org/">Apache CXF</a>.
+    Р‘РѕСЂРґРѕРїРѕРёСЃРє РїСЂРµРґРѕСЃС‚Р°РІР»СЏРµС‚ <a href="/ws/">РІРµР±-СЃРµСЂРІРёСЃ</a> (<a href="ws/search?wsdl">wsdl</a>),
+    РІС‹РїРѕР»РЅРµРЅРЅС‹Р№ РЅР° С‚РµС…РЅРѕР»РѕРіРёРё <a href="http://cxf.apache.org/">Apache CXF</a>.
 
-    Для работы из <a href="http://www.python.org/">python</a> рекомеднуется библиотека для WS
+    Р”Р»СЏ СЂР°Р±РѕС‚С‹ РёР· <a href="http://www.python.org/">python</a> СЂРµРєРѕРјРµРґРЅСѓРµС‚СЃСЏ Р±РёР±Р»РёРѕС‚РµРєР° РґР»СЏ WS
     <a href="https://fedorahosted.org/suds/">suds</a>
-    (<a href="http://zlo.rt.mipt.ru/?read=6939422">пример использования</a>).
+    (<a href="http://zlo.rt.mipt.ru/?read=6939422">РїСЂРёРјРµСЂ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ</a>).
 
-    Веб-метод search принимает поисковую строку, соответствующую формату
-    <a href="http://lucene.apache.org/java/3_0_2/queryparsersyntax.html">Lucene query parser</a>'a, при этом
-    распознаются поля:
+    Р’РµР±-РјРµС‚РѕРґ search РїСЂРёРЅРёРјР°РµС‚ РїРѕРёСЃРєРѕРІСѓСЋ СЃС‚СЂРѕРєСѓ, СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰СѓСЋ С„РѕСЂРјР°С‚Сѓ
+    <a href="http://lucene.apache.org/java/3_0_2/queryparsersyntax.html">Lucene query parser</a>'a, РїСЂРё СЌС‚РѕРј
+    СЂР°СЃРїРѕР·РЅР°СЋС‚СЃСЏ РїРѕР»СЏ:
     <ul>
         <li>title - string</li>
         <li>topicCode - int</li>

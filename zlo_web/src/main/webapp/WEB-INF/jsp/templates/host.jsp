@@ -4,7 +4,7 @@
   Time: 22:24:57
 --%>
 <%@ include file="/WEB-INF/jsp/import.jsp" %>
-<%@ page contentType="text/html; charset=windows-1251" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <tiles:useAttribute name="host"/>
 <tiles:useAttribute name="nick"/>
@@ -15,7 +15,7 @@
     <c:if test="${brackets}">(</c:if><c:out value="${host}"/>
     <a class="search" href="search?site=${site.siteNumber}&host=${host}">?</a>
     <c:if test="${not empty nick}"><a href="search?site=${site.siteNumber}&nick=${nick}&host=${host}" class="search"
-                                      title="ïîèñê ïî íèêó è õîñòó">?nh</a></c:if>
-    <a class="search" href="nickhost.jsp?site=${site.siteNumber}&w=h&t=${host}" title="íèêè ıòîãî õîñòà">n</a><c:if
+                                      title="Ğ¿Ğ¾Ğ¸ÑĞº Ğ¿Ğ¾ Ğ½Ğ¸ĞºÑƒ Ğ¸ Ñ…Ğ¾ÑÑ‚Ñƒ">?nh</a></c:if>
+    <a class="search" href="nickhost.jsp?site=${site.siteNumber}&w=h&t=${host}" title="Ğ½Ğ¸ĞºĞ¸ ÑÑ‚Ğ¾Ğ³Ğ¾ Ñ…Ğ¾ÑÑ‚Ğ°">n</a><c:if
         test="${brackets}">)</c:if>
 </c:if>

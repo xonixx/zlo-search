@@ -4,7 +4,7 @@
   Time: 18:26:19
 --%>
 <%@ include file="/WEB-INF/jsp/import.jsp" %>
-<%@ page contentType="text/html; charset=windows-1251" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <link rel="stylesheet" type="text/css" href="main.css"/>
 
 <jsp:useBean id="backendBean" class="info.xonix.zlo.web.BackendBean" scope="request"/>
@@ -55,7 +55,7 @@
 </c:if>
 
 <c:set var="title">
-    Все ${isHost ? 'ники хоста' : 'хосты ника'} <c:out value="${text}"/> на форуме ${siteUrl}
+    Р’СЃРµ ${isHost ? 'РЅРёРєРё С…РѕСЃС‚Р°' : 'С…РѕСЃС‚С‹ РЅРёРєР°'} <c:out value="${text}"/> РЅР° С„РѕСЂСѓРјРµ ${siteUrl}
 </c:set>
 <title>${title}</title>
 
@@ -69,25 +69,25 @@
     <h3>${title}</h3>
 
     <form action="nickhost.jsp" method="get">
-        Сайт:
+        РЎР°Р№С‚:
         <jsp:getProperty name="backendBean" property="siteSelector"/>
         <br/>
         <input type="radio" name="w" value="n" id="nick" <c:if test="${isNick}">checked="checked"</c:if>><label
-            for="nick">Все хосты ника</label>
+            for="nick">Р’СЃРµ С…РѕСЃС‚С‹ РЅРёРєР°</label>
         <input type="radio" name="w" value="h" id="host" <c:if test="${isHost}">checked="checked"</c:if>><label
-            for="host">Все ники хоста</label><br/>
+            for="host">Р’СЃРµ РЅРёРєРё С…РѕСЃС‚Р°</label><br/>
         <input type="text" name="t" style="width:250px;" <c:if test="${not empty text}"> value="<c:out value="${text}"/>"</c:if> /><br/>
-        <input type="submit" value="Показать!"/>
+        <input type="submit" value="РџРѕРєР°Р·Р°С‚СЊ!"/>
     </form>
 
     <c:if test="${isAllSelected}">
         <c:set var="totalCnt" value="${totalNum.rows[0].cnt}"/>
-        Всего сообщений: ${totalCnt == null ? 0 : totalCnt} <a
+        Р’СЃРµРіРѕ СЃРѕРѕР±С‰РµРЅРёР№: ${totalCnt == null ? 0 : totalCnt} <a
             href="search?site=${siteNum}&${isHost ? 'host' : 'nick'}=<c:out value="${text}" />" class="search">?</a>
 
         <c:if test="${totalCnt > 0}">
             <display:table name="${res.rows}" id="row" htmlId="resultTable">
-                <display:column title="${isHost ? 'Ник' : 'Хост'}" class="center">
+                <display:column title="${isHost ? 'РќРёРє' : 'РҐРѕСЃС‚'}" class="center">
                     <c:choose>
                         <c:when test="${isHost}">
                             <tiles:insertDefinition name="nick">
@@ -106,7 +106,7 @@
                         </c:otherwise>
                     </c:choose>
                 </display:column>
-                <display:column title="Число сообщений" property="cnt" class="center"/>
+                <display:column title="Р§РёСЃР»Рѕ СЃРѕРѕР±С‰РµРЅРёР№" property="cnt" class="center"/>
             </display:table>
         </c:if>
     </c:if>

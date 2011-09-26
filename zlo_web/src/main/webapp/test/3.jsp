@@ -4,7 +4,7 @@
   Time: 23:08:18
 --%>
 <%@ include file="/WEB-INF/jsp/import.jsp" %>
-<%@ page contentType="text/html; charset=windows-1251" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <%!
     private ArrayList<Obj> getArray() {
@@ -34,11 +34,11 @@
             <c:out value="${row.s}"/>
         </c:if>
         <display:table name="${row.strArr}" id="str">
-            <display:setProperty name="basic.msg.empty_list"><span class="pagebanner">Сообщения, соответствующие введенным критериям поиска не найдены. </span></display:setProperty>
+            <display:setProperty name="basic.msg.empty_list"><span class="pagebanner">РЎРѕРѕР±С‰РµРЅРёСЏ, СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёРµ РІРІРµРґРµРЅРЅС‹Рј РєСЂРёС‚РµСЂРёСЏРј РїРѕРёСЃРєР° РЅРµ РЅР°Р№РґРµРЅС‹. </span></display:setProperty>
             <display:setProperty name="paging.banner.one_item_found"><span
-                    class="pagebanner">Найдено одно сообщение. </span></display:setProperty>
-            <display:setProperty name="paging.banner.all_items_found"><span class="pagebanner">Найдено сообщений: {0}, показаны все. </span></display:setProperty>
-            <display:setProperty name="paging.banner.some_items_found"><span class="pagebanner">Найдено сообщений: {0}, показаны с {2} по {3}. </span></display:setProperty>
+                    class="pagebanner">РќР°Р№РґРµРЅРѕ РѕРґРЅРѕ СЃРѕРѕР±С‰РµРЅРёРµ. </span></display:setProperty>
+            <display:setProperty name="paging.banner.all_items_found"><span class="pagebanner">РќР°Р№РґРµРЅРѕ СЃРѕРѕР±С‰РµРЅРёР№: {0}, РїРѕРєР°Р·Р°РЅС‹ РІСЃРµ. </span></display:setProperty>
+            <display:setProperty name="paging.banner.some_items_found"><span class="pagebanner">РќР°Р№РґРµРЅРѕ СЃРѕРѕР±С‰РµРЅРёР№: {0}, РїРѕРєР°Р·Р°РЅС‹ СЃ {2} РїРѕ {3}. </span></display:setProperty>
             <display:column title="${row.s}">
                 ${str}
             </display:column>

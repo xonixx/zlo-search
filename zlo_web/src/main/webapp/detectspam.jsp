@@ -4,7 +4,7 @@
   Time: 2:08:16
 --%>
 <%@ include file="/WEB-INF/jsp/import.jsp" %>
-<%@ page contentType="text/html; charset=windows-1251" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <link rel="stylesheet" type="text/css" href="main.css"/>
 
 <%@ include file="/WEB-INF/jsp/setSite.jsp" %>
@@ -46,7 +46,7 @@
 
 
 <c:set var="title">
-    Поиск возможного спама
+    РџРѕРёСЃРє РІРѕР·РјРѕР¶РЅРѕРіРѕ СЃРїР°РјР°
 </c:set>
 
 <title>${title}</title>
@@ -57,40 +57,40 @@
     <h3>${title}</h3>
 
     <form action="detectspam.jsp" method="get">
-        Сайт:
+        РЎР°Р№С‚:
         <jsp:getProperty name="backendBean" property="siteSelector"/>
         <br/>
-        Посдедние сообщ.:
+        РџРѕСЃРґРµРґРЅРёРµ СЃРѕРѕР±С‰.:
         <select name="checkLastNum"><%-- last messages to search spam --%>
             <option value="1" <c:if test="${checkLastNum == 5000}">selected="selected"</c:if>>5'000</option>
             <option value="2" <c:if test="${checkLastNum == 10000}">selected="selected"</c:if>>10'000</option>
             <option value="3" <c:if test="${checkLastNum == 20000}">selected="selected"</c:if>>20'000</option>
         </select>
 
-        не более сообщ.:
+        РЅРµ Р±РѕР»РµРµ СЃРѕРѕР±С‰.:
         <select name="msgsMax"><%-- max messages for user --%>
             <option value="1" <c:if test="${msgsMax == 5}">selected="selected"</c:if>>5</option>
             <option value="2" <c:if test="${msgsMax == 10}">selected="selected"</c:if>>10</option>
         </select>
 
         <input type="checkbox" name="unreg" id="unreg" <c:if test="${unreg}">checked="checked"</c:if>/>
-        <label for="unreg">от unreg</label>
+        <label for="unreg">РѕС‚ unreg</label>
 
         <%--<input type="checkbox" name="hasUrl" id="hasUrl"
                <c:if test="${not empty param['hasUrl']}">checked="checked"</c:if>/>
         <label for="hasUrl"><fmt:message key="label.search.in.has.url"/></label>--%>
 
-        <input type="submit" value="Показать!"/>
+        <input type="submit" value="РџРѕРєР°Р·Р°С‚СЊ!"/>
     </form>
 
     <%--todo: maybe create component--%>
     <div class="searchResOuter">
         <display:table name="${res.rows}" id="msg" htmlId="resultTable" requestURI="detectspam.jsp" class="searchRes">
-            <display:column title="№"
+            <display:column title="в„–"
                             class="small" style="text-align:center;width:1%;">${msg_rowNum}</display:column>
-            <display:column title="Тема" style="width:67%">
+            <display:column title="РўРµРјР°" style="width:67%">
                 <a href="http://${site.siteUrl}${site.readQuery}${msg.num}">
-                    <c:if test="${not empty msg.topic and msg.topic != 'без темы'}">[${msg.topic}]</c:if>
+                    <c:if test="${not empty msg.topic and msg.topic != 'Р±РµР· С‚РµРјС‹'}">[${msg.topic}]</c:if>
                     <c:out value="${msg.title}" escapeXml="false"/>
                 </a>
                 <small>
@@ -102,21 +102,21 @@
                    href="msg?site=${site.siteNumber}&num=${msg.num}">
                     <fmt:message key="link.saved.msg"/></a>
             </display:column>
-            <display:column title="Всего&nbsp;сообщ." property="count" style="text-align:center"/>
-            <display:column title="Ник">
+            <display:column title="Р’СЃРµРіРѕ&nbsp;СЃРѕРѕР±С‰." property="count" style="text-align:center"/>
+            <display:column title="РќРёРє">
                 <tiles:insertDefinition name="nick">
                     <tiles:putAttribute name="reg" value="${msg.reg}"/>
                     <tiles:putAttribute name="nick" value="${msg.nick}"/>
                     <tiles:putAttribute name="site" value="${site}"/>
                 </tiles:insertDefinition>
             </display:column>
-            <display:column title="Хост" class="small">
+            <display:column title="РҐРѕСЃС‚" class="small">
                 <tiles:insertDefinition name="host">
                     <tiles:putAttribute name="host" value="${msg.host}"/>
                     <tiles:putAttribute name="site" value="${site}"/>
                 </tiles:insertDefinition>
             </display:column>
-            <display:column title="Дата" property="msgDate" format="{0,date,dd/MM/yyyy HH:mm}" class="small nowrap"/>
+            <display:column title="Р”Р°С‚Р°" property="msgDate" format="{0,date,dd/MM/yyyy HH:mm}" class="small nowrap"/>
         </display:table>
     </div>
 </div>
