@@ -87,7 +87,7 @@
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
-                    <encoding>windows-1251</encoding>
+                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
             <plugin>
@@ -95,7 +95,7 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>2.4.3</version>
                 <configuration>
-                    <encoding>windows-1251</encoding>
+                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
             <plugin>

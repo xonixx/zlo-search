@@ -28,6 +28,8 @@ public class Config {
 
     private final static String TRUE = "true";
     private final static String TRUE1 = "1";
+    //    public static final String ENCODING = "windows-1251";
+    public static final String ENCODING = "UTF-8";
 
     private Properties props;
 
