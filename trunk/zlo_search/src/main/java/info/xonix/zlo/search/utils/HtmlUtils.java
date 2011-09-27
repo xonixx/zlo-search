@@ -1,5 +1,6 @@
 package info.xonix.zlo.search.utils;
 
+import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.domainobj.Site;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
@@ -55,7 +56,7 @@ public class HtmlUtils {
 
     public static String urlencode(String s) {
         try {
-            return URLEncoder.encode(s, "windows-1251");
+            return URLEncoder.encode(s, Config.ENCODING);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return StringEscapeUtils.escapeHtml(s);
