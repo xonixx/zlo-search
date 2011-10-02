@@ -17,7 +17,7 @@ public class ExceptionUtils {
         return result.toString();
     }
 
-    public static void rethrowAsRuntime(Throwable throwable) {
+    public static Error rethrowAsRuntime(Throwable throwable) {
         if (throwable instanceof Error) {
             throw (Error) throwable;
         } else if (throwable instanceof RuntimeException) {

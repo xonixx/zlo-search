@@ -106,7 +106,7 @@ public class Config {
             }
         } catch (Exception e) {
             log.error("Can't create analyzer", e);
-            ExceptionUtils.rethrowAsRuntime(e);
+            throw ExceptionUtils.rethrowAsRuntime(e);
         }
 
         final PerFieldAnalyzerWrapper perFieldAnalyzerWrapper = new PerFieldAnalyzerWrapper(new KeywordAnalyzer());

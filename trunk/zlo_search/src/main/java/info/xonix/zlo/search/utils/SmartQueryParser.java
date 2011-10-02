@@ -45,7 +45,7 @@ public class SmartQueryParser {
                 return decoded;
 
             } catch (UnsupportedEncodingException exc) {
-                ExceptionUtils.rethrowAsRuntime(exc);
+                throw ExceptionUtils.rethrowAsRuntime(exc);
             }
         }
 
