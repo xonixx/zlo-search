@@ -18,7 +18,7 @@
         </li>
         <li>Добавлена функциональность RSS. Теперь можно подписаться на сообщения по конкретному запросу, например,
             канал <a
-                    href="search?rss&st=adv&text=%F1%E8%F1%FC*+%F2%E8%F2%FC*+boobs+tits+%F1%E8%F1%E8+%F6%FB%F6%EA%E8&topic=-1&inTitle=on&inBody=on&hasImg=on&nick=&host=&site=0&pageSize=0&submitBtn=%C8%F1%EA%E0%F2%FC%21">сисек
+                    href="search?rss&st=adv&text=%D1%81%D0%B8%D1%81%D1%8C*+%D1%82%D0%B8%D1%82%D1%8C*+boobs+tits+%D1%81%D0%B8%D1%81%D0%B8+%D1%86%D1%8B%D1%86%D0%BA%D0%B8+%D1%81%D0%B8%D1%81%D0%B5*&topic=-1&inTitle=on&inBody=on&hasImg=on&nick=&host=&site=0&pageSize=0&submitBtn=%D0%98%D1%81%D0%BA%D0%B0%D1%82%D1%8C!">сисек
                 <img src="feed-icon-14x14.png" alt="картинки сисек"/></a>;
         </li>
         <li>Добавлен поиск по форуму <a href="http://velo.mipt.ru/cgi/forum/index.cgi">velo.mipt.ru</a>;</li>
