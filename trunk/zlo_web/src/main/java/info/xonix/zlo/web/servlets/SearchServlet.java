@@ -420,7 +420,7 @@ public class SearchServlet extends BaseServlet {
 
         auditLogic.logSearchEvent(searchLog);
 
-        if (StringUtils.isNotEmpty(searchText)) {
+        if (StringUtils.isNotEmpty(searchText) && !rssAsked) {
             appLogic.saveSearchTextForAutocomplete(site, searchText);
         }
     }
