@@ -4,6 +4,7 @@ import info.xonix.zlo.search.analyzers.AnalyzerProvider;
 import info.xonix.zlo.search.model.MessageFields;
 import info.xonix.zlo.search.utils.EnvUtils;
 import info.xonix.zlo.search.utils.ExceptionUtils;
+import info.xonix.zlo.search.utils.SmartQueryParser;
 import info.xonix.zlo.search.utils.TimeUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -30,6 +31,7 @@ public class Config {
     private final static String TRUE1 = "1";
     //    public static final String ENCODING = "windows-1251";
     public static final String ENCODING = "UTF-8";
+    public final static SmartQueryParser SMART_QUERY_PARSER = new SmartQueryParser("windows-1251");
 
     private Properties props;
 
