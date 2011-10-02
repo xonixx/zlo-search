@@ -65,6 +65,7 @@ public class SmartQueryParser {
             UrlEncoded.decodeTo(query, params, UTF_8);
         } catch (Utf8Appendable.NotUtf8Exception ex) {
             UrlEncoded.decodeTo(query, params, encoding);
+            log.info("Query is in " + encoding + ": " + query);
         }
 
         return params;

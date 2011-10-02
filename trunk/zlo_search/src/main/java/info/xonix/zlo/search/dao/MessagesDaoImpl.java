@@ -239,7 +239,7 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
                 queryProvider.getInsertUpdateAutocompleteQuery(site),
                 substring(text, 0, 255));
 
-        if (res != 1) {
+        if (res != 1 && res != 2) {// see http://stackoverflow.com/questions/3747314/why-are-2-rows-affected-in-my-insert-on-duplicate-key-update
             log.error("saveSearchTextForAutocomplete: res=" + res);
         }
     }
