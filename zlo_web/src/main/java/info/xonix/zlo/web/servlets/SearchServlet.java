@@ -23,6 +23,7 @@ import info.xonix.zlo.web.utils.RequestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.search.BooleanQuery;
+import org.eclipse.jetty.util.MultiMap;
 import org.springframework.dao.DataAccessException;
 
 import javax.servlet.ServletException;
@@ -36,6 +37,8 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import static info.xonix.zlo.search.config.Config.SMART_QUERY_PARSER;
 
 /**
  * Author: gubarkov
@@ -101,8 +104,13 @@ public class SearchServlet extends BaseServlet {
     private final RssFormer rssFormer = new RssFormer();
 
     protected void doGet(ForwardingRequest request, HttpServletResponse response) throws ServletException, IOException {
+        final MultiMap<String> params = SMART_QUERY_PARSER.parseUrlencodedParams(request.getQueryString());
+
+        String text = smartGetParam(request, params, QS_TEXT);
+        String nick = smartGetParam(request, params, QS_NICK);
+        String host = smartGetParam(request, params, QS_HOST);
+
         final String topicCodeStr = request.getParameter(QS_TOPIC_CODE);
-        String text = request.getParameter(QS_TEXT);
 
         final boolean inTitle = StringUtils.isNotEmpty(request.getParameter(QS_IN_TITLE));
         final boolean inBody = StringUtils.isNotEmpty(request.getParameter(QS_IN_BODY));
@@ -113,8 +121,6 @@ public class SearchServlet extends BaseServlet {
 
         final boolean isRssAsked = request.getParameter(QS_RSS) != null;
 
-        String nick = request.getParameter(QS_NICK);
-        String host = request.getParameter(QS_HOST);
         final String fromDateStr = request.getParameter(QS_FROM_DATE);
         final String toDateStr = request.getParameter(QS_TO_DATE);
 
@@ -309,6 +315,12 @@ public class SearchServlet extends BaseServlet {
         } else {
             request.forwardTo(JSP_SEARCH);
         }
+    }
+
+    private String smartGetParam(ForwardingRequest request, MultiMap<String> params, final String paramName) {
+        String val = params.getString(paramName);
+        request.setParameter(paramName, val);
+        return val;
     }
 
     private int getLimit(int pageNumber, int objectsPerPage) {
