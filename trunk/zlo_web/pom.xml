@@ -6,7 +6,7 @@
 
     <groupId>ZloSearcher</groupId>
     <artifactId>zlo_web</artifactId>
-    <version>0.2</version>
+    <version>0.7</version>
 
     <packaging>war</packaging>
 
@@ -14,8 +14,8 @@
 
     <parent>
         <groupId>ZloSearcher</groupId>
-        <artifactId>root</artifactId>
-        <version>0.2</version>
+        <artifactId>zlo_root</artifactId>
+        <version>0.7</version>
         <relativePath>..</relativePath>
     </parent>
 
@@ -47,7 +47,7 @@
         <dependency>
             <groupId>ZloSearcher</groupId>
             <artifactId>zlo_search</artifactId>
-            <version>0.2</version>
+            <version>0.7</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-collections</groupId>

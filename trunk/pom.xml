@@ -6,10 +6,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ZloSearcher</groupId>
-    <artifactId>root</artifactId>
+    <artifactId>zlo_root</artifactId>
     <packaging>pom</packaging>
 
-    <version>0.2</version>
+    <version>0.7</version>
 
     <repositories>
         <!--not works now-->
@@ -88,11 +88,13 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.6.4</version>
+            <scope>runtime</scope>
         </dependency>
         <dependency><!--slf4j over log4j-->
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.6.4</version>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 
