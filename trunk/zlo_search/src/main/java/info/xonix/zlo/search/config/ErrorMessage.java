@@ -44,6 +44,9 @@ public enum ErrorMessage {
         return data;
     }
 
+    /*
+     * TODO: this is not OK : enum values should be immutable
+     */
     public void setData(String data) {
         this.data = data;
     }
