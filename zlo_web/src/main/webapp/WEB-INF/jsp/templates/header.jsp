@@ -34,7 +34,7 @@
         <li><a href="faq.jsp"
                <c:if test="${activeScreen == 'faq'}">class="activeLink"</c:if>>FAQ</a></li>
         <li><a href="about.jsp"
-               <c:if test="${activeScreen == 'about'}">class="activeLink"</c:if>>About</a></li>
+               <c:if test="${activeScreen == 'about'}">class="activeLink"</c:if>>О системе</a></li>
 
         <c:if test="<%= RequestUtils.isPowerUser(request) %>">
             <span class="adminLinks">
