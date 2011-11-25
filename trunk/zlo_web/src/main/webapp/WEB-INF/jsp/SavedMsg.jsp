@@ -30,9 +30,9 @@
                 <a href="http://${siteRoot}/?read=${msg.num}">?</a>
 
                     <%--paul7 link--%>
-                <c:if test="${msg.site.name == 'zlo'}">
+                <%--<c:if test="${msg.site.name == 'zlo'}">
                     <a href="http://zlo.paul7.net/${msg.num}">paul7</a>
-                </c:if>
+                </c:if>--%><%--dead for now--%>
             </big>
             <br/>Сообщение было послано:
             <tiles:insertDefinition name="nick">
