@@ -18,7 +18,7 @@ import java.util.List;
  * Date: 19.03.11
  * Time: 22:02
  */
-public class RussianAnalizerTests {
+public class RussianAnalyzerTests {
     private static Analyzer analyzer;
 
     @BeforeClass
