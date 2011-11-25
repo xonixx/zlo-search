@@ -101,9 +101,9 @@ public final class RequestUtils {
             final String boardRoot = "board.rt.mipt.ru";
 
             if (StringUtils.isNotEmpty(referer)) {
-                if (referer.indexOf(zloRoot) != -1) {
+                if (referer.contains(zloRoot)) {
                     return zloRoot;
-                } else if (referer.indexOf(boardRoot) != -1) {
+                } else if (referer.contains(boardRoot)) {
                     return boardRoot;
                 }
             }
