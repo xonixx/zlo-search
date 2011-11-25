@@ -58,12 +58,12 @@
                     <input type="radio" name="st" id="st1" value="all"
                            <c:if test="${param['st'] == 'all'}">checked="checked"</c:if> />
                     <label for="st1"><fmt:message key="label.search.all"/></label>
-                    <input type="radio" name="st" id="st2" value="exct"
-                           <c:if test="${param['st'] == 'exct'}">checked="checked"</c:if> />
-                    <label for="st2"><fmt:message key="label.search.exact.phrase"/></label>
                     <input type="radio" name="st" id="st3" value="adv"
                            <c:if test="${param['st'] == 'adv'}">checked="checked"</c:if> />
                     <label for="st3"><fmt:message key="label.search.advanced"/></label>
+                    <input type="radio" name="st" id="st2" value="exct"
+                           <c:if test="${param['st'] == 'exct'}">checked="checked"</c:if> />
+                    <label for="st2"><fmt:message key="label.search.exact.phrase"/></label>
                     <br/>
                     <fmt:message key="label.text"/>
                     <input type="text" name="text" id="text"
