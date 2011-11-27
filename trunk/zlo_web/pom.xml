@@ -19,6 +19,11 @@
         <relativePath>..</relativePath>
     </parent>
 
+    <properties>
+        <!--<cxf.version>2.3.4</cxf.version>-->
+        <cxf.version>2.5.0</cxf.version>
+    </properties>
+
     <build>
         <resources>
             <resource>
@@ -156,26 +161,32 @@
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxws</artifactId>
-            <version>2.3.4</version>
-            <!--Note: 2.4.0 not works (No service found)-->
+            <version>${cxf.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-transports-http</artifactId>
-            <version>2.3.4</version>
+            <version>${cxf.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework</groupId>
                     <artifactId>spring-web</artifactId>
                 </exclusion>
             </exclusions>
-            <!--Note: 2.4.0 not works (No service found)-->
         </dependency>
 
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
             <version>1.1</version>
+        </dependency>
+
+        <!--for sources-->
+        <dependency>
+            <groupId>org.apache.geronimo.ext.tomcat</groupId>
+            <artifactId>catalina</artifactId>
+            <version>6.0.33.1</version>
+            <scope>provided</scope>
         </dependency>
 
         <!--testing-->

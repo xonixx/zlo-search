@@ -1,5 +1,8 @@
 from suds.client import Client
 
+#OUT_ENCODING = 'cp1251'
+OUT_ENCODING = 'UTF-8'
+
 c = Client('http://localhost:8080/ws/search?wsdl')
 #c = Client('http://zlo.rt.mipt.ru:7500/ws/search?wsdl')
 
@@ -13,7 +16,7 @@ print 'Last saved number, zlo:', service.getLastSavedMsgNumber(ZLO_ID)
 print
 print 'Last indexed number, zlo:', service.getLastIndexedMsgNumber(ZLO_ID)
 print
-print 'Msg#1, zlo:', service.getMessage(ZLO_ID, 1).body.encode('cp1251')
+print 'Msg#1, zlo:', service.getMessage(ZLO_ID, 1).body.encode(OUT_ENCODING)
 print
 
 print 'Getting all messages for search by nick:xonix :'
@@ -36,6 +39,6 @@ while True:
     total += len(l)
 
     for m in l:
-        print '#%s : [%s] %s' % (m.id, m.topic.encode('cp1251'), m.title.encode('cp1251'))
+        print '#%s : [%s] %s' % (m.id, m.topic.encode(OUT_ENCODING), m.title.encode(OUT_ENCODING))
 
 print 'Total xonix msgs:', total
