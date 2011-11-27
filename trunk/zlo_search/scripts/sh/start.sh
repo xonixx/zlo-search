@@ -1,3 +1,9 @@
+#!/bin/sh
 
-echo startup
-/usr/local/apache-tomcat6.0/bin/startup.sh
+#declare TOMCAT
+
+. _cfg.sh
+
+echo "Startup..."
+
+$TOMCAT/bin/startup.sh

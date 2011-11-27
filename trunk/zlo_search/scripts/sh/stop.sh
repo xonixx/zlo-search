@@ -1,7 +1,13 @@
-echo pkill
+#!/bin/sh
+
+#declare TOMCAT
+
+. _cfg.sh
+
+echo "Pkill..."
 pkill java
 sleep 10
 
-echo shutdown
-/usr/local/apache-tomcat6.0/bin/shutdown.sh
+echo "Shutdown..."
+$TOMCAT/bin/shutdown.sh
 sleep 10
