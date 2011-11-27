@@ -21,7 +21,7 @@
 
     <properties>
         <spring.version>3.0.6.RELEASE</spring.version>
-        <lucene.version>3.4.0</lucene.version>
+        <lucene.version>3.5.0</lucene.version>
     </properties>
 
     <build>
