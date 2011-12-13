@@ -89,17 +89,23 @@ background-color: #DDDDDD; color: #000000;
 		out+=("<table border=\"0\" cellpadding=\"3\" width=\"100%\">");
 
 		Properties props = System.getProperties();
+        List<String> keys = new ArrayList<String>(props.size());
 		for (Enumeration e = props.propertyNames(); e.hasMoreElements(); ) {
 		  s = n(e.nextElement());
-		  t = "";
-		  if (!s.equals("")) {
-			 t = n(System.getProperty(s));
+            keys.add(s);
+		}
+
+        Collections.sort(keys);
+
+        for (String key : keys) {
+		  if (!key.equals("")) {
+			 t = n(System.getProperty(key));
 			 t = (t.indexOf(";")>0 ? str_replace(java.io.File.pathSeparator,';'+vBR,t)+vBR : t);
 			 t = str_replace(".jar:", ".jar:\n<br>" ,t);
 			 t = str_replace(",$", ",\n<br>$", t);
-			 out+=("<tr><td class='e'><b>"+s+":</b></td><td class='v'>" + t +"</td></tr>");
+			 out+=("<tr><td class='e'><b>"+ key +":</b></td><td class='v'>" + t +"</td></tr>");
 		  }
-		}
+        }
 
 		out+=("</table>");
 		out+=("<h2>Request Headers:</h2>");
