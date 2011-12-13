@@ -2,6 +2,8 @@
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
 <%@ page import="javax.servlet.http.HttpServletResponse, java.lang.reflect.Method" %>
 <%@ page import="java.util.*" %>
+<%@ page import="java.net.InetAddress" %>
+<%@ page import="java.net.UnknownHostException" %>
 <%
     //	String SN = n(request.getRequestURI()); // script name shortcut, including path
 //	String SCN = SN.substring(SN.lastIndexOf("/")+1); // just the jsp name (eg., Foo.jsp)
@@ -113,14 +115,17 @@
         // Memory
         reportMemory(out);
 
+        reportInet(out);
+
         return out.toString();
     }
+
     private void reportMemory(StringBuilder out) {
         Runtime runtime = Runtime.getRuntime();
 
         float mb = 1024 * 1024f;
 
-        Map<String, Float> memory = new LinkedHashMap<String, Float>();
+//        Map<String, Float> memory = new LinkedHashMap<String, Float>();
         final float free = runtime.freeMemory() / mb;
         final float total = runtime.totalMemory() / mb;
         final float max = runtime.maxMemory() / mb;
@@ -133,7 +138,33 @@
         out.append("<tr><td class='e'><b>Free:</b></td><td class='v'> ").append(free).append(" M</td></tr>");
         out.append("<tr><td class='e'><b>Total:</b></td><td class='v'> ").append(total).append(" M</td></tr>");
         out.append("<tr><td class='e'><b>Max:</b></td><td class='v'> ").append(max).append(" M</td></tr>");
-        //out+=("getRequestedSessionId: "+n(request.getRequestedSessionId()) + vBR);
+        out.append("</table>");
+    }
+
+    private void reportInet(StringBuilder out) {
+        String hostName;
+        String canonicalHostName;
+        String hostAddress;
+        try {
+            hostName = InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+            hostName = e.getMessage();
+        }
+        try {
+            hostAddress = InetAddress.getLocalHost().getCanonicalHostName();
+        } catch (UnknownHostException e) {
+            hostAddress = e.getMessage();
+        }
+        try {
+            canonicalHostName = InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            canonicalHostName = e.getMessage();
+        }
+        out.append("<h2>Inet:</h2>");
+        out.append("<table border=\"0\" cellpadding=\"3\" width=\"100%\">");
+        out.append("<tr><td class='e'><b>Hostname:</b></td><td class='v'> ").append(hostName).append("</td></tr>");
+        out.append("<tr><td class='e'><b>Canonical Hostname:</b></td><td class='v'> ").append(canonicalHostName).append("</td></tr>");
+        out.append("<tr><td class='e'><b>Host Address:</b></td><td class='v'> ").append(hostAddress).append("</td></tr>");
         out.append("</table>");
     }
 
