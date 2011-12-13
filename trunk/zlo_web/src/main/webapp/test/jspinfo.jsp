@@ -1,28 +1,13 @@
 <%-- import attributes start here --%>
-<%@ page import="java.lang.*" %>
-<%@ page import="javax.servlet.*, javax.servlet.http.*" %>
-<%@ page import="java.util.ArrayList, java.util.List, java.util.Date, java.util.Calendar, java.util.Vector, java.util.Properties, java.util.Enumeration" %>
-<%@ page import="java.io.*" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.lang.reflect.*" %>
+<%@ page import="javax.servlet.http.HttpServletRequest" %>
+<%@ page import="javax.servlet.http.HttpServletResponse, java.lang.reflect.Method" %>
 <%@ page import="java.util.*" %>
-<%@ page import="java.text.*" %>
 <%
 	String SN = n(request.getRequestURI()); // script name shortcut, including path
 	String SCN = SN.substring(SN.lastIndexOf("/")+1); // just the jsp name (eg., Foo.jsp)
 %>
 <html>
 <head>
-<meta http-equiv="Content-Language" content="en-gb">
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="shortcut icon" href="favicon.ico">
-<META NAME="KEYWORDS" CONTENT="website hosting, uk web hosting,quality web hosting,affordable hosting,low cost web hosting,web hosting articles,website hosting tools">
-<META NAME="DESCRIPTION" CONTENT="CJ Website Hosting - Quality, affordable web hosting. Offering high bandwidth and diskspace, packages start from £20 per year">
-<META NAME="AUTHOR" CONTENT="CJ Website Hosting">
-<META NAME="RATING" CONTENT="General">
-<META name="robots" content="all">
-<META name="revisit-after" content="7 days">
-<link rel="stylesheet" type="text/css" media="screen, projection" href="styles/base.css">
 <style>
 body
 {
@@ -60,20 +45,13 @@ background-color: #DDDDDD; color: #000000;
 <title>JSP Information</title>
 </head>
 <body>
-<div id="nav">
-	<ul>
-		<li><a href="http://www.cj-hosting.com/phpinfo.php">PHP Information</a></li>
-		<li><a href="http://www.cj-hosting.com/cgi-bin/modules.pl">Perl Modules</a></li>
-		<li id="on"><a href="http://www.cj-hosting.com/jspinfo.jsp">JSP Information</a></li>
-	</ul>
-</div>
+
 <div id="wrapper">
 <h1>JSP Information</h1>
 <% String s=""; %>
 <div id="container">
 <%= javaInfo(request,response,999) %>
 </div>
-<p style="text-align:right;font-size:13px;"><a href="http://www.cj-hosting.com">CJ Website Hosting</a></p>
 </div>
 </body>
 </html>
