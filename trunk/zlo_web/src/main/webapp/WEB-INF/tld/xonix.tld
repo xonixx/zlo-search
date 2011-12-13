@@ -17,7 +17,7 @@
         </description>
         <name>urlencode</name>
         <function-class>info.xonix.zlo.web.jstl.Functions</function-class>
-        <function-signature>java.lang.String urlencode(java.lang.String)</function-signature>
+        <function-signature>java.lang.String urlencode(java.lang.String, java.lang.String)</function-signature>
         <example>
         </example>
     </function>

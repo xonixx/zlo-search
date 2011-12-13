@@ -41,6 +41,7 @@ public abstract class SiteConfiguration {
     private ArrayList<Integer> msgReGroupsOrder = null;
 
     private String siteUrl;
+    private String siteCharset; // defined or NULL
     private String siteSmilesPath;
     private String siteDescription;
 
@@ -109,6 +110,7 @@ public abstract class SiteConfiguration {
         linkIndexRe = Pattern.compile(linkIndexReStr);
 
         siteUrl = p.getProperty("site.url");
+        siteCharset = p.getProperty("site.charset");
         siteSmilesPath = p.getProperty("site.smiles.path");
         siteDescription = p.getProperty("site.description");
 
@@ -233,6 +235,10 @@ public abstract class SiteConfiguration {
 /*    public void setSiteUrl(String siteUrl) {
         this.siteUrl = siteUrl;
     }*/
+
+    public String getSiteCharset() {
+        return siteCharset;
+    }
 
     public String getSiteSmilesPath() {
         return siteSmilesPath;
