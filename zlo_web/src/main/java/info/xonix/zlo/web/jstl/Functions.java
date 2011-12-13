@@ -1,5 +1,6 @@
 package info.xonix.zlo.web.jstl;
 
+import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -9,8 +10,8 @@ import org.apache.commons.lang.StringUtils;
  * Time: 4:07:44
  */
 public class Functions {
-    public static String urlencode(String s) {
-        return HtmlUtils.urlencode(s);
+    public static String urlencode(String s, String charset) {
+        return HtmlUtils.urlencode(s, charset);
     }
 
     public static String mysqlRange(String s) {
@@ -22,7 +23,8 @@ public class Functions {
     }
 
     public static void main(String[] args) {
-        System.out.println(urlencode("<sb>"));
+        System.out.println(urlencode("<sb>", Config.UTF_8));
+        System.out.println(urlencode("<sb>", Config.WINDOWS_1251));
     }
 
     public static String plural(int n, String word1, String word2, String wordMany) {

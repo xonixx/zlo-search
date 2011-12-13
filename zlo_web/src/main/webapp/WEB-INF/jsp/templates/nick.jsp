@@ -9,11 +9,11 @@
 <tiles:useAttribute name="reg"/>
 <tiles:useAttribute name="nick"/>
 <tiles:useAttribute name="host"/>
-<tiles:useAttribute name="site"/>
+<tiles:useAttribute name="site" classname="info.xonix.zlo.search.domainobj.Site"/>
 
 <c:if test="${not empty nick}">
     <c:set var="nickEscaped"><c:out value="${nick}"/></c:set>
-    <c:set var="nickUrlencoded"><c:out value="${xonix:urlencode(nick)}"/></c:set>
+    <c:set var="nickUrlencoded"><c:out value="${xonix:urlencode(nick, site.siteCharset)}"/></c:set>
     <span class="nick">
         <c:choose>
             <c:when test="${not reg}">${nickEscaped}</c:when>

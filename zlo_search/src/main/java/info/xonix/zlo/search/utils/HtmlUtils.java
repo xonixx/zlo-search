@@ -54,9 +54,9 @@ public class HtmlUtils {
         return StringEscapeUtils.unescapeHtml(s);
     }
 
-    public static String urlencode(String s) {
+    public static String urlencode(String s, String charset) {
         try {
-            return URLEncoder.encode(s, Config.ENCODING);
+            return URLEncoder.encode(s, StringUtils.isNotEmpty(charset) ? charset : Config.UTF_8);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return StringEscapeUtils.escapeHtml(s);

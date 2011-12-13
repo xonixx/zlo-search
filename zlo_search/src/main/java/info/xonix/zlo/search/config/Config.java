@@ -29,9 +29,11 @@ public class Config {
 
     private final static String TRUE = "true";
     private final static String TRUE1 = "1";
-    //    public static final String ENCODING = "windows-1251";
-    public static final String ENCODING = "UTF-8";
-    public final static SmartQueryParser SMART_QUERY_PARSER = new SmartQueryParser("windows-1251");
+
+    public static final String UTF_8 = "UTF-8";
+    public static final String WINDOWS_1251 = "windows-1251";
+
+    public final static SmartQueryParser SMART_QUERY_PARSER = new SmartQueryParser(WINDOWS_1251);
 
     private Properties props;
 
