@@ -64,6 +64,7 @@ public class SmartQueryParser {
         try {
             UrlEncoded.decodeTo(query, params, UTF_8);
         } catch (Utf8Appendable.NotUtf8Exception ex) {
+            params.clear(); // it can contain partly-parsed data from try block!!!
             UrlEncoded.decodeTo(query, params, encoding);
             log.info("Query is in " + encoding + ": " + query);
         }
