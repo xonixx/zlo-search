@@ -4,6 +4,7 @@
 <%@ page import="java.util.*" %>
 <%@ page import="java.net.InetAddress" %>
 <%@ page import="java.net.UnknownHostException" %>
+<%@ page import="javax.naming.*" %>
 <%
     //	String SN = n(request.getRequestURI()); // script name shortcut, including path
 //	String SCN = SN.substring(SN.lastIndexOf("/")+1); // just the jsp name (eg., Foo.jsp)
@@ -112,6 +113,8 @@
         //out+=("getRequestedSessionId: "+n(request.getRequestedSessionId()) + vBR);
         out.append("</table>");
 
+        reportJndi(out);
+
         // Memory
         reportMemory(out);
 
@@ -166,6 +169,38 @@
         out.append("<tr><td class='e'><b>Canonical Hostname:</b></td><td class='v'> ").append(canonicalHostName).append("</td></tr>");
         out.append("<tr><td class='e'><b>Host Address:</b></td><td class='v'> ").append(hostAddress).append("</td></tr>");
         out.append("</table>");
+    }
+
+    private void reportJndi(StringBuilder out) {
+        out.append("<h2>JNDI:</h2>");
+        out.append("<table border=\"0\" cellpadding=\"3\" width=\"100%\">");
+
+        try {
+            Context ctx = (Context) new InitialContext().lookup("java:comp/env");
+            listContext(ctx, out, "");
+        } catch (NamingException ex) {
+            out.append(ex.getMessage());
+        }
+
+        out.append("</table>");
+    }
+
+    public void listContext(Context ctx, StringBuilder out, String nameStart) throws NamingException {
+        NamingEnumeration list = ctx.listBindings("");
+        while (list.hasMore()) {
+            Binding item = (Binding) list.next();
+            Object o = item.getObject();
+            String className = item.getClassName();
+            String name = item.getName();
+            String fullName = ("".equals(nameStart) ? "" : nameStart + "/") + name;
+
+            out.append("<tr><td class='e'><b>").append(fullName).append("</b></td><td class='v'> ")
+                    .append(className).append(" : ").append(o).append("</td></tr>");
+
+            if (o instanceof javax.naming.Context) {
+                listContext((Context) o, out, fullName);
+            }
+        }
     }
 
     public String n(Object obj) { // convert a possibly null into a "" instead
@@ -264,28 +299,6 @@
             return s;
         }
     }
-
-/*
-    public String str_replace_multi(String sep, String rep, String s) // analogue to preg_replace("pat","repl","src");, but where each char of sep is treated as a string to replace
-    {
-        if (sep != null && !sep.equals("") && sep.length() > 0 && !sep.equals(rep)) {
-            try {
-                String outText = "";
-                int pos = 0;
-                while (sep.length() >= 1) {
-                    s = str_replace(sep.substring(0, 1), rep, s);
-                    sep = sep.substring(1);
-                }
-                return s;
-            } catch (Exception e) {
-                handleException(e, "str_replace_multi()");
-            }
-            return ("");
-        } else {
-            return s;
-        }
-    }
-*/
 
     public String handleException(Exception e, String funcname) {
         String l = "";
