@@ -13,12 +13,13 @@
 
 <c:if test="${not empty nick}">
     <c:set var="nickEscaped"><c:out value="${nick}"/></c:set>
-    <c:set var="nickUrlencoded"><c:out value="${xonix:urlencode(nick, site.siteCharset)}"/></c:set>
+    <c:set var="nickUrlencodedForSite"><c:out value="${xonix:urlencode(nick, site.siteCharset)}"/></c:set>
+    <c:set var="nickUrlencoded"><c:out value="${xonix:urlencode(nick, null)}"/></c:set><%--default enc (UTF-8)--%>
     <span class="nick">
         <c:choose>
             <c:when test="${not reg}">${nickEscaped}</c:when>
             <c:otherwise>
-                <a href="http://${site.siteUrl}${site.uinfoQuery}${nickUrlencoded}">${nickEscaped}</a>
+                <a href="http://${site.siteUrl}${site.uinfoQuery}${nickUrlencodedForSite}">${nickEscaped}</a>
             </c:otherwise>
         </c:choose>
     </span>
