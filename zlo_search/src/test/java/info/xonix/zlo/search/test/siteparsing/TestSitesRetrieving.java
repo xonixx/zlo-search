@@ -264,6 +264,15 @@ public class TestSitesRetrieving {
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
         System.out.println(m);
 
+        m = siteLogic.getMessageByNumber(zlo, 7787566);
+
+        Assert.assertEquals("vilfred", m.getNick());
+        Assert.assertEquals("77.51.192.172", m.getHost());
+        Assert.assertTrue(m.isReg());
+        Assert.assertTrue(m.isHasImg());
+        Assert.assertTrue("Сообщения в этом потоке".equals(m.getTitle()));
+        System.out.println(m);
+
         m = siteLogic.getMessageByNumber(zlo, 999999999);
 
         Assert.assertEquals(null, m.getNick());
