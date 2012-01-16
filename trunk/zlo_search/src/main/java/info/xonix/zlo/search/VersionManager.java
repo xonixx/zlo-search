@@ -16,9 +16,11 @@ public class VersionManager {
     public static final Properties VERSION_PROPERTIES = new Properties();
     public static final String UNKNOWN = "UNKNOWN";
 
+    public static final String VERSION_FILE = "info/xonix/zlo/search/version.properties";
+
     static {
         try {
-            VERSION_PROPERTIES.load(VersionManager.class.getClassLoader().getResourceAsStream("version.properties"));
+            VERSION_PROPERTIES.load(VersionManager.class.getClassLoader().getResourceAsStream(VERSION_FILE));
         } catch (IOException e) {
             log.log(Level.SEVERE, "Can't read project version", e);
         }
