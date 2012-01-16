@@ -29,6 +29,7 @@ public class ObsceneUtils {
             {'o', 'о'},
             {'p', 'р'},
             {'u', 'и'},
+            {'x', 'х'},
             {'y', 'у'},
     };
 
@@ -71,6 +72,8 @@ public class ObsceneUtils {
 
         txt = txt.toLowerCase();
         txt = tr(txt, EN_2_RU_CHARS);
+
+        txt = txt.replace('ё', 'е');
 
         return txt;
     }
