@@ -27,6 +27,20 @@
     <build>
         <resources>
             <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+                <excludes>
+                    <exclude>version/*</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources/version</directory>
+                <filtering>true</filtering>
+                <!--maven fills varibales-->
+            </resource>
+            <resource>
                 <directory>src/main/java</directory>
                 <includes>
                     <include>**/*.xml</include>
@@ -35,6 +49,25 @@
                 </includes>
             </resource>
         </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <doCheck>false</doCheck>
+                    <doUpdate>false</doUpdate>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
     <dependencies>

@@ -11,6 +11,13 @@
 
     <version>0.7</version>
 
+    <scm>
+        <connection>scm:svn:https://zlo-search.googlecode.com/svn/trunk</connection>
+        <developerConnection>scm:svn:https://zlo-search.googlecode.com/svn/trunk</developerConnection>
+        <tag>HEAD</tag>
+        <url>http://code.google.com/p/zlo-search/source/list</url>
+    </scm>
+
     <repositories>
         <!--not works now-->
         <!--<repository>

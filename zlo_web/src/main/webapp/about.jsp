@@ -1,3 +1,4 @@
+<%@ page import="info.xonix.zlo.search.VersionManager" %>
 <%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
@@ -22,8 +23,10 @@
     (он же jabber)
     <script type="text/javascript">document.write("<a href='mai" + "lto:xoni" + "xx@gmai" + "l.com'>");
     document.write("xoni" + "xx@gmai" + "l.com</a>");</script><%--,
-    или на ICQ 250-123-253--%>
+ или на ICQ 250-123-253--%>
     или <a href="http://zlo.rt.mipt.ru/?persmsgform=xonix">в приват</a>.
+    <hr/>
+    <small>Версия: <i><%= VersionManager.getApplicationVersion() %></i></small>
 </div>
 
 <tiles:insertDefinition name="ga"/>
