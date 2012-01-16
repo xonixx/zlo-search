@@ -15,6 +15,7 @@ import info.xonix.zlo.search.logic.exceptions.ExceptionsLogger;
 import info.xonix.zlo.search.model.SearchLog;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.utils.HtmlUtils;
+import info.xonix.zlo.search.utils.obscene.ObsceneUtils;
 import info.xonix.zlo.web.RequestCache;
 import info.xonix.zlo.web.rss.RssFormer;
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
@@ -401,10 +402,12 @@ public class SearchServlet extends BaseServlet {
         final Site site = getSite(request);
         final String searchText = request.getParameter(QS_TEXT);
 
+        final String clientIp = RequestUtils.getClientIp(request);
+
         SearchLog searchLog = new SearchLog();
 
         searchLog.setSite(site);
-        searchLog.setClientIp(RequestUtils.getClientIp(request));
+        searchLog.setClientIp(clientIp);
         searchLog.setUserAgent(request.getHeader(HttpHeader.USER_AGENT));
         searchLog.setReferer(request.getHeader(HttpHeader.REFERER));
 
@@ -421,7 +424,11 @@ public class SearchServlet extends BaseServlet {
         auditLogic.logSearchEvent(searchLog);
 
         if (StringUtils.isNotEmpty(searchText) && !rssAsked) {
-            appLogic.saveSearchTextForAutocomplete(site, searchText);
+            if (!ObsceneUtils.containsObsceneWord(searchText)) {
+                appLogic.saveSearchTextForAutocomplete(site, searchText);
+            } else {
+                log.info("! Search by obscene words: {" + searchText + "}, ip=" + clientIp);
+            }
         }
     }
 
