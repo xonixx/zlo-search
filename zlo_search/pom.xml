@@ -39,6 +39,7 @@
                 <directory>src/main/resources/version</directory>
                 <filtering>true</filtering>
                 <!--maven fills varibales-->
+                <targetPath>info/xonix/zlo/search</targetPath>
             </resource>
             <resource>
                 <directory>src/main/java</directory>
