@@ -65,7 +65,7 @@
                 </executions>
                 <configuration>
                     <doCheck>false</doCheck>
-                    <doUpdate>false</doUpdate>
+                    <doUpdate>true</doUpdate>
                 </configuration>
             </plugin>
         </plugins>
