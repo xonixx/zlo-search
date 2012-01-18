@@ -8,6 +8,11 @@ words = open(f).read().split()
 
 sql_select = '''
 SELECT * FROM zlo_autocomplete WHERE search_text RLIKE '%s'
-''' % '|'.join('\\b%s' % w for w in words)
+''' % '|'.join('[[:<:]]%s' % w for w in words)
+
+sql_delete = '''
+DELETE FROM zlo_autocomplete WHERE search_text RLIKE '%s'
+''' % '|'.join('[[:<:]]%s' % w for w in words)
 
 print sql_select
+print sql_delete
