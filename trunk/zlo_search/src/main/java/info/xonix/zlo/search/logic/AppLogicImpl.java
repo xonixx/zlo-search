@@ -94,7 +94,7 @@ public class AppLogicImpl implements AppLogic, InitializingBean {
             throw new IllegalArgumentException("text is empty");
         }
 
-        messagesDao.saveSearchTextForAutocomplete(site, text.trim());
+        messagesDao.saveSearchTextForAutocomplete(site, text.trim().toLowerCase());
     }
 
     @Override

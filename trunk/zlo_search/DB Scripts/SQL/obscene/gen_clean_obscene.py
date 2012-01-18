@@ -6,13 +6,15 @@ words = open(f).read().split()
 
 #print ', '.join(words)
 
+regex = '|'.join('[[:<:]]%s' % w for w in words)
+
 sql_select = '''
-SELECT * FROM zlo_autocomplete WHERE search_text RLIKE '%s'
-''' % '|'.join('[[:<:]]%s' % w for w in words)
+SELECT * FROM zlo_autocomplete WHERE LOWER(search_text) RLIKE '%s'
+''' % regex
 
 sql_delete = '''
-DELETE FROM zlo_autocomplete WHERE search_text RLIKE '%s'
-''' % '|'.join('[[:<:]]%s' % w for w in words)
+DELETE FROM zlo_autocomplete WHERE LOWER(search_text) RLIKE '%s'
+''' % regex
 
 print sql_select
 print sql_delete
