@@ -1,0 +1,51 @@
+<project name="Xonix" basedir=".">
+
+    <property environment="env"/>
+    <property name="maven.home" value="${env.M2_HOME}"/>
+
+    <!--
+    http://maven.apache.org/ant-tasks/examples/mvn.html
+    -->
+    <macrodef name="maven">
+        <attribute name="options" default=""/>
+        <attribute name="goal"/>
+        <attribute name="basedir"/>
+        <attribute name="resultproperty" default="maven.result"/>
+        <element name="args" implicit="true" optional="true"/>
+        <sequential>
+            <java classname="org.codehaus.classworlds.Launcher" fork="true"
+                  dir="@{basedir}" resultproperty="@{resultproperty}"
+                  failonerror="true"> <!--http://stackoverflow.com/questions/907364/how-can-i-have-my-ant-task-pass-or-fail-based-on-the-results-of-a-jar-it-runs-->
+                <jvmarg value="-Xmx512m"/>
+                <classpath>
+                    <fileset dir="${maven.home}/boot">
+                        <include name="*.jar"/>
+                    </fileset>
+                    <fileset dir="${maven.home}/lib">
+                        <include name="*.jar"/>
+                    </fileset>
+                </classpath>
+                <sysproperty key="classworlds.conf" value="${maven.home}/bin/m2.conf"/>
+                <sysproperty key="maven.home" value="${maven.home}"/>
+                <arg line="--batch-mode @{options} @{goal}"/>
+            </java>
+        </sequential>
+    </macrodef>
+
+    <target id="build-exploded" name="build-exploded">
+        <echo>Maven home: ${maven.home}</echo>
+
+        <!--
+        http://stackoverflow.com/questions/352612/how-to-get-maven-to-run-warexploded-but-not-warwar
+        -->
+        <maven basedir="zlo_web"
+               goal="prepare-package war:exploded"
+                resultproperty="mvn_result"/>
+
+        <!--<echo>@mvn_result</echo>-->
+    </target>
+
+</project>
+
+
+
