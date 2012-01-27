@@ -35,12 +35,14 @@
     <target id="build-exploded" name="build-exploded">
         <echo>Maven home: ${maven.home}</echo>
 
+        <maven basedir="zlo_search"
+               goal="-DskipTests=true install"/>
+
         <!--
         http://stackoverflow.com/questions/352612/how-to-get-maven-to-run-warexploded-but-not-warwar
         -->
         <maven basedir="zlo_web"
-               goal="prepare-package war:exploded"
-                resultproperty="mvn_result"/>
+               goal="-DskipTests=true prepare-package war:exploded"/>
 
         <!--<echo>@mvn_result</echo>-->
     </target>
