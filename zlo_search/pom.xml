@@ -20,7 +20,7 @@
     </parent>
 
     <properties>
-        <spring.version>3.0.6.RELEASE</spring.version>
+        <spring.version>3.1.0.RELEASE</spring.version>
         <lucene.version>3.5.0</lucene.version>
     </properties>
 
@@ -152,6 +152,11 @@
             <artifactId>lucene-analyzers</artifactId>
             <version>${lucene.version}</version>
         </dependency>
+        <!--<dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-spellchecker</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>-->
         <!--end lucene-->
 
         <!--Spring-->
