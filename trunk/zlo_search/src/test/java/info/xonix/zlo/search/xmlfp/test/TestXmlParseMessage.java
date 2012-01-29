@@ -1,4 +1,4 @@
-package info.xonix.zlo.search.xmlfp;
+package info.xonix.zlo.search.xmlfp.test;
 
 import info.xonix.zlo.search.xmlfp.xjccompiled.message.Message;
 

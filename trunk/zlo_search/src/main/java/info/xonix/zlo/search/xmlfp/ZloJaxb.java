@@ -20,6 +20,7 @@ import java.util.GregorianCalendar;
  * Author: Vovan
  * Date: 13.08.2008
  * Time: 19:07:32
+ * TODO: turn to spring bean
  */
 public class ZloJaxb {
     private static Marshaller MESSAGE_MARSHALLER;
@@ -87,7 +88,7 @@ public class ZloJaxb {
         return marshall(MESSAGE_MARSHALLER, jaxbMessage);
     }
 
-    public static String lastNessageNumberToXml(int num) {
+    public static String lastMessageNumberToXml(int num) {
         return marshall(LAST_MSG_NUM_MARSHALLER,
                 new ObjectFactory().createLastMessageNumber(BigInteger.valueOf(num)));
     }

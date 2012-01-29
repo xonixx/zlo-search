@@ -1,7 +1,6 @@
-<%@ page import="info.xonix.zlo.search.logic.AppLogic" %>
-<%@ page import="info.xonix.zlo.search.model.Message" %>
-<%@ page import="info.xonix.zlo.search.xmlfp.ZloJaxb" %>
+<%@ page import="info.xonix.zlo.search.xmlfp.XmlFpFormer" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
+<%@ page import="java.io.PrintWriter" %>
 <%--
   User: Vovan
   Date: 13.08.2008
@@ -13,7 +12,7 @@
 <%@ include file="/WEB-INF/jsp/setSite.jsp" %>
 
 <%!
-    private final AppLogic appLogic = AppSpringContext.get(AppLogic.class);
+    private final XmlFpFormer xmlFpFormer = AppSpringContext.get(XmlFpFormer.class);
 %>
 
 <c:choose>
@@ -22,21 +21,23 @@
     </c:when>
     <c:otherwise>
         <%
+            final PrintWriter responseWriter = response.getWriter();
             try {
                 response.setStatus(200);
                 response.setContentType("text/xml; charset=UTF-8");
 
-                if (StringUtils.isNotEmpty(request.getParameter("num"))) {
-                    Message m = appLogic.getMessageByNumber(site, Integer.parseInt(request.getParameter("num")));
-                    response.getWriter().write(ZloJaxb.zloMessageToXml(m));
+                final String num = request.getParameter("num");
+                if (StringUtils.isNotEmpty(num)) {
+                    responseWriter.write(xmlFpFormer.getMessage(site, Integer.parseInt(num)));
+
                 } else if (request.getParameter("lastMessageNumber") != null) {
-                    response.getWriter().write(ZloJaxb.lastNessageNumberToXml(
-                            appLogic.getLastSavedMessageNumber(site)));
+                    responseWriter.write(xmlFpFormer.lastMessageNumber(site));
                 }
             } catch (Exception ex) {
                 response.setStatus(500); // todo: ?
                 response.setContentType("text/html");
-                response.getWriter().write("<h3>Error</h3>");
+                responseWriter.write("<h3>Error</h3>");
+                responseWriter.write("<pre>" + ex.toString() + "</pre>");
             }
         %>
     </c:otherwise>
