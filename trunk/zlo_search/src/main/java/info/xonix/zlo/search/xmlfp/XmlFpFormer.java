@@ -3,6 +3,7 @@ package info.xonix.zlo.search.xmlfp;
 import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Message;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 /**
  * User: gubarkov
@@ -18,7 +19,12 @@ public class XmlFpFormer {
     }
 
     public String getMessage(Site site, int num) {
-        Message m = appLogic.getMessageByNumber(site, num);
+        Message m;
+        try {
+            m = appLogic.getMessageByNumber(site, num);
+        } catch (EmptyResultDataAccessException e) {
+            m = Message.withStatus(null);// TODO: should mean NOT EXISTS
+        }
 
         return ZloJaxb.zloMessageToXml(m);
     }
