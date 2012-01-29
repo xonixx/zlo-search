@@ -48,4 +48,9 @@
         <property name="auditDao" ref="auditDao"/>
     </bean>
 
+    <!--xmlfp-->
+    <bean id="xmlFpFormer" class="info.xonix.zlo.search.xmlfp.XmlFpFormer">
+        <property name="appLogic" ref="appLogic"/>
+    </bean>
+
 </beans>
