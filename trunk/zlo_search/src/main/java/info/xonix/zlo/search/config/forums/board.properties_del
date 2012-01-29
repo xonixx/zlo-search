@@ -1,9 +1,0 @@
-
-# TODO: maybe del ?
-
-site.number=1
-site.url=board.rt.mipt.ru
-# indexer
-indexer.perform.indexing=false
-
-site.name=zlo
