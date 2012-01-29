@@ -31,14 +31,14 @@ public class BaseServlet extends ForwardingServlet {
 
         if (StringUtils.isNotEmpty(siteNumStr)) {
             site = getSiteOrDefault(siteNumStr);
-            CookieUtils.rememberInCookie(response, QS_SITE, site.getSiteNumber().toString());
+            CookieUtils.rememberInCookie(response, QS_SITE, String.valueOf(site.getSiteNumber()));
         } else if (StringUtils.isNotEmpty(siteInCookie = CookieUtils.recallFromCookie(request, QS_SITE))) {
             site = getSiteOrDefault(siteInCookie);
         } else {
             site = getSiteOrDefault("0");
         }
 
-        request.setParameter(QS_SITE, site.getSiteNumber().toString());
+        request.setParameter(QS_SITE, String.valueOf(site.getSiteNumber()));
         request.setAttribute(QS_SITE, site);
         request.setAttribute(REQ_SITE_ROOT, RequestUtils.getSiteRoot(request, site));
     }

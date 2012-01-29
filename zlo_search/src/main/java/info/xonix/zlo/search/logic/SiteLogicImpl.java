@@ -7,13 +7,14 @@ import info.xonix.zlo.search.logic.site.PageParseException;
 import info.xonix.zlo.search.logic.site.RetrieverException;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.utils.Check;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * User: Vovan
@@ -71,12 +72,19 @@ public class SiteLogicImpl implements SiteLogic, InitializingBean {
         if (sites == null) {
             sites = new LinkedList<Site>();
 
-            for (Object key : config.getAppProperties().keySet()) {
-                String k = (String) key;
-                if (k.startsWith(Config.SITE_CONFIG_PREFIX)) {
-                    sites.add(Site.forName(k.replaceFirst(Config.SITE_CONFIG_PREFIX, "")));
-                }
+            final PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+
+            final Resource[] resources;
+            try {
+                resources = resolver.getResources(Config.FORUMS_CONF_PATH + "**/*.properties");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
+
+            for (Resource siteFileResource : resources) {
+                sites.add(Site.forName(FilenameUtils.removeExtension(siteFileResource.getFilename())));
+            }
+
             Collections.sort(sites, new Comparator<Site>() {
                 public int compare(Site o1, Site o2) {
                     return new Integer(o1.getSiteNumber()).compareTo(o2.getSiteNumber());

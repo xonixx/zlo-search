@@ -68,7 +68,7 @@ public class BackendBean {
         String[] siteNums = new String[sites.size()];
         int i = 0;
         for (Site site1 : sites) {
-            siteNums[i++] = site1.getSiteNumber().toString();
+            siteNums[i++] = String.valueOf(site1.getSiteNumber());
         }
         return siteNums;
     }

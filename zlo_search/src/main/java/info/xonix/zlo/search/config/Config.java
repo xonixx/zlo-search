@@ -14,6 +14,7 @@ import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 /**
@@ -22,8 +23,6 @@ import java.util.Properties;
  * Time: 18:06:03
  */
 public class Config {
-    public static final String SITE_CONFIG_PREFIX = "site.config.";
-
     private static final Logger log = Logger.getLogger(Config.class);
     private static final String CONFIG_PATH_ENV_NAME = "ZLO_CONFIG";
 
@@ -34,6 +33,9 @@ public class Config {
     public static final String WINDOWS_1251 = "windows-1251";
 
     public final static SmartQueryParser SMART_QUERY_PARSER = new SmartQueryParser(WINDOWS_1251);
+
+    public static final String FORUMS_CONF_PATH = "info/xonix/zlo/search/config/forums/";
+    public static final String FORUMS_CONF_DEAD_PATH = FORUMS_CONF_PATH + "dead/";
 
     private Properties props;
 
@@ -158,16 +160,27 @@ public class Config {
         return TRUE.equals(val) || TRUE1.equals(val);
     }
 
-    public static void loadProperties(Properties pr, String path) {
+    public static boolean loadProperties(Properties pr, String path) {
         System.out.println("Loading props from: " + path); // not through logger as logger maybe not yet inited
         try {
-            pr.load(Thread.currentThread()
+            final InputStream resourceAsStream = Thread.currentThread()
                     .getContextClassLoader()
-                    .getResourceAsStream(path));
+                    .getResourceAsStream(path);
+
+            if (resourceAsStream == null) {
+                System.out.println("\t-> not found");
+                return false;
+            } else {
+                System.out.println("\t-> found");
+            }
+
+            pr.load(resourceAsStream);
+
         } catch (IOException e) {
-            log.fatal("Can't load config: " + path, e);
-            e.printStackTrace();
+            throw new RuntimeException("Can't load config: " + path, e);
         }
+
+        return true;
     }
 
     public static Properties loadProperties(String path) {
