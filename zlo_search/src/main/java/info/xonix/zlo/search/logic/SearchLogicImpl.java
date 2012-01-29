@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Date;
 
+import static java.text.MessageFormat.format;
+
 /**
  * Author: gubarkov
  * Date: 01.06.2007
@@ -36,7 +38,10 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     //    public static final int PERIOD_RECREATE_INDEXER = TimeUtils.parseToMilliSeconds(Config.getProp("searcher.period.recreate.indexer"));
     private Config config;
 
-    public static String formQueryString(String text, boolean inTitle, boolean inBody, int topicCode, String nick, String host, Date fromDate, Date toDate, boolean inReg, boolean inHasUrl, boolean inHasImg) {
+    public static String formQueryString(String text, boolean inTitle, boolean inBody, int topicCode,
+                                         String nick, String host, Date fromDate, Date toDate,
+                                         boolean inReg, boolean inHasUrl, boolean inHasImg) {
+
         text = FoundTextHighlighter.escapeColon(text);
 
         StringBuilder queryStr = new StringBuilder();
@@ -45,40 +50,47 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
         host = StringUtils.lowerCase(host);
 
         if (StringUtils.isNotEmpty(text)) {
-            if (inTitle && !inBody)
-                queryStr.append(MessageFormat.format(" +{0}:({1})", MessageFields.TITLE, text));
+            if (inTitle && !inBody) {
+                queryStr.append(format(" +{0}:({1})", MessageFields.TITLE, text));
 
-            else if (!inTitle && inBody)
-                queryStr.append(MessageFormat.format(" +{0}:({1})", MessageFields.BODY, text));
+            } else if (!inTitle && inBody) {
+                queryStr.append(format(" +{0}:({1})", MessageFields.BODY, text));
 
-            else if (inTitle && inBody)
-                queryStr.append(MessageFormat.format(" +({0}:({2}) OR {1}:({2}))", MessageFields.TITLE, MessageFields.BODY, text));
+            } else if (inTitle && inBody) {
+                queryStr.append(format(" +({0}:({2}) OR {1}:({2}))", MessageFields.TITLE, MessageFields.BODY, text));
 
-            else // !inTitle && !inBody
-                queryStr.append(MessageFormat.format(" +{0}:({2}) +{1}:({2})", MessageFields.TITLE, MessageFields.BODY, text));
+            } else { // !inTitle && !inBody
+                queryStr.append(format(" +{0}:({2}) +{1}:({2})", MessageFields.TITLE, MessageFields.BODY, text));
+            }
         }
 
         if (-1 != topicCode) {
-            queryStr.append(MessageFormat.format(" +{0}:{1}", MessageFields.TOPIC_CODE, topicCode));
+            queryStr.append(format(" +{0}:{1}", MessageFields.TOPIC_CODE, topicCode));
         }
 
-        if (StringUtils.isNotEmpty(nick))
-            queryStr.append(MessageFormat.format(" +{0}:(\"{1}\")", MessageFields.NICK, nick));
+        if (StringUtils.isNotEmpty(nick)) {
+            queryStr.append(format(" +{0}:(\"{1}\")", MessageFields.NICK, nick));
+        }
 
-        if (StringUtils.isNotEmpty(host))
-            queryStr.append(MessageFormat.format(" +{0}:({1})", MessageFields.HOST, host));
+        if (StringUtils.isNotEmpty(host)) {
+            queryStr.append(format(" +{0}:({1})", MessageFields.HOST, host));
+        }
 
-        if (fromDate != null && toDate != null)
-            queryStr.append(MessageFormat.format(" +{0}:[{1,date,yyyyMMdd} TO {2,date,yyyyMMdd}]", MessageFields.DATE, fromDate, toDate));
+        if (fromDate != null && toDate != null) {
+            queryStr.append(format(" +{0}:[{1,date,yyyyMMdd} TO {2,date,yyyyMMdd}]", MessageFields.DATE, fromDate, toDate));
+        }
 
-        if (inReg)
-            queryStr.append(MessageFormat.format(" +{0}:1", MessageFields.REG));
+        if (inReg) {
+            queryStr.append(format(" +{0}:1", MessageFields.REG));
+        }
 
-        if (inHasUrl)
-            queryStr.append(MessageFormat.format(" +{0}:1", MessageFields.HAS_URL));
+        if (inHasUrl) {
+            queryStr.append(format(" +{0}:1", MessageFields.HAS_URL));
+        }
 
-        if (inHasImg)
-            queryStr.append(MessageFormat.format(" +{0}:1", MessageFields.HAS_IMG));
+        if (inHasImg) {
+            queryStr.append(format(" +{0}:1", MessageFields.HAS_IMG));
+        }
 
         return queryStr.toString();
     }
