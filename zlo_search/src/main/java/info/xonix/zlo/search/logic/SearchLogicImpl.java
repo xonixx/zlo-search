@@ -73,7 +73,12 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
         }
 
         if (StringUtils.isNotEmpty(host)) {
-            queryStr.append(format(" +{0}:({1})", MessageFields.HOST, host));
+            if (host.startsWith("*") || host.startsWith("?")) {
+                final String hostReversed = StringUtils.reverse(host);
+                queryStr.append(format(" +{0}:({1})", MessageFields.HOST_REVERSED, hostReversed));
+            } else {
+                queryStr.append(format(" +{0}:({1})", MessageFields.HOST, host));
+            }
         }
 
         if (fromDate != null && toDate != null) {
