@@ -43,6 +43,17 @@
                     <warName>ROOT</warName>
                     <!--<webXml>src/main/webapp/WEB-INF/web.xml</webXml>
                     <excludes>**/web.xml</excludes>-->
+
+                    <webResources>
+                        <!--http://maven.apache.org/plugins/maven-war-plugin/examples/adding-filtering-webresources.html-->
+                        <resource>
+                            <directory>../zlo_search/forum_xml_protocol</directory>
+                            <includes>
+                                <include>*.xsd</include>
+                            </includes>
+                            <targetPath>xmlfp/xsd</targetPath>
+                        </resource>
+                    </webResources>
                 </configuration>
             </plugin>
         </plugins>
