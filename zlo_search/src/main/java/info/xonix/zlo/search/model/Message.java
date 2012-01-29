@@ -97,6 +97,12 @@ public class Message extends MessageShallow implements Serializable {
                 MessageStatus.fromInt(status));
     }
 
+    public static Message withStatus(MessageStatus status){
+        final Message message = new Message();
+        message.setStatus(status);
+        return message;
+    }
+
     public String getAltName() {
         return altName;
     }
