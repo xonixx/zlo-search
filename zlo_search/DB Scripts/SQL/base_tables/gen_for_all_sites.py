@@ -1,4 +1,4 @@
-from os.path import exists, join, splitext
+from os.path import   splitext
 import os
 import re
 

@@ -1,6 +1,5 @@
 package info.xonix.sphinx.test;
 
-import org.sphx.api.test;
 import org.sphx.api.SphinxException;
 
 import java.io.UnsupportedEncodingException;

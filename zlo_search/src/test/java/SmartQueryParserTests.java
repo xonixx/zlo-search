@@ -1,4 +1,3 @@
-import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.utils.SmartQueryParser;
 import org.junit.Test;
 

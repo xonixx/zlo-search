@@ -2,7 +2,6 @@
 
 import os
 import os.path
-import glob
 
 src_dirs = [ 
 	r'D:\TEST\JAVA\ZloSearcher\trunk\zlo_search\src',

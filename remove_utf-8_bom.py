@@ -1,7 +1,6 @@
 
 import os
 import os.path
-import glob
 
 UTF_8_BOM = '\xef\xbb\xbf'
 
