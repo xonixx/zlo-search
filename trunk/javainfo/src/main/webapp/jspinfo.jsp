@@ -1,10 +1,10 @@
 <%-- import attributes start here --%>
-<%@ page import="javax.servlet.http.HttpServletRequest" %>
-<%@ page import="javax.servlet.http.HttpServletResponse, java.lang.reflect.Method" %>
-<%@ page import="java.util.*" %>
+<%@ page import="javax.naming.*" %>
+<%@ page import="javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse" %>
+<%@ page import="java.lang.reflect.Method" %>
 <%@ page import="java.net.InetAddress" %>
 <%@ page import="java.net.UnknownHostException" %>
-<%@ page import="javax.naming.*" %>
+<%@ page import="java.util.*" %>
 <%
     //	String SN = n(request.getRequestURI()); // script name shortcut, including path
 //	String SCN = SN.substring(SN.lastIndexOf("/")+1); // just the jsp name (eg., Foo.jsp)

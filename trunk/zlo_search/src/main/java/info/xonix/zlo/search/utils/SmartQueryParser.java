@@ -4,7 +4,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.util.MultiMap;
 import org.eclipse.jetty.util.UrlEncoded;
-import org.eclipse.jetty.util.Utf8Appendable;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

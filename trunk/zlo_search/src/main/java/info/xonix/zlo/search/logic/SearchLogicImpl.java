@@ -20,7 +20,6 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.Date;
 
 import static java.text.MessageFormat.format;
