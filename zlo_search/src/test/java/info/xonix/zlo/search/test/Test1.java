@@ -47,7 +47,7 @@ public class Test1 {
     }
 
     public static void m21() {
-        Properties p = Config.loadProperties("info/xonix/zlo/search/config/zlo.properties");
+        Properties p = Config.loadProperties("info/xonix/zlo/search/config/forums/zlo.properties");
         System.out.println(p.getProperty("regex.msg.reg"));
     }
 

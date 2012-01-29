@@ -92,8 +92,9 @@ public class Config {
         initAnalyzers();
         initOtherProps();
 
-        if (useProxy)
+        if (useProxy) {
             log.info("Starting using proxy: " + proxyHost + ":" + proxyPort);
+        }
     }
 
     private void initAnalyzers() {
