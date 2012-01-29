@@ -87,6 +87,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
             for (Message msg : appLogic.getMessages(site, start, end)) {
                 if (msg.getStatus() == MessageStatus.OK) {
                     log.debug(site.getName() + " - Addind: " + (config.isDebug() ? msg : msg.getNum()));
+
                     writer.addDocument(msg.getDocument());
                 } else {
                     log.debug(site.getName() + " - Not adding: " + msg.getNum() + " with status: " + msg.getStatus());

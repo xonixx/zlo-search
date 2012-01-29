@@ -11,7 +11,10 @@ public interface MessageFields {
     String URL_NUM = "num";
     String NICK = "nick";
     String REG = "reg";
+
     String HOST = "host";
+    String HOST_REVERSED = "host_r";
+
     String DATE = "date";
     String BODY = "body"; // clean - w/o html
     String HAS_URL = "url";

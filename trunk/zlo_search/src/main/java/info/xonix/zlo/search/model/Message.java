@@ -223,6 +223,8 @@ public class Message extends MessageShallow implements Serializable {
         if (!isOk()) // index only OK messages
             return null;
 
+        final String hostLowerCase = host.toLowerCase();
+
         Document doc = new Document();
 
         doc.add(new Field(MessageFields.URL_NUM, URL_NUM_FORMAT.format(num), Store.YES, Index.NOT_ANALYZED));
@@ -230,7 +232,10 @@ public class Message extends MessageShallow implements Serializable {
         doc.add(new Field(MessageFields.TITLE, getCleanTitle(), Store.NO, Index.ANALYZED)); // "чистый" - индексируем, не храним
         doc.add(new Field(MessageFields.NICK, nick.toLowerCase(), Store.NO, Index.NOT_ANALYZED));
         doc.add(new Field(MessageFields.REG, reg ? TRUE : FALSE, Store.NO, Index.NOT_ANALYZED));
-        doc.add(new Field(MessageFields.HOST, host.toLowerCase(), Store.NO, Index.NOT_ANALYZED));
+
+        doc.add(new Field(MessageFields.HOST, hostLowerCase, Store.NO, Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.HOST_REVERSED, StringUtils.reverse(hostLowerCase), Store.NO, Index.NOT_ANALYZED));
+
         doc.add(new Field(MessageFields.DATE, DateTools.dateToString(date, DateTools.Resolution.MINUTE), Store.NO, Index.NOT_ANALYZED));
         doc.add(new Field(MessageFields.BODY, getCleanBody(), Store.NO, Index.ANALYZED)); // "чистый" - индексируем, не храним
         doc.add(new Field(MessageFields.HAS_URL, isHasUrl() ? TRUE : FALSE, Store.NO, Index.NOT_ANALYZED));
