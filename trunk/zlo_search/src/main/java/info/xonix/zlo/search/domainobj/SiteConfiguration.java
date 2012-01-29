@@ -18,8 +18,9 @@ import java.util.regex.Pattern;
  */
 public abstract class SiteConfiguration {
 
-    private static final Logger log = Logger.getLogger(SiteConfiguration.class);
+    public static final String FORUMS_CONF_PATH = "info/xonix/zlo/search/config/forums/";
 
+    private static final Logger log = Logger.getLogger(SiteConfiguration.class);
     private static final Config config = AppSpringContext.get(Config.class);
 
     private String markEndMsg1;
@@ -76,7 +77,7 @@ public abstract class SiteConfiguration {
 
         try {
             for (String propFile : config.getProp(Config.SITE_CONFIG_PREFIX + name).split(";")) {
-                Config.loadProperties(p, "info/xonix/zlo/search/config/" + propFile);
+                Config.loadProperties(p, FORUMS_CONF_PATH + propFile);
             }
         } catch (NullPointerException e) {
             log.error("Can't locate: " + Config.SITE_CONFIG_PREFIX + name);
