@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.store.FSDirectory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,8 +25,13 @@ import java.io.IOException;
 public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
     private static Logger log = Logger.getLogger(IndexerLogicImpl.class);
 
+    @Autowired
     private Config config;
+
+    @Autowired
     private AppLogic appLogic;
+
+    @Autowired
     private SearchLogic searchLogic;
 
     private SiteFactory<IndexWriter> siteToIndexWriter = new SiteFactory<IndexWriter>() {
@@ -57,18 +63,6 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
             return new File(site.getIndexDirDouble() + "/" + DoubleIndexManager.SMALL_INDEX_DIR);
         }
     };
-
-    public void setConfig(Config config) {
-        this.config = config;
-    }
-
-    public void setAppLogic(AppLogic appLogic) {
-        this.appLogic = appLogic;
-    }
-
-    public void setSearchLogic(SearchLogicImpl searchLogic) {
-        this.searchLogic = searchLogic;
-    }
 
     @Override
     public void afterPropertiesSet() throws Exception {

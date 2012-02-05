@@ -11,6 +11,7 @@ import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,11 +30,8 @@ public class PageRetriever implements InitializingBean {
 
     private HttpClient httpClient;
 
+    @Autowired
     private Config config;
-
-    public void setConfig(Config config) {
-        this.config = config;
-    }
 
     @Override
     public void afterPropertiesSet() throws Exception {

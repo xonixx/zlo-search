@@ -5,6 +5,7 @@ import info.xonix.zlo.search.utils.Check;
 import info.xonix.zlo.search.utils.ExceptionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 
 /**
@@ -15,11 +16,8 @@ import org.springframework.dao.DataAccessException;
 public class ExceptionsLoggerImpl implements ExceptionsLogger, InitializingBean {
     private final static Logger log = Logger.getLogger(ExceptionsLoggerImpl.class);
 
+    @Autowired
     private AuditDao auditDao;
-
-    public void setAuditDao(AuditDao auditDao) {
-        this.auditDao = auditDao;
-    }
 
     @Override
     public void afterPropertiesSet() throws Exception {

@@ -6,6 +6,7 @@ import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.utils.Check;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 
@@ -19,21 +20,14 @@ public class MessageRetriever implements InitializingBean {
 //    private static final int LIMIT_PER_SECOND = Integer.parseInt(Config.getProp("retriever.limit.per.second"));
     private static Logger log = Logger.getLogger(MessageRetriever.class);
 
+    @Autowired
     private Config config;
+
+    @Autowired
     private PageParser pageParser;
+
+    @Autowired
     private PageRetriever pageRetriever;
-
-    public void setConfig(Config config) {
-        this.config = config;
-    }
-
-    public void setPageParser(PageParser pageParser) {
-        this.pageParser = pageParser;
-    }
-
-    public void setPageRetriever(PageRetriever pageRetriever) {
-        this.pageRetriever = pageRetriever;
-    }
 
     @Override
     public void afterPropertiesSet() throws Exception {

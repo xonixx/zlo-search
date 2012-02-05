@@ -8,49 +8,26 @@
         <property name="messagesDao" ref="messagesDao"/>
     </bean>
 
-    <bean id="indexerLogic" class="info.xonix.zlo.search.logic.IndexerLogicImpl">
-        <property name="config" ref="appConfig"/>
-        <property name="appLogic" ref="appLogic"/>
-        <property name="searchLogic" ref="searchLogic"/>
-    </bean>
+    <bean id="indexerLogic" class="info.xonix.zlo.search.logic.IndexerLogicImpl"/>
 
     <!--site logic-->
-    <bean id="pageParser" class="info.xonix.zlo.search.logic.site.PageParser">
-        <property name="messagesDao" ref="messagesDao"/>
-    </bean>
+    <bean id="pageParser" class="info.xonix.zlo.search.logic.site.PageParser"/>
 
-    <bean id="pageRetriever" class="info.xonix.zlo.search.logic.site.PageRetriever">
-        <property name="config" ref="appConfig"/>
-    </bean>
+    <bean id="pageRetriever" class="info.xonix.zlo.search.logic.site.PageRetriever"/>
 
-    <bean id="messageRetriever" class="info.xonix.zlo.search.logic.site.MessageRetriever">
-        <property name="config" ref="appConfig"/>
-        <property name="pageParser" ref="pageParser"/>
-        <property name="pageRetriever" ref="pageRetriever"/>
-    </bean>
+    <bean id="messageRetriever" class="info.xonix.zlo.search.logic.site.MessageRetriever"/>
 
-    <bean id="siteLogic" class="info.xonix.zlo.search.logic.SiteLogicImpl">
-        <property name="config" ref="appConfig"/>
-        <property name="messageRetriever" ref="messageRetriever"/>
-    </bean>
+    <bean id="siteLogic" class="info.xonix.zlo.search.logic.SiteLogicImpl"/>
 
     <!--search logic-->
-    <bean id="searchLogic" class="info.xonix.zlo.search.logic.SearchLogicImpl">
-        <property name="config" ref="appConfig"/>
-    </bean>
+    <bean id="searchLogic" class="info.xonix.zlo.search.logic.SearchLogicImpl"/>
 
     <!--audit logic-->
-    <bean id="auditLogic" class="info.xonix.zlo.search.logic.AuditLogicImpl">
-        <property name="auditDao" ref="auditDao"/>
-    </bean>
+    <bean id="auditLogic" class="info.xonix.zlo.search.logic.AuditLogicImpl"/>
 
-    <bean id="exceptionLogger" class="info.xonix.zlo.search.logic.exceptions.ExceptionsLoggerImpl">
-        <property name="auditDao" ref="auditDao"/>
-    </bean>
+    <bean id="exceptionLogger" class="info.xonix.zlo.search.logic.exceptions.ExceptionsLoggerImpl"/>
 
     <!--xmlfp-->
-    <bean id="xmlFpFormer" class="info.xonix.zlo.search.xmlfp.XmlFpFormer">
-        <property name="appLogic" ref="appLogic"/>
-    </bean>
+    <bean id="xmlFpFormer" class="info.xonix.zlo.search.xmlfp.XmlFpFormer"/>
 
 </beans>

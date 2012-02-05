@@ -17,6 +17,7 @@ import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.*;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
@@ -35,6 +36,8 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     public static final Sort REVERSED_INDEX_ORDER_SORT = new Sort(new SortField(null, SortField.DOC, true));
 
     //    public static final int PERIOD_RECREATE_INDEXER = TimeUtils.parseToMilliSeconds(Config.getProp("searcher.period.recreate.indexer"));
+
+    @Autowired
     private Config config;
 
     public static String formQueryString(String text, boolean inTitle, boolean inBody, int topicCode,
@@ -97,10 +100,6 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
         }
 
         return queryStr.toString();
-    }
-
-    public void setConfig(Config config) {
-        this.config = config;
     }
 
     @Override

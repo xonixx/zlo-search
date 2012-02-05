@@ -5,6 +5,7 @@ import info.xonix.zlo.search.utils.Check;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.sql.DataSource;
 
@@ -16,7 +17,9 @@ import javax.sql.DataSource;
 public class DataSourceFactory implements FactoryBean<DataSource>, InitializingBean {
     private static final Logger log = Logger.getLogger(DataSourceFactory.class);
 
+    @Autowired
     private Config config;
+
     private DataSource dataSourceLocal;
     private DataSource dataSourceRt;
 
@@ -52,23 +55,11 @@ public class DataSourceFactory implements FactoryBean<DataSource>, InitializingB
         return true;
     }
 
-    public void setConfig(Config config) {
-        this.config = config;
-    }
-
     public void setDataSourceLocal(DataSource dataSourceLocal) {
         this.dataSourceLocal = dataSourceLocal;
     }
 
-/*    public BasicDataSource getDataSourceLocal() {
-        return dataSourceLocal;
-    }*/
-
     public void setDataSourceRt(DataSource dataSourceRt) {
         this.dataSourceRt = dataSourceRt;
     }
-
-/*    public BasicDataSource getDataSourceRt() {
-        return dataSourceRt;
-    }*/
 }
