@@ -8,6 +8,8 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 
+import javax.annotation.Nullable;
+
 /**
  * User: Vovan
  * Date: 21.11.2010
@@ -25,7 +27,7 @@ public class ExceptionsLoggerImpl implements ExceptionsLogger, InitializingBean 
     }
 
     @Override
-    public void logException(Throwable throwable, String msg, String source, ExceptionCategory category) {
+    public void logException(Throwable throwable, @Nullable String msg, String source, ExceptionCategory category) {
         try {
             auditDao.storeException(
                     throwable.toString(),

@@ -46,23 +46,6 @@ public class DbDaemon extends Daemon {
         }
 
         protected boolean processException(Exception e) {
-            // TODO!!!
-/*            if (e instanceof DbException) {
-                logger.warn(getSiteName() + " - Problem with db: " + e.getClass(), e);
-                return true;
-            } else if (e instanceof DAOException) {
-                if (e.getCause() instanceof ConnectException) {
-                    logger.error(getSiteName() + " - Problem with site... " + e.getCause().getClass().getName());
-                } else if (e.getCause() instanceof DbException && e.getCause().getCause() instanceof BatchUpdateException) {
-                    logger.error(getSiteName(), e);
-                    logger.info("Resetting...");
-                    reset();
-                } else {
-                    logger.error(getSiteName(), e);
-                }
-                return true;
-            }*/
-
             exceptionsLogger.logException(e,
                     "Exception in db daemon: " + getSiteName(),
                     getClass(),

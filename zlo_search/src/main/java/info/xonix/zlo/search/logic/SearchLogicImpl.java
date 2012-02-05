@@ -35,8 +35,6 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     private static final int MAX_LIMIT = 500;
     public static final Sort REVERSED_INDEX_ORDER_SORT = new Sort(new SortField(null, SortField.DOC, true));
 
-    //    public static final int PERIOD_RECREATE_INDEXER = TimeUtils.parseToMilliSeconds(Config.getProp("searcher.period.recreate.indexer"));
-
     @Autowired
     private Config config;
 
@@ -141,14 +139,10 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     private SearchResult search(Site site, String queryStr, boolean searchAll, int limit) throws SearchException {
         Assert.notNull(site, "site can't be null!");
 
-        return searchDoubleIndex(site, queryStr/*, null*/, searchAll, limit);
+        return searchDoubleIndex(site, queryStr, searchAll, limit);
     }
 
-    private SearchResult searchDoubleIndex(Site site, String queryStr/*, Sort sort*/, boolean searchAll, int limit) throws SearchException {
-        // TODO: do we need sorting here???
-//        if (sort == null)
-//            sort = getDateSort();
-
+    private SearchResult searchDoubleIndex(Site site, String queryStr, boolean searchAll, int limit) throws SearchException {
         SearchResult result;
         try {
             QueryParser parser = getQueryParser();

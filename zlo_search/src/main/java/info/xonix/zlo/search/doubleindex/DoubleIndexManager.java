@@ -20,7 +20,9 @@ import java.util.Date;
  * Author: Vovan
  * Date: 13.12.2007
  * Time: 2:57:59
+ * TODO: redesign indexing !!!
  */
+@Deprecated
 @SuppressWarnings("unused")
 public class DoubleIndexManager {
     private static final Logger log = Logger.getLogger(DoubleIndexManager.class);
