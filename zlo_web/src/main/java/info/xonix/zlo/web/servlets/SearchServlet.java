@@ -265,13 +265,13 @@ public class SearchServlet extends BaseServlet {
 
                     request.setAttribute(REQ_SEARCH_RESULT, searchResult);
 
-                    final ZloPaginatedList paginatedList = ZloPaginatedList.fromSearchResult(searchResult);
+                    final ZloPaginatedList paginatedList = new ZloPaginatedList(searchResult);
                     request.setAttribute(REQ_PAGINATED_LIST, paginatedList);
 
                     paginatedList.setPageNumber(pageNumber);
                     paginatedList.setObjectsPerPage(objectsPerPage);
 
-                    paginatedList.refreshCurrentList();// todo: handle java.lang.NegativeArraySizeException here
+                    paginatedList.refreshCurrentList();
                 } else {
                     log.error("searchResult == null. This should not happen!");
                 }
