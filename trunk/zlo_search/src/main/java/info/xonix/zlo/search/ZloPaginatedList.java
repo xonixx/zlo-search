@@ -12,6 +12,7 @@ import org.displaytag.pagination.PaginatedList;
 import org.displaytag.properties.SortOrderEnum;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -26,19 +27,25 @@ public class ZloPaginatedList implements PaginatedList {
     private int pageNumber;
     private int objectsPerPage;
     private DoubleHits hits;
+    private int maxResultsLimit;
 
     private Site site;
     private MessagesDao messagesDao = AppSpringContext.get(MessagesDao.class);
 
-    ZloPaginatedList(DoubleHits hits, Site site) {
+    ZloPaginatedList(DoubleHits hits, Site site, int maxResultsLimit) {
         this.site = site;
         this.hits = hits;
+        this.maxResultsLimit = maxResultsLimit;
     }
 
-    public static ZloPaginatedList fromSearchResult(SearchResult searchResult) {
-        return new ZloPaginatedList(
-                searchResult.getDoubleHits(),
-                searchResult.getSite());
+    public ZloPaginatedList(SearchResult searchResult, int maxResultsLimit) {
+        this(searchResult.getDoubleHits(),
+                searchResult.getSite(),
+                maxResultsLimit);
+    }
+
+    public ZloPaginatedList(SearchResult searchResult) {
+        this(searchResult, 0);/*no limit*/
     }
 
     public List getList() {
@@ -46,8 +53,8 @@ public class ZloPaginatedList implements PaginatedList {
     }
 
     public List<Message> subList(int fromIndex, int toIndex) {
-        if (fromIndex == toIndex)
-            return null;
+        if (fromIndex >= toIndex)
+            return Collections.emptyList();
 
         int[] indexes = new int[toIndex - fromIndex];
         try {
@@ -89,7 +96,9 @@ public class ZloPaginatedList implements PaginatedList {
     }
 
     public int getFullListSize() {
-        return hits.length();
+        return maxResultsLimit > 0
+                ? Math.min(maxResultsLimit, hits.length())
+                : hits.length();
     }
 
     public String getSortCriterion() {
