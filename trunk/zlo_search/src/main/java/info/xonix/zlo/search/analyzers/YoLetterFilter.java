@@ -2,7 +2,7 @@ package info.xonix.zlo.search.analyzers;
 
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.tokenattributes.TermAttribute;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 
 import java.io.IOException;
 
@@ -14,17 +14,17 @@ import java.io.IOException;
 public class YoLetterFilter extends TokenFilter {
     public YoLetterFilter(TokenStream in) {
         super(in);
-        termAtt = addAttribute(TermAttribute.class);
+        termAtt = addAttribute(CharTermAttribute.class);
     }
 
-    private TermAttribute termAtt;
+    private CharTermAttribute termAtt;
 
     @Override
     public final boolean incrementToken() throws IOException {
         if (input.incrementToken()) {
 
-            final char[] buffer = termAtt.termBuffer();
-            final int length = termAtt.termLength();
+            final char[] buffer = termAtt.buffer();
+            final int length = termAtt.length();
             for (int i = 0; i < length; i++) {
                 if (buffer[i] == 'ё' || buffer[i] == 'Ё') {
                     buffer[i] = 'е';

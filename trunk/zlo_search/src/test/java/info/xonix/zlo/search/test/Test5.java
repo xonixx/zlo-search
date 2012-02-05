@@ -27,28 +27,11 @@ public class Test5 {
         m4();
     }*/
 
-/*    public static void m3() {
-        // test index
-        Site zlo = Site.forName("zlo");
-        IndexerLogicImpl zi = new IndexerLogicImpl(zlo);
-
-        zi.setAnalyzer(new RussianWithNumbersAndSpecialStopWordsAnalyzer(new String[0])); // nos stopWords=empty index with all words
-        zi.setIndexPerTime(10000);
-        zi.setIndexDir(new File("D:\\TEST\\JAVA\\SearchLogicImpl\\indexes\\__test\\no_stop_words"));
-
-        try {
-            zi.indexRange(0, zlo.getDbManager().getLastMessageNumber());
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-    }*/
-
     @Test
     public void m2() {
         String s = "в чем смысл жизни?";
 
         Analyzer analyzer = config.getMessageAnalyzer();
-//        Analyzer analyzer = new RussianWithNumbersAndSpecialStopWordsAnalyzer(new String[0]);
 
         showTokens(s, analyzer);
 

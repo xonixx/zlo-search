@@ -1,5 +1,6 @@
 package info.xonix.zlo.search.logic;
 
+import info.xonix.zlo.search.LuceneVersion;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.doubleindex.DoubleIndexManager;
@@ -9,6 +10,7 @@ import info.xonix.zlo.search.utils.Check;
 import info.xonix.zlo.search.utils.factory.SiteFactory;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.FSDirectory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,10 +41,12 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
         protected IndexWriter create(Site site) {
             IndexWriter writer;
             try {
-                writer = new IndexWriter(FSDirectory.open(getIndexDir(site)), config.getMessageAnalyzer(),
-                        IndexWriter.MaxFieldLength.UNLIMITED); // for unlimited - see http://www.gossamer-threads.com/lists/lucene/java-user/91611
+                IndexWriterConfig indexWriterConfig = new IndexWriterConfig(
+                        LuceneVersion.VERSION, config.getMessageAnalyzer());
 
-                writer.setMergeFactor(7); // optimized for search
+                writer = new IndexWriter(FSDirectory.open(getIndexDir(site)),indexWriterConfig);
+
+                writer.setMergeFactor(7); // optimized for search : TODO
             } catch (IOException e) {
                 throw new RuntimeException("Can't create writer", e);
             }

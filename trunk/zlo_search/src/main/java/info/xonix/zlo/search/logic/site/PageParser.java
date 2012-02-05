@@ -32,25 +32,6 @@ public class PageParser implements InitializingBean {
     @Autowired
     private MessagesDao messagesDao;
 
-//    private Site site;
-
-//    private MessagesDao dbm;
-
-//    private Pattern MSG_REG_RE;
-//    private Pattern MSG_UNREG_RE;
-//    private String MSG_DATE_PATTERN;
-
-/*
-    public PageParser(Site site) {
-//        super(site);
-        this.site = site;
-//        dbm = site.getDbManager();
-        MSG_REG_RE = site.getMsgRegReStr() == null ? null : Pattern.compile(site.getMsgRegReStr(), Pattern.DOTALL);
-        MSG_UNREG_RE = site.getMsgUnregReStr() == null ? null : Pattern.compile(site.getMsgUnregReStr(), Pattern.DOTALL);
-        MSG_DATE_PATTERN = site.getMsgDatePattern();
-    }
-*/
-
     @Override
     public void afterPropertiesSet() throws Exception {
         Check.isSet(messagesDao, "messagesDao");

@@ -17,7 +17,6 @@ import org.apache.log4j.Logger;
 public class IndexerDaemon extends Daemon {
     private static Logger log = Logger.getLogger(IndexerDaemon.class);
 
-//    private Site site;
     private AppLogic appLogic = AppSpringContext.get(AppLogic.class);
     private IndexerLogic indexerLogic = AppSpringContext.get(IndexerLogic.class);
 
@@ -43,14 +42,6 @@ public class IndexerDaemon extends Daemon {
 
         @Override
         protected boolean processException(Exception e) {
-/*            if (e instanceof DbException) {
-                getLogger().warn(getSiteName() + " - Problem with db: " + e.getClass());
-                return true;
-            } else if (e instanceof IOException) {
-                log.error(getSiteName() + " - IOException while indexing, probably something with index...", e);
-                return true;
-            }
-            return false;*/
             log.error("Exception while indexing", e);
 
             exceptionsLogger.logException(e,
@@ -74,11 +65,6 @@ public class IndexerDaemon extends Daemon {
         return new IndexingProcess();
     }
 
-/*    public IndexerDaemon() {
-        super();
-        setParams();
-    }*/
-
     protected IndexerDaemon(Site site) {
         super(site);
         setParams();
@@ -89,10 +75,6 @@ public class IndexerDaemon extends Daemon {
         setSleepPeriod(getSite().getIndexerIndexPeriod());
         setRetryPeriod(getSite().getIndexerReconnectPeriod());
     }
-
-/*    public static void main(String[] args) {
-        new IndexerDaemon().start();
-    }*/
 
     protected void start() {
         final Site site = getSite();

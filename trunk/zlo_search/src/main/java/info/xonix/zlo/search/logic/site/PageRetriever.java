@@ -87,9 +87,9 @@ public class PageRetriever implements InitializingBean {
                 currSize = stringGroups.size();
                 ending = stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1);
             } while (
-                    ending.indexOf(site.getMarkEndMsg1()) == -1 &&
-                            ending.indexOf(site.getMarkEndMsg2()) == -1 && // if user have sign - won't read it all
-                            ending.indexOf(site.getMsgNotExistOrWrong()) == -1
+                    !ending.contains(site.getMarkEndMsg1()) &&
+                            !ending.contains(site.getMarkEndMsg2()) && // if user have sign - won't read it all
+                            !ending.contains(site.getMsgNotExistOrWrong())
                     );
 
             // read till end - seems that closing while not end reached causes board crash
@@ -113,7 +113,7 @@ public class PageRetriever implements InitializingBean {
             }
             getMethod.releaseConnection(); // http://jakarta.apache.org/httpcomponents/httpclient-3.x/threading.html
         }
-        StringBuffer sb = new StringBuffer(totalRead);
+        StringBuilder sb = new StringBuilder(totalRead);
         for (String s : stringGroups) {
             sb.append(s);
         }
