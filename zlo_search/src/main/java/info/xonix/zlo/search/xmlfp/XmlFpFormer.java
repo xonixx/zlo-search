@@ -3,6 +3,7 @@ package info.xonix.zlo.search.xmlfp;
 import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Message;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 /**
@@ -11,12 +12,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
  * Time: 22:56
  */
 public class XmlFpFormer {
-//    @Autowired
+    @Autowired
     private AppLogic appLogic;
-
-    public void setAppLogic(AppLogic appLogic) {
-        this.appLogic = appLogic;
-    }
 
     public String getMessage(Site site, int num) {
         Message m;

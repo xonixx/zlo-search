@@ -2,6 +2,7 @@ package info.xonix.zlo.search.dao;
 
 import info.xonix.zlo.search.dao.rowmappers.RowMappersHelper;
 import info.xonix.zlo.search.utils.Check;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
 /**
@@ -10,6 +11,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
  * Time: 2:07:47 PM
  */
 public abstract class DaoImplBase extends SimpleJdbcDaoSupport {
+    @Autowired
     private RowMappersHelper rowMappersHelper;
 
     @Override
@@ -21,9 +23,5 @@ public abstract class DaoImplBase extends SimpleJdbcDaoSupport {
 
     public RowMappersHelper getRowMappersHelper() {
         return rowMappersHelper;
-    }
-
-    public void setRowMappersHelper(RowMappersHelper rowMappersHelper) {
-        this.rowMappersHelper = rowMappersHelper;
     }
 }

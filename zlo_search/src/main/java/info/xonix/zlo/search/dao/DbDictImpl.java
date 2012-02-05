@@ -2,6 +2,7 @@ package info.xonix.zlo.search.dao;
 
 import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.utils.Check;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.Date;
@@ -14,11 +15,8 @@ import static info.xonix.zlo.search.dao.VarType.*;
  * Time: 17:05:56
  */
 public class DbDictImpl extends DaoImplBase implements DbDict {
+    @Autowired
     private QueryProvider queryProvider;
-
-    public void setQueryProvider(QueryProvider queryProvider) {
-        this.queryProvider = queryProvider;
-    }
 
     @Override
     protected void checkDaoConfig() {

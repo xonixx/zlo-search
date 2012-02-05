@@ -10,6 +10,7 @@ import info.xonix.zlo.search.utils.Check;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
@@ -27,16 +28,11 @@ import java.util.List;
 public class SiteLogicImpl implements SiteLogic, InitializingBean {
     private static final Logger log = Logger.getLogger(SiteLogicImpl.class);
 
+    @Autowired
     private Config config;
+
+    @Autowired
     private MessageRetriever messageRetriever;
-
-    public void setConfig(Config config) {
-        this.config = config;
-    }
-
-    public void setMessageRetriever(MessageRetriever messageRetriever) {
-        this.messageRetriever = messageRetriever;
-    }
 
     @Override
     public void afterPropertiesSet() throws Exception {

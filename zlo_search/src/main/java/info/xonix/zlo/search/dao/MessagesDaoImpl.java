@@ -8,6 +8,7 @@ import info.xonix.zlo.search.model.Topic;
 import info.xonix.zlo.search.utils.Check;
 import info.xonix.zlo.search.utils.factory.SiteFactory;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.util.Assert;
@@ -30,6 +31,7 @@ import static org.apache.commons.lang.StringUtils.substring;
 public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
     private static final Logger log = Logger.getLogger(MessagesDaoImpl.class);
 
+    @Autowired
     private QueryProvider queryProvider;
 
     private SiteFactory<Map<String, Integer>> topicsMapFactory = new SiteFactory<Map<String, Integer>>() {
@@ -57,10 +59,6 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
             return topics;
         }
     };
-
-    public void setQueryProvider(QueryProvider queryProvider) {
-        this.queryProvider = queryProvider;
-    }
 
     @Override
     protected void checkDaoConfig() {

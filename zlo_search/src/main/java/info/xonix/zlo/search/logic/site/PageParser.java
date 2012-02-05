@@ -10,6 +10,7 @@ import info.xonix.zlo.search.utils.HtmlUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -28,6 +29,7 @@ import java.util.regex.Matcher;
 public class PageParser implements InitializingBean {
     public static final Logger log = Logger.getLogger(PageParser.class);
 
+    @Autowired
     private MessagesDao messagesDao;
 
 //    private Site site;
@@ -48,10 +50,6 @@ public class PageParser implements InitializingBean {
         MSG_DATE_PATTERN = site.getMsgDatePattern();
     }
 */
-
-    public void setMessagesDao(MessagesDao messagesDao) {
-        this.messagesDao = messagesDao;
-    }
 
     @Override
     public void afterPropertiesSet() throws Exception {
