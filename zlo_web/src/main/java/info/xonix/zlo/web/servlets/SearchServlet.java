@@ -50,6 +50,8 @@ import static info.xonix.zlo.search.config.Config.SMART_QUERY_PARSER;
 public class SearchServlet extends BaseServlet {
     private static final Logger log = Logger.getLogger(SearchServlet.class);
 
+    public static final int MAX_RESULTS_LIMIT = 200000;
+
     private final Config config = AppSpringContext.get(Config.class);
     private final AppLogic appLogic = AppSpringContext.get(AppLogic.class);
     private final AuditLogic auditLogic = AppSpringContext.get(AuditLogic.class);
@@ -265,7 +267,14 @@ public class SearchServlet extends BaseServlet {
 
                     request.setAttribute(REQ_SEARCH_RESULT, searchResult);
 
-                    final ZloPaginatedList paginatedList = new ZloPaginatedList(searchResult);
+                    final ZloPaginatedList paginatedList;
+
+                    if (RequestUtils.isPowerUser(request)) {
+                        paginatedList = new ZloPaginatedList(searchResult);
+                    }else {
+                        paginatedList = new ZloPaginatedList(searchResult, MAX_RESULTS_LIMIT);
+                    }
+
                     request.setAttribute(REQ_PAGINATED_LIST, paginatedList);
 
                     paginatedList.setPageNumber(pageNumber);
@@ -390,9 +399,11 @@ public class SearchServlet extends BaseServlet {
 
     private void showStatistics(ForwardingRequest request) {
         Site site = getSite(request);
+
         request.setAttribute(QS_LAST_MSGS,
                 new int[]{appLogic.getLastSavedMessageNumber(site),
                         appLogic.getLastIndexedNumber(site)});
+
         request.setAttribute(QS_LAST_MSGS_DATES,
                 new Date[]{appLogic.getLastSavedDate(site),
                         appLogic.getLastIndexedDate(site)});
