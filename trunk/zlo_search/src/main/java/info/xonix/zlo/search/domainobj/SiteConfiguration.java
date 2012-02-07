@@ -64,6 +64,7 @@ public abstract class SiteConfiguration {
     private int dbReconnectPeriod;
 
     private int siteNumber;
+    private int weight;
 
     private String name;
 
@@ -141,6 +142,8 @@ public abstract class SiteConfiguration {
         dbReconnectPeriod = TimeUtils.parseToMilliSeconds(p.getProperty("db.daemon.period.to.reconnect"));
 
         siteNumber = Integer.parseInt(p.getProperty("site.number"));
+        final String weightStr = p.getProperty("site.weight");
+        weight = weightStr != null ? Integer.parseInt(weightStr) : Integer.MAX_VALUE;
 
         msgDatePattern = p.getProperty("str.date.pattern");
 
@@ -276,5 +279,9 @@ public abstract class SiteConfiguration {
 
     public boolean isNoHost() {
         return noHost;
+    }
+
+    public int getWeight() {
+        return weight;
     }
 }
