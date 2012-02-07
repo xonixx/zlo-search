@@ -86,7 +86,7 @@ public class SiteLogicImpl implements SiteLogic, InitializingBean {
 
             Collections.sort(sites, new Comparator<Site>() {
                 public int compare(Site o1, Site o2) {
-                    return new Integer(o1.getSiteNumber()).compareTo(o2.getSiteNumber());
+                    return new Integer(o1.getWeight()).compareTo(o2.getWeight());
                 }
             });
         }
