@@ -1,6 +1,6 @@
-import info.xonix.zlo.search.utils.obscene.ObsceneUtils;
 import org.junit.Test;
 
+import static info.xonix.zlo.search.utils.obscene.ObsceneUtils.containsObsceneWord;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -12,32 +12,40 @@ import static org.junit.Assert.assertTrue;
 public class ObsceneUtilsTests {
     @Test
     public void test1() {
-        assertFalse(ObsceneUtils.containsObsceneWord(""));
-        assertFalse(ObsceneUtils.containsObsceneWord("привет"));
+        assertFalse(containsObsceneWord(""));
+        assertFalse(containsObsceneWord("привет"));
 
-        assertFalse(ObsceneUtils.containsObsceneWord("оскорблять"));
-        assertTrue(ObsceneUtils.containsObsceneWord("блять"));
+        assertFalse(containsObsceneWord("оскорблять"));
+        assertTrue(containsObsceneWord("блять"));
 
-        assertFalse(ObsceneUtils.containsObsceneWord("не психуй"));
-        assertTrue(ObsceneUtils.containsObsceneWord("соси ХУЙ"));
-        assertTrue(ObsceneUtils.containsObsceneWord("СОСИ ХУЁК"));
+        assertFalse(containsObsceneWord("не психуй"));
+        assertTrue(containsObsceneWord("соси ХУЙ"));
+        assertTrue(containsObsceneWord("СОСИ ХУЁК"));
 
-        assertTrue(ObsceneUtils.containsObsceneWord("пЁзднуться"));
+        assertTrue(containsObsceneWord("пЁзднуться"));
 
-        assertTrue(ObsceneUtils.containsObsceneWord("привет хуёвый"));
-        assertTrue(ObsceneUtils.containsObsceneWord("привет блядь"));
-        assertTrue(ObsceneUtils.containsObsceneWord("привет блядский"));
-        assertTrue(ObsceneUtils.containsObsceneWord("привет бля"));
+        assertTrue(containsObsceneWord("долбоёб"));
+        assertTrue(containsObsceneWord("далбаеб"));
+        assertTrue(containsObsceneWord("долБАеб"));
+        assertTrue(containsObsceneWord("дАЛбОЁб"));
 
-        assertTrue(ObsceneUtils.containsObsceneWord("пИзДлявая"));
-        assertTrue(ObsceneUtils.containsObsceneWord("пUзДлявAя"));
+        assertTrue(containsObsceneWord("привет хуёвый"));
+        assertTrue(containsObsceneWord("привет блядь"));
+        assertTrue(containsObsceneWord("привет блядский"));
+        assertTrue(containsObsceneWord("привет бля"));
 
-        assertTrue(ObsceneUtils.containsObsceneWord("хYй"));
-        assertTrue(ObsceneUtils.containsObsceneWord("XУй"));
+        assertTrue(containsObsceneWord("привет пидор"));
+        assertTrue(containsObsceneWord("привет пидар"));
 
-        assertTrue(ObsceneUtils.containsObsceneWord("гавна поешь"));
-        assertTrue(ObsceneUtils.containsObsceneWord("имярек мудак"));
-        assertTrue(ObsceneUtils.containsObsceneWord("мудак имярек"));
-        assertTrue(ObsceneUtils.containsObsceneWord("имярек гей"));
+        assertTrue(containsObsceneWord("пИзДлявая"));
+        assertTrue(containsObsceneWord("пUзДлявAя"));
+
+        assertTrue(containsObsceneWord("хYй"));
+        assertTrue(containsObsceneWord("XУй"));
+
+        assertTrue(containsObsceneWord("гавна поешь"));
+        assertTrue(containsObsceneWord("имярек мудак"));
+        assertTrue(containsObsceneWord("мудак имярек"));
+        assertTrue(containsObsceneWord("имярек гей"));
     }
 }
