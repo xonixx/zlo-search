@@ -20,6 +20,9 @@ public class ObsceneUtilsTests {
 
         assertFalse(ObsceneUtils.containsObsceneWord("не психуй"));
         assertTrue(ObsceneUtils.containsObsceneWord("соси ХУЙ"));
+        assertTrue(ObsceneUtils.containsObsceneWord("СОСИ ХУЁК"));
+
+        assertTrue(ObsceneUtils.containsObsceneWord("пЁзднуться"));
 
         assertTrue(ObsceneUtils.containsObsceneWord("привет хуёвый"));
         assertTrue(ObsceneUtils.containsObsceneWord("привет блядь"));
