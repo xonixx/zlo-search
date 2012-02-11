@@ -1,5 +1,5 @@
 
-package info.xonix.zlo.search.xmlfp.xjccompiled.message;
+package info.xonix.zlo.search.xmlfp.jaxb_generated.message;
 
 import java.util.ArrayList;
 import java.util.List;

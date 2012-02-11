@@ -42,10 +42,10 @@ public class TestMessageToXML {
 
         final String msgXmlStr = IOUtils.toString(new FileReader(path));
 
-        JAXBContext jaxbContext = JAXBContext.newInstance("info.xonix.zlo.search.xmlfp.xjccompiled.message");
+        JAXBContext jaxbContext = JAXBContext.newInstance("info.xonix.zlo.search.xmlfp.jaxb_generated.message");
         final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
-        final info.xonix.zlo.search.xmlfp.xjccompiled.message.Message jaxbMessage = MarshalUtils.unmarshal(unmarshaller, msgXmlStr);
+        final info.xonix.zlo.search.xmlfp.jaxb_generated.message.Message jaxbMessage = MarshalUtils.unmarshal(unmarshaller, msgXmlStr);
         System.out.println(Convert.fromJaxbMessage(jaxbMessage));
     }
 }
