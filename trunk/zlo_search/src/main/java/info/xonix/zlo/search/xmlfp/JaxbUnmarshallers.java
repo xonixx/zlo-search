@@ -11,7 +11,7 @@ import static info.xonix.zlo.search.xmlfp.JaxbContexts.MESSAGE_JAXB_CONTEXT;
  * Date: 12.02.12
  * Time: 1:43
  */
-public class JaxbUnmarshallers {
+class JaxbUnmarshallers {
     static final Unmarshaller MESSAGE_UNMARSHALLER;
     static final Unmarshaller LAST_MSG_NUM_UNMARSHALLER;
 

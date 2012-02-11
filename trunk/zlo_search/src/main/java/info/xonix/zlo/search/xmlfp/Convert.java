@@ -19,7 +19,7 @@ import java.util.GregorianCalendar;
  * Date: 11.02.12
  * Time: 22:27
  */
-public class Convert {
+class Convert {
     public static Message fromJaxbMessage(info.xonix.zlo.search.xmlfp.jaxb_generated.message.Message jaxbMessage) {
         final MessageStatus messageStatus = messageStatusFromString(jaxbMessage.getStatus());
 

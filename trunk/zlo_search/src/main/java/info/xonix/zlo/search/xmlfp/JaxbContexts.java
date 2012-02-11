@@ -8,7 +8,7 @@ import javax.xml.bind.JAXBException;
  * Date: 12.02.12
  * Time: 1:42
  */
-public class JaxbContexts {
+class JaxbContexts {
     static final JAXBContext MESSAGE_JAXB_CONTEXT;
     static final JAXBContext LAST_MSG_NUM_JAXB_CONTEXT;
 
