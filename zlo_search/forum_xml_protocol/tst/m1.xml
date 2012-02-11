@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="message.xsd"
+        xsi:noNamespaceSchemaLocation="../message.xsd"
         status="ok">
     <info>
         <date>2010-10-10T10:10:10</date>
