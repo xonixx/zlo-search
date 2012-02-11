@@ -4,7 +4,8 @@
         xsi:noNamespaceSchemaLocation="../message.xsd"
         status="ok">
     <info>
-        <date>2010-10-10T10:10:10</date>
+        <!-- Z means UTC: http://www.w3schools.com/schema/schema_dtypes_date.asp -->
+        <date>2010-10-10T10:10:10Z</date>
         <id>123</id>
         <parentId>0</parentId>
         <messageUrl>http://site/?123</messageUrl>
@@ -17,7 +18,7 @@
         <signature>Без пруда не вытащишь и рыбку из него</signature>
     </author>
     <content>
-        <category>Temp</category>
+        <category id="7">Temp</category>
         <title>Привет люди</title>
         <body><![CDATA[
             <asd>asdasd
