@@ -8,6 +8,7 @@ import info.xonix.zlo.search.xmlfp.jaxb_generated.lastMessageNumber.ObjectFactor
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 /**
  * Author: Vovan
@@ -17,6 +18,7 @@ import javax.xml.bind.Marshaller;
 public class XmlFp {
     private Marshaller messageMarshaller;
     private Marshaller lastMsgNumMarshaller;
+    private Unmarshaller messageUnmarshaller;
 
     public XmlFp(final String marshallersEncoding, final boolean prettyPrint) {
         try {
@@ -24,12 +26,13 @@ public class XmlFp {
 
             jaxbContext = JAXBContext.newInstance("info.xonix.zlo.search.xmlfp.jaxb_generated.message");
             messageMarshaller = jaxbContext.createMarshaller();
+            messageUnmarshaller = jaxbContext.createUnmarshaller();
 
             jaxbContext = JAXBContext.newInstance("info.xonix.zlo.search.xmlfp.jaxb_generated.lastMessageNumber");
             lastMsgNumMarshaller = jaxbContext.createMarshaller();
 
             for (Marshaller mar : new Marshaller[]{messageMarshaller, lastMsgNumMarshaller}) {
-                mar.setProperty("jaxb.encoding", marshallersEncoding);
+                mar.setProperty("jaxb.encoding", marshallersEncoding);/* TODO: is this even necessary? */
                 mar.setProperty("jaxb.formatted.output", prettyPrint); // pretty-print
             }
         } catch (JAXBException e) {
@@ -43,6 +46,16 @@ public class XmlFp {
             return MarshalUtils.marshal(messageMarshaller, Convert.toJaxbMessage(message));
         } catch (XmlFpMarshalException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public Message messageFromXml(String xml) throws XmlFpException {
+        try {
+            return Convert.fromJaxbMessage(
+                    MarshalUtils.<info.xonix.zlo.search.xmlfp.jaxb_generated.message.Message>unmarshal(
+                            messageUnmarshaller, xml));
+        } catch (XmlFpMarshalException e) {
+            throw new XmlFpException(e);
         }
     }
 
