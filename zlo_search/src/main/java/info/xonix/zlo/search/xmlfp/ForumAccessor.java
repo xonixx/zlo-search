@@ -51,6 +51,7 @@ public class ForumAccessor {
 
     }
 
+    //TODO: implement retry for download
     private byte[] getXmlAsBytesFromUrl(final String url) throws XmlFpException {
         final byte[] bytes;
 
