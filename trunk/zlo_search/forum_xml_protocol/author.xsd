@@ -17,7 +17,11 @@
                 </xs:element>
                 <xs:element name="registered" type="xs:boolean" minOccurs="0">
                     <xs:annotation>
-                        <xs:documentation>Whether user is registered in conference</xs:documentation>
+                        <xs:documentation>
+                            Whether user is registered in conference
+
+                            Omitted means NOT registered (= unreg)
+                        </xs:documentation>
                     </xs:annotation>
                 </xs:element>
 
