@@ -73,8 +73,8 @@ public class ZloJaxb {
             GregorianCalendar cal = new GregorianCalendar();
             cal.setTime(m.getDate());
             info.setDate(new XMLGregorianCalendarImpl(cal));
-            info.setParentId(BigInteger.valueOf(m.getParentNum()));
-            info.setId(BigInteger.valueOf(m.getNum()));
+            info.setParentId((long) m.getParentNum());
+            info.setId((long) m.getNum());
             info.setMessageUrl("http://" + m.getSite().getSiteUrl() + site.getReadQuery() + m.getNum());
 
             Author author = new Author();
@@ -89,7 +89,7 @@ public class ZloJaxb {
 
     public String lastMessageNumberToXml(int num) {
         return marshall(lastMsgNumMarshaller,
-                new ObjectFactory().createLastMessageNumber(BigInteger.valueOf(num)));
+                new ObjectFactory().createLastMessageNumber((long) num));
     }
 
     private static String marshall(Marshaller m, Object o) {

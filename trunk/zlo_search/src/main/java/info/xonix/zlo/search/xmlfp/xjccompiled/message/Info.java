@@ -1,7 +1,6 @@
 
 package info.xonix.zlo.search.xmlfp.xjccompiled.message;
 
-import java.math.BigInteger;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -23,9 +22,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *       &lt;all>
  *         &lt;element name="date" type="{http://www.w3.org/2001/XMLSchema}dateTime"/>
  *         &lt;element name="dateModified" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
- *         &lt;element name="isRoot" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
- *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}nonNegativeInteger"/>
- *         &lt;element name="parentId" type="{http://www.w3.org/2001/XMLSchema}nonNegativeInteger" minOccurs="0"/>
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="parentId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="messageUrl" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
  *       &lt;/all>
  *     &lt;/restriction>
@@ -47,12 +45,8 @@ public class Info {
     protected XMLGregorianCalendar date;
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar dateModified;
-    protected Boolean isRoot;
-    @XmlElement(required = true)
-    @XmlSchemaType(name = "nonNegativeInteger")
-    protected BigInteger id;
-    @XmlSchemaType(name = "nonNegativeInteger")
-    protected BigInteger parentId;
+    protected long id;
+    protected Long parentId;
     @XmlElement(required = true)
     @XmlSchemaType(name = "anyURI")
     protected String messageUrl;
@@ -106,50 +100,18 @@ public class Info {
     }
 
     /**
-     * Gets the value of the isRoot property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
-     */
-    public Boolean isIsRoot() {
-        return isRoot;
-    }
-
-    /**
-     * Sets the value of the isRoot property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
-     */
-    public void setIsRoot(Boolean value) {
-        this.isRoot = value;
-    }
-
-    /**
      * Gets the value of the id property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
      */
-    public BigInteger getId() {
+    public long getId() {
         return id;
     }
 
     /**
      * Sets the value of the id property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
      */
-    public void setId(BigInteger value) {
+    public void setId(long value) {
         this.id = value;
     }
 
@@ -158,10 +120,10 @@ public class Info {
      * 
      * @return
      *     possible object is
-     *     {@link BigInteger }
+     *     {@link Long }
      *     
      */
-    public BigInteger getParentId() {
+    public Long getParentId() {
         return parentId;
     }
 
@@ -170,10 +132,10 @@ public class Info {
      * 
      * @param value
      *     allowed object is
-     *     {@link BigInteger }
+     *     {@link Long }
      *     
      */
-    public void setParentId(BigInteger value) {
+    public void setParentId(Long value) {
         this.parentId = value;
     }
 

@@ -1,7 +1,6 @@
 
 package info.xonix.zlo.search.xmlfp.xjccompiled.lastMessageNumber;
 
-import java.math.BigInteger;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
@@ -35,12 +34,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link BigInteger }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link Long }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "", name = "lastMessageNumber")
-    public JAXBElement<BigInteger> createLastMessageNumber(BigInteger value) {
-        return new JAXBElement<BigInteger>(_LastMessageNumber_QNAME, BigInteger.class, null, value);
+    public JAXBElement<Long> createLastMessageNumber(Long value) {
+        return new JAXBElement<Long>(_LastMessageNumber_QNAME, Long.class, null, value);
     }
 
 }
