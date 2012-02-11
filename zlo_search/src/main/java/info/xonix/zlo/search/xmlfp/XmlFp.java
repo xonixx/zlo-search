@@ -3,7 +3,7 @@ package info.xonix.zlo.search.xmlfp;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.xmlfp.utils.MarshalUtils;
 import info.xonix.zlo.search.xmlfp.utils.XmlFpMarshalException;
-import info.xonix.zlo.search.xmlfp.xjccompiled.lastMessageNumber.ObjectFactory;
+import info.xonix.zlo.search.xmlfp.jaxb_generated.lastMessageNumber.ObjectFactory;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -22,10 +22,10 @@ public class XmlFp {
         try {
             JAXBContext jaxbContext;
 
-            jaxbContext = JAXBContext.newInstance("info.xonix.zlo.search.xmlfp.xjccompiled.message");
+            jaxbContext = JAXBContext.newInstance("info.xonix.zlo.search.xmlfp.jaxb_generated.message");
             messageMarshaller = jaxbContext.createMarshaller();
 
-            jaxbContext = JAXBContext.newInstance("info.xonix.zlo.search.xmlfp.xjccompiled.lastMessageNumber");
+            jaxbContext = JAXBContext.newInstance("info.xonix.zlo.search.xmlfp.jaxb_generated.lastMessageNumber");
             lastMsgNumMarshaller = jaxbContext.createMarshaller();
 
             for (Marshaller mar : new Marshaller[]{messageMarshaller, lastMsgNumMarshaller}) {

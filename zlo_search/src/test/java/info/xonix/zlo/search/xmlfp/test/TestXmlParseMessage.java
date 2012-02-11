@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.xmlfp.test;
 
-import info.xonix.zlo.search.xmlfp.xjccompiled.message.Message;
+import info.xonix.zlo.search.xmlfp.jaxb_generated.message.Message;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
