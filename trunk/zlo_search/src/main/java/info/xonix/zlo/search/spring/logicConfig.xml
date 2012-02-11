@@ -28,7 +28,7 @@
     <bean id="exceptionLogger" class="info.xonix.zlo.search.logic.exceptions.ExceptionsLoggerImpl"/>
 
     <!--xmlfp-->
-    <bean id="xmlFp" class="info.xonix.zlo.search.xmlfp.XmlFp">
+    <bean class="info.xonix.zlo.search.xmlfp.XmlFpFormatterOptions">
         <!--TODO: inject from config? -->
         <constructor-arg index="0" value="UTF-8"/>
 
