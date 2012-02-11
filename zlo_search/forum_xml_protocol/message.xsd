@@ -19,9 +19,9 @@
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="ok"/>
                         <xs:enumeration value="deleted"/>
-                        <xs:enumeration value="notExists"/>
-                        <xs:enumeration value="unknown"/>
+                        <xs:enumeration value="not_exists"/>
                         <xs:enumeration value="spam"/>
+                        <xs:enumeration value="unknown"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:attribute>

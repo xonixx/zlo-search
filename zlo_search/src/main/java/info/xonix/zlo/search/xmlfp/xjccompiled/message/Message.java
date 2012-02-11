@@ -28,9 +28,9 @@ import javax.xml.bind.annotation.XmlType;
  *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
  *             &lt;enumeration value="ok"/>
  *             &lt;enumeration value="deleted"/>
- *             &lt;enumeration value="notExists"/>
- *             &lt;enumeration value="unknown"/>
+ *             &lt;enumeration value="not_exists"/>
  *             &lt;enumeration value="spam"/>
+ *             &lt;enumeration value="unknown"/>
  *           &lt;/restriction>
  *         &lt;/simpleType>
  *       &lt;/attribute>

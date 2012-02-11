@@ -16,7 +16,7 @@ public class XmlFpFormer {
     private AppLogic appLogic;
 
     @Autowired
-    private ZloJaxb zloJaxb;
+    private XmlFp xmlFp;
 
     public String getMessage(Site site, int num) {
         Message m;
@@ -26,11 +26,11 @@ public class XmlFpFormer {
             m = Message.withStatus(null);// TODO: should mean NOT EXISTS
         }
 
-        return zloJaxb.zloMessageToXml(m);
+        return xmlFp.messageToXml(m);
     }
 
     public String lastMessageNumber(Site site){
-        return zloJaxb.lastMessageNumberToXml(
+        return xmlFp.lastMessageNumberToXml(
                 appLogic.getLastSavedMessageNumber(site));
     }
 }

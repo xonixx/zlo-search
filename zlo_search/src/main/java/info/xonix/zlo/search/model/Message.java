@@ -27,11 +27,12 @@ import static org.apache.lucene.document.Field.Store;
 public class Message extends MessageShallow implements Serializable {
     private static final String TRUE = "1";
     private static final String FALSE = "0";
+    public static final int NO_PARENT = -1;
 
     private String altName;
     private int topicCode;
     private String body;
-    private int parentNum = -1; // default
+    private int parentNum = NO_PARENT; // default
 
     private String titleClean;
     private String bodyClean;
@@ -97,7 +98,7 @@ public class Message extends MessageShallow implements Serializable {
                 MessageStatus.fromInt(status));
     }
 
-    public static Message withStatus(MessageStatus status){
+    public static Message withStatus(MessageStatus status) {
         final Message message = new Message();
         message.setStatus(status);
         return message;
@@ -196,7 +197,7 @@ public class Message extends MessageShallow implements Serializable {
     }
 
     public String toString() {
-        if (isOk())
+        if (isOk()) {
             return MessageFormat.format(
                     "Message(" +
                             "\n\tnum={0},\n\tparentNum={1},\n\ttopicCode={2},\n\ttopic={3}," +
@@ -210,7 +211,7 @@ public class Message extends MessageShallow implements Serializable {
                     isHasImg() ? TRUE : FALSE,
                     site == null ? "" : site.getName(),
                     body.replaceAll("\n", "\n\t\t"));
-        else
+        } else {
             return MessageFormat.format(
                     "Message(" +
                             "\n\tnum={0},\n\tstatus={1}," +
@@ -218,6 +219,7 @@ public class Message extends MessageShallow implements Serializable {
                             "\n)",
                     num, status,
                     site == null ? "" : site.getName());
+        }
     }
 
     public boolean isOk() {
