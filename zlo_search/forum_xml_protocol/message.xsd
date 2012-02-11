@@ -33,25 +33,41 @@
             <xs:all>
                 <xs:element name="date" type="xs:dateTime">
                     <xs:annotation>
-                        <xs:documentation>Creation date</xs:documentation>
+                        <xs:documentation>
+                            Creation date
+
+                            Should be in GMT (UTC) timezone, and end by Z
+                        </xs:documentation>
                     </xs:annotation>
                 </xs:element>
 
                 <xs:element name="dateModified" type="xs:dateTime" minOccurs="0">
                     <xs:annotation>
-                        <xs:documentation>Last modification date</xs:documentation>
+                        <xs:documentation>
+                            Last modification date
+
+                            Should be in GMT (UTC) timezone, and end by Z
+                        </xs:documentation>
                     </xs:annotation>
                 </xs:element>
 
                 <!--effectively positive-->
-                <xs:element name="id" type="xs:long"/>
+                <xs:element name="id" type="xs:long">
+                    <xs:annotation>
+                        <xs:documentation>
+                            This message ID number
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
 
                 <!--effectively positive-->
                 <xs:element name="parentId" type="xs:long" minOccurs="0">
                     <xs:annotation>
                         <xs:documentation>
-                            If this is absent or value is less or equal 0 the message is considered to be root of a
-                            thread
+                            Parent message Id
+
+                            If this is absent or value is less or equal 0 the message is considered
+                            to be root of a thread.
                         </xs:documentation>
                     </xs:annotation>
                 </xs:element>
@@ -72,13 +88,17 @@
                     <xs:complexType>
                         <xs:simpleContent>
                             <xs:extension base="xs:string">
-                                <xs:attribute name="id" type="xs:nonNegativeInteger"/>
+                                <!-- effectively positive -->
+                                <xs:attribute name="id" type="xs:int"/>
                             </xs:extension>
                         </xs:simpleContent>
                     </xs:complexType>
                 </xs:element>
+
                 <xs:element name="title" type="xs:string"/>
+
                 <xs:element name="body" type="xs:string"/>
+
                 <xs:element name="tags" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>

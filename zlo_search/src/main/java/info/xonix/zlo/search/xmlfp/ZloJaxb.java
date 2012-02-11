@@ -65,8 +65,11 @@ public class ZloJaxb {
             content.setTitle(m.getTitle());
             content.setBody(m.getBody());
 
-            content.setCategory(new Content.Category());
-            content.getCategory().setValue(m.getTopic());
+            final Content.Category category = new Content.Category();
+            category.setValue(m.getTopic());
+            category.setId(m.getTopicCode());
+
+            content.setCategory(category);
 
             Info info = new Info();
             jaxbMessage.setInfo(info);

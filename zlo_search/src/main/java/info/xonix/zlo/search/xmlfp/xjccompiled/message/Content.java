@@ -1,7 +1,6 @@
 
 package info.xonix.zlo.search.xmlfp.xjccompiled.message;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -9,7 +8,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
@@ -28,7 +26,7 @@ import javax.xml.bind.annotation.XmlValue;
  *           &lt;complexType>
  *             &lt;simpleContent>
  *               &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
- *                 &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}nonNegativeInteger" />
+ *                 &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}int" />
  *               &lt;/extension>
  *             &lt;/simpleContent>
  *           &lt;/complexType>
@@ -178,7 +176,7 @@ public class Content {
      * &lt;complexType>
      *   &lt;simpleContent>
      *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
-     *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}nonNegativeInteger" />
+     *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}int" />
      *     &lt;/extension>
      *   &lt;/simpleContent>
      * &lt;/complexType>
@@ -195,8 +193,7 @@ public class Content {
         @XmlValue
         protected String value;
         @XmlAttribute(name = "id")
-        @XmlSchemaType(name = "nonNegativeInteger")
-        protected BigInteger id;
+        protected Integer id;
 
         /**
          * Gets the value of the value property.
@@ -227,10 +224,10 @@ public class Content {
          * 
          * @return
          *     possible object is
-         *     {@link BigInteger }
+         *     {@link Integer }
          *     
          */
-        public BigInteger getId() {
+        public Integer getId() {
             return id;
         }
 
@@ -239,10 +236,10 @@ public class Content {
          * 
          * @param value
          *     allowed object is
-         *     {@link BigInteger }
+         *     {@link Integer }
          *     
          */
-        public void setId(BigInteger value) {
+        public void setId(Integer value) {
             this.id = value;
         }
 
