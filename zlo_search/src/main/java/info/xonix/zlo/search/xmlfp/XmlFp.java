@@ -5,10 +5,7 @@ import info.xonix.zlo.search.xmlfp.utils.MarshalUtils;
 import info.xonix.zlo.search.xmlfp.utils.XmlFpMarshalException;
 import info.xonix.zlo.search.xmlfp.jaxb_generated.lastMessageNumber.ObjectFactory;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.*;
 
 /**
  * Author: Vovan
@@ -16,9 +13,11 @@ import javax.xml.bind.Unmarshaller;
  * Time: 19:07:32
  */
 public class XmlFp {
-    private Marshaller messageMarshaller;
-    private Marshaller lastMsgNumMarshaller;
-    private Unmarshaller messageUnmarshaller;
+    Marshaller messageMarshaller;
+    Unmarshaller messageUnmarshaller;
+
+    Marshaller lastMsgNumMarshaller;
+    Unmarshaller lastMsgNumUnmarshaller;
 
     public XmlFp(final String marshallersEncoding, final boolean prettyPrint) {
         try {
@@ -30,6 +29,7 @@ public class XmlFp {
 
             jaxbContext = JAXBContext.newInstance("info.xonix.zlo.search.xmlfp.jaxb_generated.lastMessageNumber");
             lastMsgNumMarshaller = jaxbContext.createMarshaller();
+            lastMsgNumUnmarshaller = jaxbContext.createUnmarshaller();
 
             for (Marshaller mar : new Marshaller[]{messageMarshaller, lastMsgNumMarshaller}) {
                 mar.setProperty("jaxb.encoding", marshallersEncoding);/* TODO: is this even necessary? */
@@ -65,6 +65,15 @@ public class XmlFp {
                     new ObjectFactory().createLastMessageNumber((long) num));
         } catch (XmlFpMarshalException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public long lastMessageNumberFromXml(String xml) throws XmlFpException {
+        try {
+            final JAXBElement<Long> res = MarshalUtils.unmarshal(lastMsgNumUnmarshaller, xml);
+            return res.getValue();
+        } catch (XmlFpMarshalException e) {
+            throw new XmlFpException(e);
         }
     }
 }
