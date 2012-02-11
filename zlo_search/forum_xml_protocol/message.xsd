@@ -15,13 +15,22 @@
                 <xs:element ref="content"/>
             </xs:all>
             <xs:attribute name="status">
+                <xs:annotation>
+                    <xs:documentation>
+                        Omitted status equivalent to status = ok
+
+                        ok - message exists and is shown on forum
+                        deleted - message exised before but was removed by moderator
+                        not_exists - message not yet exists
+                        spam - message marked by Forum software as SPAM (?)
+                    </xs:documentation>
+                </xs:annotation>
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="ok"/>
                         <xs:enumeration value="deleted"/>
                         <xs:enumeration value="not_exists"/>
                         <xs:enumeration value="spam"/>
-                        <xs:enumeration value="unknown"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:attribute>
