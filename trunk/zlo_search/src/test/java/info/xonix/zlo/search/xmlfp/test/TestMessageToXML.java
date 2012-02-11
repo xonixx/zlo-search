@@ -15,6 +15,7 @@ import org.junit.Test;
 public class TestMessageToXML {
 
     AppLogic appLogic = AppSpringContext.get(AppLogic.class);
+    ZloJaxb zloJaxb = AppSpringContext.get(ZloJaxb.class);
 
     @Test
     public void test1() {
@@ -22,6 +23,6 @@ public class TestMessageToXML {
         Message m = appLogic.getMessageByNumber(site, 3333333);
         System.out.println(m);
         System.out.println("======================");
-        System.out.println(ZloJaxb.zloMessageToXml(m));
+        System.out.println(zloJaxb.zloMessageToXml(m));
     }
 }

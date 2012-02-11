@@ -20,33 +20,32 @@ import java.util.GregorianCalendar;
  * Author: Vovan
  * Date: 13.08.2008
  * Time: 19:07:32
- * TODO: turn to spring bean
  */
 public class ZloJaxb {
-    private static Marshaller MESSAGE_MARSHALLER;
-    private static Marshaller LAST_MSG_NUM_MARSHALLER;
+    private Marshaller messageMarshaller;
+    private Marshaller lastMsgNumMarshaller;
 
-    static {
+    public ZloJaxb(final String marshallersEncoding, final boolean prettyPrint) {
         try {
             JAXBContext jaxbContext;
 
             jaxbContext = JAXBContext.newInstance("info.xonix.zlo.search.xmlfp.xjccompiled.message");
-            MESSAGE_MARSHALLER = jaxbContext.createMarshaller();
+            messageMarshaller = jaxbContext.createMarshaller();
 
             jaxbContext = JAXBContext.newInstance("info.xonix.zlo.search.xmlfp.xjccompiled.lastMessageNumber");
-            LAST_MSG_NUM_MARSHALLER = jaxbContext.createMarshaller();
+            lastMsgNumMarshaller = jaxbContext.createMarshaller();
 
-            for (Marshaller mar : new Marshaller[]{MESSAGE_MARSHALLER, LAST_MSG_NUM_MARSHALLER}) {
-                mar.setProperty("jaxb.encoding", "windows-1251");
-                mar.setProperty("jaxb.formatted.output", true); // pretty-print
+            for (Marshaller mar : new Marshaller[]{messageMarshaller, lastMsgNumMarshaller}) {
+                mar.setProperty("jaxb.encoding", marshallersEncoding);
+                mar.setProperty("jaxb.formatted.output", prettyPrint); // pretty-print
             }
         } catch (JAXBException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
 
-    public static String zloMessageToXml(Message m) {
+    public String zloMessageToXml(Message m) {
         if (m == null) {
             m = new Message();
         }
@@ -85,11 +84,11 @@ public class ZloJaxb {
             author.setRegistered(m.isReg());
         }
 
-        return marshall(MESSAGE_MARSHALLER, jaxbMessage);
+        return marshall(messageMarshaller, jaxbMessage);
     }
 
-    public static String lastMessageNumberToXml(int num) {
-        return marshall(LAST_MSG_NUM_MARSHALLER,
+    public String lastMessageNumberToXml(int num) {
+        return marshall(lastMsgNumMarshaller,
                 new ObjectFactory().createLastMessageNumber(BigInteger.valueOf(num)));
     }
 

@@ -28,6 +28,13 @@
     <bean id="exceptionLogger" class="info.xonix.zlo.search.logic.exceptions.ExceptionsLoggerImpl"/>
 
     <!--xmlfp-->
+    <bean id="zloJaxb" class="info.xonix.zlo.search.xmlfp.ZloJaxb">
+        <!--TODO: inject from config? -->
+        <constructor-arg index="0" value="UTF-8"/>
+
+        <constructor-arg index="1" value="true"/>
+    </bean>
+
     <bean id="xmlFpFormer" class="info.xonix.zlo.search.xmlfp.XmlFpFormer"/>
 
 </beans>
