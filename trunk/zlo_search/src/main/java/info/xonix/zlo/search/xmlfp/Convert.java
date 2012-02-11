@@ -21,13 +21,14 @@ import java.util.GregorianCalendar;
  */
 public class Convert {
     public static Message fromJaxbMessage(info.xonix.zlo.search.xmlfp.xjccompiled.message.Message jaxbMessage) {
-        final String status = jaxbMessage.getStatus();
+        final MessageStatus messageStatus = messageStatusFromString(jaxbMessage.getStatus());
 
-        if ("ok".equals(status)) {
+        if (messageStatus == MessageStatus.OK) {
             final Author author = jaxbMessage.getAuthor();
             final Content content = jaxbMessage.getContent();
             final Content.Category category = content.getCategory();
             final Info info = jaxbMessage.getInfo();
+
             return new Message(
                     null, // must set after!
                     author.getName(),
@@ -45,10 +46,10 @@ public class Convert {
                     (int) info.getId(),
                     (int) (info.getParentId() == null ? Message.NO_PARENT : info.getParentId()),
 
-                    MessageStatus.OK.getInt()
+                    messageStatus.getInt()
             );
         } else {
-            return Message.withStatus(messageStatusFromString(status));
+            return Message.withStatus(messageStatus);
         }
     }
 

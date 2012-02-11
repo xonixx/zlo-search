@@ -30,7 +30,6 @@ import javax.xml.bind.annotation.XmlType;
  *             &lt;enumeration value="deleted"/>
  *             &lt;enumeration value="not_exists"/>
  *             &lt;enumeration value="spam"/>
- *             &lt;enumeration value="unknown"/>
  *           &lt;/restriction>
  *         &lt;/simpleType>
  *       &lt;/attribute>
