@@ -9,4 +9,8 @@ public class XmlFpException extends Exception {
     public XmlFpException(Exception e) {
         super(e);
     }
+
+    public XmlFpException(Exception e, String s) {
+        super(s, e);
+    }
 }

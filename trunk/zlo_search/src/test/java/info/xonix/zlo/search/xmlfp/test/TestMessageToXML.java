@@ -5,8 +5,10 @@ import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.spring.AppSpringContext;
+import info.xonix.zlo.search.xmlfp.ForumAccessor;
 import info.xonix.zlo.search.xmlfp.XmlFp;
 import info.xonix.zlo.search.xmlfp.XmlFpException;
+import info.xonix.zlo.search.xmlfp.XmlFpUrls;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
@@ -47,5 +49,27 @@ public class TestMessageToXML {
         final String msgXmlStr = FileUtils.readFileToString(new File(path), Config.UTF_8);
 
         System.out.println(xmlFp.messageFromXml(msgXmlStr));
+    }
+
+    @Test
+    public void test3() throws IOException, XmlFpException {
+        System.out.println("Last num=");
+        System.out.println(xmlFp.lastMessageNumberFromXml(
+                FileUtils.readFileToString(new File("D:\\stuff\\test\\java\\zlo-search\\zlo_search\\forum_xml_protocol\\tst\\lastNum1.xml"), Config.UTF_8)
+        ));
+    }
+
+    @Test
+    public void test4() throws XmlFpException {
+        final XmlFpUrls xmlFpUrls = new XmlFpUrls(
+                "http://localhost:8080/xmlfp/xmlfp.jsp?lastMessageNumber=true&site=0",
+                "http://localhost:8080/xmlfp/xmlfp.jsp?site=0&num={0}");
+
+        ForumAccessor forumAccessor = new ForumAccessor(xmlFp, xmlFpUrls);
+
+        final long lastMessageNumber = forumAccessor.getLastMessageNumber();
+
+        System.out.println("Last num: " + lastMessageNumber);
+        System.out.println("Msg: " + forumAccessor.getMessage(lastMessageNumber));
     }
 }
