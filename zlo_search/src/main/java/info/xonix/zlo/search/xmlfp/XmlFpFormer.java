@@ -15,9 +15,6 @@ public class XmlFpFormer {
     @Autowired
     private AppLogic appLogic;
 
-    @Autowired
-    private XmlFpFormatterOptions xmlFpFormatterOptions;
-
     public String getMessage(Site site, int num) {
         Message m;
         try {
