@@ -61,9 +61,12 @@ class Convert {
         Site site = message.getSite();
         info.xonix.zlo.search.xmlfp.jaxb_generated.message.Message jaxbMessage = new info.xonix.zlo.search.xmlfp.jaxb_generated.message.Message();
 
-        jaxbMessage.setStatus(messageStatusToString(message.getStatus()));
+        final MessageStatus messageStatus = message.getStatus();
+        jaxbMessage.setStatus(messageStatusToString(messageStatus));
 
-        if ("ok".equals(jaxbMessage.getStatus())) {
+        if (messageStatus == MessageStatus.OK) {
+
+            jaxbMessage.setStatus(null); // null = OK
 
             final Content content = new Content();
             jaxbMessage.setContent(content);
@@ -117,6 +120,6 @@ class Convert {
 
     private static MessageStatus messageStatusFromString(String jaxbStatus) {
         final MessageStatus messageStatus = MESSAGE_STATUS_TO_JAXB_STATUS.inverse().get(jaxbStatus);
-        return messageStatus != null ? messageStatus : MessageStatus.UNKNOWN;
+        return messageStatus != null ? messageStatus : MessageStatus.OK; // omitted status = OK
     }
 }

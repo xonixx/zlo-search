@@ -7,6 +7,9 @@ import info.xonix.zlo.search.xmlfp.utils.XmlFpMarshalException;
 
 import javax.xml.bind.JAXBElement;
 
+import static info.xonix.zlo.search.xmlfp.JaxbMarshallers.*;
+import static info.xonix.zlo.search.xmlfp.JaxbUnmarshallers.*;
+
 /**
  * User: gubarkov
  * Date: 12.02.12
@@ -15,7 +18,7 @@ import javax.xml.bind.JAXBElement;
 public class XmlFpUtils {
     public static String messageToXml(Message message) {
         try {
-            return MarshalUtils.marshal(JaxbMarshallers.MESSAGE_MARSHALLER, Convert.toJaxbMessage(message));
+            return MarshalUtils.marshal(MESSAGE_MARSHALLER, Convert.toJaxbMessage(message));
         } catch (XmlFpMarshalException e) {
             throw new RuntimeException(e);
         }
@@ -25,7 +28,7 @@ public class XmlFpUtils {
         try {
             return Convert.fromJaxbMessage(
                     MarshalUtils.<info.xonix.zlo.search.xmlfp.jaxb_generated.message.Message>unmarshal(
-                            JaxbUnmarshallers.MESSAGE_UNMARSHALLER, xml));
+                            MESSAGE_UNMARSHALLER, xml));
         } catch (XmlFpMarshalException e) {
             throw new XmlFpException(e);
         }
@@ -33,7 +36,7 @@ public class XmlFpUtils {
 
     public static String lastMessageNumberToXml(int num) {
         try {
-            return MarshalUtils.marshal(JaxbMarshallers.LAST_MSG_NUM_MARSHALLER,
+            return MarshalUtils.marshal(LAST_MSG_NUM_MARSHALLER,
                     new ObjectFactory().createLastMessageNumber((long) num));
         } catch (XmlFpMarshalException e) {
             throw new RuntimeException(e);
@@ -42,7 +45,7 @@ public class XmlFpUtils {
 
     public static long lastMessageNumberFromXml(String xml) throws XmlFpException {
         try {
-            final JAXBElement<Long> res = MarshalUtils.unmarshal(JaxbUnmarshallers.LAST_MSG_NUM_UNMARSHALLER, xml);
+            final JAXBElement<Long> res = MarshalUtils.unmarshal(LAST_MSG_NUM_UNMARSHALLER, xml);
             return res.getValue();
         } catch (XmlFpMarshalException e) {
             throw new XmlFpException(e);
