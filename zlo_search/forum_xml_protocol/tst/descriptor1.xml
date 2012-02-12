@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<forum xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../descriptor.xsd">
+
+    <name>Форум ФРТК-МФТИ</name>
+    <url>http://zlo.rt.mipt.ru/</url>
+
+    <type>tree</type>
+
+    <xmlfp>
+        <lastMessageNumberUrl>http://zlo.rt.mipt.ru/xmlfp?lastMsgNumber</lastMessageNumberUrl>
+        <messageUrl>http://zlo.rt.mipt.ru/xmlfp?msg={0}</messageUrl>
+    </xmlfp>
+</forum>

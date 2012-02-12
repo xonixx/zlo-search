@@ -6,9 +6,9 @@ import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl
 import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
-import info.xonix.zlo.search.xmlfp.jaxb_generated.message.Author;
-import info.xonix.zlo.search.xmlfp.jaxb_generated.message.Content;
-import info.xonix.zlo.search.xmlfp.jaxb_generated.message.Info;
+import info.xonix.zlo.search.xmlfp.jaxb_generated.Author;
+import info.xonix.zlo.search.xmlfp.jaxb_generated.Content;
+import info.xonix.zlo.search.xmlfp.jaxb_generated.Info;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Date;
@@ -20,7 +20,7 @@ import java.util.GregorianCalendar;
  * Time: 22:27
  */
 class Convert {
-    public static Message fromJaxbMessage(info.xonix.zlo.search.xmlfp.jaxb_generated.message.Message jaxbMessage) {
+    public static Message fromJaxbMessage(info.xonix.zlo.search.xmlfp.jaxb_generated.Message jaxbMessage) {
         final MessageStatus messageStatus = messageStatusFromString(jaxbMessage.getStatus());
 
         if (messageStatus == MessageStatus.OK) {
@@ -53,13 +53,13 @@ class Convert {
         }
     }
 
-    public static info.xonix.zlo.search.xmlfp.jaxb_generated.message.Message toJaxbMessage(Message message) {
+    public static info.xonix.zlo.search.xmlfp.jaxb_generated.Message toJaxbMessage(Message message) {
         if (message == null) { // TODO: ?
             message = new Message();
         }
 
         Site site = message.getSite();
-        info.xonix.zlo.search.xmlfp.jaxb_generated.message.Message jaxbMessage = new info.xonix.zlo.search.xmlfp.jaxb_generated.message.Message();
+        info.xonix.zlo.search.xmlfp.jaxb_generated.Message jaxbMessage = new info.xonix.zlo.search.xmlfp.jaxb_generated.Message();
 
         final MessageStatus messageStatus = message.getStatus();
         jaxbMessage.setStatus(messageStatusToString(messageStatus));

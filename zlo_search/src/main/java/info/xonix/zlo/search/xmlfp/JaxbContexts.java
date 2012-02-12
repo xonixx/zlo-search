@@ -9,13 +9,11 @@ import javax.xml.bind.JAXBException;
  * Time: 1:42
  */
 class JaxbContexts {
-    static final JAXBContext MESSAGE_JAXB_CONTEXT;
-    static final JAXBContext LAST_MSG_NUM_JAXB_CONTEXT;
+    static final JAXBContext JAXB_CONTEXT;
 
     static {
         try {
-            MESSAGE_JAXB_CONTEXT = JAXBContext.newInstance("info.xonix.zlo.search.xmlfp.jaxb_generated.message");
-            LAST_MSG_NUM_JAXB_CONTEXT = JAXBContext.newInstance("info.xonix.zlo.search.xmlfp.jaxb_generated.lastMessageNumber");
+            JAXB_CONTEXT = JAXBContext.newInstance("info.xonix.zlo.search.xmlfp.jaxb_generated");
         } catch (JAXBException e) {
             throw new RuntimeException("Error creating JAXB contexts", e);
         }

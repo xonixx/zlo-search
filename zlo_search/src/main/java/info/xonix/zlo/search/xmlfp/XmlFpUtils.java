@@ -1,14 +1,14 @@
 package info.xonix.zlo.search.xmlfp;
 
 import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.xmlfp.jaxb_generated.lastMessageNumber.ObjectFactory;
+import info.xonix.zlo.search.xmlfp.jaxb_generated.ObjectFactory;
 import info.xonix.zlo.search.xmlfp.utils.MarshalUtils;
 import info.xonix.zlo.search.xmlfp.utils.XmlFpMarshalException;
 
 import javax.xml.bind.JAXBElement;
 
-import static info.xonix.zlo.search.xmlfp.JaxbMarshallers.*;
-import static info.xonix.zlo.search.xmlfp.JaxbUnmarshallers.*;
+import static info.xonix.zlo.search.xmlfp.JaxbMarshallers.MARSHALLER_XMLFP;
+import static info.xonix.zlo.search.xmlfp.JaxbUnmarshallers.UNMARSHALLER_XMLFP;
 
 /**
  * User: gubarkov
@@ -18,7 +18,7 @@ import static info.xonix.zlo.search.xmlfp.JaxbUnmarshallers.*;
 public class XmlFpUtils {
     public static String messageToXml(Message message) {
         try {
-            return MarshalUtils.marshal(MESSAGE_MARSHALLER, Convert.toJaxbMessage(message));
+            return MarshalUtils.marshal(MARSHALLER_XMLFP, Convert.toJaxbMessage(message));
         } catch (XmlFpMarshalException e) {
             throw new RuntimeException(e);
         }
@@ -27,8 +27,8 @@ public class XmlFpUtils {
     public static Message messageFromXml(String xml) throws XmlFpException {
         try {
             return Convert.fromJaxbMessage(
-                    MarshalUtils.<info.xonix.zlo.search.xmlfp.jaxb_generated.message.Message>unmarshal(
-                            MESSAGE_UNMARSHALLER, xml));
+                    MarshalUtils.<info.xonix.zlo.search.xmlfp.jaxb_generated.Message>unmarshal(
+                            UNMARSHALLER_XMLFP, xml));
         } catch (XmlFpMarshalException e) {
             throw new XmlFpException(e);
         }
@@ -36,7 +36,7 @@ public class XmlFpUtils {
 
     public static String lastMessageNumberToXml(int num) {
         try {
-            return MarshalUtils.marshal(LAST_MSG_NUM_MARSHALLER,
+            return MarshalUtils.marshal(MARSHALLER_XMLFP,
                     new ObjectFactory().createLastMessageNumber((long) num));
         } catch (XmlFpMarshalException e) {
             throw new RuntimeException(e);
@@ -45,7 +45,7 @@ public class XmlFpUtils {
 
     public static long lastMessageNumberFromXml(String xml) throws XmlFpException {
         try {
-            final JAXBElement<Long> res = MarshalUtils.unmarshal(LAST_MSG_NUM_UNMARSHALLER, xml);
+            final JAXBElement<Long> res = MarshalUtils.unmarshal(UNMARSHALLER_XMLFP, xml);
             return res.getValue();
         } catch (XmlFpMarshalException e) {
             throw new XmlFpException(e);

@@ -9,6 +9,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 
+import static info.xonix.zlo.search.xmlfp.JaxbUnmarshallers.UNMARSHALLER_XMLFP;
+
 /**
  * User: gubarkov
  * Date: 12.02.12
@@ -26,7 +28,7 @@ public class ForumAccessor {
 
         try {
             @SuppressWarnings("unchecked")
-            final JAXBElement<Long> res = (JAXBElement<Long>) JaxbUnmarshallers.LAST_MSG_NUM_UNMARSHALLER.unmarshal(new ByteArrayInputStream(bytes));
+            final JAXBElement<Long> res = (JAXBElement<Long>) UNMARSHALLER_XMLFP.unmarshal(new ByteArrayInputStream(bytes));
 
             return res.getValue();
         } catch (JAXBException e) {
@@ -42,7 +44,7 @@ public class ForumAccessor {
 
         try {
             @SuppressWarnings("unchecked")
-            final info.xonix.zlo.search.xmlfp.jaxb_generated.message.Message jaxbMessage = (info.xonix.zlo.search.xmlfp.jaxb_generated.message.Message) JaxbUnmarshallers.MESSAGE_UNMARSHALLER.unmarshal(new ByteArrayInputStream(bytes));
+            final info.xonix.zlo.search.xmlfp.jaxb_generated.Message jaxbMessage = (info.xonix.zlo.search.xmlfp.jaxb_generated.Message) UNMARSHALLER_XMLFP.unmarshal(new ByteArrayInputStream(bytes));
 
             return Convert.fromJaxbMessage(jaxbMessage);
         } catch (JAXBException e) {
