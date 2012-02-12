@@ -86,6 +86,10 @@ class Convert {
             jaxbMessage.setInfo(info);
 
             GregorianCalendar cal = new GregorianCalendar();
+            // TODO: normalize TZ
+//            GregorianCalendar cal = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
+
+            // TODO: note: msg datetime MUST be UTC(GMT) based
             cal.setTime(message.getDate());
 
             info.setDate(new XMLGregorianCalendarImpl(cal));
