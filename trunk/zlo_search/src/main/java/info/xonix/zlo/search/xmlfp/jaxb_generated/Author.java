@@ -1,5 +1,5 @@
 
-package info.xonix.zlo.search.xmlfp.jaxb_generated.message;
+package info.xonix.zlo.search.xmlfp.jaxb_generated;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

@@ -1,13 +1,16 @@
 
-package info.xonix.zlo.search.xmlfp.jaxb_generated.message;
+package info.xonix.zlo.search.xmlfp.jaxb_generated;
 
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
+import javax.xml.namespace.QName;
 
 
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the info.xonix.zlo.search.xmlfp.jaxb_generated.message package. 
+ * generated in the info.xonix.zlo.search.xmlfp.jaxb_generated package. 
  * <p>An ObjectFactory allows you to programatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -21,9 +24,10 @@ import javax.xml.bind.annotation.XmlRegistry;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _LastMessageNumber_QNAME = new QName("", "lastMessageNumber");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: info.xonix.zlo.search.xmlfp.jaxb_generated.message
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: info.xonix.zlo.search.xmlfp.jaxb_generated
      * 
      */
     public ObjectFactory() {
@@ -35,6 +39,14 @@ public class ObjectFactory {
      */
     public Content createContent() {
         return new Content();
+    }
+
+    /**
+     * Create an instance of {@link Forum }
+     * 
+     */
+    public Forum createForum() {
+        return new Forum();
     }
 
     /**
@@ -75,6 +87,23 @@ public class ObjectFactory {
      */
     public Author createAuthor() {
         return new Author();
+    }
+
+    /**
+     * Create an instance of {@link Forum.Xmlfp }
+     * 
+     */
+    public Forum.Xmlfp createForumXmlfp() {
+        return new Forum.Xmlfp();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Long }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "lastMessageNumber")
+    public JAXBElement<Long> createLastMessageNumber(Long value) {
+        return new JAXBElement<Long>(_LastMessageNumber_QNAME, Long.class, null, value);
     }
 
 }
