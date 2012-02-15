@@ -12,6 +12,15 @@
 </style>
 
 <form action="xmlfp.jsp" method="get" class="form">
+    <input type="hidden" name="xmlfp" value="descriptor"/>
+    Сайт:
+    <jsp:getProperty name="backendBean" property="siteSelector"/>
+    <br/>
+    <input type="submit" value="Получить XMLFP дескриптор"/>
+</form>
+
+<form action="xmlfp.jsp" method="get" class="form">
+    <input type="hidden" name="xmlfp" value="message"/>
     Сайт:
     <jsp:getProperty name="backendBean" property="siteSelector"/>
     <br/>
@@ -21,7 +30,7 @@
 </form>
 
 <form action="xmlfp.jsp" method="get" class="form">
-    <input type="hidden" name="lastMessageNumber" value="true"/>
+    <input type="hidden" name="xmlfp" value="lastMessageNumber"/>
     Сайт:
     <jsp:getProperty name="backendBean" property="siteSelector"/>
     <br/>
@@ -30,6 +39,7 @@
 
 <h3>XML Schemas</h3>
 <ul>
+    <li><a href="xsd/descriptor.xsd">descriptor.xsd</a></li>
     <li><a href="xsd/message.xsd">message.xsd</a></li>
     <li><a href="xsd/author.xsd">author.xsd</a></li>
     <li><a href="xsd/lastMessageNumber.xsd">lastMessageNumber.xsd</a></li>

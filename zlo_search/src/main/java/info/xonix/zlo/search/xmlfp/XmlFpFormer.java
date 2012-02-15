@@ -30,4 +30,8 @@ public class XmlFpFormer {
         return XmlFpUtils.lastMessageNumberToXml(
                 appLogic.getLastSavedMessageNumber(site));
     }
+
+    public String siteXmlFpDescriptor(Site site) {
+        return XmlFpUtils.siteDescriptorToXml(site);
+    }
 }

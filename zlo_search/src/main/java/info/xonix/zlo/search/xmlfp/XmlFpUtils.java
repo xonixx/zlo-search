@@ -1,5 +1,6 @@
 package info.xonix.zlo.search.xmlfp;
 
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.xmlfp.jaxb_generated.ObjectFactory;
 import info.xonix.zlo.search.xmlfp.utils.MarshalUtils;
@@ -49,6 +50,15 @@ public class XmlFpUtils {
             return res.getValue();
         } catch (XmlFpMarshalException e) {
             throw new XmlFpException(e);
+        }
+    }
+
+    public static String siteDescriptorToXml(Site site) {
+        try {
+            return MarshalUtils.marshal(MARSHALLER_XMLFP,
+                    Convert.toJaxbForum(site));
+        } catch (XmlFpMarshalException e) {
+            throw new RuntimeException(e);
         }
     }
 }

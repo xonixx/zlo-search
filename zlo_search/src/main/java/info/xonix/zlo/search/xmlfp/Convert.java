@@ -8,6 +8,7 @@ import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.xmlfp.jaxb_generated.Author;
 import info.xonix.zlo.search.xmlfp.jaxb_generated.Content;
+import info.xonix.zlo.search.xmlfp.jaxb_generated.Forum;
 import info.xonix.zlo.search.xmlfp.jaxb_generated.Info;
 import org.apache.commons.lang.StringUtils;
 
@@ -125,5 +126,22 @@ class Convert {
     private static MessageStatus messageStatusFromString(String jaxbStatus) {
         final MessageStatus messageStatus = MESSAGE_STATUS_TO_JAXB_STATUS.inverse().get(jaxbStatus);
         return messageStatus != null ? messageStatus : MessageStatus.OK; // omitted status = OK
+    }
+
+    public static Forum toJaxbForum(Site site) {
+        Forum forum = new Forum();
+
+        forum.setName(site.getSiteDescription());
+        forum.setUrl("http://" + site.getSiteUrl() + "/");
+
+        final Forum.Xmlfp xmlFpInfo = new Forum.Xmlfp();
+
+//        TODO: absolute URLS?
+        xmlFpInfo.setLastMessageNumberUrl("/xmlfp.jsp?xmlfp=lastMessageNumber&site=" + site.getSiteNumber());
+        xmlFpInfo.setMessageUrl("/xmlfp.jsp?xmlfp=message&num={0}&site=" + site.getSiteNumber());
+
+        forum.setXmlfp(xmlFpInfo);
+        forum.setType("tree");
+        return forum;
     }
 }

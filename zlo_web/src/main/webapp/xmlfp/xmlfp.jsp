@@ -26,12 +26,18 @@
                 response.setStatus(200);
                 response.setContentType("text/xml; charset=UTF-8");
 
-                final String num = request.getParameter("num");
-                if (StringUtils.isNotEmpty(num)) {
-                    responseWriter.write(xmlFpFormer.getMessage(site, Integer.parseInt(num)));
+                final String xmlFp = request.getParameter("xmlfp");
 
-                } else if (request.getParameter("lastMessageNumber") != null) {
+                if ("message".equals(xmlFp)) {
+                    responseWriter.write(xmlFpFormer.getMessage(site,
+                            Integer.parseInt(request.getParameter("num"))));
+
+                } else if ("lastMessageNumber".equals(xmlFp)) {
                     responseWriter.write(xmlFpFormer.lastMessageNumber(site));
+
+                } else if ("descriptor".equals(xmlFp)) {
+                    responseWriter.write(xmlFpFormer.siteXmlFpDescriptor(site));
+
                 }
             } catch (Exception ex) {
                 response.setStatus(500); // todo: ?
