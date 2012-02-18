@@ -22,13 +22,29 @@
                 <xs:element name="xmlfp">
                     <xs:complexType>
                         <xs:all>
-                            <xs:element name="lastMessageNumberUrl" type="xs:anyURI"/>
+                            <xs:element name="lastMessageNumberUrl" type="xs:anyURI">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        Example: http://some-cool-forum.com/xmlfp.php?last
+
+                                        Can be relative. Assume the xmlfp descriptor URL is
+
+                                        htto://url/some/path/xmlfp?descriptor
+
+                                        then examples of resolivng relative URLs:
+
+                                            /aaa/xmlfp?last  -->  htto://url/aaa/xmlfp?last
+                                            aaa/xmlfp?last   -->  htto://url/some/path/aaa/xmlfp?last
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
 
                             <xs:element name="messageUrl" type="xs:anyURI">
                                 <xs:annotation>
                                     <xs:documentation>
-                                        Example: http://some-cool-forum.com/msg.php?id={0}
-                                        <!--TODO: can it be relative?-->
+                                        Example: http://some-cool-forum.com/xmlfp.php?msg&amp;id={0}
+
+                                        Can be relative, see explanation above.
                                     </xs:documentation>
                                 </xs:annotation>
                             </xs:element>
