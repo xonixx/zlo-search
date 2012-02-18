@@ -6,6 +6,7 @@ import info.xonix.zlo.search.utils.factory.Factory;
  * Author: Vovan
  * Date: 11.01.2008
  * Time: 22:30:46
+ * TODO: we should rename this to smth like WwwconfForumParams
  */
 public class Site extends SiteConfiguration {
     private static Factory<String, Site> siteFactory = new Factory<String, Site>() {
