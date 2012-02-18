@@ -1,6 +1,8 @@
 package info.xonix.zlo.search.xmlfp;
 
 import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.xmlfp.jaxb_generated.Forum;
+import info.xonix.zlo.search.xmlfp.utils.UrlUtil;
 import org.apache.commons.io.IOUtils;
 
 import javax.xml.bind.JAXBElement;
@@ -19,6 +21,23 @@ public class ForumAccessor {
 
     public ForumAccessor(XmlFpUrls xmlFpUrls) {
         this.xmlFpUrls = xmlFpUrls;
+    }
+
+    public ForumAccessor(String descriptorUrl) throws XmlFpException {
+        final byte[] descriptorXmlBytes = getXmlAsBytesFromUrl(descriptorUrl);
+
+        final Forum forum;
+        try {
+            forum = (Forum) XmlFpContext.getUnmarshaller().unmarshal(new ByteArrayInputStream(descriptorXmlBytes));
+        } catch (JAXBException e) {
+            throw new XmlFpException(e, "Error unmarshalling");
+        }
+
+        this.xmlFpUrls = new XmlFpUrls(
+                UrlUtil.combineUrls(descriptorUrl, forum.getXmlfp().getLastMessageNumberUrl()),
+                UrlUtil.combineUrls(descriptorUrl, forum.getXmlfp().getMessageUrl().replace("{0}", "__0__"))
+                        .replace("__0__", "{0}") // small hack to get round URI validation
+        );
     }
 
     public long getLastMessageNumber() throws XmlFpException {
@@ -60,7 +79,7 @@ public class ForumAccessor {
         try {
             bytes = IOUtils.toByteArray(new URL(url).openStream());
         } catch (IOException e) {
-            throw new XmlFpException(e, "Error accessing forum site");
+            throw new XmlFpIOException(e, "Error accessing forum site");
         }
 
         return bytes;
