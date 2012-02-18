@@ -27,7 +27,6 @@ class Convert {
         if (messageStatus == MessageStatus.OK) {
             final Author author = jaxbMessage.getAuthor();
             final Content content = jaxbMessage.getContent();
-            final Content.Category category = content.getCategory();
             final Info info = jaxbMessage.getInfo();
 
             return new Message(
@@ -36,8 +35,8 @@ class Convert {
                     null, // TODO: implement altname in xmlfp ?
                     author.getHost(),
 
-                    category.getValue(),
-                    category.getId(),
+                    content.getCategory(),
+                    -1,
 
                     StringUtils.trim(content.getTitle()),
                     StringUtils.trim(content.getBody()),
@@ -75,13 +74,7 @@ class Convert {
             content.setTitle(message.getTitle());
             content.setBody(message.getBody());
 
-
-            final Content.Category category = new Content.Category();
-            content.setCategory(category);
-
-            category.setValue(message.getTopic());
-            category.setId(message.getTopicCode());
-
+            content.setCategory(message.getTopic());
 
             final Info info = new Info();
             jaxbMessage.setInfo(info);

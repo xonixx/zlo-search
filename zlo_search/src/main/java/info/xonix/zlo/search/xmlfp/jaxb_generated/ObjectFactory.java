@@ -50,14 +50,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Content.Category }
-     * 
-     */
-    public Content.Category createContentCategory() {
-        return new Content.Category();
-    }
-
-    /**
      * Create an instance of {@link Content.Tags }
      * 
      */
