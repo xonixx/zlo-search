@@ -10,7 +10,7 @@ import info.xonix.zlo.search.xmlfp.XmlFpIOException;
  * Date: 19.02.12
  * Time: 1:32
  */
-public class XmlFpForumAdapter implements ForumAdapter {
+public class XmlFpForumAdapter extends ForumAdapterAbstract {
 
     private ForumAccessor forumAccessor;
 

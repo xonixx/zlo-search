@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Date: 19.02.12
  * Time: 1:32
  */
-public class WwwconfForumAdapter implements ForumAdapter {
+public class WwwconfForumAdapter extends ForumAdapterAbstract {
     private Site site;
 
     @Autowired
