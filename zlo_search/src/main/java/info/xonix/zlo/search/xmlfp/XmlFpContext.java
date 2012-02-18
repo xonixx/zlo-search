@@ -12,9 +12,8 @@ import java.util.List;
  * User: gubarkov
  * Date: 18.02.12
  * Time: 15:45
- * TODO: make package-private?
  */
-public class XmlFpContext {
+class XmlFpContext {
     public static JAXBContext getJaxbContext() {
         return JaxbContextHolder.JAXB_CONTEXT;
     }

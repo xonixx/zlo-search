@@ -18,7 +18,6 @@ public class XmlFpUtils {
         try {
             return MarshalUtils.marshal(XmlFpContext.getMarshaller(),
                     Convert.toJaxbMessage(message));
-
         } catch (XmlFpMarshalException e) {
             throw new RuntimeException(e);
         }

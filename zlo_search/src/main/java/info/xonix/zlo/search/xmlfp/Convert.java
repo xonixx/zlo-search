@@ -136,9 +136,8 @@ class Convert {
 
         final Forum.Xmlfp xmlFpInfo = new Forum.Xmlfp();
 
-//        TODO: absolute URLS?
-        xmlFpInfo.setLastMessageNumberUrl("/xmlfp.jsp?xmlfp=lastMessageNumber&site=" + site.getSiteNumber());
-        xmlFpInfo.setMessageUrl("/xmlfp.jsp?xmlfp=message&num={0}&site=" + site.getSiteNumber());
+        xmlFpInfo.setLastMessageNumberUrl("xmlfp.jsp?xmlfp=lastMessageNumber&site=" + site.getSiteNumber());
+        xmlFpInfo.setMessageUrl("xmlfp.jsp?xmlfp=message&num={0}&site=" + site.getSiteNumber());
 
         forum.setXmlfp(xmlFpInfo);
         forum.setType("tree");
