@@ -1,7 +1,7 @@
 package info.xonix.zlo.search;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.model.MessageFields;
+import info.xonix.zlo.search.logic.MessageFields;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;

@@ -4,7 +4,6 @@ import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.MessagesDao;
 import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.SiteLogic;
-import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
@@ -20,6 +19,8 @@ import java.util.List;
  */
 public class BackendBean {
     private final static Logger log = Logger.getLogger(BackendBean.class);
+
+    public static final String ALL_TOPICS = "Все темы";
 
     private String topic;
     private String title;
@@ -55,7 +56,7 @@ public class BackendBean {
         }
 
         return HtmlConstructor.constructSelector(SN_TOPIC, null,
-                new String[]{Message.ALL_TOPICS}, topics, getTopicInt(), true);
+                new String[]{ALL_TOPICS}, topics, getTopicInt(), true);
     }
 
     public String getSiteSelector() {

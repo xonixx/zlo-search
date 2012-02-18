@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.config;
 
 import info.xonix.zlo.search.analyzers.AnalyzerProvider;
-import info.xonix.zlo.search.model.MessageFields;
+import info.xonix.zlo.search.logic.MessageFields;
 import info.xonix.zlo.search.utils.EnvUtils;
 import info.xonix.zlo.search.utils.ExceptionUtils;
 import info.xonix.zlo.search.utils.SmartQueryParser;

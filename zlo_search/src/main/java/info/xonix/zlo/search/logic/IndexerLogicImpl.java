@@ -5,18 +5,24 @@ import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.doubleindex.DoubleIndexManager;
 import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.utils.Check;
 import info.xonix.zlo.search.utils.factory.SiteFactory;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.apache.lucene.document.DateTools;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.FSDirectory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 /**
  * Author: gubarkov
@@ -26,6 +32,10 @@ import java.io.IOException;
  */
 public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
     private static Logger log = Logger.getLogger(IndexerLogicImpl.class);
+
+    public static NumberFormat URL_NUM_FORMAT = new DecimalFormat("0000000000"); // 10 zeros
+    public static final String TRUE = "1";
+    public static final String FALSE = "0";
 
     @Autowired
     private Config config;
@@ -83,10 +93,10 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
         final IndexWriter writer = getWriter(site);
         try {
             for (Message msg : appLogic.getMessages(site, start, end)) {
-                if (msg.getStatus() == MessageStatus.OK) {
+                if (msg.isOk()) {
                     log.debug(site.getName() + " - Addind: " + (config.isDebug() ? msg : msg.getNum()));
 
-                    writer.addDocument(msg.getDocument());
+                    writer.addDocument(messageToDocument(msg));
                 } else {
                     log.debug(site.getName() + " - Not adding: " + msg.getNum() + " with status: " + msg.getStatus());
                 }
@@ -98,6 +108,28 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
             log.error("Exception while adding to index", e);
             throw new IndexerException(e);
         }
+    }
+
+    private Document messageToDocument(@Nonnull Message msg) {
+            final String hostLowerCase = msg.getHost().toLowerCase();
+
+            Document doc = new Document();
+
+            doc.add(new Field(MessageFields.URL_NUM, URL_NUM_FORMAT.format(msg.getNum()), Field.Store.YES, Field.Index.NOT_ANALYZED));
+            doc.add(new Field(MessageFields.TOPIC_CODE, Integer.toString(msg.getTopicCode()), Field.Store.NO, Field.Index.NOT_ANALYZED));
+            doc.add(new Field(MessageFields.TITLE, msg.getCleanTitle(), Field.Store.NO, Field.Index.ANALYZED)); // "чистый" - индексируем, не храним
+            doc.add(new Field(MessageFields.NICK, msg.getNick().toLowerCase(), Field.Store.NO, Field.Index.NOT_ANALYZED));
+            doc.add(new Field(MessageFields.REG, msg.isReg() ? TRUE : FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED));
+
+            doc.add(new Field(MessageFields.HOST, hostLowerCase, Field.Store.NO, Field.Index.NOT_ANALYZED));
+            doc.add(new Field(MessageFields.HOST_REVERSED, StringUtils.reverse(hostLowerCase), Field.Store.NO, Field.Index.NOT_ANALYZED));
+
+            doc.add(new Field(MessageFields.DATE, DateTools.dateToString(msg.getDate(), DateTools.Resolution.MINUTE), Field.Store.NO, Field.Index.NOT_ANALYZED));
+            doc.add(new Field(MessageFields.BODY, msg.getCleanBody(), Field.Store.NO, Field.Index.ANALYZED)); // "чистый" - индексируем, не храним
+            doc.add(new Field(MessageFields.HAS_URL, msg.isHasUrl() ? TRUE : FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED));
+            doc.add(new Field(MessageFields.HAS_IMG, msg.isHasImg() ? TRUE : FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED));
+
+            return doc;
     }
 
     /**
