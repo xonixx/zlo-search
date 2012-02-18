@@ -73,7 +73,6 @@ public class PageParser implements InitializingBean {
             groupsOrder.add(0, 0);
         }
 
-
         String topic = m.group(groupsOrder.get(1));
         String title = m.group(groupsOrder.get(2));
 
@@ -104,10 +103,10 @@ public class PageParser implements InitializingBean {
     }
 
     public Message parseMessage(Site site, String msg, int urlNum) throws PageParseException {
-        Message zm = new Message();
-        zm.setNum(urlNum);
-        parseMessage(site, zm, msg);
-        return zm;
+        Message message = new Message();
+        message.setNum(urlNum);
+        parseMessage(site, message, msg);
+        return message;
     }
 
     private Date prepareDate(Site site, String s) {

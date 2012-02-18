@@ -1,5 +1,5 @@
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.model.MessageFields;
+import info.xonix.zlo.search.logic.MessageFields;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
