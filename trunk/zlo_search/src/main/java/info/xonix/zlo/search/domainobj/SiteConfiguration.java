@@ -92,6 +92,10 @@ public abstract class SiteConfiguration {
 
         this.name = name;
 
+        initializeFromProperties(p);
+    }
+
+    private void initializeFromProperties(Properties p) {
         markEndMsg1 = p.getProperty("str.mark.end.1");
         markEndMsg2 = p.getProperty("str.mark.end.2");
 

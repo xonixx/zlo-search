@@ -34,8 +34,8 @@ public class ForumAccessor {
         }
 
         this.xmlFpUrls = new XmlFpUrls(
-                UrlUtil.combineUrls(descriptorUrl, forum.getXmlfp().getLastMessageNumberUrl()),
-                UrlUtil.combineUrls(descriptorUrl, forum.getXmlfp().getMessageUrl().replace("{0}", "__0__"))
+                UrlUtil.combineUrls(descriptorUrl, forum.getXmlfpUrls().getLastMessageNumberUrl()),
+                UrlUtil.combineUrls(descriptorUrl, forum.getXmlfpUrls().getMessageUrl().replace("{0}", "__0__"))
                         .replace("__0__", "{0}") // small hack to get round URI validation
         );
     }
