@@ -10,6 +10,16 @@
 
                 <xs:element name="url" type="xs:anyURI"/>
 
+                <xs:element name="charset" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Charset could affect generated URLs
+
+                            Examples: UTF-8, windows-1251
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
                 <xs:element name="type">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
@@ -19,7 +29,7 @@
                     </xs:simpleType>
                 </xs:element>
 
-                <xs:element name="xmlfp">
+                <xs:element name="xmlfpUrls">
                     <xs:complexType>
                         <xs:all>
                             <xs:element name="lastMessageNumberUrl" type="xs:anyURI">
@@ -29,12 +39,13 @@
 
                                         Can be relative. Assume the xmlfp descriptor URL is
 
-                                        htto://url/some/path/xmlfp?descriptor
+                                        http://url/some/path/xmlfp?descriptor
 
                                         then examples of resolivng relative URLs:
-
-                                            /aaa/xmlfp?last  -->  htto://url/aaa/xmlfp?last
-                                            aaa/xmlfp?last   -->  htto://url/some/path/aaa/xmlfp?last
+                                        <ul>
+                                            <li>/aaa/xmlfp?last --> http://url/aaa/xmlfp?last</li>
+                                            <li>aaa/xmlfp?last --> http://url/some/path/aaa/xmlfp?last</li>
+                                        </ul>
                                     </xs:documentation>
                                 </xs:annotation>
                             </xs:element>
@@ -48,6 +59,16 @@
                                     </xs:documentation>
                                 </xs:annotation>
                             </xs:element>
+                        </xs:all>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="forumUrls">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="messageUrl" type="xs:anyURI"/>
+
+                            <xs:element name="userProfileUrl" type="xs:anyURI"/>
                         </xs:all>
                     </xs:complexType>
                 </xs:element>

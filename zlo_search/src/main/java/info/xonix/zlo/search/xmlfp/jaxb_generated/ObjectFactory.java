@@ -82,11 +82,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Forum.Xmlfp }
+     * Create an instance of {@link Forum.XmlfpUrls }
      * 
      */
-    public Forum.Xmlfp createForumXmlfp() {
-        return new Forum.Xmlfp();
+    public Forum.XmlfpUrls createForumXmlfpUrls() {
+        return new Forum.XmlfpUrls();
+    }
+
+    /**
+     * Create an instance of {@link Forum.ForumUrls }
+     * 
+     */
+    public Forum.ForumUrls createForumForumUrls() {
+        return new Forum.ForumUrls();
     }
 
     /**

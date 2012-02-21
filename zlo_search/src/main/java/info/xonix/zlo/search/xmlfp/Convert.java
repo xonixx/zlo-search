@@ -126,14 +126,19 @@ class Convert {
 
         forum.setName(site.getSiteDescription());
         forum.setUrl("http://" + site.getSiteUrl() + "/");
+        forum.setType("tree");
+        forum.setCharset(site.getSiteCharset());
 
-        final Forum.Xmlfp xmlFpInfo = new Forum.Xmlfp();
-
+        final Forum.XmlfpUrls xmlFpInfo = new Forum.XmlfpUrls();
         xmlFpInfo.setLastMessageNumberUrl("xmlfp.jsp?xmlfp=lastMessageNumber&site=" + site.getSiteNumber());
         xmlFpInfo.setMessageUrl("xmlfp.jsp?xmlfp=message&num={0}&site=" + site.getSiteNumber());
+        forum.setXmlfpUrls(xmlFpInfo);
 
-        forum.setXmlfp(xmlFpInfo);
-        forum.setType("tree");
+        final Forum.ForumUrls forumUrls = new Forum.ForumUrls();
+        forumUrls.setMessageUrl("http://" + site.getSiteUrl() + site.getReadQuery() + "__message_id__");
+        forumUrls.setUserProfileUrl("http://" + site.getSiteUrl() + site.getUinfoQuery() + "__user_name__");
+        forum.setForumUrls(forumUrls);
+
         return forum;
     }
 }
