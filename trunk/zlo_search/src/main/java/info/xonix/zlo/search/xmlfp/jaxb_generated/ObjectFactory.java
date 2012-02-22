@@ -98,6 +98,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Messages }
+     * 
+     */
+    public Messages createMessages() {
+        return new Messages();
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Long }{@code >}}
      * 
      */

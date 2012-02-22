@@ -14,7 +14,11 @@ OUT_DIR="$SRC_DIR/info/xonix/zlo/search/forumxmlprotocol/xjccompiled"
 PATH="$JAXB_HOME/bin:$PATH"
 
 #rm -rf $OUT_DIR
-sh xjc.sh $JAXB_OPTS -p info.xonix.zlo.search.xmlfp.jaxb_generated -d $SRC_DIR descriptor.xsd message.xsd lastMessageNumber.xsd
+sh xjc.sh $JAXB_OPTS -p info.xonix.zlo.search.xmlfp.jaxb_generated -d $SRC_DIR \
+    descriptor.xsd \
+    message.xsd \
+    messages.xsd \
+    lastMessageNumber.xsd
 
 #echo "Copying xsd"
 #copy *.xsd D:/TEST/JAVA/ZloSearcher/trunk/zlo_web/resources/xmlfp/xsd

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:include schemaLocation="message.xsd"/>
+
+    <xs:element name="messages">
+        <xs:complexType>
+            <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="message"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

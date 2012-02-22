@@ -7,6 +7,7 @@ import info.xonix.zlo.search.xmlfp.utils.MarshalUtils;
 import info.xonix.zlo.search.xmlfp.utils.XmlFpMarshalException;
 
 import javax.xml.bind.JAXBElement;
+import java.util.List;
 
 /**
  * User: gubarkov
@@ -18,6 +19,15 @@ public class XmlFpUtils {
         try {
             return MarshalUtils.marshal(XmlFpContext.getMarshaller(),
                     Convert.toJaxbMessage(message));
+        } catch (XmlFpMarshalException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String messagesToXml(List<Message> messages) {
+        try {
+            return MarshalUtils.marshal(XmlFpContext.getMarshaller(),
+                    Convert.toJaxbMessages(messages));
         } catch (XmlFpMarshalException e) {
             throw new RuntimeException(e);
         }

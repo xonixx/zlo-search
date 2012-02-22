@@ -6,14 +6,12 @@ import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl
 import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
-import info.xonix.zlo.search.xmlfp.jaxb_generated.Author;
-import info.xonix.zlo.search.xmlfp.jaxb_generated.Content;
-import info.xonix.zlo.search.xmlfp.jaxb_generated.Forum;
-import info.xonix.zlo.search.xmlfp.jaxb_generated.Info;
+import info.xonix.zlo.search.xmlfp.jaxb_generated.*;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * User: gubarkov
@@ -21,6 +19,8 @@ import java.util.GregorianCalendar;
  * Time: 22:27
  */
 class Convert {
+    private static final ObjectFactory OBJECT_FACTORY = new ObjectFactory();
+
     public static Message fromJaxbMessage(info.xonix.zlo.search.xmlfp.jaxb_generated.Message jaxbMessage) {
         final MessageStatus messageStatus = messageStatusFromString(jaxbMessage.getStatus());
 
@@ -53,6 +53,16 @@ class Convert {
         }
     }
 
+    public static Messages toJaxbMessages(List<Message> messages) {
+        Messages jaxbMessages = OBJECT_FACTORY.createMessages();
+
+        for (Message message : messages) {
+            jaxbMessages.getMessage().add(toJaxbMessage(message));
+        }
+
+        return jaxbMessages;
+    }
+
     public static info.xonix.zlo.search.xmlfp.jaxb_generated.Message toJaxbMessage(Message message) {
         if (message == null) { // TODO: ?
             message = new Message();
@@ -68,7 +78,7 @@ class Convert {
 
             jaxbMessage.setStatus(null); // null = OK
 
-            final Content content = new Content();
+            final Content content = OBJECT_FACTORY.createContent();
             jaxbMessage.setContent(content);
 
             content.setTitle(message.getTitle());
@@ -76,7 +86,7 @@ class Convert {
 
             content.setCategory(message.getTopic());
 
-            final Info info = new Info();
+            final Info info = OBJECT_FACTORY.createInfo();
             jaxbMessage.setInfo(info);
 
             GregorianCalendar cal = new GregorianCalendar();
@@ -92,7 +102,7 @@ class Convert {
             info.setMessageUrl("http://" + message.getSite().getSiteUrl() + site.getReadQuery() + message.getNum());
 
 
-            final Author author = new Author();
+            final Author author = OBJECT_FACTORY.createAuthor();
             jaxbMessage.setAuthor(author);
 
             author.setName(message.getNick());
@@ -122,19 +132,19 @@ class Convert {
     }
 
     public static Forum toJaxbForum(Site site) {
-        Forum forum = new Forum();
+        Forum forum = OBJECT_FACTORY.createForum();
 
         forum.setName(site.getSiteDescription());
         forum.setUrl("http://" + site.getSiteUrl() + "/");
         forum.setType("tree");
         forum.setCharset(site.getSiteCharset());
 
-        final Forum.XmlfpUrls xmlFpInfo = new Forum.XmlfpUrls();
+        final Forum.XmlfpUrls xmlFpInfo = OBJECT_FACTORY.createForumXmlfpUrls();
         xmlFpInfo.setLastMessageNumberUrl("xmlfp.jsp?xmlfp=lastMessageNumber&site=" + site.getSiteNumber());
         xmlFpInfo.setMessageUrl("xmlfp.jsp?xmlfp=message&num=" + XmlFpUrlsSubstitutions.MESSAGE_ID + "&site=" + site.getSiteNumber());
         forum.setXmlfpUrls(xmlFpInfo);
 
-        final Forum.ForumUrls forumUrls = new Forum.ForumUrls();
+        final Forum.ForumUrls forumUrls = OBJECT_FACTORY.createForumForumUrls();
         forumUrls.setMessageUrl("http://" + site.getSiteUrl() + site.getReadQuery() + XmlFpUrlsSubstitutions.MESSAGE_ID);
         forumUrls.setUserProfileUrl("http://" + site.getSiteUrl() + site.getUinfoQuery() + XmlFpUrlsSubstitutions.USER_NAME);
         forum.setForumUrls(forumUrls);

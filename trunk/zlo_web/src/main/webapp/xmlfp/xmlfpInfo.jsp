@@ -30,6 +30,18 @@
 </form>
 
 <form action="xmlfp.jsp" method="get" class="form">
+    <input type="hidden" name="xmlfp" value="messages"/>
+    Сайт:
+    <jsp:getProperty name="backendBean" property="siteSelector"/>
+    <br/>
+    Диапазон
+    от:<input size="9" type="text" value="${param['from']}" name="from"/>
+    до:<input size="9" type="text" value="${param['to']}" name="to"/><br/>
+
+    <input type="submit" value="Получить XML"/>
+</form>
+
+<form action="xmlfp.jsp" method="get" class="form">
     <input type="hidden" name="xmlfp" value="lastMessageNumber"/>
     Сайт:
     <jsp:getProperty name="backendBean" property="siteSelector"/>
@@ -41,6 +53,7 @@
 <ul>
     <li><a href="xsd/descriptor.xsd">descriptor.xsd</a></li>
     <li><a href="xsd/message.xsd">message.xsd</a></li>
+    <li><a href="xsd/messages.xsd">messages.xsd</a></li>
     <li><a href="xsd/author.xsd">author.xsd</a></li>
     <li><a href="xsd/lastMessageNumber.xsd">lastMessageNumber.xsd</a></li>
 </ul>
