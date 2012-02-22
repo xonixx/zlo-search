@@ -142,6 +142,10 @@ class Convert {
         final Forum.XmlfpUrls xmlFpInfo = OBJECT_FACTORY.createForumXmlfpUrls();
         xmlFpInfo.setLastMessageNumberUrl("xmlfp.jsp?xmlfp=lastMessageNumber&site=" + site.getSiteNumber());
         xmlFpInfo.setMessageUrl("xmlfp.jsp?xmlfp=message&num=" + XmlFpUrlsSubstitutions.MESSAGE_ID + "&site=" + site.getSiteNumber());
+        xmlFpInfo.setMessageListUrl("xmlfp.jsp?xmlfp=messages" +
+                "&from=" + XmlFpUrlsSubstitutions.FROM +
+                "&to=" + XmlFpUrlsSubstitutions.TO +
+                "&site=" + site.getSiteNumber());
         forum.setXmlfpUrls(xmlFpInfo);
 
         final Forum.ForumUrls forumUrls = OBJECT_FACTORY.createForumForumUrls();

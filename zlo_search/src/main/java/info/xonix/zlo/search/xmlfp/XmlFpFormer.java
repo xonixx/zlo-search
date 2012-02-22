@@ -18,6 +18,10 @@ public class XmlFpFormer {
     private AppLogic appLogic;
 
     public String getMessages(Site site, int from, int to) {
+        if (to - from > 1000) {
+            throw new IllegalArgumentException("You are trying to receive more then 1000 messages!");
+        }
+
         final List<Message> messages = appLogic.getMessages(site, from, to);
 
         return XmlFpUtils.messagesToXml(messages);

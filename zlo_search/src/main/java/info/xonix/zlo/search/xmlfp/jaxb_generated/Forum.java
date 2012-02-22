@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlType;
  *                 &lt;all>
  *                   &lt;element name="lastMessageNumberUrl" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
  *                   &lt;element name="messageUrl" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
+ *                   &lt;element name="messageListUrl" type="{http://www.w3.org/2001/XMLSchema}anyURI" minOccurs="0"/>
  *                 &lt;/all>
  *               &lt;/restriction>
  *             &lt;/complexContent>
@@ -349,6 +350,7 @@ public class Forum {
      *       &lt;all>
      *         &lt;element name="lastMessageNumberUrl" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
      *         &lt;element name="messageUrl" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
+     *         &lt;element name="messageListUrl" type="{http://www.w3.org/2001/XMLSchema}anyURI" minOccurs="0"/>
      *       &lt;/all>
      *     &lt;/restriction>
      *   &lt;/complexContent>
@@ -369,6 +371,8 @@ public class Forum {
         @XmlElement(required = true)
         @XmlSchemaType(name = "anyURI")
         protected String messageUrl;
+        @XmlSchemaType(name = "anyURI")
+        protected String messageListUrl;
 
         /**
          * Gets the value of the lastMessageNumberUrl property.
@@ -416,6 +420,30 @@ public class Forum {
          */
         public void setMessageUrl(String value) {
             this.messageUrl = value;
+        }
+
+        /**
+         * Gets the value of the messageListUrl property.
+         * 
+         * @return
+         *     possible object is
+         *     {@link String }
+         *     
+         */
+        public String getMessageListUrl() {
+            return messageListUrl;
+        }
+
+        /**
+         * Sets the value of the messageListUrl property.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link String }
+         *     
+         */
+        public void setMessageListUrl(String value) {
+            this.messageListUrl = value;
         }
 
     }
