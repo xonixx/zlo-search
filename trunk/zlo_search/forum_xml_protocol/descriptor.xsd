@@ -59,6 +59,19 @@
                                     </xs:documentation>
                                 </xs:annotation>
                             </xs:element>
+
+                            <xs:element name="messageListUrl" type="xs:anyURI" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        Example: http://some-cool-forum.com/xmlfp.php?msgs&amp;from=__from__&amp;to=__to__
+
+                                        Can be relative, see explanation above.
+                                        Note: from - including, to - excluding.
+
+                                        This is optional functionality, but providing this it will optimize indexing
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
                         </xs:all>
                     </xs:complexType>
                 </xs:element>

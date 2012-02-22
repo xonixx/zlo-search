@@ -8,6 +8,9 @@ package info.xonix.zlo.search.xmlfp;
 public final class XmlFpUrlsSubstitutions {
     public static final String MESSAGE_ID = "__message_id__";
 
+    public static final String FROM = "__from__";
+    public static final String TO = "__to__";
+
     public static final String USER_NAME = "__user_name__";
     public static final String USER_ID = "__user_id__";
 }
