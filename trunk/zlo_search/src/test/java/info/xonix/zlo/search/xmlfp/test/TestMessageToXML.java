@@ -59,7 +59,7 @@ public class TestMessageToXML {
     public void test4() throws XmlFpException {
         final XmlFpUrls xmlFpUrls = new XmlFpUrls(
                 "http://localhost:8080/xmlfp/xmlfp.jsp?xmlfp=lastMessageNumber&site=0",
-                "http://localhost:8080/xmlfp/xmlfp.jsp?xmlfp=message&site=0&num={0}");
+                "http://localhost:8080/xmlfp/xmlfp.jsp?xmlfp=message&site=0&num=" + XmlFpUrlsSubstitutions.MESSAGE_ID);
 
         ForumAccessor forumAccessor = new ForumAccessor(xmlFpUrls);
 

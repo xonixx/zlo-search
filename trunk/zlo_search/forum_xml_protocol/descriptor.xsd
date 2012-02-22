@@ -53,7 +53,7 @@
                             <xs:element name="messageUrl" type="xs:anyURI">
                                 <xs:annotation>
                                     <xs:documentation>
-                                        Example: http://some-cool-forum.com/xmlfp.php?msg&amp;id={0}
+                                        Example: http://some-cool-forum.com/xmlfp.php?msg&amp;id=__message_id__
 
                                         Can be relative, see explanation above.
                                     </xs:documentation>

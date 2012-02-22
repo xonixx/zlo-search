@@ -10,7 +10,7 @@
 
     <xmlfpUrls>
         <lastMessageNumberUrl>http://zlo.rt.mipt.ru/xmlfp?lastMsgNumber</lastMessageNumberUrl>
-        <messageUrl>http://zlo.rt.mipt.ru/xmlfp?msg={0}</messageUrl>
+        <messageUrl>http://zlo.rt.mipt.ru/xmlfp?msg=__message_id__</messageUrl>
     </xmlfpUrls>
 
     <forumUrls>
