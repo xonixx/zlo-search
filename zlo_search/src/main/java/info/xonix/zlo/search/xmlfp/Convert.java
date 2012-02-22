@@ -131,12 +131,12 @@ class Convert {
 
         final Forum.XmlfpUrls xmlFpInfo = new Forum.XmlfpUrls();
         xmlFpInfo.setLastMessageNumberUrl("xmlfp.jsp?xmlfp=lastMessageNumber&site=" + site.getSiteNumber());
-        xmlFpInfo.setMessageUrl("xmlfp.jsp?xmlfp=message&num={0}&site=" + site.getSiteNumber());
+        xmlFpInfo.setMessageUrl("xmlfp.jsp?xmlfp=message&num=" + XmlFpUrlsSubstitutions.MESSAGE_ID + "&site=" + site.getSiteNumber());
         forum.setXmlfpUrls(xmlFpInfo);
 
         final Forum.ForumUrls forumUrls = new Forum.ForumUrls();
-        forumUrls.setMessageUrl("http://" + site.getSiteUrl() + site.getReadQuery() + "__message_id__");
-        forumUrls.setUserProfileUrl("http://" + site.getSiteUrl() + site.getUinfoQuery() + "__user_name__");
+        forumUrls.setMessageUrl("http://" + site.getSiteUrl() + site.getReadQuery() + XmlFpUrlsSubstitutions.MESSAGE_ID);
+        forumUrls.setUserProfileUrl("http://" + site.getSiteUrl() + site.getUinfoQuery() + XmlFpUrlsSubstitutions.USER_NAME);
         forum.setForumUrls(forumUrls);
 
         return forum;

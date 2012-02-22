@@ -35,8 +35,7 @@ public class ForumAccessor {
 
         this.xmlFpUrls = new XmlFpUrls(
                 UrlUtil.combineUrls(descriptorUrl, forum.getXmlfpUrls().getLastMessageNumberUrl()),
-                UrlUtil.combineUrls(descriptorUrl, forum.getXmlfpUrls().getMessageUrl().replace("{0}", "__0__"))
-                        .replace("__0__", "{0}") // small hack to get round URI validation
+                UrlUtil.combineUrls(descriptorUrl, forum.getXmlfpUrls().getMessageUrl())
         );
     }
 
@@ -56,7 +55,8 @@ public class ForumAccessor {
 
     public Message getMessage(long id) throws XmlFpException {
         final String messageUrl = xmlFpUrls.getMessageUrl();
-        final String messageUrlFilled = messageUrl.replace("{0}", Long.toString(id));
+        final String messageUrlFilled = messageUrl.replace(
+                XmlFpUrlsSubstitutions.MESSAGE_ID, Long.toString(id));
 
         final byte[] bytes = getXmlAsBytesFromUrl(messageUrlFilled);
 
