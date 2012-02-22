@@ -6,6 +6,8 @@ import info.xonix.zlo.search.model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 
+import java.util.List;
+
 /**
  * User: gubarkov
  * Date: 29.01.12
@@ -14,6 +16,12 @@ import org.springframework.dao.EmptyResultDataAccessException;
 public class XmlFpFormer {
     @Autowired
     private AppLogic appLogic;
+
+    public String getMessages(Site site, int from, int to) {
+        final List<Message> messages = appLogic.getMessages(site, from, to);
+
+        return XmlFpUtils.messagesToXml(messages);
+    }
 
     public String getMessage(Site site, int num) {
         Message m;

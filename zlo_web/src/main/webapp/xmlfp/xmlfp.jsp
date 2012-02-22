@@ -32,6 +32,11 @@
                     responseWriter.write(xmlFpFormer.getMessage(site,
                             Integer.parseInt(request.getParameter("num"))));
 
+                } else if ("messages".equals(xmlFp)) {
+                    responseWriter.write(xmlFpFormer.getMessages(site,
+                            Integer.parseInt(request.getParameter("from")),
+                            Integer.parseInt(request.getParameter("to"))
+                    ));
                 } else if ("lastMessageNumber".equals(xmlFp)) {
                     responseWriter.write(xmlFpFormer.lastMessageNumber(site));
 
