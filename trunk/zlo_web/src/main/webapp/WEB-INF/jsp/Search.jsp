@@ -1,4 +1,5 @@
 <%@ page import="java.util.Date" %>
+<%@ page import="info.xonix.zlo.search.model.Message" %>
 <%--
   User: gubarkov
   Date: 14.08.2007
@@ -6,6 +7,8 @@
 --%>
 <%@ include file="import.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
+
+<%@ include file="/WEB-INF/jsp/setSite.jsp" %>
 
 <jsp:useBean id="backendBean" class="info.xonix.zlo.web.BackendBean" scope="request"/>
 <jsp:setProperty name="backendBean" property="*"/>
@@ -164,7 +167,7 @@
                                decorator="info.xonix.zlo.web.decorators.SearchResultLineDecorator" requestURI="search"
                                class="searchRes">
                     <c:if test="${msg != null}">
-                        <c:set var="site" value="${msg.site}"/>
+                        <%--<c:set var="site" value="${msg.site}"/>--%>
                         <c:set var="siteRootUrl" value="${xonix:getSiteRoot(header['Referer'], site)}"/>
 
                         <c:if test="${not msg.ok}">
@@ -205,24 +208,24 @@
                         <small>
                             <c:if test="${empty msg.body}">(-)</c:if>
                             <c:if test="${msg.hasUrl}">(url)</c:if>
-                            <c:if test="${msg.hasImg}">(pic)</c:if>
+                            <c:if test="<%= ((Message)msg).isHasImg(site) %>">(pic)</c:if>
                         </small>
                         <a class="search"
-                           href="msg?site=${msg.site.siteNumber}&num=${msg.num}<c:if test="${not empty hl.wordsStr}">&hw=${hl.wordsStr}</c:if>"><fmt:message
+                           href="msg?site=${site.siteNumber}&num=${msg.num}<c:if test="${not empty hl.wordsStr}">&hw=${hl.wordsStr}</c:if>"><fmt:message
                                 key="link.saved.msg"/></a>
                     </display:column>
                     <display:column title="Ник">
                         <tiles:insertDefinition name="nick">
                             <tiles:putAttribute name="reg" value="${msg.reg}"/>
                             <tiles:putAttribute name="nick" value="${msg.nick}"/>
-                            <tiles:putAttribute name="site" value="${msg.site}"/>
+                            <tiles:putAttribute name="site" value="${site}"/>
                         </tiles:insertDefinition>
                     </display:column>
                     <c:if test="${not site.noHost}">
                         <display:column title="Хост" class="small">
                             <tiles:insertDefinition name="host">
                                 <tiles:putAttribute name="host" value="${msg.host}"/>
-                                <tiles:putAttribute name="site" value="${msg.site}"/>
+                                <tiles:putAttribute name="site" value="${site}"/>
                             </tiles:insertDefinition>
                         </display:column>
                     </c:if>

@@ -97,7 +97,8 @@ public class RssFormer {
                         Message m = (Message) m1;
                         Item it = new Item();
 
-                        Site s = m.getSite();
+//                        Site s = m.getSite();
+                        Site s = pl.getSite();
 
                         // highlighting of all feed takes to many time & cpu
 

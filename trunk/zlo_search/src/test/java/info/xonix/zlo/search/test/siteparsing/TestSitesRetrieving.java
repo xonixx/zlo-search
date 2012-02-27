@@ -269,7 +269,7 @@ public class TestSitesRetrieving {
         Assert.assertEquals("vilfred", m.getNick());
         Assert.assertEquals("77.51.192.172", m.getHost());
         Assert.assertTrue(m.isReg());
-        Assert.assertTrue(m.isHasImg());
+        Assert.assertTrue(m.isHasImg(zlo));
         Assert.assertTrue("Сообщения в этом потоке".equals(m.getTitle()));
         System.out.println(m);
 
@@ -330,7 +330,7 @@ public class TestSitesRetrieving {
         Assert.assertTrue(m.isReg());
         Assert.assertEquals("bestation", m.getNick());
         Assert.assertEquals("10.55.110.140", m.getHost());
-        Assert.assertTrue(!m.isHasImg());
+        Assert.assertTrue(!m.isHasImg(anime));
         Assert.assertTrue(!m.isHasUrl());
         Assert.assertEquals("В качестве бонуса могу выдать батч скаченный на 54.2% с полностью скаченной первой серией, оп и ед.", m.getBody());
         Assert.assertEquals("Ну, что? Кто в локалке возмется кланнад 1-5 скачать?", m.getTitle());
@@ -338,7 +338,7 @@ public class TestSitesRetrieving {
         m = siteLogic.getMessageByNumber(anime, 16376);
         System.out.println(m);
 
-        Assert.assertTrue(m.isHasImg());
+        Assert.assertTrue(m.isHasImg(anime));
         Assert.assertTrue(m.isHasUrl());
         Assert.assertTrue(m.isReg());
         Assert.assertEquals("fth", m.getNick());

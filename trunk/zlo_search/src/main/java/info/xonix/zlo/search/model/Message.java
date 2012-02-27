@@ -30,7 +30,7 @@ public class Message extends MessageShallow implements Serializable {
 
     private int hitId;
 
-    private Site site;
+//    private Site site;// TODO: this is WRONG!!!
 
     public static Comparator<Message> NUM_COMPARATOR = new Comparator<Message>() {
         public int compare(Message m1, Message m2) {
@@ -52,7 +52,8 @@ public class Message extends MessageShallow implements Serializable {
 
         super(num, nick, host, reg, topic, title, msgDate);
 
-        this.site = site;
+//        TODO: remove constructor param!!!
+//        this.site = site;
         this.altName = altName;
         this.topicCode = topicCode;
         this.body = body;
@@ -154,9 +155,11 @@ public class Message extends MessageShallow implements Serializable {
         return hasUrl;
     }
 
-    public boolean isHasImg() {
+    public boolean isHasImg(Site site) {
         if (hasImg == null) {
+            // TODO!!! This logic should be outside!!!
             hasImg = StringUtils.isNotEmpty(body) && HtmlUtils.hasImg(body, site);
+//            throw new UnsupportedOperationException("This logic should be outside!!!");
         }
         return hasImg;
     }
@@ -169,13 +172,13 @@ public class Message extends MessageShallow implements Serializable {
         this.status = status;
     }
 
-    public Site getSite() {
+/*    public Site getSite() {
         return site;
     }
 
     public void setSite(Site site) {
         this.site = site;
-    }
+    }*/
 
     public Message getMessage() {
         return this;
@@ -197,8 +200,8 @@ public class Message extends MessageShallow implements Serializable {
                     num, parentNum, topicCode, topic, title,
                     nick, altName, reg, host, date,
                     isHasUrl(),
-                    isHasImg(),
-                    site == null ? "" : site.getName(),
+                    isHasImg(null), // <<<---TODO
+//                    site == null ? "" : site.getName(),
                     body.replaceAll("\n", "\n\t\t"));
         } else {
             return MessageFormat.format(
@@ -206,8 +209,9 @@ public class Message extends MessageShallow implements Serializable {
                             "\n\tnum={0},\n\tstatus={1}," +
                             "\n\tsite={2}" +
                             "\n)",
-                    num, status,
-                    site == null ? "" : site.getName());
+                    num, status//,
+//                    site == null ? "" : site.getName()
+            );
         }
     }
 

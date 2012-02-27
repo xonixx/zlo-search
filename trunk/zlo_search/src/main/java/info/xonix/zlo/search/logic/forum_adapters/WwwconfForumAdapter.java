@@ -34,7 +34,7 @@ public class WwwconfForumAdapter extends ForumAdapterAbstract {
     @Override
     public Message getMessage(long messageId) throws ForumAccessException {
         try {
-            return messageRetriever.getMessage(site, (int)messageId, 0); // retries = 0 as we implement retries on ForumAdapter level
+            return messageRetriever.getMessage(site, (int) messageId, 0); // retries = 0 as we implement retries on ForumAdapter level
         } catch (RetrieverException e) {
             throw new ForumIoException("Can't get message #" + messageId + " from site: " + site.getName(), e);
         } catch (PageParseException e) {

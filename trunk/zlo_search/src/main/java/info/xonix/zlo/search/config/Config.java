@@ -1,6 +1,7 @@
 package info.xonix.zlo.search.config;
 
 import info.xonix.zlo.search.analyzers.AnalyzerProvider;
+import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.MessageFields;
 import info.xonix.zlo.search.utils.EnvUtils;
 import info.xonix.zlo.search.utils.ExceptionUtils;
@@ -305,5 +306,9 @@ public class Config {
 
     public boolean isStartDaemons() {
         return startDaemons;
+    }
+
+    public String getIndexDirDouble(Site site) {
+        return getProp("indexer.dir.double") + "/index_" + site.getName();
     }
 }

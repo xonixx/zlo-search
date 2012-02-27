@@ -58,7 +58,7 @@ public class DoubleIndexManager {
     }
 
     public DoubleIndexManager(Site site, Sort renewingSort) {
-        this(site.getIndexDirDouble(), renewingSort);
+        this(config.getIndexDirDouble(site), renewingSort);
     }
 
     private Directory dir(File dir) throws IOException {

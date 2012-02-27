@@ -48,6 +48,10 @@ public class ZloPaginatedList implements PaginatedList {
         this(searchResult, 0);/*no limit*/
     }
 
+    public Site getSite() {
+        return site;
+    }
+
     public List getList() {
         return currentList;
     }

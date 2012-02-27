@@ -28,7 +28,7 @@ public class TestMessageToXML {
         System.out.println(m);
 
         System.out.println("======================");
-        final String xml = XmlFpUtils.messageToXml(m);
+        final String xml = XmlFpUtils.messageToXml(site, m);
         System.out.println(xml);
 
         System.out.println("======================");

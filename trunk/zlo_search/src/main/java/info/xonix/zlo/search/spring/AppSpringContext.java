@@ -16,16 +16,24 @@ public final class AppSpringContext {
     private static volatile ApplicationContext applicationContext;
     private static volatile ApplicationContext applicationContextTesting;
 
+    private static boolean initializing = false;
+
     /**
      * get "production" application context
      *
      * @return application context
      */
     public static ApplicationContext getApplicationContext() {
+        if (initializing) {
+            throw new RuntimeException("Already in process of initialization!");
+        }
+
         if (applicationContext == null) {
             synchronized (AppSpringContext.class) {
                 if (applicationContext == null) {
+                    initializing = true;
                     applicationContext = new ClassPathXmlApplicationContext("all_beans.xml", AppSpringContext.class);
+                    initializing = false;
                 }
             }
         }
