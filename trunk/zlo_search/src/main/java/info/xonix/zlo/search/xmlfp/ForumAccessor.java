@@ -18,6 +18,8 @@ import java.net.URL;
  */
 public class ForumAccessor {
     private XmlFpUrls xmlFpUrls;
+    private String forumMessageUrlPattern;
+    private String forumUserProfileUrlPattern;
 
     public ForumAccessor(XmlFpUrls xmlFpUrls) {
         this.xmlFpUrls = xmlFpUrls;
@@ -37,6 +39,9 @@ public class ForumAccessor {
                 UrlUtil.combineUrls(descriptorUrl, forum.getXmlfpUrls().getLastMessageNumberUrl()),
                 UrlUtil.combineUrls(descriptorUrl, forum.getXmlfpUrls().getMessageUrl())
         );
+
+        this.forumMessageUrlPattern = UrlUtil.combineUrls(descriptorUrl, forum.getForumUrls().getMessageUrl());
+        this.forumUserProfileUrlPattern = UrlUtil.combineUrls(descriptorUrl, forum.getForumUrls().getUserProfileUrl());
     }
 
     public long getLastMessageNumber() throws XmlFpException {
@@ -83,5 +88,16 @@ public class ForumAccessor {
         }
 
         return bytes;
+    }
+
+    public String getForumMessageUrl(long messageId) {
+        return forumMessageUrlPattern
+                .replace(XmlFpUrlsSubstitutions.MESSAGE_ID, Long.toString(messageId));
+    }
+
+    public String getForumUserProfileUrl(long userId, String userName) {
+        return forumUserProfileUrlPattern
+                .replace(XmlFpUrlsSubstitutions.USER_ID, Long.toString(userId))
+                .replace(XmlFpUrlsSubstitutions.USER_NAME, userName);
     }
 }

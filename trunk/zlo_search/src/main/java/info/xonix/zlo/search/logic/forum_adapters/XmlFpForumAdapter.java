@@ -47,4 +47,14 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract {
             throw translateException(e, "Can't get message #" + messageId);
         }
     }
+
+    @Override
+    public String prepareMessageUrl(long messageId) {
+        return forumAccessor.getForumMessageUrl(messageId);
+    }
+
+    @Override
+    public String prepareUserProfileUrl(long userId, String userName) {
+        return forumAccessor.getForumUserProfileUrl(userId, userName);
+    }
 }

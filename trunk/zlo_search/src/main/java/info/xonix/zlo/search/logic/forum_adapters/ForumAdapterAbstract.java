@@ -26,6 +26,7 @@ public abstract class ForumAdapterAbstract implements ForumAdapter {
      * @return list of received messages
      * @throws ForumAccessException if can't get msg from site
      */
+    @Override
     public List<Message> getMessages(long from, long to) throws ForumAccessException {
         if (to < from) {
             throw new IllegalArgumentException("to (" + to + ") < from (" + from + ")");
