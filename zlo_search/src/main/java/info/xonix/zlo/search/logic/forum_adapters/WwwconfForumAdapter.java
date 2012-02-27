@@ -41,4 +41,14 @@ public class WwwconfForumAdapter extends ForumAdapterAbstract {
             throw new ForumFormatException("Can't get message #" + messageId + " from site: " + site.getName(), e);
         }
     }
+
+    @Override
+    public String prepareMessageUrl(long messageId) {
+        return "http://" + site.getSiteUrl() + site.getReadQuery() + messageId;
+    }
+
+    @Override
+    public String prepareUserProfileUrl(long userId, String userName) {
+        return "http://" + site.getSiteUrl() + site.getUinfoQuery() + userName; // TODO: correct encoding of userName
+    }
 }
