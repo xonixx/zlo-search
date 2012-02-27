@@ -74,7 +74,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
         }
 
         private File getIndexDir(Site site) {
-            return new File(site.getIndexDirDouble() + "/" + DoubleIndexManager.SMALL_INDEX_DIR);
+            return new File(config.getIndexDirDouble(site) + "/" + DoubleIndexManager.SMALL_INDEX_DIR);
         }
     };
 
@@ -96,7 +96,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
                 if (msg.isOk()) {
                     log.debug(site.getName() + " - Addind: " + (config.isDebug() ? msg : msg.getNum()));
 
-                    writer.addDocument(messageToDocument(msg));
+                    writer.addDocument(messageToDocument(site, msg));
                 } else {
                     log.debug(site.getName() + " - Not adding: " + msg.getNum() + " with status: " + msg.getStatus());
                 }
@@ -110,7 +110,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
         }
     }
 
-    private Document messageToDocument(@Nonnull Message msg) {
+    private Document messageToDocument(Site site, @Nonnull Message msg) {
             final String hostLowerCase = msg.getHost().toLowerCase();
 
             Document doc = new Document();
@@ -127,7 +127,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
             doc.add(new Field(MessageFields.DATE, DateTools.dateToString(msg.getDate(), DateTools.Resolution.MINUTE), Field.Store.NO, Field.Index.NOT_ANALYZED));
             doc.add(new Field(MessageFields.BODY, msg.getCleanBody(), Field.Store.NO, Field.Index.ANALYZED)); // "чистый" - индексируем, не храним
             doc.add(new Field(MessageFields.HAS_URL, msg.isHasUrl() ? TRUE : FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED));
-            doc.add(new Field(MessageFields.HAS_IMG, msg.isHasImg() ? TRUE : FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED));
+            doc.add(new Field(MessageFields.HAS_IMG, msg.isHasImg(site) ? TRUE : FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED));
 
             return doc;
     }

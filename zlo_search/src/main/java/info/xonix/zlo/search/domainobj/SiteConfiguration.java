@@ -19,7 +19,6 @@ import java.util.regex.Pattern;
 public abstract class SiteConfiguration {
 
     private static final Logger log = Logger.getLogger(SiteConfiguration.class);
-    private static final Config config = AppSpringContext.get(Config.class);
 
     private String markEndMsg1;
     private String markEndMsg2;
@@ -51,7 +50,6 @@ public abstract class SiteConfiguration {
 
     // index
     private boolean performIndexing;
-    private String indexDirDouble;
 
     private int indexerIndexPerTime;
     private int indexerIndexPeriod;
@@ -133,7 +131,6 @@ public abstract class SiteConfiguration {
 
         // indexer-----
         performIndexing = Config.isTrue(p.getProperty("indexer.perform.indexing"));
-        indexDirDouble = config.getProp("indexer.dir.double") + "/index_" + name;
 
         indexerIndexPerTime = Integer.parseInt(p.getProperty("indexer.daemon.index.per.time"));
         indexerIndexPeriod = TimeUtils.parseToMilliSeconds(p.getProperty("indexer.daemon.period.to.index"));
@@ -239,10 +236,6 @@ public abstract class SiteConfiguration {
 
     public boolean isPerformIndexing() {
         return performIndexing;
-    }
-
-    public String getIndexDirDouble() {
-        return indexDirDouble;
     }
 
     public int getIndexerIndexPerTime() {

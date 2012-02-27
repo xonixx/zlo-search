@@ -24,7 +24,7 @@ public class XmlFpFormer {
 
         final List<Message> messages = appLogic.getMessages(site, from, to);
 
-        return XmlFpUtils.messagesToXml(messages);
+        return XmlFpUtils.messagesToXml(site, messages);
     }
 
     public String getMessage(Site site, int num) {
@@ -35,7 +35,7 @@ public class XmlFpFormer {
             m = Message.withStatus(null);// TODO: should mean NOT EXISTS
         }
 
-        return XmlFpUtils.messageToXml(m);
+        return XmlFpUtils.messageToXml(site, m);
     }
 
     public String lastMessageNumber(Site site){

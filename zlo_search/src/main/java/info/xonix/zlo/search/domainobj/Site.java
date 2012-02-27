@@ -16,7 +16,8 @@ public class Site extends SiteConfiguration {
         }
     };
 
-    private Site(String siteName) {
+//    TODO: merge this with SiteConfiguration to single class!!!
+    public Site(String siteName) {
         super(siteName);
     }
 

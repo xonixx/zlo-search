@@ -52,7 +52,7 @@ public class PageParser implements InitializingBean {
                     message.setStatus(MessageStatus.UNKNOWN);
                     throw new PageParseException("Can't parse msg#:" + message.getNum() + " in site:" + site.getName() + "... Possibly format changed!\n\n" + msg);
                 }
-                message.setSite(site);
+//                message.setSite(site);
                 return message;
             }
             message.setReg(true);
@@ -88,7 +88,7 @@ public class PageParser implements InitializingBean {
         }
         message.setTopicCode(topicCode);
 
-        message.setSite(site);
+//        message.setSite(site);
         message.setTitle(title);
         message.setNick(StringUtils.trim(HtmlUtils.unescapeHtml(m.group(groupsOrder.get(3))))); // unescape nick
         message.setHost(m.group(groupsOrder.get(4)));

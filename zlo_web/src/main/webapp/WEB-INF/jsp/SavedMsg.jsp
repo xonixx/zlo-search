@@ -3,8 +3,9 @@
   Date: 11.09.2007
   Time: 17:31:09
 --%>
-<%@ include file="import.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ include file="import.jsp" %>
+<%@ include file="/WEB-INF/jsp/setSite.jsp" %>
 
 <jsp:useBean id="msg" scope="request" class="info.xonix.zlo.search.model.Message"/>
 <jsp:useBean id="siteRoot" class="java.lang.String" scope="request"/>
@@ -38,11 +39,11 @@
             <tiles:insertDefinition name="nick">
                 <tiles:putAttribute name="reg" value="${msg.reg}"/>
                 <tiles:putAttribute name="nick" value="${msg.nick}"/>
-                <tiles:putAttribute name="site" value="${msg.site}"/>
+                <tiles:putAttribute name="site" value="${site}"/>
             </tiles:insertDefinition>
             <tiles:insertDefinition name="host">
                 <tiles:putAttribute name="host" value="${msg.host}"/>
-                <tiles:putAttribute name="site" value="${msg.site}"/>
+                <tiles:putAttribute name="site" value="${site}"/>
                 <tiles:putAttribute name="brackets" value="${true}"/>
             </tiles:insertDefinition>
             <br/>Дата:

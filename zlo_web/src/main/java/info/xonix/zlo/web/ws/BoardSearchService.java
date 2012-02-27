@@ -49,7 +49,7 @@ public class BoardSearchService {
         return site;
     }
 
-    private Message fromMessageModel(info.xonix.zlo.search.model.Message messageModel) {
+    private Message fromMessageModel(Site site, info.xonix.zlo.search.model.Message messageModel) {
         return new Message(
                 messageModel.getNum(),
                 messageModel.getNick(),
@@ -60,7 +60,7 @@ public class BoardSearchService {
                 messageModel.getBody(),
                 messageModel.getDate(),
                 messageModel.isHasUrl(),
-                messageModel.isHasImg());
+                messageModel.isHasImg(site));
     }
 
     private MessageShallow fromMessageModelShallow(info.xonix.zlo.search.model.MessageShallow message) {
@@ -94,7 +94,8 @@ public class BoardSearchService {
             @WebParam(name = "msgId") int msgId) throws ServiceException {
         log.info("getMessage(" + siteId + ", " + msgId + ")");
 
-        return fromMessageModel(appLogic.getMessageByNumber(site(siteId), msgId));
+        final Site site = site(siteId);
+        return fromMessageModel(site, appLogic.getMessageByNumber(site, msgId));
     }
 
     @WebMethod
@@ -114,7 +115,7 @@ public class BoardSearchService {
         List<Message> resultMessages = new ArrayList<Message>(messages.size());
 
         for (info.xonix.zlo.search.model.Message message : messages) {
-            resultMessages.add(fromMessageModel(message));
+            resultMessages.add(fromMessageModel(site, message));
         }
 
         return resultMessages;

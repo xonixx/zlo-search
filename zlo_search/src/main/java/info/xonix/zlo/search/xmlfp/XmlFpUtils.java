@@ -15,19 +15,19 @@ import java.util.List;
  * Time: 1:59
  */
 public class XmlFpUtils {
-    public static String messageToXml(Message message) {
+    public static String messageToXml(Site site, Message message) {
         try {
             return MarshalUtils.marshal(XmlFpContext.getMarshaller(),
-                    Convert.toJaxbMessage(message));
+                    Convert.toJaxbMessage(site, message));
         } catch (XmlFpMarshalException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static String messagesToXml(List<Message> messages) {
+    public static String messagesToXml(Site site, List<Message> messages) {
         try {
             return MarshalUtils.marshal(XmlFpContext.getMarshaller(),
-                    Convert.toJaxbMessages(messages));
+                    Convert.toJaxbMessages(site, messages));
         } catch (XmlFpMarshalException e) {
             throw new RuntimeException(e);
         }

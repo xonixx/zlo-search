@@ -53,22 +53,24 @@ class Convert {
         }
     }
 
-    public static Messages toJaxbMessages(List<Message> messages) {
+    public static Messages toJaxbMessages(Site site, List<Message> messages) {
         Messages jaxbMessages = OBJECT_FACTORY.createMessages();
 
         for (Message message : messages) {
-            jaxbMessages.getMessage().add(toJaxbMessage(message));
+            jaxbMessages.getMessage().add(toJaxbMessage(site, message));
         }
 
         return jaxbMessages;
     }
 
-    public static info.xonix.zlo.search.xmlfp.jaxb_generated.Message toJaxbMessage(Message message) {
+    public static info.xonix.zlo.search.xmlfp.jaxb_generated.Message toJaxbMessage(
+            Site site, Message message) {
+
         if (message == null) { // TODO: ?
             message = new Message();
         }
 
-        Site site = message.getSite();
+//        Site site = message.getSite();
         info.xonix.zlo.search.xmlfp.jaxb_generated.Message jaxbMessage = new info.xonix.zlo.search.xmlfp.jaxb_generated.Message();
 
         final MessageStatus messageStatus = message.getStatus();
@@ -99,7 +101,7 @@ class Convert {
             info.setDate(new XMLGregorianCalendarImpl(cal));
             info.setParentId((long) message.getParentNum());
             info.setId((long) message.getNum());
-            info.setMessageUrl("http://" + message.getSite().getSiteUrl() + site.getReadQuery() + message.getNum());
+            info.setMessageUrl("http://" + site.getSiteUrl() + site.getReadQuery() + message.getNum());
 
 
             final Author author = OBJECT_FACTORY.createAuthor();
