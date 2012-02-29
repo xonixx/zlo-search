@@ -1,8 +1,6 @@
-package info.xonix.zlo.search.domainobj;
+package info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.spring.AppSpringContext;
-import info.xonix.zlo.search.utils.TimeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -16,9 +14,9 @@ import java.util.regex.Pattern;
  * Date: 28.12.2007
  * Time: 2:45:21
  */
-public abstract class SiteConfiguration {
+public class WwwconfParams {
 
-    private static final Logger log = Logger.getLogger(SiteConfiguration.class);
+    private static final Logger log = Logger.getLogger(WwwconfParams.class);
 
     private String markEndMsg1;
     private String markEndMsg2;
@@ -48,31 +46,15 @@ public abstract class SiteConfiguration {
 
     private String msgDatePattern;
 
-    // index
-    private boolean performIndexing;
-
-    private int indexerIndexPerTime;
-    private int indexerIndexPeriod;
-    private int indexerReconnectPeriod;
-    private int indexerLimitPerSecond;
-
-    // db daemon
-    private int dbScanPerTime;
-    private int dbScanPeriod;
-    private int dbReconnectPeriod;
-
-    private int siteNumber;
-    private int weight;
-
-    private String name;
+    private String forumId;
 
     private boolean noHost;
 
 
-    public SiteConfiguration(String name) {
+    public WwwconfParams(String forumId) {
         Properties p = new Properties();
 
-        final String propFile = name + ".properties";
+        final String propFile = forumId + ".properties";
 
         ok:
         {
@@ -85,10 +67,10 @@ public abstract class SiteConfiguration {
                 }
             }
 
-            throw new RuntimeException("Config for: " + name + " site was not found!");
+            throw new RuntimeException("Config for: " + forumId + " site was not found!");
         }
 
-        this.name = name;
+        this.forumId = forumId;
 
         initializeFromProperties(p);
     }
@@ -129,35 +111,18 @@ public abstract class SiteConfiguration {
         // db -----
 //        initDb(p);
 
-        // indexer-----
-        performIndexing = Config.isTrue(p.getProperty("indexer.perform.indexing"));
-
-        indexerIndexPerTime = Integer.parseInt(p.getProperty("indexer.daemon.index.per.time"));
-        indexerIndexPeriod = TimeUtils.parseToMilliSeconds(p.getProperty("indexer.daemon.period.to.index"));
-        indexerReconnectPeriod = TimeUtils.parseToMilliSeconds(p.getProperty("indexer.daemon.period.to.reconnect"));
-        indexerLimitPerSecond = Integer.parseInt(p.getProperty("indexer.limit.per.second"));
-
-        // db daemon-----
-        dbScanPerTime = Integer.parseInt(p.getProperty("db.daemon.scan.per.time"));
-        dbScanPeriod = TimeUtils.parseToMilliSeconds(p.getProperty("db.daemon.period.to.scan"));
-        dbReconnectPeriod = TimeUtils.parseToMilliSeconds(p.getProperty("db.daemon.period.to.reconnect"));
-
-        siteNumber = Integer.parseInt(p.getProperty("site.number"));
-        final String weightStr = p.getProperty("site.weight");
-        weight = weightStr != null ? Integer.parseInt(weightStr) : Integer.MAX_VALUE;
-
         msgDatePattern = p.getProperty("str.date.pattern");
 
         noHost = Config.isTrue(p.getProperty("site.no.host", "0"));
     }
 
     public boolean equals(Object obj) {
-        if (!(obj instanceof SiteConfiguration)) {
+        if (!(obj instanceof WwwconfParams)) {
             return false;
         }
 
-        return /*StringUtils.equals(getName(), ((SiteConfiguration) obj).getName()) &&*/
-                StringUtils.equals(name, ((SiteConfiguration) obj).name);
+        return /*StringUtils.equals(getName(), ((WwwconfParams) obj).getName()) &&*/
+                StringUtils.equals(forumId, ((WwwconfParams) obj).forumId);
     }
 
     // getters
@@ -234,7 +199,7 @@ public abstract class SiteConfiguration {
         return msgDatePattern;
     }
 
-    public boolean isPerformIndexing() {
+/*    public boolean isPerformIndexing() {
         return performIndexing;
     }
 
@@ -268,17 +233,17 @@ public abstract class SiteConfiguration {
 
     public int getSiteNumber() {
         return siteNumber;
-    }
+    }*/
 
-    public String getName() {
-        return name;
+    public String getForumId() {
+        return forumId;
     }
 
     public boolean isNoHost() {
         return noHost;
     }
 
-    public int getWeight() {
+/*    public int getWeight() {
         return weight;
-    }
+    }*/
 }

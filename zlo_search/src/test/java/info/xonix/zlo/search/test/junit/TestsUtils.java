@@ -2,7 +2,7 @@ package info.xonix.zlo.search.test.junit;
 
 import info.xonix.zlo.search.dao.DbDict;
 import info.xonix.zlo.search.dao.MessagesDao;
-import info.xonix.zlo.search.domainobj.Site;
+
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import info.xonix.zlo.search.utils.TimeUtils;
@@ -22,11 +22,12 @@ public class TestsUtils {
 
     private MessagesDao messagesDao;
     private DbDict dbDict;
-    private Site site;
+    private String forumId;
 
     @Before
     public void setUp() throws Exception {
-        site = Site.forName("zlo");
+//        site = Site.forName("zlo");
+        forumId = "zlo";
         messagesDao = AppSpringContext.get(MessagesDao.class);
         dbDict = AppSpringContext.get(DbDict.class);
     }
@@ -63,7 +64,7 @@ public class TestsUtils {
         assertEquals("<qqq>", HtmlUtils.unescapeHtml("&lt;qqq&gt;"));
         assertEquals("1&&3", HtmlUtils.unescapeHtml("1&amp;&amp;3"));
 
-        Site games = Site.forName("games");
+        String games = "games";
         assertTrue(HtmlUtils.hasImg("<img src='http://123' >", games));
         assertTrue(HtmlUtils.hasImg("<img src=\"http://123\" >", games));
         assertTrue(HtmlUtils.hasImg("<img src=https://123 >", games));
@@ -90,7 +91,7 @@ public class TestsUtils {
 
     @Test
     public void testGetTopics() {
-        String[] topics = messagesDao.getTopics(site);
+        String[] topics = messagesDao.getTopics(forumId);
         assertEquals("без темы", topics[0]);
         assertEquals("Учеба", topics[1]);
         assertEquals("Работа", topics[2]);
@@ -100,19 +101,19 @@ public class TestsUtils {
 
     @Test
     public void testDbDict() {
-        dbDict.setInt(site, "name1", null);
-        assertEquals(null, dbDict.getInt(site, "name1"));
-        dbDict.setStr(site, "s", "Hello");
-        assertEquals("Hello", dbDict.getStr(site, "s"));
+        dbDict.setInt(forumId, "name1", null);
+        assertEquals(null, dbDict.getInt(forumId, "name1"));
+        dbDict.setStr(forumId, "s", "Hello");
+        assertEquals("Hello", dbDict.getStr(forumId, "s"));
         Date d = new Date();
-        dbDict.setDate(site, "d", d);
-        Date dd = dbDict.getDate(site, "d");
+        dbDict.setDate(forumId, "d", d);
+        Date dd = dbDict.getDate(forumId, "d");
         System.out.println(d + " " + dd + " " + d.getTime() + " " + dd.getTime());
         assertEquals(true, d.getTime() - dd.getTime() < 1000);
 
-        dbDict.remove(site, "name1");
-        dbDict.remove(site, "s");
-        dbDict.remove(site, "d");
-        assertEquals(null, dbDict.getStr(site, "s"));
+        dbDict.remove(forumId, "name1");
+        dbDict.remove(forumId, "s");
+        dbDict.remove(forumId, "d");
+        assertEquals(null, dbDict.getStr(forumId, "s"));
     }
 }

@@ -1,6 +1,7 @@
 package info.xonix.zlo.search.daemon;
 
-import info.xonix.zlo.search.domainobj.Site;
+import info.xonix.zlo.search.config.forums.ForumParams;
+import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.doubleindex.DoubleIndexManager;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.logic.IndexerException;
@@ -27,17 +28,17 @@ public class IndexerDaemon extends Daemon {
     private class IndexingProcess extends Process {
         @Override
         protected int getFromIndex() {
-            return appLogic.getLastIndexedNumber(getSite());
+            return appLogic.getLastIndexedNumber(getForumId());
         }
 
         @Override
         protected int getEndIndex() {
-            return appLogic.getLastSavedMessageNumber(getSite());
+            return appLogic.getLastSavedMessageNumber(getForumId());
         }
 
         @Override
         protected void perform(int from, int to) throws IndexerException {
-            indexerLogic.index(getSite(), from, to);
+            indexerLogic.index(getForumId(), from, to);
         }
 
         @Override
@@ -45,7 +46,7 @@ public class IndexerDaemon extends Daemon {
             log.error("Exception while indexing", e);
 
             exceptionsLogger.logException(e,
-                    "Exception in indexer daemon: " + getSiteName(),
+                    "Exception in indexer daemon: " + getForumId(),
                     getClass(),
                     ExceptionCategory.DAEMON);
 
@@ -65,24 +66,24 @@ public class IndexerDaemon extends Daemon {
         return new IndexingProcess();
     }
 
-    protected IndexerDaemon(Site site) {
-        super(site);
+    protected IndexerDaemon(String forumId) {
+        super(forumId);
         setParams();
     }
 
     private void setParams() {
-        setDoPerTime(getSite().getIndexerIndexPerTime());
-        setSleepPeriod(getSite().getIndexerIndexPeriod());
-        setRetryPeriod(getSite().getIndexerReconnectPeriod());
+        final ForumParams params = GetForum.params(getForumId());
+        setDoPerTime(params.getIndexerIndexPerTime());
+        setSleepPeriod(params.getIndexerIndexPeriod());
+        setRetryPeriod(params.getIndexerReconnectPeriod());
     }
 
     protected void start() {
-        final Site site = getSite();
-        log.info("Starting indexing to " + site.getName() + " index (double index)...");
+        log.info("Starting indexing to " + getForumId() + " index (double index)...");
 
         // this is for clearing in case of not graceful exit
         log.info("Clearing lock...");
-        new DoubleIndexManager(site, null).clearLocks();
+        new DoubleIndexManager(getForumId(), null).clearLocks();
 
         super.start();
     }

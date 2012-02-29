@@ -23,20 +23,20 @@ public class SearchResult {
 
     private boolean newSearch = true; // by default after created
 
-    private Site site;
+    private String forumId;
     private Date searchDate;
     private DoubleIndexManager doubleIndexManager;
 
-    public SearchResult(Site site, Query query, DoubleIndexManager dis, DoubleHits doubleHits) {
-        this.site = site;
+    public SearchResult(String forumId, Query query, DoubleIndexManager dis, DoubleHits doubleHits) {
+        this.forumId = forumId;
         this.doubleIndexManager = dis;
         this.query = query;
         this.doubleHits = doubleHits;
         searchDate = new Date(); // now
     }
 
-    public Site getSite() {
-        return site;
+    public String getForumId() {
+        return forumId;
     }
 
     public DoubleHits getDoubleHits() {

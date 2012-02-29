@@ -1,5 +1,9 @@
-package info.xonix.zlo.search.logic.forum_adapters;
+package info.xonix.zlo.search.logic.forum_adapters.impl;
 
+import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
+import info.xonix.zlo.search.logic.forum_adapters.ForumAdapterAbstract;
+import info.xonix.zlo.search.logic.forum_adapters.ForumFormatException;
+import info.xonix.zlo.search.logic.forum_adapters.ForumIoException;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.xmlfp.ForumAccessor;
 import info.xonix.zlo.search.xmlfp.XmlFpException;

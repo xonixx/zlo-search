@@ -2,7 +2,7 @@ package info.xonix.zlo.search.progs;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.MessagesDao;
-import info.xonix.zlo.search.domainobj.Site;
+
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
@@ -38,7 +38,7 @@ public class FileToDb {
     public static final Logger logger = Logger.getLogger(FileToDb.class);
 
     private void start(boolean doWork) {
-        Site site = Site.forName("zlo");
+        String forumId = "zlo";
         MessagesDao dbm = AppSpringContext.get(MessagesDao.class);
         String lastLine = "";
         int result;
@@ -79,7 +79,6 @@ public class FileToDb {
 
                     try {
                         msgs.add(new Message(
-                                site,
                                 columnVals[2], // userName
                                 columnVals[3], // alt
                                 columnVals[4], // host
@@ -111,7 +110,7 @@ public class FileToDb {
                     lastLine = s;
                 }
                 if (doWork)
-                    dbm.saveMessagesFast(site, msgs);
+                    dbm.saveMessagesFast(forumId, msgs);
                 else {
                     for (Message m : msgs) {
                         System.out.println(m);

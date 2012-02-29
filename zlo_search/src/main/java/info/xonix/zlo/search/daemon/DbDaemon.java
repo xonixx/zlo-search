@@ -1,6 +1,5 @@
 package info.xonix.zlo.search.daemon;
 
-import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.logic.SiteLogic;
 import info.xonix.zlo.search.logic.exceptions.ExceptionCategory;
@@ -30,24 +29,24 @@ public class DbDaemon extends Daemon {
     private class DbProcess extends Process {
         @Override
         protected int getFromIndex() {
-            return appLogic.getLastSavedMessageNumber(getSite());
+            return appLogic.getLastSavedMessageNumber(getForumId());
         }
 
         @Override
         protected int getEndIndex() throws RetrieverException {
-            return siteLogic.getLastMessageNumber(getSite());
+            return siteLogic.getLastMessageNumber(getForumId());
         }
 
         @Override
         protected void perform(int from, int to) throws RetrieverException, PageParseException {
-            Site site = getSite();
-            appLogic.saveMessages(site, siteLogic.getMessages(site, from, to + 1));
-            appLogic.setLastSavedDate(site, new Date());
+            String forumId = getForumId();
+            appLogic.saveMessages(forumId, siteLogic.getMessages(forumId, from, to + 1));
+            appLogic.setLastSavedDate(forumId, new Date());
         }
 
         protected boolean processException(Exception e) {
             exceptionsLogger.logException(e,
-                    "Exception in db daemon: " + getSiteName(),
+                    "Exception in db daemon: " + getForumId(),
                     getClass(),
                     ExceptionCategory.DAEMON);
 
@@ -63,8 +62,8 @@ public class DbDaemon extends Daemon {
         setParams();
     }
 
-    protected DbDaemon(Site site) {
-        super(site);
+    protected DbDaemon(String forumId) {
+        super(forumId);
         setParams();
     }
 

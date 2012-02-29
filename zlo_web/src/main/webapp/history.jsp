@@ -79,7 +79,7 @@
         <display:column property="searchNick" title="Ник поиска"/>
         <display:column property="searchHost" title="Хост поиска"/>
         <display:column title="Сайт">
-            <% Site site = siteLogic.getSite((Integer) ((Map) row).get("site")); %>
+            <% String forumId = siteLogic.getSite((Integer) ((Map) row).get("site")); %>
             <c:if test="<%= site != null %>">
                 <a href="http://<%= site.getSiteUrl() %>">
                     <%= site.getName() %>

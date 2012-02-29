@@ -1,7 +1,6 @@
 package info.xonix.zlo.search.doubleindex;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.SearchLogicImpl;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
@@ -57,8 +56,8 @@ public class DoubleIndexManager {
         renewDate = new Date();
     }
 
-    public DoubleIndexManager(Site site, Sort renewingSort) {
-        this(config.getIndexDirDouble(site), renewingSort);
+    public DoubleIndexManager(String forumId, Sort renewingSort) {
+        this(config.getIndexDirDouble(forumId), renewingSort);
     }
 
     private Directory dir(File dir) throws IOException {

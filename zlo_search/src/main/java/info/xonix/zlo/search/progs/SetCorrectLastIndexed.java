@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.progs;
 
-import info.xonix.zlo.search.domainobj.Site;
+
 import info.xonix.zlo.search.doubleindex.DoubleIndexManager;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.spring.AppSpringContext;
@@ -22,14 +22,12 @@ public class SetCorrectLastIndexed extends App {
         if ("e".equals(siteName))
             return;
 
-        Site site = Site.forName(siteName);
-
-        DoubleIndexManager dis = new DoubleIndexManager(site, null);
+        DoubleIndexManager dis = new DoubleIndexManager(siteName, null);
         int lastIndexedNum = Integer.parseInt(dis.search(new MatchAllDocsQuery(), -1).doc(0).get("num"));
 
         System.out.println(lastIndexedNum);
 
-        appLogic.setLastIndexedNumber(site, lastIndexedNum);
+        appLogic.setLastIndexedNumber(siteName, lastIndexedNum);
 
     }
 

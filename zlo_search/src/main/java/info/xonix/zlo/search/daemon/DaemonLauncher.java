@@ -1,6 +1,5 @@
 package info.xonix.zlo.search.daemon;
 
-import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.SiteLogic;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
@@ -16,13 +15,13 @@ public class DaemonLauncher {
     private SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
 
     public void main(String[] args) {
-        for (Site site : siteLogic.getSites()) {
-            if (site.isPerformIndexing()) {
-                log.info("Starting daemons for: " + site.getName());
-                startInNewThread(new DbDaemon(site));
-                startInNewThread(new IndexerDaemon(site));
+        for (String forumId : siteLogic.getSites()) {
+            if (forumId.isPerformIndexing()) {
+                log.info("Starting daemons for: " + forumId);
+                startInNewThread(new DbDaemon(forumId));
+                startInNewThread(new IndexerDaemon(forumId));
             } else {
-                log.info("Not starting daemons for: " + site.getName());
+                log.info("Not starting daemons for: " + forumId);
             }
         }
     }

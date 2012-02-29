@@ -2,7 +2,7 @@ package info.xonix.zlo.search;
 
 import info.xonix.zlo.search.dao.MessagesDao;
 import info.xonix.zlo.search.domainobj.SearchResult;
-import info.xonix.zlo.search.domainobj.Site;
+
 import info.xonix.zlo.search.doubleindex.DoubleHits;
 import info.xonix.zlo.search.logic.MessageFields;
 import info.xonix.zlo.search.model.Message;
@@ -29,18 +29,18 @@ public class ZloPaginatedList implements PaginatedList {
     private DoubleHits hits;
     private int maxResultsLimit;
 
-    private Site site;
+    private String forumId;
     private MessagesDao messagesDao = AppSpringContext.get(MessagesDao.class);
 
-    ZloPaginatedList(DoubleHits hits, Site site, int maxResultsLimit) {
-        this.site = site;
+    ZloPaginatedList(DoubleHits hits, String forumId, int maxResultsLimit) {
+        this.forumId = forumId;
         this.hits = hits;
         this.maxResultsLimit = maxResultsLimit;
     }
 
     public ZloPaginatedList(SearchResult searchResult, int maxResultsLimit) {
         this(searchResult.getDoubleHits(),
-                searchResult.getSite(),
+                searchResult.getForumId(),
                 maxResultsLimit);
     }
 
@@ -48,8 +48,8 @@ public class ZloPaginatedList implements PaginatedList {
         this(searchResult, 0);/*no limit*/
     }
 
-    public Site getSite() {
-        return site;
+    public String getForumId() {
+        return forumId;
     }
 
     public List getList() {
@@ -69,7 +69,7 @@ public class ZloPaginatedList implements PaginatedList {
             log.error("Error while getting doc from index: " + e, e);
         }
 
-        List<Message> messages = messagesDao.getMessages(site, indexes);
+        List<Message> messages = messagesDao.getMessages(forumId, indexes);
 
         for (Message message : messages) {
             message.setHitId(fromIndex++);

@@ -1,7 +1,7 @@
 package info.xonix.zlo.web.ws;
 
 import info.xonix.zlo.search.dao.MessagesDao;
-import info.xonix.zlo.search.domainobj.Site;
+
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.logic.SearchException;
 import info.xonix.zlo.search.logic.SearchLogic;
@@ -41,15 +41,15 @@ public class BoardSearchService {
     private MessagesDao messagesDao;
 
     @Nonnull
-    private Site site(int siteId) throws ServiceException {
-        final Site site = siteLogic.getSite(siteId);
-        if (site == null) {
+    private String forumId(int siteId) throws ServiceException {
+        final String forumId = siteLogic.getSite(siteId);
+        if (forumId == null) {
             throw new ServiceException("Wrong siteId: " + siteId);
         }
         return site;
     }
 
-    private Message fromMessageModel(Site site, info.xonix.zlo.search.model.Message messageModel) {
+    private Message fromMessageModel(String forumId, info.xonix.zlo.search.model.Message messageModel) {
         return new Message(
                 messageModel.getNum(),
                 messageModel.getNick(),
@@ -60,7 +60,7 @@ public class BoardSearchService {
                 messageModel.getBody(),
                 messageModel.getDate(),
                 messageModel.isHasUrl(),
-                messageModel.isHasImg(site));
+                messageModel.isHasImg(forumId));
     }
 
     private MessageShallow fromMessageModelShallow(info.xonix.zlo.search.model.MessageShallow message) {
@@ -78,14 +78,14 @@ public class BoardSearchService {
     public int getLastSavedMsgNumber(@WebParam(name = "siteId") int siteId) throws ServiceException {
         log.info("getLastSavedMsgNumber(" + siteId + ")");
 
-        return appLogic.getLastSavedMessageNumber(site(siteId));
+        return appLogic.getLastSavedMessageNumber(forumId(siteId));
     }
 
     @WebMethod
     public int getLastIndexedMsgNumber(@WebParam(name = "siteId") int siteId) throws ServiceException {
         log.info("getLastIndexedMsgNumber(" + siteId + ")");
 
-        return appLogic.getLastIndexedNumber(site(siteId));
+        return appLogic.getLastIndexedNumber(forumId(siteId));
     }
 
     @WebMethod
@@ -94,8 +94,8 @@ public class BoardSearchService {
             @WebParam(name = "msgId") int msgId) throws ServiceException {
         log.info("getMessage(" + siteId + ", " + msgId + ")");
 
-        final Site site = site(siteId);
-        return fromMessageModel(site, appLogic.getMessageByNumber(site, msgId));
+        final String forumId = site(siteId);
+        return fromMessageModel(forumId, appLogic.getMessageByNumber(forumId, msgId));
     }
 
     @WebMethod
@@ -106,16 +106,16 @@ public class BoardSearchService {
             @WebParam(name = "limit") int limit) throws ServiceException {
         log.info("search(" + siteId + ", \"" + searchString + "\", " + skip + ", " + limit + ")");
 
-        final Site site = site(siteId);
+        final String forumId = site(siteId);
 
-        final int[] resultIds = search(site, searchString, skip, limit);
+        final int[] resultIds = search(forumId, searchString, skip, limit);
 
-        final List<info.xonix.zlo.search.model.Message> messages = messagesDao.getMessages(site, resultIds);
+        final List<info.xonix.zlo.search.model.Message> messages = messagesDao.getMessages(forumId, resultIds);
 
         List<Message> resultMessages = new ArrayList<Message>(messages.size());
 
         for (info.xonix.zlo.search.model.Message message : messages) {
-            resultMessages.add(fromMessageModel(site, message));
+            resultMessages.add(fromMessageModel(forumId, message));
         }
 
         return resultMessages;
@@ -129,11 +129,11 @@ public class BoardSearchService {
             @WebParam(name = "limit") int limit) throws ServiceException {
         log.info("searchShallow(" + siteId + ", \"" + searchString + "\", " + skip + ", " + limit + ")");
 
-        final Site site = site(siteId);
+        final String forumId = site(siteId);
 
-        final int[] resultIds = search(site, searchString, skip, limit);
+        final int[] resultIds = search(forumId, searchString, skip, limit);
 
-        final List<info.xonix.zlo.search.model.MessageShallow> messages = messagesDao.getShallowMessages(site, resultIds);
+        final List<info.xonix.zlo.search.model.MessageShallow> messages = messagesDao.getShallowMessages(forumId, resultIds);
 
         List<MessageShallow> resultMessages = new ArrayList<MessageShallow>(messages.size());
 
@@ -144,11 +144,11 @@ public class BoardSearchService {
         return resultMessages;
     }
 
-    private int[] search(Site site, String searchString, int skip, int limit) throws ServiceException {
+    private int[] search(String forumId, String searchString, int skip, int limit) throws ServiceException {
         final int[] resultIds;
 
         try {
-            resultIds = searchLogic.search(site, searchString, skip, limit);
+            resultIds = searchLogic.search(forumId, searchString, skip, limit);
         } catch (SearchException e) {
             throw new ServiceException("Search error:" + e, e);
         }

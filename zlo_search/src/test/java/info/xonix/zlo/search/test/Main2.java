@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.test;
 
 import info.xonix.zlo.search.LuceneVersion;
-import info.xonix.zlo.search.domainobj.Site;
+
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.lucene.analysis.Analyzer;
@@ -40,9 +40,9 @@ public class Main2 {
                 wr.addDocument(d);
             }
             */
-        Site site = Site.forName("zlo");
+        String forumId = Site.forName("zlo");
         AppLogic appLogic = AppSpringContext.get(AppLogic.class);
-/*            wr.addDocument(appLogic.getMessageByNumber(site, 3001403).getDocument());
+/*            wr.addDocument(appLogic.getMessageByNumber(forumId, 3001403).getDocument());
 
 
             wr.optimize();

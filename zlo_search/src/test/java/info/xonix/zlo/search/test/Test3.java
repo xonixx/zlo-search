@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.test;
 
-import info.xonix.zlo.search.domainobj.Site;
+
 import info.xonix.zlo.search.logic.site.PageParseException;
 import info.xonix.zlo.search.logic.site.PageParser;
 import info.xonix.zlo.search.model.Message;
@@ -55,9 +55,9 @@ public class Test3 {
                 "\n" +
                 "<DIV class = ots>";
 
-        Site site = Site.forName("velo");
+        String forumId = Site.forName("velo");
         PageParser p = new PageParser();
-        Message m = p.parseMessage(site, msg, 123);
+        Message m = p.parseMessage(forumId, msg, 123);
         System.out.println(m);
     }
 }

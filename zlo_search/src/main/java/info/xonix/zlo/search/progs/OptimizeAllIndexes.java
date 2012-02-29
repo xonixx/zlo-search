@@ -3,7 +3,6 @@ package info.xonix.zlo.search.progs;
 import info.xonix.zlo.search.ZloObservable;
 import info.xonix.zlo.search.daemon.Daemon;
 import info.xonix.zlo.search.daemon.DaemonLauncher;
-import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.IndexerLogic;
 import info.xonix.zlo.search.logic.SiteLogic;
 import info.xonix.zlo.search.spring.AppSpringContext;
@@ -40,9 +39,9 @@ public class OptimizeAllIndexes {
 
     public void go() {
         final OptimizeIndex optimizeIndex = new OptimizeIndex();
-        for (Site site : siteLogic.getSites()) {
-            if (site.isPerformIndexing()) {
-                optimizeIndex.optimizeDoubleIndexForSite(site);
+        for (String forumId : siteLogic.getSites()) {
+            if (forumId.isPerformIndexing()) {
+                optimizeIndex.optimizeDoubleIndexForSite(forumId);
             }
         }
         observable.notifyObservers("optimized");

@@ -208,7 +208,7 @@
                         <small>
                             <c:if test="${empty msg.body}">(-)</c:if>
                             <c:if test="${msg.hasUrl}">(url)</c:if>
-                            <c:if test="<%= ((Message)msg).isHasImg(site) %>">(pic)</c:if>
+                            <c:if test="<%= ((Message)msg).isHasImg(forumId) %>">(pic)</c:if>
                         </small>
                         <a class="search"
                            href="msg?site=${site.siteNumber}&num=${msg.num}<c:if test="${not empty hl.wordsStr}">&hw=${hl.wordsStr}</c:if>"><fmt:message

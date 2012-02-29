@@ -1,6 +1,5 @@
 package info.xonix.zlo.search.model;
 
-import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -30,8 +29,6 @@ public class Message extends MessageShallow implements Serializable {
 
     private int hitId;
 
-//    private Site site;// TODO: this is WRONG!!!
-
     public static Comparator<Message> NUM_COMPARATOR = new Comparator<Message>() {
         public int compare(Message m1, Message m2) {
             return new Integer(m1.getNum()).compareTo(m2.getNum());
@@ -44,7 +41,7 @@ public class Message extends MessageShallow implements Serializable {
         super();
     }
 
-    public Message(Site site, String nick, String altName, String host, String topic, int topicCode,
+    public Message(String nick, String altName, String host, String topic, int topicCode,
                    String title, String body, Date msgDate,
                    boolean reg, int num, int parentNum,
                    Boolean hasUrl, Boolean hasImg,
@@ -63,11 +60,11 @@ public class Message extends MessageShallow implements Serializable {
         this.status = status;
     }
 
-    public Message(Site site, String nick, String altName, String host, String topic, int topicCode,
+    public Message(String nick, String altName, String host, String topic, int topicCode,
                    String title, String body, Date msgDate,
                    boolean reg, int num, int parentNum,
                    int status) {
-        this(site,
+        this(
                 nick,
                 altName,
                 host,
@@ -155,10 +152,10 @@ public class Message extends MessageShallow implements Serializable {
         return hasUrl;
     }
 
-    public boolean isHasImg(Site site) {
+    public boolean isHasImg(String forumId) {
         if (hasImg == null) {
             // TODO!!! This logic should be outside!!!
-            hasImg = StringUtils.isNotEmpty(body) && HtmlUtils.hasImg(body, site);
+            hasImg = StringUtils.isNotEmpty(body) && HtmlUtils.hasImg(body, forumId);
 //            throw new UnsupportedOperationException("This logic should be outside!!!");
         }
         return hasImg;
@@ -176,7 +173,7 @@ public class Message extends MessageShallow implements Serializable {
         return site;
     }
 
-    public void setSite(Site site) {
+    public void setSite(String forumId) {
         this.site = site;
     }*/
 

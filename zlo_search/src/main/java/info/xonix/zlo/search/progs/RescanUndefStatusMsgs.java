@@ -2,7 +2,7 @@ package info.xonix.zlo.search.progs;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.MessagesDao;
-import info.xonix.zlo.search.domainobj.Site;
+
 import info.xonix.zlo.search.logic.site.MessageRetriever;
 import info.xonix.zlo.search.logic.site.PageParseException;
 import info.xonix.zlo.search.logic.site.RetrieverException;
@@ -31,13 +31,13 @@ public class RescanUndefStatusMsgs {
     public static void main(String[] args) {
         new Config();
 
-        Site site = Site.forName("zlo");
+        String forumId = "zlo";
 
         int n = 420000;
 
         int addedEmpty = 0;
         while (n <= MAX_ALEXZAM + N) {
-            List<Message> msgs_n_N = dbm.getMessagesByRange(site, n, n + N);
+            List<Message> msgs_n_N = dbm.getMessagesByRange(forumId, n, n + N);
 
             Set<Integer> newNums = new HashSet<Integer>();
             for (Message m : msgs_n_N) {
@@ -61,7 +61,7 @@ public class RescanUndefStatusMsgs {
                 }
 
                 System.out.print("Saving... ");
-                dbm.saveMessagesFast(site, newMsgs, true);
+                dbm.saveMessagesFast(forumId, newMsgs, true);
 
                 System.out.println("Done.");
             }

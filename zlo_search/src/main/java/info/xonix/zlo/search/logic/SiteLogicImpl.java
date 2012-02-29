@@ -1,7 +1,9 @@
 package info.xonix.zlo.search.logic;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.domainobj.Site;
+
+import info.xonix.zlo.search.config.forums.GetForum;
+import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
 import info.xonix.zlo.search.logic.site.MessageRetriever;
 import info.xonix.zlo.search.logic.site.PageParseException;
 import info.xonix.zlo.search.logic.site.RetrieverException;
@@ -41,57 +43,59 @@ public class SiteLogicImpl implements SiteLogic, InitializingBean {
     }
 
     @Override
-    public Message getMessageByNumber(Site site, int num) throws RetrieverException, PageParseException {
-        log.debug(site.getName() + " - Receiving from site: " + num);
-        return messageRetriever.getMessage(site, num);
+    public Message getMessageByNumber(String forumId, int num) throws ForumAccessException {
+        log.debug(forumId + " - Receiving from site: " + num);
+//        return messageRetriever.getMessage(forumId, num);
+        return GetForum.adapter(forumId).getMessage(num);
     }
 
     @Override
-    public List<Message> getMessages(Site site, int from, int to) throws RetrieverException, PageParseException {
-        log.info(site.getName() + " - Downloading messages from " + from + " to " + to + "...");
+    public List<Message> getMessages(String forumId, int from, int to) throws ForumAccessException {
+        log.info(forumId + " - Downloading messages from " + from + " to " + to + "...");
         long begin = System.currentTimeMillis();
 
-        List<Message> msgs = messageRetriever.getMessages(site, from, to);
+//        List<Message> msgs = messageRetriever.getMessages(forumId, from, to);
+        List<Message> msgs = GetForum.adapter(forumId).getMessages((long) from, (long) to);
 
         float durationSecs = (System.currentTimeMillis() - begin) / 1000f;
-        log.info(site.getName() + " - Downloaded " + msgs.size() + " messages in " + (int) durationSecs + "secs. Rate: " + ((float) msgs.size()) / durationSecs + "mps.");
+        log.info(forumId + " - Downloaded " + msgs.size() + " messages in " + (int) durationSecs + "secs. Rate: " + ((float) msgs.size()) / durationSecs + "mps.");
 
         return msgs;
     }
 
     @Override
-    public int getLastMessageNumber(Site site) throws RetrieverException {
-        return messageRetriever.getLastMessageNumber(site);
+    public int getLastMessageNumber(String forumId) throws RetrieverException {
+        return messageRetriever.getLastMessageNumber(forumId);
     }
 
-    private List<Site> sites;
+//    private List<Site> sites;
 
-    @Override
-    public List<Site> getSites() {
-        if (sites == null) {
-            sites = new LinkedList<Site>();
-
-            final PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-
-            final Resource[] resources;
-            try {
-                resources = resolver.getResources(Config.FORUMS_CONF_PATH + "**/*.properties");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            for (Resource siteFileResource : resources) {
-                sites.add(Site.forName(FilenameUtils.removeExtension(siteFileResource.getFilename())));
-            }
-
-            Collections.sort(sites, new Comparator<Site>() {
-                public int compare(Site o1, Site o2) {
-                    return new Integer(o1.getWeight()).compareTo(o2.getWeight());
-                }
-            });
-        }
-        return sites;
-    }
+//    @Override
+//    public List<Site> getSites() {
+//        if (sites == null) {
+//            sites = new LinkedList<Site>();
+//
+//            final PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+//
+//            final Resource[] resources;
+//            try {
+//                resources = resolver.getResources(Config.FORUMS_CONF_PATH + "**/*.properties");
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//
+//            for (Resource siteFileResource : resources) {
+//                sites.add(Site.forName(FilenameUtils.removeExtension(siteFileResource.getFilename())));
+//            }
+//
+//            Collections.sort(sites, new Comparator<Site>() {
+//                public int compare(Site o1, Site o2) {
+//                    return new Integer(o1.getWeight()).compareTo(o2.getWeight());
+//                }
+//            });
+//        }
+//        return sites;
+//    }
 
     @Override
     public String[] getSiteNames() {
@@ -103,13 +107,13 @@ public class SiteLogicImpl implements SiteLogic, InitializingBean {
         return sites;
     }
 
-    @Override
+/*    @Override
     public Site getSite(int num) {
-        for (Site site : getSites()) {
-            if (site.getSiteNumber() == num) {
+        for (String forumId : getSites()) {
+            if (forumId.getSiteNumber() == num) {
                 return site;
             }
         }
         return null;
-    }
+    }*/
 }

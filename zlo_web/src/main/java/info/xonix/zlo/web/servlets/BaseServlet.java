@@ -1,6 +1,6 @@
 package info.xonix.zlo.web.servlets;
 
-import info.xonix.zlo.search.domainobj.Site;
+
 import info.xonix.zlo.search.logic.SiteLogic;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
@@ -25,30 +25,30 @@ public class BaseServlet extends ForwardingServlet {
 
     protected void setSiteInReq(ForwardingRequest request, HttpServletResponse response) {
         String siteInCookie;
-        Site site;
+        String forumId;
 
         String siteNumStr = request.getParameter(QS_SITE);
 
         if (StringUtils.isNotEmpty(siteNumStr)) {
             site = getSiteOrDefault(siteNumStr);
-            CookieUtils.rememberInCookie(response, QS_SITE, String.valueOf(site.getSiteNumber()));
+            CookieUtils.rememberInCookie(response, QS_SITE, String.valueOf(forumId.getSiteNumber()));
         } else if (StringUtils.isNotEmpty(siteInCookie = CookieUtils.recallFromCookie(request, QS_SITE))) {
             site = getSiteOrDefault(siteInCookie);
         } else {
             site = getSiteOrDefault("0");
         }
 
-        request.setParameter(QS_SITE, String.valueOf(site.getSiteNumber()));
+        request.setParameter(QS_SITE, String.valueOf(forumId.getSiteNumber()));
         request.setAttribute(QS_SITE, site);
         request.setAttribute(REQ_SITE_ROOT, RequestUtils.getSiteRoot(request, site));
     }
 
     private Site getSiteOrDefault(String siteNumStr) {
         Site defaultSite = siteLogic.getSites().get(0);
-        Site site;
+        String forumId;
         try {
             site = siteLogic.getSite(Integer.parseInt(siteNumStr));
-            if (site == null) {
+            if (forumId == null) {
                 site = defaultSite;
             }
         } catch (Exception e) {

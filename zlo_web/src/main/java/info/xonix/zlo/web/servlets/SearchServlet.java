@@ -8,7 +8,7 @@ import info.xonix.zlo.search.config.DateFormats;
 import info.xonix.zlo.search.config.ErrorMessage;
 import info.xonix.zlo.search.domainobj.SearchRequest;
 import info.xonix.zlo.search.domainobj.SearchResult;
-import info.xonix.zlo.search.domainobj.Site;
+
 import info.xonix.zlo.search.logic.*;
 import info.xonix.zlo.search.logic.exceptions.ExceptionCategory;
 import info.xonix.zlo.search.logic.exceptions.ExceptionsLogger;
@@ -398,26 +398,26 @@ public class SearchServlet extends BaseServlet {
     }
 
     private void showStatistics(ForwardingRequest request) {
-        Site site = getSite(request);
+        String forumId = getSite(request);
 
         request.setAttribute(QS_LAST_MSGS,
-                new int[]{appLogic.getLastSavedMessageNumber(site),
-                        appLogic.getLastIndexedNumber(site)});
+                new int[]{appLogic.getLastSavedMessageNumber(forumId),
+                        appLogic.getLastIndexedNumber(forumId)});
 
         request.setAttribute(QS_LAST_MSGS_DATES,
-                new Date[]{appLogic.getLastSavedDate(site),
-                        appLogic.getLastIndexedDate(site)});
+                new Date[]{appLogic.getLastSavedDate(forumId),
+                        appLogic.getLastIndexedDate(forumId)});
     }
 
     private void logRequest(ForwardingRequest request, String query, boolean rssAsked) {
-        final Site site = getSite(request);
+        final String forumId = getSite(request);
         final String searchText = request.getParameter(QS_TEXT);
 
         final String clientIp = RequestUtils.getClientIp(request);
 
         SearchLog searchLog = new SearchLog();
 
-        searchLog.setSite(site);
+        searchLog.setSite(forumId);
         searchLog.setClientIp(clientIp);
         searchLog.setUserAgent(request.getHeader(HttpHeader.USER_AGENT));
         searchLog.setReferer(request.getHeader(HttpHeader.REFERER));
@@ -436,7 +436,7 @@ public class SearchServlet extends BaseServlet {
 
         if (StringUtils.isNotEmpty(searchText) && !rssAsked) {
             if (!ObsceneUtils.containsObsceneWord(searchText)) {
-                appLogic.saveSearchTextForAutocomplete(site, searchText);
+                appLogic.saveSearchTextForAutocomplete(forumId, searchText);
             } else {
                 log.info("! Search by obscene words: {" + searchText + "}, ip=" + clientIp);
             }

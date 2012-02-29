@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.xmlfp.test;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.domainobj.Site;
+
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.spring.AppSpringContext;
@@ -23,12 +23,12 @@ public class TestMessageToXML {
 
     @Test
     public void test1() throws XmlFpException {
-        Site site = Site.forName("zlo");
-        Message m = appLogic.getMessageByNumber(site, 3333333);
+        String forumId = Site.forName("zlo");
+        Message m = appLogic.getMessageByNumber(forumId, 3333333);
         System.out.println(m);
 
         System.out.println("======================");
-        final String xml = XmlFpUtils.messageToXml(site, m);
+        final String xml = XmlFpUtils.messageToXml(forumId, m);
         System.out.println(xml);
 
         System.out.println("======================");

@@ -7,7 +7,7 @@ package info.xonix.zlo.search.test;
  */
 public class CompoundIndexTest {
     public static void main(String[] args) {
-        /*Site site = Site.forName("zlo");
+        /*String forumId = Site.forName("zlo");
         IndexerLogic indexerLogic = AppSpringContext.get(IndexerLogic.class);
         IndexWriter indexWriter = indexerLogic.getWriter();
         System.out.println(indexWriter.getUseCompoundFile());

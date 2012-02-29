@@ -3,18 +3,29 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean class="info.xonix.zlo.search.config.forums.Forums">
+    <bean class="info.xonix.zlo.search.config.forums.GetForum">
         <constructor-arg>
             <list>
-                <bean class="info.xonix.zlo.search.logic.forum_adapters.WwwconfForumAdapter">
-                    <constructor-arg ref="zlo"/>
+                <bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
+                    <constructor-arg value="zlo"/>
+                    <constructor-arg>
+                        <bean class="info.xonix.zlo.search.config.forums.ForumParams">
+                            <constructor-arg value="/info/xonix/zlo/search/config/forums/zlo.properties"/>
+                        </bean>
+                    </constructor-arg>
+                    <constructor-arg>
+                        <bean class="info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfForumAdapter">
+                            <constructor-arg>
+                                <bean class="info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams">
+                                    <!--TODO: conf file path should be passed-->
+                                    <constructor-arg value="zlo"/>
+                                </bean>
+                            </constructor-arg>
+                        </bean>
+                    </constructor-arg>
                 </bean>
             </list>
         </constructor-arg>
-    </bean>
-
-    <bean id="zlo" class="info.xonix.zlo.search.domainobj.Site">
-        <constructor-arg value="zlo"/><!--TODO: conf file path should be passed-->
     </bean>
 
 </beans>

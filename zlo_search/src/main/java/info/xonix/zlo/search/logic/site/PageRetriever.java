@@ -2,7 +2,7 @@ package info.xonix.zlo.search.logic.site;
 
 import info.xonix.zlo.search.HttpHeader;
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.domainobj.Site;
+import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams;
 import info.xonix.zlo.search.utils.Check;
 import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpClient;
@@ -52,8 +52,8 @@ public class PageRetriever implements InitializingBean {
         }
     }
 
-    public String getPageContentByNumber(Site site, int num) throws RetrieverException {
-        GetMethod getMethod = formGetMethod(site, "http://" + site.getSiteUrl() + site.getReadQuery() + num);
+    public String getPageContentByNumber(WwwconfParams wwwconfParams, int num) throws RetrieverException {
+        GetMethod getMethod = formGetMethod(wwwconfParams, "http://" + wwwconfParams.getSiteUrl() + wwwconfParams.getReadQuery() + num);
 
         final List<String> stringGroups = new ArrayList<String>();
         InputStream is = null;
@@ -87,9 +87,9 @@ public class PageRetriever implements InitializingBean {
                 currSize = stringGroups.size();
                 ending = stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1);
             } while (
-                    !ending.contains(site.getMarkEndMsg1()) &&
-                            !ending.contains(site.getMarkEndMsg2()) && // if user have sign - won't read it all
-                            !ending.contains(site.getMsgNotExistOrWrong())
+                    !ending.contains(wwwconfParams.getMarkEndMsg1()) &&
+                            !ending.contains(wwwconfParams.getMarkEndMsg2()) && // if user have sign - won't read it all
+                            !ending.contains(wwwconfParams.getMsgNotExistOrWrong())
                     );
 
             // read till end - seems that closing while not end reached causes board crash
@@ -126,12 +126,12 @@ public class PageRetriever implements InitializingBean {
      * load page until first root-message found
      * returns last number of root-message or -1 if not found
      *
-     * @param site site
+     * @param wwwconfParams wwwconfParams
      * @return number of last msg
      * @throws RetrieverException on i/o exception
      */
-    public int getLastRootMessageNumber(Site site) throws RetrieverException {
-        GetMethod getMethod = formGetMethod(site, "http://" + site.getSiteUrl());
+    public int getLastRootMessageNumber(WwwconfParams wwwconfParams) throws RetrieverException {
+        GetMethod getMethod = formGetMethod(wwwconfParams, "http://" + wwwconfParams.getSiteUrl());
 
         InputStream is = null;
         Matcher m = null;
@@ -152,7 +152,7 @@ public class PageRetriever implements InitializingBean {
                 }
                 stringGroups.add(new String(buff, 0, lenRead, config.getCharsetName()));
                 currSize = stringGroups.size();
-                m = site.getLinkIndexRe().matcher(stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1));
+                m = wwwconfParams.getLinkIndexRe().matcher(stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1));
             } while (!m.find());
 
             // TODO: maybe save traffic?
@@ -192,9 +192,9 @@ public class PageRetriever implements InitializingBean {
         }
     }
 
-    private GetMethod formGetMethod(Site site, String uri) {
+    private GetMethod formGetMethod(WwwconfParams wwwconfParams, String uri) {
         GetMethod getMethod = new GetMethod(uri);
-        getMethod.addRequestHeader(HttpHeader.HOST, site.getSiteUrl());
+        getMethod.addRequestHeader(HttpHeader.HOST, wwwconfParams.getSiteUrl());
         getMethod.addRequestHeader(HttpHeader.USER_AGENT, config.getUserAgent());
         getMethod.getParams().setVersion(HttpVersion.HTTP_1_0); // to prevent chunk transfer-encoding in reply
         return getMethod;

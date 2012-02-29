@@ -1,6 +1,5 @@
 package info.xonix.zlo.search.xmlfp;
 
-import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,33 +16,33 @@ public class XmlFpFormer {
     @Autowired
     private AppLogic appLogic;
 
-    public String getMessages(Site site, int from, int to) {
+    public String getMessages(String forumId, int from, int to) {
         if (to - from > 1000) {
             throw new IllegalArgumentException("You are trying to receive more then 1000 messages!");
         }
 
-        final List<Message> messages = appLogic.getMessages(site, from, to);
+        final List<Message> messages = appLogic.getMessages(forumId, from, to);
 
-        return XmlFpUtils.messagesToXml(site, messages);
+        return XmlFpUtils.messagesToXml(forumId, messages);
     }
 
-    public String getMessage(Site site, int num) {
+    public String getMessage(String forumId, int num) {
         Message m;
         try {
-            m = appLogic.getMessageByNumber(site, num);
+            m = appLogic.getMessageByNumber(forumId, num);
         } catch (EmptyResultDataAccessException e) {
             m = Message.withStatus(null);// TODO: should mean NOT EXISTS
         }
 
-        return XmlFpUtils.messageToXml(site, m);
+        return XmlFpUtils.messageToXml(forumId, m);
     }
 
-    public String lastMessageNumber(Site site){
+    public String lastMessageNumber(String forumId){
         return XmlFpUtils.lastMessageNumberToXml(
-                appLogic.getLastSavedMessageNumber(site));
+                appLogic.getLastSavedMessageNumber(forumId));
     }
 
-    public String siteXmlFpDescriptor(Site site) {
-        return XmlFpUtils.siteDescriptorToXml(site);
+    public String siteXmlFpDescriptor(String forumId) {
+        return XmlFpUtils.siteDescriptorToXml(forumId);
     }
 }

@@ -2,7 +2,6 @@ package info.xonix.zlo.search.logic;
 
 import info.xonix.zlo.search.domainobj.SearchRequest;
 import info.xonix.zlo.search.domainobj.SearchResult;
-import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.doubleindex.DoubleIndexManager;
 import org.apache.lucene.search.Sort;
 
@@ -14,15 +13,15 @@ import java.io.IOException;
  * Time: 18:30
  */
 public interface SearchLogic {
-    DoubleIndexManager getDoubleIndexManager(Site site);
+    DoubleIndexManager getDoubleIndexManager(String forumId);
 
-    void optimizeIndex(Site site);
+    void optimizeIndex(String forumId);
 
     SearchResult search(SearchRequest searchRequest, int limit) throws SearchException;
 
     Sort getDateSort();
 
-    void dropIndex(Site site) throws IOException;
+    void dropIndex(String forumId) throws IOException;
 
-    int[] search(Site site, String searchString, int skip, int limit) throws SearchException;
+    int[] search(String forumId, String searchString, int skip, int limit) throws SearchException;
 }

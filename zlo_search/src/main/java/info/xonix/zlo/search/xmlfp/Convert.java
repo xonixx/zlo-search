@@ -3,7 +3,7 @@ package info.xonix.zlo.search.xmlfp;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
-import info.xonix.zlo.search.domainobj.Site;
+import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.xmlfp.jaxb_generated.*;
@@ -30,7 +30,7 @@ class Convert {
             final Info info = jaxbMessage.getInfo();
 
             return new Message(
-                    null, // must set after!
+                    // must set after!
                     author.getName(),
                     null, // TODO: implement altname in xmlfp ?
                     author.getHost(),
@@ -53,24 +53,23 @@ class Convert {
         }
     }
 
-    public static Messages toJaxbMessages(Site site, List<Message> messages) {
+    public static Messages toJaxbMessages(WwwconfParams wwwconfParams, List<Message> messages) {
         Messages jaxbMessages = OBJECT_FACTORY.createMessages();
 
         for (Message message : messages) {
-            jaxbMessages.getMessage().add(toJaxbMessage(site, message));
+            jaxbMessages.getMessage().add(toJaxbMessage(wwwconfParams, message));
         }
 
         return jaxbMessages;
     }
 
     public static info.xonix.zlo.search.xmlfp.jaxb_generated.Message toJaxbMessage(
-            Site site, Message message) {
+            WwwconfParams wwwconfParams, Message message) {
 
         if (message == null) { // TODO: ?
             message = new Message();
         }
 
-//        Site site = message.getSite();
         info.xonix.zlo.search.xmlfp.jaxb_generated.Message jaxbMessage = new info.xonix.zlo.search.xmlfp.jaxb_generated.Message();
 
         final MessageStatus messageStatus = message.getStatus();
@@ -101,7 +100,7 @@ class Convert {
             info.setDate(new XMLGregorianCalendarImpl(cal));
             info.setParentId((long) message.getParentNum());
             info.setId((long) message.getNum());
-            info.setMessageUrl("http://" + site.getSiteUrl() + site.getReadQuery() + message.getNum());
+            info.setMessageUrl("http://" + wwwconfParams.getSiteUrl() + wwwconfParams.getReadQuery() + message.getNum());
 
 
             final Author author = OBJECT_FACTORY.createAuthor();
@@ -133,26 +132,26 @@ class Convert {
         return messageStatus != null ? messageStatus : MessageStatus.OK; // omitted status = OK
     }
 
-    public static Forum toJaxbForum(Site site) {
+    public static Forum toJaxbForum(WwwconfParams wwwconfParams) {
         Forum forum = OBJECT_FACTORY.createForum();
 
-        forum.setName(site.getSiteDescription());
-        forum.setUrl("http://" + site.getSiteUrl() + "/");
+        forum.setName(wwwconfParams.getSiteDescription());
+        forum.setUrl("http://" + wwwconfParams.getSiteUrl() + "/");
         forum.setType("tree");
-        forum.setCharset(site.getSiteCharset());
+        forum.setCharset(wwwconfParams.getSiteCharset());
 
         final Forum.XmlfpUrls xmlFpInfo = OBJECT_FACTORY.createForumXmlfpUrls();
-        xmlFpInfo.setLastMessageNumberUrl("xmlfp.jsp?xmlfp=lastMessageNumber&site=" + site.getSiteNumber());
-        xmlFpInfo.setMessageUrl("xmlfp.jsp?xmlfp=message&num=" + XmlFpUrlsSubstitutions.MESSAGE_ID + "&site=" + site.getSiteNumber());
+        xmlFpInfo.setLastMessageNumberUrl("xmlfp.jsp?xmlfp=lastMessageNumber&site=" + wwwconfParams.getSiteNumber());
+        xmlFpInfo.setMessageUrl("xmlfp.jsp?xmlfp=message&num=" + XmlFpUrlsSubstitutions.MESSAGE_ID + "&site=" + wwwconfParams.getSiteNumber());
         xmlFpInfo.setMessageListUrl("xmlfp.jsp?xmlfp=messages" +
                 "&from=" + XmlFpUrlsSubstitutions.FROM +
                 "&to=" + XmlFpUrlsSubstitutions.TO +
-                "&site=" + site.getSiteNumber());
+                "&site=" + wwwconfParams.getSiteNumber());
         forum.setXmlfpUrls(xmlFpInfo);
 
         final Forum.ForumUrls forumUrls = OBJECT_FACTORY.createForumForumUrls();
-        forumUrls.setMessageUrl("http://" + site.getSiteUrl() + site.getReadQuery() + XmlFpUrlsSubstitutions.MESSAGE_ID);
-        forumUrls.setUserProfileUrl("http://" + site.getSiteUrl() + site.getUinfoQuery() + XmlFpUrlsSubstitutions.USER_NAME);
+        forumUrls.setMessageUrl("http://" + wwwconfParams.getSiteUrl() + wwwconfParams.getReadQuery() + XmlFpUrlsSubstitutions.MESSAGE_ID);
+        forumUrls.setUserProfileUrl("http://" + wwwconfParams.getSiteUrl() + wwwconfParams.getUinfoQuery() + XmlFpUrlsSubstitutions.USER_NAME);
         forum.setForumUrls(forumUrls);
 
         return forum;
