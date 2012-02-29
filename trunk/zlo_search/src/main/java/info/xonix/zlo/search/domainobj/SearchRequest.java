@@ -1,6 +1,7 @@
 package info.xonix.zlo.search.domainobj;
 
 import info.xonix.zlo.search.config.DateFormats;
+import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.dao.MessagesDao;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.commons.lang.StringUtils;
@@ -212,7 +213,7 @@ public class SearchRequest {
 
     public String describeToString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("форум:(").append(getSite().getSiteUrl()).append(")");
+        sb.append("форум:(").append(GetForum.adapter(forumId).getForumUrl()).append(")");
 
         if (StringUtils.isNotEmpty(text)) sb.append(" текст:(").append(text).append(")");
         if (StringUtils.isNotEmpty(nick)) sb.append(" ник:(").append(nick).append(")");

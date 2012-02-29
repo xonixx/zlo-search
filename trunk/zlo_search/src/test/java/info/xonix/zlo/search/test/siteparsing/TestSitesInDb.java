@@ -16,18 +16,18 @@ import org.junit.Test;
  */
 public class TestSitesInDb {
 
-    private Site velo = null;
+/*    private Site velo = null;
     private Site dev = null;
     private Site zlo = null;
     private Site takeoff = null;
     private Site anime = null;
-    private Site np = null;
+    private Site np = null;*/
 
     private AppLogic appLogic = AppSpringContext.get(AppLogic.class);
 
     @Before
     public void setUp() {
-        velo = Site.forName("velo");
+/*        velo = Site.forName("velo");
 
         dev = Site.forName("dev");
 
@@ -35,13 +35,14 @@ public class TestSitesInDb {
 
         takeoff = Site.forName("takeoff");
 
-        anime = Site.forName("anime");
+        anime = Site.forName("anime");*/
 
 //        np = Site.forName("np");
     }
 
     @Test
     public void testVelo() {
+        String velo = "velo";
         int lmn = appLogic.getLastSavedMessageNumber(velo);
         System.out.println("lmn: " + lmn);
 
@@ -79,6 +80,7 @@ public class TestSitesInDb {
 
     @Test
     public void testDev() {
+        String dev = "dev";
         int lmn = appLogic.getLastSavedMessageNumber(dev);
         System.out.println(lmn);
 
@@ -115,6 +117,7 @@ public class TestSitesInDb {
 
     @Test
     public void testZlo() {
+        String zlo = "zlo";
         int lmn = appLogic.getLastSavedMessageNumber(zlo);
         System.out.println(lmn);
 
@@ -153,6 +156,7 @@ public class TestSitesInDb {
 
     @Test
     public void testTakeoff() {
+        String takeoff = "takeoff";
         int lmn = appLogic.getLastSavedMessageNumber(takeoff);
 
         System.out.println(lmn);
@@ -189,6 +193,7 @@ public class TestSitesInDb {
 
     @Test
     public void testAnime() {
+        String anime = "anime";
         int lmn = appLogic.getLastSavedMessageNumber(anime);
         System.out.println(lmn);
     }
@@ -196,6 +201,7 @@ public class TestSitesInDb {
 //    @Test
 
     public void testNp() {
+        String np = "np";
         int lmn = appLogic.getLastSavedMessageNumber(np);
         System.out.println(lmn);
 

@@ -29,10 +29,14 @@ public class WwwconfForumAdapter extends ForumAdapterAbstract {
         return wwwconfParams.getForumId();
     }
 
+    public WwwconfParams getWwwconfParams() {
+        return wwwconfParams;
+    }
+
     @Override
     public long getLastMessageNumber() throws ForumAccessException {
         try {
-            return messageRetriever.getLastMessageNumber(forumId());
+            return messageRetriever.getLastMessageNumber(wwwconfParams);
         } catch (RetrieverException e) {
             throw new ForumIoException("Can't get last number from: " + forumId(), e);
         }
@@ -41,7 +45,7 @@ public class WwwconfForumAdapter extends ForumAdapterAbstract {
     @Override
     public Message getMessage(long messageId) throws ForumAccessException {
         try {
-            return messageRetriever.getMessage(forumId(), (int) messageId, 0); // retries = 0 as we implement retries on ForumAdapter level
+            return messageRetriever.getMessage(wwwconfParams, (int) messageId, 0); // retries = 0 as we implement retries on ForumAdapter level
         } catch (RetrieverException e) {
             throw new ForumIoException("Can't get message #" + messageId + " from site: " + forumId(), e);
         } catch (PageParseException e) {
@@ -57,5 +61,10 @@ public class WwwconfForumAdapter extends ForumAdapterAbstract {
     @Override
     public String prepareUserProfileUrl(long userId, String userName) {
         return "http://" + wwwconfParams.getSiteUrl() + wwwconfParams.getUinfoQuery() + userName; // TODO: correct encoding of userName
+    }
+
+    @Override
+    public String getForumUrl() {
+        return wwwconfParams.getSiteUrl();
     }
 }

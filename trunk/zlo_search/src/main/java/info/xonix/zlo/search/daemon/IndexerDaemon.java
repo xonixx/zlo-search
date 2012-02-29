@@ -83,7 +83,7 @@ public class IndexerDaemon extends Daemon {
 
         // this is for clearing in case of not graceful exit
         log.info("Clearing lock...");
-        new DoubleIndexManager(getForumId(), null).clearLocks();
+        DoubleIndexManager.create(getForumId(), null).clearLocks();
 
         super.start();
     }

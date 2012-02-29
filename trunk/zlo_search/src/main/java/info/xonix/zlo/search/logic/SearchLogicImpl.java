@@ -27,6 +27,7 @@ import static java.text.MessageFormat.format;
  * Author: gubarkov
  * Date: 01.06.2007
  * Time: 2:24:05
+ * TODO: int <-> long
  */
 public class SearchLogicImpl implements SearchLogic, InitializingBean {
     private static final Logger log = Logger.getLogger(SearchLogicImpl.class);
@@ -107,7 +108,7 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     private StringFactory<DoubleIndexManager> doubleIndexManagerFactory = new StringFactory<DoubleIndexManager>() {
         @Override
         protected DoubleIndexManager create(String forumId) {
-            return new DoubleIndexManager(forumId, getDateSort());
+            return DoubleIndexManager.create(forumId, getDateSort());
         }
     };
 

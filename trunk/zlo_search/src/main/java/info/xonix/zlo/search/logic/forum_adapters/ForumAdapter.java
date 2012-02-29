@@ -19,4 +19,6 @@ public interface ForumAdapter {
     public String prepareMessageUrl(long messageId);
 
     public String prepareUserProfileUrl(long userId, String userName);
+
+    public String getForumUrl();
 }

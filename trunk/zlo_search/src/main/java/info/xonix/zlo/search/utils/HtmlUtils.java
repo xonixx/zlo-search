@@ -71,10 +71,11 @@ public class HtmlUtils {
 
         boolean isFound = matcher.find();
 
-        if (isFound &&
+        // TODO: SMILES = NOT IMAGES !!! Implement !!!
+        if (isFound/* &&
                 (forumId != null
                         && StringUtils.isNotEmpty(forumId.getSiteSmilesPath())
-                        && matcher.group(2).contains(forumId.getSiteSmilesPath())))
+                        && matcher.group(2).contains(forumId.getSiteSmilesPath()))*/)
             return false; // this is smile
         else
             return isFound;

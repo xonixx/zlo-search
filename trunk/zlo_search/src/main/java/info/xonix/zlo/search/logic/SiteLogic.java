@@ -22,7 +22,7 @@ public interface SiteLogic {
 /*    @Nullable
     Site getSite(int num);*/
 
-    int getLastMessageNumber(String forumId) throws RetrieverException;
+    int getLastMessageNumber(String forumId) throws ForumAccessException;
 
     List<Message> getMessages(String forumId, int from, int to) throws ForumAccessException;
 

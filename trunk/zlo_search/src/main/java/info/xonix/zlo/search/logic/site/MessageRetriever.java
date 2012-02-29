@@ -2,6 +2,7 @@ package info.xonix.zlo.search.logic.site;
 
 import info.xonix.zlo.search.config.Config;
 
+import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.utils.Check;
@@ -88,7 +89,7 @@ public class MessageRetriever implements InitializingBean {
                 msgs.add(getMessage(wwwconfParams, num));
 
                 long delta = System.currentTimeMillis() - t1;
-                long toSleep = 1000 / wwwconfParams.getIndexerLimitPerSecond() - delta;
+                long toSleep = 1000 / /*TODO: impr*/GetForum.params(wwwconfParams.getForumId()).getIndexerLimitPerSecond() - delta;
                 if (toSleep > 0) {
                     try {
                         Thread.sleep(toSleep);
@@ -127,7 +128,7 @@ public class MessageRetriever implements InitializingBean {
         return msgs;
     }
 
-    public int getLastMessageNumber(String forumId) throws RetrieverException {
-        return pageRetriever.getLastRootMessageNumber(forumId);
+    public int getLastMessageNumber(WwwconfParams wwwconfParams) throws RetrieverException {
+        return pageRetriever.getLastRootMessageNumber(wwwconfParams);
     }
 }

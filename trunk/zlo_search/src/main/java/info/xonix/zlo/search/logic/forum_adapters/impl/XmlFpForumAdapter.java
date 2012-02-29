@@ -15,7 +15,6 @@ import info.xonix.zlo.search.xmlfp.XmlFpIOException;
  * Time: 1:32
  */
 public class XmlFpForumAdapter extends ForumAdapterAbstract {
-
     private ForumAccessor forumAccessor;
 
     public XmlFpForumAdapter(String descriptorUrl) throws ForumAccessException {
@@ -60,5 +59,10 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract {
     @Override
     public String prepareUserProfileUrl(long userId, String userName) {
         return forumAccessor.getForumUserProfileUrl(userId, userName);
+    }
+
+    @Override
+    public String getForumUrl() {
+        return forumAccessor.getForumUrl();
     }
 }

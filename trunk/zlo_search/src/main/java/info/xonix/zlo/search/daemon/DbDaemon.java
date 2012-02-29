@@ -1,8 +1,11 @@
 package info.xonix.zlo.search.daemon;
 
+import info.xonix.zlo.search.config.forums.ForumParams;
+import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.logic.SiteLogic;
 import info.xonix.zlo.search.logic.exceptions.ExceptionCategory;
+import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
 import info.xonix.zlo.search.logic.site.PageParseException;
 import info.xonix.zlo.search.logic.site.RetrieverException;
 import info.xonix.zlo.search.spring.AppSpringContext;
@@ -33,12 +36,12 @@ public class DbDaemon extends Daemon {
         }
 
         @Override
-        protected int getEndIndex() throws RetrieverException {
+        protected int getEndIndex() throws ForumAccessException {
             return siteLogic.getLastMessageNumber(getForumId());
         }
 
         @Override
-        protected void perform(int from, int to) throws RetrieverException, PageParseException {
+        protected void perform(int from, int to) throws ForumAccessException {
             String forumId = getForumId();
             appLogic.saveMessages(forumId, siteLogic.getMessages(forumId, from, to + 1));
             appLogic.setLastSavedDate(forumId, new Date());
@@ -68,9 +71,10 @@ public class DbDaemon extends Daemon {
     }
 
     private void setParams() {
-        setDoPerTime(getSite().getDbScanPerTime());
-        setSleepPeriod(getSite().getDbScanPeriod());
-        setRetryPeriod(getSite().getDbReconnectPeriod());
+        final ForumParams params = GetForum.params(getForumId());
+        setDoPerTime(params.getDbScanPerTime());
+        setSleepPeriod(params.getDbScanPeriod());
+        setRetryPeriod(params.getDbReconnectPeriod());
     }
 
     protected Process createProcess() {

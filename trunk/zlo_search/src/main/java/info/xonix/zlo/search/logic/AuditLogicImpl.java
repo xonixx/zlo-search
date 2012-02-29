@@ -1,5 +1,6 @@
 package info.xonix.zlo.search.logic;
 
+import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.dao.AuditDao;
 import info.xonix.zlo.search.model.SearchLog;
 import info.xonix.zlo.search.utils.Check;
@@ -23,7 +24,7 @@ public class AuditLogicImpl implements AuditLogic, InitializingBean {
     @Override
     public void logSearchEvent(SearchLog searchLog) {
         auditDao.saveSearchRequest(
-                searchLog.getSite().getSiteNumber(),
+                GetForum.params(searchLog.getForumId()).getSiteNumber(),
                 searchLog);
 
     }

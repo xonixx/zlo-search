@@ -17,10 +17,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * User: Vovan
@@ -64,8 +61,9 @@ public class SiteLogicImpl implements SiteLogic, InitializingBean {
     }
 
     @Override
-    public int getLastMessageNumber(String forumId) throws RetrieverException {
-        return messageRetriever.getLastMessageNumber(forumId);
+    public int getLastMessageNumber(String forumId) throws ForumAccessException {
+//        return messageRetriever.getLastMessageNumber(forumId);
+        return (int) GetForum.adapter(forumId).getLastMessageNumber();
     }
 
 //    private List<Site> sites;
@@ -99,12 +97,14 @@ public class SiteLogicImpl implements SiteLogic, InitializingBean {
 
     @Override
     public String[] getSiteNames() {
-        List<Site> allSites = getSites();
+        final Collection<String> ids = GetForum.ids();
+        return ids.toArray(new String[ids.size()]);
+/*        List<Site> allSites = getSites();
         String[] sites = new String[allSites.size()];
         for (int i = 0; i < allSites.size(); i++) {
             sites[i] = allSites.get(i).getSiteUrl();
         }
-        return sites;
+        return sites;*/
     }
 
 /*    @Override

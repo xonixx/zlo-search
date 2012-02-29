@@ -3,6 +3,8 @@ package info.xonix.zlo.search.xmlfp;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
+import info.xonix.zlo.search.config.forums.ForumParams;
+import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
@@ -141,12 +143,13 @@ class Convert {
         forum.setCharset(wwwconfParams.getSiteCharset());
 
         final Forum.XmlfpUrls xmlFpInfo = OBJECT_FACTORY.createForumXmlfpUrls();
-        xmlFpInfo.setLastMessageNumberUrl("xmlfp.jsp?xmlfp=lastMessageNumber&site=" + wwwconfParams.getSiteNumber());
-        xmlFpInfo.setMessageUrl("xmlfp.jsp?xmlfp=message&num=" + XmlFpUrlsSubstitutions.MESSAGE_ID + "&site=" + wwwconfParams.getSiteNumber());
+        ForumParams forumParams = GetForum.params(wwwconfParams.getForumId()); // <<< TODO
+        xmlFpInfo.setLastMessageNumberUrl("xmlfp.jsp?xmlfp=lastMessageNumber&site=" + forumParams.getSiteNumber());
+        xmlFpInfo.setMessageUrl("xmlfp.jsp?xmlfp=message&num=" + XmlFpUrlsSubstitutions.MESSAGE_ID + "&site=" + forumParams.getSiteNumber());
         xmlFpInfo.setMessageListUrl("xmlfp.jsp?xmlfp=messages" +
                 "&from=" + XmlFpUrlsSubstitutions.FROM +
                 "&to=" + XmlFpUrlsSubstitutions.TO +
-                "&site=" + wwwconfParams.getSiteNumber());
+                "&site=" + forumParams.getSiteNumber());
         forum.setXmlfpUrls(xmlFpInfo);
 
         final Forum.ForumUrls forumUrls = OBJECT_FACTORY.createForumForumUrls();

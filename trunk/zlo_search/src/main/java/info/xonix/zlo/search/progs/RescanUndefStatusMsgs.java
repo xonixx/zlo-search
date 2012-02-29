@@ -3,6 +3,7 @@ package info.xonix.zlo.search.progs;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.MessagesDao;
 
+import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfUtils;
 import info.xonix.zlo.search.logic.site.MessageRetriever;
 import info.xonix.zlo.search.logic.site.PageParseException;
 import info.xonix.zlo.search.logic.site.RetrieverException;
@@ -53,7 +54,7 @@ public class RescanUndefStatusMsgs {
                 System.out.print("Getting from site... ");
                 List<Message> newMsgs = null;
                 try {
-                    newMsgs = messageRetriever.getMessages(Site.forName("zlo"), newNums);
+                    newMsgs = messageRetriever.getMessages(WwwconfUtils.getWwwconfParams("zlo"), newNums);
                 } catch (RetrieverException e) {
                     e.printStackTrace();
                 } catch (PageParseException e) {

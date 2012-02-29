@@ -36,7 +36,7 @@ public class DoubleIndexTest {
     }
 
     private static DoubleIndexManager getDIS() {
-        return new DoubleIndexManager("test", SEARCH_LOGIC.getDateSort());
+        return DoubleIndexManager.create("test", SEARCH_LOGIC.getDateSort());
     }
 
     public static void m1() {

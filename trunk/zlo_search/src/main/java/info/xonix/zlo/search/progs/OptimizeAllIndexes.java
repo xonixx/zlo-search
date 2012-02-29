@@ -1,6 +1,7 @@
 package info.xonix.zlo.search.progs;
 
 import info.xonix.zlo.search.ZloObservable;
+import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.daemon.Daemon;
 import info.xonix.zlo.search.daemon.DaemonLauncher;
 import info.xonix.zlo.search.logic.IndexerLogic;
@@ -39,8 +40,8 @@ public class OptimizeAllIndexes {
 
     public void go() {
         final OptimizeIndex optimizeIndex = new OptimizeIndex();
-        for (String forumId : siteLogic.getSites()) {
-            if (forumId.isPerformIndexing()) {
+        for (String forumId : siteLogic.getSiteNames()) {
+            if (GetForum.params(forumId).isPerformIndexing()) {
                 optimizeIndex.optimizeDoubleIndexForSite(forumId);
             }
         }
