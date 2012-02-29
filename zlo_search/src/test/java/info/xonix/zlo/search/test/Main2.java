@@ -40,8 +40,8 @@ public class Main2 {
                 wr.addDocument(d);
             }
             */
-        String forumId = Site.forName("zlo");
-        AppLogic appLogic = AppSpringContext.get(AppLogic.class);
+//        String forumId = Site.forName("zlo");
+//        AppLogic appLogic = AppSpringContext.get(AppLogic.class);
 /*            wr.addDocument(appLogic.getMessageByNumber(forumId, 3001403).getDocument());
 
 

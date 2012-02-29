@@ -23,7 +23,7 @@ public class TestMessageToXML {
 
     @Test
     public void test1() throws XmlFpException {
-        String forumId = Site.forName("zlo");
+        String forumId = "zlo";
         Message m = appLogic.getMessageByNumber(forumId, 3333333);
         System.out.println(m);
 
@@ -55,7 +55,7 @@ public class TestMessageToXML {
         ));
     }
 
-    @Test
+/*    @Test
     public void test4() throws XmlFpException {
         final XmlFpUrls xmlFpUrls = new XmlFpUrls(
                 "http://localhost:8080/xmlfp/xmlfp.jsp?xmlfp=lastMessageNumber&site=0",
@@ -67,7 +67,7 @@ public class TestMessageToXML {
 
         System.out.println("Last num: " + lastMessageNumber);
         System.out.println("Msg: " + forumAccessor.getMessage(lastMessageNumber));
-    }
+    }*/
 
     @Test
     public void test5() throws XmlFpException {

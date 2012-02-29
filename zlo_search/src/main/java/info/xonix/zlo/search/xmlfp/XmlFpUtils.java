@@ -1,5 +1,6 @@
 package info.xonix.zlo.search.xmlfp;
 
+import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfUtils;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.xmlfp.jaxb_generated.ObjectFactory;
 import info.xonix.zlo.search.xmlfp.utils.MarshalUtils;
@@ -17,7 +18,7 @@ public class XmlFpUtils {
     public static String messageToXml(String forumId, Message message) {
         try {
             return MarshalUtils.marshal(XmlFpContext.getMarshaller(),
-                    Convert.toJaxbMessage(forumId, message));
+                    Convert.toJaxbMessage(WwwconfUtils.getWwwconfParams(forumId), message));
         } catch (XmlFpMarshalException e) {
             throw new RuntimeException(e);
         }
@@ -26,7 +27,7 @@ public class XmlFpUtils {
     public static String messagesToXml(String forumId, List<Message> messages) {
         try {
             return MarshalUtils.marshal(XmlFpContext.getMarshaller(),
-                    Convert.toJaxbMessages(forumId, messages));
+                    Convert.toJaxbMessages(WwwconfUtils.getWwwconfParams(forumId), messages));
         } catch (XmlFpMarshalException e) {
             throw new RuntimeException(e);
         }
@@ -63,7 +64,7 @@ public class XmlFpUtils {
     public static String siteDescriptorToXml(String forumId) {
         try {
             return MarshalUtils.marshal(XmlFpContext.getMarshaller(),
-                    Convert.toJaxbForum(forumId));
+                    Convert.toJaxbForum(WwwconfUtils.getWwwconfParams(forumId)));
         } catch (XmlFpMarshalException e) {
             throw new RuntimeException(e);
         }

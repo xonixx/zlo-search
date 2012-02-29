@@ -2,6 +2,7 @@ package info.xonix.zlo.search.test.siteparsing;
 
 
 import info.xonix.zlo.search.logic.SiteLogic;
+import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
 import info.xonix.zlo.search.logic.site.PageParseException;
 import info.xonix.zlo.search.logic.site.RetrieverException;
 import info.xonix.zlo.search.model.Message;
@@ -19,20 +20,20 @@ import org.junit.Test;
  */
 public class TestSitesRetrieving {
 
-    private static Site velo = null;
+/*    private static Site velo = null;
     private static Site dev = null;
     private static Site zlo = null;
     private static Site takeoff = null;
     private static Site anime = null;
     private static Site np = null;
     private static Site x = null;
-    private static Site dolgopa = null;
+    private static Site dolgopa = null;*/
 
     private static SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
 
     @BeforeClass
     public static void setUp() {
-        velo = Site.forName("velo");
+/*        velo = Site.forName("velo");
 
         dev = Site.forName("dev");
 
@@ -45,12 +46,12 @@ public class TestSitesRetrieving {
 //        np = Site.forName("np");
         x = Site.forName("x");
 
-        dolgopa = Site.forName("dolgopa");
+        dolgopa = Site.forName("dolgopa");*/
     }
 
     @Test
-    public void testVelo() throws RetrieverException, PageParseException {
-        final String forumId = velo;
+    public void testVelo() throws ForumAccessException {
+        final String forumId = "velo";
 
         int lmn = siteLogic.getLastMessageNumber(forumId);
         System.out.println("lmn: " + lmn);
@@ -95,7 +96,8 @@ public class TestSitesRetrieving {
     }
 
     @Test
-    public void testDev() throws RetrieverException, PageParseException {
+    public void testDev() throws ForumAccessException {
+        String dev = "dev";
         int lmn = siteLogic.getLastMessageNumber(dev);
         System.out.println(lmn);
 
@@ -131,7 +133,8 @@ public class TestSitesRetrieving {
     }
 
     @Test
-    public void testX() throws RetrieverException, PageParseException {
+    public void testX() throws ForumAccessException {
+        String x = "x";
         int lmn = siteLogic.getLastMessageNumber(x);
         System.out.println(lmn);
 
@@ -172,8 +175,8 @@ public class TestSitesRetrieving {
     }
 
     @Test
-    public void testDolgopa() throws RetrieverException, PageParseException {
-        final String forumId = dolgopa;
+    public void testDolgopa() throws ForumAccessException {
+        final String forumId = "dolgopa";
 
         int lmn = siteLogic.getLastMessageNumber(forumId);
         System.out.println(lmn);
@@ -224,7 +227,7 @@ public class TestSitesRetrieving {
         checkMsgNotExists(forumId);
     }
 
-    private void checkMsgNotExists(String forumId) throws RetrieverException, PageParseException {
+    private void checkMsgNotExists(String forumId) throws ForumAccessException {
         final Message m = siteLogic.getMessageByNumber(forumId, 999999999);
 
         System.out.println(m);
@@ -236,7 +239,8 @@ public class TestSitesRetrieving {
     }
 
     @Test
-    public void testZlo() throws RetrieverException, PageParseException {
+    public void testZlo() throws ForumAccessException {
+        String  zlo = "zlo";
         int lmn = siteLogic.getLastMessageNumber(zlo);
         System.out.println(lmn);
 
@@ -283,7 +287,8 @@ public class TestSitesRetrieving {
     }
 
     @Test
-    public void testTakeoff() throws RetrieverException, PageParseException {
+    public void testTakeoff() throws ForumAccessException {
+        String takeoff = "takeoff";
         int lmn = siteLogic.getLastMessageNumber(takeoff);
 
         System.out.println(lmn);
@@ -319,7 +324,8 @@ public class TestSitesRetrieving {
     }
 
     @Test
-    public void testAnime() throws RetrieverException, PageParseException {
+    public void testAnime() throws ForumAccessException {
+        String anime = "anime";
         int lmn = siteLogic.getLastMessageNumber(anime);
 
         System.out.println(lmn);
@@ -360,7 +366,8 @@ public class TestSitesRetrieving {
 
 //    @Test
 
-    public void testNp() throws RetrieverException, PageParseException {
+    public void testNp() throws ForumAccessException {
+        String np = "np";
         int lmn = siteLogic.getLastMessageNumber(np);
         System.out.println(lmn);
 

@@ -17,24 +17,27 @@ import java.net.URL;
  * Time: 0:33
  */
 public class ForumAccessor {
-    private XmlFpUrls xmlFpUrls;
-    private String forumMessageUrlPattern;
-    private String forumUserProfileUrlPattern;
+    private Forum forum;
+    //    private XmlFpUrls xmlFpUrls;
+//    private String forumMessageUrlPattern;
+//    private String forumUserProfileUrlPattern;
 
-    public ForumAccessor(XmlFpUrls xmlFpUrls) {
+/*    public ForumAccessor(XmlFpUrls xmlFpUrls) {
         this.xmlFpUrls = xmlFpUrls;
-    }
+    }*/
 
     public ForumAccessor(String descriptorUrl) throws XmlFpException {
         final byte[] descriptorXmlBytes = getXmlAsBytesFromUrl(descriptorUrl);
 
-        final Forum forum;
         try {
             forum = (Forum) XmlFpContext.getUnmarshaller().unmarshal(new ByteArrayInputStream(descriptorXmlBytes));
         } catch (JAXBException e) {
             throw new XmlFpException(e, "Error unmarshalling");
         }
 
+        absolutizeUrls(descriptorUrl);
+
+/*
         this.xmlFpUrls = new XmlFpUrls(
                 UrlUtil.combineUrls(descriptorUrl, forum.getXmlfpUrls().getLastMessageNumberUrl()),
                 UrlUtil.combineUrls(descriptorUrl, forum.getXmlfpUrls().getMessageUrl())
@@ -42,10 +45,23 @@ public class ForumAccessor {
 
         this.forumMessageUrlPattern = UrlUtil.combineUrls(descriptorUrl, forum.getForumUrls().getMessageUrl());
         this.forumUserProfileUrlPattern = UrlUtil.combineUrls(descriptorUrl, forum.getForumUrls().getUserProfileUrl());
+*/
+    }
+
+    private void absolutizeUrls(String descriptorUrl) {
+        final Forum.XmlfpUrls xmlfpUrls = forum.getXmlfpUrls();
+
+        xmlfpUrls.setLastMessageNumberUrl(UrlUtil.combineUrls(descriptorUrl, xmlfpUrls.getLastMessageNumberUrl()));
+        xmlfpUrls.setMessageUrl(UrlUtil.combineUrls(descriptorUrl, xmlfpUrls.getMessageUrl()));
+        xmlfpUrls.setMessageListUrl(UrlUtil.combineUrls(descriptorUrl, xmlfpUrls.getMessageListUrl()));
+
+        final Forum.ForumUrls forumUrls = forum.getForumUrls();
+        forumUrls.setMessageUrl(UrlUtil.combineUrls(descriptorUrl, forumUrls.getMessageUrl()));
+        forumUrls.setUserProfileUrl(UrlUtil.combineUrls(descriptorUrl, forumUrls.getUserProfileUrl()));
     }
 
     public long getLastMessageNumber() throws XmlFpException {
-        final byte[] bytes = getXmlAsBytesFromUrl(xmlFpUrls.getLastMessageNumberUrl());
+        final byte[] bytes = getXmlAsBytesFromUrl(forum.getXmlfpUrls().getLastMessageNumberUrl());
 
         try {
             @SuppressWarnings("unchecked")
@@ -59,7 +75,7 @@ public class ForumAccessor {
     }
 
     public Message getMessage(long id) throws XmlFpException {
-        final String messageUrl = xmlFpUrls.getMessageUrl();
+        final String messageUrl = forum.getXmlfpUrls().getMessageUrl();
         final String messageUrlFilled = messageUrl.replace(
                 XmlFpUrlsSubstitutions.MESSAGE_ID, Long.toString(id));
 
@@ -91,13 +107,17 @@ public class ForumAccessor {
     }
 
     public String getForumMessageUrl(long messageId) {
-        return forumMessageUrlPattern
+        return forum.getForumUrls().getMessageUrl()
                 .replace(XmlFpUrlsSubstitutions.MESSAGE_ID, Long.toString(messageId));
     }
 
     public String getForumUserProfileUrl(long userId, String userName) {
-        return forumUserProfileUrlPattern
+        return forum.getForumUrls().getUserProfileUrl()
                 .replace(XmlFpUrlsSubstitutions.USER_ID, Long.toString(userId))
                 .replace(XmlFpUrlsSubstitutions.USER_NAME, userName);
+    }
+
+    public String getForumUrl() {
+        return forum.getUrl();
     }
 }

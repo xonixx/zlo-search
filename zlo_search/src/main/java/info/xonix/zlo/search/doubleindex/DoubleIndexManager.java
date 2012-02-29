@@ -56,8 +56,11 @@ public class DoubleIndexManager {
         renewDate = new Date();
     }
 
-    public DoubleIndexManager(String forumId, Sort renewingSort) {
+/*    public DoubleIndexManager(String forumId, Sort renewingSort) {
         this(config.getIndexDirDouble(forumId), renewingSort);
+    }*/
+    public static DoubleIndexManager create(String forumId, Sort renewingSort) {
+        return new DoubleIndexManager(config.getIndexDirDouble(forumId), renewingSort);
     }
 
     private Directory dir(File dir) throws IOException {

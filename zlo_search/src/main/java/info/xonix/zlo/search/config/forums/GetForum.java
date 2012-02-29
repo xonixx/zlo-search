@@ -2,6 +2,7 @@ package info.xonix.zlo.search.config.forums;
 
 import info.xonix.zlo.search.logic.forum_adapters.ForumAdapter;
 
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,10 @@ public class GetForum {
 
     public static ForumParams params(String forumId) {
         return descriptor(forumId).getForumParams();
+    }
+
+    public static Collection<String> ids() {
+        return INSTANCE.forumIdToForumDescriptor.keySet();
     }
 
     public static ForumDescriptor descriptor(String forumId) {

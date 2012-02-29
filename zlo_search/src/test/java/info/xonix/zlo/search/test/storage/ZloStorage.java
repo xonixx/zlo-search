@@ -61,7 +61,7 @@ public class ZloStorage implements Serializable {
     private void retrieveAndSerialize() {
         System.out.println("Retrieving...");
         try {
-            String forumId = Site.forName("zlo");
+            String forumId = "zlo";
             AppLogic appLogic = AppSpringContext.get(AppLogic.class);
             for (Message m : appLogic.getMessages(forumId, FROM, TO)) {
                 if (m != null)

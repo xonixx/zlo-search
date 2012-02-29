@@ -4,7 +4,9 @@ package info.xonix.zlo.search.xmlfp;
  * User: gubarkov
  * Date: 12.02.12
  * Time: 0:31
+ * @deprecated
  */
+@Deprecated
 public class XmlFpUrls {
     private String lastMessageNumberUrl;
     private String messageUrl;

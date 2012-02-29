@@ -63,7 +63,7 @@ public class Test5 {
 //        SearchLogicImpl zs = new SearchLogicImpl(Site.forName("zlo"));
 //        System.out.println(zs.search(-1, "тест", true, true, false, false, false, null, null).getHits().length());
         String forumId = "zlo";
-        DoubleIndexManager dis = new DoubleIndexManager(forumId, null);
+        DoubleIndexManager dis = DoubleIndexManager.create(forumId, null);
         IndexSearcher is = new IndexSearcher(dis.getBigReader());
 /*        try {
             Hits hits = is.search(new QueryParser("body", config.getMessageAnalyzer()).parse("body:тест title:тест"), Sort.INDEXORDER);

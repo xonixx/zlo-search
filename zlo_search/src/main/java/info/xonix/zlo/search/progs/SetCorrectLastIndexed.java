@@ -22,7 +22,7 @@ public class SetCorrectLastIndexed extends App {
         if ("e".equals(siteName))
             return;
 
-        DoubleIndexManager dis = new DoubleIndexManager(siteName, null);
+        DoubleIndexManager dis = DoubleIndexManager.create(siteName, null);
         int lastIndexedNum = Integer.parseInt(dis.search(new MatchAllDocsQuery(), -1).doc(0).get("num"));
 
         System.out.println(lastIndexedNum);
