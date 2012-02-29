@@ -1,7 +1,6 @@
 package info.xonix.zlo.search.utils;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.domainobj.Site;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -67,15 +66,15 @@ public class HtmlUtils {
         return URL.matcher(s).find();
     }
 
-    public static boolean hasImg(String s, Site site) {
+    public static boolean hasImg(String s, String forumId) {
         Matcher matcher = IMG.matcher(s);
 
         boolean isFound = matcher.find();
 
         if (isFound &&
-                (site != null
-                        && StringUtils.isNotEmpty(site.getSiteSmilesPath())
-                        && matcher.group(2).contains(site.getSiteSmilesPath())))
+                (forumId != null
+                        && StringUtils.isNotEmpty(forumId.getSiteSmilesPath())
+                        && matcher.group(2).contains(forumId.getSiteSmilesPath())))
             return false; // this is smile
         else
             return isFound;

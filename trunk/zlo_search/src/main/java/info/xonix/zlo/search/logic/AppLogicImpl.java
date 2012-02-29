@@ -3,7 +3,6 @@ package info.xonix.zlo.search.logic;
 import info.xonix.zlo.search.dao.DbDict;
 import info.xonix.zlo.search.dao.DbDictFields;
 import info.xonix.zlo.search.dao.MessagesDao;
-import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.utils.Check;
 import org.apache.commons.lang.StringUtils;
@@ -39,66 +38,66 @@ public class AppLogicImpl implements AppLogic, InitializingBean {
     }
 
     @Override
-    public void setLastIndexedNumber(Site site, int num) {
-        dbDict.setInt(site, DbDictFields.DB_DICT_LAST_INDEXED_DOUBLE, num);
-        dbDict.setDate(site, DbDictFields.DB_DICT_LAST_INDEXED_DOUBLE_DATE, new Date());
+    public void setLastIndexedNumber(String forumId, int num) {
+        dbDict.setInt(forumId, DbDictFields.DB_DICT_LAST_INDEXED_DOUBLE, num);
+        dbDict.setDate(forumId, DbDictFields.DB_DICT_LAST_INDEXED_DOUBLE_DATE, new Date());
     }
 
     @Override
-    public int getLastIndexedNumber(Site site) {
-        return dbDict.getInt(site, DbDictFields.DB_DICT_LAST_INDEXED_DOUBLE, 0);
+    public int getLastIndexedNumber(String forumId) {
+        return dbDict.getInt(forumId, DbDictFields.DB_DICT_LAST_INDEXED_DOUBLE, 0);
     }
 
     @Override
-    public Date getLastIndexedDate(Site site) {
-        return dbDict.getDate(site, DbDictFields.DB_DICT_LAST_INDEXED_DOUBLE_DATE, new Date(0));
+    public Date getLastIndexedDate(String forumId) {
+        return dbDict.getDate(forumId, DbDictFields.DB_DICT_LAST_INDEXED_DOUBLE_DATE, new Date(0));
     }
 
     @Override
-    public void setLastSavedDate(Site site, Date d) {
-        dbDict.setDate(site, DbDictFields.DB_DICT_LAST_SAVED_DATE, d);
+    public void setLastSavedDate(String forumId, Date d) {
+        dbDict.setDate(forumId, DbDictFields.DB_DICT_LAST_SAVED_DATE, d);
     }
 
     @Override
-    public Date getLastSavedDate(Site site) {
-        return dbDict.getDate(site, DbDictFields.DB_DICT_LAST_SAVED_DATE, new Date(0));
+    public Date getLastSavedDate(String forumId) {
+        return dbDict.getDate(forumId, DbDictFields.DB_DICT_LAST_SAVED_DATE, new Date(0));
     }
 
     // messages
 
     @Override
-    public void saveMessages(Site site, List<Message> msgs) {
-        log.info(site.getName() + " - Saving (" + msgs.get(0).getNum() + " - " + msgs.get(msgs.size() - 1).getNum() + ") msgs to DB...");
-        messagesDao.saveMessagesFast(site, msgs);
-        log.info(site.getName() + " - Successfully saved " + msgs.size() + " msgs to DB.");
+    public void saveMessages(String forumId, List<Message> msgs) {
+        log.info(forumId + " - Saving (" + msgs.get(0).getNum() + " - " + msgs.get(msgs.size() - 1).getNum() + ") msgs to DB...");
+        messagesDao.saveMessagesFast(forumId, msgs);
+        log.info(forumId + " - Successfully saved " + msgs.size() + " msgs to DB.");
     }
 
     @Override
-    public Message getMessageByNumber(Site site, int num) {
-        return messagesDao.getMessageByNumber(site, num);
+    public Message getMessageByNumber(String forumId, int num) {
+        return messagesDao.getMessageByNumber(forumId, num);
     }
 
     @Override
-    public List<Message> getMessages(Site site, int start, int end) {
-        return messagesDao.getMessagesByRange(site, start, end);
+    public List<Message> getMessages(String forumId, int start, int end) {
+        return messagesDao.getMessagesByRange(forumId, start, end);
     }
 
     @Override
-    public int getLastSavedMessageNumber(Site site) {
-        return messagesDao.getLastMessageNumber(site);
+    public int getLastSavedMessageNumber(String forumId) {
+        return messagesDao.getLastMessageNumber(forumId);
     }
 
     @Override
-    public void saveSearchTextForAutocomplete(Site site, String text) {
+    public void saveSearchTextForAutocomplete(String forumId, String text) {
         if (StringUtils.isEmpty(text)) {
             throw new IllegalArgumentException("text is empty");
         }
 
-        messagesDao.saveSearchTextForAutocomplete(site, text.trim().toLowerCase());
+        messagesDao.saveSearchTextForAutocomplete(forumId, text.trim().toLowerCase());
     }
 
     @Override
-    public List<String> autoCompleteText(Site site, String text, int limit) {
-        return messagesDao.autoCompleteText(site, text, limit);
+    public List<String> autoCompleteText(String forumId, String text, int limit) {
+        return messagesDao.autoCompleteText(forumId, text, limit);
     }
 }

@@ -2,7 +2,7 @@ package info.xonix.zlo.search.test;
 
 import info.xonix.zlo.search.LuceneVersion;
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.domainobj.Site;
+
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.spring.AppSpringContext;
@@ -37,7 +37,7 @@ class B extends A {
 
 public class Test1 {
     private static AppLogic appLogic = AppSpringContext.get(AppLogic.class);
-    private static Site zlo = Site.forName("zlo");
+//    private static Site zlo = Site.forName("zlo");
 
     public static void main(String[] args) {
         new Config();
@@ -121,27 +121,27 @@ public class Test1 {
 //            System.out.println(MessagesDao.getMessageByNumber(4149183));
 //            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(648064));
 //            System.out.println(DAO.Site.getSite("zlo").getMessageByNumber(4199196));
-        Site site = Site.forName("sport");
-/*             System.out.println(site.getMessageByNumber(61353));
-            System.out.println(site.getMessageByNumber(62212));
-            System.out.println(site.getMessageByNumber(622120));*/
+        String forumId = "sport";
+/*             System.out.println(forumId.getMessageByNumber(61353));
+            System.out.println(forumId.getMessageByNumber(62212));
+            System.out.println(forumId.getMessageByNumber(622120));*/
 
-        site = zlo;
-        System.out.println(appLogic.getMessageByNumber(site, 4235814));
-        System.out.println(appLogic.getMessageByNumber(site, 4235806));
-        System.out.println(appLogic.getMessageByNumber(site, 42358140));
+//        site = zlo;
+        System.out.println(appLogic.getMessageByNumber(forumId, 4235814));
+        System.out.println(appLogic.getMessageByNumber(forumId, 4235806));
+        System.out.println(appLogic.getMessageByNumber(forumId, 42358140));
 
 /*            site = Site.forName("anime");
-            System.out.println(site.getMessageByNumber(24));
-            System.out.println(site.getMessageByNumber(25));
-            System.out.println(site.getMessageByNumber(26));*/
+            System.out.println(forumId.getMessageByNumber(24));
+            System.out.println(forumId.getMessageByNumber(25));
+            System.out.println(forumId.getMessageByNumber(26));*/
 /*            site = Site.forName("games");
-            System.out.println(site.getMessageByNumber(47405)); // unreg
-            System.out.println(site.getMessageByNumber(47116)); // reg + sign (
-            System.out.println(site.getMessageByNumber(47128)); // unreg w/o text*/
-/*            System.out.println(site.getMessageByNumber(11009));
-            System.out.println(site.getMessageByNumber(11010));
-            System.out.println(site.getMessageByNumber(110100));*/
+            System.out.println(forumId.getMessageByNumber(47405)); // unreg
+            System.out.println(forumId.getMessageByNumber(47116)); // reg + sign (
+            System.out.println(forumId.getMessageByNumber(47128)); // unreg w/o text*/
+/*            System.out.println(forumId.getMessageByNumber(11009));
+            System.out.println(forumId.getMessageByNumber(11010));
+            System.out.println(forumId.getMessageByNumber(110100));*/
     }
 
 /*
@@ -174,7 +174,7 @@ public class Test1 {
     }
 
     public static void m12() {
-        for (Message m : appLogic.getMessages(zlo, 10000, 10042)) {
+        for (Message m : appLogic.getMessages("zlo", 10000, 10042)) {
             System.out.println(m);
         }
 
@@ -182,7 +182,7 @@ public class Test1 {
 
     public static void m11() {
         for (int i = 0; i < 6000; i++) {
-            appLogic.getMessageByNumber(zlo, i);
+            appLogic.getMessageByNumber("zlo", i);
         }
 
     }
@@ -190,7 +190,7 @@ public class Test1 {
     public static void m10() {
 
 //            System.out.println(new ZloStorage().getLastSavedMessageNumber());
-        System.out.println(appLogic.getLastSavedMessageNumber(zlo));
+        System.out.println(appLogic.getLastSavedMessageNumber("zlo"));
 
     }
 
@@ -227,7 +227,7 @@ public class Test1 {
     public static void m5() {
         for (int i = 0; i < 10; i++) {
 
-            System.out.println(">" + appLogic.getLastSavedMessageNumber(zlo));
+            System.out.println(">" + appLogic.getLastSavedMessageNumber("zlo"));
 
         }
     }
@@ -262,7 +262,7 @@ public class Test1 {
 
     public static void m7() {
 
-        for (Message m : appLogic.getMessages(zlo, 10, 110)) {
+        for (Message m : appLogic.getMessages("zlo", 10, 110)) {
             System.out.println(m);
         }
 
@@ -270,7 +270,7 @@ public class Test1 {
 
     public static void m8() {
 
-        System.out.println(appLogic.getMessageByNumber(zlo, 3960198));
+        System.out.println(appLogic.getMessageByNumber("zlo", 3960198));
 
         /*System.out.println(PageParser.parseMessage("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n" +
                 "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=windows-1251\" /><link rel=\"shortcut icon\" href=\"/favicon.ico\" /><link rel=\"stylesheet\" type=\"text/css\" href=\"/main.css\" /><meta http-equiv=\"Page-Exit\" content=\"progid:DXImageTransform.Microsoft.Fade(Duration=0.2)\" /><title>Форум-ФРТК-МФТИ : Программирование : я говорю про коды на FORTRAN-87, какие RPC?</title></head><body>\n" +
@@ -322,13 +322,13 @@ public class Test1 {
 
     public static void m9() {
 
-        List<Message> l = appLogic.getMessages(zlo, 3999995, 3999999);
+        List<Message> l = appLogic.getMessages("zlo", 3999995, 3999999);
 //            Collections.
         for (Message m : l) {
             System.out.println(m);
         }
         System.out.println("#############################################");
-        List<Message> l1 = appLogic.getMessages(zlo, 4000000, 4000005);
+        List<Message> l1 = appLogic.getMessages("zlo", 4000000, 4000005);
         for (Message m : l1) {
             System.out.println(m);
         }

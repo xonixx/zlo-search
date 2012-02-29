@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.progs;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.domainobj.Site;
+
 import info.xonix.zlo.search.logic.SearchLogic;
 import info.xonix.zlo.search.logic.SearchLogicImpl;
 import info.xonix.zlo.search.spring.AppSpringContext;
@@ -22,14 +22,14 @@ public class OptimizeIndex {
     }
 
     public void main() {
-        Site site = Site.forName(Config.getSiteEnvName());
+        String forumId = Config.getSiteEnvName();
 
-        optimizeDoubleIndexForSite(site);
+        optimizeDoubleIndexForSite(forumId);
     }
 
-    public void optimizeDoubleIndexForSite(Site site) {
-        log.info("Optimizing index for " + site.getName());
+    public void optimizeDoubleIndexForSite(String forumId) {
+        log.info("Optimizing index for " + forumId);
 
-        searchLogic.optimizeIndex(site);
+        searchLogic.optimizeIndex(forumId);
     }
 }

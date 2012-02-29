@@ -2,7 +2,7 @@ package info.xonix.zlo.search.daemon;
 
 import info.xonix.zlo.search.ZloObservable;
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.domainobj.Site;
+
 import info.xonix.zlo.search.logic.exceptions.ExceptionsLogger;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.utils.TimeUtils;
@@ -41,7 +41,7 @@ public abstract class Daemon {
 
     private static Observable observable = new ZloObservable();
 
-    private Site site;
+    private String forumId;
 
     public static void on(Observer o) {
         observable.addObserver(o);
@@ -145,7 +145,7 @@ public abstract class Daemon {
     }
 
     public String describe() {
-        return getClass().getSimpleName() + "-" + getSiteName();
+        return getClass().getSimpleName() + "-" + forumId;
     }
 
     protected abstract class Process extends Thread {
@@ -159,11 +159,11 @@ public abstract class Daemon {
                 try {
                     doOneIteration();
                 } catch (InterruptedException e) {
-                    getLogger().info(getSiteName() + " - Process interrupted.");
+                    getLogger().info(forumId + " - Process interrupted.");
                 }
 
                 if (isExiting()) {
-                    getLogger().info(getSiteName() + " - Performing cleanup...");
+                    getLogger().info(forumId + " - Performing cleanup...");
                     cleanUp();
                     processExited(Daemon.this);
                     break;
@@ -206,7 +206,7 @@ public abstract class Daemon {
                 }
 
                 while (indexFrom > end) {
-                    getLogger().info(getSiteName() + " - Sleeping " + TimeUtils.toMinutesSeconds(sleepPeriod) + "...");
+                    getLogger().info(forumId + " - Sleeping " + TimeUtils.toMinutesSeconds(sleepPeriod) + "...");
                     doSleep(sleepPeriod);
                     end = getEndIndex();
                 }
@@ -216,10 +216,10 @@ public abstract class Daemon {
                 saveLastException(e);
 
                 if (!processException(e)) {
-                    getLogger().error("(" + getSiteName() + ") Unknown exception", e);
+                    getLogger().error("(" + forumId + ") Unknown exception", e);
                 }
 
-                getLogger().info(getSiteName() + " - Retry in " + TimeUtils.toMinutesSeconds(retryPeriod));
+                getLogger().info(forumId + " - Retry in " + TimeUtils.toMinutesSeconds(retryPeriod));
                 doSleep(retryPeriod);
             }
         }
@@ -245,33 +245,33 @@ public abstract class Daemon {
     }
 
     protected Daemon() {
-        this(Site.forName(Config.getSiteEnvName()));
+        this(Config.getSiteEnvName());
     }
 
-    protected Daemon(Site site) {
-//        super(site);
-        this.site = site;
+    protected Daemon(String forumId) {
+//        super(forumId);
+        this.forumId = forumId;
         registerExitHandlers();
     }
 
-    public Site getSite() {
-        return site;
+    public String getForumId() {
+        return forumId;
     }
 
-    public String getSiteName() {
-        return site.getName();
+    public void setForumId(String forumId) {
+        this.forumId = forumId;
     }
 
     public void registerExitHandlers() {
         registerForCleanUp(this);
 
-        getLogger().info(getSiteName() + " - Registering exit handlers...");
+        getLogger().info(getForumId() + " - Registering exit handlers...");
         setExiting(false);
 
         final SignalHandler exitHandler = new SignalHandler() {
             public void handle(Signal signal) {
                 // getLogger().info(...) gaves NPE at rt
-                log.info(getSiteName() + " - Exit handler for " + signal.getName() + "...");
+                log.info(getForumId() + " - Exit handler for " + signal.getName() + "...");
                 setExitingAll();
             }
         };
@@ -281,7 +281,7 @@ public abstract class Daemon {
     }
 
     protected void start() {
-        getLogger().info("Starting " + this.getClass() + " daemon for site: " + getSiteName());
+        getLogger().info("Starting " + this.getClass() + " daemon for site: " + getForumId());
         while (true) {
             Process t = getProcess();
             t.setPriority(Thread.MIN_PRIORITY); // so daemons not slowing search 
@@ -294,9 +294,9 @@ public abstract class Daemon {
             // if we are here => thread finished
             // if !exiting => thread was finished by mysterious reason
             if (!isExiting()) {
-                getLogger().warn(getSiteName() + " - MainProcess unexpectedly finished, restarting...");
+                getLogger().warn(getForumId() + " - MainProcess unexpectedly finished, restarting...");
             } else {
-                getLogger().info(getSiteName() + " - Gracefully exiting...");
+                getLogger().info(getForumId() + " - Gracefully exiting...");
                 break;
             }
         }

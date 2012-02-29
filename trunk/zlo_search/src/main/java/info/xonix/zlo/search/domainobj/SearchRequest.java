@@ -17,7 +17,7 @@ public class SearchRequest {
 
     private MessagesDao messagesDao = AppSpringContext.get(MessagesDao.class);
 
-    private Site site;
+    private String forumId;
 
     private String text;
 
@@ -38,11 +38,11 @@ public class SearchRequest {
 
     private boolean searchAll;
 
-    public SearchRequest(Site site, String text, boolean inTitle, boolean inBody,
+    public SearchRequest(String forumId, String text, boolean inTitle, boolean inBody,
                          boolean inReg, boolean inHasUrl, boolean inHasImg,
                          String nick, String host, int topicCode, boolean isDateSet, Date fromDate, Date toDate,
                          boolean searchAll) {
-        this.site = site;
+        this.forumId = forumId;
 
         this.text = text;
         this.inTitle = inTitle;
@@ -61,12 +61,12 @@ public class SearchRequest {
         this.searchAll = searchAll;
     }
 
-    public Site getSite() {
-        return site;
+    public String getForumId() {
+        return forumId;
     }
 
-    public void setSite(Site site) {
-        this.site = site;
+    public void setForumId(String forumId) {
+        this.forumId = forumId;
     }
 
     public String getText() {
@@ -183,7 +183,7 @@ public class SearchRequest {
 
         SearchRequest req = (SearchRequest) obj;
 
-        return site.equals(req.getSite()) &&
+        return forumId.equals(req.getForumId()) &&
                 topicCode == req.getTopicCode() &&
                 StringUtils.equals(text, req.getText()) &&
                 inTitle == req.isInTitle() &&
@@ -199,7 +199,7 @@ public class SearchRequest {
     }
 
     public int hashCode() {
-        return StringUtils.join(new Object[]{text, inTitle, inBody, inReg, inHasUrl, inHasImg, nick, host, topicCode, searchAll, site.getName()}, '|').hashCode();
+        return StringUtils.join(new Object[]{text, inTitle, inBody, inReg, inHasUrl, inHasImg, nick, host, topicCode, searchAll, forumId}, '|').hashCode();
     }
 
     public boolean isTheSameSearch(SearchRequest searchRequest) {
@@ -220,7 +220,7 @@ public class SearchRequest {
 
         if (topicCode != -1) {
 //            try {
-            sb.append(" категория:(").append(messagesDao.getTopics(site)[topicCode]).append(")");
+            sb.append(" категория:(").append(messagesDao.getTopics(forumId)[topicCode]).append(")");
 //            } catch (DbException e) {
 //                ;
 //            }

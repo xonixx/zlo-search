@@ -2,11 +2,10 @@ package info.xonix.zlo.search.logic;
 
 import info.xonix.zlo.search.LuceneVersion;
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.doubleindex.DoubleIndexManager;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.utils.Check;
-import info.xonix.zlo.search.utils.factory.SiteFactory;
+import info.xonix.zlo.search.utils.factory.StringFactory;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.document.DateTools;
@@ -46,15 +45,15 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
     @Autowired
     private SearchLogic searchLogic;
 
-    private SiteFactory<IndexWriter> siteToIndexWriter = new SiteFactory<IndexWriter>() {
+    private StringFactory<IndexWriter> siteToIndexWriter = new StringFactory<IndexWriter>() {
         @Override
-        protected IndexWriter create(Site site) {
+        protected IndexWriter create(String forumId) {
             IndexWriter writer;
             try {
                 IndexWriterConfig indexWriterConfig = new IndexWriterConfig(
                         LuceneVersion.VERSION, config.getMessageAnalyzer());
 
-                writer = new IndexWriter(FSDirectory.open(getIndexDir(site)),indexWriterConfig);
+                writer = new IndexWriter(FSDirectory.open(getIndexDir(forumId)),indexWriterConfig);
 
                 writer.setMergeFactor(7); // optimized for search : TODO
             } catch (IOException e) {
@@ -64,17 +63,17 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
         }
 
         @Override
-        protected void close(Site site, IndexWriter indexWriter) {
-            log.info("Closing indexWriter for site: " + site.getName());
+        protected void close(String forumId, IndexWriter indexWriter) {
+            log.info("Closing indexWriter for site: " + forumId);
             try {
                 indexWriter.close();
             } catch (IOException e) {
-                log.error("Problem closing indexWriter for site: " + site.getName(), e);
+                log.error("Problem closing indexWriter for site: " + forumId, e);
             }
         }
 
-        private File getIndexDir(Site site) {
-            return new File(config.getIndexDirDouble(site) + "/" + DoubleIndexManager.SMALL_INDEX_DIR);
+        private File getIndexDir(String forumId) {
+            return new File(config.getIndexDirDouble(forumId) + "/" + DoubleIndexManager.SMALL_INDEX_DIR);
         }
     };
 
@@ -85,20 +84,20 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
         Check.isSet(searchLogic, "searchLogic");
     }
 
-    private IndexWriter getWriter(Site site) {
-        return siteToIndexWriter.get(site);
+    private IndexWriter getWriter(String forumId) {
+        return siteToIndexWriter.get(forumId);
     }
 
-    private void addMessagesToIndex(Site site, int start, int end) throws IndexerException {
-        final IndexWriter writer = getWriter(site);
+    private void addMessagesToIndex(String forumId, int start, int end) throws IndexerException {
+        final IndexWriter writer = getWriter(forumId);
         try {
-            for (Message msg : appLogic.getMessages(site, start, end)) {
+            for (Message msg : appLogic.getMessages(forumId, start, end)) {
                 if (msg.isOk()) {
-                    log.debug(site.getName() + " - Addind: " + (config.isDebug() ? msg : msg.getNum()));
+                    log.debug(forumId + " - Addind: " + (config.isDebug() ? msg : msg.getNum()));
 
-                    writer.addDocument(messageToDocument(site, msg));
+                    writer.addDocument(messageToDocument(forumId, msg));
                 } else {
-                    log.debug(site.getName() + " - Not adding: " + msg.getNum() + " with status: " + msg.getStatus());
+                    log.debug(forumId + " - Not adding: " + msg.getNum() + " with status: " + msg.getStatus());
                 }
             }
 //            writer.flush();
@@ -110,7 +109,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
         }
     }
 
-    private Document messageToDocument(Site site, @Nonnull Message msg) {
+    private Document messageToDocument(String forumId, @Nonnull Message msg) {
             final String hostLowerCase = msg.getHost().toLowerCase();
 
             Document doc = new Document();
@@ -127,7 +126,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
             doc.add(new Field(MessageFields.DATE, DateTools.dateToString(msg.getDate(), DateTools.Resolution.MINUTE), Field.Store.NO, Field.Index.NOT_ANALYZED));
             doc.add(new Field(MessageFields.BODY, msg.getCleanBody(), Field.Store.NO, Field.Index.ANALYZED)); // "чистый" - индексируем, не храним
             doc.add(new Field(MessageFields.HAS_URL, msg.isHasUrl() ? TRUE : FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED));
-            doc.add(new Field(MessageFields.HAS_IMG, msg.isHasImg(site) ? TRUE : FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED));
+            doc.add(new Field(MessageFields.HAS_IMG, msg.isHasImg(forumId) ? TRUE : FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED));
 
             return doc;
     }
@@ -139,30 +138,28 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
      * TODO: this must be transactional!
      */
     @Override
-    public void index(Site site, int from, int to) throws IndexerException {
-        final String siteName = site.getName();
-
+    public void index(String forumId, int from, int to) throws IndexerException {
         if (from <= 1) {
-            log.info("[!] Dropping index for site: " + siteName + ", as from index=" + from);
+            log.info("[!] Dropping index for site: " + forumId + ", as from index=" + from);
             try {
-                searchLogic.dropIndex(site);
+                searchLogic.dropIndex(forumId);
             } catch (IOException e) {
-                log.error("Error while dropping index for site: " + siteName, e);
+                log.error("Error while dropping index for site: " + forumId, e);
             }
         }
 
-        log.info(String.format(siteName + " - Adding %s msgs [%s-%s] to index...", to - from + 1, from, to));
+        log.info(String.format(forumId + " - Adding %s msgs [%s-%s] to index...", to - from + 1, from, to));
 
-        addMessagesToIndex(site, from, to + 1);
+        addMessagesToIndex(forumId, from, to + 1);
 
-        log.info(siteName + " - Setting last indexed: " + to);
+        log.info(forumId + " - Setting last indexed: " + to);
 
-        appLogic.setLastIndexedNumber(site, to);
+        appLogic.setLastIndexedNumber(forumId, to);
     }
 
     @Override
-    public void closeIndexWriter(Site site) {
-        siteToIndexWriter.reset(site);
+    public void closeIndexWriter(String forumId) {
+        siteToIndexWriter.reset(forumId);
     }
 
     @Override

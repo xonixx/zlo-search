@@ -1,6 +1,5 @@
 package info.xonix.zlo.search.dao;
 
-import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageShallow;
 import info.xonix.zlo.search.model.Topic;
@@ -14,29 +13,29 @@ import java.util.Map;
  * Time: 1:19:55
  */
 public interface MessagesDao {
-    void saveMessagesFast(Site site, List<Message> msgs);
+    void saveMessagesFast(String forumId, List<Message> msgs);
 
-    void saveMessagesFast(Site site, List<Message> msgs, boolean updateIfExists);
+    void saveMessagesFast(String forumId, List<Message> msgs, boolean updateIfExists);
 
-    Message getMessageByNumber(Site site, int num);
+    Message getMessageByNumber(String forumId, int num);
 
-    List<Message> getMessagesByRange(Site site, int start, int end);
+    List<Message> getMessagesByRange(String forumId, int start, int end);
 
-    List<Message> getMessages(Site site, int[] nums);
+    List<Message> getMessages(String forumId, int[] nums);
 
-    List<MessageShallow> getShallowMessages(Site site, int[] nums);
+    List<MessageShallow> getShallowMessages(String forumId, int[] nums);
 
-    int getLastMessageNumber(Site site);
+    int getLastMessageNumber(String forumId);
 
     // TODO: introduce right dmo
 
-    List<Topic> getTopicList(Site site);
+    List<Topic> getTopicList(String forumId);
 
-    String[] getTopics(Site site);
+    String[] getTopics(String forumId);
 
-    Map<String, Integer> getTopicsHashMap(Site site);
+    Map<String, Integer> getTopicsHashMap(String forumId);
 
-    void saveSearchTextForAutocomplete(Site site, String text);
+    void saveSearchTextForAutocomplete(String forumId, String text);
 
-    List<String> autoCompleteText(Site site, String text, int limit);
+    List<String> autoCompleteText(String forumId, String text, int limit);
 }

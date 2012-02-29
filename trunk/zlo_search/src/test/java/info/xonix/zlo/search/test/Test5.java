@@ -2,7 +2,7 @@ package info.xonix.zlo.search.test;
 
 import info.xonix.zlo.search.LuceneVersion;
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.domainobj.Site;
+
 import info.xonix.zlo.search.doubleindex.DoubleIndexManager;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.lucene.analysis.Analyzer;
@@ -62,8 +62,8 @@ public class Test5 {
     public static void m4() {
 //        SearchLogicImpl zs = new SearchLogicImpl(Site.forName("zlo"));
 //        System.out.println(zs.search(-1, "тест", true, true, false, false, false, null, null).getHits().length());
-        Site site = Site.forName("zlo");
-        DoubleIndexManager dis = new DoubleIndexManager(site, null);
+        String forumId = "zlo";
+        DoubleIndexManager dis = new DoubleIndexManager(forumId, null);
         IndexSearcher is = new IndexSearcher(dis.getBigReader());
 /*        try {
             Hits hits = is.search(new QueryParser("body", config.getMessageAnalyzer()).parse("body:тест title:тест"), Sort.INDEXORDER);

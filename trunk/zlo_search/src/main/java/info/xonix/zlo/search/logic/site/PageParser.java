@@ -2,7 +2,7 @@ package info.xonix.zlo.search.logic.site;
 
 import info.xonix.zlo.search.config.DateFormats;
 import info.xonix.zlo.search.dao.MessagesDao;
-import info.xonix.zlo.search.domainobj.Site;
+import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.utils.Check;
@@ -37,28 +37,29 @@ public class PageParser implements InitializingBean {
         Check.isSet(messagesDao, "messagesDao");
     }
 
-    private Message parseMessage(Site site, Message message, String msg) throws PageParseException {
+    private Message parseMessage(WwwconfParams wwwconfParams, Message message, String msg) throws PageParseException {
 
-        Matcher m = site.getMsgUnregRe().matcher(msg);
+        Matcher m = wwwconfParams.getMsgUnregRe().matcher(msg);
 
+        final String forumId = wwwconfParams.getForumId();
         if (m.find()) {
             message.setReg(false);
         } else {
-            m = site.getMsgRegRe().matcher(msg);
+            m = wwwconfParams.getMsgRegRe().matcher(msg);
             if (!m.find()) {
-                if (msg.contains(site.getMsgNotExistOrWrong())) {
+                if (msg.contains(wwwconfParams.getMsgNotExistOrWrong())) {
                     message.setStatus(MessageStatus.DELETED);
                 } else {
                     message.setStatus(MessageStatus.UNKNOWN);
-                    throw new PageParseException("Can't parse msg#:" + message.getNum() + " in site:" + site.getName() + "... Possibly format changed!\n\n" + msg);
+                    throw new PageParseException("Can't parse msg#:" + message.getNum() + " in site:" + forumId + "... Possibly format changed!\n\n" + msg);
                 }
-//                message.setSite(site);
+//                message.setSite(forumId);
                 return message;
             }
             message.setReg(true);
         }
 
-        List<Integer> groupsOrder = site.getMsgReGroupsOrder();
+        List<Integer> groupsOrder = wwwconfParams.getMsgReGroupsOrder();
         if (groupsOrder == null)
             groupsOrder = Arrays.asList(0,
                     1, // topic
@@ -78,23 +79,23 @@ public class PageParser implements InitializingBean {
 
         message.setTopic(topic);
 
-        Integer topicCode = messagesDao.getTopicsHashMap(site).get(topic);
+        Integer topicCode = messagesDao.getTopicsHashMap(forumId).get(topic);
         if (topicCode == null) {
             topicCode = -1;
             if (StringUtils.isNotEmpty(topic)) {
-                log.info("Unknown topic: " + topic + " while parsing msg#: " + message.getNum() + " in site:" + site.getName() + "... Adding to title.");
+                log.info("Unknown topic: " + topic + " while parsing msg#: " + message.getNum() + " in site:" + forumId + "... Adding to title.");
                 title = "[" + topic + "] " + title;
             }
         }
         message.setTopicCode(topicCode);
 
-//        message.setSite(site);
+//        message.setSite(forumId);
         message.setTitle(title);
         message.setNick(StringUtils.trim(HtmlUtils.unescapeHtml(m.group(groupsOrder.get(3))))); // unescape nick
         message.setHost(m.group(groupsOrder.get(4)));
 
         String dateStr = m.group(groupsOrder.get(5));
-        message.setDate(StringUtils.isEmpty(dateStr) ? new Date(0) : prepareDate(site, dateStr));
+        message.setDate(StringUtils.isEmpty(dateStr) ? new Date(0) : prepareDate(wwwconfParams, dateStr));
 
         message.setBody(m.group(groupsOrder.get(6)));
         message.setStatus(MessageStatus.OK);
@@ -102,18 +103,18 @@ public class PageParser implements InitializingBean {
         return message;
     }
 
-    public Message parseMessage(Site site, String msg, int urlNum) throws PageParseException {
+    public Message parseMessage(WwwconfParams wwwconfParams, String msg, int urlNum) throws PageParseException {
         Message message = new Message();
         message.setNum(urlNum);
-        parseMessage(site, message, msg);
+        parseMessage(wwwconfParams, message, msg);
         return message;
     }
 
-    private Date prepareDate(Site site, String s) {
+    private Date prepareDate(WwwconfParams wwwconfParams, String s) {
         DateFormat df;
         Date d = null;
         try {
-            String msgDatePattern = site.getMsgDatePattern();
+            String msgDatePattern = wwwconfParams.getMsgDatePattern();
             if (StringUtils.isNotEmpty(msgDatePattern)) {
                 df = new SimpleDateFormat(msgDatePattern);
                 return df.parse(s);

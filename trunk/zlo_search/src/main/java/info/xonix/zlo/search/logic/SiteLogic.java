@@ -1,6 +1,7 @@
 package info.xonix.zlo.search.logic;
 
-import info.xonix.zlo.search.domainobj.Site;
+
+import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
 import info.xonix.zlo.search.logic.site.PageParseException;
 import info.xonix.zlo.search.logic.site.RetrieverException;
 import info.xonix.zlo.search.model.Message;
@@ -14,16 +15,16 @@ import java.util.List;
  * Time: 22:00:19
  */
 public interface SiteLogic {
-    List<Site> getSites();
+//    List<Site> getSites();
 
     String[] getSiteNames();
 
-    @Nullable
-    Site getSite(int num);
+/*    @Nullable
+    Site getSite(int num);*/
 
-    int getLastMessageNumber(Site site) throws RetrieverException;
+    int getLastMessageNumber(String forumId) throws RetrieverException;
 
-    List<Message> getMessages(Site site, int from, int to) throws RetrieverException, PageParseException;
+    List<Message> getMessages(String forumId, int from, int to) throws ForumAccessException;
 
-    Message getMessageByNumber(Site site, int num) throws RetrieverException, PageParseException;
+    Message getMessageByNumber(String forumId, int num) throws ForumAccessException;
 }

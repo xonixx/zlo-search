@@ -1,6 +1,5 @@
 package info.xonix.zlo.search.dao;
 
-import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.utils.Check;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -24,39 +23,39 @@ public class DbDictImpl extends DaoImplBase implements DbDict {
         Check.isSet(queryProvider, "queryProvider");
     }
 
-    private void setVal(Site site, String name, Object val, VarType type) {
+    private void setVal(String forumId, String name, Object val, VarType type) {
         // int, txt, bool, date
         Object[] vals = new Object[]{null, null, null, null};
         vals[getValIndex(type)] = val;
 
-        getSimpleJdbcTemplate().update(queryProvider.getDbDictSetValQuery(site),
+        getSimpleJdbcTemplate().update(queryProvider.getDbDictSetValQuery(forumId),
                 name, type.getInt(), vals[0], vals[1], vals[2], vals[3],
                 type.getInt(), vals[0], vals[1], vals[2], vals[3]);
     }
 
     @Override
-    public void setInt(Site site, String name, Integer val) {
-        setVal(site, name, val, INTEGER);
+    public void setInt(String forumId, String name, Integer val) {
+        setVal(forumId, name, val, INTEGER);
     }
 
     @Override
-    public void setStr(Site site, String name, String val) {
-        setVal(site, name, val, STRING);
+    public void setStr(String forumId, String name, String val) {
+        setVal(forumId, name, val, STRING);
     }
 
     @Override
-    public void setBool(Site site, String name, Boolean val) {
-        setVal(site, name, val, BOOLEAN);
+    public void setBool(String forumId, String name, Boolean val) {
+        setVal(forumId, name, val, BOOLEAN);
     }
 
     @Override
-    public void setDate(Site site, String name, Date val) {
-        setVal(site, name, val, DATE);
+    public void setDate(String forumId, String name, Date val) {
+        setVal(forumId, name, val, DATE);
     }
 
-    private Object getVal(Site site, String name, VarType varType) {
+    private Object getVal(String forumId, String name, VarType varType) {
         try {
-            return getSimpleJdbcTemplate().queryForObject(queryProvider.getDbDictGetValQuery(site),
+            return getSimpleJdbcTemplate().queryForObject(queryProvider.getDbDictGetValQuery(forumId),
                     varType.getJavaType(),
                     name);
         } catch (EmptyResultDataAccessException ignore) {
@@ -65,52 +64,52 @@ public class DbDictImpl extends DaoImplBase implements DbDict {
     }
 
     @Override
-    public Integer getInt(Site site, String name) {
-        return (Integer) getVal(site, name, INTEGER);
+    public Integer getInt(String forumId, String name) {
+        return (Integer) getVal(forumId, name, INTEGER);
     }
 
     @Override
-    public int getInt(Site site, String name, int defaultVal) {
-        Integer i = getInt(site, name);
+    public int getInt(String forumId, String name, int defaultVal) {
+        Integer i = getInt(forumId, name);
         return i == null ? defaultVal : i;
     }
 
     @Override
-    public String getStr(Site site, String name) {
-        return (String) getVal(site, name, STRING);
+    public String getStr(String forumId, String name) {
+        return (String) getVal(forumId, name, STRING);
     }
 
     @Override
-    public String getStr(Site site, String name, String defaultVal) {
-        String s = getStr(site, name);
+    public String getStr(String forumId, String name, String defaultVal) {
+        String s = getStr(forumId, name);
         return s == null ? defaultVal : s;
     }
 
     @Override
-    public Boolean getBool(Site site, String name) {
-        return (Boolean) getVal(site, name, BOOLEAN);
+    public Boolean getBool(String forumId, String name) {
+        return (Boolean) getVal(forumId, name, BOOLEAN);
     }
 
     @Override
-    public boolean getBool(Site site, String name, boolean defaultVal) {
-        Boolean b = getBool(site, name);
+    public boolean getBool(String forumId, String name, boolean defaultVal) {
+        Boolean b = getBool(forumId, name);
         return b == null ? defaultVal : b;
     }
 
     @Override
-    public Date getDate(Site site, String name) {
-        return (Date) getVal(site, name, DATE);
+    public Date getDate(String forumId, String name) {
+        return (Date) getVal(forumId, name, DATE);
     }
 
     @Override
-    public Date getDate(Site site, String name, Date defaultVal) {
-        Date d = getDate(site, name);
+    public Date getDate(String forumId, String name, Date defaultVal) {
+        Date d = getDate(forumId, name);
         return d == null ? defaultVal : d;
     }
 
     @Override
-    public void remove(Site site, String name) {
-        getSimpleJdbcTemplate().update(queryProvider.getDbDictRemoveValQuery(site), name);
+    public void remove(String forumId, String name) {
+        getSimpleJdbcTemplate().update(queryProvider.getDbDictRemoveValQuery(forumId), name);
     }
 
     private int getValIndex(VarType type) {

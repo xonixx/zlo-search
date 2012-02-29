@@ -1,7 +1,6 @@
 package info.xonix.zlo.search.daemon;
 
 import info.xonix.zlo.search.dao.DbDict;
-import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.spring.AppSpringContext;
@@ -25,16 +24,16 @@ public abstract class DbMessagesIteratingDaemon extends Daemon {
     private class DbMessagesIterationProcess extends Process {
 
         protected int getFromIndex() {
-            return dbDict.getInt(getSite(), getIteratingVariableName(), 0);
+            return dbDict.getInt(getForumId(), getIteratingVariableName(), 0);
         }
 
         protected int getEndIndex() {
-            return appLogic.getLastSavedMessageNumber(getSite());
+            return appLogic.getLastSavedMessageNumber(getForumId());
         }
 
         protected void perform(int from, int to) {
-            doWithMessages(appLogic.getMessages(getSite(), from, to + 1));
-            dbDict.setInt(getSite(), getIteratingVariableName(), to);
+            doWithMessages(appLogic.getMessages(getForumId(), from, to + 1));
+            dbDict.setInt(getForumId(), getIteratingVariableName(), to);
         }
 
         protected boolean processException(Exception ex) {
@@ -45,8 +44,8 @@ public abstract class DbMessagesIteratingDaemon extends Daemon {
         }
     }
 
-    protected DbMessagesIteratingDaemon(Site site) {
-        super(site);
+    protected DbMessagesIteratingDaemon(String forumId) {
+        super(forumId);
         setDoPerTime(processPerTime);
     }
 
@@ -59,7 +58,7 @@ public abstract class DbMessagesIteratingDaemon extends Daemon {
     }
 
     protected void reset() {
-        dbDict.setInt(getSite(), getIteratingVariableName(), 0);
+        dbDict.setInt(getForumId(), getIteratingVariableName(), 0);
     }
 
     protected abstract void doWithMessages(List<Message> msgs);

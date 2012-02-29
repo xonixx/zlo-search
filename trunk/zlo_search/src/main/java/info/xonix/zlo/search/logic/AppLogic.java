@@ -1,6 +1,5 @@
 package info.xonix.zlo.search.logic;
 
-import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.model.Message;
 
 import java.util.Date;
@@ -12,40 +11,40 @@ import java.util.List;
  * Time: 0:22:50
  */
 public interface AppLogic {
-    void setLastIndexedNumber(Site site, int num);
+    void setLastIndexedNumber(String forumId, int num);
 
-    int getLastIndexedNumber(Site site);
+    int getLastIndexedNumber(String forumId);
 
-    Date getLastIndexedDate(Site site);
+    Date getLastIndexedDate(String forumId);
 
-    void setLastSavedDate(Site site, Date d);
+    void setLastSavedDate(String forumId, Date d);
 
-    Date getLastSavedDate(Site site);
+    Date getLastSavedDate(String forumId);
 
-    void saveMessages(Site site, List<Message> msgs);
+    void saveMessages(String forumId, List<Message> msgs);
 
     /**
      * get message, saved in DB
      *
-     * @param site site
+     * @param forumId forumId
      * @param num  message id
      * @return message obj
      */
-    Message getMessageByNumber(Site site, int num);
+    Message getMessageByNumber(String forumId, int num);
 
     /**
      * get messages, saved in DB for site in given range
      *
-     * @param site  site
+     * @param forumId forumId
      * @param start start index
      * @param end   end index
      * @return result messages
      */
-    List<Message> getMessages(Site site, int start, int end);
+    List<Message> getMessages(String forumId, int start, int end);
 
-    int getLastSavedMessageNumber(Site site);
+    int getLastSavedMessageNumber(String forumId);
 
-    void saveSearchTextForAutocomplete(Site site, String text);
+    void saveSearchTextForAutocomplete(String forumId, String text);
 
-    List<String> autoCompleteText(Site site, String text, int limit);
+    List<String> autoCompleteText(String forumId, String text, int limit);
 }

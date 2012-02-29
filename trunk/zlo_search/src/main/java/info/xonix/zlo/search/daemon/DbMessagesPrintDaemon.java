@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.daemon;
 
-import info.xonix.zlo.search.domainobj.Site;
+
 import info.xonix.zlo.search.model.Message;
 import org.apache.log4j.Logger;
 
@@ -14,12 +14,12 @@ import java.util.List;
 public class DbMessagesPrintDaemon extends DbMessagesIteratingDaemon {
     private static final Logger logger = Logger.getLogger(DbMessagesPrintDaemon.class);
 
-    protected DbMessagesPrintDaemon(Site site) {
-        super(site);
+    protected DbMessagesPrintDaemon(String forumId) {
+        super(forumId);
     }
 
-    public DbMessagesPrintDaemon(Site site, int perTime) {
-        this(site);
+    public DbMessagesPrintDaemon(String forumId, int perTime) {
+        this(forumId);
         setDoPerTime(perTime);
     }
 
@@ -39,7 +39,7 @@ public class DbMessagesPrintDaemon extends DbMessagesIteratingDaemon {
     }
 
     public static void main(String[] args) {
-        DbMessagesPrintDaemon d = new DbMessagesPrintDaemon(Site.forName("zlo"), 10);
+        DbMessagesPrintDaemon d = new DbMessagesPrintDaemon("zlo", 10);
         d.reset();
         d.start();
     }

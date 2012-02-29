@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.test;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.domainobj.Site;
+
 import info.xonix.zlo.search.doubleindex.DoubleHits;
 import info.xonix.zlo.search.doubleindex.DoubleIndexManager;
 import info.xonix.zlo.search.logic.SearchLogic;
@@ -36,7 +36,7 @@ public class DoubleIndexTest {
     }
 
     private static DoubleIndexManager getDIS() {
-        return new DoubleIndexManager(Site.forName("test"), SEARCH_LOGIC.getDateSort());
+        return new DoubleIndexManager("test", SEARCH_LOGIC.getDateSort());
     }
 
     public static void m1() {

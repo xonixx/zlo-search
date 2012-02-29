@@ -1,7 +1,5 @@
 package info.xonix.zlo.search.dao;
 
-import info.xonix.zlo.search.domainobj.Site;
-
 import java.util.Date;
 
 /**
@@ -10,29 +8,29 @@ import java.util.Date;
  * Time: 23:50:40
  */
 public interface DbDict {
-    void setInt(Site site, String name, Integer val);
+    void setInt(String forumId, String name, Integer val);
 
-    void setStr(Site site, String name, String val);
+    void setStr(String forumId, String name, String val);
 
-    void setBool(Site site, String name, Boolean val);
+    void setBool(String forumId, String name, Boolean val);
 
-    void setDate(Site site, String name, Date val);
+    void setDate(String forumId, String name, Date val);
 
-    Integer getInt(Site site, String name);
+    Integer getInt(String forumId, String name);
 
-    int getInt(Site site, String name, int defaultVal);
+    int getInt(String forumId, String name, int defaultVal);
 
-    String getStr(Site site, String name);
+    String getStr(String forumId, String name);
 
-    String getStr(Site site, String name, String defaultVal);
+    String getStr(String forumId, String name, String defaultVal);
 
-    Boolean getBool(Site site, String name);
+    Boolean getBool(String forumId, String name);
 
-    boolean getBool(Site site, String name, boolean defaultVal);
+    boolean getBool(String forumId, String name, boolean defaultVal);
 
-    Date getDate(Site site, String name);
+    Date getDate(String forumId, String name);
 
-    Date getDate(Site site, String name, Date defaultVal);
+    Date getDate(String forumId, String name, Date defaultVal);
 
-    void remove(Site site, String name);
+    void remove(String forumId, String name);
 }

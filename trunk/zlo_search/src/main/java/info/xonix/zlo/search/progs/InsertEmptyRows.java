@@ -15,7 +15,7 @@ public class InsertEmptyRows {
         new Config();
         int n = 0;
 
-        Site site = Site.forName("zlo");
+        String forumId = Site.forName("zlo");
         MessagesDao dbm = AppSpringContext.get(MessagesDao.class);
 
         int addedEmpty = 0;

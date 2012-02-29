@@ -1,7 +1,6 @@
 package info.xonix.zlo.search.config;
 
 import info.xonix.zlo.search.analyzers.AnalyzerProvider;
-import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.logic.MessageFields;
 import info.xonix.zlo.search.utils.EnvUtils;
 import info.xonix.zlo.search.utils.ExceptionUtils;
@@ -13,9 +12,7 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.KeywordAnalyzer;
 import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Properties;
 
 /**
@@ -98,6 +95,24 @@ public class Config {
         if (useProxy) {
             log.info("Starting using proxy: " + proxyHost + ":" + proxyPort);
         }
+    }
+
+    /**
+     * @param filePath file path OR classpath to resource
+     * @return input stream or null
+     */
+    public static InputStream resolvePath(String filePath) {
+        final File file = new File(filePath);
+
+        if (file.exists()) {
+            try {
+                return new FileInputStream(file);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return Thread.currentThread().getContextClassLoader().getResourceAsStream(filePath);
     }
 
     private void initAnalyzers() {
@@ -308,7 +323,7 @@ public class Config {
         return startDaemons;
     }
 
-    public String getIndexDirDouble(Site site) {
-        return getProp("indexer.dir.double") + "/index_" + site.getName();
+    public String getIndexDirDouble(String forumId) {
+        return getProp("indexer.dir.double") + "/index_" + forumId;
     }
 }

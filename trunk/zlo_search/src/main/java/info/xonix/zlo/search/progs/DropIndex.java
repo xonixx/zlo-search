@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.progs;
 
-import info.xonix.zlo.search.domainobj.Site;
+
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.logic.SearchLogic;
 import info.xonix.zlo.search.logic.SearchLogicImpl;
@@ -28,11 +28,11 @@ public class DropIndex extends App {
                 System.in.read(reply);
                 String siteName = getSiteName();
                 System.out.println("Deleting...");
-                Site site = Site.forName(siteName);
+                String forumId = siteName;
 
-                searchLogic.dropIndex(site);
+                searchLogic.dropIndex(forumId);
 
-                appLogic.setLastIndexedNumber(site, -1);
+                appLogic.setLastIndexedNumber(forumId, -1);
             }
         } catch (IOException e) {
             e.printStackTrace();

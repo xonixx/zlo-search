@@ -3,7 +3,7 @@ package info.xonix.zlo.web.utils;
 import info.xonix.zlo.search.HttpHeader;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.config.SiteName;
-import info.xonix.zlo.search.domainobj.Site;
+
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.commons.lang.StringUtils;
 
@@ -95,8 +95,8 @@ public final class RequestUtils {
      * @param site    site
      * @return site root url, based on Host header
      */
-    public static String getSiteRoot(String referer, Site site) {
-        if (SiteName.ZLO.equals(site.getName())) {
+    public static String getSiteRoot(String referer, String forumId) {
+        if (SiteName.ZLO.equals(forumId.getName())) {
             final String zloRoot = "zlo.rt.mipt.ru";
             final String boardRoot = "board.rt.mipt.ru";
 
@@ -117,7 +117,7 @@ public final class RequestUtils {
      * @param site    site
      * @return site root url, based on Host header
      */
-    public static String getSiteRoot(HttpServletRequest request, Site site) {
+    public static String getSiteRoot(HttpServletRequest request, String forumId) {
         return getSiteRoot(request.getHeader(HttpHeader.REFERER), site);
     }
 }

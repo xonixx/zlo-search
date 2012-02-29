@@ -29,19 +29,19 @@
                 final String xmlFp = request.getParameter("xmlfp");
 
                 if ("message".equals(xmlFp)) {
-                    responseWriter.write(xmlFpFormer.getMessage(site,
+                    responseWriter.write(xmlFpFormer.getMessage(forumId,
                             Integer.parseInt(request.getParameter("num"))));
 
                 } else if ("messages".equals(xmlFp)) {
-                    responseWriter.write(xmlFpFormer.getMessages(site,
+                    responseWriter.write(xmlFpFormer.getMessages(forumId,
                             Integer.parseInt(request.getParameter("from")),
                             Integer.parseInt(request.getParameter("to"))
                     ));
                 } else if ("lastMessageNumber".equals(xmlFp)) {
-                    responseWriter.write(xmlFpFormer.lastMessageNumber(site));
+                    responseWriter.write(xmlFpFormer.lastMessageNumber(forumId));
 
                 } else if ("descriptor".equals(xmlFp)) {
-                    responseWriter.write(xmlFpFormer.siteXmlFpDescriptor(site));
+                    responseWriter.write(xmlFpFormer.siteXmlFpDescriptor(forumId));
 
                 }
             } catch (Exception ex) {

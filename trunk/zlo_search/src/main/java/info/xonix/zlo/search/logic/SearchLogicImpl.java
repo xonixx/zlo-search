@@ -5,10 +5,9 @@ import info.xonix.zlo.search.LuceneVersion;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.domainobj.SearchRequest;
 import info.xonix.zlo.search.domainobj.SearchResult;
-import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.doubleindex.DoubleIndexManager;
 import info.xonix.zlo.search.utils.Check;
-import info.xonix.zlo.search.utils.factory.SiteFactory;
+import info.xonix.zlo.search.utils.factory.StringFactory;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -105,17 +104,17 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     }
 
     // TODO: move this to Site as it belongs to it
-    private SiteFactory<DoubleIndexManager> doubleIndexManagerFactory = new SiteFactory<DoubleIndexManager>() {
+    private StringFactory<DoubleIndexManager> doubleIndexManagerFactory = new StringFactory<DoubleIndexManager>() {
         @Override
-        protected DoubleIndexManager create(Site site) {
-            return new DoubleIndexManager(site, getDateSort());
+        protected DoubleIndexManager create(String forumId) {
+            return new DoubleIndexManager(forumId, getDateSort());
         }
     };
 
     @Override
     public SearchResult search(SearchRequest req, int limit) throws SearchException {
         final SearchResult searchResult = search(
-                req.getSite(),
+                req.getForumId(),
                 formQueryString(
                         req.getText(), req.isInTitle(), req.isInBody(),
                         req.getTopicCode(), req.getNick(), req.getHost(),
@@ -135,13 +134,13 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
                 : null;
     }
 
-    private SearchResult search(Site site, String queryStr, boolean searchAll, int limit) throws SearchException {
-        Assert.notNull(site, "site can't be null!");
+    private SearchResult search(String forumId, String queryStr, boolean searchAll, int limit) throws SearchException {
+        Assert.notNull(forumId, "site can't be null!");
 
-        return searchDoubleIndex(site, queryStr, searchAll, limit);
+        return searchDoubleIndex(forumId, queryStr, searchAll, limit);
     }
 
-    private SearchResult searchDoubleIndex(Site site, String queryStr, boolean searchAll, int limit) throws SearchException {
+    private SearchResult searchDoubleIndex(String forumId, String queryStr, boolean searchAll, int limit) throws SearchException {
         SearchResult result;
         try {
             QueryParser parser = getQueryParser();
@@ -151,9 +150,9 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
 
             log.info("query: " + query);
 
-            DoubleIndexManager dis = getDoubleIndexManager(site);
+            DoubleIndexManager dis = getDoubleIndexManager(forumId);
 
-            result = new SearchResult(site, query, dis, dis.search(query, limit));
+            result = new SearchResult(forumId, query, dis, dis.search(query, limit));
         } catch (ParseException e) {
             throw new SearchException(queryStr, e);
         } catch (IOException e) {
@@ -168,8 +167,8 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     }
 
     @Override
-    public void optimizeIndex(Site site) {
-        DoubleIndexManager dis = getDoubleIndexManager(site);
+    public void optimizeIndex(String forumId) {
+        DoubleIndexManager dis = getDoubleIndexManager(forumId);
 
         try {
             dis.moveSmallToBig();
@@ -182,14 +181,14 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     }
 
     @Override
-    public void dropIndex(Site site) throws IOException {
-        final DoubleIndexManager dis = getDoubleIndexManager(site);
+    public void dropIndex(String forumId) throws IOException {
+        final DoubleIndexManager dis = getDoubleIndexManager(forumId);
         dis.drop();
         dis.close();
     }
 
     @Override
-    public int[] search(Site site, String searchString, int skip, int limit) throws SearchException {
+    public int[] search(String forumId, String searchString, int skip, int limit) throws SearchException {
         final QueryParser queryParser = getQueryParser();
 
         final Query query;
@@ -201,7 +200,7 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
 
         int realLimit = skip + fixLimit(limit);
 
-        final DoubleIndexManager doubleIndexManager = getDoubleIndexManager(site);
+        final DoubleIndexManager doubleIndexManager = getDoubleIndexManager(forumId);
 
         final IndexSearcher smallSearcher = new IndexSearcher(doubleIndexManager.getSmallReader());
 
@@ -263,11 +262,11 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     /**
      * TODO: make private!
      *
-     * @param site site
+     * @param String forumId
      * @return dis
      */
     @Override
-    public DoubleIndexManager getDoubleIndexManager(Site site) {
-        return doubleIndexManagerFactory.get(site);
+    public DoubleIndexManager getDoubleIndexManager(String forumId) {
+        return doubleIndexManagerFactory.get(forumId);
     }
 }

@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.model;
 
-import info.xonix.zlo.search.domainobj.Site;
+
 
 /**
  * User: Vovan
@@ -8,7 +8,7 @@ import info.xonix.zlo.search.domainobj.Site;
  * Time: 17:06:26
  */
 public class SearchLog {
-    private Site site;
+    private String forumId;
 
     private String clientIp;
     private String userAgent;
@@ -24,12 +24,12 @@ public class SearchLog {
     private boolean rssAsked;
     private boolean adminRequest;
 
-    public Site getSite() {
-        return site;
+    public String getForumId() {
+        return forumId;
     }
 
-    public void setSite(Site site) {
-        this.site = site;
+    public void setForumId(String forumId) {
+        this.forumId = forumId;
     }
 
     public String getClientIp() {

@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.logic.site;
 
-import info.xonix.zlo.search.domainobj.Site;
+import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams;
 import info.xonix.zlo.search.model.Message;
 import org.apache.log4j.Logger;
 
@@ -17,7 +17,7 @@ class MessageRetrieverThread extends Thread {
 
     private List<Message> msgs;
     private List<Message> myMsgs = new ArrayList<Message>();
-    private Site site;
+    private WwwconfParams wwwconfParams;
 
     private MessageRetriever messageRetriever;
 
@@ -25,7 +25,7 @@ class MessageRetrieverThread extends Thread {
 
     private static Iterator<Integer> numsIterator = null;
 
-    public MessageRetrieverThread(MessageRetriever messageRetriever, Site site, Iterable<Integer> numsToSave, List<Message> msgs) {
+    public MessageRetrieverThread(MessageRetriever messageRetriever, WwwconfParams wwwconfParams, Iterable<Integer> numsToSave, List<Message> msgs) {
         super("MessageRetriever #" + threadNum);
 
         this.messageRetriever = messageRetriever;
@@ -35,7 +35,7 @@ class MessageRetrieverThread extends Thread {
             exception = null;
         }
 
-        this.site = site;
+        this.wwwconfParams = wwwconfParams;
 
         if (numsIterator == null)
             numsIterator = numsToSave.iterator();
@@ -58,7 +58,7 @@ class MessageRetrieverThread extends Thread {
             while ((nextNum = getNextNum()) != -1) {
                 try {
                     log.debug("Downloading: " + nextNum + " by " + getName());
-                    myMsgs.add(messageRetriever.getMessage(site, nextNum));
+                    myMsgs.add(messageRetriever.getMessage(wwwconfParams, nextNum));
                 } catch (Exception e) {
                     exception = e;
                     log.warn(getName() + " exiting because of exception: " + e);

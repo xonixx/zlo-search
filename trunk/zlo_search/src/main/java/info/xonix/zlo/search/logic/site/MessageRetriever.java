@@ -1,7 +1,8 @@
 package info.xonix.zlo.search.logic.site;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.domainobj.Site;
+
+import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.utils.Check;
 import org.apache.log4j.Logger;
@@ -36,21 +37,21 @@ public class MessageRetriever implements InitializingBean {
         Check.isSet(pageRetriever, "pageRetriever");
     }
 
-    public Message getMessage(Site site, int num) throws RetrieverException, PageParseException {
-        return getMessage(site, num, 3);
+    public Message getMessage(WwwconfParams wwwconfParams, int num) throws RetrieverException, PageParseException {
+        return getMessage(wwwconfParams, num, 3);
     }
 
-    public Message getMessage(Site site, int num, int retries) throws RetrieverException, PageParseException {
+    public Message getMessage(WwwconfParams wwwconfParams, int num, int retries) throws RetrieverException, PageParseException {
         SiteException lastException = null;
 
         for (int i = 0; i <= retries; i++) {
             try {
-                return pageParser.parseMessage(site, pageRetriever.getPageContentByNumber(site, num), num);
+                return pageParser.parseMessage(wwwconfParams, pageRetriever.getPageContentByNumber(wwwconfParams, num), num);
             } catch (SiteException ex) {
                 lastException = ex;
 
                 if (i < retries) {
-                    log.warn("Failed to receive msg#: " + num + " from site: (" + site.getName() +
+                    log.warn("Failed to receive msg#: " + num + " from site: (" + wwwconfParams.getForumId() +
                             "). Retry # " + (i + 1) + "... Reason: " + ex);
                 }
             }
@@ -63,19 +64,19 @@ public class MessageRetriever implements InitializingBean {
         throw (PageParseException) lastException;
     }
 
-    public List<Message> getMessages(Site source, int from, int to) throws RetrieverException, PageParseException {
+    public List<Message> getMessages(WwwconfParams wwwconfParams, int from, int to) throws RetrieverException, PageParseException {
         Set<Integer> nums = new HashSet<Integer>(to - from);
         for (int i = from; i < to; i++) {
             nums.add(i);
         }
-        return getMessages(source, nums);
+        return getMessages(wwwconfParams, nums);
     }
 
-    public List<Message> getMessages(Site source, Iterable<Integer> numsToSave) throws RetrieverException, PageParseException {
-        return getMessages(source, numsToSave, config.getRetrieverThreadNum());
+    public List<Message> getMessages(WwwconfParams wwwconfParams, Iterable<Integer> numsToSave) throws RetrieverException, PageParseException {
+        return getMessages(wwwconfParams, numsToSave, config.getRetrieverThreadNum());
     }
 
-    public List<Message> getMessages(Site site, Iterable<Integer> numsToSave, int threadsNum) throws RetrieverException, PageParseException {
+    public List<Message> getMessages(WwwconfParams wwwconfParams, Iterable<Integer> numsToSave, int threadsNum) throws RetrieverException, PageParseException {
         final List<Message> msgs;
 
         if (threadsNum == 1) {
@@ -84,10 +85,10 @@ public class MessageRetriever implements InitializingBean {
             for (int num : numsToSave) {
                 long t1 = System.currentTimeMillis();
 
-                msgs.add(getMessage(site, num));
+                msgs.add(getMessage(wwwconfParams, num));
 
                 long delta = System.currentTimeMillis() - t1;
-                long toSleep = 1000 / site.getIndexerLimitPerSecond() - delta;
+                long toSleep = 1000 / wwwconfParams.getIndexerLimitPerSecond() - delta;
                 if (toSleep > 0) {
                     try {
                         Thread.sleep(toSleep);
@@ -102,7 +103,7 @@ public class MessageRetriever implements InitializingBean {
 
             // starting all threads
             for (int i = 0; i < threadsNum; i++) {
-                Thread t = new MessageRetrieverThread(this, site, numsToSave, msgs);
+                Thread t = new MessageRetrieverThread(this, wwwconfParams, numsToSave, msgs);
                 t.start();
                 threads.add(t);
             }
@@ -117,7 +118,7 @@ public class MessageRetriever implements InitializingBean {
 
             Exception exc = MessageRetrieverThread.getException();
             if (exc != null) {
-                throw new RetrieverException("Page retrieve problem with " + site.getName(), exc);
+                throw new RetrieverException("Page retrieve problem with " + wwwconfParams.getForumId(), exc);
             }
         }
 
@@ -126,7 +127,7 @@ public class MessageRetriever implements InitializingBean {
         return msgs;
     }
 
-    public int getLastMessageNumber(Site site) throws RetrieverException {
-        return pageRetriever.getLastRootMessageNumber(site);
+    public int getLastMessageNumber(String forumId) throws RetrieverException {
+        return pageRetriever.getLastRootMessageNumber(forumId);
     }
 }

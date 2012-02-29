@@ -2,7 +2,7 @@ package info.xonix.zlo.web;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.MessagesDao;
-import info.xonix.zlo.search.domainobj.Site;
+
 import info.xonix.zlo.search.logic.SiteLogic;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.commons.lang.StringUtils;
@@ -48,7 +48,7 @@ public class BackendBean {
         String[] topics = new String[0];
 
         // todo: check
-        Site site1 = siteLogic.getSite(getSiteInt());
+        String forumId1 = siteLogic.getSite(getSiteInt());
         try {
             topics = MESSAGES_DAO.getTopics(site1);
         } catch (DataAccessException e) {
@@ -68,7 +68,7 @@ public class BackendBean {
     private String[] formSiteNums(List<Site> sites) {
         String[] siteNums = new String[sites.size()];
         int i = 0;
-        for (Site site1 : sites) {
+        for (String forumId1 : sites) {
             siteNums[i++] = String.valueOf(site1.getSiteNumber());
         }
         return siteNums;
@@ -97,7 +97,7 @@ public class BackendBean {
     }
 
     public int getSiteInt() {
-        return NumberUtils.toInt(site, 0);
+        return NumberUtils.toInt(forumId, 0);
     }
 
     public void setSite(String site) {

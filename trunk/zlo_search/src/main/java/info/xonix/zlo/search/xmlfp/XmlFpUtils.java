@@ -1,6 +1,5 @@
 package info.xonix.zlo.search.xmlfp;
 
-import info.xonix.zlo.search.domainobj.Site;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.xmlfp.jaxb_generated.ObjectFactory;
 import info.xonix.zlo.search.xmlfp.utils.MarshalUtils;
@@ -15,19 +14,19 @@ import java.util.List;
  * Time: 1:59
  */
 public class XmlFpUtils {
-    public static String messageToXml(Site site, Message message) {
+    public static String messageToXml(String forumId, Message message) {
         try {
             return MarshalUtils.marshal(XmlFpContext.getMarshaller(),
-                    Convert.toJaxbMessage(site, message));
+                    Convert.toJaxbMessage(forumId, message));
         } catch (XmlFpMarshalException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static String messagesToXml(Site site, List<Message> messages) {
+    public static String messagesToXml(String forumId, List<Message> messages) {
         try {
             return MarshalUtils.marshal(XmlFpContext.getMarshaller(),
-                    Convert.toJaxbMessages(site, messages));
+                    Convert.toJaxbMessages(forumId, messages));
         } catch (XmlFpMarshalException e) {
             throw new RuntimeException(e);
         }
@@ -61,10 +60,10 @@ public class XmlFpUtils {
         }
     }
 
-    public static String siteDescriptorToXml(Site site) {
+    public static String siteDescriptorToXml(String forumId) {
         try {
             return MarshalUtils.marshal(XmlFpContext.getMarshaller(),
-                    Convert.toJaxbForum(site));
+                    Convert.toJaxbForum(forumId));
         } catch (XmlFpMarshalException e) {
             throw new RuntimeException(e);
         }
