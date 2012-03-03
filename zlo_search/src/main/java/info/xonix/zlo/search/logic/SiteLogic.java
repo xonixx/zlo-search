@@ -17,7 +17,7 @@ import java.util.List;
 public interface SiteLogic {
 //    List<Site> getSites();
 
-    String[] getSiteNames();
+//    String[] getSiteUrls();
 
 /*    @Nullable
     Site getSite(int num);*/

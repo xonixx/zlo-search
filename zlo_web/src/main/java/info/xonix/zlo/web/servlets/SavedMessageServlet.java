@@ -2,6 +2,7 @@ package info.xonix.zlo.web.servlets;
 
 import info.xonix.zlo.search.config.ErrorMessage;
 
+import info.xonix.zlo.search.config.forums.ForumDescriptor;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
@@ -52,9 +53,9 @@ public class SavedMessageServlet extends BaseServlet {
 
         Message msg;
         try {
-            String forumId = getSite(request);
+            final ForumDescriptor forumDescriptor = getSite(request);
 
-            msg = appLogic.getMessageByNumber(forumId, num);
+            msg = appLogic.getMessageByNumber(forumDescriptor.getForumId(), num);
 
             if (msg != null && msg.getStatus() != MessageStatus.DELETED) {
                 request.setAttribute(SAVED_MSG, msg);

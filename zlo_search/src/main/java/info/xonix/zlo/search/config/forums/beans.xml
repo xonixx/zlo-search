@@ -7,12 +7,16 @@
         <constructor-arg>
             <list>
                 <bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
+                    <constructor-arg value="0"/>
+
                     <constructor-arg value="zlo"/>
+
                     <constructor-arg>
                         <bean class="info.xonix.zlo.search.config.forums.ForumParams">
                             <constructor-arg value="/info/xonix/zlo/search/config/forums/zlo.properties"/>
                         </bean>
                     </constructor-arg>
+
                     <constructor-arg>
                         <bean class="info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfForumAdapter">
                             <constructor-arg>

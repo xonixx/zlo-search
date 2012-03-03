@@ -35,7 +35,7 @@ public class AutocompletionServlet extends HttpServlet {
         final List<String> strings;
 
         if (validForAutocompletions(text)) {
-            strings = appLogic.autoCompleteText(BaseServlet.getSite(req), text, NUMBER_TO_SHOW);
+            strings = appLogic.autoCompleteText(BaseServlet.getSite(req).getForumId(), text, NUMBER_TO_SHOW);
         } else {
             strings = new LinkedList<String>();
         }
