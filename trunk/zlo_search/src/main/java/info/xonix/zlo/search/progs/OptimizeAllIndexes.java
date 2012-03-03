@@ -40,7 +40,7 @@ public class OptimizeAllIndexes {
 
     public void go() {
         final OptimizeIndex optimizeIndex = new OptimizeIndex();
-        for (String forumId : siteLogic.getSiteNames()) {
+        for (String forumId : GetForum.ids()) {
             if (GetForum.params(forumId).isPerformIndexing()) {
                 optimizeIndex.optimizeDoubleIndexForSite(forumId);
             }

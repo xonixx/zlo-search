@@ -1,5 +1,6 @@
 package info.xonix.zlo.web.ws;
 
+import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.dao.MessagesDao;
 
 import info.xonix.zlo.search.logic.AppLogic;
@@ -42,11 +43,11 @@ public class BoardSearchService {
 
     @Nonnull
     private String forumId(int siteId) throws ServiceException {
-        final String forumId = siteLogic.getSite(siteId);
+        final String forumId = GetForum.descriptor(siteId).getForumId();// TODO: <<<--- fix!!!
         if (forumId == null) {
             throw new ServiceException("Wrong siteId: " + siteId);
         }
-        return site;
+        return forumId;
     }
 
     private Message fromMessageModel(String forumId, info.xonix.zlo.search.model.Message messageModel) {
@@ -94,7 +95,7 @@ public class BoardSearchService {
             @WebParam(name = "msgId") int msgId) throws ServiceException {
         log.info("getMessage(" + siteId + ", " + msgId + ")");
 
-        final String forumId = site(siteId);
+        final String forumId = forumId(siteId);
         return fromMessageModel(forumId, appLogic.getMessageByNumber(forumId, msgId));
     }
 
@@ -106,7 +107,7 @@ public class BoardSearchService {
             @WebParam(name = "limit") int limit) throws ServiceException {
         log.info("search(" + siteId + ", \"" + searchString + "\", " + skip + ", " + limit + ")");
 
-        final String forumId = site(siteId);
+        final String forumId = forumId(siteId);
 
         final int[] resultIds = search(forumId, searchString, skip, limit);
 
@@ -129,7 +130,7 @@ public class BoardSearchService {
             @WebParam(name = "limit") int limit) throws ServiceException {
         log.info("searchShallow(" + siteId + ", \"" + searchString + "\", " + skip + ", " + limit + ")");
 
-        final String forumId = site(siteId);
+        final String forumId = forumId(siteId);
 
         final int[] resultIds = search(forumId, searchString, skip, limit);
 

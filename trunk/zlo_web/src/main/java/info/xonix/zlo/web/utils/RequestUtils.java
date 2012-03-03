@@ -94,7 +94,7 @@ public final class RequestUtils {
      * @param referer referer header
      * @param site    site
      * @return site root url, based on Host header
-     */
+
     public static String getSiteRoot(String referer, String forumId) {
         if (SiteName.ZLO.equals(forumId.getName())) {
             final String zloRoot = "zlo.rt.mipt.ru";
@@ -110,14 +110,14 @@ public final class RequestUtils {
         }
 
         return site.getSiteUrl();
-    }
+    }*/
 
     /**
      * @param request http request
      * @param site    site
      * @return site root url, based on Host header
-     */
+
     public static String getSiteRoot(HttpServletRequest request, String forumId) {
-        return getSiteRoot(request.getHeader(HttpHeader.REFERER), site);
-    }
+//        return getSiteRoot(request.getHeader(HttpHeader.REFERER), site);
+    }*/
 }

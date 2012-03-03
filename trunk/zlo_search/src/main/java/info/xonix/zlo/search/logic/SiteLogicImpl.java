@@ -2,6 +2,7 @@ package info.xonix.zlo.search.logic;
 
 import info.xonix.zlo.search.config.Config;
 
+import info.xonix.zlo.search.config.forums.ForumDescriptor;
 import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
 import info.xonix.zlo.search.logic.site.MessageRetriever;
@@ -95,10 +96,24 @@ public class SiteLogicImpl implements SiteLogic, InitializingBean {
 //        return sites;
 //    }
 
-    @Override
-    public String[] getSiteNames() {
-        final Collection<String> ids = GetForum.ids();
-        return ids.toArray(new String[ids.size()]);
+//    @Override
+//    TODO: rm
+    public String[] getSiteUrls() {
+//        final Collection<String> ids = GetForum.ids();
+//        return ids.toArray(new String[ids.size()]);
+
+        final List<ForumDescriptor> descriptors = GetForum.descriptors();
+
+        String[] res = new String[descriptors.size()];
+
+        int i=0;
+        for (ForumDescriptor descriptor : descriptors) {
+            res[i++] = descriptor.getForumAdapter().getForumUrl();
+        }
+
+        return res;
+
+
 /*        List<Site> allSites = getSites();
         String[] sites = new String[allSites.size()];
         for (int i = 0; i < allSites.size(); i++) {

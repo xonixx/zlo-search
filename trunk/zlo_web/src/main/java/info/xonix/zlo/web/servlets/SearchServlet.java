@@ -201,7 +201,7 @@ public class SearchServlet extends BaseServlet {
             nick = preprocessSearchNick(nick);
 
             searchRequest = new SearchRequest(
-                    getSite(request), text,
+                    getSite(request).getForumId(), text,
                     inTitle, inBody, inReg, inHasUrl, inHasImg,
                     nick, host, topicCode,
                     StringUtils.isNotEmpty(fromDateStr) || StringUtils.isNotEmpty(toDateStr),
@@ -398,7 +398,7 @@ public class SearchServlet extends BaseServlet {
     }
 
     private void showStatistics(ForwardingRequest request) {
-        String forumId = getSite(request);
+        String forumId = getSite(request).getForumId();
 
         request.setAttribute(QS_LAST_MSGS,
                 new int[]{appLogic.getLastSavedMessageNumber(forumId),
@@ -410,14 +410,14 @@ public class SearchServlet extends BaseServlet {
     }
 
     private void logRequest(ForwardingRequest request, String query, boolean rssAsked) {
-        final String forumId = getSite(request);
+        final String forumId = getSite(request).getForumId();
         final String searchText = request.getParameter(QS_TEXT);
 
         final String clientIp = RequestUtils.getClientIp(request);
 
         SearchLog searchLog = new SearchLog();
 
-        searchLog.setSite(forumId);
+        searchLog.setForumId(forumId);
         searchLog.setClientIp(clientIp);
         searchLog.setUserAgent(request.getHeader(HttpHeader.USER_AGENT));
         searchLog.setReferer(request.getHeader(HttpHeader.REFERER));

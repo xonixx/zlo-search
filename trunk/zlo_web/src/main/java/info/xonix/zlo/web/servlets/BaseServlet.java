@@ -1,7 +1,10 @@
 package info.xonix.zlo.web.servlets;
 
 
+import info.xonix.zlo.search.config.forums.ForumDescriptor;
+import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.logic.SiteLogic;
+import info.xonix.zlo.search.logic.forum_adapters.ForumAdapter;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 import info.xonix.zlo.web.servlets.helpful.ForwardingServlet;
@@ -18,37 +21,38 @@ import javax.servlet.http.HttpServletResponse;
  * Time: 16:32:17
  */
 public class BaseServlet extends ForwardingServlet {
-    public static final String REQ_SITE_ROOT = "siteRoot";
+//    public static final String REQ_SITE_ROOT = "siteRoot";
     public static final String QS_SITE = "site";
 
-    private static SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
+//    private static SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
 
     protected void setSiteInReq(ForwardingRequest request, HttpServletResponse response) {
         String siteInCookie;
-        String forumId;
 
+        ForumDescriptor forumDescriptor;
         String siteNumStr = request.getParameter(QS_SITE);
 
         if (StringUtils.isNotEmpty(siteNumStr)) {
-            site = getSiteOrDefault(siteNumStr);
-            CookieUtils.rememberInCookie(response, QS_SITE, String.valueOf(forumId.getSiteNumber()));
+            forumDescriptor = getSiteOrDefault(siteNumStr);
+            CookieUtils.rememberInCookie(response, QS_SITE, String.valueOf(forumDescriptor.getForumIntId()));
         } else if (StringUtils.isNotEmpty(siteInCookie = CookieUtils.recallFromCookie(request, QS_SITE))) {
-            site = getSiteOrDefault(siteInCookie);
+            forumDescriptor = getSiteOrDefault(siteInCookie);
         } else {
-            site = getSiteOrDefault("0");
+            forumDescriptor = getSiteOrDefault("0");
         }
 
-        request.setParameter(QS_SITE, String.valueOf(forumId.getSiteNumber()));
-        request.setAttribute(QS_SITE, site);
-        request.setAttribute(REQ_SITE_ROOT, RequestUtils.getSiteRoot(request, site));
+        request.setParameter(QS_SITE, String.valueOf(forumDescriptor.getForumIntId()));
+        request.setAttribute(QS_SITE, forumDescriptor);
+//        request.setAttribute(REQ_SITE_ROOT, RequestUtils.getSiteRoot(request, forumDescriptor));
     }
 
-    private Site getSiteOrDefault(String siteNumStr) {
-        Site defaultSite = siteLogic.getSites().get(0);
-        String forumId;
+    private ForumDescriptor getSiteOrDefault(String siteNumStr) {
+        ForumDescriptor defaultSite = GetForum.descriptor(0);
+        ForumDescriptor site;
         try {
-            site = siteLogic.getSite(Integer.parseInt(siteNumStr));
-            if (forumId == null) {
+            // TODO: logic should not rely on RuntimeExceptions
+            site = GetForum.descriptor(Integer.parseInt(siteNumStr));
+            if (site == null) {
                 site = defaultSite;
             }
         } catch (Exception e) {
@@ -57,8 +61,7 @@ public class BaseServlet extends ForwardingServlet {
         return site;
     }
 
-    public static Site getSite(HttpServletRequest req) {
-        // todo: tmp
+    public static ForumDescriptor getSite(HttpServletRequest req) {
         String sn = req.getParameter(QS_SITE);
         int siteId;
         if (StringUtils.isNotEmpty(sn)) {
@@ -67,6 +70,6 @@ public class BaseServlet extends ForwardingServlet {
             siteId = 0;
         }
 
-        return siteLogic.getSite(siteId);
+        return GetForum.descriptor(siteId);
     }
 }

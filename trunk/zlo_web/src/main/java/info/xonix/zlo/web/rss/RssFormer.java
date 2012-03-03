@@ -8,9 +8,11 @@ import de.nava.informa.impl.basic.Item;
 import info.xonix.zlo.search.HttpHeader;
 import info.xonix.zlo.search.ZloPaginatedList;
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.domainobj.SearchRequest;
 import info.xonix.zlo.search.domainobj.SearchResult;
 
+import info.xonix.zlo.search.logic.forum_adapters.ForumAdapter;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.utils.HtmlUtils;
@@ -98,7 +100,7 @@ public class RssFormer {
                         Item it = new Item();
 
 //                        Site s = m.getSite();
-                        Site s = pl.getSite();
+                        ForumAdapter forumAdapter = GetForum.adapter(pl.getForumId());
 
                         // highlighting of all feed takes to many time & cpu
 
@@ -113,7 +115,8 @@ public class RssFormer {
 
                         // let it point to forum msg, not saved msg
 //                        it.setLink(new URL(String.format("http://%s/msg?site=%s&num=%s&hw=%s", Config.WEBSITE_DOMAIN, s.getNum(), m.getNum(), HtmlUtils.urlencode(hl.getWordsStr()))));
-                        URL commentsUrl = new URL(String.format("http://%s%s%s", s.getSiteUrl(), s.getReadQuery(), m.getNum()));
+//                        URL commentsUrl = new URL(String.format("http://%s%s%s", s.getSiteUrl(), s.getReadQuery(), m.getNum()));
+                        URL commentsUrl = new URL(forumAdapter.prepareMessageUrl(m.getNum()));
                         it.setLink(commentsUrl);
                         it.setComments(commentsUrl);
 
@@ -121,7 +124,7 @@ public class RssFormer {
                     }
                 }
 
-                ZloRss20Exporter exporter = new ZloRss20Exporter(response.getWriter(), "windows-1251");
+                ZloRss20Exporter exporter = new ZloRss20Exporter(response.getWriter(), "windows-1251");// TODO: change to UTF-8
 
                 exporter.write(ch);
             } catch (MalformedURLException e) {
