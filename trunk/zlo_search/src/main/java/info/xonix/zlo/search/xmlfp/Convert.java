@@ -145,13 +145,14 @@ class Convert {
         final Forum.XmlfpUrls xmlFpInfo = OBJECT_FACTORY.createForumXmlfpUrls();
 
         ForumParams forumParams = GetForum.params(forumId);
+        final int forumIntId = GetForum.descriptor(forumId).getForumIntId();
 
-        xmlFpInfo.setLastMessageNumberUrl("xmlfp.jsp?xmlfp=lastMessageNumber&site=" + forumParams.getSiteNumber());
-        xmlFpInfo.setMessageUrl("xmlfp.jsp?xmlfp=message&num=" + XmlFpUrlsSubstitutions.MESSAGE_ID + "&site=" + forumParams.getSiteNumber());
+        xmlFpInfo.setLastMessageNumberUrl("xmlfp.jsp?xmlfp=lastMessageNumber&site=" + forumIntId);
+        xmlFpInfo.setMessageUrl("xmlfp.jsp?xmlfp=message&num=" + XmlFpUrlsSubstitutions.MESSAGE_ID + "&site=" + forumIntId);
         xmlFpInfo.setMessageListUrl("xmlfp.jsp?xmlfp=messages" +
                 "&from=" + XmlFpUrlsSubstitutions.FROM +
                 "&to=" + XmlFpUrlsSubstitutions.TO +
-                "&site=" + forumParams.getSiteNumber());
+                "&site=" + forumIntId);
         forum.setXmlfpUrls(xmlFpInfo);
 
         final Forum.ForumUrls forumUrls = OBJECT_FACTORY.createForumForumUrls();
