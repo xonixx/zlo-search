@@ -8,7 +8,6 @@
 
 <tiles:useAttribute name="host"/>
 <tiles:useAttribute name="nick"/>
-<tiles:useAttribute name="site"/>
 <tiles:useAttribute name="brackets"/>
 
 <jsp:useBean id="forumIntId" type="java.lang.Integer" scope="request"/>

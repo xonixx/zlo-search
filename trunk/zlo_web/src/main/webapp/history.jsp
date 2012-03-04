@@ -1,15 +1,13 @@
-<%@ page import="info.xonix.zlo.search.domainobj.Site" %>
 <%@ page import="info.xonix.zlo.search.logic.SiteLogic" %>
 <%@ page import="info.xonix.zlo.web.utils.RequestUtils" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="info.xonix.zlo.search.config.forums.GetForum" %>
+<%@ page import="info.xonix.zlo.search.config.forums.ForumDescriptor" %>
+<%@ page import="info.xonix.zlo.search.logic.forum_adapters.ForumAdapter" %>
 
 <%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <link rel="stylesheet" type="text/css" href="main.css"/>
-
-<%!
-    SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
-%>
 
 <%--<c:set var="localIps"><fmt:message key="localIps"/></c:set>--%>
 <c:set var="isPowerUser" value='<%= RequestUtils.isPowerUser(request) %>'/>
@@ -79,10 +77,11 @@
         <display:column property="searchNick" title="Ник поиска"/>
         <display:column property="searchHost" title="Хост поиска"/>
         <display:column title="Сайт">
-            <% String forumId = siteLogic.getSite((Integer) ((Map) row).get("site")); %>
-            <c:if test="<%= site != null %>">
-                <a href="http://<%= site.getSiteUrl() %>">
-                    <%= site.getName() %>
+            <% ForumDescriptor descriptor = GetForum.descriptor((Integer) ((Map) row).get("site")); %>
+            <% ForumAdapter adapter = descriptor.getForumAdapter(); %>
+            <c:if test="<%= adapter != null %>">
+                <a href="http://<%= adapter.getForumUrl() %>">
+                    <%= descriptor.getForumId() %>
                 </a>
             </c:if>
         </display:column>
