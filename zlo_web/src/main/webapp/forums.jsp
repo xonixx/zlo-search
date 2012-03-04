@@ -1,6 +1,6 @@
-<%@ page import="info.xonix.zlo.search.domainobj.Site" %>
+<%@ page import="info.xonix.zlo.search.config.forums.ForumDescriptor" %>
+<%@ page import="info.xonix.zlo.search.config.forums.GetForum" %>
 <%@ page import="info.xonix.zlo.search.logic.AppLogic" %>
-<%@ page import="info.xonix.zlo.search.logic.SiteLogic" %>
 <%--
   User: Vovan
   Date: 01.06.2008
@@ -11,7 +11,6 @@
 <link rel="stylesheet" type="text/css" href="main.css"/>
 
 <%!
-    SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
     AppLogic appLogic = AppSpringContext.get(AppLogic.class);
 %>
 
@@ -22,36 +21,38 @@
 <div align="center" class="content">
     <h3>Индексируемые форумы</h3>
 
-    <c:set var="sites" value="<%= siteLogic.getSites() %>"/>
+    <c:set var="forumDescriptors" value="<%= GetForum.descriptors() %>"/>
 
-    <display:table id="site" htmlId="resultTable" name="${sites}">
+    <display:table id="descriptor" htmlId="resultTable" name="${forumDescriptors}">
+        <c:set var="adaptor" value="${descriptor.forumAdapter}" />
+
         <display:column title="Ссылка">
-            <c:set var="siteUrl" value="${site.siteUrl}"/>
+            <c:set var="siteUrl" value="${adaptor.forumUrl}"/>
             <c:if test="${
                 not f:endsWith(siteUrl, '.cgi') and
                 not f:endsWith(siteUrl, '.exe')
             }">
-                <c:set var="siteUrl" value="${siteUrl}/"/>
+                <c:set var="siteUrl" value="${siteUrl}"/>
             </c:if>
-            <c:set var="url" value="http://${siteUrl}"/>
+            <c:set var="url" value="${siteUrl}"/>
             <a href="${url}">${url}</a>
         </display:column>
         <display:column title="Описание">
             <c:choose>
-                <c:when test="${not site.performIndexing}">
-                    <strike><c:out value="${site.siteDescription}"/></strike>
+                <c:when test="${not descriptor.forumParams.performIndexing}">
+                    <strike><c:out value="${adaptor.forumTitle}"/></strike>
                 </c:when>
-                <c:otherwise><c:out value="${site.siteDescription}"/></c:otherwise>
+                <c:otherwise><c:out value="${adaptor.forumTitle}"/></c:otherwise>
             </c:choose>
         </display:column>
         <display:column title="Сообщений">
-            <%= appLogic.getLastIndexedNumber((Site) site) %>
+            <%= appLogic.getLastIndexedNumber(((ForumDescriptor) descriptor).getForumId()) %>
         </display:column>
 
         <display:column title="Сервисы">
-            <a href="search?site=${site.siteNumber}" class="search">(Поиск)</a>
-            <a href="stats.jsp?site=${site.siteNumber}" class="search">(Статистика)</a>
-            <a href="nickhost.jsp?site=${site.siteNumber}" class="search">(Ники/Хосты)</a>
+            <a href="search?site=${descriptor.forumIntId}" class="search">(Поиск)</a>
+            <a href="stats.jsp?site=${descriptor.forumIntId}" class="search">(Статистика)</a>
+            <a href="nickhost.jsp?site=${descriptor.forumIntId}" class="search">(Ники/Хосты)</a>
         </display:column>
 
     </display:table>

@@ -65,6 +65,11 @@ public class WwwconfForumAdapter extends ForumAdapterAbstract {
 
     @Override
     public String getForumUrl() {
-        return wwwconfParams.getSiteUrl();
+        return "http://" + wwwconfParams.getSiteUrl() + "/";
+    }
+
+    @Override
+    public String getForumTitle() {
+        return wwwconfParams.getSiteDescription();
     }
 }

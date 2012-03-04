@@ -20,7 +20,7 @@
 <c:set var="period" value="${periodsMap[not empty param['period'] ? param['period'] : '']}"/>
 <c:set var="periodDays" value="${period.days}"/>
 
-<c:set var="messagesTbl">${site.name}_messages</c:set>
+<c:set var="messagesTbl">${forumId}_messages</c:set>
 
 <c:set var="msgDateWhereClause">
     where msgDate BETWEEN (NOW() - INTERVAL ? DAY) AND NOW()
@@ -54,7 +54,7 @@
 </sql:query>
 
 <c:set var="title">
-    Статистика форума ${site.siteUrl} по <c:choose><c:when
+    Статистика форума «${adapter.forumTitle}» по <c:choose><c:when
         test="${byNick}">никам</c:when><c:otherwise>хостам</c:otherwise></c:choose>
     за последние ${period.label}
 </c:set>
@@ -96,13 +96,11 @@
                     <tiles:insertDefinition name="nick">
                         <tiles:putAttribute name="reg" value="${row.reg}"/>
                         <tiles:putAttribute name="nick" value="${row.nick}"/>
-                        <tiles:putAttribute name="site" value="${site}"/>
                     </tiles:insertDefinition>
                 </c:when>
                 <c:otherwise>
                     <tiles:insertDefinition name="host">
                         <tiles:putAttribute name="host" value="${row.host}"/>
-                        <tiles:putAttribute name="site" value="${site}"/>
                     </tiles:insertDefinition>
                 </c:otherwise>
             </c:choose>

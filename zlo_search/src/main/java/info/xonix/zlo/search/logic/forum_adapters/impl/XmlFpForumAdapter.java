@@ -65,4 +65,9 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract {
     public String getForumUrl() {
         return forumAccessor.getForumUrl();
     }
+
+    @Override
+    public String getForumTitle() {
+        return forumAccessor.getTitle();
+    }
 }

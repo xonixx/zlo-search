@@ -120,4 +120,12 @@ public class ForumAccessor {
     public String getForumUrl() {
         return forum.getUrl();
     }
+
+    public String getDescription() {
+        return forum.getDescription();
+    }
+
+    public String getTitle() {
+        return forum.getName();
+    }
 }
