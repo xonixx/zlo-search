@@ -9,7 +9,6 @@
 <tiles:useAttribute name="reg"/>
 <tiles:useAttribute name="nick"/>
 <tiles:useAttribute name="host"/>
-<%--<tiles:useAttribute name="site"/>--%>
 
 <jsp:useBean id="forumIntId" type="java.lang.Integer" scope="request"/>
 <jsp:useBean id="adapter" type="info.xonix.zlo.search.logic.forum_adapters.ForumAdapter" scope="request"/>

@@ -12,8 +12,8 @@
 
 <%@ include file="/WEB-INF/jsp/setSite.jsp" %>
 
-<c:set var="siteNum" value="${site.siteNumber}"/>
-<c:set var="siteUrl" value="${site.siteUrl}"/>
+<c:set var="siteNum" value="${forumIntId}"/>
+<c:set var="siteUrl" value="${adapter.forumUrl}"/>
 
 <c:set var="isHost" value="${param['w'] == 'h'}"/>
 <c:set var="isNick" value="${param['w'] == 'n'}"/>
@@ -21,7 +21,7 @@
 
 <c:set var="isAllSelected" value="${ (isHost or isNick) and not empty text }"/>
 
-<c:set var="nickhostTbl">${site.name}_nickhost</c:set>
+<c:set var="nickhostTbl">${forumId}_nickhost</c:set>
 
 <c:if test="${isAllSelected}">
     <c:choose>
@@ -94,14 +94,12 @@
                                 <tiles:putAttribute name="reg" value="${row.reg}"/>
                                 <tiles:putAttribute name="nick" value="${row.nick}"/>
                                 <tiles:putAttribute name="host" value="${text}"/>
-                                <tiles:putAttribute name="site" value="${site}"/>
                             </tiles:insertDefinition>
                         </c:when>
                         <c:otherwise>
                             <tiles:insertDefinition name="host">
                                 <tiles:putAttribute name="host" value="${row.host}"/>
                                 <tiles:putAttribute name="nick" value="${text}"/>
-                                <tiles:putAttribute name="site" value="${site}"/>
                             </tiles:insertDefinition>
                         </c:otherwise>
                     </c:choose>
