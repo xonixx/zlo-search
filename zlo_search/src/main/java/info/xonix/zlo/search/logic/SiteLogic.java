@@ -2,11 +2,8 @@ package info.xonix.zlo.search.logic;
 
 
 import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
-import info.xonix.zlo.search.logic.site.PageParseException;
-import info.xonix.zlo.search.logic.site.RetrieverException;
 import info.xonix.zlo.search.model.Message;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -15,13 +12,6 @@ import java.util.List;
  * Time: 22:00:19
  */
 public interface SiteLogic {
-//    List<Site> getSites();
-
-//    String[] getSiteUrls();
-
-/*    @Nullable
-    Site getSite(int num);*/
-
     int getLastMessageNumber(String forumId) throws ForumAccessException;
 
     List<Message> getMessages(String forumId, int from, int to) throws ForumAccessException;

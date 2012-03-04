@@ -18,8 +18,6 @@ import java.util.*;
  * Time: 21:18:54
  */
 public class MessageRetriever implements InitializingBean {
-
-//    private static final int LIMIT_PER_SECOND = Integer.parseInt(Config.getProp("retriever.limit.per.second"));
     private static Logger log = Logger.getLogger(MessageRetriever.class);
 
     @Autowired

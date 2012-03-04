@@ -17,8 +17,6 @@ import java.util.regex.Pattern;
  */
 public class WwwconfParams {
 
-    private static final Logger log = Logger.getLogger(WwwconfParams.class);
-
     private String markEndMsg1;
     private String markEndMsg2;
     private String msgNotExistOrWrong;
@@ -47,34 +45,7 @@ public class WwwconfParams {
 
     private String msgDatePattern;
 
-//    private String forumId;
-
     private boolean noHost;
-
-
-/*    public WwwconfParams(String forumId) {
-        Properties p = new Properties();
-
-        final String propFile = forumId + ".properties";
-
-        ok:
-        {
-            for (String possiblePath : new String[]{
-                    Config.FORUMS_CONF_PATH + propFile,
-                    Config.FORUMS_CONF_DEAD_PATH + propFile}) {
-
-                if (Config.loadProperties(p, possiblePath)) {
-                    break ok;
-                }
-            }
-
-            throw new RuntimeException("Config for: " + forumId + " site was not found!");
-        }
-
-        this.forumId = forumId;
-
-        initializeFromProperties(p);
-    }*/
 
     public WwwconfParams(String filePath) {
         initializeFromProperties(ConfigUtils.loadProperties(filePath, "wwwconf params"));
@@ -113,22 +84,10 @@ public class WwwconfParams {
         readQuery = p.getProperty("site.query.read");
         uinfoQuery = p.getProperty("site.query.uinfo");
 
-        // db -----
-//        initDb(p);
-
         msgDatePattern = p.getProperty("str.date.pattern");
 
         noHost = Config.isTrue(p.getProperty("site.no.host", "0"));
     }
-
-/*    public boolean equals(Object obj) {
-        if (!(obj instanceof WwwconfParams)) {
-            return false;
-        }
-
-        return *//*StringUtils.equals(getName(), ((WwwconfParams) obj).getName()) &&*//*
-                StringUtils.equals(forumId, ((WwwconfParams) obj).forumId);
-    }*/
 
     // getters
 
@@ -204,51 +163,7 @@ public class WwwconfParams {
         return msgDatePattern;
     }
 
-/*    public boolean isPerformIndexing() {
-        return performIndexing;
-    }
-
-    public int getIndexerIndexPerTime() {
-        return indexerIndexPerTime;
-    }
-
-    public int getIndexerIndexPeriod() {
-        return indexerIndexPeriod;
-    }
-
-    public int getIndexerReconnectPeriod() {
-        return indexerReconnectPeriod;
-    }
-
-    public int getIndexerLimitPerSecond() {
-        return indexerLimitPerSecond;
-    }
-
-    public int getDbScanPerTime() {
-        return dbScanPerTime;
-    }
-
-    public int getDbScanPeriod() {
-        return dbScanPeriod;
-    }
-
-    public int getDbReconnectPeriod() {
-        return dbReconnectPeriod;
-    }
-
-    public int getSiteNumber() {
-        return siteNumber;
-    }*/
-
-/*    public String getForumId() {
-        return forumId;
-    }*/
-
     public boolean isNoHost() {
         return noHost;
     }
-
-/*    public int getWeight() {
-        return weight;
-    }*/
 }
