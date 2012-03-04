@@ -1,5 +1,4 @@
 <%@ page import="info.xonix.zlo.search.daemon.Daemon" %>
-<%@ page import="info.xonix.zlo.search.domainobj.Site" %>
 <%@ page import="info.xonix.zlo.search.logic.SearchLogic" %>
 <%@ page import="info.xonix.zlo.search.logic.SearchLogicImpl" %>
 <%@ page import="info.xonix.zlo.search.logic.SiteLogic" %>
@@ -8,6 +7,7 @@
 <%@ page import="info.xonix.zlo.web.utils.RequestUtils" %>
 <%@ page import="java.util.LinkedHashMap" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="info.xonix.zlo.search.config.forums.GetForum" %>
 <%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
@@ -106,13 +106,15 @@
         </display:column>
     </display:table>
 
-    <display:table id="site" name="<%= siteLogic.getSites() %>">
-        <c:set var="dis" value="<%= searchLogic.getDoubleIndexManager((Site) site) %>"/>
+    <display:table id="forumId" name="<%= GetForum.ids() %>">
+        <c:set var="adapter" value="<%= GetForum.adapter((String) forumId) %>" />
+        <c:set var="dis" value="<%= searchLogic.getDoubleIndexManager((String) forumId) %>"/>
+
         <display:caption>Sites</display:caption>
 
-        <display:column title="#">${site_rowNum}</display:column>
-        <display:column title="Name" property="name"/>
-        <display:column title="Url"><a href="http://${site.siteUrl}/">${site.siteUrl}</a></display:column>
+        <display:column title="#">${forumId_rowNum}</display:column>
+        <display:column title="Name">${forumId}</display:column>
+        <display:column title="Url"><a href="${adapter.forumUrl}">${adapter.forumUrl}</a></display:column>
         <display:column title="Index">${dis.indexesDir}</display:column>
         <display:column title="Renew Date"><fmt:formatDate value="${dis.renewDate}"
                                                            pattern="dd.MM.yy hh:mm"/></display:column>
