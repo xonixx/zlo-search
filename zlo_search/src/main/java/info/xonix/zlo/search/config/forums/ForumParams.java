@@ -27,7 +27,7 @@ public class ForumParams {
     private int dbScanPeriod;
     private int dbReconnectPeriod;
 
-    private int siteNumber;
+//    private int siteNumber;
 
     public ForumParams(String filePath) {
         init(ConfigUtils.loadProperties(filePath, "forum params"));
@@ -47,7 +47,7 @@ public class ForumParams {
         dbScanPeriod = TimeUtils.parseToMilliSeconds(p.getProperty("db.daemon.period.to.scan"));
         dbReconnectPeriod = TimeUtils.parseToMilliSeconds(p.getProperty("db.daemon.period.to.reconnect"));
 
-        siteNumber = Integer.parseInt(p.getProperty("site.number"));
+//        siteNumber = Integer.parseInt(p.getProperty("site.number"));
     }
 
     public boolean isPerformIndexing() {
@@ -82,7 +82,7 @@ public class ForumParams {
         return dbReconnectPeriod;
     }
 
-    public int getSiteNumber() {
+/*    public int getSiteNumber() {
         return siteNumber;
-    }
+    }*/
 }

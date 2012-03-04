@@ -24,7 +24,7 @@ public class AuditLogicImpl implements AuditLogic, InitializingBean {
     @Override
     public void logSearchEvent(SearchLog searchLog) {
         auditDao.saveSearchRequest(
-                GetForum.params(searchLog.getForumId()).getSiteNumber(),
+                GetForum.descriptor(searchLog.getForumId()).getForumIntId(),
                 searchLog);
 
     }

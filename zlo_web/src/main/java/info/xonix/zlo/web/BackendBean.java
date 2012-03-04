@@ -71,6 +71,7 @@ public class BackendBean {
         for (ForumDescriptor descriptor : descriptors) {
             ids[i] = Integer.toString(descriptor.getForumIntId());
             vals[i] = descriptor.getForumAdapter().getForumUrl();
+            i++;
         }
 
         return HtmlConstructor.constructSelector(SN_SITE, SN_SITE, null,
