@@ -9,27 +9,31 @@
 <tiles:useAttribute name="reg"/>
 <tiles:useAttribute name="nick"/>
 <tiles:useAttribute name="host"/>
-<tiles:useAttribute name="site" classname="info.xonix.zlo.search.domainobj.Site"/>
+<%--<tiles:useAttribute name="site"/>--%>
+
+<jsp:useBean id="forumIntId" type="java.lang.Integer" scope="request"/>
+<jsp:useBean id="adapter" type="info.xonix.zlo.search.logic.forum_adapters.ForumAdapter" scope="request"/>
 
 <c:if test="${not empty nick}">
     <c:set var="nickEscaped"><c:out value="${nick}"/></c:set>
-    <c:set var="nickUrlencodedForSite"><c:out value="${xonix:urlencode(nick, site.siteCharset)}"/></c:set>
+    <%--<c:set var="nickUrlencodedForSite"><c:out value="${xonix:urlencode(nick, site.siteCharset)}"/></c:set>--%>
     <c:set var="nickUrlencoded"><c:out value="${xonix:urlencode(nick, null)}"/></c:set><%--default enc (UTF-8)--%>
     <span class="nick">
         <c:choose>
             <c:when test="${not reg}">${nickEscaped}</c:when>
             <c:otherwise>
-                <a href="http://${site.siteUrl}${site.uinfoQuery}${nickUrlencodedForSite}">${nickEscaped}</a>
+                <%--<a href="http://${site.siteUrl}${site.uinfoQuery}${nickUrlencodedForSite}">${nickEscaped}</a>--%>
+                <a href="<%= adapter.prepareUserProfileUrl(-1, (String) nick)%>">${nickEscaped}</a>
             </c:otherwise>
         </c:choose>
     </span>
-    <a class="search" href="search?site=${site.siteNumber}&nick=${nickUrlencoded}">?</a>
+    <a class="search" href="search?site=${forumIntId}&nick=${nickUrlencoded}">?</a>
     <c:if test="${not empty host}">
-        <a href="search?site=${site.siteNumber}&host=${host}&nick=${nickUrlencoded}"
+        <a href="search?site=${forumIntId}&host=${host}&nick=${nickUrlencoded}"
            class="search" title="поиск по нику и хосту">?nh</a>
     </c:if>
-    <c:if test="${not site.noHost}">
-        <a class="search" href="nickhost.jsp?site=${site.siteNumber}&w=n&t=${nickUrlencoded}"
+    <c:if test="${true}"><%--TODO: not site.noHost--%>
+        <a class="search" href="nickhost.jsp?site=${forumIntId}&w=n&t=${nickUrlencoded}"
            title="хосты этого ника">h</a>
     </c:if>
 </c:if>

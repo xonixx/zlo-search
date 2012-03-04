@@ -167,8 +167,7 @@
                                decorator="info.xonix.zlo.web.decorators.SearchResultLineDecorator" requestURI="search"
                                class="searchRes">
                     <c:if test="${msg != null}">
-                        <%--<c:set var="site" value="${msg.site}"/>--%>
-                        <c:set var="siteRootUrl" value="${xonix:getSiteRoot(header['Referer'], site)}"/>
+                        <c:set var="siteRootUrl" value="${adapter.forumUrl}"/>
 
                         <c:if test="${not msg.ok}">
                             <c:set target="${msg}" property="title" value="${msg.status}"/>
@@ -201,7 +200,7 @@
                     <display:column title="№"
                                     class="small" style="text-align:center;width:1%;">${msg.hitId + 1}</display:column>
                     <display:column title="Тема" style="width:67%">
-                        <a href="http://${siteRootUrl}${site.readQuery}${msg.num}">
+                        <a href="<%= adapter.prepareMessageUrl(((Message)msg).getNum()) %>">
                             <c:if test="${not empty msg.topic and msg.topic != 'без темы'}">[${msg.topic}]</c:if>
                             <jsp:setProperty name="hl" property="text" value="${msg.title}"/>
                             <c:out value="${hl.highlightedText}" escapeXml="false"/></a>
@@ -211,7 +210,7 @@
                             <c:if test="<%= ((Message)msg).isHasImg(forumId) %>">(pic)</c:if>
                         </small>
                         <a class="search"
-                           href="msg?site=${site.siteNumber}&num=${msg.num}<c:if test="${not empty hl.wordsStr}">&hw=${hl.wordsStr}</c:if>"><fmt:message
+                           href="msg?site=${descriptor.forumIntId}&num=${msg.num}<c:if test="${not empty hl.wordsStr}">&hw=${hl.wordsStr}</c:if>"><fmt:message
                                 key="link.saved.msg"/></a>
                     </display:column>
                     <display:column title="Ник">
@@ -221,7 +220,7 @@
                             <tiles:putAttribute name="site" value="${site}"/>
                         </tiles:insertDefinition>
                     </display:column>
-                    <c:if test="${not site.noHost}">
+                    <c:if test="${true}"><%-- TODO: not site.noHost--%>
                         <display:column title="Хост" class="small">
                             <tiles:insertDefinition name="host">
                                 <tiles:putAttribute name="host" value="${msg.host}"/>

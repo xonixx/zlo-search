@@ -13,7 +13,7 @@
 
                     <constructor-arg>
                         <bean class="info.xonix.zlo.search.config.forums.ForumParams">
-                            <constructor-arg value="/info/xonix/zlo/search/config/forums/zlo.properties"/>
+                            <constructor-arg value="info/xonix/zlo/search/config/forums/zlo.properties"/>
                         </bean>
                     </constructor-arg>
 
