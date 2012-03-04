@@ -1,3 +1,5 @@
+<%@ page import="info.xonix.zlo.search.model.Message" %>
+<%@ page import="java.util.Map" %>
 <%--
   User: Vovan
   Date: 21.12.2009
@@ -13,11 +15,11 @@
 <jsp:setProperty name="backendBean" property="*"/>
 <%-- all from request properties --%>
 
-<c:set var="siteNum" value="${site.siteNumber}"/>
-<c:set var="siteUrl" value="${site.siteUrl}"/>
+<c:set var="siteNum" value="${forumIntId}"/>
+<c:set var="siteUrl" value="${adapter.forumUrl}"/>
 
-<c:set var="nickhostTbl">${site.name}_nickhost</c:set>
-<c:set var="messagesTbl">${site.name}_messages</c:set>
+<c:set var="nickhostTbl">${forumId}_nickhost</c:set>
+<c:set var="messagesTbl">${forumId}_messages</c:set>
 
 <%--params--%>
 <c:set var="checkLastNum"
@@ -89,7 +91,7 @@
             <display:column title="№"
                             class="small" style="text-align:center;width:1%;">${msg_rowNum}</display:column>
             <display:column title="Тема" style="width:67%">
-                <a href="http://${site.siteUrl}${site.readQuery}${msg.num}">
+                <a href="<%= adapter.prepareMessageUrl((Integer)((Map)msg).get("num")) %>">
                     <c:if test="${not empty msg.topic and msg.topic != 'без темы'}">[${msg.topic}]</c:if>
                     <c:out value="${msg.title}" escapeXml="false"/>
                 </a>
@@ -99,7 +101,7 @@
                     <c:if test="${msg.hasImg}">(pic)</c:if>
                 </small>
                 <a class="search"
-                   href="msg?site=${site.siteNumber}&num=${msg.num}">
+                   href="msg?site=${siteNum}&num=${msg.num}">
                     <fmt:message key="link.saved.msg"/></a>
             </display:column>
             <display:column title="Всего&nbsp;сообщ." property="count" style="text-align:center"/>
@@ -107,13 +109,11 @@
                 <tiles:insertDefinition name="nick">
                     <tiles:putAttribute name="reg" value="${msg.reg}"/>
                     <tiles:putAttribute name="nick" value="${msg.nick}"/>
-                    <tiles:putAttribute name="site" value="${site}"/>
                 </tiles:insertDefinition>
             </display:column>
             <display:column title="Хост" class="small">
                 <tiles:insertDefinition name="host">
                     <tiles:putAttribute name="host" value="${msg.host}"/>
-                    <tiles:putAttribute name="site" value="${site}"/>
                 </tiles:insertDefinition>
             </display:column>
             <display:column title="Дата" property="msgDate" format="{0,date,dd/MM/yyyy HH:mm}" class="small nowrap"/>
