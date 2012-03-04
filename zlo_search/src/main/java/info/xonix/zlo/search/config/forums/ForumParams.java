@@ -1,9 +1,9 @@
 package info.xonix.zlo.search.config.forums;
 
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.utils.ConfigUtils;
 import info.xonix.zlo.search.utils.TimeUtils;
 
-import java.io.*;
 import java.util.Properties;
 
 /**
@@ -28,26 +28,12 @@ public class ForumParams {
     private int dbReconnectPeriod;
 
     private int siteNumber;
-    private int weight;
+//    private int weight;
 
 //    private String forumId;
 
     public ForumParams(String filePath) {
-        final InputStream inputStream = Config.resolvePath(filePath);
-
-        if (inputStream == null) {
-            throw new IllegalArgumentException("Invalid path: " + filePath);
-        }
-
-        Properties properties = new Properties();
-
-        try {
-            properties.load(inputStream);
-        } catch (IOException e) {
-            throw new RuntimeException("Error initializing forum params", e);
-        }
-
-        init(properties);
+        init(ConfigUtils.loadProperties(filePath, "forum params"));
     }
 
     private void init(Properties p) {
@@ -65,8 +51,8 @@ public class ForumParams {
         dbReconnectPeriod = TimeUtils.parseToMilliSeconds(p.getProperty("db.daemon.period.to.reconnect"));
 
         siteNumber = Integer.parseInt(p.getProperty("site.number"));
-        final String weightStr = p.getProperty("site.weight");
-        weight = weightStr != null ? Integer.parseInt(weightStr) : Integer.MAX_VALUE;
+//        final String weightStr = p.getProperty("site.weight");
+//        weight = weightStr != null ? Integer.parseInt(weightStr) : Integer.MAX_VALUE;
     }
 
     public boolean isPerformIndexing() {
@@ -105,9 +91,9 @@ public class ForumParams {
         return siteNumber;
     }
 
-    public int getWeight() {
+/*    public int getWeight() {
         return weight;
-    }
+    }*/
 
 /*    public String getForumId() {
         return forumId;

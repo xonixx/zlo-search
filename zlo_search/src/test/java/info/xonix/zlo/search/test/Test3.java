@@ -58,7 +58,7 @@ public class Test3 {
 
         String forumId = "velo";
         PageParser p = new PageParser();
-        Message m = p.parseMessage(WwwconfUtils.getWwwconfParams(forumId), msg, 123);
+        Message m = p.parseMessage(forumId, WwwconfUtils.getWwwconfParams(forumId), msg, 123);
         System.out.println(m);
     }
 }

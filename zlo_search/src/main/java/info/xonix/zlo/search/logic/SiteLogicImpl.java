@@ -6,18 +6,12 @@ import info.xonix.zlo.search.config.forums.ForumDescriptor;
 import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
 import info.xonix.zlo.search.logic.site.MessageRetriever;
-import info.xonix.zlo.search.logic.site.PageParseException;
-import info.xonix.zlo.search.logic.site.RetrieverException;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.utils.Check;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -44,7 +38,7 @@ public class SiteLogicImpl implements SiteLogic, InitializingBean {
     public Message getMessageByNumber(String forumId, int num) throws ForumAccessException {
         log.debug(forumId + " - Receiving from site: " + num);
 //        return messageRetriever.getMessage(forumId, num);
-        return GetForum.adapter(forumId).getMessage(num);
+        return GetForum.adapter(forumId).getMessage(forumId, num);
     }
 
     @Override
@@ -53,7 +47,7 @@ public class SiteLogicImpl implements SiteLogic, InitializingBean {
         long begin = System.currentTimeMillis();
 
 //        List<Message> msgs = messageRetriever.getMessages(forumId, from, to);
-        List<Message> msgs = GetForum.adapter(forumId).getMessages((long) from, (long) to);
+        List<Message> msgs = GetForum.adapter(forumId).getMessages(forumId, (long) from, (long) to);
 
         float durationSecs = (System.currentTimeMillis() - begin) / 1000f;
         log.info(forumId + " - Downloaded " + msgs.size() + " messages in " + (int) durationSecs + "secs. Rate: " + ((float) msgs.size()) / durationSecs + "mps.");
@@ -64,7 +58,7 @@ public class SiteLogicImpl implements SiteLogic, InitializingBean {
     @Override
     public int getLastMessageNumber(String forumId) throws ForumAccessException {
 //        return messageRetriever.getLastMessageNumber(forumId);
-        return (int) GetForum.adapter(forumId).getLastMessageNumber();
+        return (int) GetForum.adapter(forumId).getLastMessageNumber(forumId);
     }
 
 //    private List<Site> sites;

@@ -10,6 +10,7 @@ import info.xonix.zlo.search.logic.forum_adapters.ForumAdapter;
 public class ForumDescriptor {
     private int forumIntId;
     private String forumId;
+
     private ForumParams forumParams;
     private ForumAdapter forumAdapter;
 

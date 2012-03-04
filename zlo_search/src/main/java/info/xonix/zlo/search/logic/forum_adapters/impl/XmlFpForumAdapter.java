@@ -34,7 +34,7 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract {
     }
 
     @Override
-    public long getLastMessageNumber() throws ForumAccessException {
+    public long getLastMessageNumber(String forumId) throws ForumAccessException {
         try {
             return forumAccessor.getLastMessageNumber();
         } catch (XmlFpException e) {
@@ -43,7 +43,7 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract {
     }
 
     @Override
-    public Message getMessage(long messageId) throws ForumAccessException {
+    public Message getMessage(String forumId, long messageId) throws ForumAccessException {
         try {
             return forumAccessor.getMessage(messageId);
         } catch (XmlFpException e) {

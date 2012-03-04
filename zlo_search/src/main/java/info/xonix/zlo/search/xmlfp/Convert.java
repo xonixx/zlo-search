@@ -134,7 +134,7 @@ class Convert {
         return messageStatus != null ? messageStatus : MessageStatus.OK; // omitted status = OK
     }
 
-    public static Forum toJaxbForum(WwwconfParams wwwconfParams) {
+    public static Forum toJaxbForum(String forumId, WwwconfParams wwwconfParams) {
         Forum forum = OBJECT_FACTORY.createForum();
 
         forum.setName(wwwconfParams.getSiteDescription());
@@ -143,7 +143,9 @@ class Convert {
         forum.setCharset(wwwconfParams.getSiteCharset());
 
         final Forum.XmlfpUrls xmlFpInfo = OBJECT_FACTORY.createForumXmlfpUrls();
-        ForumParams forumParams = GetForum.params(wwwconfParams.getForumId()); // <<< TODO
+
+        ForumParams forumParams = GetForum.params(forumId);
+
         xmlFpInfo.setLastMessageNumberUrl("xmlfp.jsp?xmlfp=lastMessageNumber&site=" + forumParams.getSiteNumber());
         xmlFpInfo.setMessageUrl("xmlfp.jsp?xmlfp=message&num=" + XmlFpUrlsSubstitutions.MESSAGE_ID + "&site=" + forumParams.getSiteNumber());
         xmlFpInfo.setMessageListUrl("xmlfp.jsp?xmlfp=messages" +

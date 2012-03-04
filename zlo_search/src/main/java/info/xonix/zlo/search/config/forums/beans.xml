@@ -21,8 +21,7 @@
                         <bean class="info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfForumAdapter">
                             <constructor-arg>
                                 <bean class="info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams">
-                                    <!--TODO: conf file path should be passed-->
-                                    <constructor-arg value="zlo"/>
+                                    <constructor-arg value="info/xonix/zlo/search/config/forums/zlo.properties"/>
                                 </bean>
                             </constructor-arg>
                         </bean>

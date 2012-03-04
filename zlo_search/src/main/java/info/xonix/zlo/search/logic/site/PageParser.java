@@ -37,11 +37,10 @@ public class PageParser implements InitializingBean {
         Check.isSet(messagesDao, "messagesDao");
     }
 
-    private Message parseMessage(WwwconfParams wwwconfParams, Message message, String msg) throws PageParseException {
+    private Message parseMessage(String forumId, WwwconfParams wwwconfParams, Message message, String msg) throws PageParseException {
 
         Matcher m = wwwconfParams.getMsgUnregRe().matcher(msg);
 
-        final String forumId = wwwconfParams.getForumId();
         if (m.find()) {
             message.setReg(false);
         } else {
@@ -103,10 +102,10 @@ public class PageParser implements InitializingBean {
         return message;
     }
 
-    public Message parseMessage(WwwconfParams wwwconfParams, String msg, int urlNum) throws PageParseException {
+    public Message parseMessage(String forumId, WwwconfParams wwwconfParams, String msg, int urlNum) throws PageParseException {
         Message message = new Message();
         message.setNum(urlNum);
-        parseMessage(wwwconfParams, message, msg);
+        parseMessage(forumId, wwwconfParams, message, msg);
         return message;
     }
 

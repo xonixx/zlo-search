@@ -1,6 +1,7 @@
 package info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf;
 
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.utils.ConfigUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -46,12 +47,12 @@ public class WwwconfParams {
 
     private String msgDatePattern;
 
-    private String forumId;
+//    private String forumId;
 
     private boolean noHost;
 
 
-    public WwwconfParams(String forumId) {
+/*    public WwwconfParams(String forumId) {
         Properties p = new Properties();
 
         final String propFile = forumId + ".properties";
@@ -73,6 +74,10 @@ public class WwwconfParams {
         this.forumId = forumId;
 
         initializeFromProperties(p);
+    }*/
+
+    public WwwconfParams(String filePath) {
+        initializeFromProperties(ConfigUtils.loadProperties(filePath, "wwwconf params"));
     }
 
     private void initializeFromProperties(Properties p) {
@@ -116,14 +121,14 @@ public class WwwconfParams {
         noHost = Config.isTrue(p.getProperty("site.no.host", "0"));
     }
 
-    public boolean equals(Object obj) {
+/*    public boolean equals(Object obj) {
         if (!(obj instanceof WwwconfParams)) {
             return false;
         }
 
-        return /*StringUtils.equals(getName(), ((WwwconfParams) obj).getName()) &&*/
+        return *//*StringUtils.equals(getName(), ((WwwconfParams) obj).getName()) &&*//*
                 StringUtils.equals(forumId, ((WwwconfParams) obj).forumId);
-    }
+    }*/
 
     // getters
 
@@ -235,9 +240,9 @@ public class WwwconfParams {
         return siteNumber;
     }*/
 
-    public String getForumId() {
+/*    public String getForumId() {
         return forumId;
-    }
+    }*/
 
     public boolean isNoHost() {
         return noHost;

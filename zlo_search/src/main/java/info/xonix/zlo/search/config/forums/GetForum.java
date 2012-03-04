@@ -2,10 +2,7 @@ package info.xonix.zlo.search.config.forums;
 
 import info.xonix.zlo.search.logic.forum_adapters.ForumAdapter;
 
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * User: gubarkov
@@ -25,10 +22,20 @@ public class GetForum {
         }
 
         this.forumDescriptors = forumDescriptors;
-
+        
         for (ForumDescriptor forumDescriptor : forumDescriptors) {
-            forumIdToForumDescriptor.put(forumDescriptor.getForumId(), forumDescriptor);
-            forumIntIdToForumDescriptor.put(forumDescriptor.getForumIntId(), forumDescriptor);
+            final String forumId = forumDescriptor.getForumId();
+            final int forumIntId = forumDescriptor.getForumIntId();
+
+            if (forumIdToForumDescriptor.containsKey(forumId)) {
+                throw new IllegalArgumentException("Duplicate forumId: " + forumId);
+            }
+            if (forumIntIdToForumDescriptor.containsKey(forumIntId)) {
+                throw new IllegalArgumentException("Duplicate forumIntId: " + forumIntId);
+            }
+
+            forumIdToForumDescriptor.put(forumId, forumDescriptor);
+            forumIntIdToForumDescriptor.put(forumIntId, forumDescriptor);
         }
 
         INSTANCE = this;

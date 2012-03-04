@@ -97,24 +97,6 @@ public class Config {
         }
     }
 
-    /**
-     * @param filePath file path OR classpath to resource
-     * @return input stream or null
-     */
-    public static InputStream resolvePath(String filePath) {
-        final File file = new File(filePath);
-
-        if (file.exists()) {
-            try {
-                return new FileInputStream(file);
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        return Thread.currentThread().getContextClassLoader().getResourceAsStream(filePath);
-    }
-
     private void initAnalyzers() {
         try {
             final Class<?> clazz = Class.forName(getProp("analyzer"));
@@ -176,6 +158,7 @@ public class Config {
         return TRUE.equals(val) || TRUE1.equals(val);
     }
 
+    @Deprecated
     public static boolean loadProperties(Properties pr, String path) {
         System.out.println("Loading props from: " + path); // not through logger as logger maybe not yet inited
         try {

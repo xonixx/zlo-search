@@ -64,9 +64,9 @@ public class XmlFpUtils {
     public static String siteDescriptorToXml(String forumId) {
         try {
             return MarshalUtils.marshal(XmlFpContext.getMarshaller(),
-                    Convert.toJaxbForum(WwwconfUtils.getWwwconfParams(forumId)));
+                    Convert.toJaxbForum(forumId, WwwconfUtils.getWwwconfParams(forumId)));
         } catch (XmlFpMarshalException e) {
             throw new RuntimeException(e);
         }
     }
-}
+}                                   /**/

@@ -54,7 +54,7 @@ public class RescanUndefStatusMsgs {
                 System.out.print("Getting from site... ");
                 List<Message> newMsgs = null;
                 try {
-                    newMsgs = messageRetriever.getMessages(WwwconfUtils.getWwwconfParams("zlo"), newNums);
+                    newMsgs = messageRetriever.getMessages("zlo", WwwconfUtils.getWwwconfParams("zlo"), newNums);
                 } catch (RetrieverException e) {
                     e.printStackTrace();
                 } catch (PageParseException e) {

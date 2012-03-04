@@ -10,11 +10,11 @@ import java.util.List;
  * Time: 1:32
  */
 public interface ForumAdapter {
-    public long getLastMessageNumber() throws ForumAccessException;
+    public long getLastMessageNumber(String forumId) throws ForumAccessException;
 
-    public Message getMessage(long messageId) throws ForumAccessException;
+    public Message getMessage(String forumId, long messageId) throws ForumAccessException;
 
-    List<Message> getMessages(long from, long to) throws ForumAccessException;
+    List<Message> getMessages(String forumId, long from, long to) throws ForumAccessException;
 
     public String prepareMessageUrl(long messageId);
 

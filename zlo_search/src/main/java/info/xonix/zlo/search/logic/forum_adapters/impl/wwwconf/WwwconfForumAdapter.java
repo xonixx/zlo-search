@@ -25,31 +25,33 @@ public class WwwconfForumAdapter extends ForumAdapterAbstract {
         this.wwwconfParams = wwwconfParams;
     }
 
+/*
     private String forumId() {
         return wwwconfParams.getForumId();
     }
+*/
 
     public WwwconfParams getWwwconfParams() {
         return wwwconfParams;
     }
 
     @Override
-    public long getLastMessageNumber() throws ForumAccessException {
+    public long getLastMessageNumber(String forumId) throws ForumAccessException {
         try {
             return messageRetriever.getLastMessageNumber(wwwconfParams);
         } catch (RetrieverException e) {
-            throw new ForumIoException("Can't get last number from: " + forumId(), e);
+            throw new ForumIoException("Can't get last number from: " + forumId, e);
         }
     }
 
     @Override
-    public Message getMessage(long messageId) throws ForumAccessException {
+    public Message getMessage(String forumId, long messageId) throws ForumAccessException {
         try {
-            return messageRetriever.getMessage(wwwconfParams, (int) messageId, 0); // retries = 0 as we implement retries on ForumAdapter level
+            return messageRetriever.getMessage(forumId, wwwconfParams, (int) messageId, 0); // retries = 0 as we implement retries on ForumAdapter level
         } catch (RetrieverException e) {
-            throw new ForumIoException("Can't get message #" + messageId + " from site: " + forumId(), e);
+            throw new ForumIoException("Can't get message #" + messageId + " from site: " + forumId, e);
         } catch (PageParseException e) {
-            throw new ForumFormatException("Can't get message #" + messageId + " from site: " + forumId(), e);
+            throw new ForumFormatException("Can't get message #" + messageId + " from site: " + forumId, e);
         }
     }
 
