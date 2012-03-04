@@ -19,9 +19,10 @@ public class ForumDescriptor {
             String forumId,
             ForumParams forumParams,
             ForumAdapter forumAdapter) {
-        this.forumIntId = forumIntId;
 
+        this.forumIntId = forumIntId;
         this.forumId = forumId;
+
         this.forumParams = forumParams;
         this.forumAdapter = forumAdapter;
     }
