@@ -21,13 +21,15 @@ public abstract class ForumAdapterAbstract implements ForumAdapter {
     }
 
     /**
+     *
+     * @param forumId
      * @param from (including)
      * @param to   (excluding)
      * @return list of received messages
      * @throws ForumAccessException if can't get msg from site
      */
     @Override
-    public List<Message> getMessages(long from, long to) throws ForumAccessException {
+    public List<Message> getMessages(String forumId, long from, long to) throws ForumAccessException {
         if (to < from) {
             throw new IllegalArgumentException("to (" + to + ") < from (" + from + ")");
         }
@@ -35,16 +37,16 @@ public abstract class ForumAdapterAbstract implements ForumAdapter {
         List<Message> messages = new ArrayList<Message>((int) (to - from));
 
         for (long messageId = from; messageId < to; messageId++) {
-            messages.add(getMessageWithRetrying(messageId));
+            messages.add(getMessageWithRetrying(forumId, messageId));
         }
 
         return messages;
     }
 
-    public Message getMessageWithRetrying(long messageId) throws ForumAccessException {
+    public Message getMessageWithRetrying(String forumId, long messageId) throws ForumAccessException {
         for (int i = 0; i < retryCount; i++) {
             try {
-                return getMessage(messageId);
+                return getMessage(forumId, messageId);
             } catch (ForumAccessException e) {
                 if (i == (retryCount - 1)) { // last iteration
                     throw e;

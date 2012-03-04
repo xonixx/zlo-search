@@ -17,6 +17,8 @@ class MessageRetrieverThread extends Thread {
 
     private List<Message> msgs;
     private List<Message> myMsgs = new ArrayList<Message>();
+
+    private String forumId;
     private WwwconfParams wwwconfParams;
 
     private MessageRetriever messageRetriever;
@@ -25,10 +27,12 @@ class MessageRetrieverThread extends Thread {
 
     private static Iterator<Integer> numsIterator = null;
 
-    public MessageRetrieverThread(MessageRetriever messageRetriever, WwwconfParams wwwconfParams, Iterable<Integer> numsToSave, List<Message> msgs) {
+    public MessageRetrieverThread(MessageRetriever messageRetriever,
+                                  String forumId, WwwconfParams wwwconfParams, Iterable<Integer> numsToSave, List<Message> msgs) {
         super("MessageRetriever #" + threadNum);
 
         this.messageRetriever = messageRetriever;
+        this.forumId = forumId;
 
         if (threadNum == 0 && exception != null) {
             // clean the exception of last range retrieve
@@ -58,7 +62,7 @@ class MessageRetrieverThread extends Thread {
             while ((nextNum = getNextNum()) != -1) {
                 try {
                     log.debug("Downloading: " + nextNum + " by " + getName());
-                    myMsgs.add(messageRetriever.getMessage(wwwconfParams, nextNum));
+                    myMsgs.add(messageRetriever.getMessage(forumId, wwwconfParams, nextNum));
                 } catch (Exception e) {
                     exception = e;
                     log.warn(getName() + " exiting because of exception: " + e);
