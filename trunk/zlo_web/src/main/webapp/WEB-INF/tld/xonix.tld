@@ -59,12 +59,12 @@
         <function-signature>java.lang.String getUserAgentSmall(java.lang.String)</function-signature>
     </function>
 
-    <function>
+<!--    <function>
         <description>Returns appropriate site root based on Host header received from user browser</description>
         <name>getSiteRoot</name>
         <function-class>info.xonix.zlo.web.utils.RequestUtils</function-class>
         <function-signature>
             java.lang.String getSiteRoot(java.lang.String,info.xonix.zlo.search.domainobj.Site)
         </function-signature>
-    </function>
+    </function>-->
 </taglib>

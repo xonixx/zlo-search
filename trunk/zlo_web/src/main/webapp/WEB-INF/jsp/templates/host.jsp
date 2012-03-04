@@ -11,11 +11,14 @@
 <tiles:useAttribute name="site"/>
 <tiles:useAttribute name="brackets"/>
 
+<jsp:useBean id="forumIntId" type="java.lang.Integer" scope="request"/>
+<jsp:useBean id="adapter" type="info.xonix.zlo.search.logic.forum_adapters.ForumAdapter" scope="request"/>
+
 <c:if test="${not empty host}">
     <c:if test="${brackets}">(</c:if><c:out value="${host}"/>
-    <a class="search" href="search?site=${site.siteNumber}&host=${host}">?</a>
-    <c:if test="${not empty nick}"><a href="search?site=${site.siteNumber}&nick=${nick}&host=${host}" class="search"
+    <a class="search" href="search?site=${forumIntId}&host=${host}">?</a>
+    <c:if test="${not empty nick}"><a href="search?site=${forumIntId}&nick=${nick}&host=${host}" class="search"
                                       title="поиск по нику и хосту">?nh</a></c:if>
-    <a class="search" href="nickhost.jsp?site=${site.siteNumber}&w=h&t=${host}" title="ники этого хоста">n</a><c:if
+    <a class="search" href="nickhost.jsp?site=${forumIntId}&w=h&t=${host}" title="ники этого хоста">n</a><c:if
         test="${brackets}">)</c:if>
 </c:if>
