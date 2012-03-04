@@ -28,9 +28,6 @@ public class ForumParams {
     private int dbReconnectPeriod;
 
     private int siteNumber;
-//    private int weight;
-
-//    private String forumId;
 
     public ForumParams(String filePath) {
         init(ConfigUtils.loadProperties(filePath, "forum params"));
@@ -51,8 +48,6 @@ public class ForumParams {
         dbReconnectPeriod = TimeUtils.parseToMilliSeconds(p.getProperty("db.daemon.period.to.reconnect"));
 
         siteNumber = Integer.parseInt(p.getProperty("site.number"));
-//        final String weightStr = p.getProperty("site.weight");
-//        weight = weightStr != null ? Integer.parseInt(weightStr) : Integer.MAX_VALUE;
     }
 
     public boolean isPerformIndexing() {
@@ -90,13 +85,4 @@ public class ForumParams {
     public int getSiteNumber() {
         return siteNumber;
     }
-
-/*    public int getWeight() {
-        return weight;
-    }*/
-
-/*    public String getForumId() {
-        return forumId;
-    }*/
-
 }
