@@ -32,9 +32,6 @@ public class Config {
 
     public final static SmartQueryParser SMART_QUERY_PARSER = new SmartQueryParser(WINDOWS_1251);
 
-    public static final String FORUMS_CONF_PATH = "info/xonix/zlo/search/config/forums/";
-    public static final String FORUMS_CONF_DEAD_PATH = FORUMS_CONF_PATH + "dead/";
-
     private Properties props;
 
     // app props
