@@ -27,6 +27,72 @@
                         </bean>
                     </constructor-arg>
                 </bean>
+
+                <bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
+                    <constructor-arg value="3"/>
+
+                    <constructor-arg value="anime"/>
+
+                    <constructor-arg>
+                        <bean class="info.xonix.zlo.search.config.forums.ForumParams">
+                            <constructor-arg value="info/xonix/zlo/search/config/forums/anime.properties"/>
+                        </bean>
+                    </constructor-arg>
+
+                    <constructor-arg>
+                        <bean class="info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfForumAdapter">
+                            <constructor-arg>
+                                <bean class="info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams">
+                                    <constructor-arg value="info/xonix/zlo/search/config/forums/anime.properties"/>
+                                </bean>
+                            </constructor-arg>
+                        </bean>
+                    </constructor-arg>
+                </bean>
+
+                <bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
+                    <constructor-arg value="5"/>
+
+                    <constructor-arg value="velo"/>
+
+                    <constructor-arg>
+                        <bean class="info.xonix.zlo.search.config.forums.ForumParams">
+                            <constructor-arg value="info/xonix/zlo/search/config/forums/velo.properties"/>
+                        </bean>
+                    </constructor-arg>
+
+                    <constructor-arg>
+                        <bean class="info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfForumAdapter">
+                            <constructor-arg>
+                                <bean class="info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams">
+                                    <constructor-arg value="info/xonix/zlo/search/config/forums/velo.properties"/>
+                                </bean>
+                            </constructor-arg>
+                        </bean>
+                    </constructor-arg>
+                </bean>
+
+                <bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
+                    <constructor-arg value="10"/>
+
+                    <constructor-arg value="dolgopa"/>
+
+                    <constructor-arg>
+                        <bean class="info.xonix.zlo.search.config.forums.ForumParams">
+                            <constructor-arg value="info/xonix/zlo/search/config/forums/dolgopa.properties"/>
+                        </bean>
+                    </constructor-arg>
+
+                    <constructor-arg>
+                        <bean class="info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfForumAdapter">
+                            <constructor-arg>
+                                <bean class="info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams">
+                                    <constructor-arg value="info/xonix/zlo/search/config/forums/dolgopa.properties"/>
+                                </bean>
+                            </constructor-arg>
+                        </bean>
+                    </constructor-arg>
+                </bean>
             </list>
         </constructor-arg>
     </bean>
