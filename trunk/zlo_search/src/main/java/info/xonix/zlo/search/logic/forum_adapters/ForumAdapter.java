@@ -21,4 +21,6 @@ public interface ForumAdapter {
     public String prepareUserProfileUrl(long userId, String userName);
 
     public String getForumUrl();
+
+    public String getForumTitle();
 }

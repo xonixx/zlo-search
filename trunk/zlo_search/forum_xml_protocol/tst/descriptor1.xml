@@ -4,6 +4,7 @@
        xsi:noNamespaceSchemaLocation="../descriptor.xsd">
 
     <name>Форум ФРТК-МФТИ</name>
+    <description>Tra-la-la</description>
     <url>http://zlo.rt.mipt.ru/</url>
 
     <type>tree</type>
