@@ -1,6 +1,7 @@
 package info.xonix.zlo.search.config.forums;
 
 import info.xonix.zlo.search.logic.forum_adapters.ForumAdapter;
+import org.apache.log4j.Logger;
 
 import java.util.*;
 
@@ -10,6 +11,8 @@ import java.util.*;
  * Time: 23:02
  */
 public class GetForum {
+    private final static Logger log = Logger.getLogger(GetForum.class);
+
     private List<ForumDescriptor> forumDescriptors;
     private Map<String, ForumDescriptor> forumIdToForumDescriptor = new LinkedHashMap<String, ForumDescriptor>();
     private Map<Integer, ForumDescriptor> forumIntIdToForumDescriptor = new LinkedHashMap<Integer, ForumDescriptor>();
@@ -22,7 +25,7 @@ public class GetForum {
         }
 
         this.forumDescriptors = forumDescriptors;
-        
+
         for (ForumDescriptor forumDescriptor : forumDescriptors) {
             final String forumId = forumDescriptor.getForumId();
             final int forumIntId = forumDescriptor.getForumIntId();
@@ -38,7 +41,27 @@ public class GetForum {
             forumIntIdToForumDescriptor.put(forumIntId, forumDescriptor);
         }
 
+        reportLoaded();
+
         INSTANCE = this;
+    }
+
+    private void reportLoaded() {
+        StringBuilder report = new StringBuilder("\nLoaded forum descriptors:\n");
+
+        for (ForumDescriptor forumDescriptor : forumDescriptors) {
+            report.append(forumDescriptor.getForumIntId())
+                    .append("\t:\t")
+                    .append(forumDescriptor.getForumId());
+
+            if (!forumDescriptor.getForumParams().isPerformIndexing()) {
+                report.append(" [dead]");
+            }
+
+            report.append("\n");
+        }
+
+        log.info(report.toString());
     }
 
     public static ForumAdapter adapter(String forumId) {
