@@ -42,9 +42,6 @@ public class Config {
     private int buffer;
     private int retrieverThreadNum;
 
-    // TODO: this should be site-specific
-    private String charsetName;
-
     private String userAgent;
 
     private boolean debug;
@@ -125,9 +122,6 @@ public class Config {
         buffer = Integer.parseInt(getProp("buffer", "512"));
         retrieverThreadNum = Integer.parseInt(getProp("retriever.threads"));
 
-        // TODO: this should be site-specific
-        charsetName = "windows-1251";
-
         userAgent = getProp("user.agent");
 
         debug = getBoolProp("debug");
@@ -205,11 +199,6 @@ public class Config {
         }
     }
 
-// todo: del?
-//    private static final String TIME_PERIOD = getProp("time.period");
-//    public static final int TIME_PERIOD_YEARS = Integer.parseInt(TIME_PERIOD.split("y")[0]);
-//    public static final int TIME_PERIOD_MONTHS = Integer.parseInt(TIME_PERIOD.split("y")[1].split("m")[0]);
-
     public String getProp(String key) {
         if (!props.containsKey(key)) {
             throw new IllegalArgumentException("Key not found: " + key);
@@ -248,10 +237,6 @@ public class Config {
 
     public int getRetrieverThreadNum() {
         return retrieverThreadNum;
-    }
-
-    public String getCharsetName() {
-        return charsetName;
     }
 
     public String getUserAgent() {

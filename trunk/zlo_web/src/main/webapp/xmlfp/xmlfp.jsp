@@ -1,5 +1,4 @@
 <%@ page import="info.xonix.zlo.search.xmlfp.XmlFpFormer" %>
-<%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="java.io.PrintWriter" %>
 <%--
   User: Vovan
@@ -45,7 +44,7 @@
 
                 }
             } catch (Exception ex) {
-                response.setStatus(500); // todo: ?
+                response.setStatus(500);
                 response.setContentType("text/html");
                 responseWriter.write("<h3>Error</h3>");
                 responseWriter.write("<pre>" + ex.toString() + "</pre>");

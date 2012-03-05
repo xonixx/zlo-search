@@ -1,4 +1,3 @@
-<%@ page import="info.xonix.zlo.search.model.Message" %>
 <%@ page import="java.util.Map" %>
 <%--
   User: Vovan

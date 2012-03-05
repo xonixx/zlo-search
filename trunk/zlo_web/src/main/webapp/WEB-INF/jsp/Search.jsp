@@ -1,5 +1,5 @@
-<%@ page import="java.util.Date" %>
 <%@ page import="info.xonix.zlo.search.model.Message" %>
+<%@ page import="java.util.Date" %>
 <%--
   User: gubarkov
   Date: 14.08.2007
