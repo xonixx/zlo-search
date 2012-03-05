@@ -8,7 +8,6 @@
 <%@ include file="/WEB-INF/jsp/setSite.jsp" %>
 
 <jsp:useBean id="msg" scope="request" class="info.xonix.zlo.search.model.Message"/>
-<jsp:useBean id="siteRoot" class="java.lang.String" scope="request"/>
 
 <jsp:useBean id="hl" class="info.xonix.zlo.search.FoundTextHighlighter" scope="request"/>
 <jsp:setProperty name="hl" property="hlClass" value="hl"/>
@@ -28,7 +27,7 @@
                 <c:if test="${not empty msg.topic}">[${msg.topic}]</c:if>
                 <jsp:setProperty name="hl" property="text" value="${msg.title}"/>
                 <c:out value="${hl.highlightedText}" escapeXml="false"/>
-                <a href="http://${siteRoot}/?read=${msg.num}">?</a>
+                <a href="<%= adapter.prepareMessageUrl(msg.getNum()) %>">?</a>
 
                     <%--paul7 link--%>
                 <%--<c:if test="${msg.site.name == 'zlo'}">
