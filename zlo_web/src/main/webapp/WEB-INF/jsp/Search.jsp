@@ -162,6 +162,7 @@
 <c:choose>
     <c:when test="${not isError}">
         <c:if test="${isSearchResultPresent}">
+            <c:set var="hasHosts" value="${requestScope['paginatedList'].hasHosts}"/>
             <div class="searchResOuter">
                 <display:table name="requestScope.paginatedList" id="msg" htmlId="resultTable"
                                decorator="info.xonix.zlo.web.decorators.SearchResultLineDecorator" requestURI="search"
@@ -217,14 +218,12 @@
                         <tiles:insertDefinition name="nick">
                             <tiles:putAttribute name="reg" value="${msg.reg}"/>
                             <tiles:putAttribute name="nick" value="${msg.nick}"/>
-                            <tiles:putAttribute name="site" value="${site}"/>
                         </tiles:insertDefinition>
                     </display:column>
-                    <c:if test="${true}"><%-- TODO: not site.noHost--%>
+                    <c:if test="${hasHosts}">
                         <display:column title="Хост" class="small">
                             <tiles:insertDefinition name="host">
                                 <tiles:putAttribute name="host" value="${msg.host}"/>
-                                <tiles:putAttribute name="site" value="${site}"/>
                             </tiles:insertDefinition>
                         </display:column>
                     </c:if>
