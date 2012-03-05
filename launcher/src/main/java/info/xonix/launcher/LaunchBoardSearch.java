@@ -4,7 +4,6 @@ import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.nio.SelectChannelConnector;
-import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppClassLoader;
 import org.eclipse.jetty.webapp.WebAppContext;
 import sun.misc.JarFilter;
@@ -31,8 +30,6 @@ public class LaunchBoardSearch {
 
         WebAppContext root = new WebAppContext(join(zloWeb, "src/main/webapp"), "/");
 
-//        root.setDefaultsDescriptor();
-        
         WebAppClassLoader rootClassLoader = new WebAppClassLoader(root);
         rootClassLoader.addClassPath(join(zloWeb, "target/classes"));
         rootClassLoader.addClassPath(join(zloSearch, "target/classes"));
