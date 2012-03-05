@@ -58,4 +58,9 @@ public abstract class ForumAdapterAbstract implements ForumAdapter {
 
         throw new IllegalStateException("We should not get here...");
     }
+
+    @Override
+    public long extractMessageIdFromMessageUrl(String messageUrl) {
+        return -1;
+    }
 }

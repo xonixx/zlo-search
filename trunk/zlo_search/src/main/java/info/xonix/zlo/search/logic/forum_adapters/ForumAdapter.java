@@ -23,4 +23,11 @@ public interface ForumAdapter {
     public String getForumUrl();
 
     public String getForumTitle();
+
+    /**
+     * This function is necessary for implementing saved msg view when msg forum url entered to search
+     * @param messageUrl messageUrl
+     * @return message id or -1 if in can't be exctracted
+     */
+    public long extractMessageIdFromMessageUrl(String messageUrl);
 }

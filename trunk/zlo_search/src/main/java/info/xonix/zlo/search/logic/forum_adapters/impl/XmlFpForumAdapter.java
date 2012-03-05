@@ -70,4 +70,9 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract {
     public String getForumTitle() {
         return forumAccessor.getTitle();
     }
+
+    @Override
+    public long extractMessageIdFromMessageUrl(String messageUrl) {
+        throw new UnsupportedOperationException("TBD");
+    }
 }
