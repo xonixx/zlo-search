@@ -164,6 +164,8 @@
         <c:if test="${isSearchResultPresent}">
             <c:set var="hasHosts" value="${requestScope['paginatedList'].hasHosts}"/>
             <div class="searchResOuter">
+                <%@ include file="savedMsgLnk.jsp"%>
+
                 <display:table name="requestScope.paginatedList" id="msg" htmlId="resultTable"
                                decorator="info.xonix.zlo.web.decorators.SearchResultLineDecorator" requestURI="search"
                                class="searchRes">

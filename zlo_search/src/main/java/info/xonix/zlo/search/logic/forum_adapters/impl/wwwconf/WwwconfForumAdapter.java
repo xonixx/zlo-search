@@ -57,7 +57,11 @@ public class WwwconfForumAdapter extends ForumAdapterAbstract {
 
     @Override
     public String prepareMessageUrl(long messageId) {
-        return "http://" + wwwconfParams.getSiteUrl() + wwwconfParams.getReadQuery() + messageId;
+        return forumMsgUrlStart() + messageId;
+    }
+
+    private String forumMsgUrlStart() {
+        return "http://" + wwwconfParams.getSiteUrl() + wwwconfParams.getReadQuery();
     }
 
     @Override
@@ -74,5 +78,28 @@ public class WwwconfForumAdapter extends ForumAdapterAbstract {
     @Override
     public String getForumTitle() {
         return wwwconfParams.getSiteDescription();
+    }
+
+    @Override
+    public long extractMessageIdFromMessageUrl(String messageUrl) {
+        final long defaultResult = super.extractMessageIdFromMessageUrl(messageUrl);
+
+        if (messageUrl == null) {
+            return defaultResult;
+        }
+
+        messageUrl = messageUrl.trim();
+
+        final String msgUrlStart = forumMsgUrlStart();
+
+        if (messageUrl.startsWith(msgUrlStart)) {
+            try {
+                return Long.parseLong(messageUrl.substring(msgUrlStart.length()));
+            } catch (NumberFormatException e) {
+                return defaultResult;
+            }
+        }
+
+        return defaultResult;
     }
 }
