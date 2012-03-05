@@ -49,8 +49,6 @@ public class Message extends MessageShallow implements Serializable {
 
         super(num, nick, host, reg, topic, title, msgDate);
 
-//        TODO: remove constructor param!!!
-//        this.site = site;
         this.altName = altName;
         this.topicCode = topicCode;
         this.body = body;

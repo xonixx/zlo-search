@@ -87,7 +87,7 @@ public class MessageRetriever implements InitializingBean {
                 msgs.add(getMessage(forumId,wwwconfParams, num));
 
                 long delta = System.currentTimeMillis() - t1;
-                long toSleep = 1000 / /*TODO: impr*/GetForum.params(forumId).getIndexerLimitPerSecond() - delta;
+                long toSleep = 1000 / GetForum.params(forumId).getIndexerLimitPerSecond() - delta;
                 if (toSleep > 0) {
                     try {
                         Thread.sleep(toSleep);

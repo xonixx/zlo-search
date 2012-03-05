@@ -160,8 +160,6 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
         }
     }
 
-    // todo: test
-
     @Override
     public Message getMessageByNumber(String forumId, int num) {
         return getSimpleJdbcTemplate().queryForObject(

@@ -83,7 +83,7 @@ public class PageRetriever implements InitializingBean {
 
                 totalRead += lenRead;
 
-                stringGroups.add(new String(buff, 0, lenRead, config.getCharsetName()));
+                stringGroups.add(new String(buff, 0, lenRead, wwwconfParams.getSiteCharset()));
                 currSize = stringGroups.size();
                 ending = stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1);
             } while (
@@ -150,7 +150,7 @@ public class PageRetriever implements InitializingBean {
                     log.warn("lenRead = " + lenRead);
                     throw new RetrieverException("lenRead = " + lenRead);
                 }
-                stringGroups.add(new String(buff, 0, lenRead, config.getCharsetName()));
+                stringGroups.add(new String(buff, 0, lenRead, wwwconfParams.getSiteCharset()));
                 currSize = stringGroups.size();
                 m = wwwconfParams.getLinkIndexRe().matcher(stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1));
             } while (!m.find());
