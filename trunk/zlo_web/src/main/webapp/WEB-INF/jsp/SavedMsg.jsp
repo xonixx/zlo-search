@@ -39,11 +39,9 @@
             <tiles:insertDefinition name="nick">
                 <tiles:putAttribute name="reg" value="${msg.reg}"/>
                 <tiles:putAttribute name="nick" value="${msg.nick}"/>
-                <tiles:putAttribute name="site" value="${site}"/>
             </tiles:insertDefinition>
             <tiles:insertDefinition name="host">
                 <tiles:putAttribute name="host" value="${msg.host}"/>
-                <tiles:putAttribute name="site" value="${site}"/>
                 <tiles:putAttribute name="brackets" value="${true}"/>
             </tiles:insertDefinition>
             <br/>Дата:

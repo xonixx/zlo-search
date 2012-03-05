@@ -7,6 +7,7 @@ import info.xonix.zlo.search.doubleindex.DoubleHits;
 import info.xonix.zlo.search.logic.MessageFields;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.spring.AppSpringContext;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.displaytag.pagination.PaginatedList;
 import org.displaytag.properties.SortOrderEnum;
@@ -115,5 +116,18 @@ public class ZloPaginatedList implements PaginatedList {
 
     public String getSearchId() {
         return null;
+    }
+
+    /**
+     * @return whether at least one record on page has not empty host
+     */
+    public boolean isHasHosts() {
+        for (Object obj : getList()) {
+            Message message = (Message) obj;
+            if (StringUtils.isNotEmpty(message.getHost())) {
+                return true;
+            }
+        }
+        return false;
     }
 }
