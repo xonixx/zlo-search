@@ -55,20 +55,6 @@ public class TestMessageToXML {
         ));
     }
 
-/*    @Test
-    public void test4() throws XmlFpException {
-        final XmlFpUrls xmlFpUrls = new XmlFpUrls(
-                "http://localhost:8080/xmlfp/xmlfp.jsp?xmlfp=lastMessageNumber&site=0",
-                "http://localhost:8080/xmlfp/xmlfp.jsp?xmlfp=message&site=0&num=" + XmlFpUrlsSubstitutions.MESSAGE_ID);
-
-        ForumAccessor forumAccessor = new ForumAccessor(xmlFpUrls);
-
-        final long lastMessageNumber = forumAccessor.getLastMessageNumber();
-
-        System.out.println("Last num: " + lastMessageNumber);
-        System.out.println("Msg: " + forumAccessor.getMessage(lastMessageNumber));
-    }*/
-
     @Test
     public void test5() throws XmlFpException {
         ForumAccessor forumAccessor = new ForumAccessor("http://localhost:8080/xmlfp/xmlfp.jsp?xmlfp=descriptor");

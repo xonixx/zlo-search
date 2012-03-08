@@ -18,13 +18,6 @@ import java.net.URL;
  */
 public class ForumAccessor {
     private Forum forum;
-    //    private XmlFpUrls xmlFpUrls;
-//    private String forumMessageUrlPattern;
-//    private String forumUserProfileUrlPattern;
-
-/*    public ForumAccessor(XmlFpUrls xmlFpUrls) {
-        this.xmlFpUrls = xmlFpUrls;
-    }*/
 
     public ForumAccessor(String descriptorUrl) throws XmlFpException {
         final byte[] descriptorXmlBytes = getXmlAsBytesFromUrl(descriptorUrl);
@@ -36,16 +29,6 @@ public class ForumAccessor {
         }
 
         absolutizeUrls(descriptorUrl);
-
-/*
-        this.xmlFpUrls = new XmlFpUrls(
-                UrlUtil.combineUrls(descriptorUrl, forum.getXmlfpUrls().getLastMessageNumberUrl()),
-                UrlUtil.combineUrls(descriptorUrl, forum.getXmlfpUrls().getMessageUrl())
-        );
-
-        this.forumMessageUrlPattern = UrlUtil.combineUrls(descriptorUrl, forum.getForumUrls().getMessageUrl());
-        this.forumUserProfileUrlPattern = UrlUtil.combineUrls(descriptorUrl, forum.getForumUrls().getUserProfileUrl());
-*/
     }
 
     private void absolutizeUrls(String descriptorUrl) {
