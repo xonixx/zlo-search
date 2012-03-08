@@ -19,7 +19,7 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract {
 
     public XmlFpForumAdapter(String descriptorUrl) throws ForumAccessException {
         try {
-            forumAccessor = new ForumAccessor(descriptorUrl);
+            forumAccessor = ForumAccessor.fromDescriptorUrl(descriptorUrl);
         } catch (XmlFpException e) {
             throw translateException(e, "Can't create XMLFP ForumAccessor for descriptorUrl: " + descriptorUrl);
         }

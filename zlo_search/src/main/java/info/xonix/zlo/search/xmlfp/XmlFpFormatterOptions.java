@@ -13,8 +13,8 @@ public class XmlFpFormatterOptions {
         try {
             final Marshaller marshaller = XmlFpContext.getMarshaller();
 
-            marshaller.setProperty("jaxb.encoding", marshallersEncoding);/* TODO: is this even necessary? */
-            marshaller.setProperty("jaxb.formatted.output", prettyPrint); // pretty-print
+            marshaller.setProperty(Marshaller.JAXB_ENCODING, marshallersEncoding);/* TODO: is this even necessary? */
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, prettyPrint); // pretty-print
         } catch (JAXBException e) {
             throw new RuntimeException(e);
         }

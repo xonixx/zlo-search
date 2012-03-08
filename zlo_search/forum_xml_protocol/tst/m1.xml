@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../message.xsd"
+        xsi:noNamespaceSchemaLocation="../../src/main/java/info/xonix/zlo/search/xmlfp/xsd/message.xsd"
         status="ok">
     <info>
         <!-- Z means UTC: http://www.w3schools.com/schema/schema_dtypes_date.asp -->

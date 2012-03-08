@@ -1,5 +1,5 @@
 <lastMessageNumber
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="../lastMessageNumber.xsd">
+        xsi:noNamespaceSchemaLocation="../../src/main/java/info/xonix/zlo/search/xmlfp/xsd/lastMessageNumber.xsd">
     1234
 </lastMessageNumber>
