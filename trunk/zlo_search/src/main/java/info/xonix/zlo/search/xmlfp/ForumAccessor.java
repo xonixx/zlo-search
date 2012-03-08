@@ -9,6 +9,7 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.StringReader;
 import java.net.URL;
 
 /**
@@ -19,16 +20,35 @@ import java.net.URL;
 public class ForumAccessor {
     private Forum forum;
 
-    public ForumAccessor(String descriptorUrl) throws XmlFpException {
+    private ForumAccessor() {
+    }
+
+    public static ForumAccessor fromDescriptorUrl(String descriptorUrl) throws XmlFpException {
+        ForumAccessor forumAccessor = new ForumAccessor();
+
         final byte[] descriptorXmlBytes = getXmlAsBytesFromUrl(descriptorUrl);
 
         try {
-            forum = (Forum) XmlFpContext.getUnmarshaller().unmarshal(new ByteArrayInputStream(descriptorXmlBytes));
+            forumAccessor.forum = (Forum) XmlFpContext.getUnmarshaller().unmarshal(new ByteArrayInputStream(descriptorXmlBytes));
         } catch (JAXBException e) {
             throw new XmlFpException(e, "Error unmarshalling");
         }
 
-        absolutizeUrls(descriptorUrl);
+        forumAccessor.absolutizeUrls(descriptorUrl);
+        return forumAccessor;
+    }
+
+    public static ForumAccessor fromDescriptorXmlString(String descriptorUrl, String descriptorXml) throws XmlFpException {
+        ForumAccessor forumAccessor = new ForumAccessor();
+
+        try {
+            forumAccessor.forum = (Forum) XmlFpContext.getUnmarshaller().unmarshal(new StringReader(descriptorXml));
+        } catch (JAXBException e) {
+            throw new XmlFpException(e, "Error unmarshalling");
+        }
+
+        forumAccessor.absolutizeUrls(descriptorUrl);
+        return forumAccessor;
     }
 
     private void absolutizeUrls(String descriptorUrl) {
@@ -77,7 +97,7 @@ public class ForumAccessor {
     }
 
     //TODO: implement retry for download
-    private byte[] getXmlAsBytesFromUrl(final String url) throws XmlFpException {
+    private static byte[] getXmlAsBytesFromUrl(final String url) throws XmlFpException {
         final byte[] bytes;
 
         try {

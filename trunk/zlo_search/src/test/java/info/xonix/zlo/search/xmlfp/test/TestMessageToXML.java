@@ -57,7 +57,7 @@ public class TestMessageToXML {
 
     @Test
     public void test5() throws XmlFpException {
-        ForumAccessor forumAccessor = new ForumAccessor("http://localhost:8080/xmlfp/xmlfp.jsp?xmlfp=descriptor");
+        ForumAccessor forumAccessor = ForumAccessor.fromDescriptorUrl("http://localhost:8080/xmlfp/xmlfp.jsp?xmlfp=descriptor");
 
         final long lastMessageNumber = forumAccessor.getLastMessageNumber();
 
