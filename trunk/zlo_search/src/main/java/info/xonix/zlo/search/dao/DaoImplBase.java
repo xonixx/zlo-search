@@ -4,6 +4,7 @@ import info.xonix.zlo.search.dao.rowmappers.RowMappersHelper;
 import info.xonix.zlo.search.utils.Check;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 /**
  * User: gubarkov
@@ -23,5 +24,9 @@ public abstract class DaoImplBase extends SimpleJdbcDaoSupport {
 
     public RowMappersHelper getRowMappersHelper() {
         return rowMappersHelper;
+    }
+    
+    public SimpleJdbcInsert newSimpleJdbcInsert() {
+        return new SimpleJdbcInsert(getJdbcTemplate());
     }
 }
