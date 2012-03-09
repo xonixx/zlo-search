@@ -2,7 +2,9 @@ package info.xonix.zlo.search.xmlfp;
 
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.xmlfp.jaxb_generated.Forum;
+import info.xonix.zlo.search.xmlfp.utils.MarshalUtils;
 import info.xonix.zlo.search.xmlfp.utils.UrlUtil;
+import info.xonix.zlo.search.xmlfp.utils.XmlFpMarshalException;
 import org.apache.commons.io.IOUtils;
 
 import javax.xml.bind.JAXBElement;
@@ -61,6 +63,10 @@ public class ForumAccessor {
         final Forum.ForumUrls forumUrls = forum.getForumUrls();
         forumUrls.setMessageUrl(UrlUtil.combineUrls(descriptorUrl, forumUrls.getMessageUrl()));
         forumUrls.setUserProfileUrl(UrlUtil.combineUrls(descriptorUrl, forumUrls.getUserProfileUrl()));
+    }
+
+    public String formDescriptorXml() throws XmlFpMarshalException {
+        return MarshalUtils.marshal(XmlFpContext.getMarshaller(), forum);
     }
 
     public long getLastMessageNumber() throws XmlFpException {
