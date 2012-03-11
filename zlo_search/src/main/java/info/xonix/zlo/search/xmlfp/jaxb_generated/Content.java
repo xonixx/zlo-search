@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="category" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="body" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="body" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="tags" minOccurs="0">
  *           &lt;complexType>
  *             &lt;complexContent>
@@ -56,7 +56,6 @@ public class Content {
     protected String category;
     @XmlElement(required = true)
     protected String title;
-    @XmlElement(required = true)
     protected String body;
     protected Content.Tags tags;
 
