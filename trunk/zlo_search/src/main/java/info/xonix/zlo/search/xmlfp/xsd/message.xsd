@@ -97,7 +97,7 @@
 
                 <xs:element name="title" type="xs:string"/>
 
-                <xs:element name="body" type="xs:string"/>
+                <xs:element name="body" type="xs:string" minOccurs="0"/>
 
                 <xs:element name="tags" minOccurs="0">
                     <xs:complexType>
