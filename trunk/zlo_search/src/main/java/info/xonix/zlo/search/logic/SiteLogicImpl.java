@@ -23,12 +23,8 @@ public class SiteLogicImpl implements SiteLogic, InitializingBean {
     @Autowired
     private Config config;
 
-    @Autowired
-    private MessageRetriever messageRetriever;
-
     @Override
     public void afterPropertiesSet() throws Exception {
-        Check.isSet(messageRetriever, "messageRetriever");
         Check.isSet(config, "config");
     }
 
