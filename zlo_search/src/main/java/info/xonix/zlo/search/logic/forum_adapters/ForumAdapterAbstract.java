@@ -27,6 +27,7 @@ public abstract class ForumAdapterAbstract implements ForumAdapter {
      * @param to   (excluding)
      * @return list of received messages
      * @throws ForumAccessException if can't get msg from site
+     * TODO: implement limit by time
      */
     @Override
     public List<Message> getMessages(String forumId, long from, long to) throws ForumAccessException {
