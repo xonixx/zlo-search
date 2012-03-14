@@ -70,69 +70,12 @@ class XmlFpContext {
         return getValidatingUnmarshaller(LAST_MESSAGE_NUMBER_XSD);
     }
 
-/*    private static Marshaller getValidatingMarshaller() {
-        return ValidatingMarshallerHolder.MARSHALLER;
-    }
-
-    private static Unmarshaller getValidatingUnmarshaller() {
-        return ValidatingUnmarshallerHolder.UNMARSHALLER;
-    }*/
-
-/*    private static Marshaller newValidatingMarshaller() {
-        final Marshaller marshaller = newMarshaller();
-        marshaller.setSchema(getAllSchemasSchema());
-        return marshaller;
-    }
-
-    private static Unmarshaller newValidatingUnmarshaller() {
-        final Unmarshaller unmarshaller = newUnmarshaller();
-        unmarshaller.setSchema(getAllSchemasSchema());
-        return unmarshaller;
-    }*/
-
     private static SchemaFactory schemaFactory = SchemaFactory.newInstance(
             javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
     static {
         schemaFactory.setResourceResolver(new SimpleResolver(XSD_PATH));
     }
-
-/*    private static Schema getAllSchemasSchema() {
-        try {
-            final Source[] xsdSources = getXsdSources();
-
-            schemaFactory.setResourceResolver(new SimpleResolver(XSD_PATH));
-
-            return schemaFactory.newSchema(xsdSources);
-        } catch (SAXException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
-
-/*    private static Source[] getXsdSources() {
-        try {
-            PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-
-            final Resource[] resources;
-//            resources = resolver.getResources("info/xonix/zlo/search/xmlfp/xsd*//*.xsd");
-//            resources = resolver.getResources(XSD_PATH + "mess*.xsd");
-//            resources = resolver.getResources(XSD_PATH + "message.xsd");
-            resources = resolver.getResources(XSD_PATH + "*.xsd");
-
-            final Source[] sources = new Source[resources.length];
-
-            for (int i = 0; i < resources.length; i++) {
-                Resource resource = resources[i];
-//                sources[i] = new StreamSource(resource.getFile());
-                sources[i] = new StreamSource(resource.getInputStream());
-            }
-
-            return sources;
-        } catch (IOException e) {
-            throw new RuntimeException("getXsdSources", e);
-        }
-    }*/
-
 
     private static StringFactory<Marshaller> marshallersCache = new StringFactory<Marshaller>() {
         @Override
@@ -195,14 +138,6 @@ class XmlFpContext {
     private static class JaxbUnmarshallerHolder {
         static final Unmarshaller UNMARSHALLER_XMLFP = newUnmarshaller();
     }
-
-/*    private static class ValidatingMarshallerHolder {
-        static final Marshaller MARSHALLER = newValidatingMarshaller();
-    }
-
-    private static class ValidatingUnmarshallerHolder {
-        static final Unmarshaller UNMARSHALLER = newValidatingUnmarshaller();
-    }*/
 
     private static Marshaller newMarshaller() {
         try {
