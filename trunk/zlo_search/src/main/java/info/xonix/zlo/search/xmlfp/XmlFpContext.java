@@ -28,6 +28,7 @@ class XmlFpContext {
     public static final String XSD_PATH = "info/xonix/zlo/search/xmlfp/xsd/";
 
     public static final String MESSAGE_XSD = "message.xsd";
+    public static final String MESSAGES_XSD = "messages.xsd";
     public static final String DESCRIPTOR_XSD = "descriptor.xsd";
     public static final String LAST_MESSAGE_NUMBER_XSD = "lastMessageNumber.xsd";
     
@@ -52,6 +53,14 @@ class XmlFpContext {
 
     public static Unmarshaller getMessageUnmarshaller() {
         return getValidatingUnmarshaller(MESSAGE_XSD);
+    }
+
+    public static Marshaller getMessagesMarshaller() {
+        return getValidatingMarshaller(MESSAGES_XSD);
+    }
+
+    public static Unmarshaller getMessagesUnmarshaller() {
+        return getValidatingUnmarshaller(MESSAGES_XSD);
     }
 
     public static Marshaller getDescriptorMarshaller() {
