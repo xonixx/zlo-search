@@ -45,6 +45,7 @@ public class SimpleResolver implements LSResourceResolver {
             if (inputStream != null) {
                 ret.setSystemId(systemId);
                 ret.setByteStream(inputStream);
+                return ret;
             }
 
 /*            for (Source source : streams) {
