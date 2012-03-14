@@ -26,7 +26,7 @@ public class XmlFpUtils {
 
     public static String messagesToXml(String forumId, List<Message> messages) {
         try {
-            return MarshalUtils.marshal(XmlFpContext.getMessageMarshaller(),
+            return MarshalUtils.marshal(XmlFpContext.getMessagesMarshaller(),
                     Convert.toJaxbMessages(WwwconfUtils.getWwwconfParams(forumId), messages));
         } catch (XmlFpMarshalException e) {
             throw new RuntimeException(e);
