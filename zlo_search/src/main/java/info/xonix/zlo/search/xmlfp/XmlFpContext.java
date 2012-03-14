@@ -1,5 +1,6 @@
 package info.xonix.zlo.search.xmlfp;
 
+import info.xonix.zlo.search.xmlfp.utils.jaxb.SimpleResolver;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.xml.sax.SAXException;
@@ -15,6 +16,7 @@ import javax.xml.validation.SchemaFactory;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -23,6 +25,8 @@ import java.util.List;
  * Time: 15:45
  */
 class XmlFpContext {
+    public static final String XSD_PATH = "info/xonix/zlo/search/xmlfp/xsd/";
+
     public static JAXBContext getJaxbContext() {
         return JaxbContextHolder.JAXB_CONTEXT;
     }
@@ -62,7 +66,11 @@ class XmlFpContext {
 
     private static Schema getAllSchemasSchema() {
         try {
-            return schemaFactory.newSchema(getXsdSources());
+            final Source[] xsdSources = getXsdSources();
+
+            schemaFactory.setResourceResolver(new SimpleResolver(XSD_PATH));
+
+            return schemaFactory.newSchema(xsdSources);
         } catch (SAXException e) {
             throw new RuntimeException(e);
         }
@@ -73,14 +81,16 @@ class XmlFpContext {
             PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 
             final Resource[] resources;
-            resources = resolver.getResources("info/xonix/zlo/search/xmlfp/xsd/*.xsd");
-//            resources = resolver.getResources("info/xonix/zlo/search/xmlfp/xsd/mess*.xsd");
+//            resources = resolver.getResources("info/xonix/zlo/search/xmlfp/xsd/*.xsd");
+//            resources = resolver.getResources(XSD_PATH + "mess*.xsd");
+            resources = resolver.getResources(XSD_PATH + "*.xsd");
 
             final Source[] sources = new Source[resources.length];
 
             for (int i = 0; i < resources.length; i++) {
                 Resource resource = resources[i];
-                sources[i] = new StreamSource(resource.getFile());
+//                sources[i] = new StreamSource(resource.getFile());
+                sources[i] = new StreamSource(resource.getInputStream());
             }
 
             return sources;
