@@ -17,7 +17,7 @@ import java.util.List;
 public class XmlFpUtils {
     public static String messageToXml(String forumId, Message message) {
         try {
-            return MarshalUtils.marshal(XmlFpContext.getMarshaller(),
+            return MarshalUtils.marshal(XmlFpContext.getMessageMarshaller(),
                     Convert.toJaxbMessage(WwwconfUtils.getWwwconfParams(forumId), message));
         } catch (XmlFpMarshalException e) {
             throw new RuntimeException(e);
@@ -26,7 +26,7 @@ public class XmlFpUtils {
 
     public static String messagesToXml(String forumId, List<Message> messages) {
         try {
-            return MarshalUtils.marshal(XmlFpContext.getMarshaller(),
+            return MarshalUtils.marshal(XmlFpContext.getMessageMarshaller(),
                     Convert.toJaxbMessages(WwwconfUtils.getWwwconfParams(forumId), messages));
         } catch (XmlFpMarshalException e) {
             throw new RuntimeException(e);
@@ -37,7 +37,7 @@ public class XmlFpUtils {
         try {
             return Convert.fromJaxbMessage(
                     MarshalUtils.<info.xonix.zlo.search.xmlfp.jaxb_generated.Message>unmarshal(
-                            XmlFpContext.getUnmarshaller(), xml));
+                            XmlFpContext.getMessageUnmarshaller(), xml));
         } catch (XmlFpMarshalException e) {
             throw new XmlFpException(e);
         }
@@ -45,7 +45,7 @@ public class XmlFpUtils {
 
     public static String lastMessageNumberToXml(int num) {
         try {
-            return MarshalUtils.marshal(XmlFpContext.getMarshaller(),
+            return MarshalUtils.marshal(XmlFpContext.getLastMessageNumberMarshaller(),
                     new ObjectFactory().createLastMessageNumber((long) num));
         } catch (XmlFpMarshalException e) {
             throw new RuntimeException(e);
@@ -54,7 +54,8 @@ public class XmlFpUtils {
 
     public static long lastMessageNumberFromXml(String xml) throws XmlFpException {
         try {
-            final JAXBElement<Long> res = MarshalUtils.unmarshal(XmlFpContext.getUnmarshaller(), xml);
+            final JAXBElement<Long> res = MarshalUtils.unmarshal(
+                    XmlFpContext.getLastMessageNumberUnmarshaller(), xml);
             return res.getValue();
         } catch (XmlFpMarshalException e) {
             throw new XmlFpException(e);
@@ -63,10 +64,10 @@ public class XmlFpUtils {
 
     public static String siteDescriptorToXml(String forumId) {
         try {
-            return MarshalUtils.marshal(XmlFpContext.getMarshaller(),
+            return MarshalUtils.marshal(XmlFpContext.getDescriptorMarshaller(),
                     Convert.toJaxbForum(forumId, WwwconfUtils.getWwwconfParams(forumId)));
         } catch (XmlFpMarshalException e) {
             throw new RuntimeException(e);
         }
     }
-}                                   /**/
+}

@@ -11,10 +11,10 @@ import javax.xml.bind.Marshaller;
 public class XmlFpFormatterOptions {
     public XmlFpFormatterOptions(final String marshallersEncoding, final boolean prettyPrint) {
         try {
-            final Marshaller marshaller = XmlFpContext.getMarshaller();
-
-            marshaller.setProperty(Marshaller.JAXB_ENCODING, marshallersEncoding);/* TODO: is this even necessary? */
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, prettyPrint); // pretty-print
+            for (Marshaller marshaller : XmlFpContext.allMarshallers()) {
+                marshaller.setProperty(Marshaller.JAXB_ENCODING, marshallersEncoding);/* TODO: is this even necessary? */
+                marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, prettyPrint); // pretty-print
+            }
         } catch (JAXBException e) {
             throw new RuntimeException(e);
         }
