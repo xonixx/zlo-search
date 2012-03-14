@@ -83,7 +83,8 @@ class XmlFpContext {
             final Resource[] resources;
 //            resources = resolver.getResources("info/xonix/zlo/search/xmlfp/xsd/*.xsd");
 //            resources = resolver.getResources(XSD_PATH + "mess*.xsd");
-            resources = resolver.getResources(XSD_PATH + "*.xsd");
+            resources = resolver.getResources(XSD_PATH + "message.xsd");
+//            resources = resolver.getResources(XSD_PATH + "*.xsd");
 
             final Source[] sources = new Source[resources.length];
 
