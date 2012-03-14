@@ -1,5 +1,6 @@
 <%@ page import="info.xonix.zlo.search.xmlfp.XmlFpFormer" %>
 <%@ page import="java.io.PrintWriter" %>
+<%@ page import="org.apache.log4j.Logger" %>
 <%--
   User: Vovan
   Date: 13.08.2008
@@ -12,6 +13,7 @@
 
 <%!
     private final XmlFpFormer xmlFpFormer = AppSpringContext.get(XmlFpFormer.class);
+    private final static Logger log = Logger.getLogger("jsp.xmlfp");
 %>
 
 <c:choose>
@@ -44,6 +46,8 @@
 
                 }
             } catch (Exception ex) {
+                log.error("Error", ex);
+
                 response.setStatus(500);
                 response.setContentType("text/html");
                 responseWriter.write("<h3>Error</h3>");

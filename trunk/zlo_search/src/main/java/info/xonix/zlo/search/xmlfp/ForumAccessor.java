@@ -31,7 +31,7 @@ public class ForumAccessor {
         final byte[] descriptorXmlBytes = getXmlAsBytesFromUrl(descriptorUrl);
 
         try {
-            forumAccessor.forum = (Forum) XmlFpContext.getUnmarshaller().unmarshal(new ByteArrayInputStream(descriptorXmlBytes));
+            forumAccessor.forum = (Forum) XmlFpContext.getDescriptorUnmarshaller().unmarshal(new ByteArrayInputStream(descriptorXmlBytes));
         } catch (JAXBException e) {
             throw new XmlFpException(e, "Error unmarshalling");
         }
@@ -44,7 +44,7 @@ public class ForumAccessor {
         ForumAccessor forumAccessor = new ForumAccessor();
 
         try {
-            forumAccessor.forum = (Forum) XmlFpContext.getUnmarshaller().unmarshal(new StringReader(descriptorXml));
+            forumAccessor.forum = (Forum) XmlFpContext.getDescriptorUnmarshaller().unmarshal(new StringReader(descriptorXml));
         } catch (JAXBException e) {
             throw new XmlFpException(e, "Error unmarshalling");
         }
@@ -66,7 +66,7 @@ public class ForumAccessor {
     }
 
     public String formDescriptorXml() throws XmlFpMarshalException {
-        return MarshalUtils.marshal(XmlFpContext.getMarshaller(), forum);
+        return MarshalUtils.marshal(XmlFpContext.getDescriptorMarshaller(), forum);
     }
 
     public long getLastMessageNumber() throws XmlFpException {
@@ -74,7 +74,7 @@ public class ForumAccessor {
 
         try {
             @SuppressWarnings("unchecked")
-            final JAXBElement<Long> res = (JAXBElement<Long>) XmlFpContext.getUnmarshaller()
+            final JAXBElement<Long> res = (JAXBElement<Long>) XmlFpContext.getLastMessageNumberUnmarshaller()
                     .unmarshal(new ByteArrayInputStream(bytes));
 
             return res.getValue();
@@ -92,7 +92,7 @@ public class ForumAccessor {
 
         try {
             @SuppressWarnings("unchecked")
-            final info.xonix.zlo.search.xmlfp.jaxb_generated.Message jaxbMessage = (info.xonix.zlo.search.xmlfp.jaxb_generated.Message) XmlFpContext.getUnmarshaller()
+            final info.xonix.zlo.search.xmlfp.jaxb_generated.Message jaxbMessage = (info.xonix.zlo.search.xmlfp.jaxb_generated.Message) XmlFpContext.getMessageUnmarshaller()
                     .unmarshal(new ByteArrayInputStream(bytes));
 
             return Convert.fromJaxbMessage(jaxbMessage);
