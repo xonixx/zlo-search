@@ -7,6 +7,7 @@ import javax.xml.bind.Marshaller;
  * Author: Vovan
  * Date: 13.08.2008
  * Time: 19:07:32
+ * TODO: this dowsn't work!!!
  */
 public class XmlFpFormatterOptions {
     public XmlFpFormatterOptions(final String marshallersEncoding, final boolean prettyPrint) {

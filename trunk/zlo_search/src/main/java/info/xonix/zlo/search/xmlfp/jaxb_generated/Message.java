@@ -4,7 +4,6 @@ package info.xonix.zlo.search.xmlfp.jaxb_generated;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -18,21 +17,22 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;complexType>
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;all>
- *         &lt;element ref="{}info"/>
- *         &lt;element ref="{}author"/>
- *         &lt;element ref="{}content"/>
- *       &lt;/all>
- *       &lt;attribute name="status">
- *         &lt;simpleType>
- *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *             &lt;enumeration value="ok"/>
- *             &lt;enumeration value="deleted"/>
- *             &lt;enumeration value="not_exists"/>
- *             &lt;enumeration value="spam"/>
- *           &lt;/restriction>
- *         &lt;/simpleType>
- *       &lt;/attribute>
+ *       &lt;choice>
+ *         &lt;element name="status">
+ *           &lt;simpleType>
+ *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
+ *               &lt;enumeration value="deleted"/>
+ *               &lt;enumeration value="not_exists"/>
+ *             &lt;/restriction>
+ *           &lt;/simpleType>
+ *         &lt;/element>
+ *         &lt;sequence>
+ *           &lt;element ref="{}info"/>
+ *           &lt;element ref="{}author"/>
+ *           &lt;element ref="{}content"/>
+ *         &lt;/sequence>
+ *       &lt;/choice>
+ *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}long" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -42,19 +42,44 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-
+    "status",
+    "info",
+    "author",
+    "content"
 })
 @XmlRootElement(name = "message")
 public class Message {
 
-    @XmlElement(required = true)
-    protected Info info;
-    @XmlElement(required = true)
-    protected Author author;
-    @XmlElement(required = true)
-    protected Content content;
-    @XmlAttribute(name = "status")
     protected String status;
+    protected Info info;
+    protected Author author;
+    protected Content content;
+    @XmlAttribute(name = "id", required = true)
+    protected long id;
+
+    /**
+     * Gets the value of the status property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     * Sets the value of the status property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setStatus(String value) {
+        this.status = value;
+    }
 
     /**
      * Gets the value of the info property.
@@ -129,27 +154,19 @@ public class Message {
     }
 
     /**
-     * Gets the value of the status property.
+     * Gets the value of the id property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
      */
-    public String getStatus() {
-        return status;
+    public long getId() {
+        return id;
     }
 
     /**
-     * Sets the value of the status property.
+     * Sets the value of the id property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
      */
-    public void setStatus(String value) {
-        this.status = value;
+    public void setId(long value) {
+        this.id = value;
     }
 
 }
