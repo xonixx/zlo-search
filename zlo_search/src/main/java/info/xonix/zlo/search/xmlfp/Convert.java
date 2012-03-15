@@ -45,7 +45,7 @@ class Convert {
 
                     new Date(info.getDate().toGregorianCalendar().getTime().getTime()),
                     author.isRegistered() == null ? false : author.isRegistered(),
-                    (int) info.getId(),
+                    (int) jaxbMessage.getId(),
                     (int) (info.getParentId() == null ? Message.NO_PARENT : info.getParentId()),
 
                     messageStatus.getInt()
@@ -80,6 +80,7 @@ class Convert {
         if (messageStatus == MessageStatus.OK) {
 
             jaxbMessage.setStatus(null); // null = OK
+            jaxbMessage.setId((long) message.getNum());
 
             final Content content = OBJECT_FACTORY.createContent();
             jaxbMessage.setContent(content);
@@ -101,7 +102,6 @@ class Convert {
 
             info.setDate(new XMLGregorianCalendarImpl(cal));
             info.setParentId((long) message.getParentNum());
-            info.setId((long) message.getNum());
             info.setMessageUrl("http://" + wwwconfParams.getSiteUrl() + wwwconfParams.getReadQuery() + message.getNum());
 
 

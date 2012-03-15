@@ -21,6 +21,10 @@ public class TestMessageToXML {
 
     AppLogic appLogic = AppSpringContext.get(AppLogic.class);
 
+    static {
+        new XmlFpFormatterOptions("UTF-8", true);
+    }
+
     @Test
     public void test1() throws XmlFpException {
         String forumId = "zlo";

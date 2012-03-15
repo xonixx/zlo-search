@@ -1,7 +1,7 @@
 #!/bin/sh
 
 SRC_DIR="D:/stuff/test/java/zlo-search/zlo_search/src/main/java"
-XSD_DIR="D:/stuff/test/java/zlo-search/zlo_search/src/main/java/info/xonix/zlo/search/xmlfp/xsd"
+XSD_DIR="D:/stuff/test/java/zlo-search/zlo_search/src/main/resources/info/xonix/zlo/search/xmlfp/xsd"
 
 JAXB_HOME="D:/DISTR/JAVA_J2EE/JAXB/jaxb-ri-20110601"
 #JAXB_HOME="D:/!DISTRIBs/Programming/Java/xml/jaxb-2_1_7/jaxb-ri"

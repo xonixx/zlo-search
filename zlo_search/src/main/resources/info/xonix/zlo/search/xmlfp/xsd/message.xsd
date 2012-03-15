@@ -9,30 +9,36 @@
             <xs:documentation>Message document</xs:documentation>
         </xs:annotation>
         <xs:complexType>
-            <xs:all>
-                <xs:element ref="info"/>
-                <xs:element ref="author"/>
-                <xs:element ref="content"/>
-            </xs:all>
-            <xs:attribute name="status">
+            <xs:choice>
+                <xs:element name="status">
+                    <xs:annotation>
+                        <xs:documentation>
+                            deleted - message exised before but was removed by moderator
+                            not_exists - message not yet exists
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="deleted"/>
+                            <xs:enumeration value="not_exists"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+
+                <xs:sequence>
+                    <xs:element ref="info" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="author" minOccurs="1" maxOccurs="1"/>
+                    <xs:element ref="content" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:choice>
+
+            <!--effectively positive-->
+            <xs:attribute name="id" type="xs:long" use="required">
                 <xs:annotation>
                     <xs:documentation>
-                        Omitted status equivalent to status = ok
-
-                        ok - message exists and is shown on forum
-                        deleted - message exised before but was removed by moderator
-                        not_exists - message not yet exists
-                        spam - message marked by Forum software as SPAM (?)
+                        This message ID number
                     </xs:documentation>
                 </xs:annotation>
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="ok"/>
-                        <xs:enumeration value="deleted"/>
-                        <xs:enumeration value="not_exists"/>
-                        <xs:enumeration value="spam"/>
-                    </xs:restriction>
-                </xs:simpleType>
             </xs:attribute>
         </xs:complexType>
     </xs:element>
@@ -56,15 +62,6 @@
                             Last modification date
 
                             Should be in GMT (UTC) timezone, and end by Z
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-
-                <!--effectively positive-->
-                <xs:element name="id" type="xs:long">
-                    <xs:annotation>
-                        <xs:documentation>
-                            This message ID number
                         </xs:documentation>
                     </xs:annotation>
                 </xs:element>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../src/main/resources/info/xonix/zlo/search/xmlfp/xsd/message.xsd"
+        id="123">
+    <status>not_exists</status>
+</message>
+
