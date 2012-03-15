@@ -51,7 +51,7 @@ class Convert {
                     messageStatus.getInt()
             );
         } else {
-            return Message.withStatus(messageStatus);
+            return Message.withStatus(messageStatus, (int) jaxbMessage.getId());
         }
     }
 
@@ -74,13 +74,14 @@ class Convert {
 
         info.xonix.zlo.search.xmlfp.jaxb_generated.Message jaxbMessage = new info.xonix.zlo.search.xmlfp.jaxb_generated.Message();
 
+        jaxbMessage.setId((long) message.getNum());
+
         final MessageStatus messageStatus = message.getStatus();
         jaxbMessage.setStatus(messageStatusToString(messageStatus));
 
         if (messageStatus == MessageStatus.OK) {
 
             jaxbMessage.setStatus(null); // null = OK
-            jaxbMessage.setId((long) message.getNum());
 
             final Content content = OBJECT_FACTORY.createContent();
             jaxbMessage.setContent(content);
@@ -116,17 +117,20 @@ class Convert {
         return jaxbMessage;
     }
 
-    private static final String MESSAGE_STATUS_UNKNOWN = "unknown";
+//    private static final String MESSAGE_STATUS_UNKNOWN = "unknown";
 
     private static final BiMap<MessageStatus, String> MESSAGE_STATUS_TO_JAXB_STATUS = ImmutableBiMap.of(
             MessageStatus.OK, "ok",
-            MessageStatus.DELETED, "deleted",
+            MessageStatus.DELETED, "deleted"/*,
             MessageStatus.SPAM, "spam",
-            MessageStatus.UNKNOWN, MESSAGE_STATUS_UNKNOWN);
+            MessageStatus.UNKNOWN, MESSAGE_STATUS_UNKNOWN*/);
 
     private static String messageStatusToString(final MessageStatus messageStatus) {
         final String jaxbStatus = MESSAGE_STATUS_TO_JAXB_STATUS.get(messageStatus);
-        return jaxbStatus != null ? jaxbStatus : MESSAGE_STATUS_UNKNOWN;
+        if (jaxbStatus == null) {
+            throw new IllegalStateException("messageStatus:" + messageStatus);
+        }
+        return jaxbStatus;
     }
 
     private static MessageStatus messageStatusFromString(String jaxbStatus) {

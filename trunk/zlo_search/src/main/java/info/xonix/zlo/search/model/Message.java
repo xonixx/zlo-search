@@ -35,7 +35,7 @@ public class Message extends MessageShallow implements Serializable {
         }
     };
 
-    private MessageStatus status = MessageStatus.UNKNOWN; // default
+    private MessageStatus status = null; //MessageStatus.UNKNOWN; // default
 
     public Message() {
         super();
@@ -79,8 +79,9 @@ public class Message extends MessageShallow implements Serializable {
                 MessageStatus.fromInt(status));
     }
 
-    public static Message withStatus(MessageStatus status) {
+    public static Message withStatus(MessageStatus status, int id) {
         final Message message = new Message();
+        message.setNum(id);
         message.setStatus(status);
         return message;
     }

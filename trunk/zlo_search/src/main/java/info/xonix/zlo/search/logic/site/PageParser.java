@@ -49,7 +49,7 @@ public class PageParser implements InitializingBean {
                 if (msg.contains(wwwconfParams.getMsgNotExistOrWrong())) {
                     message.setStatus(MessageStatus.DELETED);
                 } else {
-                    message.setStatus(MessageStatus.UNKNOWN);
+//                    message.setStatus(MessageStatus.UNKNOWN);
                     throw new PageParseException("Can't parse msg#:" + message.getNum() + " in site:" + forumId + "... Possibly format changed!\n\n" + msg);
                 }
 //                message.setSite(forumId);
