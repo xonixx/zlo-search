@@ -42,7 +42,7 @@ public class RescanUndefStatusMsgs {
 
             Set<Integer> newNums = new HashSet<Integer>();
             for (Message m : msgs_n_N) {
-                if (m.getStatus() == MessageStatus.UNKNOWN) {
+                if (m.getStatus() == null/*MessageStatus.UNKNOWN*/) {
                     newNums.add(m.getNum());
                 }
             }

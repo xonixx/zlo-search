@@ -2,6 +2,7 @@ package info.xonix.zlo.search.xmlfp;
 
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.model.MessageStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 
@@ -31,7 +32,7 @@ public class XmlFpFormer {
         try {
             m = appLogic.getMessageByNumber(forumId, num);
         } catch (EmptyResultDataAccessException e) {
-            m = Message.withStatus(null);// TODO: should mean NOT EXISTS
+            m = Message.withStatus(MessageStatus.DELETED, num);// TODO: should mean NOT EXISTS
         }
 
         return XmlFpUtils.messageToXml(forumId, m);

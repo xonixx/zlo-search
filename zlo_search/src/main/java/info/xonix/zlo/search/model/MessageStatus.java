@@ -8,8 +8,9 @@ package info.xonix.zlo.search.model;
 public enum MessageStatus {
     OK,
     DELETED,
-    SPAM,
-    UNKNOWN,;
+//    SPAM,
+//    UNKNOWN,
+    ;
 
     public static MessageStatus fromInt(int id) {
         return MessageStatus.values()[id];
