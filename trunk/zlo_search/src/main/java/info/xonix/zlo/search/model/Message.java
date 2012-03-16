@@ -144,22 +144,6 @@ public class Message extends MessageShallow implements Serializable {
         this.hitId = hitId;
     }
 
-/*    public boolean isHasUrl() {
-        if (hasUrl == null) {
-            hasUrl = StringUtils.isNotEmpty(body) && HtmlUtils.hasUrl(body);
-        }
-        return hasUrl;
-    }
-
-    public boolean isHasImg(String forumId) {
-        if (hasImg == null) {
-            // TODO!!! This logic should be outside!!!
-            hasImg = StringUtils.isNotEmpty(body) && HtmlUtils.hasImg(body, forumId);
-//            throw new UnsupportedOperationException("This logic should be outside!!!");
-        }
-        return hasImg;
-    }*/
-
     public MessageStatus getStatus() {
         return status;
     }
@@ -167,14 +151,6 @@ public class Message extends MessageShallow implements Serializable {
     public void setStatus(MessageStatus status) {
         this.status = status;
     }
-
-/*    public Site getSite() {
-        return site;
-    }
-
-    public void setSite(String forumId) {
-        this.site = site;
-    }*/
 
     public Message getMessage() {
         return this;
@@ -191,24 +167,16 @@ public class Message extends MessageShallow implements Serializable {
                             "\n\tnum={0},\n\tparentNum={1},\n\ttopicCode={2},\n\ttopic={3}," +
                             "\n\ttitle={4},\n\tnick={5},\n\taltName={6},\n\treg={7}," +
                             "\n\thost={8},\n\tdate={9,date,MMMM, d HH:mm:ss yyyy}," +
-//                            "\n\thasUrl={10},\n\thasImg={11}," +
-                            "\n\tsite={12}," +
-                            "\n\tbody={13}\n)",
+                            "\n\tbody={10}\n)",
                     num, parentNum, topicCode, topic, title,
                     nick, altName, reg, host, date,
-//                    isHasUrl(),
-//                    isHasImg(null), // <<<---TODO
-//                    site == null ? "" : site.getName(),
                     body.replaceAll("\n", "\n\t\t"));
         } else {
             return MessageFormat.format(
                     "Message(" +
                             "\n\tnum={0},\n\tstatus={1}," +
-                            "\n\tsite={2}" +
                             "\n)",
-                    num, status//,
-//                    site == null ? "" : site.getName()
-            );
+                    num, status);
         }
     }
 
