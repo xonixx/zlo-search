@@ -63,22 +63,43 @@ public class HtmlUtils {
     }
 
     public static boolean hasUrl(String s) {
+        if (StringUtils.isEmpty(s)) {
+            return false;
+        }
+
         return URL.matcher(s).find();
     }
 
-    public static boolean hasImg(String s, String forumId) {
-        Matcher matcher = IMG.matcher(s);
+    /**
+     * Image links that are either:
+     *  - relative
+     *  - url starting with forumHost
+     *  are considered smiles (not images)
+     * @param s html code to search imgs in
+     * @param forumHost
+     * @return boolean
+     */
+    public static boolean hasImg(String s, String forumHost) {
+        if (StringUtils.isEmpty(s)) {
+            return false;
+        }
 
-        boolean isFound = matcher.find();
+        Matcher matcher = IMG.matcher(s);// only absolute urls are matched according to regexp
 
-        // TODO: SMILES = NOT IMAGES !!! Implement !!!
-        if (isFound/* &&
-                (forumId != null
-                        && StringUtils.isNotEmpty(forumId.getSiteSmilesPath())
-                        && matcher.group(2).contains(forumId.getSiteSmilesPath()))*/)
-            return false; // this is smile
-        else
-            return isFound;
+//        boolean isFound = matcher.find();
+        boolean isFound = false;
+
+        while(matcher.find()) {
+            final String imgUrlWithoutSchema = matcher.group(2);
+
+            if (forumHost == null
+                    || !imgUrlWithoutSchema.startsWith(forumHost)) { // img located on forum host = smile
+                isFound = true;
+                break;
+            }
+        }
+
+        return isFound;
     }
 
     public static boolean hasImg(String s) {

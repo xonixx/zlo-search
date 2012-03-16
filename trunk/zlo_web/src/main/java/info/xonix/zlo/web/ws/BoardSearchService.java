@@ -3,10 +3,7 @@ package info.xonix.zlo.web.ws;
 import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.dao.MessagesDao;
 
-import info.xonix.zlo.search.logic.AppLogic;
-import info.xonix.zlo.search.logic.SearchException;
-import info.xonix.zlo.search.logic.SearchLogic;
-import info.xonix.zlo.search.logic.SiteLogic;
+import info.xonix.zlo.search.logic.*;
 import info.xonix.zlo.web.ws.dto.Message;
 import info.xonix.zlo.web.ws.dto.MessageShallow;
 import org.apache.log4j.Logger;
@@ -60,8 +57,8 @@ public class BoardSearchService {
                 messageModel.getTitle(),
                 messageModel.getBody(),
                 messageModel.getDate(),
-                messageModel.isHasUrl(),
-                messageModel.isHasImg(forumId));
+                MessageLogic.hasUrl(messageModel),
+                MessageLogic.hasImg(messageModel,forumId));
     }
 
     private MessageShallow fromMessageModelShallow(info.xonix.zlo.search.model.MessageShallow message) {

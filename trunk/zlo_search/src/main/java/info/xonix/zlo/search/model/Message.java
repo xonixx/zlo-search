@@ -24,8 +24,8 @@ public class Message extends MessageShallow implements Serializable {
 
     private String titleClean;
     private String bodyClean;
-    private Boolean hasUrl = null;
-    private Boolean hasImg = null;
+//    private Boolean hasUrl = null;
+//    private Boolean hasImg = null;
 
     private int hitId;
 
@@ -53,8 +53,8 @@ public class Message extends MessageShallow implements Serializable {
         this.topicCode = topicCode;
         this.body = body;
         this.parentNum = parentNum;
-        this.hasUrl = hasUrl;
-        this.hasImg = hasImg;
+//        this.hasUrl = hasUrl;
+//        this.hasImg = hasImg;
         this.status = status;
     }
 
@@ -144,7 +144,7 @@ public class Message extends MessageShallow implements Serializable {
         this.hitId = hitId;
     }
 
-    public boolean isHasUrl() {
+/*    public boolean isHasUrl() {
         if (hasUrl == null) {
             hasUrl = StringUtils.isNotEmpty(body) && HtmlUtils.hasUrl(body);
         }
@@ -158,7 +158,7 @@ public class Message extends MessageShallow implements Serializable {
 //            throw new UnsupportedOperationException("This logic should be outside!!!");
         }
         return hasImg;
-    }
+    }*/
 
     public MessageStatus getStatus() {
         return status;
@@ -190,13 +190,14 @@ public class Message extends MessageShallow implements Serializable {
                     "Message(" +
                             "\n\tnum={0},\n\tparentNum={1},\n\ttopicCode={2},\n\ttopic={3}," +
                             "\n\ttitle={4},\n\tnick={5},\n\taltName={6},\n\treg={7}," +
-                            "\n\thost={8},\n\tdate={9,date,MMMM, d HH:mm:ss yyyy},\n\thasUrl={10},\n\thasImg={11}," +
+                            "\n\thost={8},\n\tdate={9,date,MMMM, d HH:mm:ss yyyy}," +
+//                            "\n\thasUrl={10},\n\thasImg={11}," +
                             "\n\tsite={12}," +
                             "\n\tbody={13}\n)",
                     num, parentNum, topicCode, topic, title,
                     nick, altName, reg, host, date,
-                    isHasUrl(),
-                    isHasImg(null), // <<<---TODO
+//                    isHasUrl(),
+//                    isHasImg(null), // <<<---TODO
 //                    site == null ? "" : site.getName(),
                     body.replaceAll("\n", "\n\t\t"));
         } else {
