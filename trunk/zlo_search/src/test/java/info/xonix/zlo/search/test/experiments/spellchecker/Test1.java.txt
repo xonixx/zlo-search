@@ -1,0 +1,68 @@
+package info.xonix.zlo.search.test.experiments.spellchecker;
+
+import info.xonix.zlo.search.LuceneVersion;
+import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.logic.MessageFields;
+import info.xonix.zlo.search.spring.AppSpringContext;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.search.spell.LuceneDictionary;
+import org.apache.lucene.search.spell.SpellChecker;
+import org.apache.lucene.search.spell.SuggestMode;
+import org.apache.lucene.store.FSDirectory;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+
+/**
+ * User: gubarkov
+ * Date: 23.01.12
+ * Time: 17:21
+ */
+public class Test1 {
+    private Analyzer analyzer;
+
+    private SpellChecker info.xonix.zlo.search.test.experiments.spellchecker;
+    public static final String SPELL_DIR = "D:\\stuff\\test\\java\\zlo-search_workdir\\index\\index_zlo\\spell";
+//    public static final String SRC_DIR = "D:\\stuff\\test\\java\\zlo-search_workdir\\index\\index_x\\1";
+    public static final String SRC_DIR = "D:\\stuff\\test\\java\\zlo-search_workdir\\index\\index_zlo\\1";
+
+    @Before
+    public void setUp() throws IOException {
+        Config config = AppSpringContext.getApplicationContextForTesting().getBean(Config.class);
+        analyzer = config.getMessageAnalyzer();
+        System.out.println("Using analyzer: " + analyzer.getClass());
+
+        info.xonix.zlo.search.test.experiments.spellchecker = new SpellChecker(FSDirectory.open(new File(SPELL_DIR)));
+    }
+
+    @Test
+    public void build() throws IOException {
+
+        // To index a field of a user index:
+        info.xonix.zlo.search.test.experiments.spellchecker.indexDictionary(
+                new LuceneDictionary(IndexReader.open(FSDirectory.open(new File(SRC_DIR))), MessageFields.BODY),
+                new IndexWriterConfig(LuceneVersion.VERSION, analyzer), true);
+
+        // To index a file containing words:
+//  info.xonix.zlo.search.test.experiments.spellchecker.indexDictionary(new PlainTextDictionary(new File("myfile.txt")));
+//  String[] suggestions = info.xonix.zlo.search.test.experiments.spellchecker.suggestSimilar("misspelt", 5);
+    }
+
+    @Test
+    public void test1() throws IOException {
+//        String[] suggestions = info.xonix.zlo.search.test.experiments.spellchecker.suggestSimilar("fick", 1);
+        String[] suggestions = info.xonix.zlo.search.test.experiments.spellchecker.suggestSimilar(
+                "онтош", 1,
+                IndexReader.open(FSDirectory.open(new File(SRC_DIR))),
+                MessageFields.BODY,
+                SuggestMode.SUGGEST_WHEN_NOT_IN_INDEX,
+                SpellChecker.DEFAULT_ACCURACY);
+
+        System.out.println(Arrays.asList(suggestions));
+    }
+}
