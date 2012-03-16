@@ -1,3 +1,5 @@
+package info.xonix.zlo.search.test.junit;
+
 import info.xonix.zlo.search.xmlfp.utils.UrlUtil;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,5 +19,11 @@ public class UrlUtilTests {
         Assert.assertEquals("http://aaa.bb/url/123", UrlUtil.combineUrls("http://aaa.bb/ccc/ddd", "/url/123"));
         Assert.assertEquals("http://aaa.bb/url/123?fff", UrlUtil.combineUrls("http://aaa.bb/ccc/ddd?eee", "/url/123?fff"));
         Assert.assertEquals("http://aaa.bb/ccc/url/123?fff", UrlUtil.combineUrls("http://aaa.bb/ccc/ddd?eee", "url/123?fff"));
+
+        Assert.assertEquals("http://aaa.bb/ccc/ddd?fff",
+                UrlUtil.combineUrls("http://aaa.bb/ccc/ddd", "?fff"));
+
+        Assert.assertEquals("http://aaa.bb/ccc/ddd?fff",
+                UrlUtil.combineUrls("http://aaa.bb/ccc/ddd?eee", "?fff"));
     }
 }
