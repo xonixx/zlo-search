@@ -125,8 +125,8 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
 
             doc.add(new Field(MessageFields.DATE, DateTools.dateToString(msg.getDate(), DateTools.Resolution.MINUTE), Field.Store.NO, Field.Index.NOT_ANALYZED));
             doc.add(new Field(MessageFields.BODY, msg.getCleanBody(), Field.Store.NO, Field.Index.ANALYZED)); // "чистый" - индексируем, не храним
-            doc.add(new Field(MessageFields.HAS_URL, msg.isHasUrl() ? TRUE : FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED));
-            doc.add(new Field(MessageFields.HAS_IMG, msg.isHasImg(forumId) ? TRUE : FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED));
+            doc.add(new Field(MessageFields.HAS_URL, MessageLogic.hasUrl(msg) ? TRUE : FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED));
+            doc.add(new Field(MessageFields.HAS_IMG, MessageLogic.hasImg(msg, forumId) ? TRUE : FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED));
 
             return doc;
     }

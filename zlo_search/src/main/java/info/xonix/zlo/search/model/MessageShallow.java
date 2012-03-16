@@ -8,6 +8,7 @@ import java.util.Date;
  * Time: 1:09
  */
 public class MessageShallow {
+    //    TODO: rename to id
     protected int num = -1; // default
     protected String nick;
     protected String host;
