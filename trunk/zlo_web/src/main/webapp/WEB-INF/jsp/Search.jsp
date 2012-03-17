@@ -1,3 +1,4 @@
+<%@ page import="info.xonix.zlo.search.logic.MessageLogic" %>
 <%@ page import="info.xonix.zlo.search.model.Message" %>
 <%@ page import="java.util.Date" %>
 <%--
@@ -209,8 +210,8 @@
                             <c:out value="${hl.highlightedText}" escapeXml="false"/></a>
                         <small>
                             <c:if test="${empty msg.body}">(-)</c:if>
-                            <c:if test="${msg.hasUrl}">(url)</c:if>
-                            <c:if test="<%= ((Message)msg).isHasImg(forumId) %>">(pic)</c:if>
+                            <c:if test="<%= MessageLogic.hasUrl((Message) msg)%>">(url)</c:if>
+                            <c:if test="<%= MessageLogic.hasImg((Message) msg, forumId) %>">(pic)</c:if>
                         </small>
                         <a class="search"
                            href="msg?site=${descriptor.forumIntId}&num=${msg.num}<c:if test="${not empty hl.wordsStr}">&hw=${hl.wordsStr}</c:if>"><fmt:message

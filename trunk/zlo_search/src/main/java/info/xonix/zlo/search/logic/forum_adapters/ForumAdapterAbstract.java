@@ -3,6 +3,8 @@ package info.xonix.zlo.search.logic.forum_adapters;
 import info.xonix.zlo.search.model.Message;
 import org.apache.log4j.Logger;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,5 +65,14 @@ public abstract class ForumAdapterAbstract implements ForumAdapter {
     @Override
     public long extractMessageIdFromMessageUrl(String messageUrl) {
         return -1;
+    }
+    
+    @Override
+    public String getForumHost() {
+        try {
+            return new URI(getForumUrl()).getHost();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException("Can't parse forum url", e);
+        }
     }
 }
