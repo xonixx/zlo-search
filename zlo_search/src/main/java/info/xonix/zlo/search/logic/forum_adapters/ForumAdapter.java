@@ -22,6 +22,8 @@ public interface ForumAdapter {
 
     public String getForumUrl();
 
+    public String getForumHost();
+
     public String getForumTitle();
 
     /**
