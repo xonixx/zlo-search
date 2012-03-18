@@ -19,6 +19,9 @@
     <link rel="stylesheet" type="text/css" href="main.css"/>
 </head>
 <body>
+
+<tiles:insertDefinition name="header.message"/>
+
 <c:choose>
     <c:when test="${empty requestScope['error']}">
         <div align="center">
