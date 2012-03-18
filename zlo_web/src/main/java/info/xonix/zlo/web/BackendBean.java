@@ -7,6 +7,7 @@ import info.xonix.zlo.search.dao.MessagesDao;
 
 import info.xonix.zlo.search.logic.SiteLogic;
 import info.xonix.zlo.search.spring.AppSpringContext;
+import info.xonix.zlo.search.xmlfp.utils.UrlUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;
@@ -70,7 +71,7 @@ public class BackendBean {
         int i=0;
         for (ForumDescriptor descriptor : descriptors) {
             ids[i] = Integer.toString(descriptor.getForumIntId());
-            vals[i] = descriptor.getForumAdapter().getForumUrl();
+            vals[i] = UrlUtil.urlWithoutSchema(descriptor.getForumAdapter().getForumUrl());
             i++;
         }
 

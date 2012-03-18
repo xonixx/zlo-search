@@ -33,4 +33,8 @@ public class UrlUtil {
         // TODO: possibly do smth more intelligent
         return url.startsWith("http:") || url.startsWith("https:");
     }
+
+    public static String urlWithoutSchema(String url) {
+        return url.replaceAll("^[^:]+://", "");
+    }
 }
