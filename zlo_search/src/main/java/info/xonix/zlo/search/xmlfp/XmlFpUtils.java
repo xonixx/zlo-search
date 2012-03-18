@@ -2,6 +2,7 @@ package info.xonix.zlo.search.xmlfp;
 
 import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfUtils;
 import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.xmlfp.jaxb_generated.Forum;
 import info.xonix.zlo.search.xmlfp.jaxb_generated.ObjectFactory;
 import info.xonix.zlo.search.xmlfp.utils.MarshalUtils;
 import info.xonix.zlo.search.xmlfp.utils.XmlFpMarshalException;
@@ -38,6 +39,15 @@ public class XmlFpUtils {
             return Convert.fromJaxbMessage(
                     MarshalUtils.<info.xonix.zlo.search.xmlfp.jaxb_generated.Message>unmarshal(
                             XmlFpContext.getMessageUnmarshaller(), xml));
+        } catch (XmlFpMarshalException e) {
+            throw new XmlFpException(e);
+        }
+    }
+
+    public static Forum descriptorFromXml(String xml) throws XmlFpException {
+        try {
+            return MarshalUtils.unmarshal(
+                    XmlFpContext.getDescriptorUnmarshaller(), xml);
         } catch (XmlFpMarshalException e) {
             throw new XmlFpException(e);
         }
