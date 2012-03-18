@@ -46,7 +46,22 @@ public class HtmlUtilsTests {
         assertFalse(HtmlUtils.hasImg("<img src=http://games.mipt.ru/cstrike/board/pic/123.jpg / >", gamesHost));
         assertFalse(HtmlUtils.hasImg("<img src=\"http://games.mipt.ru/cstrike/board/pic/123.jpg\" / >", gamesHost));
         assertFalse(HtmlUtils.hasImg("<img src='https://games.mipt.ru/cstrike/board/pic/123.jpg' / >", gamesHost));
+
         assertTrue(HtmlUtils.hasImg("<img src='https://games1.mipt.ru/cstrike/board/pic/123.jpg' / >", gamesHost));
+        assertTrue(HtmlUtils.hasImg("<img src='https://games1.mipt.ru/cstrike/board/pic/123.jpg' / >  " +
+                "123123<img src='https://games.mipt.ru/cstrike/board/pic/123.jpg' / >", gamesHost));
+        assertTrue(HtmlUtils.hasImg("<img src='https://games.mipt.ru/cstrike/board/pic/123.jpg' / > " +
+                "<img src='https://games1.mipt.ru/cstrike/board/pic/123.jpg' / >", gamesHost));
+        assertFalse(HtmlUtils.hasImg("<img src='https://games.mipt.ru/cstrike/board/pic/123.jpg' / > " +
+                "<img src='https://games.mipt.ru/cstrike/board/pic/222.jpg' / >", gamesHost));
+        assertTrue(HtmlUtils.hasImg(
+                "<img src='https://games.mipt.ru/cstrike/board/pic/111.jpg' / > " +
+                        "<img src =\"https://mipt.ru/cstrike/board/pic/222.jpg\" />" +
+                        "<  img src = https://games.mipt.ru/333.jpg   />", gamesHost));
+        assertFalse(HtmlUtils.hasImg(
+                "<img src='https://games.mipt.ru/cstrike/board/pic/111.jpg' / > " +
+                        "<img src =\"https://games.mipt.ru/cstrike/board/pic/222.jpg\" />" +
+                        "<  img src = https://games.mipt.ru/333.jpg   />", gamesHost));
     }
 
     @Test
