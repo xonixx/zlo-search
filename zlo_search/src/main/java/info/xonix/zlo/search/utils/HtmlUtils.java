@@ -84,13 +84,17 @@ public class HtmlUtils {
             return false;
         }
 
+        if (forumHost != null) {
+            forumHost = forumHost.toLowerCase();
+        }
+
         Matcher matcher = IMG.matcher(s);// only absolute urls are matched according to regexp
 
 //        boolean isFound = matcher.find();
         boolean isFound = false;
 
         while(matcher.find()) {
-            final String imgUrlWithoutSchema = matcher.group(2);
+            final String imgUrlWithoutSchema = matcher.group(2).toLowerCase();
 
             if (forumHost == null
                     || !imgUrlWithoutSchema.startsWith(forumHost)) { // img located on forum host = smile
