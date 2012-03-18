@@ -153,10 +153,15 @@ class Convert {
 
         xmlFpInfo.setLastMessageNumberUrl("xmlfp.jsp?xmlfp=lastMessageNumber&site=" + forumIntId);
         xmlFpInfo.setMessageUrl("xmlfp.jsp?xmlfp=message&num=" + XmlFpUrlsSubstitutions.MESSAGE_ID + "&site=" + forumIntId);
-        xmlFpInfo.setMessageListUrl("xmlfp.jsp?xmlfp=messages" +
+
+        final MessageListUrl messageListUrl = OBJECT_FACTORY.createMessageListUrl();
+        messageListUrl.setValue("xmlfp.jsp?xmlfp=messages" +
                 "&from=" + XmlFpUrlsSubstitutions.FROM +
                 "&to=" + XmlFpUrlsSubstitutions.TO +
                 "&site=" + forumIntId);
+        messageListUrl.setMaxDelta(XmlFpFormer.MAX_DELTA);
+        xmlFpInfo.setMessageListUrl(messageListUrl);
+
         forum.setXmlfpUrls(xmlFpInfo);
 
         final Forum.ForumUrls forumUrls = OBJECT_FACTORY.createForumForumUrls();
