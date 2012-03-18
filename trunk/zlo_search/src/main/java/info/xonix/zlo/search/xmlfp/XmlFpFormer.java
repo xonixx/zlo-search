@@ -14,12 +14,14 @@ import java.util.List;
  * Time: 22:56
  */
 public class XmlFpFormer {
+    public static final int MAX_DELTA = 1000;
     @Autowired
     private AppLogic appLogic;
 
     public String getMessages(String forumId, int from, int to) {
-        if (to - from > 1000) {
-            throw new IllegalArgumentException("You are trying to receive more then 1000 messages!");
+        if (to - from > MAX_DELTA) {
+            throw new IllegalArgumentException("You are trying to receive more then " +
+                    MAX_DELTA + " messages!");
         }
 
         final List<Message> messages = appLogic.getMessages(forumId, from, to);
@@ -38,7 +40,7 @@ public class XmlFpFormer {
         return XmlFpUtils.messageToXml(forumId, m);
     }
 
-    public String lastMessageNumber(String forumId){
+    public String lastMessageNumber(String forumId) {
         return XmlFpUtils.lastMessageNumberToXml(
                 appLogic.getLastSavedMessageNumber(forumId));
     }

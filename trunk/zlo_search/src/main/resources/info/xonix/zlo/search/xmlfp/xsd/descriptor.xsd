@@ -8,7 +8,17 @@
 
                 <xs:element name="description" type="xs:string" minOccurs="0"/>
 
-                <xs:element name="url" type="xs:anyURI"/>
+                <xs:element name="url" type="xs:anyURI">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Url, pointing to forum index page.
+
+                            Example: http://super-company.com/forum/phpbb/index.php
+
+                            May be relative. Relative URL resolution according to RFC3986.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
 
                 <xs:element name="charset" type="xs:string" minOccurs="0">
                     <xs:annotation>
@@ -31,17 +41,18 @@
 
                 <xs:element name="xmlfpUrls">
                     <xs:complexType>
-                        <xs:all>
-                            <xs:element name="lastMessageNumberUrl" type="xs:anyURI">
+                        <xs:sequence>
+                            <xs:element name="lastMessageNumberUrl" type="xs:anyURI" minOccurs="1">
                                 <xs:annotation>
                                     <xs:documentation>
                                         Example: http://some-cool-forum.com/xmlfp.php?last
 
-                                        Can be relative. Assume the xmlfp descriptor URL is
+                                        Can be relative. Relative URL resolution according to RFC3986.
+                                        Assume the xmlfp descriptor URL is
 
                                         http://url/some/path/xmlfp?descriptor
 
-                                        then examples of resolivng relative URLs:
+                                        then examples of resolving relative URLs:
                                         <ul>
                                             <li>/aaa/xmlfp?last --> http://url/aaa/xmlfp?last</li>
                                             <li>aaa/xmlfp?last --> http://url/some/path/aaa/xmlfp?last</li>
@@ -50,42 +61,98 @@
                                 </xs:annotation>
                             </xs:element>
 
-                            <xs:element name="messageUrl" type="xs:anyURI">
-                                <xs:annotation>
-                                    <xs:documentation>
-                                        Example: http://some-cool-forum.com/xmlfp.php?msg&amp;id=__message_id__
-
-                                        Can be relative, see explanation above.
-                                    </xs:documentation>
-                                </xs:annotation>
-                            </xs:element>
-
-                            <xs:element name="messageListUrl" type="xs:anyURI" minOccurs="0">
-                                <xs:annotation>
-                                    <xs:documentation>
-                                        Example: http://some-cool-forum.com/xmlfp.php?msgs&amp;from=__from__&amp;to=__to__
-
-                                        Can be relative, see explanation above.
-                                        Note: from - including, to - excluding.
-
-                                        This is optional functionality, but providing this it will optimize indexing
-                                    </xs:documentation>
-                                </xs:annotation>
-                            </xs:element>
-                        </xs:all>
+                            <!--
+                            One of two or both, but not none
+                            see: http://stackoverflow.com/questions/2372395/xsd-one-or-both-choice-construct-leads-to-ambiguous-content-model
+                            unfortunatelly this doesn't work well with JAXB
+                            -->
+                            <!--
+                            <xs:choice>
+                                <xs:sequence>
+                                    <xs:element ref="messageUrl"/>
+                                    <xs:element ref="messageListUrl" minOccurs="0"/>
+                                </xs:sequence>
+                                <xs:element ref="messageListUrl"/>
+                            </xs:choice>
+                            -->
+                            <xs:element ref="messageUrl"/>
+                            <xs:element ref="messageListUrl" minOccurs="0"/>
+                        </xs:sequence>
                     </xs:complexType>
                 </xs:element>
 
                 <xs:element name="forumUrls">
                     <xs:complexType>
                         <xs:all>
-                            <xs:element name="messageUrl" type="xs:anyURI"/>
+                            <xs:element name="messageUrl" type="xs:anyURI">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        Similar to xmlfpUrls/messageUrl
 
-                            <xs:element name="userProfileUrl" type="xs:anyURI"/>
+                                        Url pattern with placeholders:
+                                        __message_id__
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+
+                            <xs:element name="userProfileUrl" type="xs:anyURI">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        Url pattern with placeholders:
+                                        __user_name__
+                                        __user_id__
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
                         </xs:all>
                     </xs:complexType>
                 </xs:element>
             </xs:all>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="messageUrl" type="xs:anyURI">
+        <xs:annotation>
+            <xs:documentation>
+                Url pattern with placeholders:
+                __message_id__
+
+                Example: http://some-cool-forum.com/xmlfp.php?msg&amp;id=__message_id__
+
+                Can be relative, see explanation above.
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="messageListUrl">
+        <xs:annotation>
+            <xs:documentation>
+                Url pattern with placeholders:
+                __from__
+                __to__
+
+                Example: http://some-cool-forum.com/xmlfp.php?msgs&amp;from=__from__&amp;to=__to__
+
+                Can be relative, see explanation above.
+                Note: both #__from__ and #__to__ messages including.
+
+                This is optional functionality, but providing this will greatly optimize indexing
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="xs:anyURI">
+                    <xs:attribute name="maxDelta" type="xs:int" use="required">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Maximum of allowed (__from__ - __to__) difference.
+
+                                Recommended value is not more then 1000 (to prevent DDoS) an not less then 100.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:attribute>
+                </xs:extension>
+            </xs:simpleContent>
         </xs:complexType>
     </xs:element>
 </xs:schema>

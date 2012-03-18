@@ -35,11 +35,11 @@ import javax.xml.bind.annotation.XmlType;
  *           &lt;complexType>
  *             &lt;complexContent>
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;all>
+ *                 &lt;sequence>
  *                   &lt;element name="lastMessageNumberUrl" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
- *                   &lt;element name="messageUrl" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
- *                   &lt;element name="messageListUrl" type="{http://www.w3.org/2001/XMLSchema}anyURI" minOccurs="0"/>
- *                 &lt;/all>
+ *                   &lt;element ref="{}messageUrl"/>
+ *                   &lt;element ref="{}messageListUrl" minOccurs="0"/>
+ *                 &lt;/sequence>
  *               &lt;/restriction>
  *             &lt;/complexContent>
  *           &lt;/complexType>
@@ -347,11 +347,11 @@ public class Forum {
      * &lt;complexType>
      *   &lt;complexContent>
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;all>
+     *       &lt;sequence>
      *         &lt;element name="lastMessageNumberUrl" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
-     *         &lt;element name="messageUrl" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
-     *         &lt;element name="messageListUrl" type="{http://www.w3.org/2001/XMLSchema}anyURI" minOccurs="0"/>
-     *       &lt;/all>
+     *         &lt;element ref="{}messageUrl"/>
+     *         &lt;element ref="{}messageListUrl" minOccurs="0"/>
+     *       &lt;/sequence>
      *     &lt;/restriction>
      *   &lt;/complexContent>
      * &lt;/complexType>
@@ -361,7 +361,9 @@ public class Forum {
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-
+        "lastMessageNumberUrl",
+        "messageUrl",
+        "messageListUrl"
     })
     public static class XmlfpUrls {
 
@@ -371,8 +373,7 @@ public class Forum {
         @XmlElement(required = true)
         @XmlSchemaType(name = "anyURI")
         protected String messageUrl;
-        @XmlSchemaType(name = "anyURI")
-        protected String messageListUrl;
+        protected MessageListUrl messageListUrl;
 
         /**
          * Gets the value of the lastMessageNumberUrl property.
@@ -427,10 +428,10 @@ public class Forum {
          * 
          * @return
          *     possible object is
-         *     {@link String }
+         *     {@link MessageListUrl }
          *     
          */
-        public String getMessageListUrl() {
+        public MessageListUrl getMessageListUrl() {
             return messageListUrl;
         }
 
@@ -439,10 +440,10 @@ public class Forum {
          * 
          * @param value
          *     allowed object is
-         *     {@link String }
+         *     {@link MessageListUrl }
          *     
          */
-        public void setMessageListUrl(String value) {
+        public void setMessageListUrl(MessageListUrl value) {
             this.messageListUrl = value;
         }
 

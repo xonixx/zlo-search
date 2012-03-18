@@ -58,7 +58,8 @@ public class ForumAccessor {
 
         xmlfpUrls.setLastMessageNumberUrl(UrlUtil.combineUrls(descriptorUrl, xmlfpUrls.getLastMessageNumberUrl()));
         xmlfpUrls.setMessageUrl(UrlUtil.combineUrls(descriptorUrl, xmlfpUrls.getMessageUrl()));
-        xmlfpUrls.setMessageListUrl(UrlUtil.combineUrls(descriptorUrl, xmlfpUrls.getMessageListUrl()));
+        xmlfpUrls.getMessageListUrl().setValue(UrlUtil.combineUrls(descriptorUrl, xmlfpUrls.getMessageListUrl().getValue()));
+
 
         final Forum.ForumUrls forumUrls = forum.getForumUrls();
         forumUrls.setMessageUrl(UrlUtil.combineUrls(descriptorUrl, forumUrls.getMessageUrl()));
