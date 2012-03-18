@@ -24,7 +24,7 @@ public class XmlFpFormer {
                     MAX_DELTA + " messages!");
         }
 
-        final List<Message> messages = appLogic.getMessages(forumId, from, to);
+        final List<Message> messages = appLogic.getMessages(forumId, from, to + 1); // to+1 because in xmlfp from & to included!
 
         return XmlFpUtils.messagesToXml(forumId, messages);
     }
