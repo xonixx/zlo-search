@@ -1,12 +1,16 @@
 package info.xonix.zlo.search.test.junit.xmlfp;
 
 import info.xonix.zlo.search.config.Config;
-
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.spring.AppSpringContext;
-import info.xonix.zlo.search.xmlfp.*;
+import info.xonix.zlo.search.xmlfp.ForumAccessor;
+import info.xonix.zlo.search.xmlfp.XmlFpException;
+import info.xonix.zlo.search.xmlfp.XmlFpFormatterOptions;
+import info.xonix.zlo.search.xmlfp.XmlFpUtils;
+import info.xonix.zlo.search.xmlfp.jaxb_generated.Forum;
 import org.apache.commons.io.FileUtils;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
@@ -43,12 +47,40 @@ public class TestMessageToXML {
     }
 
     @Test
-    public void test2() throws IOException, XmlFpException {
+    public void test_m() throws IOException, XmlFpException {
         String path = "D:\\stuff\\test\\java\\zlo-search\\zlo_search\\forum_xml_protocol\\tst\\m1.xml";
 
         final String msgXmlStr = FileUtils.readFileToString(new File(path), Config.UTF_8);
 
         System.out.println(XmlFpUtils.messageFromXml(msgXmlStr));
+    }
+
+    @Test(expected = XmlFpException.class)
+    public void test_m_err1() throws IOException, XmlFpException {
+        String path = "D:\\stuff\\test\\java\\zlo-search\\zlo_search\\forum_xml_protocol\\tst\\m_err1.xml";
+
+        final String msgXmlStr = FileUtils.readFileToString(new File(path), Config.UTF_8);
+
+        System.out.println(XmlFpUtils.messageFromXml(msgXmlStr));
+    }
+
+    @Test(expected = XmlFpException.class)
+    public void test_m_err2() throws IOException, XmlFpException {
+        String path = "D:\\stuff\\test\\java\\zlo-search\\zlo_search\\forum_xml_protocol\\tst\\m_err2.xml";
+
+        final String msgXmlStr = FileUtils.readFileToString(new File(path), Config.UTF_8);
+
+        System.out.println(XmlFpUtils.messageFromXml(msgXmlStr));
+    }
+
+    @Test
+    public void test_descr() throws IOException, XmlFpException {
+        String path = "D:\\stuff\\test\\java\\zlo-search\\zlo_search\\forum_xml_protocol\\tst\\descriptor2.xml";
+
+        final String descrXmlStr = FileUtils.readFileToString(new File(path), Config.UTF_8);
+
+        final Forum forum = XmlFpUtils.descriptorFromXml(descrXmlStr);
+        Assert.assertEquals(1000, forum.getXmlfpUrls().getMessageListUrl().getMaxDelta());
     }
 
     @Test
@@ -60,7 +92,7 @@ public class TestMessageToXML {
     }
 
     @Test
-    public void test5() throws XmlFpException {
+    public void test_localhost_xmlfp() throws XmlFpException {
         ForumAccessor forumAccessor = ForumAccessor.fromDescriptorUrl("http://localhost:8080/xmlfp/xmlfp.jsp?xmlfp=descriptor");
 
         final long lastMessageNumber = forumAccessor.getLastMessageNumber();
