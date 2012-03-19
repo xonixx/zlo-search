@@ -2,6 +2,8 @@ package info.xonix.zlo.search.xmlfp;
 
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.xmlfp.jaxb_generated.Forum;
+import info.xonix.zlo.search.xmlfp.jaxb_generated.MessageListUrl;
+import info.xonix.zlo.search.xmlfp.jaxb_generated.Messages;
 import info.xonix.zlo.search.xmlfp.utils.MarshalUtils;
 import info.xonix.zlo.search.xmlfp.utils.UrlUtil;
 import info.xonix.zlo.search.xmlfp.utils.XmlFpMarshalException;
@@ -13,6 +15,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User: gubarkov
@@ -103,6 +107,41 @@ public class ForumAccessor {
 
     }
 
+    public List<Message> getMessageList(long from, long to) throws XmlFpException {
+        if (!supportsMessageListGeneration()) {
+            throw new IllegalStateException(forum.getName() + " doesn't support msg list download");
+        }
+
+        final MessageListUrl mlu = forum.getXmlfpUrls().getMessageListUrl();
+        final int maxDelta = mlu.getMaxDelta();
+
+        if (to - from > maxDelta) {
+            throw new IllegalArgumentException("from - to > allowed maxDelta = " + maxDelta);
+        }
+
+        final String messageListUrl = mlu.getValue();
+        final String messageListUrlFiller = messageListUrl
+                .replace(XmlFpUrlsSubstitutions.FROM, Long.toString(from))
+                .replace(XmlFpUrlsSubstitutions.TO, Long.toString(to));
+
+        final byte[] bytes = getXmlAsBytesFromUrl(messageListUrlFiller);
+
+        final Messages messages;
+        try {
+            messages = (Messages) XmlFpContext.getMessagesUnmarshaller().unmarshal(new ByteArrayInputStream(bytes));
+        } catch (JAXBException e) {
+            throw new XmlFpException(e, "Error unmarshalling");
+        }
+        
+        List<Message> res = new ArrayList<Message>(messages.getMessage().size());
+
+        for (info.xonix.zlo.search.xmlfp.jaxb_generated.Message jaxbMessage : messages.getMessage()) {
+            res.add(Convert.fromJaxbMessage(jaxbMessage));
+        }
+
+        return res;
+    }
+
     //TODO: implement retry for download
     private static byte[] getXmlAsBytesFromUrl(final String url) throws XmlFpException {
         final byte[] bytes;
@@ -137,5 +176,9 @@ public class ForumAccessor {
 
     public String getTitle() {
         return forum.getName();
+    }
+
+    public boolean supportsMessageListGeneration() {
+        return forum.getXmlfpUrls().getMessageListUrl() != null;
     }
 }
