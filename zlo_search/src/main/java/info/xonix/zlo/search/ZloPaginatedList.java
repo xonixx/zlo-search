@@ -130,4 +130,16 @@ public class ZloPaginatedList implements PaginatedList {
         }
         return false;
     }
+    /**
+     * @return whether at least one record on page has not empty host
+     */
+    public boolean isHasNicks() {
+        for (Object obj : getList()) {
+            Message message = (Message) obj;
+            if (StringUtils.isNotEmpty(message.getNick())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -94,7 +94,7 @@ public class PageParser implements InitializingBean {
         message.setHost(m.group(groupsOrder.get(4)));
 
         String dateStr = m.group(groupsOrder.get(5));
-        message.setDate(StringUtils.isEmpty(dateStr) ? new Date(0) : prepareDate(wwwconfParams, dateStr));
+        message.setDate(StringUtils.isEmpty(dateStr) ? new Date(0) : prepareDate(wwwconfParams, dateStr)); // TODO: insert null date
 
         message.setBody(m.group(groupsOrder.get(6)));
         message.setStatus(MessageStatus.OK);
