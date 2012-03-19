@@ -107,6 +107,12 @@ public class ForumAccessor {
 
     }
 
+    /**
+     * @param from (including)
+     * @param to (including)
+     * @return
+     * @throws XmlFpException
+     */
     public List<Message> getMessageList(long from, long to) throws XmlFpException {
         if (!supportsMessageListGeneration()) {
             throw new IllegalStateException(forum.getName() + " doesn't support msg list download");
@@ -132,7 +138,7 @@ public class ForumAccessor {
         } catch (JAXBException e) {
             throw new XmlFpException(e, "Error unmarshalling");
         }
-        
+
         List<Message> res = new ArrayList<Message>(messages.getMessage().size());
 
         for (info.xonix.zlo.search.xmlfp.jaxb_generated.Message jaxbMessage : messages.getMessage()) {
@@ -180,5 +186,9 @@ public class ForumAccessor {
 
     public boolean supportsMessageListGeneration() {
         return forum.getXmlfpUrls().getMessageListUrl() != null;
+    }
+
+    public int getMessageListMaxDelta() {
+        return forum.getXmlfpUrls().getMessageListUrl().getMaxDelta();
     }
 }

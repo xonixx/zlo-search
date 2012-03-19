@@ -14,6 +14,13 @@ public interface ForumAdapter {
 
     public Message getMessage(String forumId, long messageId) throws ForumAccessException;
 
+    /**
+     * @param forumId
+     * @param from (including)
+     * @param to (excluding)
+     * @return
+     * @throws ForumAccessException
+     */
     List<Message> getMessages(String forumId, long from, long to) throws ForumAccessException;
 
     public String prepareMessageUrl(long messageId);
