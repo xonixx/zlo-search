@@ -6,7 +6,7 @@ import de.nava.informa.impl.basic.Category;
 import de.nava.informa.impl.basic.Channel;
 import de.nava.informa.impl.basic.Item;
 import info.xonix.zlo.search.HttpHeader;
-import info.xonix.zlo.search.ZloPaginatedList;
+import info.xonix.zlo.search.SearchResultPaginatedList;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.domainobj.SearchRequest;
@@ -51,7 +51,7 @@ public class RssFormer {
             SearchResult searchResult = (SearchResult) request.getAttribute(SearchServlet.REQ_SEARCH_RESULT);
             Assert.notNull(searchResult, "SearchResult must be already set in SearchServlet!");
 
-            ZloPaginatedList pl = (ZloPaginatedList) request.getAttribute(SearchServlet.REQ_PAGINATED_LIST);
+            SearchResultPaginatedList pl = (SearchResultPaginatedList) request.getAttribute(SearchServlet.REQ_PAGINATED_LIST);
             Assert.notNull(pl, "Paginated list must be already set in SearchServlet!");
 
             List msgsList = pl.getList();

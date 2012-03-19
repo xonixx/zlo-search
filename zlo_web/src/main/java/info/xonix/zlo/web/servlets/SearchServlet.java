@@ -2,7 +2,7 @@ package info.xonix.zlo.web.servlets;
 
 import info.xonix.zlo.search.FoundTextHighlighter;
 import info.xonix.zlo.search.HttpHeader;
-import info.xonix.zlo.search.ZloPaginatedList;
+import info.xonix.zlo.search.SearchResultPaginatedList;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.config.DateFormats;
 import info.xonix.zlo.search.config.ErrorMessage;
@@ -267,12 +267,12 @@ public class SearchServlet extends BaseServlet {
 
                     request.setAttribute(REQ_SEARCH_RESULT, searchResult);
 
-                    final ZloPaginatedList paginatedList;
+                    final SearchResultPaginatedList paginatedList;
 
                     if (RequestUtils.isPowerUser(request)) {
-                        paginatedList = new ZloPaginatedList(searchResult);
+                        paginatedList = new SearchResultPaginatedList(searchResult);
                     }else {
-                        paginatedList = new ZloPaginatedList(searchResult, MAX_RESULTS_LIMIT);
+                        paginatedList = new SearchResultPaginatedList(searchResult, MAX_RESULTS_LIMIT);
                     }
 
                     request.setAttribute(REQ_PAGINATED_LIST, paginatedList);
