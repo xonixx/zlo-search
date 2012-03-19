@@ -43,11 +43,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Messages }
+     * Create an instance of {@link Info }
      * 
      */
-    public Messages createMessages() {
-        return new Messages();
+    public Info createInfo() {
+        return new Info();
     }
 
     /**
@@ -56,6 +56,30 @@ public class ObjectFactory {
      */
     public Forum.ForumUrls createForumForumUrls() {
         return new Forum.ForumUrls();
+    }
+
+    /**
+     * Create an instance of {@link Author }
+     * 
+     */
+    public Author createAuthor() {
+        return new Author();
+    }
+
+    /**
+     * Create an instance of {@link Content }
+     * 
+     */
+    public Content createContent() {
+        return new Content();
+    }
+
+    /**
+     * Create an instance of {@link MessageListUrl }
+     * 
+     */
+    public MessageListUrl createMessageListUrl() {
+        return new MessageListUrl();
     }
 
     /**
@@ -75,27 +99,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link MessageListUrl }
+     * Create an instance of {@link Messages }
      * 
      */
-    public MessageListUrl createMessageListUrl() {
-        return new MessageListUrl();
-    }
-
-    /**
-     * Create an instance of {@link Author }
-     * 
-     */
-    public Author createAuthor() {
-        return new Author();
-    }
-
-    /**
-     * Create an instance of {@link Info }
-     * 
-     */
-    public Info createInfo() {
-        return new Info();
+    public Messages createMessages() {
+        return new Messages();
     }
 
     /**
@@ -104,14 +112,6 @@ public class ObjectFactory {
      */
     public Message createMessage() {
         return new Message();
-    }
-
-    /**
-     * Create an instance of {@link Content }
-     * 
-     */
-    public Content createContent() {
-        return new Content();
     }
 
     /**

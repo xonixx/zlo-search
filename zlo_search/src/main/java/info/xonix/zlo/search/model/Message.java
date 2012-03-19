@@ -24,10 +24,8 @@ public class Message extends MessageShallow implements Serializable {
 
     private String titleClean;
     private String bodyClean;
-//    private Boolean hasUrl = null;
-//    private Boolean hasImg = null;
 
-    private int hitId;
+    private int hitId; // TODO: this should not be here
 
     public static Comparator<Message> NUM_COMPARATOR = new Comparator<Message>() {
         public int compare(Message m1, Message m2) {
@@ -44,7 +42,6 @@ public class Message extends MessageShallow implements Serializable {
     public Message(String nick, String altName, String host, String topic, int topicCode,
                    String title, String body, Date msgDate,
                    boolean reg, int num, int parentNum,
-                   Boolean hasUrl, Boolean hasImg,
                    MessageStatus status) {
 
         super(num, nick, host, reg, topic, title, msgDate);
@@ -53,8 +50,6 @@ public class Message extends MessageShallow implements Serializable {
         this.topicCode = topicCode;
         this.body = body;
         this.parentNum = parentNum;
-//        this.hasUrl = hasUrl;
-//        this.hasImg = hasImg;
         this.status = status;
     }
 
@@ -74,8 +69,6 @@ public class Message extends MessageShallow implements Serializable {
                 reg,
                 num,
                 parentNum,
-                null,
-                null,
                 MessageStatus.fromInt(status));
     }
 
