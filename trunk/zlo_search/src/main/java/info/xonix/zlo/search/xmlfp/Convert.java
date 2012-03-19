@@ -3,7 +3,6 @@ package info.xonix.zlo.search.xmlfp;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
-import info.xonix.zlo.search.config.forums.ForumParams;
 import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams;
 import info.xonix.zlo.search.model.Message;
@@ -110,6 +109,7 @@ class Convert {
             jaxbMessage.setAuthor(author);
 
             author.setName(message.getNick());
+            author.setAltName(message.getAltName());
             author.setHost(message.getHost());
             author.setRegistered(message.isReg());
         }
@@ -117,13 +117,9 @@ class Convert {
         return jaxbMessage;
     }
 
-//    private static final String MESSAGE_STATUS_UNKNOWN = "unknown";
-
     private static final BiMap<MessageStatus, String> MESSAGE_STATUS_TO_JAXB_STATUS = ImmutableBiMap.of(
             MessageStatus.OK, "ok",
-            MessageStatus.DELETED, "deleted"/*,
-            MessageStatus.SPAM, "spam",
-            MessageStatus.UNKNOWN, MESSAGE_STATUS_UNKNOWN*/);
+            MessageStatus.DELETED, "deleted");
 
     private static String messageStatusToString(final MessageStatus messageStatus) {
         final String jaxbStatus = MESSAGE_STATUS_TO_JAXB_STATUS.get(messageStatus);
@@ -148,7 +144,6 @@ class Convert {
 
         final Forum.XmlfpUrls xmlFpInfo = OBJECT_FACTORY.createForumXmlfpUrls();
 
-        ForumParams forumParams = GetForum.params(forumId);
         final int forumIntId = GetForum.descriptor(forumId).getForumIntId();
 
         xmlFpInfo.setLastMessageNumberUrl("xmlfp.jsp?xmlfp=lastMessageNumber&site=" + forumIntId);
