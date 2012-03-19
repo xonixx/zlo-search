@@ -21,8 +21,8 @@ import java.util.List;
  * Date: 26.09.2007
  * Time: 16:39:25
  */
-public class ZloPaginatedList implements PaginatedList {
-    private static final Logger log = Logger.getLogger(ZloPaginatedList.class);
+public class SearchResultPaginatedList implements PaginatedList {
+    private static final Logger log = Logger.getLogger(SearchResultPaginatedList.class);
 
     private List currentList;
     private int pageNumber;
@@ -33,19 +33,19 @@ public class ZloPaginatedList implements PaginatedList {
     private String forumId;
     private MessagesDao messagesDao = AppSpringContext.get(MessagesDao.class);
 
-    ZloPaginatedList(DoubleHits hits, String forumId, int maxResultsLimit) {
+    SearchResultPaginatedList(DoubleHits hits, String forumId, int maxResultsLimit) {
         this.forumId = forumId;
         this.hits = hits;
         this.maxResultsLimit = maxResultsLimit;
     }
 
-    public ZloPaginatedList(SearchResult searchResult, int maxResultsLimit) {
+    public SearchResultPaginatedList(SearchResult searchResult, int maxResultsLimit) {
         this(searchResult.getDoubleHits(),
                 searchResult.getForumId(),
                 maxResultsLimit);
     }
 
-    public ZloPaginatedList(SearchResult searchResult) {
+    public SearchResultPaginatedList(SearchResult searchResult) {
         this(searchResult, 0);/*no limit*/
     }
 
