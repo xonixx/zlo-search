@@ -14,6 +14,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -92,11 +93,32 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract {
         }
     }
 
+    // TODO: !!!test this!!!
     @Override
     public List<Message> getMessages(String forumId, long from, long to) throws ForumAccessException {
+        if (from > to) {
+            throw new IllegalArgumentException("from=" + from + " > to=" + to);
+        }
+
         if (forumAccessor.supportsMessageListGeneration()) {
             try {
-                return forumAccessor.getMessageList(from, to);
+                final int maxDelta = forumAccessor.getMessageListMaxDelta();
+
+                if (to - from <= maxDelta) {
+                    return forumAccessor.getMessageList(from, to - 1);
+                } else {
+                    long currentFrom = from;
+                    long currentTo = Math.min(to, from + maxDelta);
+
+                    List<Message> res = new ArrayList<Message>((int) (from - to));
+
+                    while (currentFrom <= to) {
+                        res.addAll(forumAccessor.getMessageList(currentFrom, currentTo));
+                        currentFrom = currentTo+1;
+                        currentTo = Math.min(to, currentFrom + maxDelta);
+                    }
+                    return res;
+                }
             } catch (XmlFpException e) {
                 throw translateException(e, "Can't download msg list from=" + from + " to=" + to);
             }
