@@ -7,7 +7,6 @@
         <!-- Z means UTC: http://www.w3schools.com/schema/schema_dtypes_date.asp -->
         <date>2010-10-10T10:10:10Z</date>
         <parentId>0</parentId>
-        <messageUrl>http://site/?123</messageUrl>
     </info>
     <author>
         <name>vasya</name>

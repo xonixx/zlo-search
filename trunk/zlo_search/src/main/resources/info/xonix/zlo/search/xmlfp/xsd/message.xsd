@@ -78,7 +78,7 @@
                     </xs:annotation>
                 </xs:element>
 
-                <xs:element name="messageUrl" type="xs:anyURI">
+                <xs:element name="messageUrl" type="xs:anyURI" minOccurs="0">
                     <xs:annotation>
                         <xs:documentation>URL of the message</xs:documentation>
                     </xs:annotation>
