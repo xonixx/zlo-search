@@ -119,7 +119,7 @@
                     <jsp:getProperty name="backendBean" property="siteSelector"/>
                     <script type="text/javascript">
                         document.getElementsByName("text")[0].focus();
-                        document.getElementsByName("site")[0].onchange = function() {
+                        document.getElementsByName("site")[0].onchange = function () {
                             document.getElementsByName("topic")[0].selectedIndex = 0;
                             document.getElementById("searchFrm").submit();
                         }
@@ -163,11 +163,14 @@
 <c:choose>
     <c:when test="${not isError}">
         <c:if test="${isSearchResultPresent}">
-            <c:set var="hasHosts" value="${requestScope['paginatedList'].hasHosts}"/>
-            <div class="searchResOuter">
-                <%@ include file="savedMsgLnk.jsp"%>
+            <c:set var="paginatedList" value="${requestScope['paginatedList']}"/>
+            <c:set var="hasHosts" value="${paginatedList.hasHosts}"/>
+            <c:set var="hasNicks" value="${paginatedList.hasNicks}"/>
 
-                <display:table name="requestScope.paginatedList" id="msg" htmlId="resultTable"
+            <div class="searchResOuter">
+                <%@ include file="savedMsgLnk.jsp" %>
+
+                <display:table name="${paginatedList}" id="msg" htmlId="resultTable"
                                decorator="info.xonix.zlo.web.decorators.SearchResultLineDecorator" requestURI="search"
                                class="searchRes">
                     <c:if test="${msg != null}">
@@ -217,12 +220,14 @@
                            href="msg?site=${descriptor.forumIntId}&num=${msg.num}<c:if test="${not empty hl.wordsStr}">&hw=${hl.wordsStr}</c:if>"><fmt:message
                                 key="link.saved.msg"/></a>
                     </display:column>
-                    <display:column title="Ник">
-                        <tiles:insertDefinition name="nick">
-                            <tiles:putAttribute name="reg" value="${msg.reg}"/>
-                            <tiles:putAttribute name="nick" value="${msg.nick}"/>
-                        </tiles:insertDefinition>
-                    </display:column>
+                    <c:if test="${hasNicks}">
+                        <display:column title="Ник">
+                            <tiles:insertDefinition name="nick">
+                                <tiles:putAttribute name="reg" value="${msg.reg}"/>
+                                <tiles:putAttribute name="nick" value="${msg.nick}"/>
+                            </tiles:insertDefinition>
+                        </display:column>
+                    </c:if>
                     <c:if test="${hasHosts}">
                         <display:column title="Хост" class="small">
                             <tiles:insertDefinition name="host">
