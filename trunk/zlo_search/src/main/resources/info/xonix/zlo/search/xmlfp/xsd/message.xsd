@@ -90,6 +90,7 @@
     <xs:element name="content">
         <xs:complexType>
             <xs:sequence>
+                <!--TODO: make optional?-->
                 <xs:element name="category" type="xs:string"/>
 
                 <xs:element name="title" type="xs:string"/>

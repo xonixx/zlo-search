@@ -14,6 +14,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 /**
  * User: gubarkov
  * Date: 19.02.12
@@ -87,6 +89,19 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract {
             return forumAccessor.getMessage(messageId);
         } catch (XmlFpException e) {
             throw translateException(e, "Can't get message #" + messageId);
+        }
+    }
+
+    @Override
+    public List<Message> getMessages(String forumId, long from, long to) throws ForumAccessException {
+        if (forumAccessor.supportsMessageListGeneration()) {
+            try {
+                return forumAccessor.getMessageList(from, to);
+            } catch (XmlFpException e) {
+                throw translateException(e, "Can't download msg list from=" + from + " to=" + to);
+            }
+        } else {
+            return super.getMessages(forumId, from, to);
         }
     }
 
