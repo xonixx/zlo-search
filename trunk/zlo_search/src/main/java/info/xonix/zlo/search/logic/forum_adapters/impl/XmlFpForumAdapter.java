@@ -12,6 +12,7 @@ import info.xonix.zlo.search.xmlfp.XmlFpIOException;
 import info.xonix.zlo.search.xmlfp.utils.XmlFpMarshalException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -22,15 +23,24 @@ import java.util.List;
  * Date: 19.02.12
  * Time: 1:32
  */
-public class XmlFpForumAdapter extends ForumAdapterAbstract {
+public class XmlFpForumAdapter extends ForumAdapterAbstract
+        implements InitializingBean {
     private final static Logger log = Logger.getLogger(XmlFpForumAdapter.class);
 
     @Autowired
     private XmlFpDao xmlFpDao;
 
     private ForumAccessor forumAccessor;
+    private String descriptorUrl;
 
-    public XmlFpForumAdapter(String descriptorUrl) throws ForumAccessException {
+    public XmlFpForumAdapter(String descriptorUrl) {
+        this.descriptorUrl = descriptorUrl;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws ForumAccessException {
+        log.info("Initializing xmlfp adapter for: " + descriptorUrl + " ...");
+
         final String descriptorXmlInDb = xmlFpDao.getDescriptorXmlByUrl(descriptorUrl);
 
         try {
@@ -95,7 +105,7 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract {
 
     // TODO: !!!test this!!!
     @Override
-    public List<Message> getMessages(String forumId, long from, long to) throws ForumAccessException {
+    public List<Message> getMessages(String forumId, final long from, final long to) throws ForumAccessException {
         if (from > to) {
             throw new IllegalArgumentException("from=" + from + " > to=" + to);
         }
@@ -113,8 +123,11 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract {
                     List<Message> res = new ArrayList<Message>((int) (from - to));
 
                     while (currentFrom <= to) {
+                        log.info(forumId + " : getting part [" + currentFrom + " to " + currentTo +
+                                "] of [" + from + " to " + to + "]");
+
                         res.addAll(forumAccessor.getMessageList(currentFrom, currentTo));
-                        currentFrom = currentTo+1;
+                        currentFrom = currentTo + 1;
                         currentTo = Math.min(to, currentFrom + maxDelta);
                     }
                     return res;
