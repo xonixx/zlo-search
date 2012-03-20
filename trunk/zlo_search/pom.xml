@@ -156,11 +156,11 @@
             <version>8.1.0.RC1</version>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>11.0.1</version>
-        </dependency>
+        </dependency>-->
 
         <!--lucene-->
         <dependency>
