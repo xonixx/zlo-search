@@ -163,7 +163,7 @@ public class Message extends MessageShallow implements Serializable {
                             "\n\tbody={10}\n)",
                     num, parentNum, topicCode, topic, title,
                     nick, altName, reg, host, date,
-                    body.replaceAll("\n", "\n\t\t"));
+                    body != null ? body.replaceAll("\n", "\n\t\t") : "");
         } else {
             return MessageFormat.format(
                     "Message(" +
