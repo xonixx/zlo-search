@@ -80,7 +80,7 @@ public class TestMessageToXML {
         final String descrXmlStr = FileUtils.readFileToString(new File(path), Config.UTF_8);
 
         final Forum forum = XmlFpUtils.descriptorFromXml(descrXmlStr);
-        Assert.assertEquals(1000, forum.getXmlfpUrls().getMessageListUrl().getMaxDelta());
+        Assert.assertEquals(1000, forum.getXmlfpUrls().getMessageListUrl().getMaxCount());
     }
 
     @Test

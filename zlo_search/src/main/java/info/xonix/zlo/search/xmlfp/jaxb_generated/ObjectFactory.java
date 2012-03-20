@@ -35,30 +35,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Forum.XmlfpUrls }
-     * 
-     */
-    public Forum.XmlfpUrls createForumXmlfpUrls() {
-        return new Forum.XmlfpUrls();
-    }
-
-    /**
-     * Create an instance of {@link Content.Tags }
-     * 
-     */
-    public Content.Tags createContentTags() {
-        return new Content.Tags();
-    }
-
-    /**
-     * Create an instance of {@link Forum }
-     * 
-     */
-    public Forum createForum() {
-        return new Forum();
-    }
-
-    /**
      * Create an instance of {@link Messages }
      * 
      */
@@ -75,11 +51,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Forum.ForumUrls }
+     * Create an instance of {@link Message }
      * 
      */
-    public Forum.ForumUrls createForumForumUrls() {
-        return new Forum.ForumUrls();
+    public Message createMessage() {
+        return new Message();
+    }
+
+    /**
+     * Create an instance of {@link Forum.XmlfpUrls }
+     * 
+     */
+    public Forum.XmlfpUrls createForumXmlfpUrls() {
+        return new Forum.XmlfpUrls();
     }
 
     /**
@@ -91,6 +75,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Content }
+     * 
+     */
+    public Content createContent() {
+        return new Content();
+    }
+
+    /**
+     * Create an instance of {@link Forum.ForumUrls }
+     * 
+     */
+    public Forum.ForumUrls createForumForumUrls() {
+        return new Forum.ForumUrls();
+    }
+
+    /**
      * Create an instance of {@link Info }
      * 
      */
@@ -99,19 +99,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Message }
+     * Create an instance of {@link Forum }
      * 
      */
-    public Message createMessage() {
-        return new Message();
+    public Forum createForum() {
+        return new Forum();
     }
 
     /**
-     * Create an instance of {@link Content }
+     * Create an instance of {@link Content.Tags }
      * 
      */
-    public Content createContent() {
-        return new Content();
+    public Content.Tags createContentTags() {
+        return new Content.Tags();
     }
 
     /**

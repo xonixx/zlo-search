@@ -12,7 +12,7 @@
     <xmlfpUrls>
         <lastMessageNumberUrl>http://zlo.rt.mipt.ru/xmlfp?lastMsgNumber</lastMessageNumberUrl>
         <messageUrl>http://zlo.rt.mipt.ru/xmlfp?msg=__message_id__</messageUrl>
-        <messageListUrl maxDelta="1000">http://zlo.rt.mipt.ru/xmlfp?from=__from__&amp;to=__to__</messageListUrl>
+        <messageListUrl maxCount="1000">http://zlo.rt.mipt.ru/xmlfp?from=__from__&amp;to=__to__</messageListUrl>
     </xmlfpUrls>
 
     <forumUrls>

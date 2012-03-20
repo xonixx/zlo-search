@@ -142,10 +142,11 @@
         <xs:complexType>
             <xs:simpleContent>
                 <xs:extension base="xs:anyURI">
-                    <xs:attribute name="maxDelta" type="xs:int" use="required">
+                    <xs:attribute name="maxCount" type="xs:int" use="required">
                         <xs:annotation>
                             <xs:documentation>
-                                Maximum of allowed (__from__ - __to__) difference.
+                                Maximum count of messages allowed to retrieve.
+                                This means that difference (__from__ - __to__) should not exceed (maxCount-1).
 
                                 Recommended value is not more then 1000 (to prevent DDoS) an not less then 100.
                             </xs:documentation>
