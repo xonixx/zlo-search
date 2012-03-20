@@ -7,7 +7,6 @@ import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.xmlfp.ForumAccessor;
 import info.xonix.zlo.search.xmlfp.XmlFpException;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -74,13 +73,27 @@ public class WwwconfXmlFpTests {
 
     @Test
     public void test_xmlfp_adaptor1() throws ForumAccessException {
-        final XmlFpForumAdapter xmlFpForumAdapter = new XmlFpForumAdapter(DESCRIPTOR_URL);
-        ReflectionTestUtils.setField(xmlFpForumAdapter, "xmlFpDao", AppSpringContext.get(XmlFpDao.class));
-
-        xmlFpForumAdapter.afterPropertiesSet();
+        final XmlFpForumAdapter xmlFpForumAdapter = buildAdapter();
 
         final Message message = xmlFpForumAdapter.getMessage("votalka", 123);
 
         System.out.println(message);
+    }
+
+    @Test
+    public void test_xmlfp_adaptor2() throws ForumAccessException {
+        final XmlFpForumAdapter xmlFpForumAdapter = buildAdapter();
+
+        final List<Message> messages = xmlFpForumAdapter.getMessages("votalka", 1, 333);
+
+        assertEquals(333, messages.size());
+    }
+
+    private XmlFpForumAdapter buildAdapter() throws ForumAccessException {
+        final XmlFpForumAdapter xmlFpForumAdapter = new XmlFpForumAdapter(DESCRIPTOR_URL);
+        ReflectionTestUtils.setField(xmlFpForumAdapter, "xmlFpDao", AppSpringContext.get(XmlFpDao.class));
+
+        xmlFpForumAdapter.afterPropertiesSet();
+        return xmlFpForumAdapter;
     }
 }
