@@ -34,7 +34,7 @@ public class XmlFpFormer {
         try {
             m = appLogic.getMessageByNumber(forumId, num);
         } catch (EmptyResultDataAccessException e) {
-            m = Message.withStatus(MessageStatus.DELETED, num);// TODO: should mean NOT EXISTS
+            m = Message.withStatus(MessageStatus.NOT_EXISTS, num);
         }
 
         return XmlFpUtils.messageToXml(forumId, m);

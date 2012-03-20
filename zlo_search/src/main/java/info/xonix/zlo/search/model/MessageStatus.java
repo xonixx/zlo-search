@@ -8,14 +8,17 @@ package info.xonix.zlo.search.model;
 public enum MessageStatus {
     OK,
     DELETED,
+    NOT_EXISTS
 //    SPAM,
 //    UNKNOWN,
     ;
 
+    //    TODO: !!!this is highly incorrect!!!
     public static MessageStatus fromInt(int id) {
         return MessageStatus.values()[id];
     }
 
+    //    TODO: !!!this is highly incorrect!!!
     public int getInt() {
         for (int i = 0; i < MessageStatus.values().length; i++) {
             if (this == MessageStatus.values()[i])

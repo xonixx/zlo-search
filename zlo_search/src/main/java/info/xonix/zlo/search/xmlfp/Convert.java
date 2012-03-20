@@ -1,7 +1,8 @@
 package info.xonix.zlo.search.xmlfp;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.ImmutableBiMap;
+//import com.google.common.collect.BiMap;
+//import com.google.common.collect.ImmutableBiMap;
+
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams;
@@ -21,6 +22,9 @@ import java.util.List;
  */
 class Convert {
     private static final ObjectFactory OBJECT_FACTORY = new ObjectFactory();
+
+    public static final String STATUS_DELETED = "deleted";
+    public static final String STATUS_NOT_EXISTS = "not_exists";
 
     public static Message fromJaxbMessage(info.xonix.zlo.search.xmlfp.jaxb_generated.Message jaxbMessage) {
         final MessageStatus messageStatus = messageStatusFromString(jaxbMessage.getStatus());
@@ -67,8 +71,8 @@ class Convert {
     public static info.xonix.zlo.search.xmlfp.jaxb_generated.Message toJaxbMessage(
             WwwconfParams wwwconfParams, Message message) {
 
-        if (message == null) { // TODO: ?
-            message = new Message();
+        if (message == null) {
+            throw new NullPointerException("message");
         }
 
         info.xonix.zlo.search.xmlfp.jaxb_generated.Message jaxbMessage = new info.xonix.zlo.search.xmlfp.jaxb_generated.Message();
@@ -76,10 +80,10 @@ class Convert {
         jaxbMessage.setId((long) message.getNum());
 
         final MessageStatus messageStatus = message.getStatus();
-        jaxbMessage.setStatus(messageStatusToString(messageStatus));
 
-        if (messageStatus == MessageStatus.OK) {
-
+        if (messageStatus != MessageStatus.OK) {
+            jaxbMessage.setStatus(messageStatusToString(messageStatus));
+        } else {
             jaxbMessage.setStatus(null); // null = OK
 
             final Content content = OBJECT_FACTORY.createContent();
@@ -113,25 +117,47 @@ class Convert {
             author.setHost(message.getHost());
             author.setRegistered(message.isReg());
         }
-
         return jaxbMessage;
     }
 
-    private static final BiMap<MessageStatus, String> MESSAGE_STATUS_TO_JAXB_STATUS = ImmutableBiMap.of(
+/*    private static final BiMap<MessageStatus, String> MESSAGE_STATUS_TO_JAXB_STATUS = ImmutableBiMap.of(
             MessageStatus.OK, "ok",
-            MessageStatus.DELETED, "deleted");
+            MessageStatus.DELETED, "deleted");*/
 
     private static String messageStatusToString(final MessageStatus messageStatus) {
-        final String jaxbStatus = MESSAGE_STATUS_TO_JAXB_STATUS.get(messageStatus);
+        switch (messageStatus) {
+//            case OK:
+//                return "ok";
+            case DELETED:
+                return STATUS_DELETED;
+            case NOT_EXISTS:
+                return STATUS_NOT_EXISTS;
+            default:
+                throw new IllegalArgumentException("messageStatus:" + messageStatus);
+        }
+
+/*        final String jaxbStatus = MESSAGE_STATUS_TO_JAXB_STATUS.get(messageStatus);
         if (jaxbStatus == null) {
             throw new IllegalStateException("messageStatus:" + messageStatus);
         }
-        return jaxbStatus;
+        return jaxbStatus;*/
     }
 
     private static MessageStatus messageStatusFromString(String jaxbStatus) {
+        if (jaxbStatus == null) {// omitted status = OK
+            return MessageStatus.OK;
+        } else if (STATUS_DELETED.equals(jaxbStatus)) {
+            return MessageStatus.DELETED;
+        } else if (STATUS_NOT_EXISTS.equals(jaxbStatus)) {
+            return MessageStatus.NOT_EXISTS;
+        }
+
+        throw new IllegalArgumentException("jaxbStatus: " + jaxbStatus);
+
+/*
         final MessageStatus messageStatus = MESSAGE_STATUS_TO_JAXB_STATUS.inverse().get(jaxbStatus);
         return messageStatus != null ? messageStatus : MessageStatus.OK; // omitted status = OK
+*/
     }
 
     public static Forum toJaxbForum(String forumId, WwwconfParams wwwconfParams) {
