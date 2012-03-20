@@ -71,6 +71,12 @@ public class WwwconfXmlFpTests {
         }
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void test_list_msgs_bunch2() throws XmlFpException {
+        // maxDelta=100
+        final List<Message> messageList = forumAccessor.getMessageList(1, 102);
+    }
+
     @Test
     public void test_xmlfp_adaptor1() throws ForumAccessException {
         final XmlFpForumAdapter xmlFpForumAdapter = buildAdapter();
