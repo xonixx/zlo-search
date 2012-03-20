@@ -58,6 +58,8 @@ public class ForumAccessor {
     }
 
     private void absolutizeUrls(String descriptorUrl) {
+        forum.setUrl(UrlUtil.combineUrls(descriptorUrl, forum.getUrl()));
+
         final Forum.XmlfpUrls xmlfpUrls = forum.getXmlfpUrls();
 
         xmlfpUrls.setLastMessageNumberUrl(UrlUtil.combineUrls(descriptorUrl, xmlfpUrls.getLastMessageNumberUrl()));
