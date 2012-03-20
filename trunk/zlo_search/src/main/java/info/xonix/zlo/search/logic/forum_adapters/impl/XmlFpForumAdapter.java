@@ -120,7 +120,7 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract
                     long currentFrom = from;
                     long currentTo = Math.min(to, from + maxDelta);
 
-                    List<Message> res = new ArrayList<Message>((int) (from - to));
+                    List<Message> res = new ArrayList<Message>((int) (to - from + 1));
 
                     while (currentFrom <= to) {
                         log.info(forumId + " : getting part [" + currentFrom + " to " + currentTo +
