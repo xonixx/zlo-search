@@ -104,7 +104,6 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract
     }
 
     // TODO: !!!test this!!!
-    // TODO: maxDelta should be maxCount
     @Override
     public List<Message> getMessages(String forumId, final long from, final long to) throws ForumAccessException {
         if (from > to) {
@@ -113,13 +112,13 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract
 
         if (forumAccessor.supportsMessageListGeneration()) {
             try {
-                final int maxDelta = forumAccessor.getMessageListMaxDelta();
+                final int maxCount = forumAccessor.getMessageListMaxCount();
 
-                if (to - from <= maxDelta) {
+                if (to - from <= maxCount) {
                     return forumAccessor.getMessageList(from, to - 1);
                 } else {
                     long currentFrom = from;
-                    long currentTo = Math.min(to, from + maxDelta - 1);
+                    long currentTo = Math.min(to, from + maxCount - 1);
 
                     List<Message> res = new ArrayList<Message>((int) (to - from + 1));
 
@@ -129,7 +128,7 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract
 
                         res.addAll(forumAccessor.getMessageList(currentFrom, currentTo));
                         currentFrom = currentTo + 1;
-                        currentTo = Math.min(to, currentFrom + maxDelta - 1);
+                        currentTo = Math.min(to, currentFrom + maxCount - 1);
                     }
                     return res;
                 }

@@ -121,10 +121,10 @@ public class ForumAccessor {
         }
 
         final MessageListUrl mlu = forum.getXmlfpUrls().getMessageListUrl();
-        final int maxDelta = mlu.getMaxDelta();
+        final int maxCount = mlu.getMaxCount();
 
-        if (to - from > maxDelta) {
-            throw new IllegalArgumentException("from - to > allowed maxDelta = " + maxDelta);
+        if (to - from > maxCount) {
+            throw new IllegalArgumentException("from - to > allowed maxCount = " + maxCount);
         }
 
         final String messageListUrl = mlu.getValue();
@@ -190,7 +190,7 @@ public class ForumAccessor {
         return forum.getXmlfpUrls().getMessageListUrl() != null;
     }
 
-    public int getMessageListMaxDelta() {
-        return forum.getXmlfpUrls().getMessageListUrl().getMaxDelta();
+    public int getMessageListMaxCount() {
+        return forum.getXmlfpUrls().getMessageListUrl().getMaxCount();
     }
 }

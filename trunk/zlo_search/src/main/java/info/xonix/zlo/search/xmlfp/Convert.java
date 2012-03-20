@@ -154,7 +154,7 @@ class Convert {
                 "&from=" + XmlFpUrlsSubstitutions.FROM +
                 "&to=" + XmlFpUrlsSubstitutions.TO +
                 "&site=" + forumIntId);
-        messageListUrl.setMaxDelta(XmlFpFormer.MAX_DELTA);
+        messageListUrl.setMaxCount(XmlFpFormer.MAX_DELTA);
         xmlFpInfo.setMessageListUrl(messageListUrl);
 
         forum.setXmlfpUrls(xmlFpInfo);

@@ -36,7 +36,7 @@ public class WwwconfXmlFpTests {
         assertEquals("http://votalka.campus.mipt.ru/?index", forumAccessor.getForumUrl());
         assertEquals("свободное™ общение", forumAccessor.getTitle());
         assertEquals("диктатура свободного™ общения без модерации", forumAccessor.getDescription());
-        assertEquals(100, forumAccessor.getMessageListMaxDelta());
+        assertEquals(100, forumAccessor.getMessageListMaxCount());
     }
 
     @Test
