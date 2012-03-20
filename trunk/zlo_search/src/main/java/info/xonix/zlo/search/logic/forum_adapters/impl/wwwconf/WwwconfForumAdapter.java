@@ -8,6 +8,7 @@ import info.xonix.zlo.search.logic.site.MessageRetriever;
 import info.xonix.zlo.search.logic.site.PageParseException;
 import info.xonix.zlo.search.logic.site.RetrieverException;
 import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.utils.HtmlUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -66,7 +67,8 @@ public class WwwconfForumAdapter extends ForumAdapterAbstract {
 
     @Override
     public String prepareUserProfileUrl(long userId, String userName) {
-        return "http://" + wwwconfParams.getSiteUrl() + wwwconfParams.getUinfoQuery() + userName; // TODO: correct encoding of userName
+        return "http://" + wwwconfParams.getSiteUrl() + wwwconfParams.getUinfoQuery()
+                + HtmlUtils.urlencode(userName, wwwconfParams.getSiteCharset());
     }
 
     @Override
