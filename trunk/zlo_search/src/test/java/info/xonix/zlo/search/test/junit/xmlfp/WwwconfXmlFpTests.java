@@ -54,4 +54,15 @@ public class WwwconfXmlFpTests {
             System.out.println(message);
         }
     }
+
+    @Test
+    public void test_list_msgs_bunch1() throws XmlFpException {
+        final List<Message> messageList = forumAccessor.getMessageList(101814, 101817);
+
+        assertEquals(4, messageList.size());
+
+        for (Message message : messageList) {
+            System.out.println(message);
+        }
+    }
 }
