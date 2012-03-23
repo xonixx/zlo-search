@@ -60,8 +60,15 @@
     </function>
 
     <function>
+        <description>Is obscene?</description>
+        <name>isObscene</name>
+        <function-class>info.xonix.zlo.search.utils.obscene.ObsceneUtils</function-class>
+        <function-signature>boolean containsObsceneWord(java.lang.String)</function-signature>
+    </function>
+
+    <function>
         <description>Unobscene</description>
-        <name>unobscene</name>
+        <name>unObscene</name>
         <function-class>info.xonix.zlo.search.utils.obscene.ObsceneUtils</function-class>
         <function-signature>java.lang.String unObscene(java.lang.String,java.lang.String)</function-signature>
     </function>

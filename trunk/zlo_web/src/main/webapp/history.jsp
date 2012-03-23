@@ -64,16 +64,10 @@
         за последние ${lastHours} ${xonix:plural(lastHours, 'час', 'часа', 'часов')})
     </small>
 
-    <display:table name="${res.rows}" id="row" htmlId="resultTable"
-                   decorator="info.xonix.zlo.web.decorators.HistoryTableDecorator">
+    <jsp:useBean id="decoratedRow" class="info.xonix.zlo.web.decorators.HistoryTableDecorator" scope="page"/>
+    <c:set target="${decoratedRow}" property="admin" value="${isPowerUser}" />
 
-        <c:if test="${not isPowerUser}">
-            <c:set target="${row}" property="req_text" value="${xonix:unobscene(row.req_text, '')}" />
-            <c:set target="${row}" property="req_nick">${xonix:unobscene(row.req_nick, '')}</c:set>
-            <c:set target="${row}" property="req_host">${xonix:unobscene(row.req_host, '')}</c:set>
-        </c:if>
-        <%--<display:column>${row} : ${row['req_text']}</display:column>--%>
-
+    <display:table name="${res.rows}" id="row" htmlId="resultTable" decorator="decoratedRow">
         <display:setProperty name="basic.msg.empty_list"><%-- don't display empty msg --%></display:setProperty>
 
         <display:column title="№">
