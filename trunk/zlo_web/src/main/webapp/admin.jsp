@@ -48,6 +48,13 @@
 </style>
 
 <div class="content">
+    <h2> Server Info</h2>
+    Server info = <%= application.getServerInfo() %> <br>
+    Servlet engine version = <%=  application.getMajorVersion() %>.<%= application.getMinorVersion() %><br>
+    JSP version = <%= JspFactory.getDefaultFactory().getEngineInfo().getSpecificationVersion() %><br>
+    Java version = <%= System.getProperty("java.version") %><br>
+    Java VM version = <%= System.getProperty("java.vm.version") %><br>
+
     <form action="admin.jsp" method="post">
         <input type="submit" name="command" value="Optimize"/>
         <input type="submit" name="command" value="GC"/>
