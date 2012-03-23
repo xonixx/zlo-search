@@ -59,6 +59,13 @@
         <function-signature>java.lang.String getUserAgentSmall(java.lang.String)</function-signature>
     </function>
 
+    <function>
+        <description>Unobscene</description>
+        <name>unobscene</name>
+        <function-class>info.xonix.zlo.search.utils.obscene.ObsceneUtils</function-class>
+        <function-signature>java.lang.String unObscene(java.lang.String,java.lang.String)</function-signature>
+    </function>
+
 <!--    <function>
         <description>Returns appropriate site root based on Host header received from user browser</description>
         <name>getSiteRoot</name>
