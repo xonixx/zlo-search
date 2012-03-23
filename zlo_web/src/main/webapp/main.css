@@ -89,6 +89,8 @@ h3 {
     text-align: center;
 }
 
+.attention { font-weight: bold; color: red }
+
 .search {
     font-weight: bold;
     color: green;
