@@ -3,8 +3,6 @@
 <%@ page import="info.xonix.zlo.search.logic.forum_adapters.ForumAdapter" %>
 <%@ page import="info.xonix.zlo.web.utils.RequestUtils" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="info.xonix.zlo.search.model.SearchLog" %>
-<%@ page import="info.xonix.zlo.search.logic.PresentationLogic" %>
 
 <%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
@@ -70,9 +68,11 @@
                    decorator="info.xonix.zlo.web.decorators.HistoryTableDecorator">
 
         <c:if test="${not isPowerUser}">
-            <%--<% PresentationLogic.unObscene((SearchLog) row, ""); %>--%>
-
+            <c:set target="${row}" property="req_text" value="${xonix:unobscene(row.req_text, '')}" />
+            <c:set target="${row}" property="req_nick">${xonix:unobscene(row.req_nick, '')}</c:set>
+            <c:set target="${row}" property="req_host">${xonix:unobscene(row.req_host, '')}</c:set>
         </c:if>
+        <%--<display:column>${row} : ${row['req_text']}</display:column>--%>
 
         <display:setProperty name="basic.msg.empty_list"><%-- don't display empty msg --%></display:setProperty>
 
