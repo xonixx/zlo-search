@@ -3,6 +3,8 @@
 <%@ page import="info.xonix.zlo.search.logic.forum_adapters.ForumAdapter" %>
 <%@ page import="info.xonix.zlo.web.utils.RequestUtils" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="info.xonix.zlo.search.model.SearchLog" %>
+<%@ page import="info.xonix.zlo.search.logic.PresentationLogic" %>
 
 <%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
@@ -66,6 +68,11 @@
 
     <display:table name="${res.rows}" id="row" htmlId="resultTable"
                    decorator="info.xonix.zlo.web.decorators.HistoryTableDecorator">
+
+        <c:if test="${not isPowerUser}">
+            <%--<% PresentationLogic.unObscene((SearchLog) row, ""); %>--%>
+
+        </c:if>
 
         <display:setProperty name="basic.msg.empty_list"><%-- don't display empty msg --%></display:setProperty>
 
