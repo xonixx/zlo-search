@@ -57,6 +57,10 @@ public class ObsceneUtils {
         return Pattern.compile(StringUtils.join(_words_re_parts, "|"));
     }
 
+    public static String unObscene(String txt, String defaultStr) {
+        return containsObsceneWord(txt) ? defaultStr : txt;
+    }
+
     public static boolean containsObsceneWord(String txt) {
         if (StringUtils.isEmpty(txt)) {
             return false;
