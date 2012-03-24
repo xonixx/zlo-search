@@ -6,11 +6,7 @@ import org.w3c.dom.ls.DOMImplementationLS;
 import org.w3c.dom.ls.LSInput;
 import org.w3c.dom.ls.LSResourceResolver;
 
-import javax.xml.transform.Source;
 import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Set;
 
 /**
  * User: gubarkov

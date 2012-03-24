@@ -3,7 +3,6 @@ package info.xonix.zlo.search.logic;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
-import info.xonix.zlo.search.logic.site.MessageRetriever;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.utils.Check;
 import org.apache.log4j.Logger;
@@ -17,8 +16,8 @@ import java.util.List;
  * Date: 12.06.2010
  * Time: 22:00:33
  */
-public class SiteLogicImpl implements SiteLogic, InitializingBean {
-    private static final Logger log = Logger.getLogger(SiteLogicImpl.class);
+public class ForumLogicImpl implements ForumLogic, InitializingBean {
+    private static final Logger log = Logger.getLogger(ForumLogicImpl.class);
 
     @Autowired
     private Config config;

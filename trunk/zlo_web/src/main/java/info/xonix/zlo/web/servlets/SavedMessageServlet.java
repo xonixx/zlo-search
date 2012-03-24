@@ -1,7 +1,6 @@
 package info.xonix.zlo.web.servlets;
 
 import info.xonix.zlo.search.config.ErrorMessage;
-
 import info.xonix.zlo.search.config.forums.ForumDescriptor;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Message;

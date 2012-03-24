@@ -4,8 +4,8 @@ import info.xonix.zlo.search.ZloObservable;
 import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.daemon.Daemon;
 import info.xonix.zlo.search.daemon.DaemonLauncher;
+import info.xonix.zlo.search.logic.ForumLogic;
 import info.xonix.zlo.search.logic.IndexerLogic;
-import info.xonix.zlo.search.logic.SiteLogic;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 
@@ -21,7 +21,7 @@ import java.util.Observer;
 public class OptimizeAllIndexes {
     private final static Logger log = Logger.getLogger(OptimizeAllIndexes.class);
 
-    private SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
+    private ForumLogic forumLogic = AppSpringContext.get(ForumLogic.class);
     private IndexerLogic indexerLogic = AppSpringContext.get(IndexerLogic.class);
 
     private Observable observable = new ZloObservable();

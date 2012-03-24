@@ -3,21 +3,19 @@ package info.xonix.zlo.search.xmlfp;
 import info.xonix.zlo.search.utils.ConfigUtils;
 import info.xonix.zlo.search.utils.factory.StringFactory;
 import info.xonix.zlo.search.xmlfp.utils.jaxb.SimpleResolver;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.xml.sax.SAXException;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * User: gubarkov

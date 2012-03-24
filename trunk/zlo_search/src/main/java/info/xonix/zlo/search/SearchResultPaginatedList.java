@@ -2,7 +2,6 @@ package info.xonix.zlo.search;
 
 import info.xonix.zlo.search.dao.MessagesDao;
 import info.xonix.zlo.search.domainobj.SearchResult;
-
 import info.xonix.zlo.search.doubleindex.DoubleHits;
 import info.xonix.zlo.search.logic.MessageFields;
 import info.xonix.zlo.search.model.Message;

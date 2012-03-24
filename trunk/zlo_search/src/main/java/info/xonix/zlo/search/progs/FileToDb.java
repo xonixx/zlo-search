@@ -2,7 +2,6 @@ package info.xonix.zlo.search.progs;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.MessagesDao;
-
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;

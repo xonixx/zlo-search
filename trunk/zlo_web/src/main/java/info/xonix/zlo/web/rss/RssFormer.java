@@ -11,7 +11,6 @@ import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.domainobj.SearchRequest;
 import info.xonix.zlo.search.domainobj.SearchResult;
-
 import info.xonix.zlo.search.logic.forum_adapters.ForumAdapter;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.spring.AppSpringContext;

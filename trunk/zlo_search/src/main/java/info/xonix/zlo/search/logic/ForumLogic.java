@@ -11,7 +11,7 @@ import java.util.List;
  * Date: 12.06.2010
  * Time: 22:00:19
  */
-public interface SiteLogic {
+public interface ForumLogic {
     int getLastMessageNumber(String forumId) throws ForumAccessException;
 
     List<Message> getMessages(String forumId, int from, int to) throws ForumAccessException;
