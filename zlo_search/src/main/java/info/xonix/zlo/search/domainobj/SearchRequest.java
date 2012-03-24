@@ -2,7 +2,7 @@ package info.xonix.zlo.search.domainobj;
 
 import info.xonix.zlo.search.config.DateFormats;
 import info.xonix.zlo.search.config.forums.GetForum;
-import info.xonix.zlo.search.dao.MessagesDao;
+import info.xonix.zlo.search.logic.ControlsDataLogic;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.commons.lang.StringUtils;
 
@@ -16,7 +16,7 @@ import java.util.Date;
  */
 public class SearchRequest {
 
-    private MessagesDao messagesDao = AppSpringContext.get(MessagesDao.class);
+    private ControlsDataLogic controlsDataLogic = AppSpringContext.get(ControlsDataLogic.class);
 
     private String forumId;
 
@@ -220,11 +220,8 @@ public class SearchRequest {
         if (StringUtils.isNotEmpty(host)) sb.append(" хост:(").append(host).append(")");
 
         if (topicCode != -1) {
-//            try {
-            sb.append(" категория:(").append(messagesDao.getTopics(forumId)[topicCode]).append(")");
-//            } catch (DbException e) {
-//                ;
-//            }
+            sb.append(" категория:(").append(
+                    controlsDataLogic.getTopics(forumId).get(topicCode)).append(")");
         }
 
         ArrayList<String> options = new ArrayList<String>(5);

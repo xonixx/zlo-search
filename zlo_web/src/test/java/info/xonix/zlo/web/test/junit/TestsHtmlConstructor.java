@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
  * Date: 16.10.2007
  * Time: 23:31:05
  */
-public class TestsWeb {
+public class TestsHtmlConstructor {
     @Test
     public void testHtmlConstructor() {
         assertEquals("<select name=\"selId\">\n" +

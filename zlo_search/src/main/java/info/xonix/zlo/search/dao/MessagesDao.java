@@ -5,7 +5,6 @@ import info.xonix.zlo.search.model.MessageShallow;
 import info.xonix.zlo.search.model.Topic;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * User: Vovan
@@ -27,13 +26,7 @@ public interface MessagesDao {
 
     int getLastMessageNumber(String forumId);
 
-    // TODO: introduce right dmo
-
     List<Topic> getTopicList(String forumId);
-
-    String[] getTopics(String forumId);
-
-    Map<String, Integer> getTopicsHashMap(String forumId);
 
     void saveSearchTextForAutocomplete(String forumId, String text);
 

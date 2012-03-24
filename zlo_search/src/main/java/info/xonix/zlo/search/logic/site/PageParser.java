@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.logic.site;
 
 import info.xonix.zlo.search.config.DateFormats;
-import info.xonix.zlo.search.dao.MessagesDao;
+import info.xonix.zlo.search.logic.ControlsDataLogic;
 import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
@@ -30,11 +30,11 @@ public class PageParser implements InitializingBean {
     public static final Logger log = Logger.getLogger(PageParser.class);
 
     @Autowired
-    private MessagesDao messagesDao;
+    private ControlsDataLogic controlsDataLogic;
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        Check.isSet(messagesDao, "messagesDao");
+        Check.isSet(controlsDataLogic, "controlsDataLogic");
     }
 
     private Message parseMessage(String forumId, WwwconfParams wwwconfParams, Message message, String msg) throws PageParseException {
@@ -78,7 +78,8 @@ public class PageParser implements InitializingBean {
 
         message.setTopic(topic);
 
-        Integer topicCode = messagesDao.getTopicsHashMap(forumId).get(topic);
+//        Integer topicCode = messagesDao.getTopicsHashMap(forumId).get(topic);
+        Integer topicCode = controlsDataLogic.getTopicsReversedMap(forumId).get(topic);
         if (topicCode == null) {
             topicCode = -1;
             if (StringUtils.isNotEmpty(topic)) {
@@ -94,7 +95,7 @@ public class PageParser implements InitializingBean {
         message.setHost(m.group(groupsOrder.get(4)));
 
         String dateStr = m.group(groupsOrder.get(5));
-        message.setDate(StringUtils.isEmpty(dateStr) ? new Date(0) : prepareDate(wwwconfParams, dateStr)); // TODO: insert null date
+        message.setDate(StringUtils.isEmpty(dateStr) ? null : prepareDate(wwwconfParams, dateStr));
 
         message.setBody(m.group(groupsOrder.get(6)));
         message.setStatus(MessageStatus.OK);

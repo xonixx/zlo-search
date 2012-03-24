@@ -6,7 +6,6 @@ import info.xonix.zlo.search.model.MessageShallow;
 import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.model.Topic;
 import info.xonix.zlo.search.utils.Check;
-import info.xonix.zlo.search.utils.factory.StringFactory;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
@@ -16,9 +15,7 @@ import org.springframework.util.Assert;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static info.xonix.zlo.search.utils.DbUtils.timestamp;
 import static org.apache.commons.lang.StringUtils.substring;
@@ -33,32 +30,6 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
 
     @Autowired
     private QueryProvider queryProvider;
-
-    private StringFactory<Map<String, Integer>> topicsMapFactory = new StringFactory<Map<String, Integer>>() {
-        @Override
-        protected Map<String, Integer> create(String forumId) {
-            List<Topic> topicList = getTopicList(forumId);
-            Map<String, Integer> topicsHashMap = new HashMap<String, Integer>();
-
-            for (Topic topic : topicList) {
-                topicsHashMap.put(topic.getName(), topic.getId());
-            }
-
-            return topicsHashMap;
-        }
-    };
-
-    private StringFactory<String[]> topicsFactory = new StringFactory<String[]>() {
-        @Override
-        protected String[] create(String forumId) {
-            List<Topic> topicList = getTopicList(forumId);
-            String[] topics = new String[topicList.size()];
-            for (Topic topic : topicList) {
-                topics[topic.getId()] = topic.getName();
-            }
-            return topics;
-        }
-    };
 
     @Override
     protected void checkDaoConfig() {
@@ -209,25 +180,6 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
         return getSimpleJdbcTemplate().queryForInt(queryProvider.getSelectLastMsgNumQuery(forumId));
     }
 
-//    private HashMap<String, Integer> topicsHashMap;
-
-    /**
-     * returns &lt;topic name, topic code> where "topic name"s also include old codes
-     */
-    @Override
-    public Map<String, Integer> getTopicsHashMap(String forumId) {
-        /*if (topicsHashMap == null) {
-            List<Topic> topicList = getTopicList(forumId);
-            topicsHashMap = new HashMap<String, Integer>();
-
-            for (Topic topic : topicList) {
-                topicsHashMap.put(topic.getName(), topic.getId());
-            }
-        }
-        return topicsHashMap;*/
-        return topicsMapFactory.get(forumId);
-    }
-
     @Override
     public void saveSearchTextForAutocomplete(String forumId, String text) {
         final int res = getSimpleJdbcTemplate().update(
@@ -256,13 +208,5 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
         return getSimpleJdbcTemplate().query(
                 queryProvider.getSelectTopicsQuery(forumId),
                 getRowMappersHelper().beanRowMapper(Topic.class));
-    }
-
-    // returns only "new" topics - current posible topics on site
-//    private String[] topics = null;
-
-    @Override
-    public String[] getTopics(String forumId) {
-        return topicsFactory.get(forumId);
     }
 }

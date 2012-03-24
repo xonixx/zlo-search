@@ -2,6 +2,8 @@ package info.xonix.zlo.web;
 
 import org.apache.commons.lang.StringUtils;
 
+import java.util.Map;
+
 
 /**
  * Author: gubarkov
@@ -10,18 +12,34 @@ import org.apache.commons.lang.StringUtils;
  */
 public class HtmlConstructor {
     public static String constructSelector(String name, String id, String[][] additionalOptions,
-                                           String[] values,
-                                           String[] itemsCollection,
+                                           Map<Integer, String> data,
                                            Integer selected, boolean enumerate) {
+        String[] keys = new String[data.size()];
+        String[] titles = new String[data.size()];
+
+        int i = 0;
+        for (Integer key : data.keySet()) {
+            keys[i] = key.toString();
+            titles[i] = data.get(key);
+            i++;
+        }
+
+        return constructSelector(name, id, additionalOptions, keys, titles, selected, enumerate);
+    }
+
+    public static String constructSelector(String name, String id, String[][] additionalOptions,
+                                           String[] values,
+                                           String[] titles,
+                                           Integer selected, boolean enumerate) { // TODO: wtf enumerate?
         if (values == null) {
-            values = new String[itemsCollection.length];
-            for (Integer i = 0; i < itemsCollection.length; i++) {
+            values = new String[titles.length];
+            for (Integer i = 0; i < titles.length; i++) {
                 values[i] = i.toString();
             }
         }
 
-        if (itemsCollection == null)
-            itemsCollection = new String[0];
+        if (titles == null)
+            titles = new String[0];
 
         StringBuilder res = new StringBuilder("<select name=\"");
         res.append(name).append("\"");
@@ -45,16 +63,16 @@ public class HtmlConstructor {
             }
         }
 
-        for (int i = 0; i < itemsCollection.length; i++) {
+        for (int i = 0; i < titles.length; i++) {
             String valueI = values[i];
             if (StringUtils.equals(valueI, selected.toString()))
                 res.append("<option value=\"")
                         .append(valueI).append("\" selected>")
-                        .append(itemsCollection[i]).append("</option>\n");
+                        .append(titles[i]).append("</option>\n");
             else
                 res.append("<option value=\"")
-                        .append(enumerate ? valueI : itemsCollection[i]).append("\">")
-                        .append(itemsCollection[i]).append("</option>\n");
+                        .append(enumerate ? valueI : titles[i]).append("\">")
+                        .append(titles[i]).append("</option>\n");
         }
 
         res.append("</select>");
@@ -86,9 +104,9 @@ public class HtmlConstructor {
                 selected, enumerate);
     }
 
-/*    public static String constructSelector(String name, String id, String additioanlOption, String[] itemsCollection,
+/*    public static String constructSelector(String name, String id, String additioanlOption, String[] titles,
                                            int selected, boolean enumerate) {
-        return constructSelector(name, id, new String[] {additioanlOption}, itemsCollection,
+        return constructSelector(name, id, new String[] {additioanlOption}, titles,
                                            selected, enumerate);
     }*/
 }
