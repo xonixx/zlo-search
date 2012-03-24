@@ -15,6 +15,7 @@ import org.springframework.util.Assert;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 import static info.xonix.zlo.search.utils.DbUtils.timestamp;
@@ -201,6 +202,19 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
                 text + '%',
                 limit
         );
+    }
+
+    @Override
+    public int insertTopic(String forumId, String topic) {
+        final HashMap<String, Object> args = new HashMap<String, Object>();
+        args.put("name", substring(topic,0,50));
+        args.put("isNew", true);
+
+        // id must be auto_incremented!
+        return newSimpleJdbcInsert()
+                .withTableName(forumId + "_topics")
+                .executeAndReturnKey(args)
+                .intValue();
     }
 
     @Override

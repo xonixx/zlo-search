@@ -21,6 +21,9 @@ public class ForumLogicImpl implements ForumLogic, InitializingBean {
 
     @Autowired
     private Config config;
+    
+    @Autowired
+    private ControlsDataLogic controlsDataLogic;
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -41,7 +44,7 @@ public class ForumLogicImpl implements ForumLogic, InitializingBean {
 
         List<Message> msgs = GetForum.adapter(forumId).getMessages(forumId, (long) from, (long) to);
         
-        processTopicCode(msgs);
+        processTopicCode(forumId, msgs);
 
         float durationSecs = (System.currentTimeMillis() - begin) / 1000f;
         log.info(forumId + " - Downloaded " + msgs.size() + " messages in " + (int) durationSecs + "secs. Rate: " + ((float) msgs.size()) / durationSecs + "mps.");
@@ -49,14 +52,22 @@ public class ForumLogicImpl implements ForumLogic, InitializingBean {
         return msgs;
     }
 
-    private void processTopicCode(List<Message> msgs) {
+    private void processTopicCode(String forumId, List<Message> msgs) {
         for (Message msg : msgs) {
             if (msg.getTopicCode() > 0) {
                 continue;
             }
 
-            // topicCode not set!
+            // topicCode not set, must fill it
+            final String topic = msg.getTopic();
 
+            Integer topicId = controlsDataLogic.getTopicsReversedMap(forumId).get(topic);
+
+            if (topicId == null) {
+                topicId = controlsDataLogic.addNewTopic(forumId, topic);
+            }
+
+            msg.setTopicCode(topicId);
         }
     }
 

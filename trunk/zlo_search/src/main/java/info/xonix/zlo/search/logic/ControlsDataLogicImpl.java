@@ -23,11 +23,9 @@ public class ControlsDataLogicImpl implements ControlsDataLogic {
         @Override
         protected Map<Integer, String> create(String forumId) {
             List<Topic> topicList = messagesDao.getTopicList(forumId);
-//            String[] topics = new String[topicList.size()];
             Map<Integer, String> topics = new LinkedHashMap<Integer, String>();
 
             for (Topic topic : topicList) {
-//                topics[topic.getId()] = topic.getName();
                 topics.put(topic.getId(), topic.getName());
             }
 
@@ -57,5 +55,17 @@ public class ControlsDataLogicImpl implements ControlsDataLogic {
     @Override
     public Map<String, Integer> getTopicsReversedMap(String forumId) {
         return topicsReverseMapFactory.get(forumId);
+    }
+
+    @Override
+    public int addNewTopic(String forumId, String topic) {
+        // insert
+        int id = messagesDao.insertTopic(forumId, topic);
+
+        // invalidate caches
+        topicsMapFactory.reset(forumId);
+        topicsReverseMapFactory.reset(forumId);
+
+        return id;
     }
 }
