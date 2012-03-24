@@ -3,13 +3,12 @@ package info.xonix.zlo.web;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.config.forums.ForumDescriptor;
 import info.xonix.zlo.search.config.forums.GetForum;
-import info.xonix.zlo.search.dao.MessagesDao;
+import info.xonix.zlo.search.logic.ControlsDataLogic;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.xmlfp.utils.UrlUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;
-import org.springframework.dao.DataAccessException;
 
 import java.util.List;
 
@@ -39,24 +38,17 @@ public class BackendBean {
     public static final int SITE_URL_MAX_LEN = 30;
 
     private static final Config config = AppSpringContext.get(Config.class);
-    private static final MessagesDao MESSAGES_DAO = AppSpringContext.get(MessagesDao.class);
+    private static final ControlsDataLogic controlsDataLogic = AppSpringContext.get(ControlsDataLogic.class);
 
     public BackendBean() {
     }
 
     public String getTopicSelector() {
-        String[] topics = new String[0];
-
-        // todo: check
         String forumId = GetForum.descriptor(getSiteInt()).getForumId();
-        try {
-            topics = MESSAGES_DAO.getTopics(forumId);
-        } catch (DataAccessException e) {
-            log.warn("Can't get topics, as db exception occurred: " + e);
-        }
 
         return HtmlConstructor.constructSelector(SN_TOPIC, null,
-                new String[]{ALL_TOPICS}, topics, getTopicInt(), true);
+                new String[][]{{"-1", ALL_TOPICS}},
+                controlsDataLogic.getTopics(forumId), getTopicInt(), true);
     }
 
     public String getSiteSelector() {
@@ -65,7 +57,7 @@ public class BackendBean {
         String[] ids = new String[descriptors.size()];
         String[] vals = new String[descriptors.size()];
 
-        int i=0;
+        int i = 0;
         for (ForumDescriptor descriptor : descriptors) {
             ids[i] = Integer.toString(descriptor.getForumIntId());
             vals[i] = UrlUtil.urlWithoutSchema(descriptor.getForumAdapter().getForumUrl());
@@ -76,18 +68,6 @@ public class BackendBean {
                 ids,
                 cropSiteUrls(vals), getSiteInt(), true);
     }
-
-/*
-    private String[] formSiteNums(List<Site> sites) {
-        String[] siteNums = new String[sites.size()];
-        int i = 0;
-        for (String forumId1 : sites) {
-            siteNums[i++] = String.valueOf(site1.getSiteNumber());
-        }
-        return siteNums;
-    }
-*/
-
 
     private String[] cropSiteUrls(String[] siteNames) {
         String[] res = new String[siteNames.length];
@@ -114,7 +94,7 @@ public class BackendBean {
         return NumberUtils.toInt(site, 0);
     }
 
-// forumIntId
+    // forumIntId
     public void setSite(String site) {
         this.site = site;
     }

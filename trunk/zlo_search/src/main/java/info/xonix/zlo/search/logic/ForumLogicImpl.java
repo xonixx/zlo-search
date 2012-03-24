@@ -40,11 +40,24 @@ public class ForumLogicImpl implements ForumLogic, InitializingBean {
         long begin = System.currentTimeMillis();
 
         List<Message> msgs = GetForum.adapter(forumId).getMessages(forumId, (long) from, (long) to);
+        
+        processTopicCode(msgs);
 
         float durationSecs = (System.currentTimeMillis() - begin) / 1000f;
         log.info(forumId + " - Downloaded " + msgs.size() + " messages in " + (int) durationSecs + "secs. Rate: " + ((float) msgs.size()) / durationSecs + "mps.");
 
         return msgs;
+    }
+
+    private void processTopicCode(List<Message> msgs) {
+        for (Message msg : msgs) {
+            if (msg.getTopicCode() > 0) {
+                continue;
+            }
+
+            // topicCode not set!
+
+        }
     }
 
     @Override

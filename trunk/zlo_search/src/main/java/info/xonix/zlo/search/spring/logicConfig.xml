@@ -8,6 +8,8 @@
         <property name="messagesDao" ref="messagesDao"/>
     </bean>
 
+    <bean id="controlsDataLogic" class="info.xonix.zlo.search.logic.ControlsDataLogicImpl"/>
+
     <bean id="indexerLogic" class="info.xonix.zlo.search.logic.IndexerLogicImpl"/>
 
     <!--site logic-->

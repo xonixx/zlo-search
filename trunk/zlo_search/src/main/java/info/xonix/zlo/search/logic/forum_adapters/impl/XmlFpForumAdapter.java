@@ -103,7 +103,6 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract
         }
     }
 
-    // TODO: !!!test this!!!
     @Override
     public List<Message> getMessages(String forumId, final long from, final long to) throws ForumAccessException {
         long xmlfpTo = to - 1;
