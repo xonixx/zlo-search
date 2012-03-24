@@ -2,18 +2,14 @@
 <%@ page import="info.xonix.zlo.search.daemon.Daemon" %>
 <%@ page import="info.xonix.zlo.search.logic.SearchLogic" %>
 <%@ page import="info.xonix.zlo.search.logic.SearchLogicImpl" %>
-<%@ page import="info.xonix.zlo.search.logic.SiteLogic" %>
 <%@ page import="info.xonix.zlo.search.progs.OptimizeAllIndexes" %>
 <%@ page import="info.xonix.zlo.search.utils.SysUtils" %>
-<%@ page import="info.xonix.zlo.web.utils.RequestUtils" %>
-<%@ page import="java.util.LinkedHashMap" %>
-<%@ page import="java.util.Map" %>
 <%@ page import="info.xonix.zlo.web.logic.AdminLogic" %>
+<%@ page import="info.xonix.zlo.web.utils.RequestUtils" %>
 <%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <%!
-    SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
     SearchLogic searchLogic = AppSpringContext.get(SearchLogicImpl.class);
 %>
 
