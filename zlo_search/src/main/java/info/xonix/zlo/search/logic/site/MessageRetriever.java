@@ -1,7 +1,6 @@
 package info.xonix.zlo.search.logic.site;
 
 import info.xonix.zlo.search.config.Config;
-
 import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams;
 import info.xonix.zlo.search.model.Message;

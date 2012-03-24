@@ -2,7 +2,6 @@ package info.xonix.zlo.web.ws;
 
 import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.dao.MessagesDao;
-
 import info.xonix.zlo.search.logic.*;
 import info.xonix.zlo.web.ws.dto.Message;
 import info.xonix.zlo.web.ws.dto.MessageShallow;
@@ -30,7 +29,7 @@ public class BoardSearchService {
     private AppLogic appLogic;
 
     @Autowired
-    private SiteLogic siteLogic;
+    private ForumLogic forumLogic;
 
     @Autowired
     private SearchLogic searchLogic;

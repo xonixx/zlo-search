@@ -3,13 +3,9 @@ package info.xonix.zlo.web.servlets;
 
 import info.xonix.zlo.search.config.forums.ForumDescriptor;
 import info.xonix.zlo.search.config.forums.GetForum;
-import info.xonix.zlo.search.logic.SiteLogic;
-import info.xonix.zlo.search.logic.forum_adapters.ForumAdapter;
-import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 import info.xonix.zlo.web.servlets.helpful.ForwardingServlet;
 import info.xonix.zlo.web.utils.CookieUtils;
-import info.xonix.zlo.web.utils.RequestUtils;
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,8 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 public class BaseServlet extends ForwardingServlet {
 //    public static final String REQ_SITE_ROOT = "siteRoot";
     public static final String QS_SITE = "site";
-
-//    private static SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
 
     protected void setSiteInReq(ForwardingRequest request, HttpServletResponse response) {
         String siteInCookie;

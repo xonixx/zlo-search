@@ -3,11 +3,9 @@ package info.xonix.zlo.search.daemon;
 import info.xonix.zlo.search.config.forums.ForumParams;
 import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.logic.AppLogic;
-import info.xonix.zlo.search.logic.SiteLogic;
+import info.xonix.zlo.search.logic.ForumLogic;
 import info.xonix.zlo.search.logic.exceptions.ExceptionCategory;
 import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
-import info.xonix.zlo.search.logic.site.PageParseException;
-import info.xonix.zlo.search.logic.site.RetrieverException;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 
@@ -22,7 +20,7 @@ public class DbDaemon extends Daemon {
     private static Logger logger = Logger.getLogger(DbDaemon.class);
 
     private AppLogic appLogic = AppSpringContext.get(AppLogic.class);
-    private SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
+    private ForumLogic forumLogic = AppSpringContext.get(ForumLogic.class);
 
     @Override
     protected Logger getLogger() {
@@ -37,13 +35,13 @@ public class DbDaemon extends Daemon {
 
         @Override
         protected int getEndIndex() throws ForumAccessException {
-            return siteLogic.getLastMessageNumber(getForumId());
+            return forumLogic.getLastMessageNumber(getForumId());
         }
 
         @Override
         protected void perform(int from, int to) throws ForumAccessException {
             String forumId = getForumId();
-            appLogic.saveMessages(forumId, siteLogic.getMessages(forumId, from, to + 1));
+            appLogic.saveMessages(forumId, forumLogic.getMessages(forumId, from, to + 1));
             appLogic.setLastSavedDate(forumId, new Date());
         }
 

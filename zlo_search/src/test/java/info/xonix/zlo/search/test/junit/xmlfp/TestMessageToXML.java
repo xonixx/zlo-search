@@ -4,7 +4,6 @@ import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.spring.AppSpringContext;
-import info.xonix.zlo.search.xmlfp.ForumAccessor;
 import info.xonix.zlo.search.xmlfp.XmlFpException;
 import info.xonix.zlo.search.xmlfp.XmlFpFormatterOptions;
 import info.xonix.zlo.search.xmlfp.XmlFpUtils;

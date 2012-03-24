@@ -2,7 +2,6 @@ package info.xonix.zlo.search.daemon;
 
 import info.xonix.zlo.search.ZloObservable;
 import info.xonix.zlo.search.config.Config;
-
 import info.xonix.zlo.search.logic.exceptions.ExceptionsLogger;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.utils.TimeUtils;

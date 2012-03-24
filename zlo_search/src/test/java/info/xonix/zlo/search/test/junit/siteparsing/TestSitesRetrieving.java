@@ -1,8 +1,8 @@
 package info.xonix.zlo.search.test.junit.siteparsing;
 
 
+import info.xonix.zlo.search.logic.ForumLogic;
 import info.xonix.zlo.search.logic.MessageLogic;
-import info.xonix.zlo.search.logic.SiteLogic;
 import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
@@ -28,7 +28,7 @@ public class TestSitesRetrieving {
     private static Site x = null;
     private static Site dolgopa = null;*/
 
-    private static SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
+    private static ForumLogic forumLogic = AppSpringContext.get(ForumLogic.class);
 
     @BeforeClass
     public static void setUp() {
@@ -52,10 +52,10 @@ public class TestSitesRetrieving {
     public void testVelo() throws ForumAccessException {
         final String forumId = "velo";
 
-        int lmn = siteLogic.getLastMessageNumber(forumId);
+        int lmn = forumLogic.getLastMessageNumber(forumId);
         System.out.println("lmn: " + lmn);
 
-        Message m = siteLogic.getMessageByNumber(forumId, 19490);
+        Message m = forumLogic.getMessageByNumber(forumId, 19490);
         System.out.println(m);
 
         Assert.assertEquals(19490, m.getNum());
@@ -64,7 +64,7 @@ public class TestSitesRetrieving {
         Assert.assertEquals("gw.zunet.ru", m.getHost());
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
 
-        m = siteLogic.getMessageByNumber(forumId, 19580);
+        m = forumLogic.getMessageByNumber(forumId, 19580);
         System.out.println(m);
 
         Assert.assertEquals(19580, m.getNum());
@@ -73,7 +73,7 @@ public class TestSitesRetrieving {
         Assert.assertEquals("ppp85-140-32-253.pppoe.mtu-net.ru", m.getHost());
         Assert.assertTrue(StringUtils.isEmpty(m.getBody()));
 
-        m = siteLogic.getMessageByNumber(forumId, 18869);
+        m = forumLogic.getMessageByNumber(forumId, 18869);
         System.out.println(m);
 
         Assert.assertEquals("а многие собирают себе титановые ригиды на ХТЯ.....", m.getTitle());
@@ -81,7 +81,7 @@ public class TestSitesRetrieving {
         Assert.assertTrue(StringUtils.isEmpty(m.getBody()));
         Assert.assertTrue(m.isReg());
 
-        m = siteLogic.getMessageByNumber(forumId, 25597);
+        m = forumLogic.getMessageByNumber(forumId, 25597);
         System.out.println(m);
         Assert.assertEquals("Велотуризм", m.getTopic());
         Assert.assertEquals("Отчет по походу по Карелии, который обещал выложить", m.getTitle());
@@ -97,10 +97,10 @@ public class TestSitesRetrieving {
     @Test
     public void testDev() throws ForumAccessException {
         String dev = "dev";
-        int lmn = siteLogic.getLastMessageNumber(dev);
+        int lmn = forumLogic.getLastMessageNumber(dev);
         System.out.println(lmn);
 
-        Message m = siteLogic.getMessageByNumber(dev, 9404);
+        Message m = forumLogic.getMessageByNumber(dev, 9404);
 
         Assert.assertEquals(9404, m.getNum());
         Assert.assertEquals("Berk", m.getNick());
@@ -111,7 +111,7 @@ public class TestSitesRetrieving {
 
         System.out.println(m);
 
-        m = siteLogic.getMessageByNumber(dev, 9374);
+        m = forumLogic.getMessageByNumber(dev, 9374);
 
         Assert.assertEquals(9374, m.getNum());
         Assert.assertEquals("arfix.", m.getNick());
@@ -120,7 +120,7 @@ public class TestSitesRetrieving {
 
         System.out.println(m);
 
-        m = siteLogic.getMessageByNumber(dev, 10153);
+        m = forumLogic.getMessageByNumber(dev, 10153);
 
         Assert.assertEquals(10153, m.getNum());
         Assert.assertEquals("Рыбак", m.getNick());
@@ -135,10 +135,10 @@ public class TestSitesRetrieving {
 //    dead
     public void testX() throws ForumAccessException {
         String x = "x";
-        int lmn = siteLogic.getLastMessageNumber(x);
+        int lmn = forumLogic.getLastMessageNumber(x);
         System.out.println(lmn);
 
-        Message m = siteLogic.getMessageByNumber(x, 55177);
+        Message m = forumLogic.getMessageByNumber(x, 55177);
 
         Assert.assertEquals("uberdude", m.getNick());
         Assert.assertEquals("wimax-client.yota.ru", m.getHost());
@@ -147,7 +147,7 @@ public class TestSitesRetrieving {
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
         System.out.println(m);
 
-        m = siteLogic.getMessageByNumber(x, 55182);
+        m = forumLogic.getMessageByNumber(x, 55182);
 
         Assert.assertEquals("Митя", m.getNick());
         Assert.assertEquals("ip-46-73-158-249.bb.netbynet.ru", m.getHost());
@@ -156,7 +156,7 @@ public class TestSitesRetrieving {
         Assert.assertTrue(StringUtils.isEmpty(m.getBody()));
         System.out.println(m);
 
-        m = siteLogic.getMessageByNumber(x, 55207);
+        m = forumLogic.getMessageByNumber(x, 55207);
 
         Assert.assertEquals("demerzel", m.getNick());
         Assert.assertEquals("93.175.15.182", m.getHost());
@@ -165,7 +165,7 @@ public class TestSitesRetrieving {
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
         System.out.println(m);
 
-        m = siteLogic.getMessageByNumber(x, 999999999);
+        m = forumLogic.getMessageByNumber(x, 999999999);
 
         Assert.assertEquals(null, m.getNick());
         Assert.assertEquals(null, m.getHost());
@@ -178,10 +178,10 @@ public class TestSitesRetrieving {
     public void testDolgopa() throws ForumAccessException {
         final String forumId = "dolgopa";
 
-        int lmn = siteLogic.getLastMessageNumber(forumId);
+        int lmn = forumLogic.getLastMessageNumber(forumId);
         System.out.println(lmn);
 
-        Message m = siteLogic.getMessageByNumber(forumId, 138080);
+        Message m = forumLogic.getMessageByNumber(forumId, 138080);
 
         System.out.println(m);
         Assert.assertEquals("Rook", m.getNick());
@@ -191,7 +191,7 @@ public class TestSitesRetrieving {
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
         Assert.assertEquals("И да не кончатся богом данные бюллетени в ее поддержку!", m.getBody());
 
-        m = siteLogic.getMessageByNumber(forumId, 138026);
+        m = forumLogic.getMessageByNumber(forumId, 138026);
 
         System.out.println(m);
         Assert.assertEquals("@LuCiFeRsHa@", m.getNick());
@@ -200,7 +200,7 @@ public class TestSitesRetrieving {
         Assert.assertTrue(m.isReg());
         Assert.assertTrue(StringUtils.isEmpty(m.getBody()));
 
-        m = siteLogic.getMessageByNumber(forumId, 138034);
+        m = forumLogic.getMessageByNumber(forumId, 138034);
 
         System.out.println(m);
         Assert.assertEquals("\\/", m.getNick());
@@ -209,7 +209,7 @@ public class TestSitesRetrieving {
         Assert.assertTrue(!m.isReg());
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
 
-        m = siteLogic.getMessageByNumber(forumId, 138004);
+        m = forumLogic.getMessageByNumber(forumId, 138004);
 
         System.out.println(m);
         Assert.assertEquals("FIPS", m.getNick());
@@ -220,7 +220,7 @@ public class TestSitesRetrieving {
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
         Assert.assertEquals("С овчаркой позаниматься.", m.getBody());
 
-        m = siteLogic.getMessageByNumber(forumId, 199);
+        m = forumLogic.getMessageByNumber(forumId, 199);
         System.out.println(m);
         Assert.assertEquals("<P>Люди кто нить знает что за проводок кинули с Лих 4 на Чайку уж не сетку ли?????", m.getBody());
 
@@ -228,7 +228,7 @@ public class TestSitesRetrieving {
     }
 
     private void checkMsgNotExists(String forumId) throws ForumAccessException {
-        final Message m = siteLogic.getMessageByNumber(forumId, 999999999);
+        final Message m = forumLogic.getMessageByNumber(forumId, 999999999);
 
         System.out.println(m);
 
@@ -241,10 +241,10 @@ public class TestSitesRetrieving {
     @Test
     public void testZlo() throws ForumAccessException {
         String zlo = "zlo";
-        int lmn = siteLogic.getLastMessageNumber(zlo);
+        int lmn = forumLogic.getLastMessageNumber(zlo);
         System.out.println(lmn);
 
-        Message m = siteLogic.getMessageByNumber(zlo, 4093778);
+        Message m = forumLogic.getMessageByNumber(zlo, 4093778);
 
         Assert.assertEquals("QDiesel", m.getNick());
         Assert.assertEquals("nokia.7ka.mipt.ru", m.getHost());
@@ -252,7 +252,7 @@ public class TestSitesRetrieving {
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
         System.out.println(m);
 
-        m = siteLogic.getMessageByNumber(zlo, 4093788);
+        m = forumLogic.getMessageByNumber(zlo, 4093788);
 
         Assert.assertEquals("Loki", m.getNick());
         Assert.assertEquals("loki.3ka.mipt.ru", m.getHost());
@@ -260,7 +260,7 @@ public class TestSitesRetrieving {
         Assert.assertTrue(StringUtils.isEmpty(m.getBody()));
         System.out.println(m);
 
-        m = siteLogic.getMessageByNumber(zlo, 405573);
+        m = forumLogic.getMessageByNumber(zlo, 405573);
 
         Assert.assertEquals("Demoney", m.getNick());
         Assert.assertEquals("morgue.7ka.mipt.ru", m.getHost());
@@ -268,7 +268,7 @@ public class TestSitesRetrieving {
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
         System.out.println(m);
 
-        m = siteLogic.getMessageByNumber(zlo, 7787566);
+        m = forumLogic.getMessageByNumber(zlo, 7787566);
 
         Assert.assertEquals("vilfred", m.getNick());
         Assert.assertEquals("77.51.192.172", m.getHost());
@@ -277,7 +277,7 @@ public class TestSitesRetrieving {
         Assert.assertTrue("Сообщения в этом потоке".equals(m.getTitle()));
         System.out.println(m);
 
-        m = siteLogic.getMessageByNumber(zlo, 999999999);
+        m = forumLogic.getMessageByNumber(zlo, 999999999);
 
         Assert.assertEquals(null, m.getNick());
         Assert.assertEquals(null, m.getHost());
@@ -290,11 +290,11 @@ public class TestSitesRetrieving {
 //    engine changed
     public void testTakeoff() throws ForumAccessException {
         String takeoff = "takeoff";
-        int lmn = siteLogic.getLastMessageNumber(takeoff);
+        int lmn = forumLogic.getLastMessageNumber(takeoff);
 
         System.out.println(lmn);
 
-        Message m = siteLogic.getMessageByNumber(takeoff, 13996);
+        Message m = forumLogic.getMessageByNumber(takeoff, 13996);
 
         Assert.assertEquals("Слава", m.getNick());
         Assert.assertEquals("gluk.2ka.mipt.ru", m.getHost());
@@ -303,7 +303,7 @@ public class TestSitesRetrieving {
 
         System.out.println(m);
 
-        m = siteLogic.getMessageByNumber(takeoff, 14003);
+        m = forumLogic.getMessageByNumber(takeoff, 14003);
 
         Assert.assertEquals(14003, m.getNum());
         Assert.assertEquals("mitrich", m.getNick());
@@ -313,7 +313,7 @@ public class TestSitesRetrieving {
 
         System.out.println(m);
 
-        m = siteLogic.getMessageByNumber(takeoff, 1729);
+        m = forumLogic.getMessageByNumber(takeoff, 1729);
 
         Assert.assertEquals(1729, m.getNum());
         Assert.assertEquals("shpagin&stalker", m.getNick());
@@ -327,11 +327,11 @@ public class TestSitesRetrieving {
     @Test
     public void testAnime() throws ForumAccessException {
         String anime = "anime";
-        int lmn = siteLogic.getLastMessageNumber(anime);
+        int lmn = forumLogic.getLastMessageNumber(anime);
 
         System.out.println(lmn);
 
-        Message m = siteLogic.getMessageByNumber(anime, 16825);
+        Message m = forumLogic.getMessageByNumber(anime, 16825);
         System.out.println(m);
 
         Assert.assertTrue(m.isReg());
@@ -342,7 +342,7 @@ public class TestSitesRetrieving {
         Assert.assertEquals("В качестве бонуса могу выдать батч скаченный на 54.2% с полностью скаченной первой серией, оп и ед.", m.getBody());
         Assert.assertEquals("Ну, что? Кто в локалке возмется кланнад 1-5 скачать?", m.getTitle());
 
-        m = siteLogic.getMessageByNumber(anime, 16376);
+        m = forumLogic.getMessageByNumber(anime, 16376);
         System.out.println(m);
 
         Assert.assertTrue(MessageLogic.hasImg(m, anime));
@@ -352,14 +352,14 @@ public class TestSitesRetrieving {
         Assert.assertEquals("10.55.103.181", m.getHost());
         Assert.assertEquals("С наступающим Новым Годом!", m.getTitle());
 
-        m = siteLogic.getMessageByNumber(anime, 16799);
+        m = forumLogic.getMessageByNumber(anime, 16799);
         System.out.println(m);
 
         Assert.assertFalse(m.isReg());
         Assert.assertEquals("zuzzik_", m.getNick());
         Assert.assertEquals("Фотки и отчет будут? Ж)", m.getTitle());
 
-        m = siteLogic.getMessageByNumber(anime, 2);
+        m = forumLogic.getMessageByNumber(anime, 2);
         System.out.println(m);
         Assert.assertFalse(m.isOk());
         Assert.assertEquals(MessageStatus.DELETED, m.getStatus());
@@ -369,17 +369,17 @@ public class TestSitesRetrieving {
 
     public void testNp() throws ForumAccessException {
         String np = "np";
-        int lmn = siteLogic.getLastMessageNumber(np);
+        int lmn = forumLogic.getLastMessageNumber(np);
         System.out.println(lmn);
 
-        Message m = siteLogic.getMessageByNumber(np, 96119);
+        Message m = forumLogic.getMessageByNumber(np, 96119);
         System.out.println(m);
 
         Assert.assertEquals("там сочинение на страницу или больше", m.getTitle());
         Assert.assertEquals("а я почему-то могу писать или писать только иногда, когда настроение", m.getBody());
         Assert.assertEquals("без темы", m.getTopic());
 
-        m = siteLogic.getMessageByNumber(np, 95933);
+        m = forumLogic.getMessageByNumber(np, 95933);
         System.out.println(m);
 
         Assert.assertEquals("проверим", m.getTitle());

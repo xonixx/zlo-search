@@ -17,7 +17,7 @@
 
     <bean id="messageRetriever" class="info.xonix.zlo.search.logic.site.MessageRetriever"/>
 
-    <bean id="siteLogic" class="info.xonix.zlo.search.logic.SiteLogicImpl"/>
+    <bean id="forumLogic" class="info.xonix.zlo.search.logic.ForumLogicImpl"/>
 
     <!--search logic-->
     <bean id="searchLogic" class="info.xonix.zlo.search.logic.SearchLogicImpl"/>

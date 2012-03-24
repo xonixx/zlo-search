@@ -2,13 +2,11 @@ package info.xonix.zlo.search.progs;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dao.MessagesDao;
-
 import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfUtils;
 import info.xonix.zlo.search.logic.site.MessageRetriever;
 import info.xonix.zlo.search.logic.site.PageParseException;
 import info.xonix.zlo.search.logic.site.RetrieverException;
 import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.spring.AppSpringContext;
 
 import java.text.MessageFormat;

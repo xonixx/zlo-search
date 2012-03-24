@@ -2,8 +2,6 @@ package info.xonix.zlo.web.utils;
 
 import info.xonix.zlo.search.HttpHeader;
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.config.SiteName;
-
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.commons.lang.StringUtils;
 

@@ -1,9 +1,6 @@
 package info.xonix.zlo.search.test.experiments;
 
 import info.xonix.zlo.search.LuceneVersion;
-
-import info.xonix.zlo.search.logic.AppLogic;
-import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.ru.RussianAnalyzer;
 

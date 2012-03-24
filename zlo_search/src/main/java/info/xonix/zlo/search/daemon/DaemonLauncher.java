@@ -1,9 +1,6 @@
 package info.xonix.zlo.search.daemon;
 
-import info.xonix.zlo.search.config.forums.ForumDescriptor;
 import info.xonix.zlo.search.config.forums.GetForum;
-import info.xonix.zlo.search.logic.SiteLogic;
-import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 
 /**
@@ -13,8 +10,6 @@ import org.apache.log4j.Logger;
  */
 public class DaemonLauncher {
     private static final Logger log = Logger.getLogger(DaemonLauncher.class);
-
-//    private SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
 
     public void main(String[] args) {
         for (String forumId : GetForum.ids()) {

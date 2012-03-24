@@ -3,7 +3,10 @@ package info.xonix.zlo.search.config.forums;
 import info.xonix.zlo.search.logic.forum_adapters.ForumAdapter;
 import org.apache.log4j.Logger;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * User: gubarkov

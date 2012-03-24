@@ -1,7 +1,6 @@
 package info.xonix.zlo.search.model;
 
 import info.xonix.zlo.search.utils.HtmlUtils;
-import org.apache.commons.lang.StringUtils;
 
 import java.io.Serializable;
 import java.sql.Timestamp;

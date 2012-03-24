@@ -1,6 +1,6 @@
 <%@ page import="info.xonix.zlo.search.xmlfp.XmlFpFormer" %>
-<%@ page import="java.io.PrintWriter" %>
 <%@ page import="org.apache.log4j.Logger" %>
+<%@ page import="java.io.PrintWriter" %>
 <%--
   User: Vovan
   Date: 13.08.2008

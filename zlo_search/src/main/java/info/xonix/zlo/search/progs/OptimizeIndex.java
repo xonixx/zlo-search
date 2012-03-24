@@ -1,7 +1,6 @@
 package info.xonix.zlo.search.progs;
 
 import info.xonix.zlo.search.config.Config;
-
 import info.xonix.zlo.search.logic.SearchLogic;
 import info.xonix.zlo.search.logic.SearchLogicImpl;
 import info.xonix.zlo.search.spring.AppSpringContext;

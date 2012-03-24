@@ -1,7 +1,6 @@
 package info.xonix.zlo.search.test.junit;
 
 import info.xonix.zlo.search.xmlfp.utils.UrlUtil;
-import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

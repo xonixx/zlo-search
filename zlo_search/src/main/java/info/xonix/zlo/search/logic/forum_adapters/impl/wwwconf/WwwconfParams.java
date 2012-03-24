@@ -3,7 +3,6 @@ package info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.utils.ConfigUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Properties;
