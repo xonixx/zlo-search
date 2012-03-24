@@ -1,0 +1,17 @@
+
+.reportTbl {
+    border: solid 1px black;
+}
+
+.reportTbl .odd {
+    background-color: white;
+}
+
+.reportTbl .even {
+    background-color: khaki;
+}
+
+.reportTbl th {
+    text-align: left;
+    background-color: gold;
+}

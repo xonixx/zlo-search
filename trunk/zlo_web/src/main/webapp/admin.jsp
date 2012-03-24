@@ -8,6 +8,7 @@
 <%@ page import="info.xonix.zlo.web.utils.RequestUtils" %>
 <%@ page import="java.util.LinkedHashMap" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="info.xonix.zlo.web.logic.AdminLogic" %>
 <%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
@@ -24,36 +25,16 @@
 %>
 
 <link rel="stylesheet" type="text/css" href="main.css"/>
+<link rel="stylesheet" type="text/css" href="admin.css"/>
+
 <title>Admin area</title>
 
 <tiles:insertDefinition name="header.admin"/>
 
-<style type="text/css">
-    .reportTbl {
-        border: solid 1px black;
-    }
-
-    .reportTbl .odd {
-        background-color: white;
-    }
-
-    .reportTbl .even {
-        background-color: khaki;
-    }
-
-    .reportTbl th {
-        text-align: left;
-        background-color: gold;
-    }
-</style>
-
 <div class="content">
-    <h2> Server Info</h2>
-    Server info = <%= application.getServerInfo() %> <br>
-    Servlet engine version = <%=  application.getMajorVersion() %>.<%= application.getMinorVersion() %><br>
-    JSP version = <%= JspFactory.getDefaultFactory().getEngineInfo().getSpecificationVersion() %><br>
-    Java version = <%= System.getProperty("java.version") %><br>
-    Java VM version = <%= System.getProperty("java.vm.version") %><br>
+    <%
+        request.setAttribute("mb", AdminLogic.MEGABYTE);
+    %>
 
     <form action="admin.jsp" method="post">
         <input type="submit" name="command" value="Optimize"/>
@@ -76,28 +57,28 @@
         }
     %>
 
-    <%
-        Runtime runtime = Runtime.getRuntime();
+    <table>
+        <tr>
+            <th>Memory usage</th>
+            <th>Versions</th>
+        </tr>
+        <tr>
+            <td align="left" valign="top">
+                <display:table id="line" name="<%= AdminLogic.memoryReport().entrySet() %>">
+                    <display:setProperty name="css.table">reportTbl</display:setProperty>
 
-        float mb = 1024 * 1024f;
-
-        Map<String, Float> memory = new LinkedHashMap<String, Float>();
-        memory.put("Free", runtime.freeMemory() / mb);
-        memory.put("Total", runtime.totalMemory() / mb);
-        memory.put("Max", runtime.maxMemory() / mb);
-
-        request.setAttribute("mb", mb);
-        request.setAttribute("memory", memory);
-    %>
-
-    <display:table id="line" name="<%= memory.entrySet() %>">
-        <display:caption>Memory usage</display:caption>
-        <display:setProperty name="css.table">reportTbl</display:setProperty>
-
-        <display:column property="key"/>
-        <display:column property="value" format="{0,number,#.##}"/>
-        <%--<display:column property="value" />--%>
-    </display:table>
+                    <display:column property="key"/>
+                    <display:column property="value" format="{0,number,#.##}"/>
+                </display:table>
+            </td>
+            <td>
+                <display:table name="<%= AdminLogic.versionsReport(application).entrySet()%>" class="reportTbl">
+                    <display:column property="key"/>
+                    <display:column property="value"/>
+                </display:table>
+            </td>
+        </tr>
+    </table>
 
     <display:table id="d" name="<%= Daemon.getDaemons() %>">
         <display:caption>Daemons</display:caption>
@@ -114,7 +95,7 @@
     </display:table>
 
     <display:table id="forumId" name="<%= GetForum.ids() %>">
-        <c:set var="adapter" value="<%= GetForum.adapter((String) forumId) %>" />
+        <c:set var="adapter" value="<%= GetForum.adapter((String) forumId) %>"/>
         <c:set var="dis" value="<%= searchLogic.getDoubleIndexManager((String) forumId) %>"/>
 
         <display:caption>Sites</display:caption>
@@ -129,7 +110,5 @@
                                                                  pattern="#.##"/></display:column>
         <display:column title="Small index size"><fmt:formatNumber value="${dis.smallIndexSize / mb}"
                                                                    pattern="#.##"/></display:column>
-
-
     </display:table>
 </div>
