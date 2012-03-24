@@ -2,12 +2,21 @@ from os.path import exists, join
 import os
 
 #SITE = 'x'
-SITE = 'dolgopa'
+#SITE = 'dolgopa'
+SITE = 'votalka'
 
 SQLS = [ 'create_db_dict.sql',
          'create_messages_table.sql',
          'create_table_nickhost.sql',
+         'create_autocomplete.sql',
 ]
+
+TBLS = ['db_dict',
+        'messages',
+        'nickhost',
+        'trigger_nickhost',
+        'autocomplete',
+        ]
 
 CWD = os.path.dirname(__file__)
 print('CWD:', CWD)
@@ -23,10 +32,10 @@ for sql_file in SQLS:
     with open(sql_file) as inp:
         sql = inp.read()
         with open(join(CWD, join(SITE, sql_file)), 'w') as out:
-            sql = re.sub('\\b(db_dict)\\b', SITE + '_\\1', sql)
-            sql = re.sub('\\b(messages)\\b', SITE + '_\\1', sql)
-            sql = re.sub('\\b(nickhost)\\b', SITE + '_\\1', sql)
-            sql = re.sub('\\b(trigger_nickhost)\\b', SITE + '_\\1', sql)
+
+            for t in TBLS:
+                sql = re.sub('\\b(%s)\\b' % t, SITE + '_\\1', sql)
+
             all_sql.append(sql)
             out.write(sql)
 
