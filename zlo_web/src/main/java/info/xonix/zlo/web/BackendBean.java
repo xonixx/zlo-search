@@ -4,8 +4,6 @@ import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.config.forums.ForumDescriptor;
 import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.dao.MessagesDao;
-
-import info.xonix.zlo.search.logic.SiteLogic;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.xmlfp.utils.UrlUtil;
 import org.apache.commons.lang.StringUtils;
@@ -41,7 +39,6 @@ public class BackendBean {
     public static final int SITE_URL_MAX_LEN = 30;
 
     private static final Config config = AppSpringContext.get(Config.class);
-//    private static final SiteLogic siteLogic = AppSpringContext.get(SiteLogic.class);
     private static final MessagesDao MESSAGES_DAO = AppSpringContext.get(MessagesDao.class);
 
     public BackendBean() {
