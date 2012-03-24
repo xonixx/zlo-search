@@ -158,6 +158,7 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract
 
     @Override
     public long extractMessageIdFromMessageUrl(String messageUrl) {
-        throw new UnsupportedOperationException("TBD");
+//        throw new UnsupportedOperationException("TBD");
+        return super.extractMessageIdFromMessageUrl(messageUrl); // TODO !!!
     }
 }
