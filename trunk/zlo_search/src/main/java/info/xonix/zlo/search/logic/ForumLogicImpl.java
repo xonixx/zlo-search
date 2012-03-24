@@ -21,7 +21,7 @@ public class ForumLogicImpl implements ForumLogic, InitializingBean {
 
     @Autowired
     private Config config;
-    
+
     @Autowired
     private ControlsDataLogic controlsDataLogic;
 
@@ -43,7 +43,7 @@ public class ForumLogicImpl implements ForumLogic, InitializingBean {
         long begin = System.currentTimeMillis();
 
         List<Message> msgs = GetForum.adapter(forumId).getMessages(forumId, (long) from, (long) to);
-        
+
         processTopicCode(forumId, msgs);
 
         float durationSecs = (System.currentTimeMillis() - begin) / 1000f;
@@ -54,7 +54,9 @@ public class ForumLogicImpl implements ForumLogic, InitializingBean {
 
     private void processTopicCode(String forumId, List<Message> msgs) {
         for (Message msg : msgs) {
-            if (msg.getTopicCode() > 0) {
+            if (msg.getTopicCode() >= 0 // already set
+                    || !msg.isOk()
+                    ) {
                 continue;
             }
 
@@ -64,7 +66,11 @@ public class ForumLogicImpl implements ForumLogic, InitializingBean {
             Integer topicId = controlsDataLogic.getTopicsReversedMap(forumId).get(topic);
 
             if (topicId == null) {
+                log.info(forumId + ": inserting TOPIC=" + topic);
+
                 topicId = controlsDataLogic.addNewTopic(forumId, topic);
+
+                log.info("New topicId=" + topicId);
             }
 
             msg.setTopicCode(topicId);

@@ -17,7 +17,7 @@ public class Message extends MessageShallow implements Serializable {
     public static final int NO_PARENT = -1;
 
     private String altName;
-    private int topicCode;
+    private int topicCode = -1;
     private String body;
     private int parentNum = NO_PARENT; // default
 
