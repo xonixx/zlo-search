@@ -225,6 +225,24 @@
                         </bean>
                     </constructor-arg>
                 </bean>
+
+                <bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
+                    <constructor-arg value="11"/>
+
+                    <constructor-arg value="votalka"/>
+
+                    <constructor-arg>
+                        <bean class="info.xonix.zlo.search.config.forums.ForumParams">
+                            <constructor-arg value="info/xonix/zlo/search/config/forums/test/votalka.properties"/>
+                        </bean>
+                    </constructor-arg>
+
+                    <constructor-arg>
+                        <bean class="info.xonix.zlo.search.logic.forum_adapters.impl.XmlFpForumAdapter">
+                            <constructor-arg value="http://votalka.campus.mipt.ru/?xmlfp"/>
+                        </bean>
+                    </constructor-arg>
+                </bean>
             </list>
         </constructor-arg>
     </bean>
