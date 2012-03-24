@@ -31,4 +31,6 @@ public interface MessagesDao {
     void saveSearchTextForAutocomplete(String forumId, String text);
 
     List<String> autoCompleteText(String forumId, String text, int limit);
+
+    int insertTopic(String forumId, String topic);
 }

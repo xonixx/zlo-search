@@ -11,4 +11,6 @@ public interface ControlsDataLogic {
 
     Map<Integer,String> getTopics(String forumId);
     Map<String,Integer> getTopicsReversedMap(String forumId);
+
+    int addNewTopic(String forumId, String topic);
 }
