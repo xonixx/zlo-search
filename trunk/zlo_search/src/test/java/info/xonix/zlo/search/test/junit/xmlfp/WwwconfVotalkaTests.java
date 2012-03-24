@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
  * Date: 20.03.12
  * Time: 14:50
  */
-public class WwwconfXmlFpTests {
+public class WwwconfVotalkaTests {
     private static final String DESCRIPTOR_URL = "http://votalka.campus.mipt.ru/?xmlfp";
 
     private ForumAccessor forumAccessor;

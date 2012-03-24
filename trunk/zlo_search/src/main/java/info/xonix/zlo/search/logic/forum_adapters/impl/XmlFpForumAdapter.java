@@ -114,24 +114,20 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract
             try {
                 final int maxCount = forumAccessor.getMessageListMaxCount();
 
-                if (to - from <= maxCount) {
-                    return forumAccessor.getMessageList(from, to - 1);
-                } else {
-                    long currentFrom = from;
-                    long currentTo = Math.min(to, from + maxCount - 1);
+                long currentFrom = from;
+                long currentTo = Math.min(to, from + maxCount - 1);
 
-                    List<Message> res = new ArrayList<Message>((int) (to - from + 1));
+                List<Message> res = new ArrayList<Message>((int) (to - from + 1));
 
-                    while (currentFrom <= to) {
-                        log.info(forumId + " : getting part [" + currentFrom + " to " + currentTo +
-                                "] of [" + from + " to " + to + "]");
+                while (currentFrom <= to) {
+                    log.info(forumId + " : getting part [" + currentFrom + " to " + currentTo +
+                            "] of [" + from + " to " + to + "]");
 
-                        res.addAll(forumAccessor.getMessageList(currentFrom, currentTo));
-                        currentFrom = currentTo + 1;
-                        currentTo = Math.min(to, currentFrom + maxCount - 1);
-                    }
-                    return res;
+                    res.addAll(forumAccessor.getMessageList(currentFrom, currentTo));
+                    currentFrom = currentTo + 1;
+                    currentTo = Math.min(to, currentFrom + maxCount - 1);
                 }
+                return res;
             } catch (XmlFpException e) {
                 throw translateException(e, "Can't download msg list from=" + from + " to=" + to);
             }

@@ -19,7 +19,7 @@ public class XmlFpFormer {
     private AppLogic appLogic;
 
     public String getMessages(String forumId, int from, int to) {
-        if (to - from > MAX_DELTA) {
+        if (to - from + 1 > MAX_DELTA) {
             throw new IllegalArgumentException("You are trying to receive more then " +
                     MAX_DELTA + " messages!");
         }
