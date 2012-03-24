@@ -213,6 +213,7 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
         // id must be auto_incremented!
         return newSimpleJdbcInsert()
                 .withTableName(forumId + "_topics")
+                .usingGeneratedKeyColumns("id")
                 .executeAndReturnKey(args)
                 .intValue();
     }
