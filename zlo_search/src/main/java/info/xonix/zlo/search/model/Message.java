@@ -109,8 +109,11 @@ public class Message extends MessageShallow implements Serializable {
     }
 
     public String getCleanBody() {
-        if (bodyClean == null)
-            bodyClean = HtmlUtils.cleanBoardSpecific(body);
+        if (bodyClean == null) {
+            bodyClean = body != null
+                    ? HtmlUtils.cleanBoardSpecific(body)
+                    : "";
+        }
         return bodyClean;
     }
 
