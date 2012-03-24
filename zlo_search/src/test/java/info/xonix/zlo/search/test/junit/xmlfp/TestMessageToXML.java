@@ -90,14 +90,4 @@ public class TestMessageToXML {
                 FileUtils.readFileToString(new File("D:\\stuff\\test\\java\\zlo-search\\zlo_search\\forum_xml_protocol\\tst\\lastNum1.xml"), Config.UTF_8)
         ));
     }
-
-    @Test
-    public void test_localhost_xmlfp() throws XmlFpException {
-        ForumAccessor forumAccessor = ForumAccessor.fromDescriptorUrl("http://localhost:8080/xmlfp/xmlfp.jsp?xmlfp=descriptor");
-
-        final long lastMessageNumber = forumAccessor.getLastMessageNumber();
-
-        System.out.println("Last num: " + lastMessageNumber);
-        System.out.println("Msg: " + forumAccessor.getMessage(lastMessageNumber));
-    }
 }

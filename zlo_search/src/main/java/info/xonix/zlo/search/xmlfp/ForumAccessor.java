@@ -123,7 +123,7 @@ public class ForumAccessor {
         final MessageListUrl mlu = forum.getXmlfpUrls().getMessageListUrl();
         final int maxCount = mlu.getMaxCount();
 
-        if (to - from > maxCount) {
+        if (to - from + 1 > maxCount) {
             throw new IllegalArgumentException("from - to > allowed maxCount = " + maxCount);
         }
 
