@@ -92,7 +92,10 @@ public class WwwconfVotalkaTests {
 
         final List<Message> messages = xmlFpForumAdapter.getMessages("votalka", 1, 333);
 
-        assertEquals(333, messages.size());
+        final int size = messages.size();
+        assertEquals(332, size);
+        assertEquals(1, messages.get(0).getNum());
+        assertEquals(332, messages.get(size - 1).getNum());
     }
 
     private XmlFpForumAdapter buildAdapter() throws ForumAccessException {

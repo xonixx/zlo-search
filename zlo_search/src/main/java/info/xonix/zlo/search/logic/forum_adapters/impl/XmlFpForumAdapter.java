@@ -106,8 +106,9 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract
     // TODO: !!!test this!!!
     @Override
     public List<Message> getMessages(String forumId, final long from, final long to) throws ForumAccessException {
-        if (from > to) {
-            throw new IllegalArgumentException("from=" + from + " > to=" + to);
+        long xmlfpTo = to - 1;
+        if (from > xmlfpTo) {
+            throw new IllegalArgumentException("from=" + from + " > to=" + xmlfpTo);
         }
 
         if (forumAccessor.supportsMessageListGeneration()) {
@@ -115,24 +116,24 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract
                 final int maxCount = forumAccessor.getMessageListMaxCount();
 
                 long currentFrom = from;
-                long currentTo = Math.min(to, from + maxCount - 1);
+                long currentTo = Math.min(xmlfpTo, from + maxCount - 1);
 
-                List<Message> res = new ArrayList<Message>((int) (to - from + 1));
+                List<Message> res = new ArrayList<Message>((int) (xmlfpTo - from + 1));
 
-                while (currentFrom <= to) {
+                while (currentFrom <= xmlfpTo) {
                     log.info(forumId + " : getting part [" + currentFrom + " to " + currentTo +
-                            "] of [" + from + " to " + to + "]");
+                            "] of [" + from + " to " + xmlfpTo + "]");
 
                     res.addAll(forumAccessor.getMessageList(currentFrom, currentTo));
                     currentFrom = currentTo + 1;
-                    currentTo = Math.min(to, currentFrom + maxCount - 1);
+                    currentTo = Math.min(xmlfpTo, currentFrom + maxCount - 1);
                 }
                 return res;
             } catch (XmlFpException e) {
-                throw translateException(e, "Can't download msg list from=" + from + " to=" + to);
+                throw translateException(e, "Can't download msg list from=" + from + " to=" + xmlfpTo);
             }
         } else {
-            return super.getMessages(forumId, from, to);
+            return super.getMessages(forumId, from, xmlfpTo);
         }
     }
 
