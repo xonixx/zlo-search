@@ -111,7 +111,7 @@ public class ForumAccessor {
 
     /**
      * @param from (including)
-     * @param to (including)
+     * @param to   (including)
      * @return
      * @throws XmlFpException
      */
@@ -168,9 +168,17 @@ public class ForumAccessor {
                 .replace(XmlFpUrlsSubstitutions.MESSAGE_ID, Long.toString(messageId));
     }
 
-    public String getForumUserProfileUrl(long userId, String userName) {
+    public String getForumUserProfileUrl(String userId, String userName) {
+        if (userId == null) {
+            userId = "";
+        }
+
+        if (userName == null) {
+            userName = "";
+        }
+
         return forum.getForumUrls().getUserProfileUrl()
-                .replace(XmlFpUrlsSubstitutions.USER_ID, Long.toString(userId))
+                .replace(XmlFpUrlsSubstitutions.USER_ID, userId)
                 .replace(XmlFpUrlsSubstitutions.USER_NAME, userName);
     }
 

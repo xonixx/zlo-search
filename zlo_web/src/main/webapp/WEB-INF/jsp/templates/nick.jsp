@@ -8,6 +8,7 @@
 
 <tiles:useAttribute name="reg"/>
 <tiles:useAttribute name="nick"/>
+<tiles:useAttribute name="userId" ignore="true"/>
 <tiles:useAttribute name="host"/>
 
 <jsp:useBean id="forumIntId" type="java.lang.Integer" scope="request"/>
@@ -22,7 +23,7 @@
             <c:when test="${not reg}">${nickEscaped}</c:when>
             <c:otherwise>
                 <%--<a href="http://${site.siteUrl}${site.uinfoQuery}${nickUrlencodedForSite}">${nickEscaped}</a>--%>
-                <a href="<%= adapter.prepareUserProfileUrl(-1, (String) nick)%>">${nickEscaped}</a>
+                <a href="<%= adapter.prepareUserProfileUrl((String) userId, (String) nick)%>">${nickEscaped}</a>
             </c:otherwise>
         </c:choose>
     </span>

@@ -66,7 +66,7 @@ public class WwwconfForumAdapter extends ForumAdapterAbstract {
     }
 
     @Override
-    public String prepareUserProfileUrl(long userId, String userName) {
+    public String prepareUserProfileUrl(String userId, String userName) {
         return "http://" + wwwconfParams.getSiteUrl() + wwwconfParams.getUinfoQuery()
                 + HtmlUtils.urlencode(userName, wwwconfParams.getSiteCharset());
     }

@@ -225,6 +225,7 @@
                             <tiles:insertDefinition name="nick">
                                 <tiles:putAttribute name="reg" value="${msg.reg}"/>
                                 <tiles:putAttribute name="nick" value="${msg.nick}"/>
+                                <tiles:putAttribute name="userId" value="${msg.userId}"/>
                             </tiles:insertDefinition>
                         </display:column>
                     </c:if>
