@@ -142,7 +142,7 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract
     }
 
     @Override
-    public String prepareUserProfileUrl(long userId, String userName) {
+    public String prepareUserProfileUrl(String userId, String userName) {
         return forumAccessor.getForumUserProfileUrl(userId, userName);
     }
 
