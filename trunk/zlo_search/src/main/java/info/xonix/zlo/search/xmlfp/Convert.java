@@ -38,7 +38,7 @@ class Convert {
                     // must set after!
                     author.getName(),
                     author.getId(),
-                    null, // TODO: implement altname in xmlfp ?
+                    author.getAltName(),
                     author.getHost(),
 
                     content.getCategory(),
