@@ -87,6 +87,15 @@ public class WwwconfVotalkaTests {
     }
 
     @Test
+    public void test_xmlfp_adaptor_unicode1() throws ForumAccessException {
+        final XmlFpForumAdapter xmlFpForumAdapter = buildAdapter();
+
+        final Message message = xmlFpForumAdapter.getMessage("votalka", 29590);
+
+        System.out.println(message);
+    }
+
+    @Test
     public void test_xmlfp_adaptor2() throws ForumAccessException {
         final XmlFpForumAdapter xmlFpForumAdapter = buildAdapter();
 

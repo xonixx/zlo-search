@@ -6,7 +6,9 @@ import cfg
 
 SITES = cfg.ALL_SITE_NAMES
 
-SQLS = ['create_autocomplete.sql',
+SQLS = [
+#    'create_autocomplete.sql',
+    '01_alter_messages_add_user_id.sql',
         ]
 
 TBLS = ['db_dict',

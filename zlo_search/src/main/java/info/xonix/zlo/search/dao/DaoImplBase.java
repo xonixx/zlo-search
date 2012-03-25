@@ -22,10 +22,17 @@ public abstract class DaoImplBase extends SimpleJdbcDaoSupport {
         Check.isSet(rowMappersHelper, "rowMappersHelper");
     }
 
+    public String forumTable(String forumId, String tableName) {
+        Check.isSet(forumId, "forumId");
+        Check.isSet(tableName, "tableName");
+
+        return forumId + "_" + tableName;
+    }
+
     public RowMappersHelper getRowMappersHelper() {
         return rowMappersHelper;
     }
-    
+
     public SimpleJdbcInsert newSimpleJdbcInsert() {
         return new SimpleJdbcInsert(getJdbcTemplate());
     }

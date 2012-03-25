@@ -10,6 +10,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.util.Assert;
 
 import java.sql.PreparedStatement;
@@ -43,6 +45,7 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
         public Message mapRow(ResultSet rs, int i) throws SQLException {
             return new Message(
                     rs.getString("nick")
+                    , rs.getString("user_id")
                     , rs.getString("altName")
                     , rs.getString("host")
                     , rs.getString("topic")
@@ -80,13 +83,41 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
     public void saveMessagesFast(final String forumId, final List<Message> msgs, boolean updateIfExists) {
         Assert.isTrue(!updateIfExists, "updating not implemented!");
 
+        final SqlParameterSource[] batch = new SqlParameterSource[msgs.size()];
+
+        for (int i = 0; i < msgs.size(); i++) {
+            Message msg = msgs.get(i);
+
+            validateMsgBeforeSave(forumId, msg);
+
+            batch[i] = new MapSqlParameterSource()
+                    .addValue("num", msg.getNum())
+                    .addValue("user_id", msg.getUserId())
+                    .addValue("parentNum", msg.getParentNum())
+                    .addValue("host", msg.getHost())
+                    .addValue("topicCode", msg.getTopicCode())
+                    .addValue("title", msg.getTitle())
+                    .addValue("nick", msg.getNick())
+                    .addValue("altName", msg.getAltName())
+                    .addValue("msgDate", timestamp(msg.getDate()))
+                    .addValue("reg", msg.isReg())
+                    .addValue("body", msg.getBody())
+                    .addValue("status", msg.getStatus().getInt());
+        }
+
+        newSimpleJdbcInsert()
+                .withTableName(forumTable(forumId, "messages"))
+                .executeBatch(batch);
+
+/*
         getJdbcTemplate().batchUpdate(queryProvider.getInsertMsgQuery(forumId), new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
                 Message msg = msgs.get(i);
 
                 validateMsgBeforeSave(forumId, msg);
-                /*
+                */
+/*
                 num,\
                 parentNum,\
                 host,\
@@ -98,7 +129,8 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
                 reg,\
                 body,\
                 status)
-                */
+                *//*
+
                 int j = 1;
                 ps.setInt(j++, msg.getNum());
                 ps.setInt(j++, msg.getParentNum());
@@ -118,18 +150,25 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
                 return msgs.size();
             }
         });
+*/
     }
 
     private void validateMsgBeforeSave(String forumId, Message msg) {
+        final MessageStatus status = msg.getStatus();
+        if (status != MessageStatus.OK &&
+                status != MessageStatus.DELETED) {
+            throw new IllegalArgumentException(forumId + ": wrong msg status: " + status);
+        }
+
         if (msg.getNum() == -1) {
-            throw new IllegalStateException("site=" + forumId +
-                    " num not set for msg:\n " + msg);
-        } else if (msg.getStatus() != MessageStatus.DELETED) {
+            throw new IllegalStateException(forumId +
+                    ": num not set for msg:\n " + msg);
+        } /*else if (msg.getStatus() != MessageStatus.DELETED) {
             if (msg.getDate() == null) {
                 throw new IllegalStateException("site=" + forumId +
                         " date not set:\n " + msg);
             }
-        }
+        }*/
     }
 
     @Override
@@ -207,12 +246,12 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
     @Override
     public int insertTopic(String forumId, String topic) {
         final HashMap<String, Object> args = new HashMap<String, Object>();
-        args.put("name", substring(topic,0,50));
+        args.put("name", substring(topic, 0, 50));
         args.put("isNew", true);
 
         // id must be auto_incremented!
         return newSimpleJdbcInsert()
-                .withTableName(forumId + "_topics")
+                .withTableName(forumTable(forumId, "topics"))
                 .usingGeneratedKeyColumns("id")
                 .executeAndReturnKey(args)
                 .intValue();

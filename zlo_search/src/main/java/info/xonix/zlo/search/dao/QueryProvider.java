@@ -14,7 +14,8 @@ import java.util.Properties;
 public class QueryProvider {
 
     private static final class SiteQueries {
-        private String INSERT_MSG;
+//        private String INSERT_MSG;
+
         //        private String INSERT_UPDATE_MSG;
 //        private String UPDATE_MSG;
 //        private String DELETE_MSG;
@@ -46,7 +47,8 @@ public class QueryProvider {
         }
 
         private void fillSiteQueries(SiteQueries sq, String name) {
-            sq.INSERT_MSG = MessageFormat.format(props.getProperty("sql.insert.msg"), name);
+//            sq.INSERT_MSG = MessageFormat.format(props.getProperty("sql.insert.msg"), name);
+
 //            sq.INSERT_UPDATE_MSG = MessageFormat.format(props.getProperty("sql.insert.update.msg"), name);
 //
 //            sq.UPDATE_MSG = MessageFormat.format(props.getProperty("sql.update.msg"), name);
@@ -85,9 +87,9 @@ public class QueryProvider {
 
     // queries
 
-    public String getInsertMsgQuery(String forumId) {
+    /*public String getInsertMsgQuery(String forumId) {
         return getSiteQueries(forumId).INSERT_MSG;
-    }
+    }*/
 
 /*    public String getInsertUpdateMsgQuery(String forumId) {
         return getSiteQueries(forumId).INSERT_UPDATE_MSG;
