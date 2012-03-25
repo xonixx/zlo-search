@@ -28,12 +28,12 @@
 
         <display:column title="Ссылка">
             <c:set var="siteUrl" value="${adaptor.forumUrl}"/>
-            <c:if test="${
+            <%--<c:if test="${
                 not f:endsWith(siteUrl, '.cgi') and
                 not f:endsWith(siteUrl, '.exe')
             }">
                 <c:set var="siteUrl" value="${siteUrl}"/>
-            </c:if>
+            </c:if>--%>
             <c:set var="url" value="${siteUrl}"/>
             <a href="${url}">${url}</a>
         </display:column>
