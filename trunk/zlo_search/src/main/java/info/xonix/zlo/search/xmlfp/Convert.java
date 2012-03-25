@@ -37,6 +37,7 @@ class Convert {
             return new Message(
                     // must set after!
                     author.getName(),
+                    author.getId(),
                     null, // TODO: implement altname in xmlfp ?
                     author.getHost(),
 

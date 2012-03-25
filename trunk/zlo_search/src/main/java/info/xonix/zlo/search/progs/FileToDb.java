@@ -79,6 +79,7 @@ public class FileToDb {
                     try {
                         msgs.add(new Message(
                                 columnVals[2], // userName
+                                null,
                                 columnVals[3], // alt
                                 columnVals[4], // host
                                 formTopic(columnVals[8]),
