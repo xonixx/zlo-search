@@ -79,11 +79,11 @@
         <display:column title="Сайт">
             <% ForumDescriptor descriptor = GetForum.descriptor((Integer) ((Map) row).get("site")); %>
             <% ForumAdapter adapter = descriptor.getForumAdapter(); %>
-            <c:if test="<%= adapter != null %>">
-                <a href="http://<%= adapter.getForumUrl() %>">
+            <% if (adapter != null) { %>
+                <a href="<%= adapter.getForumUrl() %>">
                     <%= descriptor.getForumId() %>
                 </a>
-            </c:if>
+            <% } %>
         </display:column>
         <display:column property="reqDate" title="Дата" class="small"/>
         <c:if test="${showAll}">
