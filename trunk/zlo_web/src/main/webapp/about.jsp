@@ -6,7 +6,7 @@
 
 <title>О системе</title>
 
-<tiles:insertDefinition name="header.about"/>
+<tiles:insertDefinition name="header.developer"/>
 
 <div class="content">
     <h3>О системе</h3>
