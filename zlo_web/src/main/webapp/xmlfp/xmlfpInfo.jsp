@@ -2,7 +2,8 @@
 
 <link rel="stylesheet" type="text/css" href="../main.css"/>
 
-<c:set var="title">XML Forum Protocol</c:set>
+<c:set var="version">v. 0.2</c:set>
+<c:set var="title">XML Forum Protocol ${version}</c:set>
 <title>${title}</title>
 
 <tiles:insertDefinition name="header.developer"/>
@@ -19,6 +20,22 @@
 <div class="content">
     <h3>${title}</h3>
 
+    <p>
+        Форум, реализующий XMLFP может быть легко добавлен в бордопоиск.
+        <br/>
+        Для реализации XMLFP форум должен предоставлять XMLFP Descriptor URL, наподобие
+        <a href="xmlfp.jsp?xmlfp=descriptor&site=0">такого</a>.
+        <br/>
+        А также (в версии ${version}) уметь обрабатывать XMLFP-запросы на получение:
+    </p>
+    <ul>
+        <li>XML представление последнего номера сообщения в базе форума</li>
+        <li>XML представление конкретного сообщения</li>
+        <li>XML представление списка сообщений в диапазоне</li>
+    </ul>
+    <p>
+        Для демонстрации примера реализации воспользуйтесь формами ниже.
+    </p>
     <form action="xmlfp.jsp" method="get" class="form">
         <input type="hidden" name="xmlfp" value="descriptor"/>
         Сайт:
@@ -57,7 +74,11 @@
         <input type="submit" value="Получить номер последнего сообщения"/>
     </form>
 
+    <br/>
     <h3>XML Schemas</h3>
+    <p>
+        Генерируемые XML должны удовлетворять схемам:
+    </p>
     <ul>
         <li><a href="xsd/descriptor.xsd">descriptor.xsd</a></li>
         <li><a href="xsd/message.xsd">message.xsd</a></li>
