@@ -29,6 +29,7 @@ public class LaunchBoardSearch {
         server.addConnector(connector);
 
         WebAppContext root = new WebAppContext(join(zloWeb, "src/main/webapp"), "/");
+//        WebAppContext root = new WebAppContext(join(zloWeb, "src/main/webapp"), "/lol");
 
         WebAppClassLoader rootClassLoader = new WebAppClassLoader(root);
         rootClassLoader.addClassPath(join(zloWeb, "target/classes"));

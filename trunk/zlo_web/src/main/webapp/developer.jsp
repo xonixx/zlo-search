@@ -16,6 +16,8 @@
         <li><strong><a href="ws.jsp">Веб-сервис</a></strong> - веб-сервис для бордопоиска</li>
         <li><strong><a href="xmlfp/xmlfp.jsp">XMLFP</a></strong> - XML Forum Protocol</li>
     </ul>
+
+    <%@ include file="/WEB-INF/jsp/version-footer.jsp" %>
 </div>
 
 <tiles:insertDefinition name="ga"/>
