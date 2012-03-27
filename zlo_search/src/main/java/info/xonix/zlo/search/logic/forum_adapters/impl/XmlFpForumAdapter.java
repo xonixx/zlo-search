@@ -1,15 +1,16 @@
 package info.xonix.zlo.search.logic.forum_adapters.impl;
 
+import info.xonix.forumsearch.xmlfp.XmlFpForum;
+import info.xonix.forumsearch.xmlfp.XmlFpException;
+import info.xonix.forumsearch.xmlfp.XmlFpIOException;
 import info.xonix.zlo.search.dao.XmlFpDao;
 import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
 import info.xonix.zlo.search.logic.forum_adapters.ForumAdapterAbstract;
 import info.xonix.zlo.search.logic.forum_adapters.ForumFormatException;
 import info.xonix.zlo.search.logic.forum_adapters.ForumIoException;
 import info.xonix.zlo.search.model.Message;
+import info.xonix.forumsearch.xmlfp.utils.XmlFpMarshalException;
 import info.xonix.zlo.search.xmlfp.ForumAccessor;
-import info.xonix.zlo.search.xmlfp.XmlFpException;
-import info.xonix.zlo.search.xmlfp.XmlFpIOException;
-import info.xonix.zlo.search.xmlfp.utils.XmlFpMarshalException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
@@ -30,6 +31,7 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract
     @Autowired
     private XmlFpDao xmlFpDao;
 
+    private XmlFpForum xmlFpForum;
     private ForumAccessor forumAccessor;
     private String descriptorUrl;
 
@@ -44,10 +46,10 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract
         final String descriptorXmlInDb = xmlFpDao.getDescriptorXmlByUrl(descriptorUrl);
 
         try {
-            forumAccessor = ForumAccessor.fromDescriptorUrl(descriptorUrl);
+            xmlFpForum = XmlFpForum.fromDescriptorUrl(descriptorUrl);
 
             try {
-                final String descriptorXml = forumAccessor.formDescriptorXml();
+                final String descriptorXml = xmlFpForum.formDescriptorXml();
 
                 if (descriptorXmlInDb == null) {
                     log.info("Adding xmlfp descriptor to DB: " + descriptorUrl);
@@ -67,14 +69,16 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract
                 log.warn("Unable to get xmlfp info from forum, loading from DB, err: ", e);
 
                 try {
-                    forumAccessor = ForumAccessor.fromDescriptorXmlString(descriptorUrl, descriptorXmlInDb);
+                    xmlFpForum = XmlFpForum.fromDescriptorXmlString(descriptorUrl, descriptorXmlInDb);
                 } catch (XmlFpException e1) {
-                    throw translateException(e1, "Can't create XMLFP ForumAccessor from xml: " + descriptorXmlInDb);
+                    throw translateException(e1, "Can't create XMLFP XmlFpForum from xml: " + descriptorXmlInDb);
                 }
             }
 
-            throw translateException(e, "Can't create XMLFP ForumAccessor for descriptorUrl: " + descriptorUrl);
+            throw translateException(e, "Can't create XMLFP XmlFpForum for descriptorUrl: " + descriptorUrl);
         }
+
+        forumAccessor = new ForumAccessor(xmlFpForum);
     }
 
     private ForumAccessException translateException(XmlFpException ex, String msg) {
@@ -88,7 +92,7 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract
     @Override
     public long getLastMessageNumber(String forumId) throws ForumAccessException {
         try {
-            return forumAccessor.getLastMessageNumber();
+            return xmlFpForum.getLastMessageNumber();
         } catch (XmlFpException e) {
             throw translateException(e, "Can't get last number");
         }
@@ -110,9 +114,9 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract
             throw new IllegalArgumentException("from=" + from + " > to=" + xmlfpTo);
         }
 
-        if (forumAccessor.supportsMessageListGeneration()) {
+        if (xmlFpForum.supportsMessageListGeneration()) {
             try {
-                final int maxCount = forumAccessor.getMessageListMaxCount();
+                final int maxCount = xmlFpForum.getMessageListMaxCount();
 
                 long currentFrom = from;
                 long currentTo = Math.min(xmlfpTo, from + maxCount - 1);
@@ -138,22 +142,22 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract
 
     @Override
     public String prepareMessageUrl(long messageId) {
-        return forumAccessor.getForumMessageUrl(messageId);
+        return xmlFpForum.getForumMessageUrl(messageId);
     }
 
     @Override
     public String prepareUserProfileUrl(String userId, String userName) {
-        return forumAccessor.getForumUserProfileUrl(userId, userName);
+        return xmlFpForum.getForumUserProfileUrl(userId, userName);
     }
 
     @Override
     public String getForumUrl() {
-        return forumAccessor.getForumUrl();
+        return xmlFpForum.getForumUrl();
     }
 
     @Override
     public String getForumTitle() {
-        return forumAccessor.getTitle();
+        return xmlFpForum.getTitle();
     }
 
     @Override

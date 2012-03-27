@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.test.experiments.xmlfp;
 
-import info.xonix.zlo.search.xmlfp.jaxb_generated.Message;
+import info.xonix.forumsearch.xmlfp.jaxb_generated.Message;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -16,7 +16,7 @@ import java.io.File;
 public class TestXmlParseMessage {
     public static void main(String[] args) {
         try {
-            JAXBContext jc = JAXBContext.newInstance("info.xonix.zlo.search.xmlfp.jaxb_generated");
+            JAXBContext jc = JAXBContext.newInstance("info.xonix.forumsearch.xmlfp.jaxb_generated");
             Unmarshaller unmarshaller = jc.createUnmarshaller();
             Marshaller marshaller = jc.createMarshaller();
             Message msg = (Message) unmarshaller.unmarshal(new File("D:\\stuff\\test\\java\\zlo-search\\zlo_search\\forum_xml_protocol\\tst\\m1.xml"));

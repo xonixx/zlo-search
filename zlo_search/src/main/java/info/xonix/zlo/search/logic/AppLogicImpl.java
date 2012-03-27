@@ -4,7 +4,7 @@ import info.xonix.zlo.search.dao.DbDict;
 import info.xonix.zlo.search.dao.DbDictFields;
 import info.xonix.zlo.search.dao.MessagesDao;
 import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.utils.Check;
+import info.xonix.utils.Check;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;

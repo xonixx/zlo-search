@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.test.experiments;
 
-import info.xonix.zlo.search.utils.EnvUtils;
+import info.xonix.utils.EnvUtils;
 import org.junit.Test;
 
 import java.net.UnknownHostException;

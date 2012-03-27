@@ -5,22 +5,20 @@ import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageShallow;
 import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.model.Topic;
-import info.xonix.zlo.search.utils.Check;
+import info.xonix.utils.Check;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.util.Assert;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
-import static info.xonix.zlo.search.utils.DbUtils.timestamp;
+import static info.xonix.utils.DbUtils.timestamp;
 import static org.apache.commons.lang.StringUtils.substring;
 
 /**

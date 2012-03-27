@@ -1,11 +1,13 @@
 package info.xonix.zlo.search.xmlfp;
 
+import info.xonix.forumsearch.xmlfp.XmlFpContext;
+import info.xonix.forumsearch.xmlfp.XmlFpException;
 import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfUtils;
 import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.xmlfp.jaxb_generated.Forum;
-import info.xonix.zlo.search.xmlfp.jaxb_generated.ObjectFactory;
-import info.xonix.zlo.search.xmlfp.utils.MarshalUtils;
-import info.xonix.zlo.search.xmlfp.utils.XmlFpMarshalException;
+import info.xonix.forumsearch.xmlfp.jaxb_generated.Forum;
+import info.xonix.forumsearch.xmlfp.jaxb_generated.ObjectFactory;
+import info.xonix.forumsearch.xmlfp.utils.MarshalUtils;
+import info.xonix.forumsearch.xmlfp.utils.XmlFpMarshalException;
 
 import javax.xml.bind.JAXBElement;
 import java.util.List;
@@ -37,7 +39,7 @@ public class XmlFpUtils {
     public static Message messageFromXml(String xml) throws XmlFpException {
         try {
             return Convert.fromJaxbMessage(
-                    MarshalUtils.<info.xonix.zlo.search.xmlfp.jaxb_generated.Message>unmarshal(
+                    MarshalUtils.<info.xonix.forumsearch.xmlfp.jaxb_generated.Message>unmarshal(
                             XmlFpContext.getMessageUnmarshaller(), xml));
         } catch (XmlFpMarshalException e) {
             throw new XmlFpException(e);

@@ -1,13 +1,13 @@
 package info.xonix.zlo.search.test.junit.xmlfp;
 
+import info.xonix.forumsearch.xmlfp.XmlFpException;
+import info.xonix.forumsearch.xmlfp.XmlFpFormatterOptions;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.spring.AppSpringContext;
-import info.xonix.zlo.search.xmlfp.XmlFpException;
-import info.xonix.zlo.search.xmlfp.XmlFpFormatterOptions;
 import info.xonix.zlo.search.xmlfp.XmlFpUtils;
-import info.xonix.zlo.search.xmlfp.jaxb_generated.Forum;
+import info.xonix.forumsearch.xmlfp.jaxb_generated.Forum;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Test;

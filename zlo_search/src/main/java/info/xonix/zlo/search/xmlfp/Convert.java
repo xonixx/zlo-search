@@ -4,11 +4,12 @@ package info.xonix.zlo.search.xmlfp;
 //import com.google.common.collect.ImmutableBiMap;
 
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
+import info.xonix.forumsearch.xmlfp.XmlFpUrlsSubstitutions;
+import info.xonix.forumsearch.xmlfp.jaxb_generated.*;
 import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
-import info.xonix.zlo.search.xmlfp.jaxb_generated.*;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Date;
@@ -26,7 +27,7 @@ class Convert {
     public static final String STATUS_DELETED = "deleted";
     public static final String STATUS_NOT_EXISTS = "not_exists";
 
-    public static Message fromJaxbMessage(info.xonix.zlo.search.xmlfp.jaxb_generated.Message jaxbMessage) {
+    public static Message fromJaxbMessage(info.xonix.forumsearch.xmlfp.jaxb_generated.Message jaxbMessage) {
         final MessageStatus messageStatus = messageStatusFromString(jaxbMessage.getStatus());
 
         if (messageStatus == MessageStatus.OK) {
@@ -69,14 +70,14 @@ class Convert {
         return jaxbMessages;
     }
 
-    public static info.xonix.zlo.search.xmlfp.jaxb_generated.Message toJaxbMessage(
+    public static info.xonix.forumsearch.xmlfp.jaxb_generated.Message toJaxbMessage(
             WwwconfParams wwwconfParams, Message message) {
 
         if (message == null) {
             throw new NullPointerException("message");
         }
 
-        info.xonix.zlo.search.xmlfp.jaxb_generated.Message jaxbMessage = new info.xonix.zlo.search.xmlfp.jaxb_generated.Message();
+        info.xonix.forumsearch.xmlfp.jaxb_generated.Message jaxbMessage = new info.xonix.forumsearch.xmlfp.jaxb_generated.Message();
 
         jaxbMessage.setId((long) message.getNum());
 

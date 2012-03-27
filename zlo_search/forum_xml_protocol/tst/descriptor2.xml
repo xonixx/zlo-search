@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <forum xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:noNamespaceSchemaLocation="../../src/main/resources/info/xonix/zlo/search/xmlfp/xsd/descriptor.xsd">
+       xsi:noNamespaceSchemaLocation="../../../xmlfp/src/main/resources/info/xonix/zlo/search/xmlfp/xsd/descriptor.xsd">
 
     <name>Форум ФРТК-МФТИ</name>
     <description>Tra-la-la</description>

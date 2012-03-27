@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.utils.ConfigUtils;
+import info.xonix.utils.ConfigUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
