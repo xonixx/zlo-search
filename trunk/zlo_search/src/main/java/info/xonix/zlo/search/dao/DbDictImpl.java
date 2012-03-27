@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.dao;
 
-import info.xonix.zlo.search.utils.Check;
+import info.xonix.utils.Check;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 

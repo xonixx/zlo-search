@@ -35,6 +35,12 @@
     <target id="build-exploded" name="build-exploded">
         <echo>Maven home: ${maven.home}</echo>
 
+        <maven basedir="xonix-utils"
+               goal="-DskipTests=true install"/>
+
+        <maven basedir="xmlfp"
+               goal="-DskipTests=true install"/>
+
         <maven basedir="zlo_search"
                goal="-DskipTests=true install"/>
 

@@ -30,12 +30,12 @@
     <bean id="exceptionLogger" class="info.xonix.zlo.search.logic.exceptions.ExceptionsLoggerImpl"/>
 
     <!--xmlfp-->
-    <bean class="info.xonix.zlo.search.xmlfp.XmlFpFormatterOptions">
-        <!--TODO: inject from config? -->
+    <!--<bean class="info.xonix.forumsearch.xmlfp.XmlFpFormatterOptions">
+        &lt;!&ndash;TODO: inject from config? &ndash;&gt;
         <constructor-arg index="0" value="UTF-8"/>
 
         <constructor-arg index="1" value="true"/>
-    </bean>
+    </bean>-->
 
     <bean id="xmlFpFormer" class="info.xonix.zlo.search.xmlfp.XmlFpFormer"/>
 

@@ -1,8 +1,8 @@
 package info.xonix.zlo.search.utils.obscene;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.utils.Check;
-import info.xonix.zlo.search.utils.ExceptionUtils;
+import info.xonix.utils.Check;
+import info.xonix.utils.ExceptionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jetty.util.IO;
 

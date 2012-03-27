@@ -1,12 +1,13 @@
 package info.xonix.zlo.search.test.junit.xmlfp;
 
+import info.xonix.forumsearch.xmlfp.XmlFpForum;
+import info.xonix.forumsearch.xmlfp.XmlFpException;
 import info.xonix.zlo.search.dao.XmlFpDao;
 import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
 import info.xonix.zlo.search.logic.forum_adapters.impl.XmlFpForumAdapter;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.xmlfp.ForumAccessor;
-import info.xonix.zlo.search.xmlfp.XmlFpException;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -23,42 +24,44 @@ import static org.junit.Assert.assertEquals;
 public class WwwconfLocalhostZloTests {
     private static final String DESCRIPTOR_URL = "http://localhost:8080/xmlfp/xmlfp.jsp?xmlfp=descriptor&site=0";
 
+    private XmlFpForum xmlFpForum;
     private ForumAccessor forumAccessor;
     public static final int N = 10;
 
     @Before
     public void setup() throws XmlFpException {
-        forumAccessor = ForumAccessor.fromDescriptorUrl(DESCRIPTOR_URL);
+        xmlFpForum = XmlFpForum.fromDescriptorUrl(DESCRIPTOR_URL);
+        forumAccessor = new ForumAccessor(xmlFpForum);
     }
 
     @Test
     public void test_descriptor() throws XmlFpException {
-        assertEquals("http://zlo.rt.mipt.ru/", forumAccessor.getForumUrl());
-        assertEquals("Конференция ФРТК-МФТИ", forumAccessor.getTitle());
-        assertEquals(null, forumAccessor.getDescription());
-        assertEquals(1000, forumAccessor.getMessageListMaxCount());
+        assertEquals("http://zlo.rt.mipt.ru/", xmlFpForum.getForumUrl());
+        assertEquals("Конференция ФРТК-МФТИ", xmlFpForum.getTitle());
+        assertEquals(null, xmlFpForum.getDescription());
+        assertEquals(1000, xmlFpForum.getMessageListMaxCount());
     }
 
     @Test
     public void test_localhost_xmlfp() throws XmlFpException {
-        final long lastMessageNumber = forumAccessor.getLastMessageNumber();
+        final long lastMessageNumber = xmlFpForum.getLastMessageNumber();
 
         System.out.println("Last num: " + lastMessageNumber);
-        System.out.println("Last Msg: " + forumAccessor.getMessage(lastMessageNumber));
+        System.out.println("Last Msg: " + xmlFpForum.getMessage(lastMessageNumber));
     }
 
     @Test
     public void test_list_last_N_msgs() throws XmlFpException {
-        final long lastMessageNumber = forumAccessor.getLastMessageNumber();
+        final long lastMessageNumber = xmlFpForum.getLastMessageNumber();
 
         for (long i = 0; i < N; i++) {
-            System.out.println(forumAccessor.getMessage(lastMessageNumber - i));
+            System.out.println(xmlFpForum.getMessage(lastMessageNumber - i));
         }
     }
 
     @Test
     public void test_list_last_N_msgs_bunch() throws XmlFpException {
-        final long lastMessageNumber = forumAccessor.getLastMessageNumber();
+        final long lastMessageNumber = xmlFpForum.getLastMessageNumber();
 
         final List<Message> messageList = forumAccessor.getMessageList(lastMessageNumber - N + 1, lastMessageNumber);
         assertEquals(N, messageList.size());

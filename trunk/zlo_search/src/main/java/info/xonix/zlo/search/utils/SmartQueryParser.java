@@ -1,5 +1,6 @@
 package info.xonix.zlo.search.utils;
 
+import info.xonix.utils.ExceptionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.util.MultiMap;

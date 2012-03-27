@@ -1,12 +1,13 @@
 package info.xonix.zlo.search.test.junit.xmlfp;
 
+import info.xonix.forumsearch.xmlfp.XmlFpForum;
+import info.xonix.forumsearch.xmlfp.XmlFpException;
 import info.xonix.zlo.search.dao.XmlFpDao;
 import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
 import info.xonix.zlo.search.logic.forum_adapters.impl.XmlFpForumAdapter;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.xmlfp.ForumAccessor;
-import info.xonix.zlo.search.xmlfp.XmlFpException;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -23,34 +24,37 @@ import static org.junit.Assert.assertEquals;
 public class WwwconfVotalkaTests {
     private static final String DESCRIPTOR_URL = "http://votalka.campus.mipt.ru/?xmlfp";
 
+    private XmlFpForum xmlFpForum;
     private ForumAccessor forumAccessor;
+
     public static final int N = 10;
 
     @Before
     public void setup() throws XmlFpException {
-        forumAccessor = ForumAccessor.fromDescriptorUrl(DESCRIPTOR_URL);
+        xmlFpForum = XmlFpForum.fromDescriptorUrl(DESCRIPTOR_URL);
+        forumAccessor = new ForumAccessor(xmlFpForum);
     }
 
     @Test
     public void test_descriptor() throws XmlFpException {
-        assertEquals("http://votalka.campus.mipt.ru/?index", forumAccessor.getForumUrl());
-        assertEquals("свободное™ общение", forumAccessor.getTitle());
-        assertEquals("диктатура свободного™ общения без модерации", forumAccessor.getDescription());
-        assertEquals(100, forumAccessor.getMessageListMaxCount());
+        assertEquals("http://votalka.campus.mipt.ru/?index", xmlFpForum.getForumUrl());
+        assertEquals("свободное™ общение", xmlFpForum.getTitle());
+        assertEquals("диктатура свободного™ общения без модерации", xmlFpForum.getDescription());
+        assertEquals(100, xmlFpForum.getMessageListMaxCount());
     }
 
     @Test
     public void test_list_last_N_msgs() throws XmlFpException {
-        final long lastMessageNumber = forumAccessor.getLastMessageNumber();
+        final long lastMessageNumber = xmlFpForum.getLastMessageNumber();
 
         for (long i = 0; i < N; i++) {
-            System.out.println(forumAccessor.getMessage(lastMessageNumber - i));
+            System.out.println(xmlFpForum.getMessage(lastMessageNumber - i));
         }
     }
 
     @Test
     public void test_list_last_N_msgs_bunch() throws XmlFpException {
-        final long lastMessageNumber = forumAccessor.getLastMessageNumber();
+        final long lastMessageNumber = xmlFpForum.getLastMessageNumber();
 
         final List<Message> messageList = forumAccessor.getMessageList(lastMessageNumber - N + 1, lastMessageNumber);
         assertEquals(N, messageList.size());

@@ -49,6 +49,8 @@
     <modules>
         <module>zlo_search</module>
         <module>zlo_web</module>
+        <module>xmlfp</module>
+        <module>xonix-utils</module>
         <!--<module>launcher</module>-->
     </modules>
 

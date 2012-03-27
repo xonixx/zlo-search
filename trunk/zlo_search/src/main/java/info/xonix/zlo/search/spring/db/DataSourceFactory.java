@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.spring.db;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.utils.Check;
+import info.xonix.utils.Check;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;

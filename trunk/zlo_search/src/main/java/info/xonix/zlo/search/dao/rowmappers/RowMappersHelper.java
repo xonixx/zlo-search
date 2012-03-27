@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.dao.rowmappers;
 
-import info.xonix.zlo.search.utils.factory.Factory;
+import info.xonix.utils.factory.Factory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 
