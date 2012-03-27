@@ -36,8 +36,14 @@
         <put-attribute name="activeScreen" value="forums"/>
     </definition>
 
+<!--
     <definition name="header.ws" extends="header">
         <put-attribute name="activeScreen" value="ws"/>
+    </definition>
+-->
+
+    <definition name="header.developer" extends="header">
+        <put-attribute name="activeScreen" value="developer"/>
     </definition>
 
     <definition name="header.message" extends="header">

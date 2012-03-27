@@ -3,14 +3,15 @@
 
 <link rel="stylesheet" type="text/css" href="main.css"/>
 
-<title>Web Service поиска</title>
+<c:set var="title">Web Service поиска</c:set>
+<title>${title}</title>
 
-<tiles:insertDefinition name="header.ws"/>
+<tiles:insertDefinition name="header.developer"/>
 
 <div class="content">
-    <h3>Web Service поиска</h3>
+    <h3>${title}</h3>
 
-    Бордопоиск предоставляет <a href="/ws/">веб-сервис</a> (<a href="ws/search?wsdl">wsdl</a>),
+    Бордопоиск предоставляет <a href="ws/">веб-сервис</a> (<a href="ws/search?wsdl">wsdl</a>),
     выполненный на технологии <a href="http://cxf.apache.org/">Apache CXF</a>.
 
     Для работы из <a href="http://www.python.org/">python</a> рекомеднуется библиотека для WS

@@ -23,32 +23,32 @@
 <c:set var="isSearchResultPresent" value="${not empty requestScope['searchResult']}"/>
 <c:set var="rssUrl" value='<%= String.format("search?rss&%s", request.getQueryString()) %>'/>
 <c:set var="rssLinkHtml"><a href="${rssUrl}" title="RSS для этого запроса">
-    <img src="/feed-icon-14x14.png" alt="RSS для этого запроса"/></a>
+    <img src="feed-icon-14x14.png" alt="RSS для этого запроса"/></a>
 </c:set>
 
 <!-- ПРЕВЕД -->
 <html>
 <head>
     <title><fmt:message key="page.title"/></title>
-    <link rel="stylesheet" type="text/css" href="/main.css"/>
+    <link rel="stylesheet" type="text/css" href="main.css"/>
     <c:if test="${not isError and isSearchResultPresent}">
         <link rel="alternate" type="application/rss+xml" title="RSS" href="${rssUrl}">
     </c:if>
 
     <%--jQuery--%>
-    <link rel="stylesheet" type="text/css" href="/jq/themes/base/jquery.ui.core.css"/>
-    <link rel="stylesheet" type="text/css" href="/jq/themes/base/jquery.ui.theme.css"/>
-    <link rel="stylesheet" type="text/css" href="/jq/themes/base/jquery.ui.autocomplete.css"/>
+    <link rel="stylesheet" type="text/css" href="jq/themes/base/jquery.ui.core.css"/>
+    <link rel="stylesheet" type="text/css" href="jq/themes/base/jquery.ui.theme.css"/>
+    <link rel="stylesheet" type="text/css" href="jq/themes/base/jquery.ui.autocomplete.css"/>
 
-    <script type="text/javascript" src="/jq/jquery-1.6.2.min.js"></script>
-    <script type="text/javascript" src="/jq/jquery.ui.core.min.js"></script>
-    <script type="text/javascript" src="/jq/jquery.ui.widget.min.js"></script>
-    <script type="text/javascript" src="/jq/jquery.ui.position.min.js"></script>
-    <script type="text/javascript" src="/jq/jquery.ui.autocomplete.min.js"></script>
+    <script type="text/javascript" src="jq/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="jq/jquery.ui.core.min.js"></script>
+    <script type="text/javascript" src="jq/jquery.ui.widget.min.js"></script>
+    <script type="text/javascript" src="jq/jquery.ui.position.min.js"></script>
+    <script type="text/javascript" src="jq/jquery.ui.autocomplete.min.js"></script>
     <%--jQuery ends--%>
 
-    <script type="text/javascript" src="/script.js"></script>
-    <script type="text/javascript" src="/pic/lulz/db.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript" src="pic/lulz/db.js"></script>
 </head>
 <body>
 <tiles:insertDefinition name="header.search"/>
