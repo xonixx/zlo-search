@@ -2,7 +2,9 @@
 
 f = r'D:\stuff\test\java\zlo-search\zlo_search\src\main\java\info\xonix\zlo\search\utils\obscene\obscene.txt'
 
-words = open(f).read().split()
+words = open(f).read().split('\n')
+words = [ w.strip() for w in words ]
+words = [ w for w in words if w != '' and w[0] != '#']
 
 #print ', '.join(words)
 

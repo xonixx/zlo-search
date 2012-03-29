@@ -38,6 +38,8 @@ public class ObsceneUtilsTests {
 
         assertTrue(containsObsceneWord("привет пидор"));
         assertTrue(containsObsceneWord("привет пидар"));
+        assertTrue(containsObsceneWord("привет пидираст"));
+        assertTrue(containsObsceneWord("привет педораз"));
 
         assertTrue(containsObsceneWord("пИзДлявая"));
         assertTrue(containsObsceneWord("пUзДлявAя"));
@@ -49,5 +51,9 @@ public class ObsceneUtilsTests {
         assertTrue(containsObsceneWord("имярек мудак"));
         assertTrue(containsObsceneWord("мудак имярек"));
         assertTrue(containsObsceneWord("имярек гей"));
+
+        assertTrue(containsObsceneWord("анал"));
+        assertTrue(containsObsceneWord("анальный"));
+        assertFalse(containsObsceneWord("аналит"));
     }
 }
