@@ -13,7 +13,7 @@ CREATE TABLE messages (
   status TINYINT COMMENT 'ok/deleted',
   body TEXT,
 
-  KEY (msgDate) COMMENT 'for statistics'
+  KEY (msgDate) -- COMMENT 'for statistics'
 )
 ENGINE=INNODB
 DEFAULT CHARSET=cp1251;
