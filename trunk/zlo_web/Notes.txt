@@ -19,7 +19,7 @@
 4) Проект должен лежать в папке "D:\TEST\JAVA\ZloSearcher", чтобы не было проблем с библиотеками
 
 5) DB user:
-    Create_webapp_user.sql
+    Create_webapp_user.sql <removed>
 
 6) Настройка tomcat connection pool:
    В server.xml внутри тега Host в конце вставить секцию (так для каждого нового сайта, изменяя имя и базу):

@@ -3,12 +3,14 @@ import os
 
 #SITE = 'x'
 #SITE = 'dolgopa'
-SITE = 'votalka'
+#SITE = 'votalka'
+SITE = 'x_mipt_cc'
 
 SQLS = [ 'create_db_dict.sql',
          'create_messages_table.sql',
          'create_table_nickhost.sql',
          'create_autocomplete.sql',
+         'creare_topics_table.sql',
 ]
 
 TBLS = ['db_dict',
@@ -16,6 +18,7 @@ TBLS = ['db_dict',
         'nickhost',
         'trigger_nickhost',
         'autocomplete',
+        'topics',
         ]
 
 CWD = os.path.dirname(__file__)
