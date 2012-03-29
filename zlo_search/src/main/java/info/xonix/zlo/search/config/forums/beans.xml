@@ -29,6 +29,24 @@
                 </bean>
 
                 <bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
+                    <constructor-arg value="12"/>
+
+                    <constructor-arg value="x_mipt_cc"/>
+
+                    <constructor-arg>
+                        <bean class="info.xonix.zlo.search.config.forums.ForumParams">
+                            <constructor-arg value="info/xonix/zlo/search/config/forums/common/active.properties"/>
+                        </bean>
+                    </constructor-arg>
+
+                    <constructor-arg>
+                        <bean class="info.xonix.zlo.search.logic.forum_adapters.impl.XmlFpForumAdapter">
+                            <constructor-arg value="http://x.mipt.cc/?xmlfp"/>
+                        </bean>
+                    </constructor-arg>
+                </bean>
+
+                <bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
                     <constructor-arg value="3"/>
 
                     <constructor-arg value="anime"/>

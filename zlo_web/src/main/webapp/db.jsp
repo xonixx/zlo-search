@@ -1,4 +1,3 @@
-<%@ page import="org.apache.tomcat.jdbc.pool.DataSource" %>
 <%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
@@ -6,7 +5,7 @@
 
 <c:set var="sql">${param['sql']}</c:set>
 
-<form action="tst.jsp" method="post">
+<form action="db.jsp" method="post">
     <textarea rows="5" cols="50" name="sql">${sql}</textarea>
     <input type="submit" value="GO">
 </form>

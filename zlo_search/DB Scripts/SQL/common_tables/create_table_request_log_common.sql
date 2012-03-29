@@ -32,4 +32,4 @@ ALTER TABLE request_log
 
 -- update request_log set is_admin_req = 0 where is_admin_req is null;  
     
---update request_log set is_rss_req=if(req_query_str like 'rss&%', 1, 0)
+-- update request_log set is_rss_req=if(req_query_str like 'rss&%', 1, 0)
