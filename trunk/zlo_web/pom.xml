@@ -47,7 +47,7 @@
                     <webResources>
                         <!--http://maven.apache.org/plugins/maven-war-plugin/examples/adding-filtering-webresources.html-->
                         <resource>
-                            <directory>../zlo_search/src/main/resources/info/xonix/zlo/search/xmlfp/xsd</directory>
+                            <directory>../xmlfp/src/main/resources/info/xonix/zlo/search/xmlfp/xsd</directory>
                             <includes>
                                 <include>*.xsd</include>
                             </includes>

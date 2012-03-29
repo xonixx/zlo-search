@@ -226,7 +226,7 @@
                     </constructor-arg>
                 </bean>
 
-                <bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
+                <!--<bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
                     <constructor-arg value="11"/>
 
                     <constructor-arg value="votalka"/>
@@ -242,7 +242,7 @@
                             <constructor-arg value="http://votalka.campus.mipt.ru/?xmlfp"/>
                         </bean>
                     </constructor-arg>
-                </bean>
+                </bean>-->
             </list>
         </constructor-arg>
     </bean>
