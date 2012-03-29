@@ -29,7 +29,7 @@
 <c:choose>
     <c:when test="${byNick}">
         <sql:query var="res">
-            select nick, reg, COUNT(*) cnt from ${messagesTbl}
+            select nick, user_id, reg, COUNT(*) cnt from ${messagesTbl}
             ${msgDateWhereClause}
             group by nick
             order by cnt desc;
@@ -96,6 +96,7 @@
                     <tiles:insertDefinition name="nick">
                         <tiles:putAttribute name="reg" value="${row.reg}"/>
                         <tiles:putAttribute name="nick" value="${row.nick}"/>
+                        <tiles:putAttribute name="userId" value="${row.user_id}"/>
                     </tiles:insertDefinition>
                 </c:when>
                 <c:otherwise>
