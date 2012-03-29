@@ -52,7 +52,7 @@
 
 <title>${title}</title>
 
-<tiles:insertDefinition name="header.detectspam"/>
+<tiles:insertDefinition name="header.admin"/>
 
 <div align="center">
     <h3>${title}</h3>

@@ -39,6 +39,9 @@
 --%>
         <li><a href="${baseUrl}developer.jsp"
                <c:if test="${activeScreen == 'developer'}">class="activeLink"</c:if>>Разработчику</a></li>
+
+        <li><a href="${baseUrl}contact.jsp"
+               <c:if test="${activeScreen == 'contact'}">class="activeLink"</c:if>>Обратная связь</a></li>
 <%--
         <li><a href="about.jsp"
                <c:if test="${activeScreen == 'about'}">class="activeLink"</c:if>>О системе</a></li>
@@ -47,8 +50,8 @@
         <c:if test="<%= RequestUtils.isPowerUser(request) %>">
             <span class="adminLinks">
                 <%--admin menu items--%>
-                <li><a href="${baseUrl}detectspam.jsp"
-                       <c:if test="${activeScreen == 'detectspam'}">class="activeLink"</c:if>>Spam</a></li>
+                <%--<li><a href="${baseUrl}detectspam.jsp"
+                       <c:if test="${activeScreen == 'detectspam'}">class="activeLink"</c:if>>Spam</a></li>--%>
                 <li><a href="${baseUrl}admin.jsp"
                        <c:if test="${activeScreen == 'admin'}">class="activeLink"</c:if>>Admin</a></li>
             </span>
