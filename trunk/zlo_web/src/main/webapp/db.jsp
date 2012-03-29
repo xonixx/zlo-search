@@ -4,27 +4,7 @@
 <%@ include file="WEB-INF/jsp/restrictAccess.jsp" %>
 
 <link rel="stylesheet" type="text/css" href="main.css"/>
-
-<style type="text/css">
-    table, th, td {
-        border: solid black;
-    }
-
-    table {
-        border-width: 1px 0 0 1px;
-        border-collapse: collapse;
-        min-width: 100px;
-        margin: 0 auto;
-    }
-
-    th, td {
-        border-width: 0 1px 1px 0;
-    }
-
-    caption {
-        text-align: left;
-    }
-</style>
+<link rel="stylesheet" type="text/css" href="db.css"/>
 
 <tiles:insertDefinition name="header.admin"/>
 
