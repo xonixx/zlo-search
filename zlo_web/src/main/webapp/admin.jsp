@@ -5,7 +5,6 @@
 <%@ page import="info.xonix.zlo.search.progs.OptimizeAllIndexes" %>
 <%@ page import="info.xonix.zlo.search.utils.SysUtils" %>
 <%@ page import="info.xonix.zlo.web.logic.AdminLogic" %>
-<%@ page import="info.xonix.zlo.web.utils.RequestUtils" %>
 <%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
@@ -13,12 +12,7 @@
     SearchLogic searchLogic = AppSpringContext.get(SearchLogicImpl.class);
 %>
 
-<%
-    if (!RequestUtils.isPowerUser(request)) {
-        response.sendError(404);
-        return;
-    }
-%>
+<%@ include file="WEB-INF/jsp/restrictAccess.jsp" %>
 
 <link rel="stylesheet" type="text/css" href="main.css"/>
 <link rel="stylesheet" type="text/css" href="admin.css"/>
