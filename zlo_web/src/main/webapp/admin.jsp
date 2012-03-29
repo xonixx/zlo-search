@@ -30,6 +30,9 @@
         <input type="submit" name="command" value="Optimize"/>
         <input type="submit" name="command" value="GC"/>
     </form>
+    
+    <a href="detectspam.jsp">Spam?</a>
+    <a href="db.jsp">DB</a>
 
     <%
         if ("POST".equals(request.getMethod())) {
