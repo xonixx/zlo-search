@@ -222,7 +222,7 @@ public class SearchRequest {
     public String describeToString() {
         StringBuilder sb = new StringBuilder();
         sb.append("форум:(").append(GetForum.adapter(forumId).getForumUrl()).append(")");
-//TODO : add root
+
         if (StringUtils.isNotEmpty(text)) sb.append(" текст:(").append(text).append(")");
         if (StringUtils.isNotEmpty(nick)) sb.append(" ник:(").append(nick).append(")");
         if (StringUtils.isNotEmpty(host)) sb.append(" хост:(").append(host).append(")");
@@ -233,6 +233,8 @@ public class SearchRequest {
         }
 
         ArrayList<String> options = new ArrayList<String>(5);
+
+        if (root) options.add("в корневых сообщ.");
         if (inTitle) options.add("в заголовках");
         if (inBody) options.add("в теле");
         if (inHasImg) options.add("с картинками");

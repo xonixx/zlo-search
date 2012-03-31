@@ -39,4 +39,6 @@ public interface ForumAdapter {
      * @return message id or -1 if in can't be exctracted
      */
     public long extractMessageIdFromMessageUrl(String messageUrl);
+
+    public boolean supportsParents();
 }

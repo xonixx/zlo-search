@@ -103,9 +103,11 @@
                            <c:if test="${not empty param['hasImg']}">checked="checked"</c:if>/>
                     <label for="hasImg"><fmt:message key="label.search.in.has.img"/></label>
 
-                    <input type="checkbox" name="isRoot" id="isRoot"
-                           <c:if test="${not empty param['isRoot']}">checked="checked"</c:if>/>
-                    <label for="isRoot"><fmt:message key="label.search.in.is.root"/></label>
+                    <c:if test="<%= adapter.supportsParents() %>">
+                        <input type="checkbox" name="isRoot" id="isRoot"
+                               <c:if test="${not empty param['isRoot']}">checked="checked"</c:if>/>
+                        <label for="isRoot"><fmt:message key="label.search.in.is.root"/></label>
+                    </c:if>
                     <br/>
                     <fmt:message key="label.nick"/> <input type="text" name="nick"
                                                            <c:if test="${not empty param['nick']}">value="<c:out value="${param['nick']}" />"

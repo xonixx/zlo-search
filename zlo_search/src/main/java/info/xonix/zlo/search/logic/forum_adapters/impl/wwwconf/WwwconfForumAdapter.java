@@ -104,4 +104,9 @@ public class WwwconfForumAdapter extends ForumAdapterAbstract {
 
         return defaultResult;
     }
+
+    @Override
+    public boolean supportsParents() {
+        return false;
+    }
 }

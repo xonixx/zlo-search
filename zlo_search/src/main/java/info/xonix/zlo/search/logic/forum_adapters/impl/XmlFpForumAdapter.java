@@ -165,4 +165,9 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract
 //        throw new UnsupportedOperationException("TBD");
         return super.extractMessageIdFromMessageUrl(messageUrl); // TODO !!!
     }
+
+    @Override
+    public boolean supportsParents() {
+        return true;
+    }
 }
