@@ -13,6 +13,7 @@ CREATE TABLE messages (
   status TINYINT COMMENT 'ok/deleted',
   body TEXT,
 
+  KEY (parentNum),
   KEY (msgDate) -- COMMENT 'for statistics'
 )
 ENGINE=INNODB

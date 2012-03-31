@@ -8,8 +8,9 @@ SITES = cfg.ALL_SITE_NAMES
 
 SQLS = [
 #    'create_autocomplete.sql',
-    '01_alter_messages_add_user_id.sql',
-    '01b_alter_messages_add_user_id.sql',
+#    '01_alter_messages_add_user_id.sql',
+#    '01b_alter_messages_add_user_id.sql',
+    '02_alter_messages_add_key_parentNum.sql',
         ]
 
 TBLS = ['db_dict',
