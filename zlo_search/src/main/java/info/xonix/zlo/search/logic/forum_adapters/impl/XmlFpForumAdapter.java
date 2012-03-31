@@ -170,4 +170,8 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract
     public boolean supportsParents() {
         return true;
     }
+
+    public XmlFpForum getXmlFpForum() {
+        return xmlFpForum;
+    }
 }

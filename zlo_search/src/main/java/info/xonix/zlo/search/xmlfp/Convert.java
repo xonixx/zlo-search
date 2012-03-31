@@ -60,18 +60,18 @@ class Convert {
         }
     }
 
-    public static Messages toJaxbMessages(WwwconfParams wwwconfParams, List<Message> messages) {
+    public static Messages toJaxbMessages(String forumId, List<Message> messages) {
         Messages jaxbMessages = OBJECT_FACTORY.createMessages();
 
         for (Message message : messages) {
-            jaxbMessages.getMessage().add(toJaxbMessage(wwwconfParams, message));
+            jaxbMessages.getMessage().add(toJaxbMessage(forumId, message));
         }
 
         return jaxbMessages;
     }
 
     public static info.xonix.forumsearch.xmlfp.jaxb_generated.Message toJaxbMessage(
-            WwwconfParams wwwconfParams, Message message) {
+            String forumId, Message message) {
 
         if (message == null) {
             throw new NullPointerException("message");
@@ -108,8 +108,7 @@ class Convert {
 
             info.setDate(new XMLGregorianCalendarImpl(cal));
             info.setParentId((long) message.getParentNum());
-            info.setMessageUrl("http://" + wwwconfParams.getSiteUrl() + wwwconfParams.getReadQuery() + message.getNum());
-
+            info.setMessageUrl(GetForum.adapter(forumId).prepareMessageUrl(message.getNum()));
 
             final Author author = OBJECT_FACTORY.createAuthor();
             jaxbMessage.setAuthor(author);
