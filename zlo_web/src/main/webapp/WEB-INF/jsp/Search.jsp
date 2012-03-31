@@ -83,22 +83,29 @@
                 <td colspan="2">
                     <fmt:message key="label.search"/>
                     <input type="checkbox" name="inTitle" id="inTitle"
-                           <c:if test="${not empty param['inTitle']}">checked="checked"</c:if>/> <label
-                        for="inTitle"><fmt:message key="label.search.in.title"/></label>
+                           <c:if test="${not empty param['inTitle']}">checked="checked"</c:if>/>
+                    <label for="inTitle"><fmt:message key="label.search.in.title"/></label>
+
                     <input type="checkbox" name="inBody" id="inBody"
-                           <c:if test="${not empty param['inBody']}">checked="checked"</c:if>/> <label
-                        for="inBody"><fmt:message key="label.search.in.body"/></label>
+                           <c:if test="${not empty param['inBody']}">checked="checked"</c:if>/>
+                    <label for="inBody"><fmt:message key="label.search.in.body"/></label>
                     <br/>
                     <fmt:message key="label.search.messages"/>
                     <input type="checkbox" name="reg" id="reg"
-                           <c:if test="${not empty param['reg']}">checked="checked"</c:if>/> <label
-                        for="reg"><fmt:message key="label.search.in.reg"/></label>
+                           <c:if test="${not empty param['reg']}">checked="checked"</c:if>/>
+                    <label for="reg"><fmt:message key="label.search.in.reg"/></label>
+
                     <input type="checkbox" name="hasUrl" id="hasUrl"
-                           <c:if test="${not empty param['hasUrl']}">checked="checked"</c:if>/> <label
-                        for="hasUrl"><fmt:message key="label.search.in.has.url"/></label>
+                           <c:if test="${not empty param['hasUrl']}">checked="checked"</c:if>/>
+                    <label for="hasUrl"><fmt:message key="label.search.in.has.url"/></label>
+
                     <input type="checkbox" name="hasImg" id="hasImg"
-                           <c:if test="${not empty param['hasImg']}">checked="checked"</c:if>/> <label
-                        for="hasImg"><fmt:message key="label.search.in.has.img"/></label>
+                           <c:if test="${not empty param['hasImg']}">checked="checked"</c:if>/>
+                    <label for="hasImg"><fmt:message key="label.search.in.has.img"/></label>
+
+                    <input type="checkbox" name="isRoot" id="isRoot"
+                           <c:if test="${not empty param['isRoot']}">checked="checked"</c:if>/>
+                    <label for="isRoot"><fmt:message key="label.search.in.is.root"/></label>
                     <br/>
                     <fmt:message key="label.nick"/> <input type="text" name="nick"
                                                            <c:if test="${not empty param['nick']}">value="<c:out value="${param['nick']}" />"

@@ -53,7 +53,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
                 IndexWriterConfig indexWriterConfig = new IndexWriterConfig(
                         LuceneVersion.VERSION, config.getMessageAnalyzer());
 
-                writer = new IndexWriter(FSDirectory.open(getIndexDir(forumId)),indexWriterConfig);
+                writer = new IndexWriter(FSDirectory.open(getIndexDir(forumId)), indexWriterConfig);
 
                 writer.setMergeFactor(7); // optimized for search : TODO
             } catch (IOException e) {
@@ -110,25 +110,31 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
     }
 
     private Document messageToDocument(String forumId, @Nonnull Message msg) {
-            final String hostLowerCase = msg.getHost().toLowerCase();
+        if (msg == null || !msg.isOk()) {
+            throw new IllegalArgumentException("msg");
+        }
 
-            Document doc = new Document();
+        final String hostLowerCase = msg.getHost().toLowerCase();
 
-            doc.add(new Field(MessageFields.URL_NUM, URL_NUM_FORMAT.format(msg.getNum()), Field.Store.YES, Field.Index.NOT_ANALYZED));
-            doc.add(new Field(MessageFields.TOPIC_CODE, Integer.toString(msg.getTopicCode()), Field.Store.NO, Field.Index.NOT_ANALYZED));
-            doc.add(new Field(MessageFields.TITLE, msg.getCleanTitle(), Field.Store.NO, Field.Index.ANALYZED)); // "чистый" - индексируем, не храним
-            doc.add(new Field(MessageFields.NICK, msg.getNick().toLowerCase(), Field.Store.NO, Field.Index.NOT_ANALYZED));
-            doc.add(new Field(MessageFields.REG, msg.isReg() ? TRUE : FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED));
+        Document doc = new Document();
 
-            doc.add(new Field(MessageFields.HOST, hostLowerCase, Field.Store.NO, Field.Index.NOT_ANALYZED));
-            doc.add(new Field(MessageFields.HOST_REVERSED, StringUtils.reverse(hostLowerCase), Field.Store.NO, Field.Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.URL_NUM, URL_NUM_FORMAT.format(msg.getNum()), Field.Store.YES, Field.Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.TOPIC_CODE, Integer.toString(msg.getTopicCode()), Field.Store.NO, Field.Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.TITLE, msg.getCleanTitle(), Field.Store.NO, Field.Index.ANALYZED)); // "чистый" - индексируем, не храним
+        doc.add(new Field(MessageFields.NICK, msg.getNick().toLowerCase(), Field.Store.NO, Field.Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.REG, msg.isReg() ? TRUE : FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED));
 
-            doc.add(new Field(MessageFields.DATE, DateTools.dateToString(msg.getDate(), DateTools.Resolution.MINUTE), Field.Store.NO, Field.Index.NOT_ANALYZED));
-            doc.add(new Field(MessageFields.BODY, msg.getCleanBody(), Field.Store.NO, Field.Index.ANALYZED)); // "чистый" - индексируем, не храним
-            doc.add(new Field(MessageFields.HAS_URL, MessageLogic.hasUrl(msg) ? TRUE : FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED));
-            doc.add(new Field(MessageFields.HAS_IMG, MessageLogic.hasImg(msg, forumId) ? TRUE : FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.HOST, hostLowerCase, Field.Store.NO, Field.Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.HOST_REVERSED, StringUtils.reverse(hostLowerCase), Field.Store.NO, Field.Index.NOT_ANALYZED));
 
-            return doc;
+        doc.add(new Field(MessageFields.DATE, DateTools.dateToString(msg.getDate(), DateTools.Resolution.MINUTE), Field.Store.NO, Field.Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.BODY, msg.getCleanBody(), Field.Store.NO, Field.Index.ANALYZED)); // "чистый" - индексируем, не храним
+        doc.add(new Field(MessageFields.HAS_URL, MessageLogic.hasUrl(msg) ? TRUE : FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.HAS_IMG, MessageLogic.hasImg(msg, forumId) ? TRUE : FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED));
+
+        doc.add(new Field(MessageFields.IS_ROOT, msg.getParentNum() <= 0 ? TRUE : FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED));
+
+        return doc;
     }
 
     /**

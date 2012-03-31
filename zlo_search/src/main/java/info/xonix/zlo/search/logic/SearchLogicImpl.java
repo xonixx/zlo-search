@@ -37,7 +37,7 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     @Autowired
     private Config config;
 
-    public static String formQueryString(String text, boolean inTitle, boolean inBody, int topicCode,
+    public static String formQueryString(String text, boolean isRoot, boolean inTitle, boolean inBody, int topicCode,
                                          String nick, String host, Date fromDate, Date toDate,
                                          boolean inReg, boolean inHasUrl, boolean inHasImg) {
 
@@ -84,6 +84,10 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
             queryStr.append(format(" +{0}:[{1,date,yyyyMMdd} TO {2,date,yyyyMMdd}]", MessageFields.DATE, fromDate, toDate));
         }
 
+        if (isRoot) {
+            queryStr.append(format(" +{0}:1", MessageFields.IS_ROOT));
+        }
+
         if (inReg) {
             queryStr.append(format(" +{0}:1", MessageFields.REG));
         }
@@ -117,7 +121,7 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
         final SearchResult searchResult = search(
                 req.getForumId(),
                 formQueryString(
-                        req.getText(), req.isInTitle(), req.isInBody(),
+                        req.getText(), req.isRoot(), req.isInTitle(), req.isInBody(),
                         req.getTopicCode(), req.getNick(), req.getHost(),
                         req.getFromDate(), req.getToDate(),
                         req.isInReg(), req.isInHasUrl(), req.isInHasImg()),
