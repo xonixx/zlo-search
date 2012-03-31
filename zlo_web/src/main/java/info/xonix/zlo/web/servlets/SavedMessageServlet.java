@@ -26,6 +26,8 @@ public class SavedMessageServlet extends BaseServlet {
     public static final String QS_NUM = "num";
     public static final String ERROR = "error";
     public static final String SAVED_MSG = "msg";
+    public static final String PARENT_MSG = "parentMsg";
+    public static final String CHILD_MSGS = "childMsgs";
 
     public static final String JSP_SAVED_MSG = "/WEB-INF/jsp/SavedMsg.jsp";
 
@@ -51,6 +53,8 @@ public class SavedMessageServlet extends BaseServlet {
         setSiteInReq(request, response);
 
         Message msg;
+        Message parentMsg = null;
+
         try {
             final ForumDescriptor forumDescriptor = getSite(request);
 
@@ -58,6 +62,15 @@ public class SavedMessageServlet extends BaseServlet {
 
             if (msg != null && msg.getStatus() != MessageStatus.DELETED) {
                 request.setAttribute(SAVED_MSG, msg);
+
+                final int parentNum = msg.getParentNum();
+                if (parentNum > 0) {
+                    parentMsg = appLogic.getMessageByNumber(forumDescriptor.getForumId(), parentNum);
+                }
+
+                if (parentMsg != null && parentMsg.isOk()) {
+                    request.setAttribute(PARENT_MSG, parentMsg);
+                }
             } else {
                 request.setAttribute(ERROR, ErrorMessage.MessageNotFound);
             }
