@@ -22,6 +22,7 @@ public class SearchRequest {
 
     private String text;
 
+    private boolean root;
     private boolean inTitle;
     private boolean inBody;
 
@@ -39,13 +40,14 @@ public class SearchRequest {
 
     private boolean searchAll;
 
-    public SearchRequest(String forumId, String text, boolean inTitle, boolean inBody,
+    public SearchRequest(String forumId, String text, boolean isRoot, boolean inTitle, boolean inBody,
                          boolean inReg, boolean inHasUrl, boolean inHasImg,
                          String nick, String host, int topicCode, boolean isDateSet, Date fromDate, Date toDate,
                          boolean searchAll) {
         this.forumId = forumId;
 
         this.text = text;
+        root = isRoot;
         this.inTitle = inTitle;
         this.inBody = inBody;
         this.inReg = inReg;
@@ -76,6 +78,10 @@ public class SearchRequest {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public boolean isRoot() {
+        return root;
     }
 
     public boolean isInTitle() {
@@ -173,6 +179,7 @@ public class SearchRequest {
                 || inHasUrl
                 || inHasImg
                 || isDateSet
+                || root
 //                || -1 != topicCode
                 ;
     }
@@ -186,6 +193,7 @@ public class SearchRequest {
 
         return forumId.equals(req.getForumId()) &&
                 topicCode == req.getTopicCode() &&
+                root == req.root &&
                 StringUtils.equals(text, req.getText()) &&
                 inTitle == req.isInTitle() &&
                 inBody == req.isInBody() &&
@@ -200,7 +208,7 @@ public class SearchRequest {
     }
 
     public int hashCode() {
-        return StringUtils.join(new Object[]{text, inTitle, inBody, inReg, inHasUrl, inHasImg, nick, host, topicCode, searchAll, forumId}, '|').hashCode();
+        return StringUtils.join(new Object[]{text, root, inTitle, inBody, inReg, inHasUrl, inHasImg, nick, host, topicCode, searchAll, forumId}, '|').hashCode();
     }
 
     public boolean isTheSameSearch(SearchRequest searchRequest) {
@@ -214,7 +222,7 @@ public class SearchRequest {
     public String describeToString() {
         StringBuilder sb = new StringBuilder();
         sb.append("форум:(").append(GetForum.adapter(forumId).getForumUrl()).append(")");
-
+//TODO : add root
         if (StringUtils.isNotEmpty(text)) sb.append(" текст:(").append(text).append(")");
         if (StringUtils.isNotEmpty(nick)) sb.append(" ник:(").append(nick).append(")");
         if (StringUtils.isNotEmpty(host)) sb.append(" хост:(").append(host).append(")");

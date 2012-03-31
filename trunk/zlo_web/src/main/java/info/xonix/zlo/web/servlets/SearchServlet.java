@@ -80,6 +80,7 @@ public class SearchServlet extends BaseServlet {
     public static final String QS_IN_REG = "reg";
     public static final String QS_IN_HAS_URL = "hasUrl";
     public static final String QS_IN_HAS_IMG = "hasImg";
+    public static final String QS_IS_ROOT = "isRoot";
 
     public static final String QS_SEARCH_TYPE = "st";
     public static final String SEARCH_TYPE_ALL = "all";
@@ -120,6 +121,7 @@ public class SearchServlet extends BaseServlet {
         final boolean inReg = StringUtils.isNotEmpty(request.getParameter(QS_IN_REG));
         final boolean inHasUrl = StringUtils.isNotEmpty(request.getParameter(QS_IN_HAS_URL));
         final boolean inHasImg = StringUtils.isNotEmpty(request.getParameter(QS_IN_HAS_IMG));
+        final boolean isRoot = StringUtils.isNotEmpty(request.getParameter(QS_IS_ROOT));
 
         final boolean isRssAsked = request.getParameter(QS_RSS) != null;
 
@@ -200,7 +202,7 @@ public class SearchServlet extends BaseServlet {
             nick = preprocessSearchNick(nick);
 
             searchRequest = new SearchRequest(
-                    getSite(request).getForumId(), text,
+                    getSite(request).getForumId(), text, isRoot,
                     inTitle, inBody, inReg, inHasUrl, inHasImg,
                     nick, host, topicCode,
                     StringUtils.isNotEmpty(fromDateStr) || StringUtils.isNotEmpty(toDateStr),

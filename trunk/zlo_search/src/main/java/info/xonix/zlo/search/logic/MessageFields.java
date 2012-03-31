@@ -19,4 +19,6 @@ public final class MessageFields {
     public static String BODY = "body"; // clean - w/o html
     public static String HAS_URL = "url";
     public static String HAS_IMG = "img";
+
+    public static String IS_ROOT = "root";
 }
