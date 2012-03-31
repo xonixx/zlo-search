@@ -21,6 +21,8 @@ public interface MessagesDao {
     List<Message> getMessagesByRange(String forumId, int start, int end);
 
     List<Message> getMessages(String forumId, int[] nums);
+    
+    List<Message> getChildMessages(String forumId, long messageId);
 
     List<MessageShallow> getShallowMessages(String forumId, int[] nums);
 

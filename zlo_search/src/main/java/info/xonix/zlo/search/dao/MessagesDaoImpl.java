@@ -193,6 +193,19 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
     }
 
     @Override
+    public List<Message> getChildMessages(String forumId, long messageId) {
+        return getSimpleJdbcTemplate().query(
+                "select m.num, m.parentNum, m.nick, m.altName, m.user_id, m.title, m.host, " +
+                        "m.msgDate, m.body, m.reg, m.status, " +
+                        " t.name as topic, t.id as topicCode" +
+                        " from " + forumTable(forumId, "messages") + " m" +
+                        " join " + forumTable(forumId, "topics") + " t on m.topicCode=t.id" +
+                        " where parentNum=? " + // TODO : add key by parentNum
+                        " order by num desc",
+                messageRowMapper, messageId);
+    }
+
+    @Override
     public List<MessageShallow> getShallowMessages(String forumId, int[] nums) {
         String sql = String.format(queryProvider.getSelectShallowSetQuery(forumId), joinByComma(nums));
 

@@ -83,6 +83,11 @@ public class AppLogicImpl implements AppLogic, InitializingBean {
     }
 
     @Override
+    public List<Message> getChildMessages(String forumId, long messageId) {
+        return messagesDao.getChildMessages(forumId, messageId);
+    }
+
+    @Override
     public int getLastSavedMessageNumber(String forumId) {
         return messagesDao.getLastMessageNumber(forumId);
     }
