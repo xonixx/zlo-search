@@ -24,6 +24,13 @@
 
 <c:choose>
     <c:when test="${empty requestScope['error']}">
+        <c:if test="${not empty parentMsg}">
+            <jsp:useBean id="parentMsg" scope="request" type="info.xonix.zlo.search.model.Message"/>
+            В ответ на:
+            <a href="msg?site=${forumIntId}&num=${parentMsg.num}">${parentMsg.title}</a> --
+            <util:nick_and_host msg="${parentMsg}"/> --
+            <fmt:formatDate value="${parentMsg.date}" pattern="d/MM/yyyy HH:mm:ss"/>
+        </c:if>
         <div align="center">
             <big>
                 <c:if test="${not empty msg.topic}">[${msg.topic}]</c:if>
@@ -36,16 +43,7 @@
                     <a href="http://zlo.paul7.net/${msg.num}">paul7</a>
                 </c:if>--%><%--dead for now--%>
             </big>
-            <br/>Сообщение было послано:
-            <tiles:insertDefinition name="nick">
-                <tiles:putAttribute name="reg" value="${msg.reg}"/>
-                <tiles:putAttribute name="nick" value="${msg.nick}"/>
-                <tiles:putAttribute name="userId" value="${msg.userId}"/>
-            </tiles:insertDefinition>
-            <tiles:insertDefinition name="host">
-                <tiles:putAttribute name="host" value="${msg.host}"/>
-                <tiles:putAttribute name="brackets" value="${true}"/>
-            </tiles:insertDefinition>
+            <br/>Сообщение было послано: <util:nick_and_host msg="${msg}"/>
             <br/>Дата:
             <fmt:formatDate value="${msg.date}" pattern="EEEE, MMMM d HH:mm:ss yyyy"/>
         </div>
