@@ -65,17 +65,19 @@ public class SavedMessageServlet extends BaseServlet {
             if (msg != null && msg.getStatus() != MessageStatus.DELETED) {
                 request.setAttribute(SAVED_MSG, msg);
 
-                final int parentNum = msg.getParentNum();
-                if (parentNum > 0) {
-                    parentMsg = appLogic.getMessageByNumber(forumId, parentNum);
-                }
+                if (forumDescriptor.getForumAdapter().supportsParents()) {
+                    final int parentNum = msg.getParentNum();
+                    if (parentNum > 0) {
+                        parentMsg = appLogic.getMessageByNumber(forumId, parentNum);
+                    }
 
-                if (parentMsg != null && parentMsg.isOk()) {
-                    request.setAttribute(PARENT_MSG, parentMsg);
-                }
+                    if (parentMsg != null && parentMsg.isOk()) {
+                        request.setAttribute(PARENT_MSG, parentMsg);
+                    }
 
-                final List<Message> childMessages = appLogic.getChildMessages(forumId, msg.getNum());
-                request.setAttribute(CHILD_MSGS, childMessages);
+                    final List<Message> childMessages = appLogic.getChildMessages(forumId, msg.getNum());
+                    request.setAttribute(CHILD_MSGS, childMessages);
+                }
             } else {
                 request.setAttribute(ERROR, ErrorMessage.MessageNotFound);
             }
