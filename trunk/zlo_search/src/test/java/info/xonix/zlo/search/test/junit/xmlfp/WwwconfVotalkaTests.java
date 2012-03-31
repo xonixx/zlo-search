@@ -111,6 +111,12 @@ public class WwwconfVotalkaTests {
         assertEquals(332, messages.get(size - 1).getNum());
     }
 
+    @Test
+    public void testNl() throws XmlFpException {
+        final info.xonix.forumsearch.xmlfp.jaxb_generated.Message message = xmlFpForum.getMessage(101881);
+        System.out.println(message.getContent().getBody());
+    }
+
     private XmlFpForumAdapter buildAdapter() throws ForumAccessException {
         final XmlFpForumAdapter xmlFpForumAdapter = new XmlFpForumAdapter(DESCRIPTOR_URL);
         ReflectionTestUtils.setField(xmlFpForumAdapter, "xmlFpDao", AppSpringContext.get(XmlFpDao.class));

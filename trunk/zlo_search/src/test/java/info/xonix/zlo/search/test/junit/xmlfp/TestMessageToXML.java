@@ -54,6 +54,17 @@ public class TestMessageToXML {
         System.out.println(XmlFpUtils.messageFromXml(msgXmlStr));
     }
 
+    @Test
+    public void test_m_nl() throws IOException, XmlFpException {
+        String path = "D:\\stuff\\test\\java\\zlo-search\\zlo_search\\forum_xml_protocol\\tst\\m1_nl.xml";
+
+        final String msgXmlStr = FileUtils.readFileToString(new File(path), Config.UTF_8);
+
+        final Message message = XmlFpUtils.messageFromXml(msgXmlStr);
+        System.out.println(message.getBody());
+        Assert.assertTrue(message.getBody().indexOf('\n') > 0);
+    }
+
     @Test(expected = XmlFpException.class)
     public void test_m_err1() throws IOException, XmlFpException {
         String path = "D:\\stuff\\test\\java\\zlo-search\\zlo_search\\forum_xml_protocol\\tst\\m_err1.xml";
