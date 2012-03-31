@@ -14,6 +14,7 @@ import org.springframework.dao.DataAccessException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Author: gubarkov
@@ -57,20 +58,24 @@ public class SavedMessageServlet extends BaseServlet {
 
         try {
             final ForumDescriptor forumDescriptor = getSite(request);
+            final String forumId = forumDescriptor.getForumId();
 
-            msg = appLogic.getMessageByNumber(forumDescriptor.getForumId(), num);
+            msg = appLogic.getMessageByNumber(forumId, num);
 
             if (msg != null && msg.getStatus() != MessageStatus.DELETED) {
                 request.setAttribute(SAVED_MSG, msg);
 
                 final int parentNum = msg.getParentNum();
                 if (parentNum > 0) {
-                    parentMsg = appLogic.getMessageByNumber(forumDescriptor.getForumId(), parentNum);
+                    parentMsg = appLogic.getMessageByNumber(forumId, parentNum);
                 }
 
                 if (parentMsg != null && parentMsg.isOk()) {
                     request.setAttribute(PARENT_MSG, parentMsg);
                 }
+
+                final List<Message> childMessages = appLogic.getChildMessages(forumId, msg.getNum());
+                request.setAttribute(CHILD_MSGS, childMessages);
             } else {
                 request.setAttribute(ERROR, ErrorMessage.MessageNotFound);
             }

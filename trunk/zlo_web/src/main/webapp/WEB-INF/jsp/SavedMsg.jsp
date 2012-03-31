@@ -24,12 +24,15 @@
 
 <c:choose>
     <c:when test="${empty requestScope['error']}">
-        <c:if test="${not empty parentMsg}">
-            <jsp:useBean id="parentMsg" scope="request" type="info.xonix.zlo.search.model.Message"/>
-            В ответ на:
-            <a href="msg?site=${forumIntId}&num=${parentMsg.num}">${parentMsg.title}</a> --
-            <util:nick_and_host msg="${parentMsg}"/> --
-            <fmt:formatDate value="${parentMsg.date}" pattern="d/MM/yyyy HH:mm:ss"/>
+        <c:if test="${not empty parentMsg or not empty childMsgs}">
+            <ul>
+                <c:if test="${not empty parentMsg}">
+                    <li><b>В ответ на:</b> <util:msg_line msg="${parentMsg}"/></li>
+                </c:if>
+                <c:forEach items="${childMsgs}" var="child">
+                    <li><b>Ответ:</b> <util:msg_line msg="${child}"/></li>
+                </c:forEach>
+            </ul>
         </c:if>
         <div align="center">
             <big>
@@ -39,9 +42,9 @@
                 <a href="<%= adapter.prepareMessageUrl(msg.getNum()) %>">?</a>
 
                     <%--paul7 link--%>
-                <%--<c:if test="${msg.site.name == 'zlo'}">
-                    <a href="http://zlo.paul7.net/${msg.num}">paul7</a>
-                </c:if>--%><%--dead for now--%>
+                    <%--<c:if test="${msg.site.name == 'zlo'}">
+                        <a href="http://zlo.paul7.net/${msg.num}">paul7</a>
+                    </c:if>--%><%--dead for now--%>
             </big>
             <br/>Сообщение было послано: <util:nick_and_host msg="${msg}"/>
             <br/>Дата:

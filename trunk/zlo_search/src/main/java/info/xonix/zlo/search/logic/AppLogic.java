@@ -42,6 +42,8 @@ public interface AppLogic {
      */
     List<Message> getMessages(String forumId, int start, int end);
 
+    List<Message> getChildMessages(String forumId, long messageId);
+
     int getLastSavedMessageNumber(String forumId);
 
     void saveSearchTextForAutocomplete(String forumId, String text);
