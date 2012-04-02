@@ -16,9 +16,13 @@ import java.util.TreeMap;
  * Time: 16:56:20
  */
 public class HistoryTableDecorator extends TableDecorator {
+    public static final String REQ_TEXT = "req_text";
+    public static final String REQ_NICK = "req_nick";
+    public static final String REQ_HOST = "req_host";
     private final ObsceneAnalyzer obsceneAnalyzer = AppSpringContext.get(ObsceneAnalyzer.class);
 
     public static final int MAX_LEN = 40;
+    public static final String REPLACEMENT_FOR_OBSCENE = "&lt;неразборчиво&gt;";
 
     private boolean admin;
 
@@ -40,7 +44,6 @@ public class HistoryTableDecorator extends TableDecorator {
         return shortenString(s.toString(), MAX_LEN);
     }
 
-
     private Object get(final String field) {
         return ((TreeMap) getCurrentRowObject()).get(field);
     }
@@ -57,7 +60,7 @@ public class HistoryTableDecorator extends TableDecorator {
             if (admin) {
                 return "<span class='attention'>" + resultText + "</span>";
             } else {
-                return ""; // don't show obscene in history
+                return REPLACEMENT_FOR_OBSCENE; // don't show obscene in history
             }
         }
 
@@ -65,20 +68,30 @@ public class HistoryTableDecorator extends TableDecorator {
     }
 
     public String getSearchText() {
-        return getSafeText("req_text");
+        return getSafeText(REQ_TEXT);
     }
 
     public String getSearchNick() {
-        return getSafeText("req_nick");
+        return getSafeText(REQ_NICK);
     }
 
     public String getSearchHost() {
-        return getSafeText("req_host");
+        return getSafeText(REQ_HOST);
     }
 
     public String getReqDate() {
         return DateFormats.ddMMyyyyy_HHmm.format(get("req_date"));
     }
+
+/*    public boolean isObscene() {
+        return obsceneAnalyzer.containsObsceneWord((String) get(REQ_TEXT)) ||
+                obsceneAnalyzer.containsObsceneWord((String) get(REQ_NICK)) ||
+                obsceneAnalyzer.containsObsceneWord((String) get(REQ_HOST));
+    }
+
+    public boolean isSafe() {
+        return !isObscene();
+    }*/
 
     public String getUserAgentSmall() {
         return RequestUtils.getUserAgentSmall((String) (get("user_agent")));

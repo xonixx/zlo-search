@@ -3,15 +3,20 @@
 <%@ page import="info.xonix.zlo.search.logic.forum_adapters.ForumAdapter" %>
 <%@ page import="info.xonix.zlo.web.utils.RequestUtils" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="info.xonix.zlo.search.utils.obscene.ObsceneAnalyzer" %>
 
 <%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <link rel="stylesheet" type="text/css" href="main.css"/>
 
+<%!
+    private static final ObsceneAnalyzer obsceneAnalyzer = AppSpringContext.get(ObsceneAnalyzer.class);
+%>
+
 <%--<c:set var="localIps"><fmt:message key="localIps"/></c:set>--%>
 <c:set var="isPowerUser" value='<%= RequestUtils.isPowerUser(request) %>'/>
 <c:set var="showAll" value="${ param['all'] != null and isPowerUser }"/>
-<c:set var="limit" value="${1000}" />
+<c:set var="limit" value="${1000}"/>
 
 <c:set var="lastHours" value="6"/>
 <c:if test="${isPowerUser and not empty param['n']}">
@@ -68,13 +73,22 @@
     </small>
 
     <jsp:useBean id="decoratedRow" class="info.xonix.zlo.web.decorators.HistoryTableDecorator" scope="page"/>
-    <c:set target="${decoratedRow}" property="admin" value="${isPowerUser}" />
+    <c:set target="${decoratedRow}" property="admin" value="${isPowerUser}"/>
 
     <display:table name="${res.rows}" id="row" htmlId="resultTable" decorator="decoratedRow">
         <display:setProperty name="basic.msg.empty_list"><%-- don't display empty msg --%></display:setProperty>
 
         <display:column title="№">
-            <a href="search?<c:out value="${row.req_query_str}"/>" class="search">${row_rowNum}</a>
+            <c:choose>
+                <c:when test="<%= obsceneAnalyzer.allSafe(
+                    (String)((Map)row).get("req_text"),
+                    (String)((Map)row).get("req_nick"),
+                    (String)((Map)row).get("req_host"))
+                    %>">
+                    <a href="search?<c:out value="${row.req_query_str}"/>" class="search">${row_rowNum}</a>
+                </c:when>
+                <c:otherwise>${row_rowNum}</c:otherwise>
+            </c:choose>
         </display:column>
         <display:column property="searchText" title="Текст"/>
         <display:column property="searchNick" title="Ник поиска"/>
@@ -83,9 +97,9 @@
             <% ForumDescriptor descriptor = GetForum.descriptor((Integer) ((Map) row).get("site")); %>
             <% ForumAdapter adapter = descriptor.getForumAdapter(); %>
             <% if (adapter != null) { %>
-                <a href="<%= adapter.getForumUrl() %>">
-                    <%= descriptor.getForumId() %>
-                </a>
+            <a href="<%= adapter.getForumUrl() %>">
+                <%= descriptor.getForumId() %>
+            </a>
             <% } %>
         </display:column>
         <display:column property="reqDate" title="Дата" class="small"/>
