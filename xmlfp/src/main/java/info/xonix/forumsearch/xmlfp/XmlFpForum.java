@@ -5,7 +5,7 @@ import info.xonix.forumsearch.xmlfp.jaxb_generated.Message;
 import info.xonix.forumsearch.xmlfp.jaxb_generated.MessageListUrl;
 import info.xonix.forumsearch.xmlfp.jaxb_generated.Messages;
 import info.xonix.forumsearch.xmlfp.utils.MarshalUtils;
-import info.xonix.forumsearch.xmlfp.utils.UrlUtil;
+import info.xonix.utils.UrlUtil;
 import info.xonix.forumsearch.xmlfp.utils.XmlFpMarshalException;
 import org.apache.commons.io.IOUtils;
 

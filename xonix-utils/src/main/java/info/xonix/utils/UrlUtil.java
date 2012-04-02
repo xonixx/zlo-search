@@ -1,6 +1,7 @@
-package info.xonix.forumsearch.xmlfp.utils;
+package info.xonix.utils;
 
 import java.net.URI;
+import java.util.regex.Pattern;
 
 /**
  * User: gubarkov
@@ -13,6 +14,10 @@ import java.net.URI;
  * http://bugs.sun.com/view_bug.do?bug_id=6791060
  */
 public class UrlUtil {
+
+    private static final String URL_START_REGEXP_S = "^[^:]+://";
+    private static final Pattern URL_START_REGEXP = Pattern.compile(URL_START_REGEXP_S);
+
     public static String combineUrls(String rootUrl, String possiblyRelativeUrl) {
         if (isAbsoluteUrl(possiblyRelativeUrl)) {
             return possiblyRelativeUrl;
@@ -35,6 +40,11 @@ public class UrlUtil {
     }
 
     public static String urlWithoutSchema(String url) {
-        return url.replaceAll("^[^:]+://", "");
+        return url.replaceAll(URL_START_REGEXP_S, "");
+    }
+
+    // TODO: this may be not good (f.e. file:/)
+    public static boolean isUrl(String urlOrNot) {
+        return URL_START_REGEXP.matcher(urlOrNot).find();
     }
 }
