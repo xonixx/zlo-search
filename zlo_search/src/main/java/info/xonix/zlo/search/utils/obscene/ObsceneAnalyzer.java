@@ -113,6 +113,20 @@ public class ObsceneAnalyzer {
                 obsceneRegexp.matcher(normalize(txt, NormalizeDirection.TO_EN)).find();
     }
 
+    public boolean isSafe(String string) {
+        return !containsObsceneWord(string);
+    }
+
+    public boolean allSafe(String... strings) {
+        for (String string : strings) {
+            if (containsObsceneWord(string)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     private static String normalize(String txt, NormalizeDirection normalizeDirection) {
         Check.isSet(txt);
 
