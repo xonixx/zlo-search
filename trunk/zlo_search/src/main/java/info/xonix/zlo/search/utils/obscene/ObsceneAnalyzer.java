@@ -8,6 +8,7 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.jetty.util.IO;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -52,7 +53,7 @@ public class ObsceneAnalyzer {
     }
 
     public ObsceneAnalyzer(String fileName) {
-        this(wordsFromFileLocation(fileName));
+        this(wordsFromInputStream(ConfigUtils.resolvePath(fileName)));
     }
 
     public ObsceneAnalyzer(List<String> additionalObsceneWords) {
@@ -64,8 +65,8 @@ public class ObsceneAnalyzer {
     private Pattern prepareObsceneRegexp(List<String> additionalObsceneWords) {
         List<String> allObsceneWords = new LinkedList<String>();
 
-        allObsceneWords.addAll(wordsFromFileLocation(
-                ObsceneAnalyzer.class.getResource(OBSCENE_FILE).getPath()));
+        allObsceneWords.addAll(wordsFromInputStream(
+                ObsceneAnalyzer.class.getResourceAsStream(OBSCENE_FILE)));
         allObsceneWords.addAll(additionalObsceneWords);
 
         List<String> _words_re_parts = new LinkedList<String>();
@@ -77,12 +78,16 @@ public class ObsceneAnalyzer {
         return Pattern.compile(StringUtils.join(_words_re_parts, "|"));
     }
 
-    private static List<String> wordsFromFileLocation(final String fileLocation) {
+    private static List<String> wordsFromInputStream(final InputStream stream) {
+        if (stream == null) {
+            throw new NullPointerException("stream");
+        }
+
         List<String> obsceneWords = new LinkedList<String>();
         final String txt;
 
         try {
-            txt = IO.toString(ConfigUtils.resolvePath(fileLocation), Config.UTF_8);
+            txt = IO.toString(stream, Config.UTF_8);
         } catch (IOException e) {
             throw ExceptionUtils.rethrowAsRuntime(e);
         }

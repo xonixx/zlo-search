@@ -1,11 +1,11 @@
 package info.xonix.zlo.web;
 
+import info.xonix.utils.UrlUtil;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.config.forums.ForumDescriptor;
 import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.logic.ControlsDataLogic;
 import info.xonix.zlo.search.spring.AppSpringContext;
-import info.xonix.forumsearch.xmlfp.utils.UrlUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;
