@@ -14,7 +14,7 @@ import info.xonix.zlo.search.logic.exceptions.ExceptionsLogger;
 import info.xonix.zlo.search.model.SearchLog;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.utils.HtmlUtils;
-import info.xonix.zlo.search.utils.obscene.ObsceneUtils;
+import info.xonix.zlo.search.utils.obscene.ObsceneAnalyzer;
 import info.xonix.zlo.web.RequestCache;
 import info.xonix.zlo.web.rss.RssFormer;
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
@@ -56,6 +56,7 @@ public class SearchServlet extends BaseServlet {
     private final AuditLogic auditLogic = AppSpringContext.get(AuditLogic.class);
     private final ExceptionsLogger exceptionsLogger = AppSpringContext.get(ExceptionsLogger.class);
     private final SearchLogic searchLogic = AppSpringContext.get(SearchLogicImpl.class);
+    private final ObsceneAnalyzer obsceneAnalyzer = AppSpringContext.get(ObsceneAnalyzer.class);
 
     public static final String ON = "on";
     // query string params
@@ -436,7 +437,7 @@ public class SearchServlet extends BaseServlet {
         auditLogic.logSearchEvent(searchLog);
 
         if (StringUtils.isNotEmpty(searchText) && !rssAsked) {
-            if (!ObsceneUtils.containsObsceneWord(searchText)) {
+            if (!obsceneAnalyzer.containsObsceneWord(searchText)) {
                 appLogic.saveSearchTextForAutocomplete(forumId, searchText);
             } else {
                 log.info("! Search by obscene words: {" + searchText + "}, ip=" + clientIp);

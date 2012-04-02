@@ -37,6 +37,10 @@
         <constructor-arg index="1" value="true"/>
     </bean>-->
 
+    <bean id="obsceneAnalyzer" class="info.xonix.zlo.search.utils.obscene.ObsceneAnalyzer">
+        <constructor-arg value="info/xonix/zlo/search/config/usernames_to_filter.txt"/>
+    </bean>
+
     <bean id="xmlFpFormer" class="info.xonix.zlo.search.xmlfp.XmlFpFormer"/>
 
 </beans>
