@@ -1,7 +1,8 @@
 package info.xonix.zlo.web.decorators;
 
 import info.xonix.zlo.search.config.DateFormats;
-import info.xonix.zlo.search.utils.obscene.ObsceneUtils;
+import info.xonix.zlo.search.spring.AppSpringContext;
+import info.xonix.zlo.search.utils.obscene.ObsceneAnalyzer;
 import info.xonix.zlo.web.utils.RequestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.displaytag.decorator.TableDecorator;
@@ -15,6 +16,7 @@ import java.util.TreeMap;
  * Time: 16:56:20
  */
 public class HistoryTableDecorator extends TableDecorator {
+    private final ObsceneAnalyzer obsceneAnalyzer = AppSpringContext.get(ObsceneAnalyzer.class);
 
     public static final int MAX_LEN = 40;
 
@@ -51,7 +53,7 @@ public class HistoryTableDecorator extends TableDecorator {
         final String initialText = (String) get(field);
         final String resultText = HtmlUtils.htmlEscape(shortenString(initialText));
 
-        if (ObsceneUtils.containsObsceneWord(initialText)) {
+        if (obsceneAnalyzer.containsObsceneWord(initialText)) {
             if (admin) {
                 return "<span class='attention'>" + resultText + "</span>";
             } else {

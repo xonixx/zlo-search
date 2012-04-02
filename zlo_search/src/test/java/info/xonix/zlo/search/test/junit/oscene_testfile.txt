@@ -1,0 +1,6 @@
+ааа
+ббб
+ввв
+
+# normalization test
+uuu

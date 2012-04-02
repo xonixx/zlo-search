@@ -1,8 +1,8 @@
 package info.xonix.zlo.search.test.junit;
 
+import info.xonix.zlo.search.utils.obscene.ObsceneAnalyzer;
 import org.junit.Test;
 
-import static info.xonix.zlo.search.utils.obscene.ObsceneUtils.containsObsceneWord;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -12,6 +12,12 @@ import static org.junit.Assert.assertTrue;
  * Time: 17:09
  */
 public class ObsceneUtilsTests {
+
+    private ObsceneAnalyzer obsceneAnalyzer = new ObsceneAnalyzer(
+//            "info/xonix/zlo/search/test/junit/oscene_testfile.txt"
+            "D:\\stuff\\test\\java\\zlo-search\\zlo_search\\src\\test\\java\\info\\xonix\\zlo\\search\\test\\junit\\oscene_testfile.txt"
+    );
+
     @Test
     public void test1() {
         assertFalse(containsObsceneWord(""));
@@ -55,5 +61,18 @@ public class ObsceneUtilsTests {
         assertTrue(containsObsceneWord("анал"));
         assertTrue(containsObsceneWord("анальный"));
         assertFalse(containsObsceneWord("аналит"));
+
+        // from file
+        assertTrue(containsObsceneWord("ааа"));
+        assertTrue(containsObsceneWord("ввв"));
+    }
+
+    @Test
+    public void normalizationBackTest() {
+        assertTrue(containsObsceneWord("uuu"));
+    }
+
+    private boolean containsObsceneWord(String s) {
+        return obsceneAnalyzer.containsObsceneWord(s);
     }
 }

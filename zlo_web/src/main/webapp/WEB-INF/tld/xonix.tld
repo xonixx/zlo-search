@@ -59,17 +59,18 @@
         <function-signature>java.lang.String getUserAgentSmall(java.lang.String)</function-signature>
     </function>
 
+    <!--TODO: VVV- fix or del -->
     <function>
         <description>Is obscene?</description>
         <name>isObscene</name>
-        <function-class>info.xonix.zlo.search.utils.obscene.ObsceneUtils</function-class>
+        <function-class>info.xonix.zlo.search.utils.obscene.ObsceneAnalyzer</function-class>
         <function-signature>boolean containsObsceneWord(java.lang.String)</function-signature>
     </function>
 
     <function>
         <description>Unobscene</description>
         <name>unObscene</name>
-        <function-class>info.xonix.zlo.search.utils.obscene.ObsceneUtils</function-class>
+        <function-class>info.xonix.zlo.search.utils.obscene.ObsceneAnalyzer</function-class>
         <function-signature>java.lang.String unObscene(java.lang.String,java.lang.String)</function-signature>
     </function>
 
