@@ -80,11 +80,11 @@
 
         <display:column title="№">
             <c:choose>
-                <c:when test="<%= obsceneAnalyzer.allSafe(
+                <c:when test='<%= obsceneAnalyzer.allSafe(
                     (String)((Map)row).get("req_text"),
                     (String)((Map)row).get("req_nick"),
                     (String)((Map)row).get("req_host"))
-                    %>">
+                    %>'>
                     <a href="search?<c:out value="${row.req_query_str}"/>" class="search">${row_rowNum}</a>
                 </c:when>
                 <c:otherwise>${row_rowNum}</c:otherwise>
