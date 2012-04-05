@@ -70,6 +70,7 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract
 
                 try {
                     xmlFpForum = XmlFpForum.fromDescriptorXmlString(descriptorUrl, descriptorXmlInDb);
+                    return;
                 } catch (XmlFpException e1) {
                     throw translateException(e1, "Can't create XMLFP XmlFpForum from xml: " + descriptorXmlInDb);
                 }
