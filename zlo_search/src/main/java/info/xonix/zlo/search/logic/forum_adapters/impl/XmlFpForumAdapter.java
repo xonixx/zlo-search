@@ -45,6 +45,7 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract
 
         final String descriptorXmlInDb = xmlFpDao.getDescriptorXmlByUrl(descriptorUrl);
 
+        try_catch:
         try {
             xmlFpForum = XmlFpForum.fromDescriptorUrl(descriptorUrl);
 
@@ -70,7 +71,7 @@ public class XmlFpForumAdapter extends ForumAdapterAbstract
 
                 try {
                     xmlFpForum = XmlFpForum.fromDescriptorXmlString(descriptorUrl, descriptorXmlInDb);
-                    return;
+                    break try_catch;
                 } catch (XmlFpException e1) {
                     throw translateException(e1, "Can't create XMLFP XmlFpForum from xml: " + descriptorXmlInDb);
                 }
