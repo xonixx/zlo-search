@@ -1,7 +1,10 @@
 физикс
 айгул
-fizix
-physics2007
+
+(ph|f)(i|y)s(i|y)((c|k)s|x)
+
 дм
+dm
+
 орантиус
 orantius

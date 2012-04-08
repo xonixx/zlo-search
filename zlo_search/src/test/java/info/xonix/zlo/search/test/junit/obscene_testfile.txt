@@ -4,3 +4,5 @@
 
 # normalization test
 uuu
+
+(ph|f)(i|y)s(i|y)((c|k)s|x)
