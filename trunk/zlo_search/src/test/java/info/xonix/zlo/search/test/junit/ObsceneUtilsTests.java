@@ -15,7 +15,7 @@ public class ObsceneUtilsTests {
 
     private ObsceneAnalyzer obsceneAnalyzer = new ObsceneAnalyzer(
 //            "info/xonix/zlo/search/test/junit/oscene_testfile.txt"
-            "D:\\stuff\\test\\java\\zlo-search\\zlo_search\\src\\test\\java\\info\\xonix\\zlo\\search\\test\\junit\\oscene_testfile.txt"
+            "D:\\stuff\\test\\java\\zlo-search\\zlo_search\\src\\test\\java\\info\\xonix\\zlo\\search\\test\\junit\\obscene_testfile.txt"
     );
 
     @Test
@@ -70,6 +70,14 @@ public class ObsceneUtilsTests {
     @Test
     public void normalizationBackTest() {
         assertTrue(containsObsceneWord("uuu"));
+    }
+
+    @Test
+    public void testFizix() {
+        assertTrue(containsObsceneWord("fysix"));
+        assertTrue(containsObsceneWord("fisyks"));
+        assertTrue(containsObsceneWord("phisyks2007"));
+        assertTrue(containsObsceneWord("physics2007"));
     }
 
     private boolean containsObsceneWord(String s) {
