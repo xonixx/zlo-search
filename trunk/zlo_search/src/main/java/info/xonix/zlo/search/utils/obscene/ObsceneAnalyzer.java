@@ -28,13 +28,31 @@ public class ObsceneAnalyzer {
             {'b', 'в'},
             {'c', 'с'},
             {'e', 'е'},
+            {'k', 'к'},
             {'m', 'м'},
             {'o', 'о'},
+            {'n', 'п'},
             {'p', 'р'},
             {'u', 'и'},
+            {'i', 'и'},
             {'x', 'х'},
             {'y', 'у'},
     };
+    private static final char[][] RU_2_EN_CHARS = {
+            {'а', 'a'},
+            {'в', 'b'},
+            {'с', 'c'},
+            {'е', 'e'},
+            {'к', 'k'},
+            {'м', 'm'},
+            {'о', 'o'},
+            {'п', 'n'},
+            {'р', 'p'},
+            {'и', 'u'},
+            {'х', 'x'},
+            {'у', 'y'},
+    };
+/*
     private static final char[][] RU_2_EN_CHARS;
 
     static {
@@ -45,6 +63,7 @@ public class ObsceneAnalyzer {
             RU_2_EN_CHARS[i] = new char[]{pair[1], pair[0]};
         }
     }
+*/
 
     private final Pattern obsceneRegexp;
 

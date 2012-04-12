@@ -15,7 +15,8 @@ public class ObsceneUtilsTests {
 
     private ObsceneAnalyzer obsceneAnalyzer = new ObsceneAnalyzer(
 //            "info/xonix/zlo/search/test/junit/oscene_testfile.txt"
-            "D:\\stuff\\test\\java\\zlo-search\\zlo_search\\src\\test\\java\\info\\xonix\\zlo\\search\\test\\junit\\obscene_testfile.txt"
+//            "D:\\stuff\\test\\java\\zlo-search\\zlo_search\\src\\test\\java\\info\\xonix\\zlo\\search\\test\\junit\\obscene_testfile.txt"
+            "D:\\stuff\\test\\java\\zlo-search\\zlo_search\\src\\main\\java\\info\\xonix\\zlo\\search\\config\\usernames_to_filter.txt"
     );
 
     @Test
@@ -28,6 +29,9 @@ public class ObsceneUtilsTests {
 
         assertFalse(containsObsceneWord("не психуй"));
         assertTrue(containsObsceneWord("соси ХУЙ"));
+        assertTrue(containsObsceneWord("хуи"));
+        assertTrue(containsObsceneWord("хуя"));
+        assertTrue(containsObsceneWord("хуёвый"));
         assertTrue(containsObsceneWord("СОСИ ХУЁК"));
 
         assertTrue(containsObsceneWord("пЁзднуться"));
@@ -63,14 +67,14 @@ public class ObsceneUtilsTests {
         assertFalse(containsObsceneWord("аналит"));
 
         // from file
-        assertTrue(containsObsceneWord("ааа"));
-        assertTrue(containsObsceneWord("ввв"));
+//        assertTrue(containsObsceneWord("ааа"));
+//        assertTrue(containsObsceneWord("ввв"));
     }
 
-    @Test
+/*    @Test
     public void normalizationBackTest() {
         assertTrue(containsObsceneWord("uuu"));
-    }
+    }*/
 
     @Test
     public void testFizix() {
@@ -78,6 +82,12 @@ public class ObsceneUtilsTests {
         assertTrue(containsObsceneWord("fisyks"));
         assertTrue(containsObsceneWord("phisyks2007"));
         assertTrue(containsObsceneWord("physics2007"));
+        assertTrue(containsObsceneWord("фiзикс"));
+        assertTrue(containsObsceneWord("fiziкs"));
+        assertTrue(containsObsceneWord("химикс"));
+        assertTrue(containsObsceneWord("химиkc"));
+        assertTrue(containsObsceneWord("хuмukc"));
+        assertTrue(containsObsceneWord("xumukc"));
     }
 
     private boolean containsObsceneWord(String s) {
