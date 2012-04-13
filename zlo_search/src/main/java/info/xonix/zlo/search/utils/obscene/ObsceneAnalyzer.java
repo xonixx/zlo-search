@@ -23,11 +23,12 @@ public class ObsceneAnalyzer {
     private static final String OBSCENE_FILE = "obscene.txt";
     private static final char COMMENT_CHAR = '#';
 
-    private static final char[][] EN_2_RU_CHARS = {
+    private static final char[][] TO_RU_CHARS = {
             {'a', 'а'},
             {'b', 'в'},
             {'c', 'с'},
             {'e', 'е'},
+            {'ё', 'е'},
             {'k', 'к'},
             {'m', 'м'},
             {'o', 'о'},
@@ -35,10 +36,12 @@ public class ObsceneAnalyzer {
             {'p', 'р'},
             {'u', 'и'},
             {'i', 'и'},
+            {'й', 'и'},
             {'x', 'х'},
             {'y', 'у'},
     };
-    private static final char[][] RU_2_EN_CHARS = {
+
+    private static final char[][] TO_EN_CHARS = {
             {'а', 'a'},
             {'в', 'b'},
             {'с', 'c'},
@@ -52,18 +55,6 @@ public class ObsceneAnalyzer {
             {'х', 'x'},
             {'у', 'y'},
     };
-/*
-    private static final char[][] RU_2_EN_CHARS;
-
-    static {
-        RU_2_EN_CHARS = new char[EN_2_RU_CHARS.length][];
-
-        for (int i = 0; i < EN_2_RU_CHARS.length; i++) {
-            char[] pair = EN_2_RU_CHARS[i];
-            RU_2_EN_CHARS[i] = new char[]{pair[1], pair[0]};
-        }
-    }
-*/
 
     private final Pattern obsceneRegexp;
 
@@ -157,10 +148,9 @@ public class ObsceneAnalyzer {
         txt = txt.toLowerCase();
 
         if (normalizeDirection == NormalizeDirection.TO_RU) {
-            txt = tr(txt, EN_2_RU_CHARS);
-            txt = txt.replace('ё', 'е');
+            txt = tr(txt, TO_RU_CHARS);
         } else if (normalizeDirection == NormalizeDirection.TO_EN) {
-            txt = tr(txt, RU_2_EN_CHARS);
+            txt = tr(txt, TO_EN_CHARS);
         }
 
         return txt;
