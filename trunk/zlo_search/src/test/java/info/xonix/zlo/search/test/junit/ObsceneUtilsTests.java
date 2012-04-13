@@ -61,6 +61,7 @@ public class ObsceneUtilsTests {
         assertTrue(containsObsceneWord("имярек мудак"));
         assertTrue(containsObsceneWord("мудак имярек"));
         assertTrue(containsObsceneWord("имярек гей"));
+        assertTrue(containsObsceneWord("имярек геи"));
 
         assertTrue(containsObsceneWord("анал"));
         assertTrue(containsObsceneWord("анальный"));
@@ -88,6 +89,14 @@ public class ObsceneUtilsTests {
         assertTrue(containsObsceneWord("химиkc"));
         assertTrue(containsObsceneWord("хuмukc"));
         assertTrue(containsObsceneWord("xumukc"));
+    }
+
+    @Test
+    public void testAjgul() {
+        assertTrue(containsObsceneWord("айгуль"));
+        assertTrue(containsObsceneWord("аигуль"));
+        assertTrue(containsObsceneWord("аiгуль"));
+        assertTrue(containsObsceneWord("iгуль"));
     }
 
     private boolean containsObsceneWord(String s) {
