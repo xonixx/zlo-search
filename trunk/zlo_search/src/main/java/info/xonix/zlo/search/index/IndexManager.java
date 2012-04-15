@@ -79,7 +79,10 @@ public class IndexManager {
         if (indexReader == null) {
             indexReader = IndexReader.open(getWriter(), true);
         } else {
-            indexReader = IndexReader.openIfChanged(indexReader, getWriter(), true);
+            final IndexReader updatedReader = IndexReader.openIfChanged(indexReader, getWriter(), true);
+            if (updatedReader != null) {
+                indexReader = updatedReader;
+            }
         }
 
         return indexReader;

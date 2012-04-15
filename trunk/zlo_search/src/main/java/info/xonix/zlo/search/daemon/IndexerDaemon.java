@@ -3,7 +3,6 @@ package info.xonix.zlo.search.daemon;
 import info.xonix.zlo.search.config.forums.ForumParams;
 import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.index.IndexManager;
-import info.xonix.zlo.search.index.doubleindex.DoubleIndexManager;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.logic.IndexerException;
 import info.xonix.zlo.search.logic.IndexerLogic;
