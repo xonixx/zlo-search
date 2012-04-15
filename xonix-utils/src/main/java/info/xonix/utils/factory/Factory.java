@@ -1,9 +1,6 @@
 package info.xonix.utils.factory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * User: Vovan
@@ -14,6 +11,10 @@ public abstract class Factory<Key, Res> {
     private Map<Key, Res> modelToRes = new HashMap<Key, Res>();
 
     protected abstract Res create(Key key);
+
+    public Collection<Res> all() {
+        return modelToRes.values();
+    }
 
     public Res get(Key key) {
         if (!modelToRes.containsKey(key)) {
