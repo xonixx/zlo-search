@@ -108,15 +108,6 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
         Check.isSet(config, "config");
     }
 
-    // TODO: move this to Site as it belongs to it
-    private StringFactory<IndexManager> doubleIndexManagerFactory = new StringFactory<IndexManager>() {
-        @Override
-        protected IndexManager create(String forumId) {
-//            return DoubleIndexManager.create(forumId, getDateSort());
-            return null; // TODO
-        }
-    };
-
     @Override
     public SearchResult search(SearchRequest req, int limit) throws SearchException {
         final SearchResult searchResult = search(
@@ -156,7 +147,7 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
 
             log.info("query: " + query);
 
-            IndexManager indexManager = getIndexManager(forumId);
+            IndexManager indexManager = IndexManager.get(forumId);
 
             result = new SearchResult(forumId, query, indexManager, indexManager.search(query, limit));
         } catch (ParseException e) {
@@ -174,7 +165,7 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
 
     @Override
     public void optimizeIndex(String forumId) {
-        IndexManager dis = getIndexManager(forumId);
+//        IndexManager dis = getIndexManager(forumId);
 
         throw new UnsupportedOperationException();
 
@@ -191,7 +182,7 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
 
     @Override
     public void dropIndex(String forumId) throws IOException {
-        final IndexManager indexManager = getIndexManager(forumId);
+        final IndexManager indexManager = IndexManager.get(forumId);
         indexManager.drop();
         indexManager.close();
     }
@@ -209,13 +200,12 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
 
         int realLimit = skip + fixLimit(limit);
 
-        final IndexManager indexManager = getIndexManager(forumId);
+        final IndexManager indexManager = IndexManager.get(forumId);
 
         final IndexSearcher searcher = new IndexSearcher(indexManager.getReader());
 
         try {
-            final int[] ids = search(searcher, query, realLimit);
-            return ids;
+            return search(searcher, query, realLimit);
         } catch (IOException e) {
             throw new SearchException("search: I/O exception", e);
         }
@@ -274,16 +264,5 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
             ids[i] = Integer.parseInt(searcher.doc(scoreDoc.doc).get(MessageFields.URL_NUM));
         }
         return ids;
-    }
-
-    /**
-     * TODO: make private!
-     *
-     * @param forumId String
-     * @return dis
-     */
-    @Override
-    public IndexManager getIndexManager(String forumId) {
-        return doubleIndexManagerFactory.get(forumId);
     }
 }

@@ -1,12 +1,19 @@
 package info.xonix.zlo.search.index;
 
+import info.xonix.utils.factory.StringFactory;
+import info.xonix.zlo.search.LuceneVersion;
+import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.logic.SearchLogicImpl;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.TopFieldDocs;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -15,6 +22,26 @@ import java.io.IOException;
  * Time: 21:48
  */
 public class IndexManager {
+
+    private final static Config config = AppSpringContext.get(Config.class);
+
+    private final File indexDir;
+
+    private static StringFactory<IndexManager> indexManagerFactory = new StringFactory<IndexManager>() {
+        @Override
+        protected IndexManager create(String forumId) {
+            return new IndexManager(config.getIndexDir(forumId));
+        }
+    };
+
+    private IndexManager(String indexDirPath) {
+        // TODO: check indexDir to exist & be folder
+        indexDir = new File(indexDirPath);
+    }
+
+    public static IndexManager get(String forumId) {
+        return indexManagerFactory.get(forumId);
+    }
 
     public Hits search(Query query, int limit) throws IOException {
         final IndexReader reader = getReader();
@@ -64,6 +91,13 @@ public class IndexManager {
 
     public IndexReader getReader() {
         return null; // TODO
+    }
+
+    public IndexWriter createWriter() throws IOException {
+        final IndexWriterConfig indexWriterConfig = new IndexWriterConfig(
+                LuceneVersion.VERSION, config.getMessageAnalyzer());
+
+        return new IndexWriter(IndexUtils.dir(indexDir), indexWriterConfig);
     }
 
     public void drop() {

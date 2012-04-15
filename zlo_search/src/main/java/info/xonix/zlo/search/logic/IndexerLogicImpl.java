@@ -2,6 +2,8 @@ package info.xonix.zlo.search.logic;
 
 import info.xonix.zlo.search.LuceneVersion;
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.index.IndexManager;
+import info.xonix.zlo.search.index.IndexUtils;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.utils.Check;
 import info.xonix.utils.factory.StringFactory;
@@ -49,13 +51,8 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
         protected IndexWriter create(String forumId) {
             IndexWriter writer;
             try {
-                final File indexDir = new File(config.getIndexDir(forumId));
-                // TODO: check dir exists
-                
-                final IndexWriterConfig indexWriterConfig = new IndexWriterConfig(
-                        LuceneVersion.VERSION, config.getMessageAnalyzer());
-                writer = new IndexWriter(FSDirectory.open(indexDir), indexWriterConfig);
 
+                  writer = IndexManager.get(forumId).createWriter();
 //                VVV-- NOT works in Lucene 3.6
 //                writer.setMergeFactor(7); // optimized for search : TODO
             } catch (IOException e) {
