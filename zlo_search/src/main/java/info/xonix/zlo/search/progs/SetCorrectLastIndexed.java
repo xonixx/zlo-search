@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.progs;
 
 
-import info.xonix.zlo.search.doubleindex.DoubleIndexManager;
+import info.xonix.zlo.search.index.doubleindex.DoubleIndexManager;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.lucene.search.MatchAllDocsQuery;

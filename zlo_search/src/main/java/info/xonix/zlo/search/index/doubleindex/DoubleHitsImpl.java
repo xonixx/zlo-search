@@ -1,4 +1,4 @@
-package info.xonix.zlo.search.doubleindex;
+package info.xonix.zlo.search.index.doubleindex;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.search.IndexSearcher;

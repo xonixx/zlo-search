@@ -2,7 +2,7 @@ package info.xonix.zlo.search.logic;
 
 import info.xonix.zlo.search.LuceneVersion;
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.doubleindex.DoubleIndexManager;
+import info.xonix.zlo.search.index.doubleindex.DoubleIndexManager;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.utils.Check;
 import info.xonix.utils.factory.StringFactory;

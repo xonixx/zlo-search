@@ -1,8 +1,8 @@
 package info.xonix.zlo.search.logic;
 
-import info.xonix.zlo.search.domainobj.SearchRequest;
-import info.xonix.zlo.search.domainobj.SearchResult;
-import info.xonix.zlo.search.doubleindex.DoubleIndexManager;
+import info.xonix.zlo.search.domain.SearchRequest;
+import info.xonix.zlo.search.domain.SearchResult;
+import info.xonix.zlo.search.index.doubleindex.DoubleIndexManager;
 import org.apache.lucene.search.Sort;
 
 import java.io.IOException;

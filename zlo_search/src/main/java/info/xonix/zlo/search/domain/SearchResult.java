@@ -1,7 +1,7 @@
-package info.xonix.zlo.search.domainobj;
+package info.xonix.zlo.search.domain;
 
-import info.xonix.zlo.search.doubleindex.DoubleHits;
-import info.xonix.zlo.search.doubleindex.DoubleIndexManager;
+import info.xonix.zlo.search.index.doubleindex.DoubleHits;
+import info.xonix.zlo.search.index.doubleindex.DoubleIndexManager;
 import org.apache.log4j.Logger;
 import org.apache.lucene.search.Query;
 
