@@ -222,7 +222,7 @@ public class DoubleIndexManager {
         }
 
         synchronized (closeLock) { // to give ability to perform searh if oldReader already used
-            IndexUtils.clean(oldIndexReader);
+            IndexUtils.close(oldIndexReader);
         }
 
         log.info("Successfuly recreated.");
@@ -295,8 +295,8 @@ public class DoubleIndexManager {
     }
 
     public void close() {
-        IndexUtils.clean(bigReader);
-        IndexUtils.clean(smallReader);
+        IndexUtils.close(bigReader);
+        IndexUtils.close(smallReader);
     }
 
     public void moveSmallToBig() throws IOException {

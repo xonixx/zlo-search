@@ -41,7 +41,7 @@ public class IndexUtils {
         return FSDirectory.open(dir);
     }
 
-    public static void clean(IndexReader ir) {
+    public static void close(IndexReader ir) {
         try {
             if (ir != null) {
                 ir.close();
