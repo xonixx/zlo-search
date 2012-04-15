@@ -14,8 +14,6 @@ import java.io.IOException;
  * Time: 18:30
  */
 public interface SearchLogic {
-    IndexManager getIndexManager(String forumId);
-
     void optimizeIndex(String forumId);
 
     SearchResult search(SearchRequest searchRequest, int limit) throws SearchException;
