@@ -24,7 +24,7 @@
     %>
 
     <form action="admin.jsp" method="post">
-        <input type="submit" name="command" value="Optimize"/>
+        <%--<input type="submit" name="command" value="Optimize"/>--%>
         <input type="submit" name="command" value="GC"/>
     </form>
     
