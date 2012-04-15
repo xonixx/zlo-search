@@ -48,6 +48,12 @@ public class RussianAnalyzerTests {
                 new String[]{"смысл", "жизн", "жизн", "01234567890", "еж", "елка"});
     }
 
+    @Test
+    public void testElka() throws IOException {
+        checkCorrectAnalyzing("елка ёлка",
+                new String[]{"елк", "елка"}); // TODO: WTF?
+    }
+
     private void checkCorrectAnalyzing(String str, String[] expectedResult) throws IOException {
         System.out.println("-----");
         final TokenStream tokenStream = analyzer.tokenStream(MessageFields.BODY, new StringReader(str));
