@@ -184,7 +184,7 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     public void dropIndex(String forumId) throws IOException {
         final IndexManager indexManager = IndexManager.get(forumId);
         indexManager.drop();
-        indexManager.close();
+//        indexManager.close();
     }
 
     @Override

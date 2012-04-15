@@ -104,7 +104,7 @@ public class IndexManager {
        IndexUtils.createEmptyIndex(indexDir);
     }
 
-    public void close() throws IOException {
+/*    public void close() throws IOException {
         IndexUtils.close(getReader());
-    }
+    }*/
 }
