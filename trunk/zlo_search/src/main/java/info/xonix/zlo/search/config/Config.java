@@ -293,4 +293,7 @@ public class Config {
     public String getIndexDirDouble(String forumId) {
         return getProp("indexer.dir.double") + "/index_" + forumId;
     }
+    public String getIndexDir(String forumId) {
+        return getIndexDirDouble(forumId); // TODO
+    }
 }

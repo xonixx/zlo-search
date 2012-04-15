@@ -104,7 +104,7 @@ public class SearchServlet extends BaseServlet {
 
     public static DateFormat FROM_TO_DATE_FORMAT = DateFormats.ddMMyyyy_dots;
 
-    private static final RequestCache cache = new RequestCache(5);
+//    private static final RequestCache cache = new RequestCache(5);
     private final RssFormer rssFormer = new RssFormer();
 
     protected void doGet(ForwardingRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -233,14 +233,14 @@ public class SearchServlet extends BaseServlet {
                 final int searchHash = searchRequest.hashCode();
 
                 final SearchResult searchResult;
-                final SearchResult prevSearchResult = cache.get(searchHash);
+//                final SearchResult prevSearchResult = cache.get(searchHash);
 
                 final int limit = getLimit(pageNumber, objectsPerPage);
-                if (prevSearchResult == null
+               /* if (prevSearchResult == null
                         || prevSearchResult.isNotTheSameSearch(searchRequest)
                         || prevSearchResult.isOld(limit) // this should enforce re-search while indexing, so VV seems not needed more
 //                        || StringUtils.isEmpty(request.getParameter(QS_PAGE_NUMBER)) // not turning pages, but searching // commenting by now todo: check if this is not needed more
-                        ) {
+                        ) {*/
 
                     try {
                         searchResult = searchLogic.search(searchRequest, limit);
@@ -253,12 +253,12 @@ public class SearchServlet extends BaseServlet {
                         throw e;
                     }
 
-                    cache.put(searchHash, searchResult);
-                } else {
+//                    cache.put(searchHash, searchResult);
+                /*} else {
                     searchResult = prevSearchResult;
                     searchResult.setNewSearch(false); // means we use result of previous search
                     log.info("Cached search: " + searchResult.getQuery());
-                }
+                }*/
 
                 if (searchResult != null) {
                     // log only initial search. Moved here - because now cached for all users,

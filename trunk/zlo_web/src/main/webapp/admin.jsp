@@ -89,7 +89,7 @@
 
     <display:table id="forumId" name="<%= GetForum.ids() %>">
         <c:set var="adapter" value="<%= GetForum.adapter((String) forumId) %>"/>
-        <c:set var="dis" value="<%= searchLogic.getDoubleIndexManager((String) forumId) %>"/>
+        <c:set var="dis" value="<%= searchLogic.getIndexManager((String) forumId) %>"/>
 
         <display:caption>Sites</display:caption>
 

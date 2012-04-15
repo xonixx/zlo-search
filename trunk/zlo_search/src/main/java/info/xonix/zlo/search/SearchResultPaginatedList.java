@@ -2,7 +2,7 @@ package info.xonix.zlo.search;
 
 import info.xonix.zlo.search.dao.MessagesDao;
 import info.xonix.zlo.search.domain.SearchResult;
-import info.xonix.zlo.search.index.doubleindex.DoubleHits;
+import info.xonix.zlo.search.index.Hits;
 import info.xonix.zlo.search.logic.MessageFields;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.spring.AppSpringContext;
@@ -26,20 +26,20 @@ public class SearchResultPaginatedList implements PaginatedList {
     private List currentList;
     private int pageNumber;
     private int objectsPerPage;
-    private DoubleHits hits;
+    private Hits hits;
     private int maxResultsLimit;
 
     private String forumId;
     private MessagesDao messagesDao = AppSpringContext.get(MessagesDao.class);
 
-    SearchResultPaginatedList(DoubleHits hits, String forumId, int maxResultsLimit) {
+    SearchResultPaginatedList(Hits hits, String forumId, int maxResultsLimit) {
         this.forumId = forumId;
         this.hits = hits;
         this.maxResultsLimit = maxResultsLimit;
     }
 
     public SearchResultPaginatedList(SearchResult searchResult, int maxResultsLimit) {
-        this(searchResult.getDoubleHits(),
+        this(searchResult.getHits(),
                 searchResult.getForumId(),
                 maxResultsLimit);
     }
