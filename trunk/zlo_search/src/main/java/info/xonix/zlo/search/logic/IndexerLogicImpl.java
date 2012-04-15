@@ -1,25 +1,19 @@
 package info.xonix.zlo.search.logic;
 
-import info.xonix.zlo.search.LuceneVersion;
+import info.xonix.utils.Check;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.index.IndexManager;
-import info.xonix.zlo.search.index.IndexUtils;
 import info.xonix.zlo.search.model.Message;
-import info.xonix.utils.Check;
-import info.xonix.utils.factory.StringFactory;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.document.DateTools;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.store.FSDirectory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Nonnull;
-import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -46,7 +40,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
     @Autowired
     private SearchLogic searchLogic;
 
-    private StringFactory<IndexWriter> siteToIndexWriter = new StringFactory<IndexWriter>() {
+/*    private StringFactory<IndexWriter> siteToIndexWriter = new StringFactory<IndexWriter>() {
         @Override
         protected IndexWriter create(String forumId) {
             IndexWriter writer;
@@ -71,7 +65,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
             }
         }
 
-    };
+    };*/
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -80,13 +74,14 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
         Check.isSet(searchLogic, "searchLogic");
     }
 
-    private IndexWriter getWriter(String forumId) {
-        return siteToIndexWriter.get(forumId);
+    private IndexWriter getWriter(String forumId) throws IOException {
+        return IndexManager.get(forumId).getWriter();
     }
 
     private void addMessagesToIndex(String forumId, int start, int end) throws IndexerException {
-        final IndexWriter writer = getWriter(forumId);
         try {
+            final IndexWriter writer = getWriter(forumId);
+
             for (Message msg : appLogic.getMessages(forumId, start, end)) {
                 if (msg.isOk()) {
                     log.debug(forumId + " - Addind: " + (config.isDebug() ? msg : msg.getNum()));
@@ -160,12 +155,14 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
     }
 
     @Override
-    public void closeIndexWriter(String forumId) {
-        siteToIndexWriter.reset(forumId);
-    }
-
-    @Override
     public void closeIndexWriters() {
-        siteToIndexWriter.reset();
+//        TODO: ---VVV
+        for (IndexManager indexManager : IndexManager.all()) {
+            try {
+                indexManager.getWriter().close();
+            } catch (IOException e) {
+                log.error("Error closing: " + indexManager.getIndexDir(), e);
+            }
+        }
     }
 }

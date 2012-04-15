@@ -15,6 +15,8 @@ import org.apache.lucene.search.TopFieldDocs;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * User: gubarkov
@@ -46,6 +48,10 @@ public class IndexManager {
         return indexManagerFactory.get(forumId);
     }
 
+    public static Collection<IndexManager> all() {
+        return Collections.unmodifiableCollection(indexManagerFactory.all());
+    }
+
     public Hits search(Query query, int limit) throws IOException {
         final IndexSearcher indexSearcher = getSearcher();
         final TopFieldDocs topFieldDocs;
@@ -61,15 +67,28 @@ public class IndexManager {
         }
     }
 
-    public IndexReader getReader() throws IOException {
-        if (indexReader == null) {
-            return IndexReader.open(indexWriter, true);
-        } else {
-            return IndexReader.openIfChanged(indexReader);
-        }
+    public File getIndexDir() {
+        return indexDir;
     }
 
-    public IndexWriter createWriter() throws IOException {
+    public IndexReader getReader() throws IOException {
+        if (indexReader == null) {
+            indexReader = IndexReader.open(indexWriter, true);
+        } else {
+            indexReader = IndexReader.openIfChanged(indexReader);
+        }
+        return indexReader;
+    }
+
+    public IndexWriter getWriter() throws IOException {
+        if (indexWriter == null) {
+            indexWriter = createWriter();
+        }
+
+        return indexWriter;
+    }
+
+    private IndexWriter createWriter() throws IOException {
         final IndexWriterConfig indexWriterConfig = new IndexWriterConfig(
                 LuceneVersion.VERSION, config.getMessageAnalyzer());
 
