@@ -17,9 +17,12 @@ import java.io.IOException;
  * Time: 16:19
  */
 public class LaunchBoardSearch {
+    static String[] modules = {
+            "zlo_search", "zlo_web",
+            "xmlfp", "xonix-utils"};
+
     public static void main(String[] args) throws Exception {
         String rootFolder = ".";
-        String zloSearch = join(rootFolder, "zlo_search");
         String zloWeb = join(rootFolder, "zlo_web");
 
         Server server = new Server();
@@ -32,8 +35,10 @@ public class LaunchBoardSearch {
 //        WebAppContext root = new WebAppContext(join(zloWeb, "src/main/webapp"), "/lol");
 
         WebAppClassLoader rootClassLoader = new WebAppClassLoader(root);
-        rootClassLoader.addClassPath(join(zloWeb, "target/classes"));
-        rootClassLoader.addClassPath(join(zloSearch, "target/classes"));
+
+        for (String moduleName : modules) {
+            rootClassLoader.addClassPath(join(join(rootFolder, moduleName), "target/classes"));
+        }
 
         addAllDependentJars(rootClassLoader, zloWeb);
 
@@ -52,12 +57,15 @@ public class LaunchBoardSearch {
 
         final File[] jars = libDir.listFiles(new JarFilter());
 
+        jar_loop:
         for (File jar : jars) {
-            if (jar.getName().startsWith("zlo_search")) {
-                // don't add this
-                continue;
+            for (String moduleName : modules) {
+                if (jar.getName().startsWith(moduleName)) {
+                    // don't add this
+                    continue jar_loop;
+                }
             }
-            
+
             rootClassLoader.addClassPath(jar.getAbsolutePath());
         }
     }
