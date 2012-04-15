@@ -10,7 +10,9 @@ import java.io.IOException;
  * User: Vovan
  * Date: 24.04.11
  * Time: 16:28
+ * @deprecated not used for now
  */
+@Deprecated
 public class YoLetterFilter extends TokenFilter {
     public YoLetterFilter(TokenStream in) {
         super(in);

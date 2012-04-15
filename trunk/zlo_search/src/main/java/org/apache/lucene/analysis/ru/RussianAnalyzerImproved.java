@@ -1,11 +1,10 @@
-package info.xonix.zlo.search.analyzers;
+package org.apache.lucene.analysis.ru;
 
 import info.xonix.zlo.search.LuceneVersion;
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.ru.RussianAnalyzer;
+import info.xonix.zlo.search.analyzers.YoCharFilter;
+import org.apache.lucene.analysis.CharReader;
+import org.apache.lucene.analysis.ReusableAnalyzerBase;
 
-import java.io.IOException;
 import java.io.Reader;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -15,7 +14,7 @@ import java.util.HashSet;
  * Date: 24.04.11
  * Time: 16:19
  */
-public class RussianAnalyzerImproved extends Analyzer {
+public class RussianAnalyzerImproved extends ReusableAnalyzerBase{
     private static final String[] RUSSIAN_STOP_WORDS_30 = {
             "а", "без", "более", "бы", "был", "была", "были", "было", "быть", "в",
             "вам", "вас", "весь", "во", "вот", "все", "всего", "всех", "вы", "где",
@@ -33,14 +32,12 @@ public class RussianAnalyzerImproved extends Analyzer {
             new HashSet<Object>(Arrays.asList(RUSSIAN_STOP_WORDS_30)));
 
     @Override
-    public TokenStream tokenStream(String fieldName, Reader reader) {
-        final TokenStream tokenStream = russianAnalyzer.tokenStream(fieldName, reader);
-        return new YoLetterFilter(tokenStream);
+    protected Reader initReader(Reader reader) {
+        return new YoCharFilter(CharReader.get(reader));
     }
 
     @Override
-    public TokenStream reusableTokenStream(String fieldName, Reader reader) throws IOException {
-        final TokenStream tokenStream = russianAnalyzer.reusableTokenStream(fieldName, reader);
-        return new YoLetterFilter(tokenStream);
+    protected TokenStreamComponents createComponents(String fieldName, Reader reader) {
+        return russianAnalyzer.createComponents(fieldName, reader);
     }
 }

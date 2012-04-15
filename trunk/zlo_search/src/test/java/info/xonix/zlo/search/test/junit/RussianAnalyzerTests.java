@@ -45,13 +45,13 @@ public class RussianAnalyzerTests {
     @Test
     public void test3() throws IOException {
         checkCorrectAnalyzing("в чем смысл жизни? Жизнь это 01234567890 Ёж ёлка",
-                new String[]{"смысл", "жизн", "жизн", "01234567890", "еж", "елка"});
+                new String[]{"смысл", "жизн", "жизн", "01234567890", "еж", "елк"});
     }
 
     @Test
     public void testElka() throws IOException {
-        checkCorrectAnalyzing("елка ёлка",
-                new String[]{"елк", "елка"}); // TODO: WTF?
+        checkCorrectAnalyzing("елка ёлка Ёлки ЁлКоЙ",
+                new String[]{"елк", "елк", "елк", "елк"});
     }
 
     private void checkCorrectAnalyzing(String str, String[] expectedResult) throws IOException {
