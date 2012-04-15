@@ -1,8 +1,8 @@
 package info.xonix.zlo.search.logic.exceptions;
 
-import info.xonix.zlo.search.dao.AuditDao;
 import info.xonix.utils.Check;
 import info.xonix.utils.ExceptionUtils;
+import info.xonix.zlo.search.dao.AuditDao;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;

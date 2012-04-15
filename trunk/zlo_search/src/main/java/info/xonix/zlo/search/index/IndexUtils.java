@@ -1,7 +1,6 @@
 package info.xonix.zlo.search.index;
 
 import info.xonix.zlo.search.LuceneVersion;
-import info.xonix.zlo.search.index.doubleindex.DoubleIndexManager;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;

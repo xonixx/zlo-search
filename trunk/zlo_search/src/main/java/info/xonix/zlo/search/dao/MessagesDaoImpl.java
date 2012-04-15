@@ -1,11 +1,11 @@
 package info.xonix.zlo.search.dao;
 
 
+import info.xonix.utils.Check;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageShallow;
 import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.model.Topic;
-import info.xonix.utils.Check;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;

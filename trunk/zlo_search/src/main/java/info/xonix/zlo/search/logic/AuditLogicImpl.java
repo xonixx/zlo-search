@@ -1,9 +1,9 @@
 package info.xonix.zlo.search.logic;
 
+import info.xonix.utils.Check;
 import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.dao.AuditDao;
 import info.xonix.zlo.search.model.SearchLog;
-import info.xonix.utils.Check;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 

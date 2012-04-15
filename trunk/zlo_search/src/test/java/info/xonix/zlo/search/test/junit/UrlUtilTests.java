@@ -3,9 +3,7 @@ package info.xonix.zlo.search.test.junit;
 import info.xonix.utils.UrlUtil;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * User: gubarkov

@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.test.junit.xmlfp;
 
-import info.xonix.forumsearch.xmlfp.XmlFpForum;
 import info.xonix.forumsearch.xmlfp.XmlFpException;
+import info.xonix.forumsearch.xmlfp.XmlFpForum;
 import info.xonix.zlo.search.dao.XmlFpDao;
 import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
 import info.xonix.zlo.search.logic.forum_adapters.impl.XmlFpForumAdapter;

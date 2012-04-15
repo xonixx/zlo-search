@@ -1,10 +1,10 @@
 package info.xonix.zlo.search.logic;
 
+import info.xonix.utils.Check;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
 import info.xonix.zlo.search.model.Message;
-import info.xonix.utils.Check;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,11 +1,11 @@
 package info.xonix.zlo.search.logic.site;
 
+import info.xonix.utils.Check;
 import info.xonix.zlo.search.config.DateFormats;
 import info.xonix.zlo.search.logic.ControlsDataLogic;
 import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
-import info.xonix.utils.Check;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
