@@ -5,6 +5,7 @@ import info.xonix.zlo.search.LuceneVersion;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.logic.SearchLogicImpl;
 import info.xonix.zlo.search.spring.AppSpringContext;
+import org.apache.log4j.Logger;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
@@ -12,6 +13,7 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.TopFieldDocs;
+import org.apache.lucene.store.Directory;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,11 +26,13 @@ import java.util.Collections;
  * Time: 21:48
  */
 public class IndexManager {
+    private final static Logger log = Logger.getLogger(IndexManager.class);
 
     private final static Config config = AppSpringContext.get(Config.class);
 
-    private final File indexDir;
+    public static final String WRITE_LOCK_FILE = "write.lock";
 
+    private final File indexDir;
     private IndexReader indexReader;
     private IndexWriter indexWriter;
 
@@ -101,10 +105,22 @@ public class IndexManager {
     }
 
     public void drop() throws IOException {
-       IndexUtils.createEmptyIndex(indexDir);
+        IndexUtils.createEmptyIndex(indexDir);
     }
 
 /*    public void close() throws IOException {
         IndexUtils.close(getReader());
     }*/
+
+    public void clearLocks() {
+        try {
+            log.info("Clearing lock: " + indexDir.getAbsolutePath());
+
+            final Directory d = IndexUtils.dir(indexDir);
+            d.clearLock(WRITE_LOCK_FILE);
+            d.close();
+        } catch (IOException e) {
+            log.error("Error clearing lock", e);
+        }
+    }
 }
