@@ -1,4 +1,4 @@
-package info.xonix.zlo.search.doubleindex;
+package info.xonix.zlo.search.index.doubleindex;
 
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.logic.SearchLogicImpl;

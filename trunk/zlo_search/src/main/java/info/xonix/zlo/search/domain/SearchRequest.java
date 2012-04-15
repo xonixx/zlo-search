@@ -1,4 +1,4 @@
-package info.xonix.zlo.search.domainobj;
+package info.xonix.zlo.search.domain;
 
 import info.xonix.zlo.search.config.DateFormats;
 import info.xonix.zlo.search.config.forums.GetForum;
