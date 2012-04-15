@@ -7,7 +7,6 @@ import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.domain.SearchRequest;
 import info.xonix.zlo.search.domain.SearchResult;
 import info.xonix.zlo.search.index.IndexManager;
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.queryParser.ParseException;
@@ -148,7 +147,7 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
 
             IndexManager indexManager = IndexManager.get(forumId);
 
-            result = new SearchResult(forumId, query, indexManager, indexManager.search(query, limit));
+            result = new SearchResult(forumId, query, indexManager.search(query, limit));
         } catch (ParseException e) {
             throw new SearchException(queryStr, e);
         } catch (IOException e) {
@@ -164,19 +163,8 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
 
     @Override
     public void optimizeIndex(String forumId) {
-//        IndexManager dis = getIndexManager(forumId);
-
+        // TODO: implement?
         throw new UnsupportedOperationException("optimizeIndex");
-
-/*        try {
-            dis.moveSmallToBig();
-            dis.optimize();
-        } catch (IOException e) {
-            log.error("Error while optimizingIndex", e);
-        }*/
-
-        // VVV --- won't close - as it closes dis for websearch
-//        dis.close();
     }
 
     @Override
@@ -234,13 +222,13 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
 }*/
     }
 
-    private int[] last(int[] inp, int takeLast) {
+/*    private int[] last(int[] inp, int takeLast) {
         return ArrayUtils.subarray(inp, inp.length - takeLast, inp.length);
     }
 
     private int[] skip(int[] inp, int skip) {
         return ArrayUtils.subarray(inp, skip, inp.length);
-    }
+    }*/
 
     private int fixLimit(int limit) {
         // TODO?
