@@ -40,33 +40,6 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
     @Autowired
     private SearchLogic searchLogic;
 
-/*    private StringFactory<IndexWriter> siteToIndexWriter = new StringFactory<IndexWriter>() {
-        @Override
-        protected IndexWriter create(String forumId) {
-            IndexWriter writer;
-            try {
-                  writer = IndexManager.get(forumId).createWriter();
-
-//                VVV-- NOT works in Lucene 3.6
-//                writer.setMergeFactor(7); // optimized for search : TODO
-            } catch (IOException e) {
-                throw new RuntimeException("Can't create writer", e);
-            }
-            return writer;
-        }
-
-        @Override
-        protected void close(String forumId, IndexWriter indexWriter) {
-            log.info("Closing indexWriter for site: " + forumId);
-            try {
-                indexWriter.close();
-            } catch (IOException e) {
-                log.error("Problem closing indexWriter for site: " + forumId, e);
-            }
-        }
-
-    };*/
-
     @Override
     public void afterPropertiesSet() throws Exception {
         Check.isSet(config, "config");

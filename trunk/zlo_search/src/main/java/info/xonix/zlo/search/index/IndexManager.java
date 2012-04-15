@@ -63,7 +63,7 @@ public class IndexManager {
 
             topFieldDocs = indexSearcher.search(query, null, limit, reversedIndexOrderSort);
 
-            return new Hits(topFieldDocs, indexSearcher);// TODO
+            return new Hits(topFieldDocs, indexSearcher);
         }
     }
 
@@ -73,10 +73,11 @@ public class IndexManager {
 
     public IndexReader getReader() throws IOException {
         if (indexReader == null) {
-            indexReader = IndexReader.open(indexWriter, true);
+            indexReader = IndexReader.open(getWriter(), true);
         } else {
-            indexReader = IndexReader.openIfChanged(indexReader);
+            indexReader = IndexReader.openIfChanged(indexReader, getWriter(), true);
         }
+
         return indexReader;
     }
 
@@ -92,9 +93,7 @@ public class IndexManager {
         final IndexWriterConfig indexWriterConfig = new IndexWriterConfig(
                 LuceneVersion.VERSION, config.getMessageAnalyzer());
 
-        indexWriter = new IndexWriter(IndexUtils.dir(indexDir), indexWriterConfig);
-
-        return indexWriter;
+        return new IndexWriter(IndexUtils.dir(indexDir), indexWriterConfig);
     }
 
     public IndexSearcher getSearcher() throws IOException {

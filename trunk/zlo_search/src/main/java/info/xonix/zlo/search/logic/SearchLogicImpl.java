@@ -167,7 +167,7 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     public void optimizeIndex(String forumId) {
 //        IndexManager dis = getIndexManager(forumId);
 
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("optimizeIndex");
 
 /*        try {
             dis.moveSmallToBig();
