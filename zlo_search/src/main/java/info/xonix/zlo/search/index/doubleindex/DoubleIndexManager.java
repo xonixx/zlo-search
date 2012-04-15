@@ -80,19 +80,11 @@ public class DoubleIndexManager {
     }
 
     public long getSmallIndexSize() {
-        return getDirSize(getSmallPath());
+        return IndexUtils.getDirSize(getSmallPath());
     }
 
     public long getBigIndexSize() {
-        return getDirSize(getBigPath());
-    }
-
-    private long getDirSize(File dir) {
-        long size = 0;
-        for (File file : dir.listFiles()) {
-            size += file.length();
-        }
-        return size;
+        return IndexUtils.getDirSize(getBigPath());
     }
 
     private void createDirIfAbsent(String path) {
