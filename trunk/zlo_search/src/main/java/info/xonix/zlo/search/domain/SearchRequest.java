@@ -207,9 +207,9 @@ public class SearchRequest {
                 searchAll == req.isSearchAll();
     }
 
-    public int hashCode() {
+/*    public int hashCode() {
         return StringUtils.join(new Object[]{text, root, inTitle, inBody, inReg, inHasUrl, inHasImg, nick, host, topicCode, searchAll, forumId}, '|').hashCode();
-    }
+    }*/
 
     public boolean isTheSameSearch(SearchRequest searchRequest) {
         return this.equals(searchRequest);

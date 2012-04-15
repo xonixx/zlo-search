@@ -33,7 +33,7 @@ while True:
 
     l = service.searchShallow(ZLO_ID, 'nick:xonix', total, STEP)
 
-    if len(l) == 0:
+    if not len(l):
         break
 
     total += len(l)
