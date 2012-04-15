@@ -1,6 +1,7 @@
 package info.xonix.zlo.search.analyzers;
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.ru.RussianAnalyzerImproved;
 
 /**
  * User: Vovan
