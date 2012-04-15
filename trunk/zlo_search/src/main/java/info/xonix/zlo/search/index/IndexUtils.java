@@ -49,4 +49,12 @@ public class IndexUtils {
             log.error("Error while closing index reader (ignored)", e);
         }
     }
+
+    public static long getDirSize(File dir) {
+        long size = 0;
+        for (File file : dir.listFiles()) {
+            size += file.length();
+        }
+        return size;
+    }
 }

@@ -5,12 +5,9 @@
 <%@ page import="info.xonix.zlo.search.progs.OptimizeAllIndexes" %>
 <%@ page import="info.xonix.zlo.search.utils.SysUtils" %>
 <%@ page import="info.xonix.zlo.web.logic.AdminLogic" %>
+<%@ page import="info.xonix.zlo.search.index.IndexManager" %>
 <%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
-
-<%!
-    SearchLogic searchLogic = AppSpringContext.get(SearchLogicImpl.class);
-%>
 
 <%@ include file="WEB-INF/jsp/restrictAccess.jsp" %>
 
@@ -89,19 +86,16 @@
 
     <display:table id="forumId" name="<%= GetForum.ids() %>">
         <c:set var="adapter" value="<%= GetForum.adapter((String) forumId) %>"/>
-        <c:set var="dis" value="<%= searchLogic.getIndexManager((String) forumId) %>"/>
+        <c:set var="indexManager" value="<%= IndexManager.get((String) forumId) %>"/>
 
         <display:caption>Sites</display:caption>
 
         <display:column title="#">${forumId_rowNum}</display:column>
         <display:column title="Name">${forumId}</display:column>
         <display:column title="Url"><a href="${adapter.forumUrl}">${adapter.forumUrl}</a></display:column>
-        <display:column title="Index">${dis.indexesDir}</display:column>
-        <display:column title="Renew Date"><fmt:formatDate value="${dis.renewDate}"
-                                                           pattern="dd.MM.yy hh:mm"/></display:column>
-        <display:column title="Big index size"><fmt:formatNumber value="${dis.bigIndexSize / mb}"
-                                                                 pattern="#.##"/></display:column>
-        <display:column title="Small index size"><fmt:formatNumber value="${dis.smallIndexSize / mb}"
-                                                                   pattern="#.##"/></display:column>
+        <display:column title="Index">${indexManager.indexDir}</display:column>
+        <display:column title="Index Size">
+            <fmt:formatNumber value="${indexManager.indexSize / mb}" pattern="#.##"/>
+        </display:column>
     </display:table>
 </div>

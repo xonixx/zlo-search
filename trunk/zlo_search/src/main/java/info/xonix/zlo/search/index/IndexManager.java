@@ -126,4 +126,8 @@ public class IndexManager {
             log.error("Error clearing lock", e);
         }
     }
+
+    public long getIndexSize() {
+        return IndexUtils.getDirSize(indexDir);
+    }
 }
