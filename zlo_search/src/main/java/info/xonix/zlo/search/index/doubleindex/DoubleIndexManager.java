@@ -1,6 +1,7 @@
 package info.xonix.zlo.search.index.doubleindex;
 
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.index.IndexUtils;
 import info.xonix.zlo.search.logic.SearchLogicImpl;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
@@ -8,7 +9,6 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.search.*;
 import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.FSDirectory;
 
 import java.io.File;
 import java.io.IOException;
@@ -63,10 +63,6 @@ public class DoubleIndexManager {
         return new DoubleIndexManager(config.getIndexDirDouble(forumId), renewingSort);
     }
 
-    private Directory dir(File dir) throws IOException {
-        return FSDirectory.open(dir);
-    }
-
     public String getIndexesDir() {
         return indexesDir;
     }
@@ -113,12 +109,12 @@ public class DoubleIndexManager {
         if (bigReader == null) {
             final File bigPath = getBigPath();
             try {
-                bigReader = IndexReader.open(dir(bigPath), true);
+                bigReader = IndexReader.open(IndexUtils.dir(bigPath), true);
             } catch (IOException e) {
                 log.error("Can't create bigReader... Creating empty one...");
                 try {
-                    createEmptyIndex(bigPath);
-                    bigReader = IndexReader.open(dir(bigPath), true);
+                    IndexUtils.createEmptyIndex(bigPath);
+                    bigReader = IndexReader.open(IndexUtils.dir(bigPath), true);
                 } catch (IOException e1) {
                     log.error("Can't create empty big reader: ", e1);
                 }
@@ -133,13 +129,13 @@ public class DoubleIndexManager {
         if (smallReader == null) {
             final File smallPath = getSmallPath();
             try {
-                smallReader = IndexReader.open(dir(smallPath), true);
+                smallReader = IndexReader.open(IndexUtils.dir(smallPath), true);
                 renewDate = new Date();
             } catch (IOException e) {
                 log.error("Can't create smallReader... Creating empty one...");
                 try {
-                    createEmptyIndex(smallPath);
-                    smallReader = IndexReader.open(dir(smallPath), true);
+                    IndexUtils.createEmptyIndex(smallPath);
+                    smallReader = IndexReader.open(IndexUtils.dir(smallPath), true);
                 } catch (IOException e1) {
                     log.error("Can't create empty small reader: ", e1);
                 }
@@ -193,7 +189,7 @@ public class DoubleIndexManager {
 
         try {
             ir = IndexReader.open(
-                    dir(isSmall
+                    IndexUtils.dir(isSmall
                             ? getSmallPath()
                             : getBigPath()), true);
         } catch (IOException e) {
@@ -226,7 +222,7 @@ public class DoubleIndexManager {
         }
 
         synchronized (closeLock) { // to give ability to perform searh if oldReader already used
-            clean(oldIndexReader);
+            IndexUtils.clean(oldIndexReader);
         }
 
         log.info("Successfuly recreated.");
@@ -252,16 +248,6 @@ public class DoubleIndexManager {
 
         t.setPriority(Thread.MIN_PRIORITY);
         t.start();
-    }
-
-    public static void clean(IndexReader ir) {
-        try {
-            if (ir != null) {
-                ir.close();
-            }
-        } catch (IOException e) {
-            log.error("Error while closing index reader: " + e.getClass());
-        }
     }
 
     public DoubleHits search(Query query, int limit) throws IOException {
@@ -304,30 +290,30 @@ public class DoubleIndexManager {
     }
 
     public void drop() throws IOException {
-        createEmptyIndex(getBigPath());
-        createEmptyIndex(getSmallPath());
+        IndexUtils.createEmptyIndex(getBigPath());
+        IndexUtils.createEmptyIndex(getSmallPath());
     }
 
     public void close() {
-        clean(bigReader);
-        clean(smallReader);
+        IndexUtils.clean(bigReader);
+        IndexUtils.clean(smallReader);
     }
 
     public void moveSmallToBig() throws IOException {
         log.info("Start moving small to big...");
 
-        IndexWriter bigIndexWriter = new IndexWriter(dir(getBigPath()), config.getMessageAnalyzer(), IndexWriter.MaxFieldLength.UNLIMITED);
+        IndexWriter bigIndexWriter = new IndexWriter(IndexUtils.dir(getBigPath()), config.getMessageAnalyzer(), IndexWriter.MaxFieldLength.UNLIMITED);
         IndexReader smlR = getSmallReader();
 
         log.info("Moving small to big...");
-        bigIndexWriter.addIndexesNoOptimize(dir(getSmallPath())); // add small to big, w/o optimize
+        bigIndexWriter.addIndexesNoOptimize(IndexUtils.dir(getSmallPath())); // add small to big, w/o optimize
 
         smlR.close();
         smallReader = null;
         bigIndexWriter.close();
 
         log.info("Cleaning small index...");
-        createEmptyIndex(getSmallPath()); // empty small index
+        IndexUtils.createEmptyIndex(getSmallPath()); // empty small index
         log.info("Done moving small to big.");
     }
 
@@ -337,7 +323,7 @@ public class DoubleIndexManager {
         for (File path : new File[]{getBigPath(), getSmallPath()}) {
             log.info("Optimizing: " + path.getAbsolutePath());
 
-            IndexWriter iw = new IndexWriter(dir(path), config.getMessageAnalyzer(), IndexWriter.MaxFieldLength.UNLIMITED);
+            IndexWriter iw = new IndexWriter(IndexUtils.dir(path), config.getMessageAnalyzer(), IndexWriter.MaxFieldLength.UNLIMITED);
             iw.optimize();
             iw.close();
         }
@@ -345,18 +331,12 @@ public class DoubleIndexManager {
         log.info("Done.");
     }
 
-    private void createEmptyIndex(File path) throws IOException {
-        final IndexWriter indexWriter = new IndexWriter(dir(path), config.getMessageAnalyzer(), true, IndexWriter.MaxFieldLength.UNLIMITED);
-        indexWriter.setUseCompoundFile(true);
-        indexWriter.close();
-    }
-
     public void clearLocks() {
         try {
             for (File path : new File[]{getSmallPath(), getBigPath()}) {
                 log.info("Clearing lock: " + path.getAbsolutePath());
 
-                final Directory d = dir(path);
+                final Directory d = IndexUtils.dir(path);
                 d.clearLock("write.lock");
                 d.close();
             }

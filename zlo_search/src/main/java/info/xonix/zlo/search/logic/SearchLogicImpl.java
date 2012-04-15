@@ -5,9 +5,9 @@ import info.xonix.zlo.search.LuceneVersion;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.domain.SearchRequest;
 import info.xonix.zlo.search.domain.SearchResult;
-import info.xonix.zlo.search.index.doubleindex.DoubleIndexManager;
 import info.xonix.utils.Check;
 import info.xonix.utils.factory.StringFactory;
+import info.xonix.zlo.search.index.IndexManager;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -109,10 +109,11 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     }
 
     // TODO: move this to Site as it belongs to it
-    private StringFactory<DoubleIndexManager> doubleIndexManagerFactory = new StringFactory<DoubleIndexManager>() {
+    private StringFactory<IndexManager> doubleIndexManagerFactory = new StringFactory<IndexManager>() {
         @Override
-        protected DoubleIndexManager create(String forumId) {
-            return DoubleIndexManager.create(forumId, getDateSort());
+        protected IndexManager create(String forumId) {
+//            return DoubleIndexManager.create(forumId, getDateSort());
+            return null; // TODO
         }
     };
 
@@ -155,9 +156,9 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
 
             log.info("query: " + query);
 
-            DoubleIndexManager dis = getDoubleIndexManager(forumId);
+            IndexManager indexManager = getIndexManager(forumId);
 
-            result = new SearchResult(forumId, query, dis, dis.search(query, limit));
+            result = new SearchResult(forumId, query, indexManager, indexManager.search(query, limit));
         } catch (ParseException e) {
             throw new SearchException(queryStr, e);
         } catch (IOException e) {
@@ -173,23 +174,26 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
 
     @Override
     public void optimizeIndex(String forumId) {
-        DoubleIndexManager dis = getDoubleIndexManager(forumId);
+        IndexManager dis = getIndexManager(forumId);
 
-        try {
+        throw new UnsupportedOperationException();
+
+/*        try {
             dis.moveSmallToBig();
             dis.optimize();
         } catch (IOException e) {
             log.error("Error while optimizingIndex", e);
-        }
+        }*/
+
         // VVV --- won't close - as it closes dis for websearch
 //        dis.close();
     }
 
     @Override
     public void dropIndex(String forumId) throws IOException {
-        final DoubleIndexManager dis = getDoubleIndexManager(forumId);
-        dis.drop();
-        dis.close();
+        final IndexManager indexManager = getIndexManager(forumId);
+        indexManager.drop();
+        indexManager.close();
     }
 
     @Override
@@ -205,34 +209,42 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
 
         int realLimit = skip + fixLimit(limit);
 
-        final DoubleIndexManager doubleIndexManager = getDoubleIndexManager(forumId);
+        final IndexManager indexManager = getIndexManager(forumId);
 
-        final IndexSearcher smallSearcher = new IndexSearcher(doubleIndexManager.getSmallReader());
+        final IndexSearcher searcher = new IndexSearcher(indexManager.getReader());
 
         try {
-            final int[] ids = search(smallSearcher, query, realLimit);
-
-            if (ids.length == realLimit) {
-                return skip(ids, skip);
-            }
-
-            realLimit -= ids.length;
-
-            if (realLimit <= 0) {
-                throw new IllegalStateException();
-            }
-
-            final IndexSearcher bigSearcher = new IndexSearcher(doubleIndexManager.getBigReader());
-
-            final int[] idsBig = search(bigSearcher, query, realLimit);
-
-
-            final int[] idsAll = ArrayUtils.addAll(ids, idsBig);
-            return skip(idsAll, skip); // TODO: optimize
-
+            final int[] ids = search(searcher, query, realLimit);
+            return ids;
         } catch (IOException e) {
             throw new SearchException("search: I/O exception", e);
         }
+
+
+/*        try {
+    final int[] ids = search(searcher, query, realLimit);
+
+    if (ids.length == realLimit) {
+        return skip(ids, skip);
+    }
+
+    realLimit -= ids.length;
+
+    if (realLimit <= 0) {
+        throw new IllegalStateException();
+    }
+
+    final IndexSearcher bigSearcher = new IndexSearcher(indexManager.getBigReader());
+
+    final int[] idsBig = search(bigSearcher, query, realLimit);
+
+
+    final int[] idsAll = ArrayUtils.addAll(ids, idsBig);
+    return skip(idsAll, skip); // TODO: optimize
+
+} catch (IOException e) {
+    throw new SearchException("search: I/O exception", e);
+}*/
     }
 
     private int[] last(int[] inp, int takeLast) {
@@ -267,11 +279,11 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     /**
      * TODO: make private!
      *
-     * @param String forumId
+     * @param forumId String
      * @return dis
      */
     @Override
-    public DoubleIndexManager getDoubleIndexManager(String forumId) {
+    public IndexManager getIndexManager(String forumId) {
         return doubleIndexManagerFactory.get(forumId);
     }
 }

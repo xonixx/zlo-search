@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.domain;
 
-import info.xonix.zlo.search.index.doubleindex.DoubleHits;
-import info.xonix.zlo.search.index.doubleindex.DoubleIndexManager;
+import info.xonix.zlo.search.index.Hits;
+import info.xonix.zlo.search.index.IndexManager;
 import org.apache.log4j.Logger;
 import org.apache.lucene.search.Query;
 
@@ -16,7 +16,7 @@ public class SearchResult {
 
     public static final Logger log = Logger.getLogger(SearchResult.class);
 
-    private DoubleHits doubleHits;
+    private Hits hits;
     private Query query;
 
     private SearchRequest lastSearch;
@@ -25,13 +25,13 @@ public class SearchResult {
 
     private String forumId;
     private Date searchDate;
-    private DoubleIndexManager doubleIndexManager;
+    private IndexManager indexManager;
 
-    public SearchResult(String forumId, Query query, DoubleIndexManager dis, DoubleHits doubleHits) {
+    public SearchResult(String forumId, Query query, IndexManager indexManager, Hits hits) {
         this.forumId = forumId;
-        this.doubleIndexManager = dis;
+        this.indexManager = indexManager;
         this.query = query;
-        this.doubleHits = doubleHits;
+        this.hits = hits;
         searchDate = new Date(); // now
     }
 
@@ -39,8 +39,8 @@ public class SearchResult {
         return forumId;
     }
 
-    public DoubleHits getDoubleHits() {
-        return doubleHits;
+    public Hits getHits() {
+        return hits;
     }
 
     public Query getQuery() {
@@ -81,16 +81,18 @@ public class SearchResult {
      * @return old or not
      */
     public boolean isOld(int limit) {
-        boolean oldByDate = searchDate.before(doubleIndexManager.getRenewDate());
+        throw new UnsupportedOperationException("isOld");
+
+/*        boolean oldByDate = searchDate.before(indexManager.getRenewDate());
         if (oldByDate) {
             log.info("Search result for " + query + " is old by index.");
         }
 
-        boolean oldByLimit = doubleHits.oldByLimit(limit);
+        boolean oldByLimit = hits.oldByLimit(limit);
         if (oldByLimit) {
             log.info("Search result for " + query + " is old by limit.");
         }
 
-        return oldByDate || oldByLimit;
+        return oldByDate || oldByLimit;*/
     }
 }
