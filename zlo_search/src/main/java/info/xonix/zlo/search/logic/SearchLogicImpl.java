@@ -1,12 +1,11 @@
 package info.xonix.zlo.search.logic;
 
+import info.xonix.utils.Check;
 import info.xonix.zlo.search.FoundTextHighlighter;
 import info.xonix.zlo.search.LuceneVersion;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.domain.SearchRequest;
 import info.xonix.zlo.search.domain.SearchResult;
-import info.xonix.utils.Check;
-import info.xonix.utils.factory.StringFactory;
 import info.xonix.zlo.search.index.IndexManager;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;

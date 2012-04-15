@@ -1,15 +1,15 @@
 package info.xonix.zlo.search.logic.forum_adapters.impl;
 
-import info.xonix.forumsearch.xmlfp.XmlFpForum;
 import info.xonix.forumsearch.xmlfp.XmlFpException;
+import info.xonix.forumsearch.xmlfp.XmlFpForum;
 import info.xonix.forumsearch.xmlfp.XmlFpIOException;
+import info.xonix.forumsearch.xmlfp.utils.XmlFpMarshalException;
 import info.xonix.zlo.search.dao.XmlFpDao;
 import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
 import info.xonix.zlo.search.logic.forum_adapters.ForumAdapterAbstract;
 import info.xonix.zlo.search.logic.forum_adapters.ForumFormatException;
 import info.xonix.zlo.search.logic.forum_adapters.ForumIoException;
 import info.xonix.zlo.search.model.Message;
-import info.xonix.forumsearch.xmlfp.utils.XmlFpMarshalException;
 import info.xonix.zlo.search.xmlfp.ForumAccessor;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;

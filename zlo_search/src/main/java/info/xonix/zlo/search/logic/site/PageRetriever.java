@@ -1,9 +1,9 @@
 package info.xonix.zlo.search.logic.site;
 
+import info.xonix.utils.Check;
 import info.xonix.zlo.search.HttpHeader;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams;
-import info.xonix.utils.Check;
 import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpVersion;

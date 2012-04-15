@@ -1,9 +1,9 @@
 package info.xonix.zlo.search.config;
 
-import info.xonix.zlo.search.analyzers.AnalyzerProvider;
-import info.xonix.zlo.search.logic.MessageFields;
 import info.xonix.utils.EnvUtils;
 import info.xonix.utils.ExceptionUtils;
+import info.xonix.zlo.search.analyzers.AnalyzerProvider;
+import info.xonix.zlo.search.logic.MessageFields;
 import info.xonix.zlo.search.utils.SmartQueryParser;
 import info.xonix.zlo.search.utils.TimeUtils;
 import org.apache.log4j.Logger;
