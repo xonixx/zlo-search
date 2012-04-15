@@ -51,8 +51,8 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
         protected IndexWriter create(String forumId) {
             IndexWriter writer;
             try {
-
                   writer = IndexManager.get(forumId).createWriter();
+
 //                VVV-- NOT works in Lucene 3.6
 //                writer.setMergeFactor(7); // optimized for search : TODO
             } catch (IOException e) {

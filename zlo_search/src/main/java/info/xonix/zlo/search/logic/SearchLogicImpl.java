@@ -202,10 +202,8 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
 
         final IndexManager indexManager = IndexManager.get(forumId);
 
-        final IndexSearcher searcher = new IndexSearcher(indexManager.getReader());
-
         try {
-            return search(searcher, query, realLimit);
+            return search(indexManager.getSearcher(), query, realLimit);
         } catch (IOException e) {
             throw new SearchException("search: I/O exception", e);
         }
