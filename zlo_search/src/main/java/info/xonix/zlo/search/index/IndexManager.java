@@ -35,6 +35,7 @@ public class IndexManager {
     private final File indexDir;
     private IndexReader indexReader;
     private IndexWriter indexWriter;
+    private IndexSearcher indexSearcher;
 
     private static StringFactory<IndexManager> indexManagerFactory = new StringFactory<IndexManager>() {
         @Override
@@ -111,7 +112,16 @@ public class IndexManager {
     }
 
     public IndexSearcher getSearcher() throws IOException {
-        return new IndexSearcher(getReader());
+        if (indexSearcher == null) {
+            indexSearcher = new IndexSearcher(getReader());
+        } else {
+            IndexReader currentReader = getReader();
+
+            if (indexSearcher.getIndexReader() != currentReader) {
+                indexSearcher = new IndexSearcher(currentReader);
+            }
+        }
+        return indexSearcher;
     }
 
     public void drop() throws IOException {
