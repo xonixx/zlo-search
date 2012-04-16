@@ -18,6 +18,10 @@ public class DaemonTests {
 
         TestDaemon testDaemon = new TestDaemon("test", start, stop);
 
+        testDaemon.setDoPerTime(100);
+        testDaemon.setRetryPeriod(1000); // 1 sec
+        testDaemon.setSleepPeriod(5000);
+
         testDaemon.start();
     }
 }
