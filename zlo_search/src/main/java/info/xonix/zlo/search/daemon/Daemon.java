@@ -180,19 +180,14 @@ public abstract class Daemon {
                     indexFrom = getFromIndex() + 1;
                 }
 
-                if (end == -1)
+                if (end == -1) {
                     end = getEndIndex();
+                }
 
                 int indexTo = indexFrom + doPerTime - 1;
 
                 if (indexTo > end) {
-                    logger.warn("indexTo=" + indexTo + " > " + "end=" + end + ". Calling getEndIndex()...");
-
-                    end = getEndIndex();
-
-                    if (indexTo > end) {
-                        indexTo = end;
-                    }
+                    indexTo = end;
                 }
 
                 if (indexFrom <= indexTo) {
