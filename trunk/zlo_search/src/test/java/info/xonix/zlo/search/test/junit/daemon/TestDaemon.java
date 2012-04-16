@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
  * Time: 15:53
  */
 public class TestDaemon extends Daemon{
-    private final Logger log = Logger.getLogger("testDaemon");
+    private final Logger log = getLogger();
     private int start;
     private int stop;
 
@@ -22,7 +22,7 @@ public class TestDaemon extends Daemon{
 
     @Override
     protected Logger getLogger() {
-        return log;
+        return Logger.getLogger("testDaemon");
     }
 
     @Override

@@ -192,9 +192,12 @@ public abstract class Daemon {
 
                 int indexTo = indexFrom + doPerTime - 1;
 
-                if (indexTo >= end) {
+                if (indexTo > end) {
+                    getLogger().warn("indexTo=" + indexTo + " > " + "end=" + end + ". Calling getEndIndex()...");
+
                     end = getEndIndex();
-                    if (indexTo >= end) {
+
+                    if (indexTo > end) {
                         indexTo = end;
                     }
                 }
@@ -264,6 +267,7 @@ public abstract class Daemon {
     public void registerExitHandlers() {
         registerForCleanUp(this);
 
+        // TODO: VVV-- this is incorrect: we should not call overridable method from constructor
         getLogger().info(getForumId() + " - Registering exit handlers...");
         setExiting(false);
 
