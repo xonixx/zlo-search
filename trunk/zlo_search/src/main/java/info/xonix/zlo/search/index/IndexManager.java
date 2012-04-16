@@ -44,8 +44,15 @@ public class IndexManager {
     };
 
     private IndexManager(String indexDirPath) {
-        // TODO: check indexDir to exist & be folder
         indexDir = new File(indexDirPath);
+
+        if (!indexDir.exists()) {
+            log.info(indexDirPath + " not exists. Creating...");
+
+            if (!indexDir.mkdirs()) {
+                throw new RuntimeException("Failed to create folder: " + indexDirPath);
+            }
+        }
     }
 
     public static IndexManager get(String forumId) {
