@@ -30,8 +30,8 @@ public abstract class Daemon {
     private Process process;
 
     private int doPerTime;
-    private int sleepPeriod;
-    private int retryPeriod;
+    private long sleepPeriod;
+    private long retryPeriod;
 
     private Exception lastException;
     private Date lastExceptionTime;
@@ -54,11 +54,11 @@ public abstract class Daemon {
         this.doPerTime = doPerTime;
     }
 
-    public void setSleepPeriod(int sleepPeriod) {
+    public void setSleepPeriod(long sleepPeriod) {
         this.sleepPeriod = sleepPeriod;
     }
 
-    public void setRetryPeriod(int retryPeriod) {
+    public void setRetryPeriod(long retryPeriod) {
         this.retryPeriod = retryPeriod;
     }
 
@@ -74,7 +74,7 @@ public abstract class Daemon {
     /**
      * register for cleaning up
      *
-     * @param d
+     * @param d Daemon
      */
     public static void registerForCleanUp(Daemon d) {
         daemons.add(d);
@@ -118,16 +118,8 @@ public abstract class Daemon {
         return lastException;
     }
 
-    public void setLastException(Exception lastException) {
-        this.lastException = lastException;
-    }
-
     public Date getLastExceptionTime() {
         return lastExceptionTime;
-    }
-
-    public void setLastExceptionTime(Date lastExceptionTime) {
-        this.lastExceptionTime = lastExceptionTime;
     }
 
     public DaemonState getDaemonState() {
@@ -182,6 +174,7 @@ public abstract class Daemon {
         private int end = -1;
 
         private void doOneIteration() throws InterruptedException {
+            final Logger logger = getLogger();
             try {
                 if (indexFrom == -1) {
                     indexFrom = getFromIndex() + 1;
@@ -193,7 +186,7 @@ public abstract class Daemon {
                 int indexTo = indexFrom + doPerTime - 1;
 
                 if (indexTo > end) {
-                    getLogger().warn("indexTo=" + indexTo + " > " + "end=" + end + ". Calling getEndIndex()...");
+                    logger.warn("indexTo=" + indexTo + " > " + "end=" + end + ". Calling getEndIndex()...");
 
                     end = getEndIndex();
 
@@ -208,7 +201,7 @@ public abstract class Daemon {
                 }
 
                 while (indexFrom > end) {
-                    getLogger().info(forumId + " - Sleeping " + TimeUtils.toMinutesSeconds(sleepPeriod) + "...");
+                    logger.info(forumId + " - Sleeping " + TimeUtils.toMinutesSeconds(sleepPeriod) + "...");
                     doSleep(sleepPeriod);
                     end = getEndIndex();
                 }
@@ -218,10 +211,10 @@ public abstract class Daemon {
                 saveLastException(e);
 
                 if (!processException(e)) {
-                    getLogger().error("(" + forumId + ") Unknown exception", e);
+                    logger.error("(" + forumId + ") Unknown exception", e);
                 }
 
-                getLogger().info(forumId + " - Retry in " + TimeUtils.toMinutesSeconds(retryPeriod));
+                logger.info(forumId + " - Retry in " + TimeUtils.toMinutesSeconds(retryPeriod));
                 doSleep(retryPeriod);
             }
         }
