@@ -36,8 +36,10 @@ public class TestDaemon extends Daemon{
 
             @Override
             protected int getEndIndex() throws Exception {
-                log.info("getEndIndex, stop=" + stop);
-                return stop;
+                int _stop = stop;
+                log.info("getEndIndex, stop=" + _stop);
+                stop += 50;
+                return _stop;
             }
 
             @Override

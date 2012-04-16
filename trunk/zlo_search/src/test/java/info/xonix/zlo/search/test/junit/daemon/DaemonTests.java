@@ -14,7 +14,7 @@ public class DaemonTests {
     @Test
     public void test1() {
         final int start = 0;
-        final int stop = 1000;
+        final int stop = 1020;
 
         TestDaemon testDaemon = new TestDaemon("test", start, stop);
 
