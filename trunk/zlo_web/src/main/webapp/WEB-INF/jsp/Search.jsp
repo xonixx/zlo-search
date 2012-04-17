@@ -135,6 +135,9 @@
                     </script>
                     <fmt:message key="label.per.page"/>
                     <jsp:getProperty name="backendBean" property="pageSizeSelector"/>
+
+                    <fmt:message key="label.sort"/>
+                    <jsp:getProperty name="backendBean" property="sortSelector"/>
                     <br/>
                     <input type="submit" name="submitBtn" value="<fmt:message key="button.search"/>"/>
                     <br/>

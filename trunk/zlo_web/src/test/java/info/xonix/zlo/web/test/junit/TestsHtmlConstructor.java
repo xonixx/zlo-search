@@ -1,6 +1,9 @@
 package info.xonix.zlo.web.test.junit;
 
-import info.xonix.zlo.web.HtmlConstructor;
+import info.xonix.zlo.search.domain.SortBy;
+import info.xonix.zlo.web.servlets.SearchServlet;
+import info.xonix.zlo.web.utils.html.HtmlConstructor;
+import info.xonix.zlo.web.utils.html.HtmlSelectBuilder;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -37,5 +40,24 @@ public class TestsHtmlConstructor {
                 "</select>",
                 HtmlConstructor.constructSelector("selId", null, new String[]{"addItem1", "addItem2"},
                         new String[]{"item1", "item2", "item3"}, -2, true));
+    }
+
+    @Test
+    public void testSortSelector() {
+        final HtmlSelectBuilder selector = new HtmlSelectBuilder()
+                .name(SearchServlet.QS_SORT)
+                .value(SortBy.RELEVANCE.getName())
+                .addOption(SortBy.DATE.getName(), "дате")
+                .addOption(SortBy.RELEVANCE.getName(), "релевантности");
+
+        System.out.println(selector.build());
+
+        final HtmlSelectBuilder selector1 = new HtmlSelectBuilder()
+                .name(SearchServlet.QS_SORT)
+                .value("123")
+                .addOption(SortBy.DATE.getName(), "дате")
+                .addOption(SortBy.RELEVANCE.getName(), "релевантности");
+
+        System.out.println(selector1.build());
     }
 }

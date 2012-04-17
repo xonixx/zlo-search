@@ -1,4 +1,4 @@
-package info.xonix.zlo.web;
+package info.xonix.zlo.web.utils.html;
 
 import org.apache.commons.lang.StringUtils;
 
