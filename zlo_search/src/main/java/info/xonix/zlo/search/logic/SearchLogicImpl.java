@@ -6,6 +6,7 @@ import info.xonix.zlo.search.LuceneVersion;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.domain.SearchRequest;
 import info.xonix.zlo.search.domain.SearchResult;
+import info.xonix.zlo.search.domain.SortBy;
 import info.xonix.zlo.search.index.IndexManager;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -110,12 +111,15 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     public SearchResult search(SearchRequest req, int limit) throws SearchException {
         final SearchResult searchResult = search(
                 req.getForumId(),
+
                 formQueryString(
                         req.getText(), req.isRoot(), req.isInTitle(), req.isInBody(),
                         req.getTopicCode(), req.getNick(), req.getHost(),
                         req.getFromDate(), req.getToDate(),
                         req.isInReg(), req.isInHasUrl(), req.isInHasImg()),
+
                 req.isSearchAll(),
+                req.getSortDirection(),
                 limit);
         searchResult.setLastSearch(req);
         return searchResult;
@@ -129,13 +133,13 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
                 : null;
     }
 
-    private SearchResult search(String forumId, String queryStr, boolean searchAll, int limit) throws SearchException {
+    private SearchResult search(String forumId, String queryStr, boolean searchAll, SortBy sortDirection, int limit) throws SearchException {
         Assert.notNull(forumId, "site can't be null!");
 
-        return searchDoubleIndex(forumId, queryStr, searchAll, limit);
+        return searchDoubleIndex(forumId, queryStr, searchAll, sortDirection, limit);
     }
 
-    private SearchResult searchDoubleIndex(String forumId, String queryStr, boolean searchAll, int limit) throws SearchException {
+    private SearchResult searchDoubleIndex(String forumId, String queryStr, boolean searchAll, SortBy sortDirection, int limit) throws SearchException {
         SearchResult result;
         try {
             QueryParser parser = getQueryParser();
@@ -147,7 +151,7 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
 
             IndexManager indexManager = IndexManager.get(forumId);
 
-            result = new SearchResult(forumId, query, indexManager.search(query, limit));
+            result = new SearchResult(forumId, query, indexManager.search(query, sortDirection, limit));
         } catch (ParseException e) {
             throw new SearchException(queryStr, e);
         } catch (IOException e) {

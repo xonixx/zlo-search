@@ -4,8 +4,12 @@ import info.xonix.utils.UrlUtil;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.config.forums.ForumDescriptor;
 import info.xonix.zlo.search.config.forums.GetForum;
+import info.xonix.zlo.search.domain.SortBy;
 import info.xonix.zlo.search.logic.ControlsDataLogic;
 import info.xonix.zlo.search.spring.AppSpringContext;
+import info.xonix.zlo.web.servlets.SearchServlet;
+import info.xonix.zlo.web.utils.html.HtmlConstructor;
+import info.xonix.zlo.web.utils.html.HtmlSelectBuilder;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;
@@ -31,6 +35,8 @@ public class BackendBean {
     private String toDate;
     private String site;
     private String pageSize;
+
+    private String sort;
 
     public static final String SN_TOPIC = "topic";
     public static final String SN_SITE = "site";
@@ -84,6 +90,16 @@ public class BackendBean {
 
     public String getPageSizeSelector() {
         return HtmlConstructor.constructSelector(SN_PAGE_SIZE, null, config.getNumsPerPage(), getPageSizeInt(), true);
+    }
+
+    public String getSortSelector() {
+        final HtmlSelectBuilder selector = new HtmlSelectBuilder()
+                .name(SearchServlet.QS_SORT)
+                .value(sort)
+                .addOption(SortBy.DATE.getName(), "дате")
+                .addOption(SortBy.RELEVANCE.getName(), "релевантности");
+
+        return selector.build();
     }
 
     public String getSite() {
@@ -169,5 +185,13 @@ public class BackendBean {
 
     public void setPageSize(String pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
     }
 }

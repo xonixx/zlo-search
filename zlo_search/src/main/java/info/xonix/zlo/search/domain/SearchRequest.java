@@ -39,11 +39,12 @@ public class SearchRequest {
     private Date toDate;
 
     private boolean searchAll;
+    private SortBy sortDirection;
 
     public SearchRequest(String forumId, String text, boolean isRoot, boolean inTitle, boolean inBody,
                          boolean inReg, boolean inHasUrl, boolean inHasImg,
                          String nick, String host, int topicCode, boolean isDateSet, Date fromDate, Date toDate,
-                         boolean searchAll) {
+                         boolean searchAll, SortBy sortDirection) {
         this.forumId = forumId;
 
         this.text = text;
@@ -62,6 +63,11 @@ public class SearchRequest {
         this.toDate = toDate;
 
         this.searchAll = searchAll;
+        this.sortDirection = sortDirection;
+    }
+
+    public SortBy getSortDirection() {
+        return sortDirection;
     }
 
     public String getForumId() {

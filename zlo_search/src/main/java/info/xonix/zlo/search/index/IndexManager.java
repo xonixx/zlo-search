@@ -3,6 +3,7 @@ package info.xonix.zlo.search.index;
 import info.xonix.utils.factory.StringFactory;
 import info.xonix.zlo.search.LuceneVersion;
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.domain.SortBy;
 import info.xonix.zlo.search.logic.SearchLogicImpl;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
@@ -64,19 +65,29 @@ public class IndexManager {
         return Collections.unmodifiableCollection(indexManagerFactory.all());
     }
 
-    public Hits search(Query query, int limit) throws IOException {
+    public Hits search(Query query, SortBy sortDirection, int limit) throws IOException {
         final IndexSearcher indexSearcher = getSearcher();
         final TopFieldDocs topFieldDocs;
 
         if (limit < 0) {
             throw new IllegalArgumentException("limit = " + limit + " < 0"); // TODO
         } else {
-            final Sort reversedIndexOrderSort = SearchLogicImpl.REVERSED_INDEX_ORDER_SORT;
-
-            topFieldDocs = indexSearcher.search(query, null, limit, reversedIndexOrderSort);
+            topFieldDocs = indexSearcher.search(query, null, limit, getSort(sortDirection));
 
             return new Hits(topFieldDocs, indexSearcher);
         }
+    }
+
+    private Sort getSort(SortBy sortDirection) {
+        final Sort sort;
+        if (sortDirection == SortBy.DATE) {
+            sort = SearchLogicImpl.REVERSED_INDEX_ORDER_SORT;
+        } else if (sortDirection == SortBy.RELEVANCE) {
+            sort = Sort.RELEVANCE;
+        } else {
+            throw new IllegalArgumentException("unknown sortDirection=" + sortDirection);
+        }
+        return sort;
     }
 
     public File getIndexDir() {

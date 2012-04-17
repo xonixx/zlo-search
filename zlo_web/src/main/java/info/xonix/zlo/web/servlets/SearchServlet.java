@@ -8,6 +8,7 @@ import info.xonix.zlo.search.config.DateFormats;
 import info.xonix.zlo.search.config.ErrorMessage;
 import info.xonix.zlo.search.domain.SearchRequest;
 import info.xonix.zlo.search.domain.SearchResult;
+import info.xonix.zlo.search.domain.SortBy;
 import info.xonix.zlo.search.logic.*;
 import info.xonix.zlo.search.logic.exceptions.ExceptionCategory;
 import info.xonix.zlo.search.logic.exceptions.ExceptionsLogger;
@@ -15,7 +16,6 @@ import info.xonix.zlo.search.model.SearchLog;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.utils.HtmlUtils;
 import info.xonix.zlo.search.utils.obscene.ObsceneAnalyzer;
-import info.xonix.zlo.web.RequestCache;
 import info.xonix.zlo.web.rss.RssFormer;
 import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 import info.xonix.zlo.web.utils.CookieUtils;
@@ -89,6 +89,8 @@ public class SearchServlet extends BaseServlet {
     public static final String SEARCH_TYPE_EXACT_PHRASE = "exct";
 
     public static final String QS_SUBMIT = "submitBtn";
+    
+    public static final String QS_SORT = "sort";
 
     public static final String REQ_HIGHLIGHT_WORDS = "hw";
 
@@ -127,6 +129,8 @@ public class SearchServlet extends BaseServlet {
 
         final String fromDateStr = request.getParameter(QS_FROM_DATE);
         final String toDateStr = request.getParameter(QS_TO_DATE);
+
+        final SortBy sortDirection = SortBy.byName(request.getParameter(QS_SORT));
 
         ErrorMessage errorMsg = null;
         request.setAttribute(DEBUG, config.isDebug());
@@ -207,7 +211,8 @@ public class SearchServlet extends BaseServlet {
                     nick, host, topicCode,
                     StringUtils.isNotEmpty(fromDateStr) || StringUtils.isNotEmpty(toDateStr),
                     fromDate, toDate,
-                    SEARCH_TYPE_ALL.equals(searchType));
+                    SEARCH_TYPE_ALL.equals(searchType),
+                    sortDirection);
 
             if (searchRequest.canBeProcessed()) {
 
