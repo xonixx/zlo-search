@@ -9,7 +9,9 @@ import java.util.Map;
  * Author: gubarkov
  * Date: 11.09.2007
  * Time: 14:47:26
+ * @deprecated Use {@link HtmlSelectBuilder}
  */
+@Deprecated
 public class HtmlConstructor {
     public static String constructSelector(String name, String id, String[][] additionalOptions,
                                            Map<Integer, String> data,
