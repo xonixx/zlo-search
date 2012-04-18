@@ -46,6 +46,10 @@ h3 {
     color: white;
 }
 
+#submitBtn {
+    width: 150px;
+}
+
 #debug {
     background-color: blanchedalmond;
 }
