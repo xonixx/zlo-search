@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.LogByteSizeMergePolicy;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
@@ -116,8 +117,19 @@ public class IndexManager {
     }
 
     private IndexWriter createWriter() throws IOException {
+        /*
+        only this mergepolicy preserves the order of docIds
+        see:
+        http://mail-archives.apache.org/mod_mbox/lucene-java-user/201204.mbox/%3CCADuAvzefiry%2Bch1H%2BLoVcbepfG59HCFbYYPHxcQ0a%2BZmV5jr1A%40mail.gmail.com%3E
+        http://mail-archives.apache.org/mod_mbox/lucene-java-user/201204.mbox/%3CCAL8PwkaTs8qQzmoCYPzRLHVTwbf%2Bb0Qt32g2vQYG%2B%2BMTAFoZ4Q%40mail.gmail.com%3E
+         */
+
+        final LogByteSizeMergePolicy mergePolicy = new LogByteSizeMergePolicy();
+        mergePolicy.setMergeFactor(3); // aggressively merge - improve search speed
+
         final IndexWriterConfig indexWriterConfig = new IndexWriterConfig(
-                LuceneVersion.VERSION, config.getMessageAnalyzer());
+                LuceneVersion.VERSION, config.getMessageAnalyzer())
+                .setMergePolicy(mergePolicy);
 
         return new IndexWriter(IndexUtils.dir(indexDir), indexWriterConfig);
     }

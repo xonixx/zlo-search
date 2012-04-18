@@ -33,6 +33,10 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     private static final int MAX_LIMIT = 500;
     public static final Sort REVERSED_INDEX_ORDER_SORT = new Sort(new SortField(null, SortField.DOC, true));
 
+//    test --VVV
+//    public static final Sort REVERSED_INDEX_ORDER_SORT = Sort.INDEXORDER;
+//    public static final Sort REVERSED_INDEX_ORDER_SORT = new Sort(new SortField(MessageFields.URL_NUM, SortField.STRING, true));
+
     @Autowired
     private Config config;
 
