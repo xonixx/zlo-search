@@ -156,7 +156,7 @@
                     </constructor-arg>
                 </bean>
 
-                <bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
+                <!--<bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
                     <constructor-arg value="4"/>
 
                     <constructor-arg value="games"/>
@@ -176,9 +176,9 @@
                             </constructor-arg>
                         </bean>
                     </constructor-arg>
-                </bean>
+                </bean>-->
 
-                <bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
+                <!--<bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
                     <constructor-arg value="2"/>
 
                     <constructor-arg value="sport"/>
@@ -198,9 +198,9 @@
                             </constructor-arg>
                         </bean>
                     </constructor-arg>
-                </bean>
+                </bean>-->
 
-                <bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
+                <!--<bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
                     <constructor-arg value="7"/>
 
                     <constructor-arg value="takeoff"/>
@@ -220,9 +220,9 @@
                             </constructor-arg>
                         </bean>
                     </constructor-arg>
-                </bean>
+                </bean>-->
 
-                <bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
+                <!--<bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
                     <constructor-arg value="8"/>
 
                     <constructor-arg value="np"/>
@@ -242,7 +242,7 @@
                             </constructor-arg>
                         </bean>
                     </constructor-arg>
-                </bean>
+                </bean>-->
 
                 <!--<bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
                     <constructor-arg value="11"/>
