@@ -8,6 +8,7 @@ import info.xonix.zlo.search.domain.SearchRequest;
 import info.xonix.zlo.search.domain.SearchResult;
 import info.xonix.zlo.search.domain.SortBy;
 import info.xonix.zlo.search.index.IndexManager;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.queryParser.ParseException;
@@ -140,10 +141,10 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     private SearchResult search(String forumId, String queryStr, boolean searchAll, SortBy sortDirection, int limit) throws SearchException {
         Assert.notNull(forumId, "site can't be null!");
 
-        return searchDoubleIndex(forumId, queryStr, searchAll, sortDirection, limit);
+        return searchIndex(forumId, queryStr, searchAll, sortDirection, limit);
     }
 
-    private SearchResult searchDoubleIndex(String forumId, String queryStr, boolean searchAll, SortBy sortDirection, int limit) throws SearchException {
+    private SearchResult searchIndex(String forumId, String queryStr, boolean searchAll, SortBy sortDirection, int limit) throws SearchException {
         SearchResult result;
         try {
             QueryParser parser = getQueryParser();
@@ -197,12 +198,14 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
 
         final IndexManager indexManager = IndexManager.get(forumId);
 
+        final int[] realLimitIds;
         try {
-            return search(indexManager.getSearcher(), query, realLimit);
+            realLimitIds = search(indexManager.getSearcher(), query, realLimit);
         } catch (IOException e) {
             throw new SearchException("search: I/O exception", e);
         }
 
+        return skip(realLimitIds, skip);
 
 /*        try {
     final int[] ids = search(searcher, query, realLimit);
@@ -232,11 +235,11 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
 
 /*    private int[] last(int[] inp, int takeLast) {
         return ArrayUtils.subarray(inp, inp.length - takeLast, inp.length);
-    }
+    }*/
 
     private int[] skip(int[] inp, int skip) {
         return ArrayUtils.subarray(inp, skip, inp.length);
-    }*/
+    }
 
     private int fixLimit(int limit) {
         // TODO?
