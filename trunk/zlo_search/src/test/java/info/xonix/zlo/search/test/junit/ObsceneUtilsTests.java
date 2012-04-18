@@ -33,6 +33,8 @@ public class ObsceneUtilsTests {
         assertTrue(containsObsceneWord("хуя"));
         assertTrue(containsObsceneWord("хуёвый"));
         assertTrue(containsObsceneWord("СОСИ ХУЁК"));
+        assertTrue(containsObsceneWord("ХУЁК"));
+        assertTrue(containsObsceneWord("СОСИ"));
 
         assertTrue(containsObsceneWord("пЁзднуться"));
 
@@ -56,6 +58,10 @@ public class ObsceneUtilsTests {
 
         assertTrue(containsObsceneWord("хYй"));
         assertTrue(containsObsceneWord("XУй"));
+        assertTrue(containsObsceneWord("хЕр"));
+
+        assertTrue(containsObsceneWord("мудило"));
+        assertTrue(containsObsceneWord("мудло"));
 
         assertTrue(containsObsceneWord("гавна поешь"));
         assertTrue(containsObsceneWord("имярек мудак"));
