@@ -20,7 +20,9 @@ public enum ErrorMessage {
 
     DbError("error.db.connection"),
 
-    UnknownError("error.unknown"),;
+    UnknownError("error.unknown"),
+
+    Banned("error.banned");
 
     private Config config = AppSpringContext.get(Config.class);
 

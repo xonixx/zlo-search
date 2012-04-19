@@ -57,6 +57,7 @@ public class SearchServlet extends BaseServlet {
     private final ExceptionsLogger exceptionsLogger = AppSpringContext.get(ExceptionsLogger.class);
     private final SearchLogic searchLogic = AppSpringContext.get(SearchLogicImpl.class);
     private final ObsceneAnalyzer obsceneAnalyzer = AppSpringContext.get(ObsceneAnalyzer.class);
+    private final UserLogic userLogic = AppSpringContext.get(UserLogic.class);
 
     public static final String ON = "on";
     // query string params
@@ -215,6 +216,14 @@ public class SearchServlet extends BaseServlet {
                     sortDirection);
 
             if (searchRequest.canBeProcessed()) {
+                final String ip = RequestUtils.getClientIp(request);
+
+                if (userLogic.getBannedStatus(ip).isBanned()) {
+                    log.warn("Search by banned IP: " + ip + ", query: "+searchRequest.describeToString());
+
+                    errorMsg = ErrorMessage.Banned;
+                    throw new Exception();
+                }
 
                 request.setAttribute(REQ_HIGHLIGHT_WORDS, FoundTextHighlighter.formHighlightedWords(text));
 
