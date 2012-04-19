@@ -12,6 +12,8 @@
 
     <bean id="indexerLogic" class="info.xonix.zlo.search.logic.IndexerLogicImpl"/>
 
+    <bean id="userLogic" class="info.xonix.zlo.search.logic.UserLogicImpl"/>
+
     <!--site logic-->
     <bean id="pageParser" class="info.xonix.zlo.search.logic.site.PageParser"/>
 
