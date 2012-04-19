@@ -92,6 +92,9 @@ public class ObsceneUtilsTests {
         assertTrue(containsObsceneWord("фiзикс"));
         assertTrue(containsObsceneWord("fiziкs"));
         assertTrue(containsObsceneWord("fизикса"));
+        assertTrue(containsObsceneWord("phУзикса"));
+        assertTrue(containsObsceneWord("phYзикса"));
+        assertTrue(containsObsceneWord("pxYзикса"));
         assertTrue(containsObsceneWord("химикс"));
         assertTrue(containsObsceneWord("химиkc"));
         assertTrue(containsObsceneWord("хuмukc"));
