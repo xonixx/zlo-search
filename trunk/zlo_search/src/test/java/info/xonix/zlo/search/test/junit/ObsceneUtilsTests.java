@@ -90,6 +90,7 @@ public class ObsceneUtilsTests {
         assertTrue(containsObsceneWord("phisyks2007"));
         assertTrue(containsObsceneWord("physics2007"));
         assertTrue(containsObsceneWord("фiзикс"));
+        assertTrue(containsObsceneWord("физикs"));
         assertTrue(containsObsceneWord("fiziкs"));
         assertTrue(containsObsceneWord("fизикса"));
         assertTrue(containsObsceneWord("phУзикса"));
