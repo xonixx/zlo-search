@@ -5,7 +5,9 @@ import info.xonix.zlo.search.logic.MessageFields;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.ru.RussianAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.util.Version;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -32,47 +34,62 @@ public class RussianAnalyzerTests {
 
     @Test
     public void test1() throws IOException {
-        checkCorrectAnalyzing("привет мир, !!! ййй qqq 123 123qw 123привет",
+        checkCorrectAnalyzing(analyzer, "привет мир, !!! ййй qqq 123 123qw 123привет",
                 new String[]{"привет", "мир", "ййй", "qqq", "123", "123qw", "123привет"});
     }
 
     @Test
     public void test2() throws IOException {
-        checkCorrectAnalyzing("бежать 777777 хотел Кровать? и как всЕгда ,,,во cisco",
+        checkCorrectAnalyzing(analyzer, "бежать 777777 хотел Кровать? и как всЕгда ,,,во cisco",
                 new String[]{"бежа", "777777", "хотел", "крова", "всегд", "cisco"});
     }
 
     @Test
     public void test3() throws IOException {
-        checkCorrectAnalyzing("в чем смысл жизни? Жизнь это 01234567890 Ёж ёлка",
+        checkCorrectAnalyzing(analyzer, "в чем смысл жизни? Жизнь это 01234567890 Ёж ёлка",
                 new String[]{"смысл", "жизн", "жизн", "01234567890", "еж", "елк"});
     }
 
     @Test
     public void testElka() throws IOException {
-        checkCorrectAnalyzing("елка ёлка Ёлки ЁлКоЙ",
+        checkCorrectAnalyzing(analyzer, "елка ёлка Ёлки ЁлКоЙ",
                 new String[]{"елк", "елк", "елк", "елк"});
     }
 
-    private void checkCorrectAnalyzing(String str, String[] expectedResult) throws IOException {
+    @Test
+    public void testDots() throws IOException {
+        final String str = "aaa.bbb.com:8888 " +
+                "a,b;c/d'e$f&g*h+i-j%k/l_m#n@o!p?q>r\"s~t(u`v|z}y\\z";
+
+        System.out.println("New analyzer:");
+        System.out.println(getTokens(new RussianAnalyzer(Version.LUCENE_36), str));
+
+        System.out.println("Old analyzer:");
+        System.out.println(getTokens(new RussianAnalyzer(Version.LUCENE_30), str));
+    }
+
+    private void checkCorrectAnalyzing(final Analyzer theAnalyzer, String str, String[] expectedResult) throws IOException {
         System.out.println("-----");
-        final TokenStream tokenStream = analyzer.tokenStream(MessageFields.BODY, new StringReader(str));
+
+        List<String> tokens = getTokens(theAnalyzer, str);
+
+        Assert.assertArrayEquals(expectedResult, tokens.toArray());
+    }
+
+    private List<String> getTokens(Analyzer theAnalyzer, String str) throws IOException {
+        final TokenStream tokenStream = theAnalyzer.tokenStream(MessageFields.BODY, new StringReader(str));
 
         tokenStream.reset();
 
         final CharTermAttribute termAttribute = tokenStream.getAttribute(CharTermAttribute.class);
-//        final PositionIncrementAttribute positionIncrementAttribute = (PositionIncrementAttribute) tokenStream.getAttribute(PositionIncrementAttribute.class);
 
         List<String> tokens = new LinkedList<String>();
 
         while (tokenStream.incrementToken()) {
             final String term = new String(termAttribute.buffer(), 0, termAttribute.length());
             tokens.add(term);
-            System.out.print(">> ");
-//            System.out.println(positionIncrementAttribute.getPositionIncrement());
-            System.out.println(term);
+//            System.out.println(">>" + term);
         }
-
-        Assert.assertArrayEquals(expectedResult, tokens.toArray());
+        return tokens;
     }
 }
