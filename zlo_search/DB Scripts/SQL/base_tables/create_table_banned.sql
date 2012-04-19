@@ -7,3 +7,5 @@ create table banned (
 
   UNIQUE KEY (ip)
 )
+ENGINE=INNODB
+DEFAULT CHARSET=cp1251;
