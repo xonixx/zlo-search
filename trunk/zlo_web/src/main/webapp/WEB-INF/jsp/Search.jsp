@@ -142,17 +142,20 @@
                     <input type="submit" id="submitBtn" name="submitBtn" value="<fmt:message key="button.search"/>"/>
                     <br/>
                     <c:if test="${not isError and not empty requestScope['lastMsgs']}">
+                        <c:set var="lastSavedN" value="${requestScope['lastMsgs'][0]}"/>
+                        <c:set var="lastIndexedN" value="${requestScope['lastMsgs'][1]}"/>
                         <table cellspacing="5" class="small">
                             <tr>
                                 <td><fmt:message key="label.last.saved.msg"/></td>
-                                <td>${requestScope['lastMsgs'][0]}</td>
+                                <td>${lastSavedN}</td>
                                 <td>(<fmt:formatDate value="${requestScope['lastMsgs_dates'][0]}"
                                                      pattern="dd/MM/yyyy HH:mm"/>)
                                 </td>
                             </tr>
                             <tr>
                                 <td><fmt:message key="label.last.indexed.msg"/></td>
-                                <td>${requestScope['lastMsgs'][1]}</td>
+                                <td <c:if test="${lastSavedN - lastIndexedN > 1000}">style="color: red"</c:if>>
+                                ${lastIndexedN}</td>
                                 <td>(<fmt:formatDate value="${requestScope['lastMsgs_dates'][1]}"
                                                      pattern="dd/MM/yyyy HH:mm"/>)
                                 </td>
