@@ -41,9 +41,6 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     @Autowired
     private Config config;
 
-    private QueryParser queryParserAnd;
-    private QueryParser queryParserOr;
-
     public static String formQueryString(String text, boolean isRoot, boolean inTitle, boolean inBody, int topicCode,
                                          String nick, String host, Date fromDate, Date toDate,
                                          boolean inReg, boolean inHasUrl, boolean inHasImg) {
@@ -113,12 +110,6 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         Check.isSet(config, "config");
-
-        init();
-    }
-
-    private void init() {
-        createQueryParsers();
     }
 
     @Override
@@ -156,7 +147,9 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     private SearchResult searchIndex(String forumId, String queryStr, boolean searchAll, SortBy sortDirection, int limit) throws SearchException {
         SearchResult result;
         try {
-            QueryParser parser = searchAll ? queryParserAnd : queryParserOr;
+            QueryParser parser = searchAll
+                    ? newQueryParser(QueryParser.Operator.AND)
+                    : newQueryParser(QueryParser.Operator.OR);
 
             Query query = parser.parse(queryStr);
 
@@ -174,17 +167,10 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
         return result;
     }
 
-    private void createQueryParsers() {
-        queryParserAnd = newQueryParser();
-        queryParserAnd.setDefaultOperator(QueryParser.Operator.AND);
-
-        queryParserOr = newQueryParser();
-        queryParserOr.setDefaultOperator(QueryParser.Operator.OR);
-    }
-
-    private QueryParser newQueryParser() {
+    private QueryParser newQueryParser(QueryParser.Operator defaultOperator) {
         QueryParser queryParser = new QueryParser(LuceneVersion.VERSION, MessageFields.BODY, config.getMessageAnalyzer());
         queryParser.setAutoGeneratePhraseQueries(true); // rt.mipt.ru -> "rt mipt ru"
+        queryParser.setDefaultOperator(defaultOperator);
         return queryParser;
     }
 
@@ -203,7 +189,7 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
 
     @Override
     public int[] search(String forumId, String searchString, int skip, int limit) throws SearchException {
-        final QueryParser queryParser = queryParserAnd;
+        final QueryParser queryParser = newQueryParser(QueryParser.Operator.AND);
 
         final Query query;
         try {
