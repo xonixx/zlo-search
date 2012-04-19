@@ -5,7 +5,7 @@ import info.xonix.zlo.search.logic.MessageFields;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.tokenattributes.TermAttribute;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -60,16 +60,17 @@ public class RussianAnalyzerTests {
 
         tokenStream.reset();
 
-        final TermAttribute termAttribute = tokenStream.getAttribute(TermAttribute.class);
+        final CharTermAttribute termAttribute = tokenStream.getAttribute(CharTermAttribute.class);
 //        final PositionIncrementAttribute positionIncrementAttribute = (PositionIncrementAttribute) tokenStream.getAttribute(PositionIncrementAttribute.class);
 
         List<String> tokens = new LinkedList<String>();
 
         while (tokenStream.incrementToken()) {
-            tokens.add(termAttribute.term());
+            final String term = new String(termAttribute.buffer(), 0, termAttribute.length());
+            tokens.add(term);
             System.out.print(">> ");
 //            System.out.println(positionIncrementAttribute.getPositionIncrement());
-            System.out.println(termAttribute.term());
+            System.out.println(term);
         }
 
         Assert.assertArrayEquals(expectedResult, tokens.toArray());
