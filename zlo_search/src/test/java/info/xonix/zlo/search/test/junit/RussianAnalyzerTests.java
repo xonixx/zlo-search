@@ -61,6 +61,17 @@ public class RussianAnalyzerTests {
         final String str = "aaa.bbb.com:8888 " +
                 "a,b;c/d'e$f&g*h+i-j%k/l_m#n@o!p?q>r\"s~t(u`v|z}y\\z";
 
+        checkCorrectAnalyzing(analyzer, str,
+                new String[]{"aaa", "bbb", "com", "8888", "a", "b", "c", "d", "e",
+                        "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q",
+                        "r", "s", "t", "u", "v", "z", "y", "z"});
+    }
+
+    @Test
+    public void testDotsShow() throws IOException {
+        final String str = "aaa.bbb.com:8888 " +
+                "a,b;c/d'e$f&g*h+i-j%k/l_m#n@o!p?q>r\"s~t(u`v|z}y\\z";
+
         System.out.println("New analyzer:");
         System.out.println(getTokens(new RussianAnalyzer(Version.LUCENE_36), str));
 
