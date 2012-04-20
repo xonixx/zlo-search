@@ -43,7 +43,8 @@ public class SearchRequest {
 
     public SearchRequest(String forumId, String text, boolean isRoot, boolean inTitle, boolean inBody,
                          boolean inReg, boolean inHasUrl, boolean inHasImg,
-                         String nick, String host, int topicCode, boolean isDateSet, Date fromDate, Date toDate,
+                         String nick, String host, int topicCode,
+                         boolean isDateSet, Date fromDate, Date toDate,
                          boolean searchAll, SortBy sortDirection) {
         this.forumId = forumId;
 
@@ -252,7 +253,7 @@ public class SearchRequest {
 
         options.clear();
 
-        if (fromDate != null || toDate != null) {
+        if (isDateSet) {
             options.add(fromDate != null ? DateFormats.ddMMyyyy.format(fromDate) : "-inf");
             options.add(toDate != null ? DateFormats.ddMMyyyy.format(toDate) : "inf");
             sb.append(" в промежутке дат:(").append(StringUtils.join(options, ", ")).append(")");
