@@ -6,8 +6,9 @@ import info.xonix.zlo.search.logic.ControlsDataLogic;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.commons.lang.StringUtils;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Author: Vovan
@@ -239,7 +240,7 @@ public class SearchRequest {
                     controlsDataLogic.getTopics(forumId).get(topicCode)).append(")");
         }
 
-        ArrayList<String> options = new ArrayList<String>(5);
+        List<String> options = new LinkedList<String>();
 
         if (root) options.add("в корневых сообщ.");
         if (inTitle) options.add("в заголовках");
