@@ -7,6 +7,9 @@
       %5p %c{1}:%L - %m%n"/>
         </layout>
     </appender>
+    <logger name="org.eclipse.jetty.server.CookieCutter">
+        <level value="ERROR"/>
+    </logger>
     <root>
         <!--<priority value="debug"/>-->
         <priority value="info"/>

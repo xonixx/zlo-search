@@ -19,7 +19,10 @@ import java.io.IOException;
 public class LaunchBoardSearch {
     static String[] modules = {
             "zlo_search", "zlo_web",
-            "xmlfp", "xonix-utils"};
+            "xmlfp", "xonix-utils",
+
+            "slf4j" // included from pom!
+    };
 
     public static void main(String[] args) throws Exception {
         String rootFolder = ".";
@@ -66,6 +69,7 @@ public class LaunchBoardSearch {
                 }
             }
 
+            System.out.println("Loading: " + jar.getName());
             rootClassLoader.addClassPath(jar.getAbsolutePath());
         }
     }
