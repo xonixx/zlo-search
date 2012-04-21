@@ -90,7 +90,7 @@ public class SearchServlet extends BaseServlet {
     public static final String SEARCH_TYPE_EXACT_PHRASE = "exct";
 
     public static final String QS_SUBMIT = "submitBtn";
-    
+
     public static final String QS_SORT = "sort";
 
     public static final String REQ_HIGHLIGHT_WORDS = "hw";
@@ -219,7 +219,7 @@ public class SearchServlet extends BaseServlet {
                 final String ip = RequestUtils.getClientIp(request);
 
                 if (userLogic.getBannedStatus(ip).isBanned()) {
-                    log.warn("Search by banned IP: " + ip + ", query: "+searchRequest.describeToString());
+                    log.warn("Search by banned IP: " + ip + ", query: " + searchRequest.describeToString());
 
                     errorMsg = ErrorMessage.Banned;
                     throw new Exception();
@@ -410,36 +410,40 @@ public class SearchServlet extends BaseServlet {
     }
 
     private void logRequest(ForwardingRequest request, String query, boolean rssAsked) {
-        final String forumId = getSite(request).getForumId();
-        final String searchText = request.getParameter(QS_TEXT);
-
         final String clientIp = RequestUtils.getClientIp(request);
 
-        SearchLog searchLog = new SearchLog();
+        if (!RequestUtils.isF5Request(request)) {
+            final String forumId = getSite(request).getForumId();
+            final String searchText = request.getParameter(QS_TEXT);
 
-        searchLog.setForumId(forumId);
-        searchLog.setClientIp(clientIp);
-        searchLog.setUserAgent(request.getHeader(HttpHeader.USER_AGENT));
-        searchLog.setReferer(request.getHeader(HttpHeader.REFERER));
+            SearchLog searchLog = new SearchLog();
 
-        searchLog.setSearchText(searchText);
-        searchLog.setSearchNick(request.getParameter(QS_NICK));
-        searchLog.setSearchHost(request.getParameter(QS_HOST));
+            searchLog.setForumId(forumId);
+            searchLog.setClientIp(clientIp);
+            searchLog.setUserAgent(request.getHeader(HttpHeader.USER_AGENT));
+            searchLog.setReferer(request.getHeader(HttpHeader.REFERER));
 
-        searchLog.setSearchQuery(query);
-        searchLog.setSearchQueryString(request.getQueryString());
+            searchLog.setSearchText(searchText);
+            searchLog.setSearchNick(request.getParameter(QS_NICK));
+            searchLog.setSearchHost(request.getParameter(QS_HOST));
 
-        searchLog.setRssAsked(rssAsked);
-        searchLog.setAdminRequest(RequestUtils.isPowerUser(request));
+            searchLog.setSearchQuery(query);
+            searchLog.setSearchQueryString(request.getQueryString());
 
-        auditLogic.logSearchEvent(searchLog);
+            searchLog.setRssAsked(rssAsked);
+            searchLog.setAdminRequest(RequestUtils.isPowerUser(request));
 
-        if (StringUtils.isNotEmpty(searchText) && !rssAsked) {
-            if (!obsceneAnalyzer.containsObsceneWord(searchText)) {
-                appLogic.saveSearchTextForAutocomplete(forumId, searchText);
-            } else {
-                log.info("! Search by obscene words: {" + searchText + "}, ip=" + clientIp);
+            auditLogic.logSearchEvent(searchLog);
+
+            if (StringUtils.isNotEmpty(searchText) && !rssAsked) {
+                if (!obsceneAnalyzer.containsObsceneWord(searchText)) {
+                    appLogic.saveSearchTextForAutocomplete(forumId, searchText);
+                } else {
+                    log.info("! Search by obscene words: {" + searchText + "}, ip=" + clientIp);
+                }
             }
+        } else {
+            log.warn("F5 search: ip=" + clientIp + ", query=" + query);
         }
     }
 
