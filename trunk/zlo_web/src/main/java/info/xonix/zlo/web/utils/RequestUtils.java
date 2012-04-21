@@ -88,7 +88,7 @@ public final class RequestUtils {
     // TODO: VVV--- improve or del
     // TODO: store users site in cookie
 
-    /**
+    /* *
      * @param referer referer header
      * @param site    site
      * @return site root url, based on Host header
@@ -110,7 +110,7 @@ public final class RequestUtils {
         return site.getSiteUrl();
     }*/
 
-    /**
+    /* *
      * @param request http request
      * @param site    site
      * @return site root url, based on Host header
@@ -118,4 +118,11 @@ public final class RequestUtils {
     public static String getSiteRoot(HttpServletRequest request, String forumId) {
 //        return getSiteRoot(request.getHeader(HttpHeader.REFERER), site);
     }*/
+
+    public static boolean isF5Request(HttpServletRequest request) {
+        final String referer = request.getHeader(HttpHeader.REFERER);
+
+        // query URL = referer
+        return referer != null && referer.endsWith(request.getQueryString());
+    }
 }
