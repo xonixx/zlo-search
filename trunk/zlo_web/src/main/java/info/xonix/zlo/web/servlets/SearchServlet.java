@@ -431,11 +431,13 @@ public class SearchServlet extends BaseServlet {
             searchLog.setSearchQueryString(request.getQueryString());
 
             searchLog.setRssAsked(rssAsked);
-            searchLog.setAdminRequest(RequestUtils.isPowerUser(request));
+
+            final boolean isAdminReq = RequestUtils.isPowerUser(request);
+            searchLog.setAdminRequest(isAdminReq);
 
             auditLogic.logSearchEvent(searchLog);
 
-            if (StringUtils.isNotEmpty(searchText) && !rssAsked) {
+            if (StringUtils.isNotEmpty(searchText) && !rssAsked && !isAdminReq) {
                 if (!obsceneAnalyzer.containsObsceneWord(searchText)) {
                     appLogic.saveSearchTextForAutocomplete(forumId, searchText);
                 } else {
