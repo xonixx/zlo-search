@@ -6,6 +6,7 @@ import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * Author: Vovan
@@ -30,6 +31,8 @@ public final class RequestUtils {
             {"Konqueror", "Konqueror"},
             {"Mozilla", "Mozilla"},
     };
+
+    public static final String SESS_PREVIOUS_QUERY_STRING = "referer";
 
     /**
      * Weather the ip of client sending request is local ip
@@ -120,9 +123,13 @@ public final class RequestUtils {
     }*/
 
     public static boolean isF5Request(HttpServletRequest request) {
-        final String referer = request.getHeader(HttpHeader.REFERER);
+        final HttpSession session = request.getSession();
 
-        // query URL = referer
-        return referer != null && referer.endsWith(request.getQueryString());
+        final String previousQueryString = (String) session.getAttribute(SESS_PREVIOUS_QUERY_STRING);
+        final String currentQueryString = request.getQueryString();
+
+        session.setAttribute(SESS_PREVIOUS_QUERY_STRING, currentQueryString);
+
+        return StringUtils.equals(previousQueryString, currentQueryString);
     }
 }
