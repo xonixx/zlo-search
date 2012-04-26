@@ -382,18 +382,21 @@ public class SearchServlet extends BaseServlet {
 
     private void setPowerUserInCookies(HttpServletRequest request, HttpServletResponse response) {
         final String powerUserKey = config.getPowerUserKey();
-        final String powerUserValue = request.getParameter(powerUserKey);
 
-        final String clientIp = RequestUtils.getClientIp(request);
+        if (StringUtils.isNotEmpty(powerUserKey)) {
+            final String powerUserValue = request.getParameter(powerUserKey);
 
-        if ("0".equals(powerUserValue)) {
-            log.info("Forgetting power user, ip=" + clientIp);
+            final String clientIp = RequestUtils.getClientIp(request);
 
-            CookieUtils.forgetCookie(response, powerUserKey);
-        } else if (powerUserValue != null) {
-            log.info("Power user enters, ip=" + clientIp);
+            if ("0".equals(powerUserValue)) {
+                log.info("Forgetting power user, ip=" + clientIp);
 
-            CookieUtils.rememberInCookie(response, powerUserKey, "1");
+                CookieUtils.forgetCookie(response, powerUserKey);
+            } else if (powerUserValue != null) {
+                log.info("Power user enters, ip=" + clientIp);
+
+                CookieUtils.rememberInCookie(response, powerUserKey, "1");
+            }
         }
     }
 

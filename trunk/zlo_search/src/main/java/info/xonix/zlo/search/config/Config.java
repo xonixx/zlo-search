@@ -12,6 +12,10 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.KeywordAnalyzer;
 import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
 
+import javax.annotation.Nullable;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -53,7 +57,6 @@ public class Config {
 
     private String websiteDomain;
 
-    private Analyzer analyzer;
     private Analyzer messageAnalyzer;
 
     private boolean useProxy;
@@ -94,6 +97,7 @@ public class Config {
     }
 
     private void initAnalyzers() {
+        Analyzer analyzer;
         try {
             final Class<?> clazz = Class.forName(getProp("analyzer"));
 
@@ -138,9 +142,9 @@ public class Config {
         proxyHost = useProxy ? getProp("proxy.host") : null;
         proxyPort = useProxy ? Integer.parseInt(getProp("proxy.port")) : -1;
 
-        powerUserKey = getProp("powerUserKey");
-
         startDaemons = getBoolProp("daemons.start");
+
+        initPowerUserPwd();
     }
 
     private boolean getBoolProp(String key) {
@@ -181,9 +185,34 @@ public class Config {
         return pr;
     }
 
-    public Properties getAppProperties() {
-        return props;
+    /**
+     * Should be defined in context.xml as follows:
+     * <p/>
+     * &lt;Parameter name="powerUserKey" value="powerUserKey"//>
+     */
+    private void initPowerUserPwd() {
+        final Context context;
+        try {
+            context = loadEnvJndiCtx();
+            powerUserKey = (String) context.lookup("powerUserKey");
+
+            log.info("Loaded powerUserKey: " +
+                    (powerUserKey != null && powerUserKey.length() > 0
+                            ? powerUserKey.charAt(0) + "..."
+                            : "empty"));
+        } catch (NamingException e) {
+            log.error("Can't get powerUserKey from JNDI", e);
+        }
     }
+
+    private Context loadEnvJndiCtx() throws NamingException {
+        final Context initialContext = new InitialContext();
+        return (Context) initialContext.lookup("java:comp/env");
+    }
+
+/*    public Properties getAppProperties() {
+        return props;
+    }*/
 
     private boolean loadPropertiesFromEnv(Properties pr) {
         String envPath = System.getenv(CONFIG_PATH_ENV_NAME);
@@ -282,6 +311,10 @@ public class Config {
         return periodRecreateIndexer;
     }
 
+    /**
+     * @return either String or null (power user not allowed)
+     */
+    @Nullable
     public String getPowerUserKey() {
         return powerUserKey;
     }
@@ -293,6 +326,7 @@ public class Config {
     public String getIndexDirDouble(String forumId) {
         return getProp("indexer.dir.double") + "/index_" + forumId;
     }
+
     public String getIndexDir(String forumId) {
         return getIndexDirDouble(forumId); // TODO
     }
