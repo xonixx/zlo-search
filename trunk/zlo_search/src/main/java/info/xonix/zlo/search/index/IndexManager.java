@@ -108,7 +108,7 @@ public class IndexManager {
         return indexReader;
     }
 
-    public IndexWriter getWriter() throws IOException {
+    public synchronized IndexWriter getWriter() throws IOException {
         if (indexWriter == null) {
             indexWriter = createWriter();
         }
