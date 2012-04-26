@@ -4,6 +4,7 @@ import info.xonix.zlo.search.HttpHeader;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpSession;
  * Time: 5:11:18
  */
 public final class RequestUtils {
+    private final static Logger log = Logger.getLogger(RequestUtils.class);
+
     private static final Config config = AppSpringContext.get(Config.class);
 
     public static String[][] BROWSERS = {
@@ -50,16 +53,16 @@ public final class RequestUtils {
         return false;
     }
 
-    /**
+    /* *
      * use {@link #isPowerUser} instead
      *
      * @param request request
      * @return true if local
      */
-    @Deprecated
+/*    @Deprecated
     public static boolean isLocalIp(HttpServletRequest request) {
         return isLocalIp(request, config.getProp("localIps").split("\\|"));
-    }
+    }*/
 
     /**
      * checking power user rights based on secret key presence in cookie
@@ -68,7 +71,13 @@ public final class RequestUtils {
      * @return true if secret key present
      */
     public static boolean isPowerUser(HttpServletRequest request) {
-        return CookieUtils.isCookiePresent(request, config.getPowerUserKey());
+        final String powerUserKey = config.getPowerUserKey();
+
+        if (!StringUtils.isEmpty(powerUserKey)) {
+            return CookieUtils.isCookiePresent(request, powerUserKey);
+        } else {
+            return false;
+        }
     }
 
     public static String getClientIp(HttpServletRequest request) {
