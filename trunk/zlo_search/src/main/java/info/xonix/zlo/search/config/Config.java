@@ -188,7 +188,7 @@ public class Config {
     /**
      * Should be defined in context.xml as follows:
      * <p/>
-     * &lt;Parameter name="powerUserKey" value="powerUserKey"//>
+     * &lt;Environment name="powerUserKey" value="powerUserKey" type="java.lang.String"//>
      */
     private void initPowerUserPwd() {
         final Context context;
