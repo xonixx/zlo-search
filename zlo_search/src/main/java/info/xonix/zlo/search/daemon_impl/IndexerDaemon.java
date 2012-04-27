@@ -1,7 +1,8 @@
-package info.xonix.zlo.search.daemon;
+package info.xonix.zlo.search.daemon_impl;
 
 import info.xonix.zlo.search.config.forums.ForumParams;
 import info.xonix.zlo.search.config.forums.GetForum;
+import info.xonix.zlo.search.daemon.Daemon;
 import info.xonix.zlo.search.index.IndexManager;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.logic.IndexerException;
@@ -78,7 +79,7 @@ public class IndexerDaemon extends Daemon {
         setRetryPeriod(params.getIndexerReconnectPeriod());
     }
 
-    protected void start() {
+    public void start() {
         log.info("Starting indexing to " + getForumId() + " index (double index)...");
 
         // this is for clearing in case of not graceful exit

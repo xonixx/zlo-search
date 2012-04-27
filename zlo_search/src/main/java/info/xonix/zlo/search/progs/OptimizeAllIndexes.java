@@ -3,7 +3,7 @@ package info.xonix.zlo.search.progs;
 import info.xonix.zlo.search.ZloObservable;
 import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.daemon.Daemon;
-import info.xonix.zlo.search.daemon.DaemonLauncher;
+import info.xonix.zlo.search.daemon_impl.DaemonLauncher;
 import info.xonix.zlo.search.logic.ForumLogic;
 import info.xonix.zlo.search.logic.IndexerLogic;
 import info.xonix.zlo.search.spring.AppSpringContext;

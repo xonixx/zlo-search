@@ -1,5 +1,6 @@
-package info.xonix.zlo.search.daemon;
+package info.xonix.zlo.search.daemon_impl;
 
+import info.xonix.zlo.search.daemon.Daemon;
 import info.xonix.zlo.search.dao.DbDict;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Message;
