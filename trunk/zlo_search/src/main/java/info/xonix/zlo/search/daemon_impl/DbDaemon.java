@@ -1,7 +1,8 @@
-package info.xonix.zlo.search.daemon;
+package info.xonix.zlo.search.daemon_impl;
 
 import info.xonix.zlo.search.config.forums.ForumParams;
 import info.xonix.zlo.search.config.forums.GetForum;
+import info.xonix.zlo.search.daemon.Daemon;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.logic.ForumLogic;
 import info.xonix.zlo.search.logic.exceptions.ExceptionCategory;

@@ -255,23 +255,24 @@ public abstract class Daemon {
     public void registerExitHandlers() {
         registerForCleanUp(this);
 
-        // TODO: VVV-- this is incorrect: we should not call overridable method from constructor
-        getLogger().info(getForumId() + " - Registering exit handlers...");
+        // we can't use getLogger() - overridable method from constructor!
+        log.info(describe() + " - Registering exit handlers...");
         setExiting(false);
 
         final SignalHandler exitHandler = new SignalHandler() {
             public void handle(Signal signal) {
                 // getLogger().info(...) gaves NPE at rt
-                log.info(getForumId() + " - Exit handler for " + signal.getName() + "...");
+                log.info(describe() + " - Exit handler for " + signal.getName() + "...");
                 setExitingAll();
             }
         };
 
+        // TODO: don't use sun.misc API!
         Signal.handle(new Signal("INT"), exitHandler);
         Signal.handle(new Signal("TERM"), exitHandler);
     }
 
-    protected void start() {
+    public void start() {
         getLogger().info("Starting " + this.getClass() + " daemon for site: " + getForumId());
         while (true) {
             Process t = getProcess();

@@ -1,7 +1,7 @@
 package info.xonix.zlo.web.servlets;
 
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.daemon.DaemonLauncher;
+import info.xonix.zlo.search.daemon_impl.DaemonLauncher;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 
