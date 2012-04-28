@@ -19,11 +19,11 @@ public class DaemonTests {
 
         TestDaemon testDaemon1 = new TestDaemon(
                 100, 5000, 1000,
-                "test-1", 0, 1020);
+                "test-1", 0, 1020, 3000);
 
         TestDaemon testDaemon2 = new TestDaemon(
                 100, 5020, 1000,
-                "test-2", 1070, 2000);
+                "test-2", 1070, 2000, 6666);
 
         daemonManager.startDaemon(testDaemon1);
         daemonManager.startDaemon(testDaemon2);

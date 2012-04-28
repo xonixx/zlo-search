@@ -20,6 +20,7 @@ public class DaemonManager {
     private List<Daemon> daemons = new LinkedList<Daemon>();
 
     public static long DEFAULT_CHECK_PERIOD = 1000;// 1 sec
+    public static long WAIT_TERMINATION_PERIOD = 1000;// 1 sec
 
     private long checkPeriod;
 
@@ -90,23 +91,48 @@ public class DaemonManager {
     public void shutdown(boolean waitAllExit) {
         log.info("Shutting down " + daemons.size() + " daemons...");
 
-        for (Daemon d : daemons) {
-            final DaemonState daemonState = d.getDaemonState();
+        for (Daemon daemon : daemons) {
+            final DaemonState daemonState = daemon.getDaemonState();
 
-            d.setExiting();
+            daemon.setExiting();
 
-            System.out.println("ds="+ daemonState);
+//            System.out.println("ds="+ daemonState);
+//            System.out.println("ts="+ daemon.getProcess().getState());
+            // TODO: maybe user thread state?
             if (daemonState == DaemonState.SLEEPING) {
-                d.getProcess().interrupt();
+                daemon.getProcess().interrupt();
             }
         }
 
         if (waitAllExit) {
-            try {
-                Thread.sleep(20000);//test
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            while (true) {
+                int notTerminated = 0;
+
+                for (Daemon daemon : daemons) {
+                    if (daemon.getProcess().getState() != Thread.State.TERMINATED) {
+                        notTerminated++;
+                    }
+                }
+
+                waitTermOneTime();
+
+                if (notTerminated > 0) {
+                    log.info("Still " + notTerminated + " daemons not terminated...");
+
+                    waitTermOneTime();
+                } else {
+                    log.info("All daemons stopped. Exit.");
+                    break;
+                }
             }
+        }
+    }
+
+    private void waitTermOneTime() {
+        try {
+            Thread.sleep(WAIT_TERMINATION_PERIOD);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }
