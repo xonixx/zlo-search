@@ -22,7 +22,7 @@ public class DaemonTests {
                 "test-1", 0, 1020);
 
         TestDaemon testDaemon2 = new TestDaemon(
-                100, 3000, 1000,
+                100, 5020, 1000,
                 "test-2", 1070, 2000);
 
         daemonManager.startDaemon(testDaemon1);

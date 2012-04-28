@@ -33,26 +33,26 @@ public class TestDaemon extends Daemon {
         return new Daemon.Process() {
             @Override
             protected int getFromIndex() throws Exception {
-                log.info("getFromIndex, start=" + start);
+                log.info(describe() + " - getFromIndex, start=" + start);
                 return start;
             }
 
             @Override
             protected int getEndIndex() throws Exception {
                 int _stop = stop;
-                log.info("getEndIndex, stop=" + _stop);
+                log.info(describe() + " - getEndIndex, stop=" + _stop);
                 stop += 50;
                 return _stop;
             }
 
             @Override
             protected void perform(int from, int to) throws Exception {
-                log.info("perform from=" + from + " to=" + to);
+                log.info(describe() + " - perform from=" + from + " to=" + to);
             }
 
             @Override
             protected boolean processException(Exception ex) {
-                log.error("processException", ex);
+                log.error(describe() + " - processException", ex);
                 return false;
             }
 
