@@ -12,15 +12,17 @@ public class TestDaemon extends Daemon {
     private final Logger log = getLogger();
     private int start;
     private int stop;
+    private long cleanUpTime;
 
     public TestDaemon(
             int doPerTime, long sleepPeriod, long retryPeriod,
-            String forumId, int start, int stop) {
+            String forumId, int start, int stop, long cleanUpTime) {
         super(forumId,
                 doPerTime, sleepPeriod, retryPeriod);
 
         this.start = start;
         this.stop = stop;
+        this.cleanUpTime = cleanUpTime;
     }
 
     @Override
@@ -58,7 +60,13 @@ public class TestDaemon extends Daemon {
 
             @Override
             protected void cleanUp() {
-                log.info("cleanUp");
+                log.info(describe() + " - cleanUp will take " + cleanUpTime);
+                try {
+                    Thread.sleep(cleanUpTime);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                log.info(describe() + " - cleanUp done.");
             }
         };
     }
