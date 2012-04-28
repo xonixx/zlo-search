@@ -49,7 +49,7 @@ public class OptimizeAllIndexes {
     }
 
     public void optimizeRestartDaemons() {
-        final OptimizeAllIndexes optimizeAllIndexes = this;
+/*        final OptimizeAllIndexes optimizeAllIndexes = this;
 
         if (Daemon.getDaemons().size() > 0) {
             Daemon.on(new Observer() {
@@ -77,6 +77,6 @@ public class OptimizeAllIndexes {
             Daemon.setExitingAll();
         } else {
             go();
-        }
+        }*/
     }
 }

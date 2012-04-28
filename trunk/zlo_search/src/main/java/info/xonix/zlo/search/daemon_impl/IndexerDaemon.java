@@ -78,13 +78,13 @@ public class IndexerDaemon extends Daemon {
         return new IndexingProcess();
     }
 
-    public void start() {
-        log.info("Starting indexing to " + getForumId() + " index (double index)...");
+    public void doOnStart() {
+        log.info("Starting indexing to " + getForumId() + " index...");
 
         // this is for clearing in case of not graceful exit
         log.info("Clearing lock...");
         IndexManager.get(getForumId()).clearLocks();
 
-        super.start();
+        super.doOnStart();
     }
 }

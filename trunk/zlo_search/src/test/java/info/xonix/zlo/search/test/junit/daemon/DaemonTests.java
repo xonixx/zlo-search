@@ -1,5 +1,6 @@
 package info.xonix.zlo.search.test.junit.daemon;
 
+import info.xonix.zlo.search.daemon.DaemonManager;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 
@@ -13,13 +14,28 @@ public class DaemonTests {
 
     @Test
     public void test1() {
-        final int start = 0;
-        final int stop = 1020;
 
-        TestDaemon testDaemon = new TestDaemon(
+        DaemonManager daemonManager = new DaemonManager();
+
+        TestDaemon testDaemon1 = new TestDaemon(
                 100, 5000, 1000,
-                "test", start, stop);
+                "test-1", 0, 1020);
 
-        testDaemon.start();
+        TestDaemon testDaemon2 = new TestDaemon(
+                100, 3000, 1000,
+                "test-2", 1070, 2000);
+
+        daemonManager.startDaemon(testDaemon1);
+        daemonManager.startDaemon(testDaemon2);
+
+        waitForever();
+    }
+
+    private static void waitForever() {
+        try {
+            Thread.sleep(Long.MAX_VALUE);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

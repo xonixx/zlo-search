@@ -1,4 +1,4 @@
-package info.xonix.zlo.search.daemon_impl;
+package info.xonix.zlo.search.daemon_impl.old;
 
 import info.xonix.zlo.search.daemon.Daemon;
 import info.xonix.zlo.search.dao.DbDict;
