@@ -1,4 +1,4 @@
-package info.xonix.zlo.search.daemon_impl;
+package info.xonix.zlo.search.daemon_impl.old;
 
 
 import info.xonix.zlo.search.model.Message;
@@ -36,6 +36,6 @@ public class DbMessagesPrintDaemon extends DbMessagesIteratingDaemon {
     public static void main(String[] args) {
         DbMessagesPrintDaemon d = new DbMessagesPrintDaemon("zlo", 10);
         d.doReset();
-        d.start();
+        d.doOnStart();
     }
 }

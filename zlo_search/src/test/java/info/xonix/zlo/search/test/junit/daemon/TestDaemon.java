@@ -62,9 +62,4 @@ public class TestDaemon extends Daemon {
             }
         };
     }
-
-    @Override
-    public void start() {
-        super.start();
-    }
 }

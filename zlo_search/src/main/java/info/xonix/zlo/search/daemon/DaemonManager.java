@@ -31,6 +31,8 @@ public class DaemonManager {
         this.checkPeriod = checkPeriod;
 
         startCheckingTimer();
+
+        registerShutdownHook();
     }
 
     private void startCheckingTimer() {
@@ -61,15 +63,47 @@ public class DaemonManager {
         }, 0, checkPeriod, TimeUnit.MILLISECONDS);
     }
 
+    private void registerShutdownHook() {
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                shutdown(true);
+            }
+        }));
+    }
+
     public DaemonManager startDaemon(Daemon daemon) {
         log.info("Starting daemon: " + daemon.describe());
 
+        daemon.doOnStart();
+
         Daemon.Process t = daemon.getProcess();
+        t.setDaemon(true);
         t.setPriority(Thread.MIN_PRIORITY); // so daemons not slowing search
         t.start();
 
         daemons.add(daemon);
 
         return this;
+    }
+
+    public void shutdown(boolean waitAllExit) {
+        log.info("Shutting down " + daemons.size() + " threads...");
+
+        for (Daemon d : daemons) {
+            d.setExiting();
+
+            if (d.getDaemonState() == DaemonState.SLEEPING) {
+                d.getProcess().interrupt();
+            }
+        }
+
+        if (waitAllExit) {
+            try {
+                Thread.sleep(10000);//test
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -201,7 +201,7 @@ public class Config {
                             ? powerUserKey.charAt(0) + "..."
                             : "empty"));
         } catch (NamingException e) {
-            log.error("Can't get powerUserKey from JNDI", e);
+            log.error("Can't get powerUserKey from JNDI, ex=" + e.toString());
         }
     }
 

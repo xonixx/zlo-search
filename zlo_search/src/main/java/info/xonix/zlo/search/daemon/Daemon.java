@@ -1,17 +1,11 @@
 package info.xonix.zlo.search.daemon;
 
-import info.xonix.zlo.search.TheObservable;
 import info.xonix.zlo.search.logic.exceptions.ExceptionsLogger;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.utils.TimeUtils;
 import org.apache.log4j.Logger;
-import sun.misc.Signal;
-import sun.misc.SignalHandler;
 
 import java.util.Date;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Vector;
 
 /**
  * Author: Vovan
@@ -23,8 +17,6 @@ public abstract class Daemon {
 
     protected ExceptionsLogger exceptionsLogger = AppSpringContext.get(ExceptionsLogger.class);
 
-//    private boolean exiting;
-    //    private boolean isSleeping = false;
     private Process process;
 
     private int doPerTime;
@@ -37,83 +29,58 @@ public abstract class Daemon {
     private DaemonState daemonState;
 
     // TODO: WTF
-    private static Observable observable = new TheObservable();
+//    private static Observable observable = new TheObservable();
 
     private String forumId;
 
-    public static void on(Observer o) {
+/*    public static void on(Observer o) {
         observable.addObserver(o);
     }
 
     public static void un(Observer o) {
         observable.deleteObserver(o);
-    }
+    }*/
 
     protected Daemon(String forumId,
                      int doPerTime, long sleepPeriod, long retryPeriod) {
-//        super(forumId);
         this.forumId = forumId;
 
         this.doPerTime = doPerTime;
         this.sleepPeriod = sleepPeriod;
         this.retryPeriod = retryPeriod;
 
-        registerExitHandlers();
+//        registerExitHandlers();
     }
-
-/*    public void setDoPerTime(int doPerTime) {
-        this.doPerTime = doPerTime;
-    }
-
-    public void setSleepPeriod(long sleepPeriod) {
-        this.sleepPeriod = sleepPeriod;
-    }
-
-    public void setRetryPeriod(long retryPeriod) {
-        this.retryPeriod = retryPeriod;
-    }*/
 
     protected abstract Logger getLogger();
 
     // clean up
-    private static Vector<Daemon> daemons = new Vector<Daemon>();
+//    private static Vector<Daemon> daemons = new Vector<Daemon>();
 
-    public static Vector<Daemon> getDaemons() {
+/*    public static Vector<Daemon> getDaemons() {
         return daemons;
-    }
+    }*/
 
-    /**
+    /* *
      * register for cleaning up
      *
      * @param d Daemon
      */
-    public static void registerForCleanUp(Daemon d) {
+/*    public static void registerForCleanUp(Daemon d) {
         daemons.add(d);
-    }
+    }*/
 
-    public static void setExitingAll() {
-        for (Daemon d : daemons) {
-            d.setExiting(true);
-
-            if (d.daemonState == DaemonState.SLEEPING) {
-                d.getProcess().interrupt();
-            }
-        }
-    }
-
-    private static void processExited(Daemon daemon) {
+/*    private static void processExited(Daemon daemon) {
         daemons.remove(daemon);
         if (daemons.isEmpty()) {
             log.info("All daemons have exited.");
             observable.notifyObservers("exited");
         }
-    }
+    }*/
     // end clean up
 
-    protected void setExiting(boolean exiting) {
-        if (exiting) {
-            daemonState = DaemonState.EXITING;
-        }
+    protected void setExiting() {
+        daemonState = DaemonState.EXITING;
     }
 
     protected boolean isExiting() {
@@ -177,7 +144,7 @@ public abstract class Daemon {
                 if (isExiting()) {
                     getLogger().info(forumId + " - Performing cleanup...");
                     cleanUp();
-                    processExited(Daemon.this);
+//                    processExited(Daemon.this);
                     break;
                 }
             }
@@ -260,8 +227,8 @@ public abstract class Daemon {
         return forumId;
     }
 
-    public void registerExitHandlers() {
-        registerForCleanUp(this);
+/*    public void registerExitHandlers() {
+//        registerForCleanUp(this);
 
         // we can't use getLogger() - overridable method from constructor!
         log.info(describe() + " - Registering exit handlers...");
@@ -278,15 +245,23 @@ public abstract class Daemon {
         // TODO: don't use sun.misc API!
         Signal.handle(new Signal("INT"), exitHandler);
         Signal.handle(new Signal("TERM"), exitHandler);
-    }
+    }*/
 
     public boolean finishedAbnormally() {
         return getProcess().getState() == Thread.State.TERMINATED
                 && !isExiting();
     }
 
-    /*TODO: modifier?*/public void start() {
+
+    protected void doOnStart() {
+
+    }
+
+/*    void startInternal() {
         getLogger().info("Starting " + this.getClass() + " daemon for site: " + getForumId());
+
+        doOnStart();
+
         while (true) {
             Process t = getProcess();
             t.setPriority(Thread.MIN_PRIORITY); // so daemons not slowing search 
@@ -306,5 +281,5 @@ public abstract class Daemon {
                 break;
             }
         }
-    }
+    }*/
 }
