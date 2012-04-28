@@ -31,7 +31,7 @@ public class DaemonsStartingServlet extends GenericServlet {
         super.init();
         if (config.isStartDaemons()) {
             log.info("Starting daemons...");
-            new DaemonLauncher().main(new String[0]);
+            DaemonLauncher.startAllActive();
         } else {
             log.info("Daemons not started.");
         }

@@ -12,6 +12,7 @@ import java.io.IOException;
  * Time: 18:30
  */
 public interface SearchLogic {
+    @Deprecated
     void optimizeIndex(String forumId);
 
     SearchResult search(SearchRequest searchRequest, int limit) throws SearchException;
