@@ -72,16 +72,18 @@
         </tr>
     </table>
 
-    <display:table id="d" name="<%= daemonManager.listDaemons() %>">
+    <display:table id="daemon" name="<%= daemonManager.listDaemons() %>">
         <display:caption>Daemons</display:caption>
-        <display:column title="Forum">${d.forumId}</display:column>
+
+        <display:column title="#">${daemon_rowNum}</display:column>
+        <display:column title="Forum">${daemon.forumId}</display:column>
         <display:column title="Type">
-            <%= d.getClass().getSimpleName() %>
+            <%= daemon.getClass().getSimpleName() %>
         </display:column>
-        <display:column title="State">${d.daemonState}</display:column>
+        <display:column title="State">${daemon.daemonState}</display:column>
         <display:column title="Last Exception">
-            <c:if test="${not empty d.lastException}">
-                ${d.lastException.message} (<fmt:formatDate value="${d.lastExceptionTime}" pattern="dd.MM.yy hh:mm"/>)
+            <c:if test="${not empty daemon.lastException}">
+                ${daemon.lastException.message} (<fmt:formatDate value="${daemon.lastExceptionTime}" pattern="dd.MM.yy hh:mm"/>)
             </c:if>
         </display:column>
     </display:table>
