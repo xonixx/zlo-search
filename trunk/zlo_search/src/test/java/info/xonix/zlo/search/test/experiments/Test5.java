@@ -2,14 +2,12 @@ package info.xonix.zlo.search.test.experiments;
 
 import info.xonix.zlo.search.LuceneVersion;
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.index.doubleindex.DoubleIndexManager;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.search.IndexSearcher;
 import org.junit.Test;
 
 import java.io.StringReader;
@@ -56,26 +54,5 @@ public class Test5 {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void m4() {
-//        SearchLogicImpl zs = new SearchLogicImpl(Site.forName("zlo"));
-//        System.out.println(zs.search(-1, "тест", true, true, false, false, false, null, null).getHits().length());
-        String forumId = "zlo";
-        DoubleIndexManager dis = DoubleIndexManager.create(forumId, null);
-        IndexSearcher is = new IndexSearcher(dis.getBigReader());
-/*        try {
-            Hits hits = is.search(new QueryParser("body", config.getMessageAnalyzer()).parse("body:тест title:тест"), Sort.INDEXORDER);
-
-            for (int i = 1; i < 10; i++) {
-                System.out.println(hits.doc(hits.length() - i).get("num"));
-            }
-
-            System.out.println(hits.length());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }*/
     }
 }

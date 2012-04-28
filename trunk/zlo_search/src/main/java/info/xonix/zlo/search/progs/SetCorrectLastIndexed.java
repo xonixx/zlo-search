@@ -1,7 +1,6 @@
 package info.xonix.zlo.search.progs;
 
 
-import info.xonix.zlo.search.index.doubleindex.DoubleIndexManager;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.lucene.search.MatchAllDocsQuery;
@@ -18,8 +17,8 @@ public class SetCorrectLastIndexed extends App {
         AppLogic appLogic = AppSpringContext.get(AppLogic.class);
 
         String siteName = getSiteName();
-
-        if ("e".equals(siteName))
+        // TODO:wtf
+        /*if ("e".equals(siteName))
             return;
 
         DoubleIndexManager dis = DoubleIndexManager.create(siteName, null);
@@ -27,7 +26,7 @@ public class SetCorrectLastIndexed extends App {
 
         System.out.println(lastIndexedNum);
 
-        appLogic.setLastIndexedNumber(siteName, lastIndexedNum);
+        appLogic.setLastIndexedNumber(siteName, lastIndexedNum);*/
 
     }
 

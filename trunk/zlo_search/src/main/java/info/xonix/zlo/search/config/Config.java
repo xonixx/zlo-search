@@ -53,7 +53,7 @@ public class Config {
     private boolean debug;
     private boolean searchPerformSort;
 
-    private int periodRecreateIndexer;
+//    private int periodRecreateIndexer;
 
     private String websiteDomain;
 
@@ -133,7 +133,7 @@ public class Config {
         debug = getBoolProp("debug");
         searchPerformSort = getBoolProp("search.perform.sort");
 
-        periodRecreateIndexer = TimeUtils.parseToMilliSeconds(getProp("searcher.period.recreate.indexer"));
+//        periodRecreateIndexer = TimeUtils.parseToMilliSeconds(getProp("searcher.period.recreate.indexer"));
 
         websiteDomain = getProp("website.domain");
 
@@ -307,9 +307,9 @@ public class Config {
         return proxyPort;
     }
 
-    public int getPeriodRecreateIndexer() {
+/*    public int getPeriodRecreateIndexer() {
         return periodRecreateIndexer;
-    }
+    }*/
 
     /**
      * @return either String or null (power user not allowed)
