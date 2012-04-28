@@ -28,18 +28,7 @@ public abstract class Daemon {
 
     private DaemonState daemonState;
 
-    // TODO: WTF
-//    private static Observable observable = new TheObservable();
-
     private String forumId;
-
-/*    public static void on(Observer o) {
-        observable.addObserver(o);
-    }
-
-    public static void un(Observer o) {
-        observable.deleteObserver(o);
-    }*/
 
     protected Daemon(String forumId,
                      int doPerTime, long sleepPeriod, long retryPeriod) {
@@ -48,36 +37,9 @@ public abstract class Daemon {
         this.doPerTime = doPerTime;
         this.sleepPeriod = sleepPeriod;
         this.retryPeriod = retryPeriod;
-
-//        registerExitHandlers();
     }
 
     protected abstract Logger getLogger();
-
-    // clean up
-//    private static Vector<Daemon> daemons = new Vector<Daemon>();
-
-/*    public static Vector<Daemon> getDaemons() {
-        return daemons;
-    }*/
-
-    /* *
-     * register for cleaning up
-     *
-     * @param d Daemon
-     */
-/*    public static void registerForCleanUp(Daemon d) {
-        daemons.add(d);
-    }*/
-
-/*    private static void processExited(Daemon daemon) {
-        daemons.remove(daemon);
-        if (daemons.isEmpty()) {
-            log.info("All daemons have exited.");
-            observable.notifyObservers("exited");
-        }
-    }*/
-    // end clean up
 
     protected void setExiting() {
         daemonState = DaemonState.EXITING;
@@ -144,7 +106,7 @@ public abstract class Daemon {
                 if (isExiting()) {
                     getLogger().info(forumId + " - Performing cleanup...");
                     cleanUp();
-//                    processExited(Daemon.this);
+
                     break;
                 }
             }
@@ -168,8 +130,16 @@ public abstract class Daemon {
                     indexFrom = getFromIndex() + 1;
                 }
 
+                if (isExiting()) {
+                    return;
+                }
+
                 if (end == -1) {
                     end = getEndIndex();
+                }
+
+                if (isExiting()) {
+                    return;
                 }
 
                 int indexTo = indexFrom + doPerTime - 1;
@@ -181,6 +151,10 @@ public abstract class Daemon {
                 if (indexFrom <= indexTo) {
                     doPerform(indexFrom, indexTo);
                     indexFrom = indexTo + 1;
+                }
+
+                if (isExiting()) {
+                    return;
                 }
 
                 while (indexFrom > end) {
@@ -205,47 +179,31 @@ public abstract class Daemon {
         protected abstract void cleanUp();
 
         protected void doSleep(long millis) throws InterruptedException {
-            // TODO: ?
             DaemonState prevState = daemonState;
-            daemonState = DaemonState.SLEEPING;
+
+            setStateIfNotExiting(DaemonState.SLEEPING);
+
             sleep(millis);
-            daemonState = prevState;
+
+            setStateIfNotExiting(prevState);
         }
 
         private void doPerform(int from, int to) throws Exception {
-            daemonState = DaemonState.PERFORMING;
+            setStateIfNotExiting(DaemonState.PERFORMING);
+
             perform(from, to);
         }
 
-        protected void reset() {
-            indexFrom = -1;
-            end = -1;
+        private void setStateIfNotExiting(DaemonState newDaemonState) {
+            if (!isExiting()) {
+                daemonState = newDaemonState;
+            }
         }
     }
 
     public String getForumId() {
         return forumId;
     }
-
-/*    public void registerExitHandlers() {
-//        registerForCleanUp(this);
-
-        // we can't use getLogger() - overridable method from constructor!
-        log.info(describe() + " - Registering exit handlers...");
-        setExiting(false);
-
-        final SignalHandler exitHandler = new SignalHandler() {
-            public void handle(Signal signal) {
-                // getLogger().info(...) gaves NPE at rt
-                log.info(describe() + " - Exit handler for " + signal.getName() + "...");
-                setExitingAll();
-            }
-        };
-
-        // TODO: don't use sun.misc API!
-        Signal.handle(new Signal("INT"), exitHandler);
-        Signal.handle(new Signal("TERM"), exitHandler);
-    }*/
 
     public boolean finishedAbnormally() {
         return getProcess().getState() == Thread.State.TERMINATED
@@ -254,32 +212,14 @@ public abstract class Daemon {
 
 
     protected void doOnStart() {
-
     }
 
-/*    void startInternal() {
-        getLogger().info("Starting " + this.getClass() + " daemon for site: " + getForumId());
-
+    void start() {
         doOnStart();
 
-        while (true) {
-            Process t = getProcess();
-            t.setPriority(Thread.MIN_PRIORITY); // so daemons not slowing search 
-            t.start();
-            try {
-                // TODO! should not!
-                t.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            // if we are here => thread finished
-            // if !exiting => thread was finished by mysterious reason
-            if (!isExiting()) {
-                getLogger().warn(getForumId() + " - MainProcess unexpectedly finished, restarting...");
-            } else {
-                getLogger().info(getForumId() + " - Gracefully exiting...");
-                break;
-            }
-        }
-    }*/
+        Process t = getProcess();
+        t.setDaemon(true);
+        t.setPriority(Thread.MIN_PRIORITY); // so daemons not slowing search
+        t.start();
+    }
 }
