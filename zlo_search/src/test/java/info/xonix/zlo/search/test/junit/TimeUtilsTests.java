@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.test.junit;
 
-import info.xonix.zlo.search.utils.TimeUtils;
+import info.xonix.utils.TimeUtils;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

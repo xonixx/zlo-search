@@ -1,4 +1,4 @@
-package info.xonix.zlo.search.daemon_impl.old;
+package info.xonix.zlo.search.daemons.old;
 
 
 import info.xonix.zlo.search.model.Message;

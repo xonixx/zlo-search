@@ -1,8 +1,8 @@
 package info.xonix.zlo.search.config.forums;
 
 import info.xonix.utils.ConfigUtils;
+import info.xonix.utils.TimeUtils;
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.utils.TimeUtils;
 
 import java.util.Properties;
 
