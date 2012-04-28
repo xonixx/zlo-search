@@ -88,19 +88,22 @@ public class DaemonManager {
     }
 
     public void shutdown(boolean waitAllExit) {
-        log.info("Shutting down " + daemons.size() + " threads...");
+        log.info("Shutting down " + daemons.size() + " daemons...");
 
         for (Daemon d : daemons) {
+            final DaemonState daemonState = d.getDaemonState();
+
             d.setExiting();
 
-            if (d.getDaemonState() == DaemonState.SLEEPING) {
+            System.out.println("ds="+ daemonState);
+            if (daemonState == DaemonState.SLEEPING) {
                 d.getProcess().interrupt();
             }
         }
 
         if (waitAllExit) {
             try {
-                Thread.sleep(10000);//test
+                Thread.sleep(20000);//test
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
