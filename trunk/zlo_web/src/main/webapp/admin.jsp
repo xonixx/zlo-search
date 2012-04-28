@@ -1,4 +1,4 @@
-<%@ page import="info.xonix.utils.daemon.Daemon" %>
+<%@ page import="info.xonix.utils.daemon.DaemonManager" %>
 <%@ page import="info.xonix.zlo.search.config.forums.GetForum" %>
 <%@ page import="info.xonix.zlo.search.index.IndexManager" %>
 <%@ page import="info.xonix.zlo.search.progs.OptimizeAllIndexes" %>
@@ -11,6 +11,10 @@
 
 <link rel="stylesheet" type="text/css" href="main.css"/>
 <link rel="stylesheet" type="text/css" href="admin.css"/>
+
+<%!
+    private static DaemonManager daemonManager = AppSpringContext.get(DaemonManager.class);
+%>
 
 <title>Admin area</title>
 
@@ -68,7 +72,7 @@
         </tr>
     </table>
 
-    <display:table id="d" name="<%= Daemon.getDaemons() %>">
+    <display:table id="d" name="<%= daemonManager.listDaemons() %>">
         <display:caption>Daemons</display:caption>
         <display:column title="Forum">${d.forumId}</display:column>
         <display:column title="Type">
