@@ -1,6 +1,7 @@
 package info.xonix.zlo.search.test.junit.daemon;
 
 import info.xonix.zlo.search.daemon.Daemon;
+import info.xonix.zlo.search.daemon.IteratingDaemon;
 import org.apache.log4j.Logger;
 
 /**
@@ -8,7 +9,7 @@ import org.apache.log4j.Logger;
  * Date: 16.04.12
  * Time: 15:53
  */
-public class TestDaemon extends Daemon {
+public class TestDaemon extends IteratingDaemon {
     private final Logger log = getLogger();
     private int start;
     private int stop;
@@ -36,8 +37,8 @@ public class TestDaemon extends Daemon {
     }
 
     @Override
-    protected Daemon.Process createProcess() {
-        return new Daemon.Process() {
+    protected Process createProcess() {
+        return new Process() {
             @Override
             protected int getFromIndex() throws Exception {
                 log.info(describe() + " - getFromIndex, start=" + start);
