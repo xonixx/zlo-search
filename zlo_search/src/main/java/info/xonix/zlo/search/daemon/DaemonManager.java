@@ -76,12 +76,7 @@ public class DaemonManager {
     public DaemonManager startDaemon(Daemon daemon) {
         log.info("Starting daemon: " + daemon.describe());
 
-        daemon.doOnStart();
-
-        Daemon.Process t = daemon.getProcess();
-        t.setDaemon(true);
-        t.setPriority(Thread.MIN_PRIORITY); // so daemons not slowing search
-        t.start();
+        daemon.start();
 
         daemons.add(daemon);
 
