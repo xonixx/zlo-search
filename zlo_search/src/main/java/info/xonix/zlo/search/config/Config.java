@@ -2,7 +2,6 @@ package info.xonix.zlo.search.config;
 
 import info.xonix.utils.EnvUtils;
 import info.xonix.utils.ExceptionUtils;
-import info.xonix.utils.TimeUtils;
 import info.xonix.zlo.search.analyzers.AnalyzerProvider;
 import info.xonix.zlo.search.logic.MessageFields;
 import info.xonix.zlo.search.utils.SmartQueryParser;
@@ -315,11 +314,7 @@ public class Config {
         return startDaemons;
     }
 
-    public String getIndexDirDouble(String forumId) {
-        return getProp("indexer.dir.double") + "/index_" + forumId;
-    }
-
     public String getIndexDir(String forumId) {
-        return getIndexDirDouble(forumId); // TODO
+        return getProp("indexer.dir") + "/index_" + forumId;
     }
 }
