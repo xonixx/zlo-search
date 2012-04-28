@@ -3,6 +3,7 @@ package info.xonix.zlo.search.daemon_impl;
 import info.xonix.zlo.search.config.forums.ForumParams;
 import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.daemon.Daemon;
+import info.xonix.zlo.search.daemon.IteratingDaemon;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.logic.ForumLogic;
 import info.xonix.zlo.search.logic.exceptions.ExceptionCategory;
@@ -19,7 +20,7 @@ import java.util.List;
  * Date: 28.09.2007
  * Time: 10:35:37
  */
-public class DownloaderDaemon extends Daemon {
+public class DownloaderDaemon extends IteratingDaemon {
     private static Logger logger = Logger.getLogger(DownloaderDaemon.class);
 
     private AppLogic appLogic = AppSpringContext.get(AppLogic.class);

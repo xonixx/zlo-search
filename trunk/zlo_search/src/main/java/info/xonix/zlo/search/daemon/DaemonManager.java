@@ -2,7 +2,9 @@ package info.xonix.zlo.search.daemon;
 
 import org.apache.log4j.Logger;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;

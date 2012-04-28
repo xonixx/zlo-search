@@ -14,7 +14,6 @@ public class DaemonTests {
 
     @Test
     public void test1() {
-
         DaemonManager daemonManager = new DaemonManager();
 
         TestDaemon testDaemon1 = new TestDaemon(

@@ -3,6 +3,7 @@ package info.xonix.zlo.search.daemon_impl;
 import info.xonix.zlo.search.config.forums.ForumParams;
 import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.daemon.Daemon;
+import info.xonix.zlo.search.daemon.IteratingDaemon;
 import info.xonix.zlo.search.index.IndexManager;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.logic.IndexerException;
@@ -16,7 +17,7 @@ import org.apache.log4j.Logger;
  * Date: 17.11.2007
  * Time: 19:25:04
  */
-public class IndexerDaemon extends Daemon {
+public class IndexerDaemon extends IteratingDaemon {
     private static Logger log = Logger.getLogger(IndexerDaemon.class);
 
     private AppLogic appLogic = AppSpringContext.get(AppLogic.class);
