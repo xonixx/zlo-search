@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.progs;
 
-import info.xonix.zlo.search.ZloObservable;
+import info.xonix.zlo.search.TheObservable;
 import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.daemon.Daemon;
 import info.xonix.zlo.search.daemon_impl.DaemonLauncher;
@@ -24,7 +24,7 @@ public class OptimizeAllIndexes {
     private ForumLogic forumLogic = AppSpringContext.get(ForumLogic.class);
     private IndexerLogic indexerLogic = AppSpringContext.get(IndexerLogic.class);
 
-    private Observable observable = new ZloObservable();
+    private Observable observable = new TheObservable();
 
     public void on(Observer o) {
         observable.addObserver(o);

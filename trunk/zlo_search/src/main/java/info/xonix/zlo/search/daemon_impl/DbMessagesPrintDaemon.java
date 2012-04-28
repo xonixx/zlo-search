@@ -14,13 +14,8 @@ import java.util.List;
 public class DbMessagesPrintDaemon extends DbMessagesIteratingDaemon {
     private static final Logger logger = Logger.getLogger(DbMessagesPrintDaemon.class);
 
-    protected DbMessagesPrintDaemon(String forumId) {
-        super(forumId);
-    }
-
     public DbMessagesPrintDaemon(String forumId, int perTime) {
-        this(forumId);
-        setDoPerTime(perTime);
+        super(forumId, perTime);
     }
 
     protected void doWithMessages(List<Message> msgs) {
@@ -40,7 +35,7 @@ public class DbMessagesPrintDaemon extends DbMessagesIteratingDaemon {
 
     public static void main(String[] args) {
         DbMessagesPrintDaemon d = new DbMessagesPrintDaemon("zlo", 10);
-        d.reset();
+        d.doReset();
         d.start();
     }
 }

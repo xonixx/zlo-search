@@ -16,11 +16,9 @@ public class DaemonTests {
         final int start = 0;
         final int stop = 1020;
 
-        TestDaemon testDaemon = new TestDaemon("test", start, stop);
-
-        testDaemon.setDoPerTime(100);
-        testDaemon.setRetryPeriod(1000); // 1 sec
-        testDaemon.setSleepPeriod(5000);
+        TestDaemon testDaemon = new TestDaemon(
+                100, 5000, 1000,
+                "test", start, stop);
 
         testDaemon.start();
     }

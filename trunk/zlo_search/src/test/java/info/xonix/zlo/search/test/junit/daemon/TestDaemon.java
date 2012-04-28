@@ -8,13 +8,16 @@ import org.apache.log4j.Logger;
  * Date: 16.04.12
  * Time: 15:53
  */
-public class TestDaemon extends Daemon{
+public class TestDaemon extends Daemon {
     private final Logger log = getLogger();
     private int start;
     private int stop;
 
-    public TestDaemon(String forumId, int start, int stop) {
-        super(forumId);
+    public TestDaemon(
+            int doPerTime, long sleepPeriod, long retryPeriod,
+            String forumId, int start, int stop) {
+        super(forumId,
+                doPerTime, sleepPeriod, retryPeriod);
 
         this.start = start;
         this.stop = stop;
