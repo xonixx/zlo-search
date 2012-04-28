@@ -2,6 +2,7 @@ package info.xonix.utils.daemon;
 
 import org.apache.log4j.Logger;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -137,5 +138,9 @@ public class DaemonManager {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+    
+    public List<Daemon> listDaemons() {
+        return Collections.unmodifiableList(daemons);
     }
 }
