@@ -1,11 +1,9 @@
+<%@ page import="info.xonix.utils.daemon.Daemon" %>
 <%@ page import="info.xonix.zlo.search.config.forums.GetForum" %>
-<%@ page import="info.xonix.zlo.search.daemon.Daemon" %>
-<%@ page import="info.xonix.zlo.search.logic.SearchLogic" %>
-<%@ page import="info.xonix.zlo.search.logic.SearchLogicImpl" %>
+<%@ page import="info.xonix.zlo.search.index.IndexManager" %>
 <%@ page import="info.xonix.zlo.search.progs.OptimizeAllIndexes" %>
 <%@ page import="info.xonix.zlo.search.utils.SysUtils" %>
 <%@ page import="info.xonix.zlo.web.logic.AdminLogic" %>
-<%@ page import="info.xonix.zlo.search.index.IndexManager" %>
 <%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 

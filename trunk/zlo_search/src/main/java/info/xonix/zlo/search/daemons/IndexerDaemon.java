@@ -3,7 +3,6 @@ package info.xonix.zlo.search.daemon_impl;
 import info.xonix.zlo.search.config.forums.ForumParams;
 import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.daemon.Daemon;
-import info.xonix.zlo.search.daemon.IteratingDaemon;
 import info.xonix.zlo.search.index.IndexManager;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.logic.IndexerException;
@@ -17,22 +16,11 @@ import org.apache.log4j.Logger;
  * Date: 17.11.2007
  * Time: 19:25:04
  */
-public class IndexerDaemon extends IteratingDaemon {
+public class IndexerDaemon extends Daemon {
     private static Logger log = Logger.getLogger(IndexerDaemon.class);
 
     private AppLogic appLogic = AppSpringContext.get(AppLogic.class);
     private IndexerLogic indexerLogic = AppSpringContext.get(IndexerLogic.class);
-
-    protected IndexerDaemon(String forumId) {
-        this(forumId, GetForum.params(forumId));
-    }
-
-    IndexerDaemon(String forumId, ForumParams params) {
-        super(forumId,
-                params.getIndexerIndexPerTime(),
-                params.getIndexerIndexPeriod(),
-                params.getIndexerReconnectPeriod());
-    }
 
     protected Logger getLogger() {
         return log;
@@ -79,13 +67,25 @@ public class IndexerDaemon extends IteratingDaemon {
         return new IndexingProcess();
     }
 
-    public void doOnStart() {
-        log.info("Starting indexing to " + getForumId() + " index...");
+    protected IndexerDaemon(String forumId) {
+        super(forumId);
+        setParams();
+    }
+
+    private void setParams() {
+        final ForumParams params = GetForum.params(getForumId());
+        setDoPerTime(params.getIndexerIndexPerTime());
+        setSleepPeriod(params.getIndexerIndexPeriod());
+        setRetryPeriod(params.getIndexerReconnectPeriod());
+    }
+
+    public void start() {
+        log.info("Starting indexing to " + getForumId() + " index (double index)...");
 
         // this is for clearing in case of not graceful exit
         log.info("Clearing lock...");
         IndexManager.get(getForumId()).clearLocks();
 
-        super.doOnStart();
+        super.start();
     }
 }

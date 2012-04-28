@@ -2,10 +2,10 @@ package info.xonix.zlo.search.config;
 
 import info.xonix.utils.EnvUtils;
 import info.xonix.utils.ExceptionUtils;
+import info.xonix.utils.TimeUtils;
 import info.xonix.zlo.search.analyzers.AnalyzerProvider;
 import info.xonix.zlo.search.logic.MessageFields;
 import info.xonix.zlo.search.utils.SmartQueryParser;
-import info.xonix.zlo.search.utils.TimeUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.lucene.analysis.Analyzer;
