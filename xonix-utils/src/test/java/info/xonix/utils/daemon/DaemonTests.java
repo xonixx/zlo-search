@@ -1,6 +1,5 @@
-package info.xonix.zlo.search.test.junit.daemon;
+package info.xonix.utils.daemon;
 
-import info.xonix.zlo.search.daemon.DaemonManager;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 

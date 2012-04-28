@@ -1,6 +1,6 @@
-package info.xonix.zlo.search.daemon;
+package info.xonix.utils.daemon;
 
-import info.xonix.zlo.search.utils.TimeUtils;
+import info.xonix.utils.TimeUtils;
 import org.apache.log4j.Logger;
 
 /**
