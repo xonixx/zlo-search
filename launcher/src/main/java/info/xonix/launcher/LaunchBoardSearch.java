@@ -1,11 +1,11 @@
 package info.xonix.launcher;
 
+import org.eclipse.jetty.plus.webapp.EnvConfiguration;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.nio.SelectChannelConnector;
-import org.eclipse.jetty.webapp.WebAppClassLoader;
-import org.eclipse.jetty.webapp.WebAppContext;
+import org.eclipse.jetty.webapp.*;
 import sun.misc.JarFilter;
 
 import java.io.File;
@@ -36,6 +36,14 @@ public class LaunchBoardSearch {
 
         WebAppContext root = new WebAppContext(join(zloWeb, "src/main/webapp"), "/");
 //        WebAppContext root = new WebAppContext(join(zloWeb, "src/main/webapp"), "/lol");
+
+        EnvConfiguration envConfiguration = new EnvConfiguration();
+        envConfiguration.setJettyEnvXml(LaunchBoardSearch.class.getResource("jetty-env.xml"));
+        root.setConfigurations(new Configuration[]{
+                new WebInfConfiguration(),// default
+                new WebXmlConfiguration(),// default
+                envConfiguration
+        });
 
         WebAppClassLoader rootClassLoader = new WebAppClassLoader(root);
 
