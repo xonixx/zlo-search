@@ -175,6 +175,7 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     }
 
     @Override
+    @Deprecated
     public void optimizeIndex(String forumId) {
         // TODO: implement?
         throw new UnsupportedOperationException("optimizeIndex");

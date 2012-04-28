@@ -16,6 +16,7 @@ import java.util.Observer;
  * Date: 24.03.2008
  * Time: 0:53:31
  */
+@Deprecated
 public class OptimizeAllIndexes {
     private final static Logger log = Logger.getLogger(OptimizeAllIndexes.class);
 

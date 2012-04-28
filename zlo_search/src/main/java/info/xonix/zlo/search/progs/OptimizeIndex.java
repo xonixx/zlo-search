@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
  * Date: 26.11.2007
  * Time: 19:27:49
  */
+@Deprecated
 public class OptimizeIndex {
     public static final Logger log = Logger.getLogger(OptimizeIndex.class);
 

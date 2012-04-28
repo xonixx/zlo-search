@@ -17,7 +17,7 @@ public class DaemonLauncher {
 
     private static final DaemonManager daemonManager = AppSpringContext.get(DaemonManager.class);
 
-    public void main(String[] args) {
+    public static void startAllActive() {
         for (String forumId : GetForum.ids()) {
             if (GetForum.params(forumId).isPerformIndexing()) {
                 log.info("Starting daemons for: " + forumId);
