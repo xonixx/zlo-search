@@ -9,9 +9,9 @@ import java.util.Observable;
  * <p/>
  * Always changed => always fired
  */
-public class ZloObservable extends Observable {
+public class TheObservable extends Observable {
 
-    public ZloObservable() {
+    public TheObservable() {
         super();
         setChanged();
     }

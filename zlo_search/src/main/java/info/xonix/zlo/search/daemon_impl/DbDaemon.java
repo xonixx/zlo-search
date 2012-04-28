@@ -23,6 +23,17 @@ public class DbDaemon extends Daemon {
     private AppLogic appLogic = AppSpringContext.get(AppLogic.class);
     private ForumLogic forumLogic = AppSpringContext.get(ForumLogic.class);
 
+    protected DbDaemon(String forumId) {
+        this(forumId, GetForum.params(forumId));
+    }
+
+    DbDaemon(String forumId, ForumParams params) {
+        super(forumId,
+                params.getDbScanPerTime(),
+                params.getDbScanPeriod(),
+                params.getDbReconnectPeriod());
+    }
+
     @Override
     protected Logger getLogger() {
         return logger;
@@ -59,28 +70,7 @@ public class DbDaemon extends Daemon {
         }
     }
 
-    public DbDaemon() {
-        super();
-        setParams();
-    }
-
-    protected DbDaemon(String forumId) {
-        super(forumId);
-        setParams();
-    }
-
-    private void setParams() {
-        final ForumParams params = GetForum.params(getForumId());
-        setDoPerTime(params.getDbScanPerTime());
-        setSleepPeriod(params.getDbScanPeriod());
-        setRetryPeriod(params.getDbReconnectPeriod());
-    }
-
     protected Process createProcess() {
         return new DbProcess();
-    }
-
-    public static void main(String[] args) {
-        new DbDaemon().start();
     }
 }

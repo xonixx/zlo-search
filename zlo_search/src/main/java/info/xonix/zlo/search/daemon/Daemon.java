@@ -1,7 +1,6 @@
 package info.xonix.zlo.search.daemon;
 
-import info.xonix.zlo.search.ZloObservable;
-import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.TheObservable;
 import info.xonix.zlo.search.logic.exceptions.ExceptionsLogger;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.utils.TimeUtils;
@@ -18,15 +17,14 @@ import java.util.Vector;
  * Author: Vovan
  * Date: 17.11.2007
  * Time: 20:00:32
- * todo: create class DaemonGroup
  */
 public abstract class Daemon {
     private static final Logger log = Logger.getLogger(Daemon.class);
 
     protected ExceptionsLogger exceptionsLogger = AppSpringContext.get(ExceptionsLogger.class);
 
-    private boolean exiting;
-    private boolean isSleeping = false;
+//    private boolean exiting;
+    //    private boolean isSleeping = false;
     private Process process;
 
     private int doPerTime;
@@ -38,7 +36,8 @@ public abstract class Daemon {
 
     private DaemonState daemonState;
 
-    private static Observable observable = new ZloObservable();
+    // TODO: WTF
+    private static Observable observable = new TheObservable();
 
     private String forumId;
 
@@ -50,7 +49,19 @@ public abstract class Daemon {
         observable.deleteObserver(o);
     }
 
-    public void setDoPerTime(int doPerTime) {
+    protected Daemon(String forumId,
+                     int doPerTime, long sleepPeriod, long retryPeriod) {
+//        super(forumId);
+        this.forumId = forumId;
+
+        this.doPerTime = doPerTime;
+        this.sleepPeriod = sleepPeriod;
+        this.retryPeriod = retryPeriod;
+
+        registerExitHandlers();
+    }
+
+/*    public void setDoPerTime(int doPerTime) {
         this.doPerTime = doPerTime;
     }
 
@@ -60,7 +71,7 @@ public abstract class Daemon {
 
     public void setRetryPeriod(long retryPeriod) {
         this.retryPeriod = retryPeriod;
-    }
+    }*/
 
     protected abstract Logger getLogger();
 
@@ -84,7 +95,7 @@ public abstract class Daemon {
         for (Daemon d : daemons) {
             d.setExiting(true);
 
-            if (d.isSleeping) {
+            if (d.daemonState == DaemonState.SLEEPING) {
                 d.getProcess().interrupt();
             }
         }
@@ -100,13 +111,13 @@ public abstract class Daemon {
     // end clean up
 
     protected void setExiting(boolean exiting) {
-        this.exiting = exiting;
-        if (exiting)
+        if (exiting) {
             daemonState = DaemonState.EXITING;
+        }
     }
 
     protected boolean isExiting() {
-        return exiting;
+        return daemonState == DaemonState.EXITING;
     }
 
     private void saveLastException(Exception e) {
@@ -128,7 +139,7 @@ public abstract class Daemon {
 
     protected abstract Process createProcess();
 
-    private Process getProcess() {
+    synchronized Process getProcess() {
         if (process == null) {
             process = createProcess();
         }
@@ -137,6 +148,16 @@ public abstract class Daemon {
 
     public String describe() {
         return getClass().getSimpleName() + "-" + forumId;
+    }
+
+    public void reset() {
+        try {
+            process.cleanUp();
+        } catch (Exception e) {
+            log.error("Error cleanUp", e);
+        }
+
+        process = null;
     }
 
     protected abstract class Process extends Thread {
@@ -217,10 +238,11 @@ public abstract class Daemon {
         protected abstract void cleanUp();
 
         protected void doSleep(long millis) throws InterruptedException {
+            // TODO: ?
+            DaemonState prevState = daemonState;
             daemonState = DaemonState.SLEEPING;
-            isSleeping = true;
             sleep(millis);
-            isSleeping = false;
+            daemonState = prevState;
         }
 
         private void doPerform(int from, int to) throws Exception {
@@ -234,22 +256,8 @@ public abstract class Daemon {
         }
     }
 
-    protected Daemon() {
-        this(Config.getSiteEnvName());
-    }
-
-    protected Daemon(String forumId) {
-//        super(forumId);
-        this.forumId = forumId;
-        registerExitHandlers();
-    }
-
     public String getForumId() {
         return forumId;
-    }
-
-    public void setForumId(String forumId) {
-        this.forumId = forumId;
     }
 
     public void registerExitHandlers() {
@@ -272,13 +280,19 @@ public abstract class Daemon {
         Signal.handle(new Signal("TERM"), exitHandler);
     }
 
-    public void start() {
+    public boolean finishedAbnormally() {
+        return getProcess().getState() == Thread.State.TERMINATED
+                && !isExiting();
+    }
+
+    /*TODO: modifier?*/public void start() {
         getLogger().info("Starting " + this.getClass() + " daemon for site: " + getForumId());
         while (true) {
             Process t = getProcess();
             t.setPriority(Thread.MIN_PRIORITY); // so daemons not slowing search 
             t.start();
             try {
+                // TODO! should not!
                 t.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();

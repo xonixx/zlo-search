@@ -20,7 +20,6 @@ public abstract class DbMessagesIteratingDaemon extends Daemon {
     private AppLogic appLogic = AppSpringContext.get(AppLogic.class);
 
     private static final Logger logger = Logger.getLogger(DbMessagesIteratingDaemon.class);
-    private int processPerTime = 1000; // default
 
     private class DbMessagesIterationProcess extends Process {
 
@@ -45,9 +44,8 @@ public abstract class DbMessagesIteratingDaemon extends Daemon {
         }
     }
 
-    protected DbMessagesIteratingDaemon(String forumId) {
-        super(forumId);
-        setDoPerTime(processPerTime);
+    protected DbMessagesIteratingDaemon(String forumId, int processPerTime) {
+        super(forumId, processPerTime, 0, 1000);
     }
 
     protected Logger getLogger() {
@@ -58,7 +56,7 @@ public abstract class DbMessagesIteratingDaemon extends Daemon {
         return new DbMessagesIterationProcess();
     }
 
-    protected void reset() {
+    protected void doReset() {
         dbDict.setInt(getForumId(), getIteratingVariableName(), 0);
     }
 

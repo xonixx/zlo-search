@@ -22,6 +22,17 @@ public class IndexerDaemon extends Daemon {
     private AppLogic appLogic = AppSpringContext.get(AppLogic.class);
     private IndexerLogic indexerLogic = AppSpringContext.get(IndexerLogic.class);
 
+    protected IndexerDaemon(String forumId) {
+        this(forumId, GetForum.params(forumId));
+    }
+
+    IndexerDaemon(String forumId, ForumParams params) {
+        super(forumId,
+                params.getIndexerIndexPerTime(),
+                params.getIndexerIndexPeriod(),
+                params.getIndexerReconnectPeriod());
+    }
+
     protected Logger getLogger() {
         return log;
     }
@@ -65,18 +76,6 @@ public class IndexerDaemon extends Daemon {
 
     protected Process createProcess() {
         return new IndexingProcess();
-    }
-
-    protected IndexerDaemon(String forumId) {
-        super(forumId);
-        setParams();
-    }
-
-    private void setParams() {
-        final ForumParams params = GetForum.params(getForumId());
-        setDoPerTime(params.getIndexerIndexPerTime());
-        setSleepPeriod(params.getIndexerIndexPeriod());
-        setRetryPeriod(params.getIndexerReconnectPeriod());
     }
 
     public void start() {
