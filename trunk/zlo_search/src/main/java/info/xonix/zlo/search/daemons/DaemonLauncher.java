@@ -1,7 +1,10 @@
-package info.xonix.zlo.search.daemon_impl;
+package info.xonix.zlo.search.daemons;
 
+import info.xonix.utils.daemon.DaemonManager;
 import info.xonix.zlo.search.config.forums.GetForum;
-import info.xonix.zlo.search.daemon.Daemon;
+import info.xonix.zlo.search.daemons.impl.DownloaderDaemon;
+import info.xonix.zlo.search.daemons.impl.IndexerDaemon;
+import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 
 /**
@@ -12,25 +15,18 @@ import org.apache.log4j.Logger;
 public class DaemonLauncher {
     private static final Logger log = Logger.getLogger(DaemonLauncher.class);
 
+    private static final DaemonManager daemonManager = AppSpringContext.get(DaemonManager.class);
+
     public void main(String[] args) {
         for (String forumId : GetForum.ids()) {
             if (GetForum.params(forumId).isPerformIndexing()) {
                 log.info("Starting daemons for: " + forumId);
-                startInNewThread(new DbDaemon(forumId));
-                startInNewThread(new IndexerDaemon(forumId));
+
+                daemonManager.startDaemon(new DownloaderDaemon(forumId));
+                daemonManager.startDaemon(new IndexerDaemon(forumId));
             } else {
                 log.info("Not starting daemons for: " + forumId);
             }
         }
-    }
-
-    private static void startInNewThread(final Daemon d) {
-        Thread t = new Thread(new Runnable() {
-            public void run() {
-                d.start();
-            }
-        }, "Control thread for: " + d.describe());
-        t.setPriority(Thread.MIN_PRIORITY);
-        t.start();
     }
 }
