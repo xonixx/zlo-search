@@ -93,9 +93,15 @@ public class DaemonManager {
 
 //            System.out.println("ds="+ daemonState);
 //            System.out.println("ts="+ daemon.getProcess().getState());
-            // TODO: maybe user thread state?
-            if (daemonState == DaemonState.SLEEPING) {
-                daemon.getProcess().interrupt();
+
+            final Daemon.Process process = daemon.getProcess();
+
+            if (daemonState == DaemonState.SLEEPING
+                    || process.getState() == Thread.State.TIMED_WAITING
+                    || process.getState() == Thread.State.WAITING) {
+                log.info("Terminating sleeping daemon: " + daemon.describe());
+
+                process.interrupt();
             }
         }
 
