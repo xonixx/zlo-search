@@ -7,27 +7,29 @@ import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.logic.ForumLogic;
 import info.xonix.zlo.search.logic.exceptions.ExceptionCategory;
 import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
+import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * User: boost
  * Date: 28.09.2007
  * Time: 10:35:37
  */
-public class DbDaemon extends Daemon {
-    private static Logger logger = Logger.getLogger(DbDaemon.class);
+public class DownloaderDaemon extends Daemon {
+    private static Logger logger = Logger.getLogger(DownloaderDaemon.class);
 
     private AppLogic appLogic = AppSpringContext.get(AppLogic.class);
     private ForumLogic forumLogic = AppSpringContext.get(ForumLogic.class);
 
-    protected DbDaemon(String forumId) {
+    protected DownloaderDaemon(String forumId) {
         this(forumId, GetForum.params(forumId));
     }
 
-    DbDaemon(String forumId, ForumParams params) {
+    DownloaderDaemon(String forumId, ForumParams params) {
         super(forumId,
                 params.getDbScanPerTime(),
                 params.getDbScanPeriod(),
@@ -51,9 +53,14 @@ public class DbDaemon extends Daemon {
         }
 
         @Override
-        protected void perform(int from, int to) throws ForumAccessException {
+        protected void perform(int from, int to) throws ForumAccessException, InterruptedException {
             String forumId = getForumId();
-            appLogic.saveMessages(forumId, forumLogic.getMessages(forumId, from, to + 1));
+
+            final List<Message> messages = forumLogic.getMessages(forumId, from, to + 1);
+
+            stopIfExiting();
+
+            appLogic.saveMessages(forumId, messages);
             appLogic.setLastSavedDate(forumId, new Date());
         }
 

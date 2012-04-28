@@ -1,7 +1,6 @@
 package info.xonix.zlo.search.daemon_impl;
 
 import info.xonix.zlo.search.config.forums.GetForum;
-import info.xonix.zlo.search.daemon.Daemon;
 import info.xonix.zlo.search.daemon.DaemonManager;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
@@ -20,24 +19,11 @@ public class DaemonLauncher {
             if (GetForum.params(forumId).isPerformIndexing()) {
                 log.info("Starting daemons for: " + forumId);
 
-                daemonManager.startDaemon(new DbDaemon(forumId));
+                daemonManager.startDaemon(new DownloaderDaemon(forumId));
                 daemonManager.startDaemon(new IndexerDaemon(forumId));
-
-//                startInNewThread(new DbDaemon(forumId));
-//                startInNewThread(new IndexerDaemon(forumId));
             } else {
                 log.info("Not starting daemons for: " + forumId);
             }
         }
     }
-
-/*    private static void startInNewThread(final Daemon d) {
-        Thread t = new Thread(new Runnable() {
-            public void run() {
-                d.doOnStart();
-            }
-        }, "Control thread for: " + d.describe());
-        t.setPriority(Thread.MIN_PRIORITY);
-        t.start();
-    }*/
 }

@@ -85,7 +85,7 @@ public class TestDaemon extends Daemon {
         try {
             Thread.sleep(interval);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.info(describe() + " - work interrupted.");
         }
     }
 }

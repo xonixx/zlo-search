@@ -130,17 +130,13 @@ public abstract class Daemon {
                     indexFrom = getFromIndex() + 1;
                 }
 
-                if (isExiting()) {
-                    return;
-                }
+                stopIfExiting();
 
                 if (end == -1) {
                     end = getEndIndex();
                 }
 
-                if (isExiting()) {
-                    return;
-                }
+                stopIfExiting();
 
                 int indexTo = indexFrom + doPerTime - 1;
 
@@ -153,9 +149,7 @@ public abstract class Daemon {
                     indexFrom = indexTo + 1;
                 }
 
-                if (isExiting()) {
-                    return;
-                }
+                stopIfExiting();
 
                 while (indexFrom > end) {
                     logger.info(forumId + " - Sleeping " + TimeUtils.toMinutesSeconds(sleepPeriod) + "...");
@@ -171,8 +165,16 @@ public abstract class Daemon {
                     logger.error("(" + forumId + ") Unknown exception", e);
                 }
 
+                stopIfExiting();
+
                 logger.info(forumId + " - Retry in " + TimeUtils.toMinutesSeconds(retryPeriod));
                 doSleep(retryPeriod);
+            }
+        }
+
+        protected void stopIfExiting() throws InterruptedException {
+            if (isExiting()) {
+                throw new InterruptedException("exit");
             }
         }
 
