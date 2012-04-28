@@ -1,7 +1,5 @@
-package info.xonix.zlo.search.daemon;
+package info.xonix.utils.daemon;
 
-import info.xonix.zlo.search.logic.exceptions.ExceptionsLogger;
-import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 
 import java.util.Date;
@@ -13,8 +11,6 @@ import java.util.Date;
  */
 public abstract class Daemon {
     private static final Logger log = Logger.getLogger(Daemon.class);
-
-    protected ExceptionsLogger exceptionsLogger = AppSpringContext.get(ExceptionsLogger.class);
 
     private Process process;
 
@@ -29,6 +25,7 @@ public abstract class Daemon {
         this.forumId = forumId;
     }
 
+    // TODO: this is NOT good!
     protected abstract Logger getLogger();
 
     protected void setExiting() {

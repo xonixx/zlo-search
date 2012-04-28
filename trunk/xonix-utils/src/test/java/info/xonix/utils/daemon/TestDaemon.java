@@ -1,7 +1,5 @@
-package info.xonix.zlo.search.test.junit.daemon;
+package info.xonix.utils.daemon;
 
-import info.xonix.zlo.search.daemon.Daemon;
-import info.xonix.zlo.search.daemon.IteratingDaemon;
 import org.apache.log4j.Logger;
 
 /**

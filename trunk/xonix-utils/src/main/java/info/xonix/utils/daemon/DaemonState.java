@@ -1,4 +1,4 @@
-package info.xonix.zlo.search.daemon;
+package info.xonix.utils.daemon;
 
 /**
  * User: Vovan
