@@ -121,7 +121,7 @@ public class DaemonManager {
                 waitTermOneTime();
 
                 if (notTerminated > 0) {
-                    log.info("Still " + notTerminated + " daemons not terminated...");
+                    log.info("Still wating " + notTerminated + " daemons to terminate..");
 
                     waitTermOneTime();
                 } else {

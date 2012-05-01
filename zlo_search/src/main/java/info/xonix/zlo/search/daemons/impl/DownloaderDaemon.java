@@ -40,43 +40,37 @@ public class DownloaderDaemon extends BaseSearcherDaemon {
         return logger;
     }
 
-    private class DbProcess extends Process {
-        @Override
-        protected int getFromIndex() {
-            return appLogic.getLastSavedMessageNumber(getForumId());
-        }
-
-        @Override
-        protected int getEndIndex() throws ForumAccessException {
-            return forumLogic.getLastMessageNumber(getForumId());
-        }
-
-        @Override
-        protected void perform(int from, int to) throws ForumAccessException, InterruptedException {
-            String forumId = getForumId();
-
-            final List<Message> messages = forumLogic.getMessages(forumId, from, to + 1);
-
-            stopIfExiting();
-
-            appLogic.saveMessages(forumId, messages);
-            appLogic.setLastSavedDate(forumId, new Date());
-        }
-
-        protected boolean processException(Exception e) {
-            exceptionsLogger.logException(e,
-                    "Exception in db daemon: " + getForumId(),
-                    getClass(),
-                    ExceptionCategory.DAEMON);
-
-            return false;
-        }
-
-        protected void cleanUp() {
-        }
+    @Override
+    protected int getFromIndex() {
+        return appLogic.getLastSavedMessageNumber(getForumId());
     }
 
-    protected Process createProcess() {
-        return new DbProcess();
+    @Override
+    protected int getEndIndex() throws ForumAccessException {
+        return forumLogic.getLastMessageNumber(getForumId());
+    }
+
+    @Override
+    protected void perform(int from, int to) throws ForumAccessException, InterruptedException {
+        String forumId = getForumId();
+
+        final List<Message> messages = forumLogic.getMessages(forumId, from, to + 1);
+
+        stopIfExiting();
+
+        appLogic.saveMessages(forumId, messages);
+        appLogic.setLastSavedDate(forumId, new Date());
+    }
+
+    protected boolean processException(Exception e) {
+        exceptionsLogger.logException(e,
+                "Exception in db daemon: " + getForumId(),
+                getClass(),
+                ExceptionCategory.DAEMON);
+
+        return false;
+    }
+
+    protected void cleanUp() {
     }
 }

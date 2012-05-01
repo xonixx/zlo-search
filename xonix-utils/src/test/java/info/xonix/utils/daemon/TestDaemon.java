@@ -35,48 +35,43 @@ public class TestDaemon extends IteratingDaemon {
     }
 
     @Override
-    protected Process createProcess() {
-        return new Process() {
-            @Override
-            protected int getFromIndex() throws Exception {
-                log.info(describe() + " - getFromIndex, start=" + start);
+    protected int getFromIndex() throws Exception {
+        log.info(describe() + " - getFromIndex, start=" + start);
 
-                work(workTime);
+        work(workTime);
 
-                return start;
-            }
+        return start;
+    }
 
-            @Override
-            protected int getEndIndex() throws Exception {
-                int _stop = stop;
-                log.info(describe() + " - getEndIndex, stop=" + _stop);
+    @Override
+    protected int getEndIndex() throws Exception {
+        int _stop = stop;
+        log.info(describe() + " - getEndIndex, stop=" + _stop);
 
-                work(workTime);
+        work(workTime);
 
-                stop += 50;
-                return _stop;
-            }
+        stop += 50;
+        return _stop;
+    }
 
-            @Override
-            protected void perform(int from, int to) throws Exception {
-                log.info(describe() + " - perform from=" + from + " to=" + to);
+    @Override
+    protected void perform(int from, int to) throws Exception {
+        log.info(describe() + " - perform from=" + from + " to=" + to);
 
-                work(workTime);
-            }
+        work(workTime);
+    }
 
-            @Override
-            protected boolean processException(Exception ex) {
-                log.error(describe() + " - processException", ex);
-                return false;
-            }
+    @Override
+    protected boolean processException(Exception ex) {
+        log.error(describe() + " - processException", ex);
+        return false;
+    }
 
-            @Override
-            protected void cleanUp() {
-                log.info(describe() + " - cleanUp will take " + cleanUpTime);
-                work(cleanUpTime);
-                log.info(describe() + " - cleanUp done.");
-            }
-        };
+    @Override
+    protected void cleanUp() {
+        log.info(describe() + " - cleanUp will take " + cleanUpTime);
+        work(cleanUpTime);
+        log.info(describe() + " - cleanUp done.");
     }
 
     private void work(final long interval) {
