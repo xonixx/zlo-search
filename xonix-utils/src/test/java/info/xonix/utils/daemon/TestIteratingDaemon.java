@@ -7,14 +7,14 @@ import org.apache.log4j.Logger;
  * Date: 16.04.12
  * Time: 15:53
  */
-public class TestDaemon extends IteratingDaemon {
+public class TestIteratingDaemon extends IteratingDaemon {
     private final Logger log = getLogger();
     private int start;
     private int stop;
     private long cleanUpTime;
     private long workTime;
 
-    public TestDaemon(
+    public TestIteratingDaemon(
             int doPerTime, long sleepPeriod, long retryPeriod,
             String forumId,
             int start, int stop, long cleanUpTime,
