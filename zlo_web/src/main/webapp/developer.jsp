@@ -13,8 +13,9 @@
 
     <ul>
         <li><strong><a href="about.jsp">О системе</a></strong> - информация о системе</li>
-        <li><strong><a href="ws.jsp">Веб-сервис</a></strong> - веб-сервис для бордопоиска</li>
+        <li><strong><a href="ws.jsp">Веб-сервис Бордопоиска</a></strong></li>
         <li><strong><a href="xmlfp/xmlfp.jsp">XMLFP</a></strong> - XML Forum Protocol</li>
+        <li><strong><a href="http://code.google.com/p/zlo-search/">Проект Бордопоиска на Google Code</a></strong></li>
     </ul>
 
     <%@ include file="/WEB-INF/jsp/version-footer.jsp" %>

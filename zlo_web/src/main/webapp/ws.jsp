@@ -18,8 +18,8 @@
     <a href="https://fedorahosted.org/suds/">suds</a>
     (<a href="http://zlo.rt.mipt.ru/?read=6939422">пример использования</a>).
 
-    Веб-метод search принимает поисковую строку, соответствующую формату
-    <a href="http://lucene.apache.org/java/3_0_2/queryparsersyntax.html">Lucene query parser</a>'a, при этом
+    Веб-метод search принимает поисковую строку, соответствующую
+    <a href="http://lucene.apache.org/core/3_6_0/queryparsersyntax.html">формату Lucene query parser</a>'a, при этом
     распознаются поля:
     <ul>
         <li>title - string</li>
