@@ -15,16 +15,24 @@ public class DaemonTests {
     public void test1() {
         DaemonManager daemonManager = new DaemonManager();
 
-        TestDaemon testDaemon1 = new TestDaemon(
+        daemonManager.startDaemon(new TestIteratingDaemon(
                 100, 5000, 1000,
-                "test-1", 0, 1020, 3000, 4000);
+                "test-1", 0, 1020, 3000, 4000));
 
-        TestDaemon testDaemon2 = new TestDaemon(
+        daemonManager.startDaemon(new TestIteratingDaemon(
                 100, 5020, 1000,
-                "test-2", 1070, 2000, 6666, 2000);
+                "test-2", 1070, 2000, 6666, 2000));
 
-        daemonManager.startDaemon(testDaemon1);
-        daemonManager.startDaemon(testDaemon2);
+        waitForever();
+    }
+
+    @Test
+    public void test2() {
+        DaemonManager daemonManager = new DaemonManager();
+
+        daemonManager.startDaemon(new RandomlyFailingDaemon("d01", .01f));
+        daemonManager.startDaemon(new RandomlyFailingDaemon("d1", .1f));
+        daemonManager.startDaemon(new RandomlyFailingDaemon("d2", .2f));
 
         waitForever();
     }
