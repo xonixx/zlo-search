@@ -8,6 +8,7 @@ import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.model.Topic;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -171,10 +172,14 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
 
     @Override
     public Message getMessageByNumber(String forumId, int num) {
-        return getSimpleJdbcTemplate().queryForObject(
-                queryProvider.getSelectMsgByIdQuery(forumId),
-                messageRowMapper,
-                num);
+        try {
+            return getSimpleJdbcTemplate().queryForObject(
+                    queryProvider.getSelectMsgByIdQuery(forumId),
+                    messageRowMapper,
+                    num);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override

@@ -4,6 +4,7 @@ import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageShallow;
 import info.xonix.zlo.search.model.Topic;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -16,6 +17,7 @@ public interface MessagesDao {
 
     void saveMessagesFast(String forumId, List<Message> msgs, boolean updateIfExists);
 
+    @Nullable
     Message getMessageByNumber(String forumId, int num);
 
     List<Message> getMessagesByRange(String forumId, int start, int end);
