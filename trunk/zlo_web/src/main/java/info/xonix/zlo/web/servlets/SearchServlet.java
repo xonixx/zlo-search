@@ -1,5 +1,6 @@
 package info.xonix.zlo.web.servlets;
 
+import info.xonix.utils.SafeUtils;
 import info.xonix.zlo.search.FoundTextHighlighter;
 import info.xonix.zlo.search.HttpHeader;
 import info.xonix.zlo.search.SearchResultPaginatedList;
@@ -21,6 +22,7 @@ import info.xonix.zlo.web.servlets.helpful.ForwardingRequest;
 import info.xonix.zlo.web.utils.CookieUtils;
 import info.xonix.zlo.web.utils.RequestUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.search.BooleanQuery;
 import org.eclipse.jetty.util.MultiMap;
@@ -354,29 +356,14 @@ public class SearchServlet extends BaseServlet {
     }
 
     private int processPageSize(ForwardingRequest request, HttpServletResponse response) {
-        int pageSize = 100; // default
         String pageSizeStrInd = request.getParameter(QS_PAGE_SIZE);
+        int idx = 0;
 
         if (StringUtils.isNotEmpty(pageSizeStrInd)) {
-            try {
-                pageSize = config.getNumsPerPage()[Integer.parseInt(pageSizeStrInd)];
-                CookieUtils.rememberInCookie(response, QS_PAGE_SIZE, pageSizeStrInd);
-            } catch (NumberFormatException ignored) {
-            } catch (ArrayIndexOutOfBoundsException ignored) {
-            }
-        } else {
-            String pageSizeStrIndCookie = CookieUtils.recallFromCookie(request, QS_PAGE_SIZE);
-            if (StringUtils.isNotEmpty(pageSizeStrIndCookie)) {
-                try {
-                    pageSize = config.getNumsPerPage()[Integer.parseInt(pageSizeStrIndCookie)];
-                    request.setParameter(QS_PAGE_SIZE, pageSizeStrIndCookie);
-                } catch (NumberFormatException ignored) {
-                } catch (ArrayIndexOutOfBoundsException ignored) {
-                }
-            } else {
-                pageSize = config.getNumsPerPage()[0];
-            }
+            idx = NumberUtils.toInt(pageSizeStrInd, 0);
         }
+
+        int pageSize = SafeUtils.safeGet(config.getNumsPerPage(), idx);
 
         request.setAttribute(REQ_PAGE_SIZE, pageSize);
 
