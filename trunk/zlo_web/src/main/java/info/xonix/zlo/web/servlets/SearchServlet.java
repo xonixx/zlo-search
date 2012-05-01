@@ -356,9 +356,10 @@ public class SearchServlet extends BaseServlet {
     private int processPageSize(ForwardingRequest request, HttpServletResponse response) {
         int pageSize = 100; // default
         String pageSizeStrInd = request.getParameter(QS_PAGE_SIZE);
+
         if (StringUtils.isNotEmpty(pageSizeStrInd)) {
             try {
-                pageSize = Integer.parseInt(config.getNumsPerPage()[Integer.parseInt(pageSizeStrInd)]);
+                pageSize = config.getNumsPerPage()[Integer.parseInt(pageSizeStrInd)];
                 CookieUtils.rememberInCookie(response, QS_PAGE_SIZE, pageSizeStrInd);
             } catch (NumberFormatException ignored) {
             } catch (ArrayIndexOutOfBoundsException ignored) {
@@ -367,16 +368,18 @@ public class SearchServlet extends BaseServlet {
             String pageSizeStrIndCookie = CookieUtils.recallFromCookie(request, QS_PAGE_SIZE);
             if (StringUtils.isNotEmpty(pageSizeStrIndCookie)) {
                 try {
-                    pageSize = Integer.parseInt(config.getNumsPerPage()[Integer.parseInt(pageSizeStrIndCookie)]);
+                    pageSize = config.getNumsPerPage()[Integer.parseInt(pageSizeStrIndCookie)];
                     request.setParameter(QS_PAGE_SIZE, pageSizeStrIndCookie);
                 } catch (NumberFormatException ignored) {
                 } catch (ArrayIndexOutOfBoundsException ignored) {
                 }
             } else {
-                pageSize = Integer.parseInt(config.getNumsPerPage()[0]);
+                pageSize = config.getNumsPerPage()[0];
             }
         }
+
         request.setAttribute(REQ_PAGE_SIZE, pageSize);
+
         return pageSize;
     }
 

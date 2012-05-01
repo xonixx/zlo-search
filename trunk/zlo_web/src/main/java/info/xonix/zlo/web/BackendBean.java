@@ -89,7 +89,17 @@ public class BackendBean {
     }
 
     public String getPageSizeSelector() {
-        return HtmlConstructor.constructSelector(SN_PAGE_SIZE, null, config.getNumsPerPage(), getPageSizeInt(), true);
+//        return HtmlConstructor.constructSelector(SN_PAGE_SIZE, null, config.getNumsPerPage(), getPageSizeInt(), true);
+        HtmlSelectBuilder numsPerPageSelectBuilder = new HtmlSelectBuilder()
+                .name(SN_PAGE_SIZE)
+                .value(Integer.toString(getPageSizeInt()));
+
+        final int[] numsPerPage = config.getNumsPerPage();
+        for (int i = 0; i < numsPerPage.length; i++) {
+            numsPerPageSelectBuilder.addOption(i, numsPerPage[i]);
+        }
+
+        return numsPerPageSelectBuilder.build();
     }
 
     public String getSortSelector() {
