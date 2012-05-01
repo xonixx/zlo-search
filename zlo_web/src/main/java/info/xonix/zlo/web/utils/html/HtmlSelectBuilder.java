@@ -41,6 +41,10 @@ public class HtmlSelectBuilder {
         return this;
     }
 
+    public HtmlSelectBuilder addOption(Object value, Object title) {
+        return addOption(value.toString(), title.toString());
+    }
+
     public String build() {
         if (name == null) {
             throw new IllegalArgumentException("name not set!");

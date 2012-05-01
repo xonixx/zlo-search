@@ -42,7 +42,7 @@ public class Config {
     // app props
     private String environment;
 
-    private String[] numsPerPage;
+    private int[] numsPerPage;
 
     private int buffer;
     private int retrieverThreadNum;
@@ -120,7 +120,7 @@ public class Config {
     private void initOtherProps() {
         environment = getProp("env.name");
 
-        numsPerPage = getProp("nums.per.page").split("\\|");
+        initNumsPerPage();
 
         buffer = Integer.parseInt(getProp("buffer", "512"));
         retrieverThreadNum = Integer.parseInt(getProp("retriever.threads"));
@@ -140,6 +140,14 @@ public class Config {
         startDaemons = getBoolProp("daemons.start");
 
         initPowerUserPwd();
+    }
+
+    private void initNumsPerPage() {
+        final String[] numsPerPageString = getProp("nums.per.page").split("\\|");
+        numsPerPage = new int[numsPerPageString.length];
+        for (int i = 0; i < numsPerPageString.length; i++) {
+            numsPerPage[i] = Integer.parseInt(numsPerPageString[i]);
+        }
     }
 
     private boolean getBoolProp(String key) {
@@ -253,7 +261,7 @@ public class Config {
         return environment;
     }
 
-    public String[] getNumsPerPage() {
+    public int[] getNumsPerPage() {
         return numsPerPage;
     }
 
