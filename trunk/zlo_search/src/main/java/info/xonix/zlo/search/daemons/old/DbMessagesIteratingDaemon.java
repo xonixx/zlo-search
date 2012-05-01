@@ -21,27 +21,18 @@ public abstract class DbMessagesIteratingDaemon extends IteratingDaemon {
 
     private static final Logger logger = Logger.getLogger(DbMessagesIteratingDaemon.class);
 
-    private class DbMessagesIterationProcess extends Process {
 
-        protected int getFromIndex() {
-            return dbDict.getInt(getForumId(), getIteratingVariableName(), 0);
-        }
+    protected int getFromIndex() {
+        return dbDict.getInt(getForumId(), getIteratingVariableName(), 0);
+    }
 
-        protected int getEndIndex() {
-            return appLogic.getLastSavedMessageNumber(getForumId());
-        }
+    protected int getEndIndex() {
+        return appLogic.getLastSavedMessageNumber(getForumId());
+    }
 
-        protected void perform(int from, int to) {
-            doWithMessages(appLogic.getMessages(getForumId(), from, to + 1));
-            dbDict.setInt(getForumId(), getIteratingVariableName(), to);
-        }
-
-        protected boolean processException(Exception ex) {
-            return false;
-        }
-
-        protected void cleanUp() {
-        }
+    protected void perform(int from, int to) {
+        doWithMessages(appLogic.getMessages(getForumId(), from, to + 1));
+        dbDict.setInt(getForumId(), getIteratingVariableName(), to);
     }
 
     protected DbMessagesIteratingDaemon(String forumId, int processPerTime) {
@@ -50,10 +41,6 @@ public abstract class DbMessagesIteratingDaemon extends IteratingDaemon {
 
     protected Logger getLogger() {
         return logger;
-    }
-
-    protected Process createProcess() {
-        return new DbMessagesIterationProcess();
     }
 
     protected void doReset() {

@@ -21,7 +21,25 @@ public abstract class IteratingDaemon extends Daemon {
         this.retryPeriod = retryPeriod;
     }
 
-    protected abstract class Process extends Daemon.Process {
+    protected abstract int getFromIndex() throws Exception;
+
+    protected abstract int getEndIndex() throws Exception;
+
+    protected abstract void perform(int from, int to) throws Exception;
+
+    protected boolean processException(Exception ex) {
+        return false;
+    }
+
+    protected void cleanUp() {
+        // do nothing by default
+    }
+
+    protected void stopIfExiting() throws InterruptedException {
+        getProcess().stopIfExiting();
+    }
+
+    private class IteratingProcess extends Daemon.Process {
         public void run() {
             while (true) {
                 try {
@@ -38,6 +56,7 @@ public abstract class IteratingDaemon extends Daemon {
                 }
             }
         }
+
         private int indexFrom = -1;
         private int end = -1;
 
@@ -96,10 +115,19 @@ public abstract class IteratingDaemon extends Daemon {
             perform(from, to);
         }
 
-        protected abstract int getFromIndex() throws Exception;
+        @Override
+        protected boolean processException(Exception ex) {
+            return IteratingDaemon.this.processException(ex);
+        }
 
-        protected abstract int getEndIndex() throws Exception;
+        @Override
+        protected void cleanUp() {
+            IteratingDaemon.this.cleanUp();
+        }
+    }
 
-        protected abstract void perform(int from, int to) throws Exception;
+    @Override
+    protected Daemon.Process createProcess() {
+        return new IteratingProcess();
     }
 }
