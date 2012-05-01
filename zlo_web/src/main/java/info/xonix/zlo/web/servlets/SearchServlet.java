@@ -150,17 +150,12 @@ public class SearchServlet extends BaseServlet {
                 request.setParameter(QS_TOPIC_CODE, "-1"); // all
             }
 
+            int topicCode = NumberUtils.toInt(topicCodeStr, -1/* all */);
+
             // set default search type
             String searchType = request.getParameter(QS_SEARCH_TYPE);
             if (StringUtils.isEmpty(searchType)) {
                 request.setParameter(QS_SEARCH_TYPE, SEARCH_TYPE_ALL);
-            }
-
-            int topicCode;
-            try {
-                topicCode = Integer.parseInt(topicCodeStr);
-            } catch (NumberFormatException e) {
-                topicCode = -1; // all
             }
 
             // default values for checkboxes
@@ -343,10 +338,8 @@ public class SearchServlet extends BaseServlet {
         int pageNumber;
         final String pageNumberStr = request.getParameter(QS_PAGE_NUMBER);
         if (StringUtils.isNotEmpty(pageNumberStr)) {
-            try {
-                pageNumber = Integer.parseInt(pageNumberStr);
-                pageNumber = pageNumber <= 0 ? 1 : pageNumber;
-            } catch (NumberFormatException e) {
+            pageNumber = NumberUtils.toInt(pageNumberStr, 1);
+            if (pageNumber <= 0) {
                 pageNumber = 1;
             }
         } else {
