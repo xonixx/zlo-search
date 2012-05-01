@@ -2,6 +2,7 @@ package info.xonix.zlo.search.logic;
 
 import info.xonix.zlo.search.model.Message;
 
+import javax.annotation.Nullable;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +31,7 @@ public interface AppLogic {
      * @param num  message id
      * @return message obj
      */
+    @Nullable
     Message getMessageByNumber(String forumId, int num);
 
     /**
