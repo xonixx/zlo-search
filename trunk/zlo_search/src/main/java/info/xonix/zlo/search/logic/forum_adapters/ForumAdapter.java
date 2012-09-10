@@ -15,10 +15,11 @@ public interface ForumAdapter {
     public Message getMessage(String forumId, long messageId) throws ForumAccessException;
 
     /**
-     * @param forumId
-     * @param from (including)
-     * @param to (excluding)
-     * @return
+     *
+     * @param forumId           forumId
+     * @param from              (including)
+     * @param to                (excluding)
+     * @return list of messages
      * @throws ForumAccessException
      */
     List<Message> getMessages(String forumId, long from, long to) throws ForumAccessException;
@@ -35,6 +36,7 @@ public interface ForumAdapter {
 
     /**
      * This function is necessary for implementing saved msg view when msg forum url entered to search
+     *
      * @param messageUrl messageUrl
      * @return message id or -1 if in can't be exctracted
      */
