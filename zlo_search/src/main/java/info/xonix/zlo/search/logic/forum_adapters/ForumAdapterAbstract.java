@@ -1,5 +1,6 @@
 package info.xonix.zlo.search.logic.forum_adapters;
 
+import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.model.Message;
 import org.apache.log4j.Logger;
 
@@ -23,13 +24,11 @@ public abstract class ForumAdapterAbstract implements ForumAdapter {
     }
 
     /**
-     *
-     * @param forumId
-     * @param from (including)
-     * @param to   (excluding)
+     * @param forumId forumId
+     * @param from    (including)
+     * @param to      (excluding)
      * @return list of received messages
      * @throws ForumAccessException if can't get msg from site
-     * TODO: implement limit by time
      */
     @Override
     public List<Message> getMessages(String forumId, long from, long to) throws ForumAccessException {
@@ -40,7 +39,19 @@ public abstract class ForumAdapterAbstract implements ForumAdapter {
         List<Message> messages = new ArrayList<Message>((int) (to - from));
 
         for (long messageId = from; messageId < to; messageId++) {
+            long t1 = System.currentTimeMillis();
+
             messages.add(getMessageWithRetrying(forumId, messageId));
+
+            long delta = System.currentTimeMillis() - t1;
+            long toSleep = 1000 / GetForum.params(forumId).getIndexerLimitPerSecond() - delta;
+            if (toSleep > 0) {
+                try {
+                    Thread.sleep(toSleep);
+                } catch (InterruptedException e) {
+                    log.warn("This should not happen!", e);
+                }
+            }
         }
 
         return messages;
@@ -55,7 +66,7 @@ public abstract class ForumAdapterAbstract implements ForumAdapter {
                     throw e;
                 }
 
-                log.warn("Problem getting message #" + messageId + ". Retrying...");
+                log.warn("Problem getting message #" + messageId + " for " + forumId + ". Retrying...");
             }
         }
 
@@ -66,7 +77,7 @@ public abstract class ForumAdapterAbstract implements ForumAdapter {
     public long extractMessageIdFromMessageUrl(String messageUrl) {
         return -1;
     }
-    
+
     @Override
     public String getForumHost() {
         try {
