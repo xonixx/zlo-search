@@ -15,3 +15,11 @@
     text-align: left;
     background-color: gold;
 }
+
+caption {
+    font-weight: bold;
+}
+
+table form {
+    margin-bottom: 0;
+}

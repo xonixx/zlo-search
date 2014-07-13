@@ -69,7 +69,7 @@
     <h3>${title}</h3>
 
     <form action="nickhost.jsp" method="get">
-        Сайт:
+        Форум:
         <jsp:getProperty name="backendBean" property="siteSelector"/>
         <br/>
         <input type="radio" name="w" value="n" id="nick" <c:if test="${isNick}">checked="checked"</c:if>><label

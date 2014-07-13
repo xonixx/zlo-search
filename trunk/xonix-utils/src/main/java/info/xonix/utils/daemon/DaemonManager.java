@@ -71,7 +71,7 @@ public class DaemonManager {
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             @Override
             public void run() {
-                shutdown(true);
+                shutdownAll(true);
             }
         }));
     }
@@ -86,7 +86,7 @@ public class DaemonManager {
         return this;
     }
 
-    public void shutdown(boolean waitAllExit) {
+    public void shutdownAll(boolean waitAllExit) {
         log.info("Shutting down " + daemons.size() + " daemons...");
 
         for (Daemon daemon : daemons) {
@@ -130,6 +130,8 @@ public class DaemonManager {
                 }
             }
         }
+
+        daemons.clear();
     }
 
     private void waitTermOneTime() {

@@ -29,4 +29,8 @@ public class DaemonLauncher {
             }
         }
     }
+
+    public static void shutdownAll() {
+        daemonManager.shutdownAll(true);
+    }
 }
