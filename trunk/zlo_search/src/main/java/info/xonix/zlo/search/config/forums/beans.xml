@@ -90,7 +90,7 @@
                     </constructor-arg>
                 </bean>
 
-                <bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
+                <!--<bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
                     <constructor-arg value="10"/>
 
                     <constructor-arg value="dolgopa"/>
@@ -110,7 +110,7 @@
                             </constructor-arg>
                         </bean>
                     </constructor-arg>
-                </bean>
+                </bean>-->
 
                 <bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
                     <constructor-arg value="6"/>
@@ -134,7 +134,7 @@
                     </constructor-arg>
                 </bean>
 
-                <bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
+                <!--<bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
                     <constructor-arg value="9"/>
 
                     <constructor-arg value="x"/>
@@ -154,7 +154,8 @@
                             </constructor-arg>
                         </bean>
                     </constructor-arg>
-                </bean>
+                    <property name="dead" value="true"/>
+                </bean>-->
 
                 <!--<bean class="info.xonix.zlo.search.config.forums.ForumDescriptor">
                     <constructor-arg value="4"/>

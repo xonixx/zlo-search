@@ -8,11 +8,12 @@ import info.xonix.zlo.search.logic.forum_adapters.ForumAdapter;
  * Time: 2:13
  */
 public class ForumDescriptor {
-    private int forumIntId;
-    private String forumId;
+    private final int forumIntId;
+    private final String forumId;
 
-    private ForumParams forumParams;
-    private ForumAdapter forumAdapter;
+    private final ForumParams forumParams;
+    private final ForumAdapter forumAdapter;
+    private boolean dead;
 
     public ForumDescriptor(
             int forumIntId,
@@ -25,6 +26,14 @@ public class ForumDescriptor {
 
         this.forumParams = forumParams;
         this.forumAdapter = forumAdapter;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
+
+    public boolean isDead() {
+        return dead;
     }
 
     public String getForumId() {

@@ -15,8 +15,6 @@ import java.util.Properties;
  */
 public class ForumParams {
     // index
-    private boolean performIndexing;
-
     private int indexerIndexPerTime;
     private int indexerIndexPeriod;
     private int indexerReconnectPeriod;
@@ -35,8 +33,6 @@ public class ForumParams {
 
     private void init(Properties p) {
         // indexer-----
-        performIndexing = Config.isTrue(p.getProperty("indexer.perform.indexing"));
-
         indexerIndexPerTime = Integer.parseInt(p.getProperty("indexer.daemon.index.per.time"));
         indexerIndexPeriod = TimeUtils.parseToMilliSeconds(p.getProperty("indexer.daemon.period.to.index"));
         indexerReconnectPeriod = TimeUtils.parseToMilliSeconds(p.getProperty("indexer.daemon.period.to.reconnect"));
@@ -48,10 +44,6 @@ public class ForumParams {
         dbReconnectPeriod = TimeUtils.parseToMilliSeconds(p.getProperty("db.daemon.period.to.reconnect"));
 
 //        siteNumber = Integer.parseInt(p.getProperty("site.number"));
-    }
-
-    public boolean isPerformIndexing() {
-        return performIndexing;
     }
 
     public int getIndexerIndexPerTime() {
