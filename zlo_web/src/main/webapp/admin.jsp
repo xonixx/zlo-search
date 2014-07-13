@@ -1,9 +1,9 @@
 <%@ page import="info.xonix.utils.daemon.DaemonManager" %>
 <%@ page import="info.xonix.zlo.search.config.forums.GetForum" %>
 <%@ page import="info.xonix.zlo.search.index.IndexManager" %>
-<%@ page import="info.xonix.zlo.search.progs.OptimizeAllIndexes" %>
 <%@ page import="info.xonix.zlo.search.utils.SysUtils" %>
 <%@ page import="info.xonix.zlo.web.logic.AdminLogic" %>
+<%@ page import="info.xonix.zlo.search.logic.AppLogic" %>
 <%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
@@ -13,7 +13,8 @@
 <link rel="stylesheet" type="text/css" href="admin.css"/>
 
 <%!
-    private static DaemonManager daemonManager = AppSpringContext.get(DaemonManager.class);
+    private static final DaemonManager daemonManager = AppSpringContext.get(DaemonManager.class);
+    private static final AppLogic appLogic = AppSpringContext.get(AppLogic.class);
 %>
 
 <title>Admin area</title>
@@ -36,16 +37,13 @@
     <%
         if ("POST".equals(request.getMethod())) {
             final String command = request.getParameter("command");
-            if ("Optimize".equals(command)) {
-                new OptimizeAllIndexes().optimizeRestartDaemons();
-
-                response.sendRedirect("admin.jsp");
-                return;
-            } else if ("GC".equals(command)) {
+            if ("GC".equals(command)) {
                 SysUtils.gc();
-                response.sendRedirect("admin.jsp");
-                return;
+            } else if ("Reindex".equals(command)) {
+                AdminLogic.reindex(request.getParameter("forumId"));
             }
+            response.sendRedirect("admin.jsp");
+            return;
         }
     %>
 
@@ -72,6 +70,7 @@
         </tr>
     </table>
 
+    <br/>
     <display:table id="daemon" name="<%= daemonManager.listDaemons() %>">
         <display:caption>Daemons</display:caption>
 
@@ -88,11 +87,12 @@
         </display:column>
     </display:table>
 
+    <br/>
     <display:table id="forumId" name="<%= GetForum.ids() %>">
         <c:set var="adapter" value="<%= GetForum.adapter((String) forumId) %>"/>
         <c:set var="indexManager" value="<%= IndexManager.get((String) forumId) %>"/>
 
-        <display:caption>Sites</display:caption>
+        <display:caption>Forums</display:caption>
 
         <display:column title="#">${forumId_rowNum}</display:column>
         <display:column title="Name">${forumId}</display:column>
@@ -100,6 +100,18 @@
         <display:column title="Index">${indexManager.indexDir}</display:column>
         <display:column title="Index Size">
             <fmt:formatNumber value="${indexManager.indexSize / mb}" pattern="#.##"/>
+        </display:column>
+        <display:column title="Last Saved">
+            <%= appLogic.getLastSavedMessageNumber((String) forumId) %>
+        </display:column>
+        <display:column title="Last Indexed">
+            <%= appLogic.getLastIndexedNumber((String) forumId) %>
+        </display:column>
+        <display:column>
+            <form action="admin.jsp" method="post" onclick="return confirm('Are you sure want to reindex ${forumId}?')">
+                <input type="hidden" name="forumId" value="${forumId}">
+                <input type="submit" name="command" value="Reindex"/>
+            </form>
         </display:column>
     </display:table>
 </div>

@@ -66,7 +66,7 @@
     <h3>${title}</h3>
 
     <form action="stats.jsp" method="get">
-        Сайт:
+        Форум:
         <jsp:getProperty name="backendBean" property="siteSelector"/>
         <br/>
         По:

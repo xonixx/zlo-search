@@ -1,5 +1,9 @@
 package info.xonix.zlo.web.logic;
 
+import info.xonix.zlo.search.daemons.DaemonLauncher;
+import info.xonix.zlo.search.logic.AppLogic;
+import info.xonix.zlo.search.spring.AppSpringContext;
+
 import javax.servlet.ServletContext;
 import javax.servlet.jsp.JspFactory;
 import java.util.LinkedHashMap;
@@ -11,6 +15,8 @@ import java.util.Map;
  * Time: 14:54
  */
 public class AdminLogic {
+    private static AppLogic appLogic = AppSpringContext.get(AppLogic.class);
+
     public static final float MEGABYTE = 1024 * 1024f;
 
     public static Map<String, Float> memoryReport() {
@@ -25,14 +31,6 @@ public class AdminLogic {
     }
 
     public static Map<String, String> versionsReport(ServletContext application) {
-        /*
-        Server info = <%= application.getServerInfo() %> <br>
-        Servlet engine version = <%=  application.getMajorVersion() %>.<%= application.getMinorVersion() %><br>
-        JSP version = <%= JspFactory.getDefaultFactory().getEngineInfo().getSpecificationVersion() %><br>
-        Java version = <%= System.getProperty("java.version") %><br>
-        Java VM version = <%= System.getProperty("java.vm.version") %><br>
-         */
-        
         Map<String ,String > versions = new LinkedHashMap<String, String>();
 
         versions.put("Server Info", application.getServerInfo());
@@ -42,5 +40,13 @@ public class AdminLogic {
         versions.put("Java VM Version", System.getProperty("java.vm.version"));
 
         return versions;
+    }
+
+    public static void reindex(String forumId) {
+        DaemonLauncher.shutdownAll();
+
+        appLogic.setLastIndexedNumber(forumId, -1);
+
+        DaemonLauncher.startAllActive();
     }
 }

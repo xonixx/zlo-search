@@ -9,7 +9,7 @@ import info.xonix.zlo.search.spring.AppSpringContext;
  * Date: 28.04.12
  * Time: 19:15
  */
-public abstract class BaseSearcherDaemon extends IteratingDaemon{
+public abstract class BaseSearcherDaemon extends IteratingDaemon {
     ExceptionsLogger exceptionsLogger = AppSpringContext.get(ExceptionsLogger.class);
 
     protected BaseSearcherDaemon(String forumId, int doPerTime, long sleepPeriod, long retryPeriod) {

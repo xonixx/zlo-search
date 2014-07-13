@@ -93,7 +93,7 @@
         <display:column property="searchText" title="Текст"/>
         <display:column property="searchNick" title="Ник поиска"/>
         <display:column property="searchHost" title="Хост поиска"/>
-        <display:column title="Сайт">
+        <display:column title="Форум">
             <% ForumDescriptor descriptor = GetForum.descriptor((Integer) ((Map) row).get("site")); %>
             <% ForumAdapter adapter = descriptor.getForumAdapter(); %>
             <% if (adapter != null) { %>

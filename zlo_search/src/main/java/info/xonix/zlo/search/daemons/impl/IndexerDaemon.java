@@ -63,14 +63,6 @@ public class IndexerDaemon extends BaseSearcherDaemon {
         return false;
     }
 
-    protected void cleanUp() {
-/*            try {
-                getIndexer().getWriter().close();
-            } catch (IOException e) {
-                log.warn(getSiteName() + " - Can't close writer: ", e);
-            }*/
-    }
-
     public void doOnStart() {
         log.info("Starting indexing to " + getForumId() + " index...");
 
