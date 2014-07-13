@@ -1,4 +1,4 @@
-package info.xonix.zlo.web;
+package info.xonix.zlo.web.listeners;
 
 import info.xonix.zlo.search.spring.AppSpringContext;
 
