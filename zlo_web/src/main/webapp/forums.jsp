@@ -24,22 +24,20 @@
     <c:set var="forumDescriptors" value="<%= GetForum.descriptors() %>"/>
 
     <display:table id="descriptor" htmlId="resultTable" name="${forumDescriptors}">
-        <c:set var="adaptor" value="${descriptor.forumAdapter}" />
+        <c:set var="adaptor" value="${descriptor.forumAdapter}"/>
 
         <display:column title="Ссылка">
-            <c:set var="siteUrl" value="${adaptor.forumUrl}"/>
-            <%--<c:if test="${
-                not f:endsWith(siteUrl, '.cgi') and
-                not f:endsWith(siteUrl, '.exe')
-            }">
-                <c:set var="siteUrl" value="${siteUrl}"/>
-            </c:if>--%>
-            <c:set var="url" value="${siteUrl}"/>
-            <a href="${url}">${url}</a>
+            <c:set var="url" value="${adaptor.forumUrl}"/>
+            <c:choose>
+                <c:when test="${descriptor.dead}">
+                    <del>${url}</del>
+                </c:when>
+                <c:otherwise><a href="${url}">${url}</a></c:otherwise>
+            </c:choose>
         </display:column>
         <display:column title="Описание">
             <c:choose>
-                <c:when test="${not descriptor.forumParams.performIndexing}">
+                <c:when test="${descriptor.dead}">
                     <strike><c:out value="${adaptor.forumTitle}"/></strike>
                 </c:when>
                 <c:otherwise><c:out value="${adaptor.forumTitle}"/></c:otherwise>
@@ -51,7 +49,7 @@
 
         <display:column title="Сервисы">
             <a href="search?site=${descriptor.forumIntId}" class="search">(Поиск)</a>
-            <a href="stats.jsp?site=${descriptor.forumIntId}" class="search">(Статистика)</a>
+            <c:if test="${!descriptor.dead}"><a href="stats.jsp?site=${descriptor.forumIntId}" class="search">(Статистика)</a></c:if>
             <a href="nickhost.jsp?site=${descriptor.forumIntId}" class="search">(Ники/Хосты)</a>
         </display:column>
 

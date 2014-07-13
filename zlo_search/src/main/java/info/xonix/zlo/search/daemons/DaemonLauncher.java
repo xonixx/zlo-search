@@ -19,13 +19,13 @@ public class DaemonLauncher {
 
     public static void startAllActive() {
         for (String forumId : GetForum.ids()) {
-            if (GetForum.params(forumId).isPerformIndexing()) {
+            if (!GetForum.descriptor(forumId).isDead()) {
                 log.info("Starting daemons for: " + forumId);
 
                 daemonManager.startDaemon(new DownloaderDaemon(forumId));
                 daemonManager.startDaemon(new IndexerDaemon(forumId));
             } else {
-                log.info("Not starting daemons for: " + forumId);
+                log.info("Not starting daemons for dead forum: " + forumId);
             }
         }
     }

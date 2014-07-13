@@ -57,7 +57,7 @@ public class GetForum {
                     .append("\t:\t")
                     .append(forumDescriptor.getForumId());
 
-            if (!forumDescriptor.getForumParams().isPerformIndexing()) {
+            if (forumDescriptor.isDead()) {
                 report.append(" [dead]");
             }
 
