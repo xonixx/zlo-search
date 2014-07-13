@@ -24,17 +24,6 @@ public final class SysUtils {
         System.gc();
         System.gc();
 
-/*        System.gc();
-        System.gc();
-        System.gc();
-        System.gc();
-        System.gc();
-        System.gc();
-        System.gc();
-        System.gc();
-        System.gc();
-        System.gc();*/
-
         log.info("GC done...");
     }
 }
