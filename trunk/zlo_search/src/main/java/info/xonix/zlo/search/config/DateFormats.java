@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 /**
+ * TODO: dateformats are not thread-safe!!!
  * User: Vovan
  * Date: 09.07.2010
  * Time: 22:10:32

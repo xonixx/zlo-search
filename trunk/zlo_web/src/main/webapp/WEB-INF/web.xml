@@ -9,6 +9,10 @@
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
+    <listener>
+        <listener-class>info.xonix.zlo.web.AppServletContextListener</listener-class>
+    </listener>
+
     <servlet>
         <description>Search servlet</description>
         <servlet-name>search</servlet-name>
