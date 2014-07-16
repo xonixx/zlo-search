@@ -3,7 +3,7 @@
 
 <%@ include file="import_taglibs.jsp" %>
 
-<fmt:setBundle basename="info.xonix.zlo.search.config.config"/>
+<fmt:setBundle basename="info.xonix.zlo.web.i18n.messages"/>
 <fmt:setLocale value="ru_RU" scope="request"/>
 
 <sql:setDataSource dataSource='<%= AppSpringContext.get("dataSource") %>'/>

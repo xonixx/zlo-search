@@ -18,6 +18,7 @@ import javax.naming.NamingException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Properties;
 
 /**
@@ -173,7 +174,7 @@ public class Config {
                 System.out.println("\t-> found");
             }
 
-            pr.load(resourceAsStream);
+            pr.load(new InputStreamReader(resourceAsStream, UTF_8));
 
         } catch (IOException e) {
             throw new RuntimeException("Can't load config: " + path, e);

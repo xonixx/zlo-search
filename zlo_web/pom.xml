@@ -55,6 +55,27 @@
                     </webResources>
                 </configuration>
             </plugin>
+            <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>native2ascii-maven-plugin</artifactId>
+            <version>1.0-beta-1</version>
+            <executions>
+            <execution>
+                <id>native2ascii-utf8-resources</id>
+                <goals>
+                    <goal>native2ascii</goal>
+                </goals>
+                <configuration>
+                    <!--<dest>target/resources</dest>-->
+                    <!--<src>src/main/resources</src>-->
+                    <encoding>UTF8</encoding>
+                    <!--<includes>
+                        <include>/info/xonix/zlo/web/i18n/messages.properties</include>
+                    </includes>-->
+                </configuration>
+            </execution>
+            </executions>
+            </plugin>
         </plugins>
     </build>
 
