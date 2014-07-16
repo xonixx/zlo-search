@@ -124,7 +124,7 @@
                     <fmt:message key="label.to.date"/> <input type="text" name="td" id="td"
                                                               value="<c:out value="${requestScope['td']}" />"/>
                     <br/>
-                    <fmt:message key="label.site"/>
+                    <fmt:message key="label.forum"/>
                     <jsp:getProperty name="backendBean" property="siteSelector"/>
                     <script type="text/javascript">
                         document.getElementsByName("text")[0].focus();
