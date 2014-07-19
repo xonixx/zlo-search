@@ -30,10 +30,11 @@
 <html ng-app="search">
 <head>
     <title><fmt:message key="page.title"/></title>
+
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap${minSuffix}.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap-theme${minSuffix}.css"/>
+
     <%@ include file="/WEB-INF/jsp/commonJsCss.jsp" %>
-    <c:if test="${not isError and isSearchResultPresent}">
-        <link rel="alternate" type="application/rss+xml" title="RSS" href="${rssUrl}">
-    </c:if>
 
     <%--jQuery--%>
     <link rel="stylesheet" type="text/css" href="lib/jq/themes/base/jquery.ui.core.css"/>
@@ -48,9 +49,15 @@
     <%--jQuery ends--%>
 
     <script type="text/javascript" src="lib/angular/angular${minSuffix}.js"></script>
+    <script type="text/javascript" src="lib/angular-strap/angular-strap${minSuffix}.js"></script>
+    <script type="text/javascript" src="lib/angular-strap/angular-strap.tpl${minSuffix}.js"></script>
 
     <script type="text/javascript" src="js/script.js?${version}"></script>
     <script type="text/javascript" src="pic/lulz/db.js"></script>
+
+    <c:if test="${not isError and isSearchResultPresent}">
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="${rssUrl}">
+    </c:if>
 </head>
 <body>
 <tiles:insertDefinition name="header.search"/>
@@ -122,10 +129,12 @@
                            ng-init="searchByDates=${not empty param['dates']}"/>
                     <label for="dates"><fmt:message key="label.dates"/></label>
 
-                    <fmt:message key="label.from.date"/> <input type="text" name="fd" id="fd" ng-disabled="!searchByDates"
-                                                                value="<c:out value="${requestScope['fd']}" />"/>
-                    <fmt:message key="label.to.date"/> <input type="text" name="td" id="td" ng-disabled="!searchByDates"
-                                                              value="<c:out value="${requestScope['td']}" />"/>
+                    <fmt:message key="label.from.date"/>
+                    <input type="text" name="fd" id="fd" ng-disabled="!searchByDates" ng-model="fromDate" bs-datepicker=""
+                           value="<c:out value="${requestScope['fd']}" />"/>
+                    <fmt:message key="label.to.date"/>
+                    <input type="text" name="td" id="td" ng-disabled="!searchByDates" ng-model="toDate" bs-datepicker=""
+                           value="<c:out value="${requestScope['td']}" />"/>
                     <br/>
                     <fmt:message key="label.forum"/>
                     <jsp:getProperty name="backendBean" property="siteSelector"/>
@@ -151,7 +160,7 @@
                             <tr>
                                 <td><fmt:message key="label.last.indexed.msg"/></td>
                                 <td <c:if test="${lastSavedN - lastIndexedN > 1000}">style="color: red"</c:if>>
-                                ${lastIndexedN}</td>
+                                        ${lastIndexedN}</td>
                                 <td>(<fmt:formatDate value="${requestScope['lastMsgs_dates'][1]}"
                                                      pattern="dd/MM/yyyy HH:mm"/>)
                                 </td>
