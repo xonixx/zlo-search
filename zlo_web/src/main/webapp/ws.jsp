@@ -1,7 +1,7 @@
 <%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<link rel="stylesheet" type="text/css" href="main.css"/>
+<link rel="stylesheet" type="text/css" href="css/main.css"/>
 
 <c:set var="title">Web Service поиска</c:set>
 <title>${title}</title>

@@ -30,24 +30,24 @@
 <html>
 <head>
     <title><fmt:message key="page.title"/></title>
-    <link rel="stylesheet" type="text/css" href="main.css"/>
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
     <c:if test="${not isError and isSearchResultPresent}">
         <link rel="alternate" type="application/rss+xml" title="RSS" href="${rssUrl}">
     </c:if>
 
     <%--jQuery--%>
-    <link rel="stylesheet" type="text/css" href="jq/themes/base/jquery.ui.core.css"/>
-    <link rel="stylesheet" type="text/css" href="jq/themes/base/jquery.ui.theme.css"/>
-    <link rel="stylesheet" type="text/css" href="jq/themes/base/jquery.ui.autocomplete.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/jq/themes/base/jquery.ui.core.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/jq/themes/base/jquery.ui.theme.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/jq/themes/base/jquery.ui.autocomplete.css"/>
 
-    <script type="text/javascript" src="jq/jquery-1.6.2.min.js"></script>
-    <script type="text/javascript" src="jq/jquery.ui.core.min.js"></script>
-    <script type="text/javascript" src="jq/jquery.ui.widget.min.js"></script>
-    <script type="text/javascript" src="jq/jquery.ui.position.min.js"></script>
-    <script type="text/javascript" src="jq/jquery.ui.autocomplete.min.js"></script>
+    <script type="text/javascript" src="lib/jq/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="lib/jq/jquery.ui.core.min.js"></script>
+    <script type="text/javascript" src="lib/jq/jquery.ui.widget.min.js"></script>
+    <script type="text/javascript" src="lib/jq/jquery.ui.position.min.js"></script>
+    <script type="text/javascript" src="lib/jq/jquery.ui.autocomplete.min.js"></script>
     <%--jQuery ends--%>
 
-    <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
     <script type="text/javascript" src="pic/lulz/db.js"></script>
 </head>
 <body>

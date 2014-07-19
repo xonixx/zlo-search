@@ -9,8 +9,8 @@
 
 <%@ include file="WEB-INF/jsp/restrictAccess.jsp" %>
 
-<link rel="stylesheet" type="text/css" href="main.css"/>
-<link rel="stylesheet" type="text/css" href="admin.css"/>
+<link rel="stylesheet" type="text/css" href="css/main.css"/>
+<link rel="stylesheet" type="text/css" href="css/admin.css"/>
 
 <%!
     private static final DaemonManager daemonManager = AppSpringContext.get(DaemonManager.class);
