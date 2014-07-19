@@ -3,8 +3,8 @@
 
 <%@ include file="WEB-INF/jsp/restrictAccess.jsp" %>
 
-<link rel="stylesheet" type="text/css" href="main.css"/>
-<link rel="stylesheet" type="text/css" href="db.css"/>
+<link rel="stylesheet" type="text/css" href="css/main.css"/>
+<link rel="stylesheet" type="text/css" href="css/db.css"/>
 
 <tiles:insertDefinition name="header.admin"/>
 
