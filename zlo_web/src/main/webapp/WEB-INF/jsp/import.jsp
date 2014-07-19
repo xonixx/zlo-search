@@ -7,3 +7,4 @@
 <fmt:setLocale value="ru_RU" scope="request"/>
 
 <sql:setDataSource dataSource='<%= AppSpringContext.get("dataSource") %>'/>
+<c:set var="minSuffix" value='<%= "1".equals(System.getenv("development")) ? "" : ".min" %>'/>
