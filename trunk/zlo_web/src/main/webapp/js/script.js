@@ -1,10 +1,3 @@
-function changedDatesSelector() {
-    var datesSelector = document.getElementById("dates");
-    document.getElementById("fd").disabled =
-        document.getElementById("td").disabled = !datesSelector.checked;
-    return true;
-}
-
 function initAutocomplete() {
     $('#text').autocomplete({
         source: function (search, cb) {
@@ -27,7 +20,14 @@ function initAutocomplete() {
 }
 
 $(function () {
-    changedDatesSelector();
+    document.getElementsByName("text")[0].focus();
+    document.getElementsByName("site")[0].onchange = function () {
+        document.getElementsByName("topic")[0].selectedIndex = 0;
+        document.getElementById("searchFrm").submit();
+    };
+
     initAutocomplete();
     dbInit();
 });
+
+angular.module('search', []);

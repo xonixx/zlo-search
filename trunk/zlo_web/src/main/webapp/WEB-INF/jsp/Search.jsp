@@ -27,7 +27,7 @@
 </c:set>
 
 <!-- ПРЕВЕД -->
-<html>
+<html ng-app="search">
 <head>
     <title><fmt:message key="page.title"/></title>
     <link rel="stylesheet" type="text/css" href="css/main.css"/>
@@ -46,6 +46,8 @@
     <script type="text/javascript" src="lib/jq/jquery.ui.position.min.js"></script>
     <script type="text/javascript" src="lib/jq/jquery.ui.autocomplete.min.js"></script>
     <%--jQuery ends--%>
+
+    <script type="text/javascript" src="lib/angular/angular${minSuffix}.js"></script>
 
     <script type="text/javascript" src="js/script.js"></script>
     <script type="text/javascript" src="pic/lulz/db.js"></script>
@@ -116,23 +118,17 @@
                                                            <c:if test="${not empty param['host']}">value="<c:out value="${param['host']}" />"
                                                            </c:if>style="width:200px;"/>
                     <br/>
-                    <input type="checkbox" name="dates" id="dates" onclick="changedDatesSelector();"
-                           <c:if test="${not empty param['dates']}">checked="checked"</c:if>/> <label
-                        for="dates"><fmt:message key="label.dates"/></label>
-                    <fmt:message key="label.from.date"/> <input type="text" name="fd" id="fd"
+                    <input type="checkbox" name="dates" id="dates" ng-model="searchByDates"
+                           ng-init="searchByDates=${not empty param['dates']}"/>
+                    <label for="dates"><fmt:message key="label.dates"/></label>
+
+                    <fmt:message key="label.from.date"/> <input type="text" name="fd" id="fd" ng-disabled="!searchByDates"
                                                                 value="<c:out value="${requestScope['fd']}" />"/>
-                    <fmt:message key="label.to.date"/> <input type="text" name="td" id="td"
+                    <fmt:message key="label.to.date"/> <input type="text" name="td" id="td" ng-disabled="!searchByDates"
                                                               value="<c:out value="${requestScope['td']}" />"/>
                     <br/>
                     <fmt:message key="label.forum"/>
                     <jsp:getProperty name="backendBean" property="siteSelector"/>
-                    <script type="text/javascript">
-                        document.getElementsByName("text")[0].focus();
-                        document.getElementsByName("site")[0].onchange = function () {
-                            document.getElementsByName("topic")[0].selectedIndex = 0;
-                            document.getElementById("searchFrm").submit();
-                        }
-                    </script>
                     <fmt:message key="label.per.page"/>
                     <jsp:getProperty name="backendBean" property="pageSizeSelector"/>
 
