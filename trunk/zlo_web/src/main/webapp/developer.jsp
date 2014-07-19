@@ -1,7 +1,7 @@
 <%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<link rel="stylesheet" type="text/css" href="css/main.css"/>
+<%@ include file="WEB-INF/jsp/commonJsCss.jsp" %>
 
 <c:set var="title">Разработчику</c:set>
 <title>${title}</title>

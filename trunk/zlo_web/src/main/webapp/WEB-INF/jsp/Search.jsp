@@ -30,7 +30,7 @@
 <html ng-app="search">
 <head>
     <title><fmt:message key="page.title"/></title>
-    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+    <%@ include file="/WEB-INF/jsp/commonJsCss.jsp" %>
     <c:if test="${not isError and isSearchResultPresent}">
         <link rel="alternate" type="application/rss+xml" title="RSS" href="${rssUrl}">
     </c:if>
@@ -49,7 +49,7 @@
 
     <script type="text/javascript" src="lib/angular/angular${minSuffix}.js"></script>
 
-    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="js/script.js?${version}"></script>
     <script type="text/javascript" src="pic/lulz/db.js"></script>
 </head>
 <body>
