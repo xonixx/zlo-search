@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.dao;
 
+import info.xonix.utils.ConfigUtils;
 import info.xonix.utils.factory.StringFactory;
-import info.xonix.zlo.search.config.Config;
 
 import java.text.MessageFormat;
 import java.util.Properties;
@@ -77,8 +77,8 @@ public class QueryProvider {
 
 
     public QueryProvider() {
-        props = Config.loadProperties("info/xonix/zlo/search/db/sql.properties");
-        dbDictProps = Config.loadProperties("info/xonix/zlo/search/db/db_dict.sql.properties");
+        props = ConfigUtils.loadProperties("info/xonix/zlo/search/db/sql.properties");
+        dbDictProps = ConfigUtils.loadProperties("info/xonix/zlo/search/db/db_dict.sql.properties");
     }
 
     private SiteQueries getSiteQueries(String forumId) {

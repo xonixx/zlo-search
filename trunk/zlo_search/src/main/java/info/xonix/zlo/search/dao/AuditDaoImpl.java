@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.dao;
 
-import info.xonix.zlo.search.config.Config;
+import info.xonix.utils.ConfigUtils;
 import info.xonix.zlo.search.model.SearchLog;
 
 import java.sql.Timestamp;
@@ -17,7 +17,7 @@ import static org.apache.commons.lang.StringUtils.substring;
 public class AuditDaoImpl extends DaoImplBase
         implements AuditDao {
 
-    private static Properties props = Config.loadProperties("info/xonix/zlo/search/db/sql.properties");
+    private static Properties props = ConfigUtils.loadProperties("info/xonix/zlo/search/db/sql.properties");
     private final String SQL_LOG_REQUEST = props.getProperty("sql.log.request");
     private final String SQL_LOG_EXCEPTION = props.getProperty("sql.log.exception");
 

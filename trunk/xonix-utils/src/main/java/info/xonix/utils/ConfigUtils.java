@@ -1,5 +1,7 @@
 package info.xonix.utils;
 
+import org.apache.log4j.Logger;
+
 import java.io.*;
 import java.util.Properties;
 
@@ -9,6 +11,8 @@ import java.util.Properties;
  * Time: 18:17
  */
 public class ConfigUtils {
+    private static final Logger log = Logger.getLogger(ConfigUtils.class);
+
     /**
      * @param filePath file path OR classpath to resource
      * @return input stream or null
@@ -27,7 +31,13 @@ public class ConfigUtils {
         return Thread.currentThread().getContextClassLoader().getResourceAsStream(filePath);
     }
 
+    public static Properties loadProperties(String filePath) {
+        return loadProperties(filePath, filePath);
+    }
+
     public static Properties loadProperties(String filePath, String propertiesDescription) {
+        log.info("Loading prop file: " + filePath);
+
         final InputStream inputStream = resolvePath(filePath);
 
         if (inputStream == null) {
@@ -37,7 +47,7 @@ public class ConfigUtils {
         Properties properties = new Properties();
 
         try {
-            properties.load(inputStream);
+            properties.load(new InputStreamReader(inputStream, "UTF-8"));
         } catch (IOException e) {
             throw new RuntimeException("Error initializing " + propertiesDescription, e);
         }

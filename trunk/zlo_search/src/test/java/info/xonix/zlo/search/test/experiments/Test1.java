@@ -12,7 +12,10 @@ import org.apache.lucene.search.Query;
 
 import java.text.DateFormat;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Author: Vovan
@@ -43,11 +46,6 @@ public class Test1 {
         m15();
 //        m21();
         System.exit(0);
-    }
-
-    public static void m21() {
-        Properties p = Config.loadProperties("info/xonix/zlo/search/config/forums/zlo.properties");
-        System.out.println(p.getProperty("regex.msg.reg"));
     }
 
     public static void m20() {
