@@ -174,7 +174,7 @@ public class TestSitesRetrieving {
         System.out.println(m);
     }
 
-    @Test
+//    @Test
     public void testDolgopa() throws ForumAccessException {
         final String forumId = "dolgopa";
 

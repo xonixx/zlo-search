@@ -1,5 +1,6 @@
 package info.xonix.zlo.search.config;
 
+import info.xonix.utils.ConfigUtils;
 import info.xonix.utils.EnvUtils;
 import info.xonix.utils.ExceptionUtils;
 import info.xonix.zlo.search.analyzers.AnalyzerProvider;
@@ -17,8 +18,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Properties;
 
 /**
@@ -159,34 +158,9 @@ public class Config {
         return TRUE.equals(val) || TRUE1.equals(val);
     }
 
-    @Deprecated
-    public static boolean loadProperties(Properties pr, String path) {
-        System.out.println("Loading props from: " + path); // not through logger as logger maybe not yet inited
-        try {
-            final InputStream resourceAsStream = Thread.currentThread()
-                    .getContextClassLoader()
-                    .getResourceAsStream(path);
-
-            if (resourceAsStream == null) {
-                System.out.println("\t-> not found");
-                return false;
-            } else {
-                System.out.println("\t-> found");
-            }
-
-            pr.load(new InputStreamReader(resourceAsStream, UTF_8));
-
-        } catch (IOException e) {
-            throw new RuntimeException("Can't load config: " + path, e);
-        }
-
-        return true;
-    }
-
-    public static Properties loadProperties(String path) {
-        Properties pr = new Properties();
-        loadProperties(pr, path);
-        return pr;
+    public static void loadProperties(Properties pr, String path) {
+        Properties properties = ConfigUtils.loadProperties(path);
+        pr.putAll(properties);
     }
 
     /**
