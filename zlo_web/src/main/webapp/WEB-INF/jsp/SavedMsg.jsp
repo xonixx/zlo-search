@@ -16,7 +16,7 @@
 <html>
 <head>
     <title><fmt:message key="page.title"/></title>
-    <link rel="stylesheet" type="text/css" href="main.css"/>
+    <%@ include file="/WEB-INF/jsp/commonJsCss.jsp" %>
 </head>
 <body>
 

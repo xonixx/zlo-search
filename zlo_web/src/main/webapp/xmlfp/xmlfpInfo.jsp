@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<link rel="stylesheet" type="text/css" href="../css/main.css"/>
+<%@ include file="/WEB-INF/jsp/commonJsCss.jsp" %>
 
 <c:set var="version">v. 0.2</c:set>
 <c:set var="title">XML Forum Protocol ${version}</c:set>
