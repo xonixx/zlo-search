@@ -30,4 +30,4 @@ $(function () {
     dbInit();
 });
 
-angular.module('search', []);
+angular.module('search', ['mgcrea.ngStrap']);
