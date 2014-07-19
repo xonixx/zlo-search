@@ -128,7 +128,7 @@ public class PageParser implements InitializingBean {
             for (int i = 0; i < RUS_MONTHS.length; i++) {
                 s = s.replaceFirst(RUS_MONTHS[i], Integer.toString(i + 1));
             }
-            d = DateFormats.DF_BOARD_MSG.parse(s);
+            d = DateFormats.DF_BOARD_MSG.get().parse(s);
         } catch (ParseException e) {
             e.printStackTrace();
         }

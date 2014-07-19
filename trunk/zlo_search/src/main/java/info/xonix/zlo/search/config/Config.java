@@ -214,10 +214,6 @@ public class Config {
         return (Context) initialContext.lookup("java:comp/env");
     }
 
-/*    public Properties getAppProperties() {
-        return props;
-    }*/
-
     private boolean loadPropertiesFromEnv(Properties pr) {
         String envPath = System.getenv(CONFIG_PATH_ENV_NAME);
         if (envPath != null) {
@@ -243,17 +239,6 @@ public class Config {
 
     public String getProp(String key, String defaultVal) {
         return props.getProperty(key, defaultVal);
-    }
-
-    public static String getSiteEnvName() {
-        String sn = System.getenv("SITE_NAME");
-        if (sn == null) {
-            log.error("Must set SITE_NAME environment variable!");
-            System.exit(-1);
-            return null;
-        } else {
-            return sn;
-        }
     }
 
     // getters
@@ -289,11 +274,6 @@ public class Config {
     public String getWebsiteDomain() {
         return websiteDomain;
     }
-
-    // commenting for now
-/*    public Analyzer getAnalyzer() {
-        return analyzer;
-    }*/
 
     public Analyzer getMessageAnalyzer() {
         return messageAnalyzer;

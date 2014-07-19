@@ -80,7 +80,7 @@ public class HistoryTableDecorator extends TableDecorator {
     }
 
     public String getReqDate() {
-        return DateFormats.ddMMyyyyy_HHmm.format(get("req_date"));
+        return DateFormats.ddMMyyyyy_HHmm.get().format(get("req_date"));
     }
 
 /*    public boolean isObscene() {

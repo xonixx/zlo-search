@@ -107,7 +107,7 @@ public class SearchServlet extends BaseServlet {
 
     public static final String JSP_SEARCH = "/WEB-INF/jsp/Search.jsp";
 
-    public static DateFormat FROM_TO_DATE_FORMAT = DateFormats.ddMMyyyy_dots;
+    public static ThreadLocal<DateFormat> FROM_TO_DATE_FORMAT = DateFormats.ddMMyyyy_dots;
 
     private final RssFormer rssFormer = new RssFormer();
 
@@ -175,7 +175,7 @@ public class SearchServlet extends BaseServlet {
                 toDate = cal.getTime(); // now + 1 day
             } else {
                 try {
-                    toDate = FROM_TO_DATE_FORMAT.parse(toDateStr);
+                    toDate = FROM_TO_DATE_FORMAT.get().parse(toDateStr);
                 } catch (ParseException e) {
                     errorMsg = ErrorMessage.ToDateInvalid;
                     throw e;
@@ -190,15 +190,15 @@ public class SearchServlet extends BaseServlet {
                 fromDate = cal.getTime();
             } else {
                 try {
-                    fromDate = FROM_TO_DATE_FORMAT.parse(fromDateStr);
+                    fromDate = FROM_TO_DATE_FORMAT.get().parse(fromDateStr);
                 } catch (ParseException e) {
                     errorMsg = ErrorMessage.FromDateInvalid;
                     throw e;
                 }
             }
 
-            request.setAttribute(QS_TO_DATE, FROM_TO_DATE_FORMAT.format(toDate));
-            request.setAttribute(QS_FROM_DATE, FROM_TO_DATE_FORMAT.format(fromDate));
+            request.setAttribute(QS_TO_DATE, FROM_TO_DATE_FORMAT.get().format(toDate));
+            request.setAttribute(QS_FROM_DATE, FROM_TO_DATE_FORMAT.get().format(fromDate));
 
             text = preprocessSearchText(text, searchType);
             nick = preprocessSearchNick(nick);

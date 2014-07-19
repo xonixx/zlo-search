@@ -15,9 +15,9 @@ public class TestParse {
     @Test
     public void test1() {
         try {
-            System.out.println(DateFormats.DF_BOARD_MSG.parse("2 16 13:14:10 2009"));
-            System.out.println(DateFormats.DF_BOARD_MSG.parse("2 16 12:14:10 2009"));
-            System.out.println(DateFormats.DF_BOARD_MSG.parse("2 16 11:14:10 2009"));
+            System.out.println(DateFormats.DF_BOARD_MSG.get().parse("2 16 13:14:10 2009"));
+            System.out.println(DateFormats.DF_BOARD_MSG.get().parse("2 16 12:14:10 2009"));
+            System.out.println(DateFormats.DF_BOARD_MSG.get().parse("2 16 11:14:10 2009"));
         } catch (ParseException e) {
             e.printStackTrace();
         }
