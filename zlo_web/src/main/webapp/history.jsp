@@ -13,7 +13,6 @@
     private static final ObsceneAnalyzer obsceneAnalyzer = AppSpringContext.get(ObsceneAnalyzer.class);
 %>
 
-<%--<c:set var="localIps"><fmt:message key="localIps"/></c:set>--%>
 <c:set var="isPowerUser" value='<%= RequestUtils.isPowerUser(request) %>'/>
 <c:set var="showAll" value="${ param['all'] != null and isPowerUser }"/>
 <c:set var="limit" value="${1000}"/>

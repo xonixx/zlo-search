@@ -255,8 +255,8 @@ public class SearchRequest {
         options.clear();
 
         if (isDateSet) {
-            options.add(fromDate != null ? DateFormats.ddMMyyyy.format(fromDate) : "-inf");
-            options.add(toDate != null ? DateFormats.ddMMyyyy.format(toDate) : "inf");
+            options.add(fromDate != null ? DateFormats.ddMMyyyy.get().format(fromDate) : "-inf");
+            options.add(toDate != null ? DateFormats.ddMMyyyy.get().format(toDate) : "inf");
             sb.append(" в промежутке дат:(").append(StringUtils.join(options, ", ")).append(")");
         }
 

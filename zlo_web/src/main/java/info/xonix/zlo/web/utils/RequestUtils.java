@@ -38,33 +38,6 @@ public final class RequestUtils {
     public static final String SESS_PREVIOUS_QUERY_STRING = "referer";
 
     /**
-     * Weather the ip of client sending request is local ip
-     *
-     * @param request  http request
-     * @param localIps list of local ips from settings
-     * @return true if local
-     */
-    private static boolean isLocalIp(HttpServletRequest request, String[] localIps) {
-        String clientIp = getClientIp(request);
-        for (String localIp : localIps) {
-            if (localIp.equals(clientIp))
-                return true;
-        }
-        return false;
-    }
-
-    /* *
-     * use {@link #isPowerUser} instead
-     *
-     * @param request request
-     * @return true if local
-     */
-/*    @Deprecated
-    public static boolean isLocalIp(HttpServletRequest request) {
-        return isLocalIp(request, config.getProp("localIps").split("\\|"));
-    }*/
-
-    /**
      * checking power user rights based on secret key presence in cookie
      *
      * @param request http request
@@ -96,40 +69,6 @@ public final class RequestUtils {
 
         return "other";
     }
-
-    // TODO: VVV--- improve or del
-    // TODO: store users site in cookie
-
-    /* *
-     * @param referer referer header
-     * @param site    site
-     * @return site root url, based on Host header
-
-    public static String getSiteRoot(String referer, String forumId) {
-        if (SiteName.ZLO.equals(forumId.getName())) {
-            final String zloRoot = "zlo.rt.mipt.ru";
-            final String boardRoot = "board.rt.mipt.ru";
-
-            if (StringUtils.isNotEmpty(referer)) {
-                if (referer.contains(zloRoot)) {
-                    return zloRoot;
-                } else if (referer.contains(boardRoot)) {
-                    return boardRoot;
-                }
-            }
-        }
-
-        return site.getSiteUrl();
-    }*/
-
-    /* *
-     * @param request http request
-     * @param site    site
-     * @return site root url, based on Host header
-
-    public static String getSiteRoot(HttpServletRequest request, String forumId) {
-//        return getSiteRoot(request.getHeader(HttpHeader.REFERER), site);
-    }*/
 
     public static boolean isF5Request(HttpServletRequest request) {
         final HttpSession session = request.getSession();

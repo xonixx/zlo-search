@@ -12,6 +12,6 @@ import org.displaytag.decorator.TableDecorator;
 public class SearchResultLineDecorator extends TableDecorator {
     public String getDate() {
         Message msg = (Message) getCurrentRowObject();
-        return DateFormats.ddMMyyyyy_HHmm.format(msg.getDate());
+        return DateFormats.ddMMyyyyy_HHmm.get().format(msg.getDate());
     }
 }
