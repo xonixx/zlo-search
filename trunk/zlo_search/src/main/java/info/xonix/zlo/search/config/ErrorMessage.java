@@ -30,7 +30,7 @@ public enum ErrorMessage {
     private String data = null;
 
     ErrorMessage(String key) {
-        this.val = config.getProp(key);
+        this.val = config.message(key);
     }
 
     public String toString() {

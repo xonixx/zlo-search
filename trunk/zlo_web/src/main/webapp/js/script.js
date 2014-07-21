@@ -31,3 +31,8 @@ $(function () {
 });
 
 angular.module('search', ['mgcrea.ngStrap']);
+
+function SearchCtrl($scope) {
+    $scope.fromDate = fd ? new Date(fd) : null;
+    $scope.toDate = td ? new Date(td) : null;
+}
