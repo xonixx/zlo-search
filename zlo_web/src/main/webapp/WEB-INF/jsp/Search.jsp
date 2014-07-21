@@ -27,7 +27,7 @@
 </c:set>
 
 <!-- ПРЕВЕД -->
-<html ng-app="search">
+<html ng-app="search" ng-controller="SearchCtrl">
 <head>
     <title><fmt:message key="page.title"/></title>
 
@@ -118,23 +118,32 @@
                         <label for="isRoot"><fmt:message key="label.search.in.is.root"/></label>
                     </c:if>
                     <br/>
-                    <fmt:message key="label.nick"/> <input type="text" name="nick"
-                                                           <c:if test="${not empty param['nick']}">value="<c:out value="${param['nick']}" />"
-                                                           </c:if>style="width:200px;"/>
-                    <fmt:message key="label.host"/> <input type="text" name="host"
-                                                           <c:if test="${not empty param['host']}">value="<c:out value="${param['host']}" />"
-                                                           </c:if>style="width:200px;"/>
+                    <fmt:message key="label.nick"/>
+                    <input type="text" name="nick"
+                           <c:if test="${not empty param['nick']}">value="<c:out value="${param['nick']}" />"
+                           </c:if>style="width:200px;"/>
+                    <fmt:message key="label.host"/>
+                    <input type="text" name="host"
+                           <c:if test="${not empty param['host']}">value="<c:out value="${param['host']}" />"
+                           </c:if>style="width:200px;"/>
                     <br/>
                     <input type="checkbox" name="dates" id="dates" ng-model="searchByDates"
                            ng-init="searchByDates=${not empty param['dates']}"/>
                     <label for="dates"><fmt:message key="label.dates"/></label>
 
+                    <script>
+                        params = {
+                            fd: '${requestScope['fd']}',
+                            td: '${requestScope['td']}'
+                        }
+                    </script>
+
                     <fmt:message key="label.from.date"/>
-                    <input type="text" name="fd" id="fd" ng-disabled="!searchByDates" ng-model="fromDate" bs-datepicker=""
-                           value="<c:out value="${requestScope['fd']}" />"/>
+                    <input type="text" name="fd" id="fd" ng-disabled="!searchByDates"
+                           ng-model="fromDate" bs-datepicker="" data-date-format="dd.MM.yyyy"/>
                     <fmt:message key="label.to.date"/>
-                    <input type="text" name="td" id="td" ng-disabled="!searchByDates" ng-model="toDate" bs-datepicker=""
-                           value="<c:out value="${requestScope['td']}" />"/>
+                    <input type="text" name="td" id="td" ng-disabled="!searchByDates"
+                           ng-model="toDate" bs-datepicker="" data-date-format="dd.MM.yyyy"/>
                     <br/>
                     <fmt:message key="label.forum"/>
                     <jsp:getProperty name="backendBean" property="siteSelector"/>

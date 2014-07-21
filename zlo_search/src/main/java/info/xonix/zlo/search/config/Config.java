@@ -19,6 +19,7 @@ import javax.naming.NamingException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 /**
  * Author: gubarkov
@@ -65,6 +66,7 @@ public class Config {
     private String powerUserKey;
 
     private boolean startDaemons;
+    private ResourceBundle messages;
 
     public Config() {
         props = new Properties();
@@ -279,5 +281,12 @@ public class Config {
 
     public String getIndexDir(String forumId) {
         return getProp("indexer.dir") + "/index_" + forumId;
+    }
+
+    public String message(String key) {
+        if (messages == null) {
+            messages = ResourceBundle.getBundle("info.xonix.zlo.web.i18n.messages");
+        }
+        return messages.getString(key);
     }
 }
