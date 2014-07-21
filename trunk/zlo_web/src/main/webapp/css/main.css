@@ -1,3 +1,22 @@
+/* {{ reset bs */
+body {
+    font-family: Verdana;
+    color: #000;
+    font-size: 16px;
+    line-height: 1;
+}
+label {
+    font-weight: normal;
+    margin: 0;
+}
+input {
+    margin: 2px 0;
+}
+a, a:hover, a:focus {
+    color: blue;
+    text-decoration: underline;
+}
+/* }} reset bs */
 a img {
     border: 0;
 }
@@ -95,7 +114,7 @@ h3 {
 
 .attention { font-weight: bold; color: red }
 
-.search {
+a.search {
     font-weight: bold;
     color: green;
     font-size: small;

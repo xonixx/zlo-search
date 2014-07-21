@@ -29,8 +29,7 @@
 <c:choose>
     <c:when test="${byNick}">
         <sql:query var="res">
-            select nick, user_id, reg, COUNT(*) cnt from ${messagesTbl}
-            ${msgDateWhereClause}
+            select nick, user_id, reg, COUNT(*) cnt from ${messagesTbl}${' '}${msgDateWhereClause}
             group by nick
             order by cnt desc;
             <sql:param>${periodDays}</sql:param>
@@ -38,8 +37,7 @@
     </c:when>
     <c:otherwise>
         <sql:query var="res">
-            select host, COUNT(*) cnt from ${messagesTbl}
-            ${msgDateWhereClause}
+            select host, COUNT(*) cnt from ${messagesTbl}${' '}${msgDateWhereClause}
             group by host
             order by cnt desc;
             <sql:param>${periodDays}</sql:param>
@@ -48,8 +46,7 @@
 </c:choose>
 
 <sql:query var="resTotal">
-    select COUNT(*) cnt from ${messagesTbl}
-    ${msgDateWhereClause}
+    select COUNT(*) cnt from ${messagesTbl}${' '}${msgDateWhereClause}
     <sql:param>${periodDays}</sql:param>
 </sql:query>
 
