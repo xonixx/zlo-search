@@ -1,9 +1,16 @@
 /* {{ reset bs */
 body {
-    font-family: Verdana;
+    font-family: serif;
     color: #000;
     font-size: 16px;
     line-height: 1;
+}
+select,button,input[type="submit"] {
+    font-size: .9em;
+    font-family: Arial,serif;
+}
+input,select,button {
+    line-height: 15px;
 }
 label {
     font-weight: normal;
@@ -17,6 +24,15 @@ a, a:hover, a:focus {
     text-decoration: underline;
 }
 /* }} reset bs */
+
+input[type="checkbox"],
+input[type="radio"]
+{
+    vertical-align: -3px;
+}
+.space1 {
+    margin-right: 10px;
+}
 a img {
     border: 0;
 }
@@ -97,7 +113,10 @@ h3 {
 #body {
     padding: 0 25px;
 }
-
+.numbers td {
+    padding-top: 7px;
+    padding-right: 8px;
+}
 .content {
     padding: 0 10px;
 }
