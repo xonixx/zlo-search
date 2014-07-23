@@ -66,12 +66,17 @@
                     <input type="radio" name="st" id="st1" value="all"
                            <c:if test="${param['st'] == 'all'}">checked="checked"</c:if> />
                     <label for="st1"><fmt:message key="label.search.all"/></label>
+                    <span class="space1"></span>
+
                     <input type="radio" name="st" id="st3" value="adv"
                            <c:if test="${param['st'] == 'adv'}">checked="checked"</c:if> />
                     <label for="st3"><fmt:message key="label.search.advanced"/></label>
+                    <span class="space1"></span>
+
                     <input type="radio" name="st" id="st2" value="exct"
                            <c:if test="${param['st'] == 'exct'}">checked="checked"</c:if> />
                     <label for="st2"><fmt:message key="label.search.exact.phrase"/></label>
+
                     <br/>
                     <fmt:message key="label.text"/>
                     <input type="text" name="text" id="text"
@@ -86,26 +91,34 @@
             <tr>
                 <td colspan="2">
                     <fmt:message key="label.search"/>
+                    <span class="space1"></span>
+
                     <input type="checkbox" name="inTitle" id="inTitle"
                            <c:if test="${not empty param['inTitle']}">checked="checked"</c:if>/>
                     <label for="inTitle"><fmt:message key="label.search.in.title"/></label>
+                    <span class="space1"></span>
 
                     <input type="checkbox" name="inBody" id="inBody"
                            <c:if test="${not empty param['inBody']}">checked="checked"</c:if>/>
                     <label for="inBody"><fmt:message key="label.search.in.body"/></label>
                     <br/>
                     <fmt:message key="label.search.messages"/>
+                    <span class="space1"></span>
+
                     <input type="checkbox" name="reg" id="reg"
                            <c:if test="${not empty param['reg']}">checked="checked"</c:if>/>
                     <label for="reg"><fmt:message key="label.search.in.reg"/></label>
+                    <span class="space1"></span>
 
                     <input type="checkbox" name="hasUrl" id="hasUrl"
                            <c:if test="${not empty param['hasUrl']}">checked="checked"</c:if>/>
                     <label for="hasUrl"><fmt:message key="label.search.in.has.url"/></label>
+                    <span class="space1"></span>
 
                     <input type="checkbox" name="hasImg" id="hasImg"
                            <c:if test="${not empty param['hasImg']}">checked="checked"</c:if>/>
                     <label for="hasImg"><fmt:message key="label.search.in.has.img"/></label>
+                    <span class="space1"></span>
 
                     <c:if test="<%= adapter.supportsParents() %>">
                         <input type="checkbox" name="isRoot" id="isRoot"
@@ -122,6 +135,7 @@
                            <c:if test="${not empty param['host']}">value="<c:out value="${param['host']}" />"
                            </c:if>style="width:200px;"/>
                     <br/>
+
                     <input type="checkbox" name="dates" id="dates" ng-model="searchByDates"
                            ng-init="searchByDates=${not empty param['dates']}"/>
                     <label for="dates"><fmt:message key="label.dates"/></label>
@@ -139,20 +153,25 @@
                     <input type="text" name="td" id="td" ng-disabled="!searchByDates"
                            ng-model="toDate" bs-datepicker="" data-date-format="dd.MM.yyyy"/>
                     <br/>
+
                     <fmt:message key="label.forum"/>
                     <jsp:getProperty name="backendBean" property="siteSelector"/>
+                    <span class="space1"></span>
+
                     <fmt:message key="label.per.page"/>
                     <jsp:getProperty name="backendBean" property="pageSizeSelector"/>
+                    <span class="space1"></span>
 
                     <fmt:message key="label.sort"/>
                     <jsp:getProperty name="backendBean" property="sortSelector"/>
                     <br/>
+
                     <input type="submit" id="submitBtn" name="submitBtn" value="<fmt:message key="button.search"/>"/>
                     <br/>
                     <c:if test="${not isError and not empty requestScope['lastMsgs']}">
                         <c:set var="lastSavedN" value="${requestScope['lastMsgs'][0]}"/>
                         <c:set var="lastIndexedN" value="${requestScope['lastMsgs'][1]}"/>
-                        <table cellspacing="5" class="small">
+                        <table cellspacing="5" class="small numbers">
                             <tr>
                                 <td><fmt:message key="label.last.saved.msg"/></td>
                                 <td>${lastSavedN}</td>
