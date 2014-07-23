@@ -132,13 +132,12 @@
                             td: '${requestScope['td']}'
                         }
                     </script>
-
                     <fmt:message key="label.from.date"/>
                     <input type="text" name="fd" id="fd" ng-disabled="!searchByDates"
-                           ng-model="fromDate" bs-datepicker1="" data-date-format="dd.MM.yyyy"/>
+                           ng-model="fromDate" bs-datepicker="" data-date-format="dd.MM.yyyy"/>
                     <fmt:message key="label.to.date"/>
                     <input type="text" name="td" id="td" ng-disabled="!searchByDates"
-                           ng-model="toDate" bs-datepicker1="" data-date-format="dd.MM.yyyy"/>
+                           ng-model="toDate" bs-datepicker="" data-date-format="dd.MM.yyyy"/>
                     <br/>
                     <fmt:message key="label.forum"/>
                     <jsp:getProperty name="backendBean" property="siteSelector"/>
@@ -232,7 +231,7 @@
                                     class="small" style="text-align:center;width:1%;">${msg.hitId + 1}</display:column>
                     <display:column title="Тема" style="width:67%">
                         <a href="<%= adapter.prepareMessageUrl(((Message)msg).getNum()) %>">
-                            <c:if test="${not empty msg.topic and msg.topic != 'без темы'}">[${msg.topic}]</c:if>
+                            <c:if test="${not empty msg.topic and msg.topic != 'без темы'}">[${msg.topic}]${' '}</c:if>
                             <jsp:setProperty name="hl" property="text" value="${msg.title}"/>
                             <c:out value="${hl.highlightedText}" escapeXml="false"/></a>
                         <small>
