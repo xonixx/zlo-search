@@ -32,7 +32,15 @@ $(function () {
 
 angular.module('search', ['mgcrea.ngStrap']);
 
+function toDate(str) { // dd.MM.yyyy
+    if (str && /\d\d\.\d\d\.\d\d\d\d/.test(str)) {
+        var parts = str.split('.');
+        return new Date(parts[2] + '-' + parts[1] + '-' + parts[0])
+    }
+    return null;
+}
+
 function SearchCtrl($scope) {
-    $scope.fromDate = fd ? new Date(fd) : null;
-    $scope.toDate = td ? new Date(td) : null;
+    $scope.fromDate = toDate(window.params.fd);
+    $scope.toDate = toDate(window.params.td);
 }

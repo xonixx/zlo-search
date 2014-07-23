@@ -171,8 +171,7 @@ public class SearchServlet extends BaseServlet {
             Date toDate;
             Calendar cal = new GregorianCalendar();
             if (StringUtils.isEmpty(toDateStr)) {
-                cal.add(Calendar.DAY_OF_MONTH, 1);
-                toDate = cal.getTime(); // now + 1 day
+                toDate = cal.getTime();
             } else {
                 try {
                     toDate = FROM_TO_DATE_FORMAT.get().parse(toDateStr);
