@@ -37,15 +37,10 @@
     <%@ include file="/WEB-INF/jsp/commonJsCss.jsp" %>
 
     <%--jQuery--%>
-    <link rel="stylesheet" type="text/css" href="lib/jq/themes/base/jquery.ui.core.css"/>
-    <link rel="stylesheet" type="text/css" href="lib/jq/themes/base/jquery.ui.theme.css"/>
-    <link rel="stylesheet" type="text/css" href="lib/jq/themes/base/jquery.ui.autocomplete.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/jq/jquery-ui-1.11.0/jquery-ui${minSuffix}.css"/>
 
-    <script type="text/javascript" src="lib/jq/jquery-1.6.2.min.js"></script>
-    <script type="text/javascript" src="lib/jq/jquery.ui.core.min.js"></script>
-    <script type="text/javascript" src="lib/jq/jquery.ui.widget.min.js"></script>
-    <script type="text/javascript" src="lib/jq/jquery.ui.position.min.js"></script>
-    <script type="text/javascript" src="lib/jq/jquery.ui.autocomplete.min.js"></script>
+    <script type="text/javascript" src="lib/jq/jquery-1.11.1${minSuffix}.js"></script>
+    <script type="text/javascript" src="lib/jq/jquery-ui-1.11.0/jquery-ui${minSuffix}.js"></script>
     <%--jQuery ends--%>
 
     <script type="text/javascript" src="lib/angular/angular${minSuffix}.js"></script>
@@ -140,10 +135,10 @@
 
                     <fmt:message key="label.from.date"/>
                     <input type="text" name="fd" id="fd" ng-disabled="!searchByDates"
-                           ng-model="fromDate" bs-datepicker="" data-date-format="dd.MM.yyyy"/>
+                           ng-model="fromDate" bs-datepicker1="" data-date-format="dd.MM.yyyy"/>
                     <fmt:message key="label.to.date"/>
                     <input type="text" name="td" id="td" ng-disabled="!searchByDates"
-                           ng-model="toDate" bs-datepicker="" data-date-format="dd.MM.yyyy"/>
+                           ng-model="toDate" bs-datepicker1="" data-date-format="dd.MM.yyyy"/>
                     <br/>
                     <fmt:message key="label.forum"/>
                     <jsp:getProperty name="backendBean" property="siteSelector"/>
