@@ -14,6 +14,7 @@ public class HtmlSelectBuilder {
     private String id;
     private String name;
     private String value;
+    private String args;
 
     private Map<String, String> options = new LinkedHashMap<String, String>();
 
@@ -29,6 +30,11 @@ public class HtmlSelectBuilder {
 
     public HtmlSelectBuilder value(String value) {
         this.value = value;
+        return this;
+    }
+
+    public HtmlSelectBuilder args(String args) {
+        this.args = args;
         return this;
     }
 
@@ -54,6 +60,9 @@ public class HtmlSelectBuilder {
         res.append(name).append("\"");
         if (id != null) {
             res.append(" id=\"").append(id).append("\"");
+        }
+        if (args != null) {
+            res.append(" ").append(args);
         }
         res.append(">\n");
 
