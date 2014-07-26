@@ -1,5 +1,10 @@
 function initAutocomplete() {
     $('#text').autocomplete({
+        select: function () {
+            setTimeout(function () {
+                $('#searchFrm').submit();
+            }, 100);
+        },
         source: function (search, cb) {
             $.ajax('/ac', {
                 dataType: 'json',

@@ -5,7 +5,7 @@ body {
     font-size: 16px;
     line-height: 1;
 }
-select,button,input[type="submit"] {
+select,button,input[type="submit"],input[type="text"] {
     font-size: .9em;
     font-family: Arial,serif;
 }

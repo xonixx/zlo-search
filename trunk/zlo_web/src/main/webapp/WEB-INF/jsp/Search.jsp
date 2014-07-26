@@ -129,6 +129,8 @@
                     <input type="text" name="nick"
                            <c:if test="${not empty param['nick']}">value="<c:out value="${param['nick']}" />"
                            </c:if>style="width:200px;"/>
+                    <span class="space1"></span>
+
                     <fmt:message key="label.host"/>
                     <input type="text" name="host"
                            <c:if test="${not empty param['host']}">value="<c:out value="${param['host']}" />"
@@ -148,6 +150,8 @@
                     <fmt:message key="label.from.date"/>
                     <input type="text" name="fd" id="fd" ng-disabled="!searchByDates"
                            ng-model="fromDate" bs-datepicker="" data-date-format="dd.MM.yyyy"/>
+                    <span class="space1"></span>
+
                     <fmt:message key="label.to.date"/>
                     <input type="text" name="td" id="td" ng-disabled="!searchByDates"
                            ng-model="toDate" bs-datepicker="" data-date-format="dd.MM.yyyy"/>
