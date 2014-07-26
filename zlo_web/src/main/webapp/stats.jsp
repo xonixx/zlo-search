@@ -7,6 +7,7 @@
 <%@ include file="WEB-INF/jsp/import.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="WEB-INF/jsp/commonJsCss.jsp" %>
+<script type="text/javascript" src="js/stats.js?${version}"></script>
 
 <jsp:useBean id="backendBean" class="info.xonix.zlo.web.BackendBean" scope="request"/>
 <jsp:setProperty name="backendBean" property="*"/>
@@ -62,7 +63,7 @@
 <div align="center">
     <h3>${title}</h3>
 
-    <form action="stats.jsp" method="get">
+    <form id="stats-form" action="stats.jsp" method="get">
         Форум:
         <jsp:getProperty name="backendBean" property="siteSelector"/>
         <br/>
@@ -79,7 +80,6 @@
                 </option>
             </c:forEach>
         </select>
-        <input type="submit" value="Показать!"/>
     </form>
     <small>Всего сообщений за этот период: ${resTotal.rows[0].cnt}</small>
 
