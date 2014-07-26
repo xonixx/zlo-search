@@ -39,7 +39,6 @@
     <%--jQuery--%>
     <link rel="stylesheet" type="text/css" href="lib/jq/jquery-ui-1.11.0/jquery-ui${minSuffix}.css"/>
 
-    <script type="text/javascript" src="lib/jq/jquery-1.11.1${minSuffix}.js"></script>
     <script type="text/javascript" src="lib/jq/jquery-ui-1.11.0/jquery-ui${minSuffix}.js"></script>
     <%--jQuery ends--%>
 
