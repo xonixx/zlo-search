@@ -198,3 +198,8 @@ a.brwsr:hover {
 #header .adminLinks a:hover {
     color: white;
 }
+
+form.inline-form {
+    margin-bottom: 0;
+    display: inline;
+}
