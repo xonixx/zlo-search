@@ -140,47 +140,9 @@
 
         <!--consider remove-->
         <dependency>
-            <groupId>informa</groupId>
-            <artifactId>informa</artifactId>
-            <version>0.6.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>lucene</groupId>
-                    <artifactId>lucene</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>hibernate</groupId>
-                    <artifactId>hibernate</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>ehcache</groupId>
-                    <artifactId>ehcache</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>hsqldb</groupId>
-                    <artifactId>hsqldb</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>odmg</groupId>
-                    <artifactId>odmg</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>cglib</groupId>
-                    <artifactId>cglib</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-beanutils</groupId>
-                    <artifactId>commons-beanutils</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-collections</groupId>
-                    <artifactId>commons-collections</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>com.rometools</groupId>
+            <artifactId>rome</artifactId>
+            <version>1.5.0</version>
         </dependency>
 
         <dependency>
