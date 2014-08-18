@@ -3,14 +3,16 @@ body {
     font-family: serif;
     color: #000;
     font-size: 16px;
-    line-height: 1;
+    line-height: normal;
 }
 select,button,input[type="submit"],input[type="text"] {
-    font-size: .9em;
+    font-size: 13.3px;
+    line-height: 15px;
+    color: 	#111;
     font-family: Arial,serif;
 }
-input,select,button {
-    line-height: 15px;
+input[disabled], select[disabled], textarea[disabled] {
+    color: #888;
 }
 label {
     font-weight: normal;
