@@ -1,10 +1,8 @@
 package info.xonix.zlo.web.rss;
 
-import de.nava.informa.core.CategoryIF;
-import de.nava.informa.core.ChannelIF;
-import de.nava.informa.impl.basic.Category;
-import de.nava.informa.impl.basic.Channel;
-import de.nava.informa.impl.basic.Item;
+import com.rometools.rome.feed.synd.*;
+import com.rometools.rome.io.FeedException;
+import com.rometools.rome.io.SyndFeedOutput;
 import info.xonix.zlo.search.HttpHeader;
 import info.xonix.zlo.search.SearchResultPaginatedList;
 import info.xonix.zlo.search.config.Config;
@@ -23,12 +21,7 @@ import org.springframework.util.Assert;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * User: Vovan
@@ -44,8 +37,8 @@ public class RssFormer {
         if (request.getAttribute(SearchServlet.ERROR) != null) {
             // process error
         } else {
+            response.setStatus(HttpServletResponse.SC_OK);
             response.setContentType("application/rss+xml");
-            response.setCharacterEncoding("windows-1251");
 
             SearchResult searchResult = (SearchResult) request.getAttribute(SearchServlet.REQ_SEARCH_RESULT);
             Assert.notNull(searchResult, "SearchResult must be already set in SearchServlet!");
@@ -73,7 +66,8 @@ public class RssFormer {
 
             SearchRequest lastSearch = searchResult.getLastSearch();
 
-            ChannelIF ch = new Channel();
+            SyndFeed feed = new SyndFeedImpl();
+            feed.setFeedType("rss_2.0");
 
             List<String> l = new ArrayList<String>(3);
             for (String s : Arrays.asList(lastSearch.getText(), lastSearch.getNick(), lastSearch.getHost())) {
@@ -82,51 +76,58 @@ public class RssFormer {
             }
             String chTitle = "Board search: " + StringUtils.join(l, ", ");
 
-            ch.setTitle(chTitle);
+            feed.setTitle(chTitle);
 
-            try {
-                ch.setLocation(new URL(String.format("http://%s/search?%s", config.getWebsiteDomain(), request.getQueryString().replace("rss&", ""))));
-                ch.setDescription(lastSearch.describeToString());
-                ch.setLanguage("ru");
-                ch.setTtl(120); // 2 hours
+            String link = String.format("http://%s/search?%s", config.getWebsiteDomain(), request.getQueryString().replace("rss&", ""));
+            feed.setLink(link);
+            feed.setUri(link);
+            feed.setDescription(lastSearch.describeToString());
+            feed.setLanguage("ru");
 
 //                FoundTextHighlighter hl = new FoundTextHighlighter();
 //                hl.setHighlightWords(FoundTextHighlighter.formHighlightedWords(lastSearch.getText()));
+            List<SyndEntry> entries = new ArrayList<SyndEntry>();
+            feed.setEntries(entries);
 
-                if (msgsList != null) {
-                    for (Object m1 : msgsList) {
-                        Message m = (Message) m1;
-                        Item it = new Item();
+            if (msgsList != null) {
+                for (Object m1 : msgsList) {
+                    Message m = (Message) m1;
+                    SyndEntry entry = new SyndEntryImpl();
+                    entries.add(entry);
 
-//                        Site s = m.getSite();
-                        ForumAdapter forumAdapter = GetForum.adapter(pl.getForumId());
+                    ForumAdapter forumAdapter = GetForum.adapter(pl.getForumId());
 
-                        // highlighting of all feed takes to many time & cpu
+                    // highlighting of all feed takes to much time & cpu
 
-                        String title = HtmlUtils.unescapeHtml(m.getTitle());
-                        if (!"без темы".equals(m.getTopic().toLowerCase()))
-                            title = "[" + m.getTopic() + "] " + title;
-                        it.setTitle(title);
-                        it.setDescription(m.getBody());
-                        it.setCreator(m.getNick() + "@" + m.getHost());
-                        it.setDate(m.getDate());
-                        it.setCategories(Arrays.asList((CategoryIF) new Category(m.getTopic())));
+                    String title = HtmlUtils.unescapeHtml(m.getTitle());
+                    if (!"без темы".equals(m.getTopic().toLowerCase()))
+                        title = "[" + m.getTopic() + "] " + title;
+                    entry.setTitle(title);
 
-                        // let it point to forum msg, not saved msg
-//                        it.setLink(new URL(String.format("http://%s/msg?site=%s&num=%s&hw=%s", Config.WEBSITE_DOMAIN, s.getNum(), m.getNum(), HtmlUtils.urlencode(hl.getWordsStr()))));
-//                        URL commentsUrl = new URL(String.format("http://%s%s%s", s.getSiteUrl(), s.getReadQuery(), m.getNum()));
-                        URL commentsUrl = new URL(forumAdapter.prepareMessageUrl(m.getNum()));
-                        it.setLink(commentsUrl);
-                        it.setComments(commentsUrl);
+                    SyndContent descr = new SyndContentImpl();
+                    descr.setType("text/html");
+                    descr.setValue(m.getBody());
+                    entry.setDescription(descr);
 
-                        ch.addItem(it);
-                    }
+                    entry.setAuthor(m.getNick() + "@" + m.getHost());
+                    entry.setPublishedDate(m.getDate());
+
+                    SyndCategory category = new SyndCategoryImpl();
+                    category.setName(m.getTopic());
+
+                    entry.setCategories(Collections.singletonList(category));
+
+                    String commentsLink = forumAdapter.prepareMessageUrl(m.getNum());
+                    entry.setLink(commentsLink);
+                    entry.setComments(commentsLink);
                 }
+            }
 
-                ZloRss20Exporter exporter = new ZloRss20Exporter(response.getWriter(), "windows-1251");// TODO: change to UTF-8
-
-                exporter.write(ch);
-            } catch (MalformedURLException e) {
+            SyndFeedOutput feedOutput = new SyndFeedOutput();
+            try {
+                feedOutput.output(feed, response.getWriter());
+                response.flushBuffer();
+            } catch (FeedException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
