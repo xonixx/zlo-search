@@ -12,7 +12,7 @@ select,button,input[type="submit"],input[type="text"] {
     font-family: Arial,serif;
 }
 input[disabled], select[disabled], textarea[disabled] {
-    color: #888;
+    color: #777;
 }
 label {
     font-weight: normal;
