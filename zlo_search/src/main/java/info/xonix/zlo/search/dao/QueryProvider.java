@@ -13,7 +13,7 @@ import java.util.Properties;
  */
 public class QueryProvider {
 
-    private static final class SiteQueries {
+    private static final class ForumQueries {
 //        private String INSERT_MSG;
 
         //        private String INSERT_UPDATE_MSG;
@@ -34,19 +34,20 @@ public class QueryProvider {
 
         private String INSERT_UPDATE_AUTOCOMPLETE;
         private String SELECT_AUTOCOMPLETE;
+        private String SELECT_DATES;
     }
 
-    private StringFactory<SiteQueries> siteQueriesSiteFactory = new StringFactory<SiteQueries>() {
+    private StringFactory<ForumQueries> siteQueriesSiteFactory = new StringFactory<ForumQueries>() {
         @Override
-        protected SiteQueries create(String forumId) {
-            SiteQueries sq = new SiteQueries();
+        protected ForumQueries create(String forumId) {
+            ForumQueries sq = new ForumQueries();
 
-            fillSiteQueries(sq, forumId);
+            fillForumQueries(sq, forumId);
 
             return sq;
         }
 
-        private void fillSiteQueries(SiteQueries sq, String name) {
+        private void fillForumQueries(ForumQueries sq, String name) {
 //            sq.INSERT_MSG = MessageFormat.format(props.getProperty("sql.insert.msg"), name);
 
 //            sq.INSERT_UPDATE_MSG = MessageFormat.format(props.getProperty("sql.insert.update.msg"), name);
@@ -69,6 +70,7 @@ public class QueryProvider {
 
             sq.INSERT_UPDATE_AUTOCOMPLETE = MessageFormat.format(props.getProperty("sql.insert_or_update.autocomplete"), name);
             sq.SELECT_AUTOCOMPLETE = MessageFormat.format(props.getProperty("sql.select.autocomplete"), name);
+            sq.SELECT_DATES = MessageFormat.format(props.getProperty("sql.select.msg_dates"), name);
         }
     };
 
@@ -81,75 +83,79 @@ public class QueryProvider {
         dbDictProps = ConfigUtils.loadProperties("info/xonix/zlo/search/db/db_dict.sql.properties");
     }
 
-    private SiteQueries getSiteQueries(String forumId) {
+    private ForumQueries getForumQueries(String forumId) {
         return siteQueriesSiteFactory.get(forumId);
     }
 
     // queries
 
     /*public String getInsertMsgQuery(String forumId) {
-        return getSiteQueries(forumId).INSERT_MSG;
+        return getForumQueries(forumId).INSERT_MSG;
     }*/
 
 /*    public String getInsertUpdateMsgQuery(String forumId) {
-        return getSiteQueries(forumId).INSERT_UPDATE_MSG;
+        return getForumQueries(forumId).INSERT_UPDATE_MSG;
     }
 
     public String getUpdateMsgQuery(String forumId) {
-        return getSiteQueries(forumId).UPDATE_MSG;
+        return getForumQueries(forumId).UPDATE_MSG;
     }
 
     public String getDeleteMsgQuery(String forumId) {
-        return getSiteQueries(forumId).DELETE_MSG;
+        return getForumQueries(forumId).DELETE_MSG;
     }*/
 
     public String getSelectMsgByIdQuery(String forumId) {
-        return getSiteQueries(forumId).SELECT_MSG_BY_ID;
+        return getForumQueries(forumId).SELECT_MSG_BY_ID;
     }
 
     public String getSelectMsgsInRangeQuery(String forumId) {
-        return getSiteQueries(forumId).SELECT_MSGS_IN_RANGE;
+        return getForumQueries(forumId).SELECT_MSGS_IN_RANGE;
     }
 
     public String getSelectLastMsgNumQuery(String forumId) {
-        return getSiteQueries(forumId).SELECT_LAST_MSG_NUM;
+        return getForumQueries(forumId).SELECT_LAST_MSG_NUM;
     }
 
     public String getSelectSetQuery(String forumId) {
-        return getSiteQueries(forumId).SELECT_MSGS_SET;
+        return getForumQueries(forumId).SELECT_MSGS_SET;
     }
 
     public String getSelectShallowSetQuery(String forumId) {
-        return getSiteQueries(forumId).SELECT_MSGS_SET_SHALLOW;
+        return getForumQueries(forumId).SELECT_MSGS_SET_SHALLOW;
     }
 
 /*    public String getSelectTopicsIncludingObsoleteQuery(String forumId) {
-        return getSiteQueries(forumId).SELECT_ALL_TOPICS;
+        return getForumQueries(forumId).SELECT_ALL_TOPICS;
     }*/
 
     public String getSelectTopicsQuery(String forumId) {
-        return getSiteQueries(forumId).SELECT_NEW_TOPICS;
+        return getForumQueries(forumId).SELECT_NEW_TOPICS;
     }
 
     // db dict
 
     public String getDbDictSetValQuery(String forumId) {
-        return getSiteQueries(forumId).DICT_SQL_SET_VAL;
+        return getForumQueries(forumId).DICT_SQL_SET_VAL;
     }
 
     public String getDbDictGetValQuery(String forumId) {
-        return getSiteQueries(forumId).DICT_SQL_GET_VAL;
+        return getForumQueries(forumId).DICT_SQL_GET_VAL;
     }
 
     public String getDbDictRemoveValQuery(String forumId) {
-        return getSiteQueries(forumId).DICT_SQL_REMOVE_VAL;
+        return getForumQueries(forumId).DICT_SQL_REMOVE_VAL;
     }
 
     public String getInsertUpdateAutocompleteQuery(String forumId) {
-        return getSiteQueries(forumId).INSERT_UPDATE_AUTOCOMPLETE;
+        return getForumQueries(forumId).INSERT_UPDATE_AUTOCOMPLETE;
     }
 
     public String getSelectAutocompleteQuery(String forumId) {
-        return getSiteQueries(forumId).SELECT_AUTOCOMPLETE;
+        return getForumQueries(forumId).SELECT_AUTOCOMPLETE;
+    }
+
+    public String getSelectDatesQuery(String forumId) {
+        return getForumQueries(forumId).SELECT_DATES;
     }
 }

@@ -6,6 +6,7 @@ import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageShallow;
 import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.model.Topic;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -16,8 +17,7 @@ import org.springframework.util.Assert;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import static info.xonix.utils.DbUtils.timestamp;
 import static org.apache.commons.lang.StringUtils.substring;
@@ -271,6 +271,29 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
                 .usingGeneratedKeyColumns("id")
                 .executeAndReturnKey(args)
                 .intValue();
+    }
+
+    @Override
+    public List<Date> getMessageDates(String forumId, List<String> nicks, Date start, Date end) {
+        String query = queryProvider.getSelectDatesQuery(forumId);
+
+        List<Object> args = new LinkedList<Object>();
+        args.add(start);
+        args.add(end);
+
+        List<String> qq = new LinkedList<String>();
+
+        for (String nick : nicks) {
+            qq.add("?");
+            args.add(nick);
+        }
+
+        query = String.format(query, StringUtils.join(qq,','));
+
+        return getJdbcTemplate().queryForList(
+                query,
+                Date.class,
+                args.toArray());
     }
 
     @Override

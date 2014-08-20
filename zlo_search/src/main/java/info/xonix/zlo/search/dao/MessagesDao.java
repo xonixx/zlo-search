@@ -5,6 +5,7 @@ import info.xonix.zlo.search.model.MessageShallow;
 import info.xonix.zlo.search.model.Topic;
 
 import javax.annotation.Nullable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,4 +38,6 @@ public interface MessagesDao {
     List<String> autoCompleteText(String forumId, String text, int limit);
 
     int insertTopic(String forumId, String topic);
+
+    List<Date> getMessageDates(String forumId, List<String> nicks, Date start, Date end);
 }
