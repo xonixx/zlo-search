@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 public class DaemonManager {
     private final static Logger log = Logger.getLogger(DaemonManager.class);
 
-    private List<Daemon> daemons = new LinkedList<Daemon>();
+    private List<DaemonBase> daemons = new LinkedList<DaemonBase>();
 
     public static long DEFAULT_CHECK_PERIOD = 1000;// 1 sec
     public static long WAIT_TERMINATION_PERIOD = 1000;// 1 sec
@@ -44,12 +44,12 @@ public class DaemonManager {
         service.scheduleWithFixedDelay(new Runnable() {
             @Override
             public void run() {
-                final List<Daemon> toRestart = new LinkedList<Daemon>();
+                final List<DaemonBase> toRestart = new LinkedList<DaemonBase>();
 
-                final Iterator<Daemon> iterator = daemons.iterator();
+                final Iterator<DaemonBase> iterator = daemons.iterator();
 
                 while (iterator.hasNext()) {
-                    final Daemon daemon = iterator.next();
+                    final DaemonBase daemon = iterator.next();
                     if (daemon.finishedAbnormally()) {
                         iterator.remove();
                         daemon.reset();
@@ -57,7 +57,7 @@ public class DaemonManager {
                     }
                 }
 
-                for (Daemon daemon : toRestart) {
+                for (DaemonBase daemon : toRestart) {
                     log.warn("Daemon " + daemon.describe() + " finished unexpectedly, restarting",
                             daemon.getLastException());
 
@@ -76,7 +76,7 @@ public class DaemonManager {
         }));
     }
 
-    public DaemonManager startDaemon(Daemon daemon) {
+    public DaemonManager startDaemon(DaemonBase daemon) {
         log.info("Starting daemon: " + daemon.describe());
 
         daemon.start();
@@ -89,7 +89,7 @@ public class DaemonManager {
     public void shutdownAll(boolean waitAllExit) {
         log.info("Shutting down " + daemons.size() + " daemons...");
 
-        for (Daemon daemon : daemons) {
+        for (DaemonBase daemon : daemons) {
             final DaemonState daemonState = daemon.getDaemonState();
 
             daemon.setExiting();
@@ -97,7 +97,7 @@ public class DaemonManager {
 //            System.out.println("ds="+ daemonState);
 //            System.out.println("ts="+ daemon.getProcess().getState());
 
-            final Daemon.Process process = daemon.getProcess();
+            final DaemonBase.Process process = daemon.getProcess();
 
             if (daemonState == DaemonState.SLEEPING
                     || process.getState() == Thread.State.TIMED_WAITING
@@ -112,7 +112,7 @@ public class DaemonManager {
             while (true) {
                 int notTerminated = 0;
 
-                for (Daemon daemon : daemons) {
+                for (DaemonBase daemon : daemons) {
                     if (daemon.getProcess().getState() != Thread.State.TERMINATED) {
                         notTerminated++;
                     }
@@ -142,7 +142,7 @@ public class DaemonManager {
         }
     }
     
-    public List<Daemon> listDaemons() {
+    public List<DaemonBase> listDaemons() {
         return Collections.unmodifiableList(daemons);
     }
 }

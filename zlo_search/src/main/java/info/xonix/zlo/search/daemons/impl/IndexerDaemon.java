@@ -52,7 +52,7 @@ public class IndexerDaemon extends BaseSearcherDaemon {
     }
 
     @Override
-    protected boolean processException(Exception e) {
+    public boolean processException(Exception e) {
         log.error("Exception while indexing", e);
 
         exceptionsLogger.logException(e,

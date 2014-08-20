@@ -62,15 +62,13 @@ public class DownloaderDaemon extends BaseSearcherDaemon {
         appLogic.setLastSavedDate(forumId, new Date());
     }
 
-    protected boolean processException(Exception e) {
+    @Override
+    public boolean processException(Exception e) {
         exceptionsLogger.logException(e,
                 "Exception in db daemon: " + getForumId(),
                 getClass(),
                 ExceptionCategory.DAEMON);
 
         return false;
-    }
-
-    protected void cleanUp() {
     }
 }
