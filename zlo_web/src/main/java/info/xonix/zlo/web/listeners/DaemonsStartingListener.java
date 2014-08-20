@@ -15,11 +15,10 @@ import javax.servlet.ServletContextListener;
  */
 public class DaemonsStartingListener implements ServletContextListener {
     private final static Logger log = Logger.getLogger(DaemonsStartingListener.class);
-    private final Config config = AppSpringContext.get(Config.class);
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        if (config.isStartDaemons()) {
+        if (AppSpringContext.get(Config.class).isStartDaemons()) {
             log.info("Starting daemons...");
             DaemonLauncher.startAllActive();
         } else {
