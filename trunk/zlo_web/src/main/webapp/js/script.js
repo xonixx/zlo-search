@@ -40,7 +40,7 @@ angular.module('search', ['mgcrea.ngStrap']);
 function toDate(str) { // dd.MM.yyyy
     if (str && /\d\d\.\d\d\.\d\d\d\d/.test(str)) {
         var parts = str.split('.');
-        return new Date(parts[2] + '-' + parts[1] + '-' + parts[0])
+        return new Date(parts[2], parts[1]-1, parts[0])
     }
     return null;
 }
