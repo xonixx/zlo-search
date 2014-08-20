@@ -9,7 +9,7 @@ import java.util.Random;
  * Date: 01.05.12
  * Time: 22:37
  */
-public class RandomlyFailingDaemon extends Daemon {
+public class RandomlyFailingDaemon extends DaemonBase {
     private final static Logger log = Logger.getLogger(RandomlyFailingDaemon.class);
     private float failingRate;
 
@@ -26,34 +26,24 @@ public class RandomlyFailingDaemon extends Daemon {
     }
 
     @Override
-    protected Process createProcess() {
-        return new Process() {
-            @Override
-            public void run() {
-                try {
-                    while (random.nextFloat() >= failingRate) {
-                        stopIfExiting();
+    public void perform() {
+        try {
+            while (random.nextFloat() >= failingRate) {
+                stopIfExiting();
 
-                        log.info(describe() + " - working...");
-                        work(1000);
-                    }
-
-                    log.info(describe() + " - ups: FAIL occured");
-                } catch (InterruptedException e) {
-                    log.info(describe() + " - Exiting...");
-                }
+                log.info(describe() + " - working...");
+                work(1000);
             }
 
-            @Override
-            protected boolean processException(Exception ex) {
-                return false;
-            }
+            log.info(describe() + " - ups: FAIL occured");
+        } catch (InterruptedException e) {
+            log.info(describe() + " - Exiting...");
+        }
+    }
 
-            @Override
-            protected void cleanUp() {
-                log.info(describe() + " - clean up...");
-            }
-        };
+    @Override
+    public void cleanUp() {
+        log.info(describe() + " - clean up...");
     }
 
     private void work(final long interval) {

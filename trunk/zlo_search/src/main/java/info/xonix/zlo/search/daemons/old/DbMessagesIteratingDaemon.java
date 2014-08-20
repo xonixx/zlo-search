@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.daemons.old;
 
-import info.xonix.utils.daemon.IteratingDaemon;
+import info.xonix.utils.daemon.ForumIteratingDaemon;
 import info.xonix.zlo.search.dao.DbDict;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.model.Message;
@@ -14,7 +14,7 @@ import java.util.List;
  * Date: 05.04.2008
  * Time: 18:53:55
  */
-public abstract class DbMessagesIteratingDaemon extends IteratingDaemon {
+public abstract class DbMessagesIteratingDaemon extends ForumIteratingDaemon {
 
     private DbDict dbDict = AppSpringContext.get(DbDict.class);
     private AppLogic appLogic = AppSpringContext.get(AppLogic.class);

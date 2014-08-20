@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
  * Date: 16.04.12
  * Time: 15:53
  */
-public class TestIteratingDaemon extends IteratingDaemon {
+public class TestIteratingDaemon extends ForumIteratingDaemon {
     private final Logger log = getLogger();
     private int start;
     private int stop;
@@ -62,13 +62,13 @@ public class TestIteratingDaemon extends IteratingDaemon {
     }
 
     @Override
-    protected boolean processException(Exception ex) {
+    public boolean processException(Exception ex) {
         log.error(describe() + " - processException", ex);
         return false;
     }
 
     @Override
-    protected void cleanUp() {
+    public void cleanUp() {
         log.info(describe() + " - cleanUp will take " + cleanUpTime);
         work(cleanUpTime);
         log.info(describe() + " - cleanUp done.");
