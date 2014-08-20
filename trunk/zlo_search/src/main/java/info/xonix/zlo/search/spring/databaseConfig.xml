@@ -53,6 +53,12 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
         <property name="dataSourceLocal" ref="dataSourceLocal"/>
         <property name="dataSourceRt" ref="dataSourceRt"/>
     </bean>
+
+    <bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
+        <property name="dataSource" ref="dataSource" />
+        <property name="changeLog" value="classpath:migrations/changelog.xml" />
+    </bean>
+
     <context:property-placeholder location="info/xonix/zlo/search/spring/jdbc.properties"/>
     <!-- context:component-scan base-package="*"/-->
 </beans>

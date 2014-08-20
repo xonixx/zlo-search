@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="1" author="xonix">
+        <createTable tableName="chart_task">
+            <column name="id" type="BIGINT"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="forumId" type="VARCHAR(20)"><constraints nullable="false"/></column>
+            <column name="nicks" type="VARCHAR(256)"><constraints nullable="false"/></column>
+            <column name="start" type="DATETIME"><constraints nullable="false"/></column>
+            <column name="end" type="DATETIME"><constraints nullable="false"/></column>
+            <column name="type" type="VARCHAR(20)"><constraints nullable="false"/></column>
+            <column name="result" type="TEXT"></column>
+        </createTable>
+    </changeSet>
+    
+</databaseChangeLog>
