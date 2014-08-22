@@ -23,7 +23,7 @@ public class AuditDaoImpl extends DaoImplBase
 
     @Override
     public void saveSearchRequest(int siteNum, SearchLog searchLog) {
-        getSimpleJdbcTemplate().update(SQL_LOG_REQUEST,
+        getJdbcTemplate().update(SQL_LOG_REQUEST,
                 siteNum,
                 substring(searchLog.getClientIp(), 0, 100),
                 substring(searchLog.getUserAgent(), 0, 200),
@@ -42,7 +42,7 @@ public class AuditDaoImpl extends DaoImplBase
     @Override
     public void storeException(String exception, String stackTrace, String msg, String source, String category) {
 //        System.out.println("Storing exception: " + exception + " source=" + source + " category=" + category);
-        getSimpleJdbcTemplate().update(SQL_LOG_EXCEPTION,
+        getJdbcTemplate().update(SQL_LOG_EXCEPTION,
                 exception,
                 stackTrace,
                 msg,

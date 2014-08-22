@@ -15,6 +15,10 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <bean id="chartsDao" class="info.xonix.zlo.search.dao.ChartsDaoImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
     <bean id="auditDao" class="info.xonix.zlo.search.dao.AuditDaoImpl">
         <property name="dataSource" ref="dataSource"/>
     </bean>
