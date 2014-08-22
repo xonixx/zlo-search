@@ -28,7 +28,7 @@ public class DbDictImpl extends DaoImplBase implements DbDict {
         Object[] vals = new Object[]{null, null, null, null};
         vals[getValIndex(type)] = val;
 
-        getSimpleJdbcTemplate().update(queryProvider.getDbDictSetValQuery(forumId),
+        getJdbcTemplate().update(queryProvider.getDbDictSetValQuery(forumId),
                 name, type.getInt(), vals[0], vals[1], vals[2], vals[3],
                 type.getInt(), vals[0], vals[1], vals[2], vals[3]);
     }
@@ -55,7 +55,7 @@ public class DbDictImpl extends DaoImplBase implements DbDict {
 
     private Object getVal(String forumId, String name, VarType varType) {
         try {
-            return getSimpleJdbcTemplate().queryForObject(queryProvider.getDbDictGetValQuery(forumId),
+            return getJdbcTemplate().queryForObject(queryProvider.getDbDictGetValQuery(forumId),
                     varType.getJavaType(),
                     name);
         } catch (EmptyResultDataAccessException ignore) {
@@ -109,7 +109,7 @@ public class DbDictImpl extends DaoImplBase implements DbDict {
 
     @Override
     public void remove(String forumId, String name) {
-        getSimpleJdbcTemplate().update(queryProvider.getDbDictRemoveValQuery(forumId), name);
+        getJdbcTemplate().update(queryProvider.getDbDictRemoveValQuery(forumId), name);
     }
 
     private int getValIndex(VarType type) {

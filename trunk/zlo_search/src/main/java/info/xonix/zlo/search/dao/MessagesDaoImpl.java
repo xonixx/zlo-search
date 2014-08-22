@@ -107,49 +107,6 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
         newSimpleJdbcInsert()
                 .withTableName(forumTable(forumId, "messages"))
                 .executeBatch(batch);
-
-/*
-        getJdbcTemplate().batchUpdate(queryProvider.getInsertMsgQuery(forumId), new BatchPreparedStatementSetter() {
-            @Override
-            public void setValues(PreparedStatement ps, int i) throws SQLException {
-                Message msg = msgs.get(i);
-
-                validateMsgBeforeSave(forumId, msg);
-                */
-/*
-                num,\
-                parentNum,\
-                host,\
-                topicCode,\
-                title,\
-                nick,\
-                altName,\
-                msgDate,\
-                reg,\
-                body,\
-                status)
-                *//*
-
-                int j = 1;
-                ps.setInt(j++, msg.getNum());
-                ps.setInt(j++, msg.getParentNum());
-                ps.setString(j++, msg.getHost());
-                ps.setInt(j++, msg.getTopicCode());
-                ps.setString(j++, msg.getTitle());
-                ps.setString(j++, msg.getNick());
-                ps.setString(j++, msg.getAltName());
-                ps.setTimestamp(j++, timestamp(msg.getDate()));
-                ps.setBoolean(j++, msg.isReg());
-                ps.setString(j++, msg.getBody());
-                ps.setInt(j, msg.getStatus().getInt());
-            }
-
-            @Override
-            public int getBatchSize() {
-                return msgs.size();
-            }
-        });
-*/
     }
 
     private void validateMsgBeforeSave(String forumId, Message msg) {
@@ -173,7 +130,7 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
     @Override
     public Message getMessageByNumber(String forumId, int num) {
         try {
-            return getSimpleJdbcTemplate().queryForObject(
+            return getJdbcTemplate().queryForObject(
                     queryProvider.getSelectMsgByIdQuery(forumId),
                     messageRowMapper,
                     num);
@@ -184,7 +141,7 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
 
     @Override
     public List<Message> getMessagesByRange(String forumId, int start, int end) {
-        return getSimpleJdbcTemplate().query(
+        return getJdbcTemplate().query(
                 queryProvider.getSelectMsgsInRangeQuery(forumId),
                 messageRowMapper,
                 start, end);
@@ -194,12 +151,12 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
     public List<Message> getMessages(String forumId, int[] nums) {
         String sql = String.format(queryProvider.getSelectSetQuery(forumId), joinByComma(nums));
 
-        return getSimpleJdbcTemplate().query(sql, messageRowMapper);
+        return getJdbcTemplate().query(sql, messageRowMapper);
     }
 
     @Override
     public List<Message> getChildMessages(String forumId, long messageId) {
-        return getSimpleJdbcTemplate().query(
+        return getJdbcTemplate().query(
                 "select m.num, m.parentNum, m.nick, m.altName, m.user_id, m.title, m.host, " +
                         "m.msgDate, m.body, m.reg, m.status, " +
                         " t.name as topic, t.id as topicCode" +
@@ -214,7 +171,7 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
     public List<MessageShallow> getShallowMessages(String forumId, int[] nums) {
         String sql = String.format(queryProvider.getSelectShallowSetQuery(forumId), joinByComma(nums));
 
-        return getSimpleJdbcTemplate().query(sql, messageShallowRowMapper);
+        return getJdbcTemplate().query(sql, messageShallowRowMapper);
     }
 
     private String joinByComma(int[] nums) {
@@ -233,12 +190,12 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
 
     @Override
     public int getLastMessageNumber(String forumId) {
-        return getSimpleJdbcTemplate().queryForInt(queryProvider.getSelectLastMsgNumQuery(forumId));
+        return getJdbcTemplate().queryForInt(queryProvider.getSelectLastMsgNumQuery(forumId));
     }
 
     @Override
     public void saveSearchTextForAutocomplete(String forumId, String text) {
-        final int res = getSimpleJdbcTemplate().update(
+        final int res = getJdbcTemplate().update(
                 queryProvider.getInsertUpdateAutocompleteQuery(forumId),
                 substring(text, 0, 255));
 
@@ -288,7 +245,7 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
             args.add(nick);
         }
 
-        query = String.format(query, StringUtils.join(qq,','));
+        query = String.format(query, StringUtils.join(qq, ','));
 
         return getJdbcTemplate().queryForList(
                 query,
@@ -298,7 +255,7 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
 
     @Override
     public List<Topic> getTopicList(String forumId) {
-        return getSimpleJdbcTemplate().query(
+        return getJdbcTemplate().query(
                 queryProvider.getSelectTopicsQuery(forumId),
                 getRowMappersHelper().beanRowMapper(Topic.class));
     }
