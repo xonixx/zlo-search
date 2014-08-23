@@ -2,6 +2,7 @@ package info.xonix.zlo.search.daemons;
 
 import info.xonix.utils.daemon.DaemonManager;
 import info.xonix.zlo.search.config.forums.GetForum;
+import info.xonix.zlo.search.daemons.impl.ChartsDaemon;
 import info.xonix.zlo.search.daemons.impl.DownloaderDaemon;
 import info.xonix.zlo.search.daemons.impl.IndexerDaemon;
 import info.xonix.zlo.search.spring.AppSpringContext;
@@ -28,6 +29,8 @@ public class DaemonLauncher {
                 log.info("Not starting daemons for dead forum: " + forumId);
             }
         }
+
+//        daemonManager.startDaemon(new ChartsDaemon());
     }
 
     public static void shutdownAll() {

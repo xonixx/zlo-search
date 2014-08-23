@@ -20,7 +20,7 @@
     </parent>
 
     <properties>
-        <cxf.version>2.5.2</cxf.version>
+        <cxf.version>3.0.1</cxf.version>
     </properties>
 
     <build>
