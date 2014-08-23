@@ -7,4 +7,5 @@
 
     <import resource="classpath*:info/xonix/zlo/**/all_beans.xml"/>
 
+    <import resource="ws.xml"/><!--TODO: why here?-->
 </beans>

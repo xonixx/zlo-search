@@ -16,7 +16,7 @@ public class ChartsDaemon extends DaemonBase implements Daemon {
 
     private ChartService chartService = AppSpringContext.get(ChartService.class);
 
-    protected ChartsDaemon() {
+    public ChartsDaemon() {
         super("Charts Daemon");
     }
 
@@ -29,6 +29,7 @@ public class ChartsDaemon extends DaemonBase implements Daemon {
     public void perform() {
         while (true) {
             if (isExiting()) {
+                cleanUp();
                 break;
             }
             chartService.processNextTask();
