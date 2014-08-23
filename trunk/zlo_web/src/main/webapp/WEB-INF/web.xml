@@ -9,6 +9,21 @@
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
+    <!--{{ spring context-->
+    <context-param>
+        <param-name>
+            contextConfigLocation
+        </param-name>
+        <param-value>
+            /WEB-INF/root-context.xml
+        </param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <!--}} spring context-->
+
     <listener>
         <listener-class>info.xonix.zlo.web.listeners.AppServletContextListener</listener-class>
     </listener>
@@ -89,7 +104,18 @@
         <url-pattern>/ws/*</url-pattern>
     </servlet-mapping>
 
+    <!--{{ spring mvc-->
+    <servlet>
+        <servlet-name>SpringMvc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
 
+    <servlet-mapping>
+        <servlet-name>SpringMvc</servlet-name>
+        <url-pattern>/a/*</url-pattern>
+    </servlet-mapping>
+    <!--}} spring mvc-->
     <!--
        - This is useful because current browsers typically do not
        - set a character encoding even if specified in the HTML page or form

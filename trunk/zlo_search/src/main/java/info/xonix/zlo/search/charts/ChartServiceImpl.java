@@ -81,7 +81,7 @@ public class ChartServiceImpl implements ChartService {
         try {
             queue.put(task);
         } catch (InterruptedException e) {
-            e.printStackTrace();//TODO
+            throw new RuntimeException(e);
         }
         return id;
     }
@@ -98,7 +98,7 @@ public class ChartServiceImpl implements ChartService {
                 chartsDao.saveChartTaskError(task.getId(), ExceptionUtils.getStackTrace(e));
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();//TODO
+            throw new RuntimeException(e);
         }
     }
 }

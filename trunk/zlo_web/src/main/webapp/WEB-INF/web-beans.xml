@@ -6,8 +6,7 @@
 
     <context:annotation-config/>
 
+    <bean class="info.xonix.zlo.search.charts.ChartServiceImpl" />
+
     <import resource="ws.xml"/>
-
-    <import resource="daemons.xml"/>
-
 </beans>
