@@ -9,8 +9,6 @@
 
     <mvc:annotation-driven />
 
-    <import resource="web-beans.xml"/>
-
     <context:component-scan base-package="info.xonix.zlo.web.controllers"/>
 
     <bean id="viewResolver"

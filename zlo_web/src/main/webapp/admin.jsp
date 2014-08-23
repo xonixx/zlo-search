@@ -75,7 +75,7 @@
         <display:caption>Daemons</display:caption>
 
         <display:column title="#">${daemon_rowNum}</display:column>
-        <display:column title="Forum">${daemon.forumId}</display:column>
+        <display:column title="Forum">${daemon.id}</display:column>
         <display:column title="Type">
             <%= daemon.getClass().getSimpleName() %>
         </display:column>

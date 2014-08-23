@@ -18,11 +18,15 @@ public class DaemonsStartingListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        if (AppSpringContext.get(Config.class).isStartDaemons()) {
-            log.info("Starting daemons...");
-            DaemonLauncher.startAllActive();
-        } else {
-            log.info("Daemons not started.");
+        try {
+            if (AppSpringContext.get(Config.class).isStartDaemons()) {
+                log.info("Starting daemons...");
+                DaemonLauncher.startAllActive();
+            } else {
+                log.info("Daemons not started.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

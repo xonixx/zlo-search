@@ -45,4 +45,5 @@
 
     <bean id="xmlFpFormer" class="info.xonix.zlo.search.xmlfp.XmlFpFormer"/>
 
+    <bean class="info.xonix.zlo.search.charts.ChartServiceImpl" />
 </beans>
