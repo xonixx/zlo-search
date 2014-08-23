@@ -30,7 +30,7 @@ public class DaemonLauncher {
             }
         }
 
-//        daemonManager.startDaemon(new ChartsDaemon());
+        daemonManager.startDaemon(new ChartsDaemon());
     }
 
     public static void shutdownAll() {
