@@ -6,7 +6,17 @@ package info.xonix.zlo.search.charts;
  * Time: 8:47 PM
  */
 public enum ChartType {
-    ByHour,
-    ByWeekDay,
-    DayInterval
+    ByHour("По часам дня"),
+    ByWeekDay("По дням недели"),
+    DayInterval("Активность в интервале");
+
+    private String title;
+
+    ChartType(String title) {
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
+    }
 }
