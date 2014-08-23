@@ -61,7 +61,8 @@ public class ChartsDaoImpl extends DaoImplBase implements ChartsDao {
 
                         return chartTask;
                     }
-                }
+                },
+                id
         );
     }
 }

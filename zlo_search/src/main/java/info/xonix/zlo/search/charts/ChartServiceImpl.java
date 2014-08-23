@@ -87,12 +87,18 @@ public class ChartServiceImpl implements ChartService {
     }
 
     @Override
+    public ChartTask loadChartTask(long id) {
+        return chartsDao.loadChartTask(id);
+    }
+
+    @Override
     public void processNextTask() {
         try {
             ChartTask task = queue.take();
             try {
                 Map<String, Integer> processedResult = process(task);
                 chartsDao.saveChartTaskResult(task.getId(), JsonUtil.toJson(processedResult));
+                log.info("Processed for task.id=" + task.getId());
             } catch (Exception e) {
                 log.error("Error processing " + task, e);
                 chartsDao.saveChartTaskError(task.getId(), ExceptionUtils.getStackTrace(e));

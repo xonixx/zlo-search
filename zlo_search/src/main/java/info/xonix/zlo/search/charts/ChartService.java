@@ -15,5 +15,7 @@ public interface ChartService {
 
     long submitTask(ChartTask task);
 
+    ChartTask loadChartTask(long id);
+
     void processNextTask();
 }
