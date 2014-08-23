@@ -1,15 +1,22 @@
 package info.xonix.zlo.search.spring;
 
+import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Utility class for creating spring application contexts
  */
-public final class AppSpringContext {
+public final class AppSpringContext implements ApplicationContextAware {
     // this class is not for creation
 
     private AppSpringContext() {
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        AppSpringContext.applicationContext = applicationContext;
     }
 
     // for volatile word - see http://en.wikipedia.org/wiki/Double-checked_locking
