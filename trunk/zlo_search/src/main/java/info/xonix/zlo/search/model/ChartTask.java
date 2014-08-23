@@ -24,10 +24,6 @@ public class ChartTask {
     private String result;
     private String error;
 
-    // TODO: why we need this?
-    public ChartTask() {
-    }
-
     public long getId() {
         return id;
     }
