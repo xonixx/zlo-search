@@ -205,3 +205,7 @@ form.inline-form {
     margin-bottom: 0;
     display: inline;
 }
+
+form.submitted .ng-invalid {
+    border: 1px solid red;
+}
