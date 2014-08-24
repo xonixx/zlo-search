@@ -22,6 +22,9 @@
     <script type="text/javascript" src="/lib/angular-strap/angular-strap${minSuffix}.js"></script>
     <script type="text/javascript" src="/lib/angular-strap/angular-strap.tpl${minSuffix}.js"></script>
 
+    <script type="text/javascript" src="/lib/highcharts/highcharts${minSuffix}.js"></script>
+    <script type="text/javascript" src="/lib/highcharts-ng/highcharts-ng${minSuffix}.js"></script>
+
     <script type="text/javascript" src="/js/common.js?${version}"></script>
     <script type="text/javascript" src="/js/charts.js?${version}"></script>
 </head>
@@ -54,6 +57,12 @@
 
     <br/>
     {{ task }}
+
+    <div ng-if="task.error" class="error">{{ task.error }}</div>
+
+    <div ng-if="chartConfig">
+        <highchart id="chart" config="chartConfig"></highchart>
+    </div>
 </form>
 
 </body>
