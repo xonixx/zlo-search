@@ -6,24 +6,33 @@ angular.module('charts', ['common', 'ngResource', 'mgcrea.ngStrap', 'highcharts-
         });
     });
 
-function ChartsCtrl($scope, Chart, $timeout, dateFilter) {
-    $scope.task = {forumId: "zlo", dbNicks: "xonix", start: new Date(1388612189000), end: new Date(), type: 'ByHour'};
+function ChartsCtrl($scope, Chart, $timeout, dateFilter, $location) {
+    var params = $location.search();
+    if (params.id) {
+        checkTask(params.id);
+    }
+//    $scope.task = {forumId: "zlo", dbNicks: "xonix", start: new Date(1388612189000), end: new Date(), type: 'ByHour'};
     $scope.submitTask = function (task) {
         delete task.nicks;
         delete task.result;
         delete task.error;
 
         Chart.submitTask(task, function (res) {
+            $scope.chartConfig = null;
+            $scope.checking = true;
+
             $timeout(function () {
+                $location.search('id', res.id);
                 checkTask(res.id)
             }, 1000)
         });
     };
 
     function checkTask(id) {
+        $scope.checking = true;
         Chart.checkTask({id: id}, function (res) {
             if (res.result || res.error) {
-                $scope.chartConfig = null;
+                $scope.checking = false;
                 $scope.task = res;
                 if (res.result) {
                     res.result = angular.fromJson(res.result);
@@ -58,13 +67,20 @@ function ChartsCtrl($scope, Chart, $timeout, dateFilter) {
         });
 
         $scope.chartConfig = {
+            options: {
+                chart: {
+                    type: type == 'ByWeekDay' ? 'column' : 'line'
+                }
+            },
             title: {
                 text: title
             },
             xAxis: {
+//                type: 'datetime',
                 categories: categories
             },
             yAxis: {
+                min: 0,
                 title: { text: 'Число сообщений' },
                 plotLines: [
                     {
@@ -80,6 +96,8 @@ function ChartsCtrl($scope, Chart, $timeout, dateFilter) {
                     data: data
                 }
             ]
-        }
+        };
+
+//        console.info($scope.chartConfig)
     }
 }

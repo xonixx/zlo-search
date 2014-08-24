@@ -56,15 +56,22 @@ public class ChartServiceImpl implements ChartService {
         Map<String, Integer> result = null;
 
         if (task.getType() == ChartType.ByHour) {
-            result = prepareMapByDateFormat(messageDates, DateFormats.Hour.get());
+            Map<String,Integer> res = prepareMapByDateFormat(messageDates, DateFormats.Hour.get());
+            result = new LinkedHashMap<String, Integer>();
+            for (int i = 0; i <= 23; i++) {
+                String si = String.valueOf(i);
+                Integer value = res.get(si);
+                result.put(si, value != null ? value : 0);
+            }
         } else if (task.getType() == ChartType.DayInterval) {
-            result = prepareMapByDateFormat(messageDates, DateFormats.ddMMyyyy_dots.get());
+            result = prepareMapByDateFormat(messageDates, DateFormats.yyyyMMdd.get());
             // TODO merge to decrease points?
         } else if (task.getType() == ChartType.ByWeekDay) {
             Map<String, Integer> res = prepareMapByDateFormat(messageDates, DateFormats.WeekDay.get());
             result = new LinkedHashMap<String, Integer>();
             for (String weekDayName : WEEK_DAYS) {
-                result.put(weekDayName, res.get(weekDayName));
+                Integer value = res.get(weekDayName);
+                result.put(weekDayName, value != null ? value : 0);
             }
         }
 
@@ -88,7 +95,14 @@ public class ChartServiceImpl implements ChartService {
 
     @Override
     public ChartTask loadChartTask(long id) {
-        return chartsDao.loadChartTask(id);
+        ChartTask chartTask = chartsDao.loadChartTask(id);
+
+        if (chartTask != null)
+            return chartTask;
+
+        ChartTask notFound = new ChartTask();
+        notFound.setError("График не найден");
+        return notFound;
     }
 
     @Override

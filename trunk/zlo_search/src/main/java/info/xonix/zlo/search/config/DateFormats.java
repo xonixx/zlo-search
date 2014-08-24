@@ -13,9 +13,10 @@ public class DateFormats {
     public static final ThreadLocal<DateFormat> ddMMyyyyy_HHmm = df("dd/MM/yyyy HH:mm");
     public static final ThreadLocal<DateFormat> ddMMyyyy = df("dd/MM/yyyy");
     public static final ThreadLocal<DateFormat> ddMMyyyy_dots = df("dd.MM.yyyy");
+    public static final ThreadLocal<DateFormat> yyyyMMdd = df("yyyy-MM-dd");
     public static final ThreadLocal<DateFormat> DF_BOARD_MSG = df("M d HH:mm:ss yyyy");
 
-    public static final ThreadLocal<DateFormat> Hour = df("HH");
+    public static final ThreadLocal<DateFormat> Hour = df("H");
     public static final ThreadLocal<DateFormat> WeekDay = df("E");
 
     private static ThreadLocal<DateFormat> df(final String format) {

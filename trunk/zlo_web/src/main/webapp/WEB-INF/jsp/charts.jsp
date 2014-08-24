@@ -56,12 +56,16 @@
     <button>Построить график!</button>
 
     <br/>
-    {{ task }}
+    <%--{{ task }}--%>
 
     <div ng-if="task.error" class="error">{{ task.error }}</div>
 
     <div ng-if="chartConfig">
         <highchart id="chart" config="chartConfig"></highchart>
+    </div>
+
+    <div ng-show="checking">
+        Пожалуйста подождите, пока строится график.
     </div>
 </form>
 

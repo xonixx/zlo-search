@@ -2,6 +2,7 @@ package info.xonix.zlo.search.dao;
 
 import info.xonix.zlo.search.charts.ChartType;
 import info.xonix.zlo.search.model.ChartTask;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 
@@ -43,26 +44,30 @@ public class ChartsDaoImpl extends DaoImplBase implements ChartsDao {
 
     @Override
     public ChartTask loadChartTask(long id) {
-        return getJdbcTemplate().queryForObject(
-                "select * from chart_task where id=?",
-                new RowMapper<ChartTask>() {
-                    @Override
-                    public ChartTask mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        ChartTask chartTask = new ChartTask();
+        try {
+            return getJdbcTemplate().queryForObject(
+                    "select * from chart_task where id=?",
+                    new RowMapper<ChartTask>() {
+                        @Override
+                        public ChartTask mapRow(ResultSet rs, int rowNum) throws SQLException {
+                            ChartTask chartTask = new ChartTask();
 
-                        chartTask.setId(rs.getLong("id"));
-                        chartTask.setForumId(rs.getString("forumId"));
-                        chartTask.setDbNicks(rs.getString("nicks"));
-                        chartTask.setStart(rs.getDate("start"));
-                        chartTask.setEnd(rs.getDate("end"));
-                        chartTask.setType(ChartType.valueOf(rs.getString("type")));
-                        chartTask.setResult(rs.getString("result"));
-                        chartTask.setError(rs.getString("error"));
+                            chartTask.setId(rs.getLong("id"));
+                            chartTask.setForumId(rs.getString("forumId"));
+                            chartTask.setDbNicks(rs.getString("nicks"));
+                            chartTask.setStart(rs.getDate("start"));
+                            chartTask.setEnd(rs.getDate("end"));
+                            chartTask.setType(ChartType.valueOf(rs.getString("type")));
+                            chartTask.setResult(rs.getString("result"));
+                            chartTask.setError(rs.getString("error"));
 
-                        return chartTask;
-                    }
-                },
-                id
-        );
+                            return chartTask;
+                        }
+                    },
+                    id
+            );
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 }
