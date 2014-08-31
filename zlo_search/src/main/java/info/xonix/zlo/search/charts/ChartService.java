@@ -11,7 +11,11 @@ import java.util.Map;
  */
 public interface ChartService {
 
-    Map<String, Integer> process(ChartTask task);
+    /**
+     * @param task chart task to render
+     * @return Map&lt;String,Integer> or some other JSONable data object to build chart from
+     */
+    Object process(ChartTask task);
 
     long submitTask(ChartTask task);
 
