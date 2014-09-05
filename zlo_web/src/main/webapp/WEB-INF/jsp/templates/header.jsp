@@ -27,7 +27,7 @@
                <c:if test="${activeScreen == 'stats'}">class="activeLink"</c:if>>Статистика</a></li>
         <li><a href="${baseUrl}nickhost.jsp?site=${site}"
                <c:if test="${activeScreen == 'nickhost'}">class="activeLink"</c:if>>Ники/Хосты</a></li>
-        <li><a href="${baseUrl}a/charts/index<%--?site=${site}--%>"
+        <li><a href='${baseUrl}a/charts#?params={"forumId":"${forumId}"}'
                <c:if test="${activeScreen == 'charts'}">class="activeLink"</c:if>>Графики</a></li>
         <li><a href="${baseUrl}history.jsp"
                <c:if test="${activeScreen == 'history'}">class="activeLink"</c:if>>История запросов</a></li>

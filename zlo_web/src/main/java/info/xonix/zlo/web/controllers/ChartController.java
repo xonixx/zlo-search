@@ -24,7 +24,7 @@ public class ChartController {
     @Autowired
     private ChartService chartService;
 
-    @RequestMapping("/index")
+    @RequestMapping("")
     public String helloWorld(Model model) {
         return "charts";
     }

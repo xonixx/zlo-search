@@ -1,4 +1,5 @@
 <%@ page import="info.xonix.zlo.web.controlsdata.ControlsData" %>
+<%@ page import="info.xonix.zlo.search.utils.DateUtil" %>
 <%--
   User: Vovan
   Date: 20.01.2008
@@ -83,6 +84,11 @@
     </form>
     <small>Всего сообщений за этот период: ${resTotal.rows[0].cnt}</small>
 
+    <%
+        long end = DateUtil.currentDateNoTime().getTime();
+        long start = end - 365L * 24 * 3600 * 1000;
+    %>
+
     <display:table name="${res.rows}" id="row" htmlId="resultTable">
         <display:setProperty name="basic.msg.empty_list"><%-- don't display empty msg --%></display:setProperty>
 
@@ -95,6 +101,8 @@
                         <tiles:putAttribute name="nick" value="${row.nick}"/>
                         <tiles:putAttribute name="userId" value="${row.user_id}"/>
                     </tiles:insertDefinition>
+                    <a class="search" title="График активности"
+                            href='a/charts#?params={"forumId":"${forumId}", "dbNicks":"${row.nick}", "start":<%=start%>, "end": <%=end%>}'>a</a>
                 </c:when>
                 <c:otherwise>
                     <tiles:insertDefinition name="host">

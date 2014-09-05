@@ -1,7 +1,7 @@
 function leave_only_fields(obj, fields) {
     var r = {};
     for (var k in obj) {
-        if (k.substr(0,1) == '$' || $.inArray(k, fields) != -1 || k == 'id' || k == 'version') {
+        if (k.substr(0, 1) == '$' || $.inArray(k, fields) != -1 || k == 'id' || k == 'version') {
             r[k] = obj[k];
         }
     }
@@ -30,11 +30,15 @@ function ChartsCtrl($scope, Chart, $timeout, dateFilter, $location) {
             if (task.start) task.start = new Date(task.start);
             if (task.end) task.end = new Date(task.end);
             $scope.task = task;
-//            console.info(222,task)
-            checkTask(task);
+            if (task.forumId &&
+                task.dbNicks &&
+                task.start &&
+                task.end &&
+                task.type)
+                checkTask(task);
         }
     }
-    $scope.task = {forumId: "zlo", dbNicks: "xonix", start: new Date(1388612189000), end: new Date(1409953114753), type: 'ByHour'};
+//    $scope.task = {forumId: "zlo", dbNicks: "xonix", start: new Date(1388534400000), end: new Date(1409961600000), type: 'ByHour'};
     $scope.submitTask = function (task) {
         task = leave_only_fields(task, ['forumId', 'dbNicks', 'start', 'end', 'type']);
 
@@ -51,7 +55,6 @@ function ChartsCtrl($scope, Chart, $timeout, dateFilter, $location) {
 
     function checkTask(task) {
         task = leave_only_fields(task, ['forumId', 'dbNicks', 'start', 'end', 'type']);
-//        console.info(111,task)
 
         $scope.checking = true;
         Chart.checkTask(task, function (res) {
@@ -186,7 +189,6 @@ function ChartsCtrl($scope, Chart, $timeout, dateFilter, $location) {
         }
 
         angular.extend($scope.chartConfig, chartCommon);
-        console.info($scope.chartConfig)
     }
 
     function _toDate(str) { // yyyy-MM-dd
