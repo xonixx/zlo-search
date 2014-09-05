@@ -20,4 +20,8 @@ public class DateUtil {
     public static int dateDiff(Date bigger, Date smaller) {
         return (int) ((bigger.getTime() - smaller.getTime()) / (24 * 3600 * 1000));
     }
+
+    public static Date currentDateNoTime() {
+        return emptyTimePart(Calendar.getInstance());
+    }
 }
