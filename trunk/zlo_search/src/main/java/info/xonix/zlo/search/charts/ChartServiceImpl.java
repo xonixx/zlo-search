@@ -145,14 +145,7 @@ public class ChartServiceImpl implements ChartService {
 
     @Override
     public ChartTask loadChartTask(String descriptor) {
-        ChartTask chartTask = chartsDao.loadChartTask(descriptor);
-
-        if (chartTask != null)
-            return chartTask;
-
-        ChartTask notFound = new ChartTask();
-        notFound.setError("График не найден");
-        return notFound;
+        return chartsDao.loadChartTask(descriptor);
     }
 
     @Override

@@ -2,6 +2,7 @@ package info.xonix.zlo.web.controllers;
 
 import info.xonix.zlo.search.charts.ChartService;
 import info.xonix.zlo.search.model.ChartTask;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("/charts")
 public class ChartController {
+    private static final Logger log = Logger.getLogger(ChartController.class);
+
     @Autowired
     private ChartService chartService;
 
@@ -29,16 +32,24 @@ public class ChartController {
     @RequestMapping("/submitTask")
     @ResponseBody
     public Map submitTask(@RequestBody ChartTask chartTask) {
-        System.out.println("Submitted: " + chartTask);
+        log.info("Submitted: " + chartTask);
+
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("id", chartService.submitTask(chartTask));
         result.put("descriptor", chartTask.getDescriptor());
+
         return result;
     }
 
     @RequestMapping("/checkTask")
     @ResponseBody
-    public ChartTask checkTask(@RequestParam("descriptor") String descriptor) {
-        return chartService.loadChartTask(descriptor);
+    public ChartTask checkTask(@RequestBody ChartTask chartTask) {
+        ChartTask task = chartService.loadChartTask(chartTask.getDescriptor());
+        if (task == null) {
+            log.info("checkTask: task not found, submitting: " + chartTask);
+            chartService.submitTask(chartTask);
+            return chartTask;
+        }
+        return task;
     }
 }

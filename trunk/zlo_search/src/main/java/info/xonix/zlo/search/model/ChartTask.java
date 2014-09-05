@@ -30,8 +30,8 @@ public class ChartTask {
      */
     public String getDescriptor() {
         Map<String,Object> map = new HashMap<String, Object>();
-        map.put("forum", forumId);
-        map.put("nick", getDbNicks());
+        map.put("forumId", forumId);
+        map.put("dbNicks", getDbNicks());
         map.put("start", start);
         map.put("end", end);
         map.put("type", type);
