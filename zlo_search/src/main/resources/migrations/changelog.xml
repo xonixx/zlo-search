@@ -7,9 +7,10 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <changeSet id="1-3" author="xonix">
+    <changeSet id="1-4" author="xonix">
         <createTable tableName="chart_task">
             <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="descriptor" type="VARCHAR(500)"><constraints unique="true" nullable="false"/></column>
             <column name="forumId" type="VARCHAR(20)"><constraints nullable="false"/></column>
             <column name="nicks" type="VARCHAR(256)"><constraints nullable="false"/></column>
             <column name="start" type="DATETIME"><constraints nullable="false"/></column>
@@ -17,6 +18,7 @@
             <column name="type" type="VARCHAR(20)"><constraints nullable="false"/></column>
             <column name="result" type="TEXT"></column>
             <column name="error" type="TEXT"></column>
+            <column name="status" type="TEXT"><constraints nullable="false"/></column>
         </createTable>
 
         <sql>ALTER TABLE chart_task CONVERT TO CHARACTER SET cp1251</sql>

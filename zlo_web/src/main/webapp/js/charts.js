@@ -1,3 +1,13 @@
+function leave_only_fields(obj, fields) {
+    var r = {};
+    for (var k in obj) {
+        if (k.substr(0,1) == '$' || $.inArray(k, fields) != -1 || k == 'id' || k == 'version') {
+            r[k] = obj[k];
+        }
+    }
+    return r;
+}
+
 angular.module('charts', ['common', 'ngResource', 'mgcrea.ngStrap', 'highcharts-ng'])
     .factory('Chart', function ($resource) {
         return $resource('/a/charts/:action/:id', {}, {
@@ -8,29 +18,27 @@ angular.module('charts', ['common', 'ngResource', 'mgcrea.ngStrap', 'highcharts-
 
 function ChartsCtrl($scope, Chart, $timeout, dateFilter, $location) {
     var params = $location.search();
-    if (params.id) {
-        checkTask(params.id);
+    if (params.params) {
+        checkTask(params.params);
     }
-//    $scope.task = {forumId: "zlo", dbNicks: "xonix", start: new Date(1388612189000), end: new Date(), type: 'ByHour'};
+    $scope.task = {forumId: "zlo", dbNicks: "xonix", start: new Date(1388612189000), end: new Date(1409953114753), type: 'ByHour'};
     $scope.submitTask = function (task) {
-        delete task.nicks;
-        delete task.result;
-        delete task.error;
+        task = leave_only_fields(task, ['forumId', 'dbNicks', 'start', 'end', 'type']);
 
         Chart.submitTask(task, function (res) {
             $scope.chartConfig = null;
             $scope.checking = true;
 
             $timeout(function () {
-                $location.search('id', res.id);
-                checkTask(res.id)
+                $location.search('params', res.descriptor);
+                checkTask(res.descriptor);
             }, 1000)
         });
     };
 
-    function checkTask(id) {
+    function checkTask(descriptor) {
         $scope.checking = true;
-        Chart.checkTask({id: id}, function (res) {
+        Chart.checkTask({descriptor: descriptor}, function (res) {
             if (res.result || res.error) {
                 $scope.checking = false;
                 $scope.task = res;
@@ -40,7 +48,7 @@ function ChartsCtrl($scope, Chart, $timeout, dateFilter, $location) {
                 }
             } else {
                 $timeout(function () {
-                    checkTask(id)
+                    checkTask(descriptor)
                 }, 2000)
             }
         })

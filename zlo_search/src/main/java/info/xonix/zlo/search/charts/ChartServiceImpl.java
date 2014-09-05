@@ -5,6 +5,7 @@ import info.xonix.zlo.search.config.DateFormats;
 import info.xonix.zlo.search.dao.ChartsDao;
 import info.xonix.zlo.search.dao.MessagesDao;
 import info.xonix.zlo.search.model.ChartTask;
+import info.xonix.zlo.search.model.ChartTypeStatus;
 import info.xonix.zlo.search.utils.DateUtil;
 import info.xonix.zlo.search.utils.JsonUtil;
 import org.apache.log4j.Logger;
@@ -89,8 +90,8 @@ public class ChartServiceImpl implements ChartService {
         Object result = null;
 
         if (task.getType() == ChartType.ByHour) {
-            Map<String,Integer> res = prepareMapByDateFormat(messageDates, DateFormats.Hour.get());
-            Map<String,Integer> resultMap = new LinkedHashMap<String, Integer>();
+            Map<String, Integer> res = prepareMapByDateFormat(messageDates, DateFormats.Hour.get());
+            Map<String, Integer> resultMap = new LinkedHashMap<String, Integer>();
             for (int i = 0; i <= 23; i++) {
                 String si = String.valueOf(i);
                 Integer value = res.get(si);
@@ -99,7 +100,7 @@ public class ChartServiceImpl implements ChartService {
             result = resultMap;
         } else if (task.getType() == ChartType.ByWeekDay) {
             Map<String, Integer> res = prepareMapByDateFormat(messageDates, DateFormats.WeekDay.get());
-            Map<String,Integer> resultMap = new LinkedHashMap<String, Integer>();
+            Map<String, Integer> resultMap = new LinkedHashMap<String, Integer>();
             for (String weekDayName : WEEK_DAYS) {
                 Integer value = res.get(weekDayName);
                 resultMap.put(weekDayName, value != null ? value : 0);
@@ -116,8 +117,22 @@ public class ChartServiceImpl implements ChartService {
 
     @Override
     public long submitTask(ChartTask task) {
+        ChartTask chartTask = chartsDao.loadChartTask(task.getDescriptor());
+        if (chartTask != null) {
+            if (chartTask.getStatus() == ChartTypeStatus.NEW ||
+                    chartTask.getStatus() == ChartTypeStatus.STARTED ||
+                    chartTask.getStatus() == ChartTypeStatus.READY) {
+                log.info("Chart already submitted: " + chartTask);
+                return chartTask.getId();
+            } else if (chartTask.getStatus() == ChartTypeStatus.OBSOLETE) {
+                task = chartTask;
+                log.info("Chart is obsolete, rebuilding: " + task);
+            }
+        }
+
         log.info("Submitting " + task);
 
+        task.setStatus(ChartTypeStatus.NEW);
         long id = chartsDao.insertChartTask(task);
         try {
             queue.put(task);
@@ -128,8 +143,8 @@ public class ChartServiceImpl implements ChartService {
     }
 
     @Override
-    public ChartTask loadChartTask(long id) {
-        ChartTask chartTask = chartsDao.loadChartTask(id);
+    public ChartTask loadChartTask(String descriptor) {
+        ChartTask chartTask = chartsDao.loadChartTask(descriptor);
 
         if (chartTask != null)
             return chartTask;
@@ -143,13 +158,24 @@ public class ChartServiceImpl implements ChartService {
     public void processNextTask() {
         try {
             ChartTask task = queue.take();
+            task.setStatus(ChartTypeStatus.STARTED);
+            chartsDao.updateChartTask(task);
             try {
                 Object processedResult = process(task);
-                chartsDao.saveChartTaskResult(task.getId(), JsonUtil.toJson(processedResult));
+
+                task.setStatus(ChartTypeStatus.READY);
+                task.setResult(JsonUtil.toJson(processedResult));
+
+                chartsDao.updateChartTask(task);
+
                 log.info("Processed for task.id=" + task.getId());
             } catch (Exception e) {
                 log.error("Error processing " + task, e);
-                chartsDao.saveChartTaskError(task.getId(), ExceptionUtils.getStackTrace(e));
+
+                task.setStatus(ChartTypeStatus.READY);
+                task.setError(ExceptionUtils.getStackTrace(e));
+
+                chartsDao.updateChartTask(task);
             }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

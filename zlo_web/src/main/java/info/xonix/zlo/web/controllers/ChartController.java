@@ -5,10 +5,7 @@ import info.xonix.zlo.search.model.ChartTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,16 +28,17 @@ public class ChartController {
 
     @RequestMapping("/submitTask")
     @ResponseBody
-    public Map doSomeThing(@RequestBody ChartTask chartTask) {
+    public Map submitTask(@RequestBody ChartTask chartTask) {
         System.out.println("Submitted: " + chartTask);
-        Map result = new HashMap();
+        Map<String, Object> result = new HashMap<String, Object>();
         result.put("id", chartService.submitTask(chartTask));
+        result.put("descriptor", chartTask.getDescriptor());
         return result;
     }
 
-    @RequestMapping("/checkTask/{id}")
+    @RequestMapping("/checkTask")
     @ResponseBody
-    public ChartTask checkTask(@PathVariable("id") long id) {
-        return chartService.loadChartTask(id);
+    public ChartTask checkTask(@RequestParam("descriptor") String descriptor) {
+        return chartService.loadChartTask(descriptor);
     }
 }
