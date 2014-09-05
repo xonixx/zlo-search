@@ -5,7 +5,7 @@ import info.xonix.zlo.search.config.DateFormats;
 import info.xonix.zlo.search.dao.ChartsDao;
 import info.xonix.zlo.search.dao.MessagesDao;
 import info.xonix.zlo.search.model.ChartTask;
-import info.xonix.zlo.search.model.ChartTypeStatus;
+import info.xonix.zlo.search.model.ChartTaskStatus;
 import info.xonix.zlo.search.utils.DateUtil;
 import info.xonix.zlo.search.utils.JsonUtil;
 import org.apache.log4j.Logger;
@@ -23,6 +23,8 @@ import java.util.concurrent.BlockingQueue;
  */
 public class ChartServiceImpl implements ChartService {
     private static final Logger log = Logger.getLogger(ChartServiceImpl.class);
+    public static final int OBSOLETE_AFTER_EVERY = 5000;
+//    public static final int OBSOLETE_AFTER_EVERY = 10;
 
     @Autowired
     private MessagesDao messagesDao;
@@ -119,26 +121,25 @@ public class ChartServiceImpl implements ChartService {
     public long submitTask(ChartTask task) {
         ChartTask chartTask = chartsDao.loadChartTask(task.getDescriptor());
         if (chartTask != null) {
-            if (chartTask.getStatus() == ChartTypeStatus.NEW ||
-                    chartTask.getStatus() == ChartTypeStatus.STARTED ||
-                    chartTask.getStatus() == ChartTypeStatus.READY) {
-                log.info("Chart already submitted: " + chartTask);
-                return chartTask.getId();
-            } else if (chartTask.getStatus() == ChartTypeStatus.OBSOLETE) {
-                task = chartTask;
-                log.info("Chart is obsolete, rebuilding: " + task);
-            }
+            log.info("Chart already submitted: " + chartTask);
+            return chartTask.getId();
         }
 
         log.info("Submitting " + task);
 
-        task.setStatus(ChartTypeStatus.NEW);
+        task.setStatus(ChartTaskStatus.NEW);
         long id = chartsDao.insertChartTask(task);
         try {
             queue.put(task);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+        if (id % OBSOLETE_AFTER_EVERY == 0) {
+            long idToObsolete = id - OBSOLETE_AFTER_EVERY;
+            log.info("Removing obsolete charts data for ids < " + idToObsolete);
+            chartsDao.removeTasksLessThen(idToObsolete);
+        }
+
         return id;
     }
 
@@ -158,12 +159,12 @@ public class ChartServiceImpl implements ChartService {
     public void processNextTask() {
         try {
             ChartTask task = queue.take();
-            task.setStatus(ChartTypeStatus.STARTED);
+            task.setStatus(ChartTaskStatus.STARTED);
             chartsDao.updateChartTask(task);
             try {
                 Object processedResult = process(task);
 
-                task.setStatus(ChartTypeStatus.READY);
+                task.setStatus(ChartTaskStatus.READY);
                 task.setResult(JsonUtil.toJson(processedResult));
 
                 chartsDao.updateChartTask(task);
@@ -172,7 +173,7 @@ public class ChartServiceImpl implements ChartService {
             } catch (Exception e) {
                 log.error("Error processing " + task, e);
 
-                task.setStatus(ChartTypeStatus.READY);
+                task.setStatus(ChartTaskStatus.READY);
                 task.setError(ExceptionUtils.getStackTrace(e));
 
                 chartsDao.updateChartTask(task);

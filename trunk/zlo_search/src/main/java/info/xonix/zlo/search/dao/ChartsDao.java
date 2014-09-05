@@ -14,4 +14,6 @@ public interface ChartsDao {
 
     ChartTask loadChartTask(long id);
     ChartTask loadChartTask(String descriptor);
+
+    void removeTasksLessThen(long id);
 }
