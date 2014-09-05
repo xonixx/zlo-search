@@ -12,14 +12,27 @@ angular.module('charts', ['common', 'ngResource', 'mgcrea.ngStrap', 'highcharts-
     .factory('Chart', function ($resource) {
         return $resource('/a/charts/:action/:id', {}, {
             submitTask: {method: 'POST', isArray: false, params: {action: 'submitTask'}},
-            checkTask: {method: 'GET', isArray: false, params: {action: 'checkTask'}}
+            checkTask: {method: 'POST', isArray: false, params: {action: 'checkTask'}}
         });
     });
 
 function ChartsCtrl($scope, Chart, $timeout, dateFilter, $location) {
     var params = $location.search();
     if (params.params) {
-        checkTask(params.params);
+        var task;
+
+        try {
+            task = angular.fromJson(params.params);
+        } catch (e) {
+            task = null;
+        }
+        if (task) {
+            if (task.start) task.start = new Date(task.start);
+            if (task.end) task.end = new Date(task.end);
+            $scope.task = task;
+//            console.info(222,task)
+            checkTask(task);
+        }
     }
     $scope.task = {forumId: "zlo", dbNicks: "xonix", start: new Date(1388612189000), end: new Date(1409953114753), type: 'ByHour'};
     $scope.submitTask = function (task) {
@@ -31,14 +44,17 @@ function ChartsCtrl($scope, Chart, $timeout, dateFilter, $location) {
 
             $timeout(function () {
                 $location.search('params', res.descriptor);
-                checkTask(res.descriptor);
+                checkTask(task);
             }, 1000)
         });
     };
 
-    function checkTask(descriptor) {
+    function checkTask(task) {
+        task = leave_only_fields(task, ['forumId', 'dbNicks', 'start', 'end', 'type']);
+//        console.info(111,task)
+
         $scope.checking = true;
-        Chart.checkTask({descriptor: descriptor}, function (res) {
+        Chart.checkTask(task, function (res) {
             if (res.result || res.error) {
                 $scope.checking = false;
                 $scope.task = res;
@@ -48,7 +64,7 @@ function ChartsCtrl($scope, Chart, $timeout, dateFilter, $location) {
                 }
             } else {
                 $timeout(function () {
-                    checkTask(descriptor)
+                    checkTask(task)
                 }, 2000)
             }
         })
