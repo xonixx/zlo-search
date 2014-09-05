@@ -19,7 +19,7 @@ public interface ChartService {
 
     long submitTask(ChartTask task);
 
-    ChartTask loadChartTask(long id);
+    ChartTask loadChartTask(String descriptor);
 
     void processNextTask();
 }

@@ -1,11 +1,10 @@
 package info.xonix.zlo.search.model;
 
 import info.xonix.zlo.search.charts.ChartType;
+import info.xonix.zlo.search.utils.JsonUtil;
 import org.apache.commons.lang.StringUtils;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * User: xonix
@@ -23,6 +22,21 @@ public class ChartTask {
 
     private String result;
     private String error;
+
+    private ChartTypeStatus status;
+
+    /**
+     * will serve as unique key in db
+     */
+    public String getDescriptor() {
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("forum", forumId);
+        map.put("nick", getDbNicks());
+        map.put("start", start);
+        map.put("end", end);
+        map.put("type", type);
+        return JsonUtil.toJson(map);
+    }
 
     public long getId() {
         return id;
@@ -96,6 +110,14 @@ public class ChartTask {
         this.error = error;
     }
 
+    public ChartTypeStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ChartTypeStatus status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "ChartTask{" +
@@ -107,6 +129,7 @@ public class ChartTask {
                 ", type=" + type +
                 ", result='" + result + '\'' +
                 ", error='" + error + '\'' +
+                ", status=" + status +
                 '}';
     }
 }

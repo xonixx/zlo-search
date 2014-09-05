@@ -84,7 +84,8 @@ h3 {
 }
 
 #submitBtn {
-    width: 150px;
+    width: 200px;
+    padding: 5px 0;
 }
 
 #debug {
@@ -208,4 +209,8 @@ form.inline-form {
 
 form.submitted .ng-invalid {
     border: 1px solid red;
+}
+
+.submitBtn1 {
+    padding: 3px 30px;
 }

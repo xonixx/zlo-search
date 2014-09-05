@@ -10,8 +10,8 @@ import info.xonix.zlo.search.model.ChartTask;
 public interface ChartsDao {
     long insertChartTask(ChartTask task);
 
-    void saveChartTaskResult(long id, String result);
-    void saveChartTaskError(long id, String error);
+    void updateChartTask(ChartTask task);
 
     ChartTask loadChartTask(long id);
+    ChartTask loadChartTask(String descriptor);
 }

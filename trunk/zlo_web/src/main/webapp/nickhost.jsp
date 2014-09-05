@@ -77,7 +77,7 @@
         <input type="radio" name="w" value="h" id="host" <c:if test="${isHost}">checked="checked"</c:if>><label
             for="host">Все ники хоста</label><br/>
         <input type="text" name="t" style="width:250px;" <c:if test="${not empty text}"> value="<c:out value="${text}"/>"</c:if> /><br/>
-        <input type="submit" value="Показать!"/>
+        <input type="submit" class="submitBtn1" value="Показать!"/>
     </form>
 
     <c:if test="${isAllSelected}">

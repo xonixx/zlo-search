@@ -19,6 +19,16 @@ public class DaemonLauncher {
     private static final DaemonManager daemonManager = AppSpringContext.get(DaemonManager.class);
 
     public static void startAllActive() {
+        if ("1".equals(System.getenv("nodaemons"))) {
+            log.info("Not starting download/indexer daemons.");
+        } else {
+            startDownloadAndIndexerDaemons();
+        }
+
+        daemonManager.startDaemon(new ChartsDaemon());
+    }
+
+    private static void startDownloadAndIndexerDaemons() {
         for (String forumId : GetForum.ids()) {
             if (!GetForum.descriptor(forumId).isDead()) {
                 log.info("Starting daemons for: " + forumId);
@@ -29,8 +39,6 @@ public class DaemonLauncher {
                 log.info("Not starting daemons for dead forum: " + forumId);
             }
         }
-
-        daemonManager.startDaemon(new ChartsDaemon());
     }
 
     public static void shutdownAll() {
