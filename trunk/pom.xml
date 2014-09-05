@@ -9,7 +9,7 @@
     <artifactId>zlo_root</artifactId>
     <packaging>pom</packaging>
 
-    <version>0.7</version>
+    <version>1.0</version>
 
     <prerequisites>
         <maven>2.2.1</maven>

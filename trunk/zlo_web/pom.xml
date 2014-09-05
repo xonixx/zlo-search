@@ -4,9 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ZloSearcher</groupId>
     <artifactId>zlo_web</artifactId>
-    <version>0.7</version>
 
     <packaging>war</packaging>
 
@@ -15,7 +13,7 @@
     <parent>
         <groupId>ZloSearcher</groupId>
         <artifactId>zlo_root</artifactId>
-        <version>0.7</version>
+        <version>1.0</version>
         <relativePath>..</relativePath>
     </parent>
 
@@ -83,7 +81,7 @@
         <dependency>
             <groupId>ZloSearcher</groupId>
             <artifactId>zlo_search</artifactId>
-            <version>0.7</version>
+            <version>1.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-collections</groupId>
