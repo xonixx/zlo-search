@@ -64,7 +64,7 @@ public class LaunchBoardSearch {
     }
 
     private static void addAllDependentJars(WebAppClassLoader rootClassLoader, String zloWeb) throws IOException {
-        final File libDir = new File(join(zloWeb, "target/zlo_web-0.7/WEB-INF/lib"));
+        final File libDir = new File(join(zloWeb, "target/zlo_web-1.0/WEB-INF/lib"));
 
         final File[] jars = libDir.listFiles(new JarFilter());
 

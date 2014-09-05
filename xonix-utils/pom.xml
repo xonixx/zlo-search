@@ -5,11 +5,10 @@
     <parent>
         <artifactId>zlo_root</artifactId>
         <groupId>ZloSearcher</groupId>
-        <version>0.7</version>
+        <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ZloSearcher</groupId>
     <artifactId>xonix-utils</artifactId>
 
     <dependencies>
