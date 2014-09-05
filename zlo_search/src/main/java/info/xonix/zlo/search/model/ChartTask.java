@@ -23,7 +23,7 @@ public class ChartTask {
     private String result;
     private String error;
 
-    private ChartTypeStatus status;
+    private ChartTaskStatus status;
 
     /**
      * will serve as unique key in db
@@ -110,11 +110,11 @@ public class ChartTask {
         this.error = error;
     }
 
-    public ChartTypeStatus getStatus() {
+    public ChartTaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(ChartTypeStatus status) {
+    public void setStatus(ChartTaskStatus status) {
         this.status = status;
     }
 

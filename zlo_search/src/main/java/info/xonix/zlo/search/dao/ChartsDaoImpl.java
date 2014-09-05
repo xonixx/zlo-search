@@ -2,7 +2,7 @@ package info.xonix.zlo.search.dao;
 
 import info.xonix.zlo.search.charts.ChartType;
 import info.xonix.zlo.search.model.ChartTask;
-import info.xonix.zlo.search.model.ChartTypeStatus;
+import info.xonix.zlo.search.model.ChartTaskStatus;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -29,7 +29,7 @@ public class ChartsDaoImpl extends DaoImplBase implements ChartsDao {
             chartTask.setType(ChartType.valueOf(rs.getString("type")));
             chartTask.setResult(rs.getString("result"));
             chartTask.setError(rs.getString("error"));
-            chartTask.setStatus(ChartTypeStatus.valueOf(rs.getString("status")));
+            chartTask.setStatus(ChartTaskStatus.valueOf(rs.getString("status")));
 
             return chartTask;
         }
@@ -92,5 +92,10 @@ public class ChartsDaoImpl extends DaoImplBase implements ChartsDao {
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
+    }
+
+    @Override
+    public void removeTasksLessThen(long id) {
+        getJdbcTemplate().update("delete from chart_task where id<?", id);
     }
 }

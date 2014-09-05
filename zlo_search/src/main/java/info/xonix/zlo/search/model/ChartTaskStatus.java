@@ -5,7 +5,7 @@ package info.xonix.zlo.search.model;
  * Date: 9/5/14
  * Time: 11:48 PM
  */
-public enum ChartTypeStatus {
+public enum ChartTaskStatus {
     /**
      * right after creation
      */
@@ -17,9 +17,5 @@ public enum ChartTypeStatus {
     /**
      * daemon processed
      */
-    READY,
-    /**
-     * data cleaned up for old chart to free space
-     */
-    OBSOLETE
+    READY
 }
