@@ -25,7 +25,7 @@ scp $WAR $SERV:$WA/ROOT.war
 ssh $SERV "
 echo 'Starting...'
 
-CATALINA_OPTS='-server -Xmx300m'
+CATALINA_OPTS='-server -Xmx300m -XX:MaxPermSize=256m -XX:PermSize=128m'
 export CATALINA_OPTS
 
 $TOMCAT/bin/startup.sh;
