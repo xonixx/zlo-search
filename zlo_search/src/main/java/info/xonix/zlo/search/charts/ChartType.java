@@ -6,6 +6,7 @@ package info.xonix.zlo.search.charts;
  * Time: 8:47 PM
  */
 public enum ChartType {
+    Trend("Обсуждаемость"),
     ByHour("По часам дня"),
     ByWeekDay("По дням недели"),
     DayInterval("Активность в интервале");

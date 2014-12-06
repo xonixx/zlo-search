@@ -24,4 +24,11 @@
         <sql>ALTER TABLE chart_task CONVERT TO CHARACTER SET cp1251</sql>
     </changeSet>
 
+    <changeSet id="2" author="xonix">
+        <sql>
+            ALTER TABLE chart_task MODIFY COLUMN nicks VARCHAR(256) NULL;
+            ALTER TABLE chart_task ADD COLUMN queries VARCHAR(256) NULL;
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>

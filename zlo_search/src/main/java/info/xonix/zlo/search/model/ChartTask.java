@@ -1,5 +1,6 @@
 package info.xonix.zlo.search.model;
 
+import info.xonix.utils.Util;
 import info.xonix.zlo.search.charts.ChartType;
 import info.xonix.zlo.search.utils.JsonUtil;
 import org.apache.commons.lang.StringUtils;
@@ -18,6 +19,7 @@ public class ChartTask {
     private List<String> nicks;
     private Date start;
     private Date end;
+    private List<String> searchQueries;
     private ChartType type;
 
     private String result;
@@ -34,7 +36,9 @@ public class ChartTask {
         map.put("dbNicks", getDbNicks());
         map.put("start", start);
         map.put("end", end);
+        map.put("searchQueries", getDbSearchQueries());
         map.put("type", type);
+        Util.removeNullValues(map);
         return JsonUtil.toJson(map);
     }
 
@@ -44,6 +48,26 @@ public class ChartTask {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public List<String> getSearchQueries() {
+        return searchQueries;
+    }
+
+    public void setSearchQueries(List<String> searchQueries) {
+        this.searchQueries = searchQueries;
+    }
+
+    public String getDbSearchQueries() {
+        if (searchQueries == null)
+            return null;
+        return StringUtils.join(searchQueries, '\n');
+    }
+
+    public void setDbSearchQueries(String queries) {
+        if (StringUtils.isEmpty(queries))
+            return;
+        this.searchQueries = Arrays.asList(StringUtils.split(queries, '\n'));;
     }
 
     public String getForumId() {
@@ -63,10 +87,14 @@ public class ChartTask {
     }
 
     public String getDbNicks() {
+        if (nicks == null)
+            return null;
         return StringUtils.join(nicks, '\n');
     }
 
     public void setDbNicks(String dbNicks) {
+        if (StringUtils.isEmpty(dbNicks))
+            return;
         this.nicks = Arrays.asList(StringUtils.split(dbNicks, '\n'));
     }
 
@@ -126,6 +154,7 @@ public class ChartTask {
                 ", nicks=" + nicks +
                 ", start=" + start +
                 ", end=" + end +
+                ", searchQueries=" + searchQueries +
                 ", type=" + type +
                 ", result='" + result + '\'' +
                 ", error='" + error + '\'' +

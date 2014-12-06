@@ -30,8 +30,8 @@ function ChartsCtrl($scope, Chart, $timeout, dateFilter, $location) {
             if (task.start) task.start = new Date(task.start);
             if (task.end) task.end = new Date(task.end);
             $scope.task = task;
+            // TODO: task.isValid()?
             if (task.forumId &&
-                task.dbNicks &&
                 task.start &&
                 task.end &&
                 task.type)
@@ -39,8 +39,12 @@ function ChartsCtrl($scope, Chart, $timeout, dateFilter, $location) {
         }
     }
 //    $scope.task = {forumId: "zlo", dbNicks: "xonix", start: new Date(1388534400000), end: new Date(1409961600000), type: 'ByHour'};
+    function cleanTask(task) {
+        return leave_only_fields(task, ['forumId', 'dbNicks', 'dbSearchQueries', 'start', 'end', 'type']);
+    }
+
     $scope.submitTask = function (task) {
-        task = leave_only_fields(task, ['forumId', 'dbNicks', 'start', 'end', 'type']);
+        task = cleanTask(task);
 
         Chart.submitTask(task, function (res) {
             $scope.chartConfig = null;
@@ -54,7 +58,7 @@ function ChartsCtrl($scope, Chart, $timeout, dateFilter, $location) {
     };
 
     function checkTask(task) {
-        task = leave_only_fields(task, ['forumId', 'dbNicks', 'start', 'end', 'type']);
+        task = cleanTask(task);
 
         $scope.checking = true;
         Chart.checkTask(task, function (res) {
@@ -79,10 +83,10 @@ function ChartsCtrl($scope, Chart, $timeout, dateFilter, $location) {
 
     function prepareChart(chartTask) {
         var type = chartTask.type;
-        var title = 'Активность ' + (
+        var title = 'Активность ' + (type == 'Trend' ? ' обсуждения "' + chartTask.dbSearchQueries + '" ' : ((
             type == 'ByHour' ? 'по часам дня' :
                 type == 'ByWeekDay' ? 'по дням недели' :
-                    type == 'DayInterval' ? 'по дням' : '') + ' пользователя ' + chartTask.dbNicks +
+                    type == 'DayInterval' ? 'по дням' : '') + ' пользователя ' + chartTask.dbNicks)) +
             ' в интевале дат от ' + df1(chartTask.start) + ' до ' + df1(chartTask.end);
 
         var chartCommon = {

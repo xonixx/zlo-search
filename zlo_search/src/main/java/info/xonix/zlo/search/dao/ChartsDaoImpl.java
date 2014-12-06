@@ -24,6 +24,7 @@ public class ChartsDaoImpl extends DaoImplBase implements ChartsDao {
             chartTask.setId(rs.getLong("id"));
             chartTask.setForumId(rs.getString("forumId"));
             chartTask.setDbNicks(rs.getString("nicks"));
+            chartTask.setDbSearchQueries(rs.getString("queries"));
             chartTask.setStart(rs.getDate("start"));
             chartTask.setEnd(rs.getDate("end"));
             chartTask.setType(ChartType.valueOf(rs.getString("type")));
@@ -45,6 +46,7 @@ public class ChartsDaoImpl extends DaoImplBase implements ChartsDao {
                         .addValue("status", task.getStatus().name())
                         .addValue("descriptor", task.getDescriptor())
                         .addValue("nicks", task.getDbNicks())
+                        .addValue("queries", task.getDbSearchQueries())
                         .addValue("start", task.getStart())
                         .addValue("end", task.getEnd())
                         .addValue("type", task.getType().name())

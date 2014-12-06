@@ -48,27 +48,34 @@
                     <c:forEach var="fd" items="<%= GetForum.descriptors() %>">
                         <option value="${fd.forumId}">${fd.forumAdapter.forumTitle}</option>
                     </c:forEach>
-                </select></td>
-            <td>
-                <label for="nick">Ник:</label>
-                <input type="text" id="nick" name="nick" ng-model="task.dbNicks" required="">
+                </select>
             </td>
-            <td>
-                <label for="start">Дата (от):</label>
-                <input type="text" name="start" id="start"
-                       ng-model="task.start" required="" bs-datepicker="" data-date-format="dd.MM.yyyy"/></td>
-            <td>
-                <label for="end">Дата (до):</label>
-                <input type="text" name="end" id="end"
-                       ng-model="task.end" required="" bs-datepicker="" data-date-format="dd.MM.yyyy"/></td>
             <td>
                 <label for="taskType">График:</label>
                 <select id="taskType" ng-model="task.type" required="">
+                    <option value="">-- пожалуйста, выбери --</option>
                     <c:forEach var="t" items="<%= ChartType.values() %>">
                         <option value="${t.name()}">${t.title}</option>
                     </c:forEach>
                 </select>
             </td>
+            <td ng-if="task.type == 'Trend'">
+                <label for="query">Поисковый запрос:</label>
+                <input type="text" id="query" name="query" style="width: 300px"
+                       ng-model="task.dbSearchQueries" required="">
+            </td>
+            <td ng-if="task.type && task.type != 'Trend'">
+                <label for="nick">Ник:</label>
+                <input type="text" id="nick" name="nick" ng-model="task.dbNicks" required="">
+            </td>
+            <td ng-if="task.type">
+                <label for="start">Дата (от):</label>
+                <input type="text" name="start" id="start"
+                       ng-model="task.start" required="" bs-datepicker="" data-date-format="dd.MM.yyyy"/></td>
+            <td ng-if="task.type">
+                <label for="end">Дата (до):</label>
+                <input type="text" name="end" id="end"
+                       ng-model="task.end" required="" bs-datepicker="" data-date-format="dd.MM.yyyy"/></td>
         </tr>
     </table>
 

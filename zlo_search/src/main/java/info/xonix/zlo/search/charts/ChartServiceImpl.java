@@ -4,6 +4,9 @@ import info.xonix.utils.ExceptionUtils;
 import info.xonix.zlo.search.config.DateFormats;
 import info.xonix.zlo.search.dao.ChartsDao;
 import info.xonix.zlo.search.dao.MessagesDao;
+import info.xonix.zlo.search.logic.SearchException;
+import info.xonix.zlo.search.logic.SearchLogic;
+import info.xonix.zlo.search.logic.SearchLogicImpl;
 import info.xonix.zlo.search.model.ChartTask;
 import info.xonix.zlo.search.model.ChartTaskStatus;
 import info.xonix.zlo.search.utils.DateUtil;
@@ -31,6 +34,9 @@ public class ChartServiceImpl implements ChartService {
 
     @Autowired
     private ChartsDao chartsDao;
+
+    @Autowired
+    private SearchLogic searchLogic;
 
     private static String[] WEEK_DAYS = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
 
@@ -83,11 +89,34 @@ public class ChartServiceImpl implements ChartService {
     public Object process(ChartTask task) {
         log.info("Going to process " + task);
 
-        List<Date> messageDates = messagesDao.getMessageDates(
-                task.getForumId(),
-                task.getNicks(),
-                task.getStart(),
-                task.getEnd());
+        List<Date> messageDates;
+
+        if (task.getType() == ChartType.Trend) {
+            List<Long> idsList;
+            try {
+                int[] ids = searchLogic.search(task.getForumId(),
+                        SearchLogicImpl.formQueryString(task.getSearchQueries().get(0), task.getStart(), task.getEnd()),
+                        0, 100000);
+                idsList = new ArrayList<Long>(ids.length);
+                for (int id : ids) {
+                    idsList.add((long)id);
+                }
+            } catch (SearchException e) {
+                throw new RuntimeException("Error doing FTS", e);
+            }
+            // TODO: what is real MAX number of elts in IN clause
+            messageDates = messagesDao.getMessageDatesByIds(
+                    task.getForumId(),
+                    idsList,
+                    task.getStart(),
+                    task.getEnd());
+        } else {
+            messageDates = messagesDao.getMessageDatesByNicks(
+                    task.getForumId(),
+                    task.getNicks(),
+                    task.getStart(),
+                    task.getEnd());
+        }
 
         Object result = null;
 
@@ -109,6 +138,8 @@ public class ChartServiceImpl implements ChartService {
             }
             result = resultMap;
         } else if (task.getType() == ChartType.DayInterval) {
+            result = prepareDateIntervalData(messageDates);
+        } else if (task.getType() == ChartType.Trend) {
             result = prepareDateIntervalData(messageDates);
         }
 

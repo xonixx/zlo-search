@@ -31,7 +31,6 @@ import static java.text.MessageFormat.format;
  */
 public class SearchLogicImpl implements SearchLogic, InitializingBean {
     private static final Logger log = Logger.getLogger(SearchLogicImpl.class);
-    private static final int MAX_LIMIT = 500;
     public static final Sort REVERSED_INDEX_ORDER_SORT = new Sort(new SortField(null, SortField.DOC, true));
 
 //    test --VVV
@@ -40,6 +39,10 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
 
     @Autowired
     private Config config;
+
+    public static String formQueryString(String text, Date fromDate, Date toDate) {
+        return text + " " + fmtDateRangeQueryString(fromDate, toDate);
+    }
 
     public static String formQueryString(String text, boolean isRoot, boolean inTitle, boolean inBody, int topicCode,
                                          String nick, String host, Date fromDate, Date toDate,
@@ -85,7 +88,7 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
         }
 
         if (fromDate != null && toDate != null) {
-            queryStr.append(format(" +{0}:[{1,date,yyyyMMdd} TO {2,date,yyyyMMdd}]", MessageFields.DATE, fromDate, toDate));
+            queryStr.append(fmtDateRangeQueryString(fromDate, toDate));
         }
 
         if (isRoot) {
@@ -105,6 +108,10 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
         }
 
         return queryStr.toString();
+    }
+
+    private static String fmtDateRangeQueryString(Date fromDate, Date toDate) {
+        return format(" +{0}:[{1,date,yyyyMMdd} TO {2,date,yyyyMMdd}]", MessageFields.DATE, fromDate, toDate);
     }
 
     @Override
@@ -247,12 +254,9 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     }
 
     private int fixLimit(int limit) {
-        // TODO?
-        if (limit > MAX_LIMIT || limit <= 0) {
-            limit = MAX_LIMIT;
-        } /*else if (limit == -1) {
-            limit = Integer.MAX_VALUE;
-        }*/
+        if (limit < 0) {
+            limit = 0;
+        }
         return limit;
     }
 

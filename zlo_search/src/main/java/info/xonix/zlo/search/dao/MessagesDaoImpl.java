@@ -231,24 +231,31 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
     }
 
     @Override
-    public List<Date> getMessageDates(String forumId, List<String> nicks, Date start, Date end) {
-        String query = queryProvider.getSelectDatesQuery(forumId);
+    public List<Date> getMessageDatesByNicks(String forumId, List<String> nicks, Date start, Date end) {
+        return getDates(queryProvider.getSelectDatesByNicksQuery(forumId), nicks, start, end);
+    }
 
+    @Override
+    public List<Date> getMessageDatesByIds(String forumId, List<Long> ids, Date start, Date end) {
+        return getDates(queryProvider.getSelectDatesByIdsQuery(forumId), ids, start, end);
+    }
+
+    private List<Date> getDates(String sql, List<?> params, Date start, Date end) {
         List<Object> args = new LinkedList<Object>();
         args.add(start);
         args.add(end);
 
         List<String> qq = new LinkedList<String>();
 
-        for (String nick : nicks) {
+        for (Object param : params) {
             qq.add("?");
-            args.add(nick);
+            args.add(param);
         }
 
-        query = String.format(query, StringUtils.join(qq, ','));
+        sql = String.format(sql, StringUtils.join(qq, ','));
 
         return getJdbcTemplate().queryForList(
-                query,
+                sql,
                 Date.class,
                 args.toArray());
     }
