@@ -99,7 +99,7 @@
 
         <c:forEach items="${lastTasks}" var="t">
             <a href='#?params=${t.descriptor}'
-                    ng-click='loadTask(${t.descriptor})'>${t.type.title} <b>${t.dbNicks}${t.dbSearchQueries}</b> от ${t.start} до ${t.end}</a> <br/>
+                    ng-click='loadTask(${t.descriptor})'>${t.type.title}${' '}<b>${t.dbNicks}${t.dbSearchQueries}</b>${' '}от ${t.start} до ${t.end}</a> <br/>
         </c:forEach>
     </div>
 </form>
