@@ -2,7 +2,7 @@ package info.xonix.zlo.search.charts;
 
 import info.xonix.zlo.search.model.ChartTask;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * User: xonix
@@ -20,6 +20,8 @@ public interface ChartService {
     long submitTask(ChartTask task);
 
     ChartTask loadChartTask(String descriptor);
+
+    List<ChartTask> getLastTasks(int count);
 
     void processNextTask();
 }

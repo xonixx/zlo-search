@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * User: xonix
@@ -99,5 +100,16 @@ public class ChartsDaoImpl extends DaoImplBase implements ChartsDao {
     @Override
     public void removeTasksLessThen(long id) {
         getJdbcTemplate().update("delete from chart_task where id<?", id);
+    }
+
+    @Override
+    public List<ChartTask> getLastTasks(int count) {
+        return getJdbcTemplate().query(
+                "select * from chart_task " +
+                        "where error is null " +
+                        "order by id desc " +
+                        "limit ?",
+                CHART_TASK_ROWMAPPER,
+                count);
     }
 }

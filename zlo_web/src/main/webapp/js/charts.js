@@ -17,6 +17,18 @@ angular.module('charts', ['common', 'ngResource', 'mgcrea.ngStrap', 'highcharts-
     });
 
 function ChartsCtrl($scope, Chart, $timeout, dateFilter, $location) {
+    $scope.loadTask = function (task) {
+        if (task.start) task.start = new Date(task.start);
+        if (task.end) task.end = new Date(task.end);
+        $scope.task = task;
+        // TODO: task.isValid()?
+        if (task.forumId &&
+            task.start &&
+            task.end &&
+            task.type)
+            checkTask(task);
+    };
+
     var params = $location.search();
     if (params.params) {
         var task;
@@ -27,15 +39,7 @@ function ChartsCtrl($scope, Chart, $timeout, dateFilter, $location) {
             task = null;
         }
         if (task) {
-            if (task.start) task.start = new Date(task.start);
-            if (task.end) task.end = new Date(task.end);
-            $scope.task = task;
-            // TODO: task.isValid()?
-            if (task.forumId &&
-                task.start &&
-                task.end &&
-                task.type)
-                checkTask(task);
+            $scope.loadTask(task);
         }
     }
 //    $scope.task = {forumId: "zlo", dbNicks: "xonix", start: new Date(1388534400000), end: new Date(1409961600000), type: 'ByHour'};
@@ -180,7 +184,7 @@ function ChartsCtrl($scope, Chart, $timeout, dateFilter, $location) {
                 series: [
                     {
                         type: 'area',
-                        name: chartTask.dbNicks,
+                        name: chartTask.dbNicks || chartTask.dbSearchQueries,
                         pointInterval: 24 * 3600 * 1000
                     }
                 ]

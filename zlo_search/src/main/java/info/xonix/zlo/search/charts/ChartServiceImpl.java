@@ -180,6 +180,11 @@ public class ChartServiceImpl implements ChartService {
     }
 
     @Override
+    public List<ChartTask> getLastTasks(int count) {
+        return chartsDao.getLastTasks(count);
+    }
+
+    @Override
     public void processNextTask() {
         try {
             ChartTask task = queue.take();
