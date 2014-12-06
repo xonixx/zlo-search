@@ -24,6 +24,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class BoardSearchService {
     private static final Logger log = Logger.getLogger(BoardSearchService.class);
+    private static final int MAX_LIMIT = 500;
 
     @Autowired
     private AppLogic appLogic;
@@ -145,6 +146,8 @@ public class BoardSearchService {
         final int[] resultIds;
 
         try {
+            if (limit > MAX_LIMIT)
+                limit = MAX_LIMIT;
             resultIds = searchLogic.search(forumId, searchString, skip, limit);
         } catch (SearchException e) {
             throw new ServiceException("Search error:" + e, e);

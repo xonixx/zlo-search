@@ -39,5 +39,7 @@ public interface MessagesDao {
 
     int insertTopic(String forumId, String topic);
 
-    List<Date> getMessageDates(String forumId, List<String> nicks, Date start, Date end);
+    List<Date> getMessageDatesByNicks(String forumId, List<String> nicks, Date start, Date end);
+
+    List<Date> getMessageDatesByIds(String forumId, List<Long> ids, Date start, Date end);
 }

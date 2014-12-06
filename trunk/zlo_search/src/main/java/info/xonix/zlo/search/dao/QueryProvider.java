@@ -34,7 +34,8 @@ public class QueryProvider {
 
         private String INSERT_UPDATE_AUTOCOMPLETE;
         private String SELECT_AUTOCOMPLETE;
-        private String SELECT_DATES;
+        private String SELECT_DATES_BY_NICKS;
+        private String SELECT_DATES_BY_IDS;
     }
 
     private StringFactory<ForumQueries> siteQueriesSiteFactory = new StringFactory<ForumQueries>() {
@@ -70,7 +71,8 @@ public class QueryProvider {
 
             sq.INSERT_UPDATE_AUTOCOMPLETE = MessageFormat.format(props.getProperty("sql.insert_or_update.autocomplete"), name);
             sq.SELECT_AUTOCOMPLETE = MessageFormat.format(props.getProperty("sql.select.autocomplete"), name);
-            sq.SELECT_DATES = MessageFormat.format(props.getProperty("sql.select.msg_dates"), name);
+            sq.SELECT_DATES_BY_NICKS = MessageFormat.format(props.getProperty("sql.select.msg_dates_by_nicks"), name);
+            sq.SELECT_DATES_BY_IDS = MessageFormat.format(props.getProperty("sql.select.msg_dates_by_ids"), name);
         }
     };
 
@@ -155,7 +157,10 @@ public class QueryProvider {
         return getForumQueries(forumId).SELECT_AUTOCOMPLETE;
     }
 
-    public String getSelectDatesQuery(String forumId) {
-        return getForumQueries(forumId).SELECT_DATES;
+    public String getSelectDatesByNicksQuery(String forumId) {
+        return getForumQueries(forumId).SELECT_DATES_BY_NICKS;
+    }
+    public String getSelectDatesByIdsQuery(String forumId) {
+        return getForumQueries(forumId).SELECT_DATES_BY_IDS;
     }
 }
