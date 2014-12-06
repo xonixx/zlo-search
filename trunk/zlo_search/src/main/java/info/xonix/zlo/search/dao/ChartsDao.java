@@ -2,6 +2,8 @@ package info.xonix.zlo.search.dao;
 
 import info.xonix.zlo.search.model.ChartTask;
 
+import java.util.List;
+
 /**
  * User: xonix
  * Date: 8/22/14
@@ -16,4 +18,6 @@ public interface ChartsDao {
     ChartTask loadChartTask(String descriptor);
 
     void removeTasksLessThen(long id);
+
+    List<ChartTask> getLastTasks(int count);
 }

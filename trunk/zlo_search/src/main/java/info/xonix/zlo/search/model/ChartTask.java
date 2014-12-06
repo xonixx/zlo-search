@@ -36,7 +36,7 @@ public class ChartTask {
         map.put("dbNicks", getDbNicks());
         map.put("start", start);
         map.put("end", end);
-        map.put("searchQueries", getDbSearchQueries());
+        map.put("dbSearchQueries", getDbSearchQueries());
         map.put("type", type);
         Util.removeNullValues(map);
         return JsonUtil.toJson(map);

@@ -93,6 +93,15 @@
     <div ng-show="checking">
         Пожалуйста подождите, пока строится график.
     </div>
+
+    <div ng-if="!chartConfig && !checking">
+        <h4>Последние графики</h4>
+
+        <c:forEach items="${lastTasks}" var="t">
+            <a href='#?params=${t.descriptor}'
+                    ng-click='loadTask(${t.descriptor})'>${t.type.title} <b>${t.dbNicks}${t.dbSearchQueries}</b> от ${t.start} до ${t.end}</a> <br/>
+        </c:forEach>
+    </div>
 </form>
 
 </body>
