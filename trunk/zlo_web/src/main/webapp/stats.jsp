@@ -102,7 +102,7 @@
                         <tiles:putAttribute name="userId" value="${row.user_id}"/>
                     </tiles:insertDefinition>
                     <a class="search" title="График активности"
-                            href='a/charts#?params={"forumId":"${forumId}", "dbNicks":"${row.nick}", "start":<%=start%>, "end": <%=end%>}'>a</a>
+                            href='a/charts#?params={"forumId":"${forumId}", "type":"DayInterval", "dbNicks":"${row.nick}", "start":<%=start%>, "end": <%=end%>}'>a</a>
                 </c:when>
                 <c:otherwise>
                     <tiles:insertDefinition name="host">
