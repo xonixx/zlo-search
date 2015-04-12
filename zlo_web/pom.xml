@@ -18,7 +18,7 @@
     </parent>
 
     <properties>
-        <cxf.version>3.0.1</cxf.version>
+        <cxf.version>3.0.4</cxf.version>
     </properties>
 
     <build>
