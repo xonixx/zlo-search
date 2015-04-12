@@ -241,6 +241,9 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
     }
 
     private List<Date> getDates(String sql, List<?> params, Date start, Date end) {
+        if (params.isEmpty())
+            return Collections.emptyList();
+
         List<Object> args = new LinkedList<Object>();
         args.add(start);
         args.add(end);

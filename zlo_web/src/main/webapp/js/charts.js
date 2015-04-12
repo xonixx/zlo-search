@@ -47,6 +47,17 @@ function ChartsCtrl($scope, Chart, $timeout, dateFilter, $location) {
         return leave_only_fields(task, ['forumId', 'dbNicks', 'dbSearchQueries', 'start', 'end', 'type']);
     }
 
+    $scope.cleanSearchValue = function(task) {
+        $scope.task = leave_only_fields(task, ['forumId', 'start', 'end', 'type']);
+    };
+
+    $scope.$watch(function () {
+        return $location.search().params;
+    }, function (params) {
+        if (params && !params.type)
+            $scope.chartConfig = null; // click on Charts menu item
+    });
+
     $scope.submitTask = function (task) {
         task = cleanTask(task);
 

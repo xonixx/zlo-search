@@ -52,7 +52,7 @@
             </td>
             <td>
                 <label for="taskType">График:</label>
-                <select id="taskType" ng-model="task.type" required="">
+                <select id="taskType" ng-model="task.type" required="" ng-change="cleanSearchValue(task)">
                     <option value="">-- пожалуйста, выбери --</option>
                     <c:forEach var="t" items="<%= ChartType.values() %>">
                         <option value="${t.name()}">${t.title}</option>
