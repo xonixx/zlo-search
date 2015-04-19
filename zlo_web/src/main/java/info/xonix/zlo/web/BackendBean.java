@@ -52,7 +52,7 @@ public class BackendBean {
     public String getTopicSelector() {
         String forumId = GetForum.descriptor(getSiteInt()).getForumId();
 
-        return HtmlConstructor.constructSelector(SN_TOPIC, null,
+        return HtmlConstructor.constructSelector(SN_TOPIC, SN_TOPIC,
                 new String[][]{{"-1", ALL_TOPICS}},
                 controlsDataLogic.getTopics(forumId), getTopicInt(), true);
     }
@@ -91,6 +91,7 @@ public class BackendBean {
     public String getPageSizeSelector() {
 //        return HtmlConstructor.constructSelector(SN_PAGE_SIZE, null, config.getNumsPerPage(), getPageSizeInt(), true);
         HtmlSelectBuilder numsPerPageSelectBuilder = new HtmlSelectBuilder()
+                .id(SN_PAGE_SIZE)
                 .name(SN_PAGE_SIZE)
                 .value(Integer.toString(getPageSizeInt()));
 
@@ -104,6 +105,7 @@ public class BackendBean {
 
     public String getSortSelector() {
         final HtmlSelectBuilder selector = new HtmlSelectBuilder()
+                .id(SearchServlet.QS_SORT)
                 .name(SearchServlet.QS_SORT)
                 .value(sort)
                 .addOption(SortBy.DATE.getName(), "дате")

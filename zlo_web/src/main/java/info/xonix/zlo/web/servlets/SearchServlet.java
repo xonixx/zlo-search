@@ -67,6 +67,7 @@ public class SearchServlet extends BaseServlet {
     public static final String QS_TEXT = "text";
     public static final String QS_NICK = "nick";
     public static final String QS_HOST = "host";
+    public static final String QS_SEPARATOR = "sep";
     public static final String QS_DATES = "dates";
     public static final String QS_FROM_DATE = "fd";
     public static final String QS_TO_DATE = "td";
@@ -205,7 +206,7 @@ public class SearchServlet extends BaseServlet {
             searchRequest = new SearchRequest(
                     getSite(request).getForumId(), text, isRoot,
                     inTitle, inBody, inReg, inHasUrl, inHasImg,
-                    nick, host, topicCode,
+                    nick, host, request.getParameter(QS_SEPARATOR), topicCode,
                     StringUtils.isNotEmpty(fromDateStr) || StringUtils.isNotEmpty(toDateStr),
                     fromDate, toDate,
                     SEARCH_TYPE_ALL.equals(searchType),

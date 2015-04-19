@@ -20,6 +20,8 @@ import org.springframework.util.Assert;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import static java.text.MessageFormat.format;
 
@@ -44,13 +46,34 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
         return text + " " + fmtDateRangeQueryString(fromDate, toDate);
     }
 
+    private static String formSubQuery(String field, String[] searchValues) {
+        if (searchValues.length == 0)
+            return "";
+
+        List<String> l = new LinkedList<String>();
+        for (String val : searchValues) {
+            val = val.trim();
+            if (StringUtils.isNotEmpty(val))
+                l.add(field + ":(\"" + val + "\")");
+        }
+
+        return " +(" + StringUtils.join(l, " OR ") + ")";
+    }
+
+    private static String[] splitIfSeparatorNotNull(String str, String separator) {
+        return separator == null ? new String[]{str} : StringUtils.split(str, separator);
+    }
+
     public static String formQueryString(String text, boolean isRoot, boolean inTitle, boolean inBody, int topicCode,
-                                         String nick, String host, Date fromDate, Date toDate,
+                                         String nick, String host, String separator, Date fromDate, Date toDate,
                                          boolean inReg, boolean inHasUrl, boolean inHasImg) {
 
         text = FoundTextHighlighter.escapeColon(text);
 
         StringBuilder queryStr = new StringBuilder();
+
+        if (separator != null)
+            separator = "".equals(separator) ? "," : separator.toLowerCase();
 
         nick = StringUtils.lowerCase(nick);
         host = StringUtils.lowerCase(host);
@@ -75,15 +98,16 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
         }
 
         if (StringUtils.isNotEmpty(nick)) {
-            queryStr.append(format(" +{0}:(\"{1}\")", MessageFields.NICK, nick));
+            queryStr.append(formSubQuery(MessageFields.NICK, splitIfSeparatorNotNull(nick, separator)));
         }
 
         if (StringUtils.isNotEmpty(host)) {
             if (host.startsWith("*") || host.startsWith("?")) {
+                final String separatorReversed = StringUtils.reverse(separator);
                 final String hostReversed = StringUtils.reverse(host);
-                queryStr.append(format(" +{0}:({1})", MessageFields.HOST_REVERSED, hostReversed));
+                queryStr.append(formSubQuery(MessageFields.HOST_REVERSED, splitIfSeparatorNotNull(hostReversed, separatorReversed)));
             } else {
-                queryStr.append(format(" +{0}:({1})", MessageFields.HOST, host));
+                queryStr.append(formSubQuery(MessageFields.HOST, splitIfSeparatorNotNull(host, separator)));
             }
         }
 
@@ -126,7 +150,7 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
 
                 formQueryString(
                         req.getText(), req.isRoot(), req.isInTitle(), req.isInBody(),
-                        req.getTopicCode(), req.getNick(), req.getHost(),
+                        req.getTopicCode(), req.getNick(), req.getHost(), req.getSeparator(),
                         req.getFromDate(), req.getToDate(),
                         req.isInReg(), req.isInHasUrl(), req.isInHasImg()),
 

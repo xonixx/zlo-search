@@ -33,6 +33,7 @@ public class SearchRequest {
 
     private String nick;
     private String host;
+    private String separator;
     private int topicCode = -1; // by default - all
 
     private boolean isDateSet = false;
@@ -44,7 +45,7 @@ public class SearchRequest {
 
     public SearchRequest(String forumId, String text, boolean isRoot, boolean inTitle, boolean inBody,
                          boolean inReg, boolean inHasUrl, boolean inHasImg,
-                         String nick, String host, int topicCode,
+                         String nick, String host, String separator, int topicCode,
                          boolean isDateSet, Date fromDate, Date toDate,
                          boolean searchAll, SortBy sortDirection) {
         this.forumId = forumId;
@@ -58,6 +59,7 @@ public class SearchRequest {
         this.inHasImg = inHasImg;
         this.nick = nick;
         this.host = host;
+        this.separator = separator;
         this.topicCode = topicCode;
 
         this.isDateSet = isDateSet;
@@ -180,6 +182,10 @@ public class SearchRequest {
         this.searchAll = searchAll;
     }
 
+    public String getSeparator() {
+        return separator;
+    }
+
     public boolean canBeProcessed() {
         return StringUtils.isNotEmpty(text)
                 || StringUtils.isNotEmpty(nick)
@@ -190,41 +196,6 @@ public class SearchRequest {
                 || root
 //                || -1 != topicCode
                 ;
-    }
-
-    // TODO: rfct equals + hashCode
-    public boolean equals(Object obj) {
-        if (!(obj instanceof SearchRequest))
-            return false;
-
-        SearchRequest req = (SearchRequest) obj;
-
-        return forumId.equals(req.getForumId()) &&
-                topicCode == req.getTopicCode() &&
-                root == req.root &&
-                StringUtils.equals(text, req.getText()) &&
-                inTitle == req.isInTitle() &&
-                inBody == req.isInBody() &&
-                inReg == req.isInReg() &&
-                inHasUrl == req.isInHasUrl() &&
-                inHasImg == req.isInHasImg() &&
-                StringUtils.equals(nick, req.getNick()) &&
-                StringUtils.equals(host, req.getHost()) &&
-                (fromDate == req.getFromDate() || fromDate != null && fromDate.equals(req.getFromDate())) &&
-                (toDate == req.getToDate() || toDate != null && toDate.equals(req.getToDate())) &&
-                searchAll == req.isSearchAll();
-    }
-
-/*    public int hashCode() {
-        return StringUtils.join(new Object[]{text, root, inTitle, inBody, inReg, inHasUrl, inHasImg, nick, host, topicCode, searchAll, forumId}, '|').hashCode();
-    }*/
-
-    public boolean isTheSameSearch(SearchRequest searchRequest) {
-        return this.equals(searchRequest);
-    }
-
-    public boolean isNotTheSameSearch(SearchRequest searchRequest) {
-        return !isTheSameSearch(searchRequest);
     }
 
     public String describeToString() {

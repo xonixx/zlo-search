@@ -77,13 +77,14 @@
                     <label for="st2"><fmt:message key="label.search.exact.phrase"/></label>
 
                     <br/>
-                    <fmt:message key="label.text"/>
+                    <label for="text"><fmt:message key="label.text"/></label>
                     <input type="text" name="text" id="text"
                            <c:if test="${not empty param['text']}">value='<c:out value="${param['text']}" />'
                     </c:if> style="width:450px;"/>
+
                 </td>
                 <td valign="bottom" style="padding-left:10px;">
-                    <fmt:message key="label.topic"/>
+                    <label for="topic"><fmt:message key="label.topic"/></label>
                     <jsp:getProperty name="backendBean" property="topicSelector"/>
                 </td>
             </tr>
@@ -125,16 +126,24 @@
                         <label for="isRoot"><fmt:message key="label.search.in.is.root"/></label>
                     </c:if>
                     <br/>
-                    <fmt:message key="label.nick"/>
-                    <input type="text" name="nick"
+
+                    <label for="nick"><fmt:message key="label.nick"/></label>
+                    <input type="text" name="nick" id="nick"
                            <c:if test="${not empty param['nick']}">value="<c:out value="${param['nick']}" />"
                            </c:if>style="width:200px;"/>
                     <span class="space1"></span>
 
-                    <fmt:message key="label.host"/>
-                    <input type="text" name="host"
+                    <label for="host"><fmt:message key="label.host"/></label>
+                    <input type="text" name="host" id="host"
                            <c:if test="${not empty param['host']}">value="<c:out value="${param['host']}" />"
                            </c:if>style="width:200px;"/>
+
+                    <span style="margin-left: 30px" title='Вы можете производить поиск по нескольким никам/хостам, используя "," в качестве разделителя. Если Вы хотите использовать другой разделитель (например, один из искомых ников сам содержит ","), заполните это поле.'>
+                        <label for="sep"><fmt:message key="label.separator"/></label>
+                        <input type="text" name="sep" id="sep"
+                               <c:if test="${not empty param['sep']}">value="<c:out value="${param['sep']}" />"
+                               </c:if>style="width:40px;"/>
+                    </span>
                     <br/>
 
                     <input type="checkbox" name="dates" id="dates" ng-model="searchByDates"
@@ -157,15 +166,15 @@
                            ng-model="toDate" bs-datepicker="" data-date-format="dd.MM.yyyy"/>
                     <br/>
 
-                    <fmt:message key="label.forum"/>
+                    <label for="site"><fmt:message key="label.forum"/></label>
                     <jsp:getProperty name="backendBean" property="siteSelector"/>
                     <span class="space1"></span>
 
-                    <fmt:message key="label.per.page"/>
+                    <label for="pageSize"><fmt:message key="label.per.page"/></label>
                     <jsp:getProperty name="backendBean" property="pageSizeSelector"/>
                     <span class="space1"></span>
 
-                    <fmt:message key="label.sort"/>
+                    <label for="sort"><fmt:message key="label.sort"/></label>
                     <jsp:getProperty name="backendBean" property="sortSelector"/>
                     <br/>
 
