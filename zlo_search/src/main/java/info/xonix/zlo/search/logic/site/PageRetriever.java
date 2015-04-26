@@ -9,14 +9,15 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpVersion;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 
@@ -53,118 +54,44 @@ public class PageRetriever implements InitializingBean {
     }
 
     public String getPageContentByNumber(WwwconfParams wwwconfParams, int num) throws RetrieverException {
-        GetMethod getMethod = formGetMethod(wwwconfParams, "http://" + wwwconfParams.getSiteUrl() + wwwconfParams.getReadQuery() + num);
-
-        final List<String> stringGroups = new ArrayList<String>();
-        InputStream is = null;
-        int totalRead = 0;
-
-        try {
-            is = getInputStream(getMethod);
-
-            // реализовано чтение до "<BIG>Сообщения в этом потоке</BIG>"
-            stringGroups.add("");
-
-            int currSize, lenRead;
-            String ending;
-            byte[] buff = new byte[config.getBuffer()];
-
-            do {
-                lenRead = is.read(buff);
-                /*
-                if (lenRead != buff.length) {
-                    log.warn("buff.length=" + buff.length + " but lenRead=" + lenRead); // <-- 4, 120
-                }
-                */
-                if (lenRead <= 0) {
-                    log.warn("lenRead = " + lenRead + " while receiving " + num + ". It possibly means that message can't be parsed correctly...");
-                    break;
-                }
-
-                totalRead += lenRead;
-
-                stringGroups.add(new String(buff, 0, lenRead, wwwconfParams.getSiteCharset()));
-                currSize = stringGroups.size();
-                ending = stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1);
-            } while (
-                    !ending.contains(wwwconfParams.getMarkEndMsg1()) &&
-                            !ending.contains(wwwconfParams.getMarkEndMsg2()) && // if user have sign - won't read it all
-                            !ending.contains(wwwconfParams.getMsgNotExistOrWrong())
-                    );
-
-            // read till end - seems that closing while not end reached causes board crash
-            /* let's save traffic
-            for (lenRead = 0; lenRead > 0;) {
-                lenRead = is.read(buff);
-            }
-            */
-
-        } catch (UnsupportedEncodingException e) {
-            throw new RetrieverException(e);
-        } catch (IOException e) {
-            throw new RetrieverException("Error while reading response body", e);
-        } finally {
-            if (is != null) {
-                try {
-                    is.close();
-                } catch (IOException e) {
-                    log.warn("Exception while close.. hmm", e);
-                }
-            }
-            getMethod.releaseConnection(); // http://jakarta.apache.org/httpcomponents/httpclient-3.x/threading.html
-        }
-        StringBuilder sb = new StringBuilder(totalRead);
-        for (String s : stringGroups) {
-            sb.append(s);
-        }
-        stringGroups.clear();
-
-        return sb.toString();
+        return getPageText("http://" + wwwconfParams.getSiteUrl() + wwwconfParams.getReadQuery() + num, wwwconfParams);
     }
 
     /**
-     * load page until first root-message found
-     * returns last number of root-message or -1 if not found
+     * loads forum root page and parses max msg id
      *
      * @param wwwconfParams wwwconfParams
      * @return number of last msg
      * @throws RetrieverException on i/o exception
      */
     public int getLastRootMessageNumber(WwwconfParams wwwconfParams) throws RetrieverException {
-        GetMethod getMethod = formGetMethod(wwwconfParams, "http://" + wwwconfParams.getSiteUrl());
+        String rootPageText = getPageText("http://" + wwwconfParams.getSiteUrl(), wwwconfParams);
 
-        InputStream is = null;
-        Matcher m = null;
+        Matcher msgLinkMatcher = wwwconfParams.getLinkIndexRe().matcher(rootPageText);
+        List<Integer> ids = new LinkedList<Integer>();
+
+        while(msgLinkMatcher.find()) {
+            ids.add(Integer.parseInt(msgLinkMatcher.group(1)));
+        }
+
+        return Collections.max(ids);
+    }
+
+    private String getPageText(String url, WwwconfParams wwwconfParams) throws RetrieverException {
+        GetMethod getMethod = formGetMethod(wwwconfParams, url);
 
         try {
-            is = getInputStream(getMethod);
-            // реализовано чтение до матча с site.getLinkIndexRe()
-            List<String> stringGroups = new ArrayList<String>();
-            stringGroups.add("");
-
-            int currSize, lenRead;
-            byte[] buff = new byte[config.getBuffer()];
-            do {
-                lenRead = is.read(buff);
-                if (lenRead <= 0) {
-                    log.warn("lenRead = " + lenRead);
-                    throw new RetrieverException("lenRead = " + lenRead);
-                }
-                stringGroups.add(new String(buff, 0, lenRead, wwwconfParams.getSiteCharset()));
-                currSize = stringGroups.size();
-                m = wwwconfParams.getLinkIndexRe().matcher(stringGroups.get(currSize - 2) + stringGroups.get(currSize - 1));
-            } while (!m.find());
-
-            // TODO: maybe save traffic?
-            // read till end
-            for (lenRead = 0; lenRead > 0;) {
-                lenRead = is.read(buff);
-            }
-
-        } catch (UnsupportedEncodingException e) {
-            throw new RetrieverException(e);
+            httpClient.executeMethod(getMethod);
         } catch (IOException e) {
-            throw new RetrieverException("Error while reading response body", e);
+            throw new RetrieverException("Error while executing http request: " + url, e);
+        }
+
+        InputStream is = null;
+        try {
+            is = getMethod.getResponseBodyAsStream();
+            return IOUtils.toString(is, wwwconfParams.getSiteCharset());
+        } catch (IOException e) {
+            throw new RetrieverException("Error while fetching response body: " + url, e);
         } finally {
             if (is != null)
                 try {
@@ -173,22 +100,6 @@ public class PageRetriever implements InitializingBean {
                     log.warn("Exception while close.. hmm", e);
                 }
             getMethod.releaseConnection();
-        }
-
-        return Integer.parseInt(m.group(1));
-    }
-
-    private InputStream getInputStream(GetMethod getMethod) throws RetrieverException {
-        try {
-            httpClient.executeMethod(getMethod);
-        } catch (IOException e) {
-            throw new RetrieverException("Error while executing http request", e);
-        }
-
-        try {
-            return getMethod.getResponseBodyAsStream();
-        } catch (IOException e) {
-            throw new RetrieverException("Error while fetching response body", e);
         }
     }
 

@@ -10,9 +10,9 @@ import java.util.List;
  * Time: 1:32
  */
 public interface ForumAdapter {
-    public long getLastMessageNumber(String forumId) throws ForumAccessException;
+    long getLastMessageNumber(String forumId) throws ForumAccessException;
 
-    public Message getMessage(String forumId, long messageId) throws ForumAccessException;
+    Message getMessage(String forumId, long messageId) throws ForumAccessException;
 
     /**
      *
@@ -24,15 +24,15 @@ public interface ForumAdapter {
      */
     List<Message> getMessages(String forumId, long from, long to) throws ForumAccessException;
 
-    public String prepareMessageUrl(long messageId);
+    String prepareMessageUrl(long messageId);
 
-    public String prepareUserProfileUrl(String userId, String userName);
+    String prepareUserProfileUrl(String userId, String userName);
 
-    public String getForumUrl();
+    String getForumUrl();
 
-    public String getForumHost();
+    String getForumHost();
 
-    public String getForumTitle();
+    String getForumTitle();
 
     /**
      * This function is necessary for implementing saved msg view when msg forum url entered to search
@@ -40,7 +40,7 @@ public interface ForumAdapter {
      * @param messageUrl messageUrl
      * @return message id or -1 if in can't be exctracted
      */
-    public long extractMessageIdFromMessageUrl(String messageUrl);
+    long extractMessageIdFromMessageUrl(String messageUrl);
 
-    public boolean supportsParents();
+    boolean supportsParents();
 }
