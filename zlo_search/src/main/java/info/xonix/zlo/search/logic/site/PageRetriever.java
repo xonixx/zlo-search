@@ -74,6 +74,11 @@ public class PageRetriever implements InitializingBean {
             ids.add(Integer.parseInt(msgLinkMatcher.group(1)));
         }
 
+        if (ids.isEmpty()) {
+            log.warn("Unable to determine last message num for: " + wwwconfParams.getSiteUrl());
+            return -1;
+        }
+
         return Collections.max(ids);
     }
 

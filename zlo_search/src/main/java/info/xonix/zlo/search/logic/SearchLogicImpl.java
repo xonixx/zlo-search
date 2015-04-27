@@ -46,15 +46,19 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
         return text + " " + fmtDateRangeQueryString(fromDate, toDate);
     }
 
-    private static String formSubQuery(String field, String[] searchValues) {
+    private static String formSubQuery(String field, String[] searchValues, boolean inQuotes) {
         if (searchValues.length == 0)
             return "";
 
         List<String> l = new LinkedList<String>();
         for (String val : searchValues) {
             val = val.trim();
-            if (StringUtils.isNotEmpty(val))
-                l.add(field + ":(\"" + val + "\")");
+            if (StringUtils.isNotEmpty(val)) {
+                if (inQuotes)
+                    l.add(field + ":(\"" + val + "\")");
+                else
+                    l.add(field + ":(" + val + ")");
+            }
         }
 
         return " +(" + StringUtils.join(l, " OR ") + ")";
@@ -98,16 +102,16 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
         }
 
         if (StringUtils.isNotEmpty(nick)) {
-            queryStr.append(formSubQuery(MessageFields.NICK, splitIfSeparatorNotNull(nick, separator)));
+            queryStr.append(formSubQuery(MessageFields.NICK, splitIfSeparatorNotNull(nick, separator), true));
         }
 
         if (StringUtils.isNotEmpty(host)) {
             if (host.startsWith("*") || host.startsWith("?")) {
                 final String separatorReversed = StringUtils.reverse(separator);
                 final String hostReversed = StringUtils.reverse(host);
-                queryStr.append(formSubQuery(MessageFields.HOST_REVERSED, splitIfSeparatorNotNull(hostReversed, separatorReversed)));
+                queryStr.append(formSubQuery(MessageFields.HOST_REVERSED, splitIfSeparatorNotNull(hostReversed, separatorReversed), false));
             } else {
-                queryStr.append(formSubQuery(MessageFields.HOST, splitIfSeparatorNotNull(host, separator)));
+                queryStr.append(formSubQuery(MessageFields.HOST, splitIfSeparatorNotNull(host, separator), false));
             }
         }
 
