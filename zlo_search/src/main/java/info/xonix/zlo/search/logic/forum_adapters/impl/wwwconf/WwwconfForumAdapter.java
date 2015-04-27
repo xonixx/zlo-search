@@ -107,6 +107,6 @@ public class WwwconfForumAdapter extends ForumAdapterAbstract {
 
     @Override
     public boolean supportsParents() {
-        return false;
+        return wwwconfParams.getParentExtractMethod() != null;
     }
 }

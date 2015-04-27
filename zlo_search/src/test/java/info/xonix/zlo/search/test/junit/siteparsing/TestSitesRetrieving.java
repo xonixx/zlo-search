@@ -7,8 +7,8 @@ import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.MessageStatus;
 import info.xonix.zlo.search.spring.AppSpringContext;
-import junit.framework.Assert;
 import org.apache.commons.lang.StringUtils;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -246,14 +246,20 @@ public class TestSitesRetrieving {
 
         Message m = forumLogic.getMessageByNumber(zlo, 4093778);
 
+        Assert.assertEquals(4093772, m.getParentNum());
         Assert.assertEquals("QDiesel", m.getNick());
         Assert.assertEquals("nokia.7ka.mipt.ru", m.getHost());
         Assert.assertTrue(m.isReg());
         Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
         System.out.println(m);
 
+        m = forumLogic.getMessageByNumber(zlo, 4093772);
+        Assert.assertEquals(-1, m.getParentNum());
+        Assert.assertEquals("HEMP", m.getNick());
+
         m = forumLogic.getMessageByNumber(zlo, 4093788);
 
+        Assert.assertEquals(4093785, m.getParentNum());
         Assert.assertEquals("Loki", m.getNick());
         Assert.assertEquals("loki.3ka.mipt.ru", m.getHost());
         Assert.assertTrue(m.isReg());
@@ -262,6 +268,7 @@ public class TestSitesRetrieving {
 
         m = forumLogic.getMessageByNumber(zlo, 405573);
 
+        Assert.assertEquals(405555, m.getParentNum());
         Assert.assertEquals("Demoney", m.getNick());
         Assert.assertEquals("morgue.7ka.mipt.ru", m.getHost());
         Assert.assertTrue(!m.isReg());
@@ -270,6 +277,7 @@ public class TestSitesRetrieving {
 
         m = forumLogic.getMessageByNumber(zlo, 7787566);
 
+        Assert.assertEquals(7787551, m.getParentNum());
         Assert.assertEquals("vilfred", m.getNick());
         Assert.assertEquals("77.51.192.172", m.getHost());
         Assert.assertTrue(m.isReg());
@@ -279,6 +287,7 @@ public class TestSitesRetrieving {
 
         m = forumLogic.getMessageByNumber(zlo, 999999999);
 
+        Assert.assertEquals(-1, m.getParentNum());
         Assert.assertEquals(null, m.getNick());
         Assert.assertEquals(null, m.getHost());
         Assert.assertEquals(null, m.getBody());

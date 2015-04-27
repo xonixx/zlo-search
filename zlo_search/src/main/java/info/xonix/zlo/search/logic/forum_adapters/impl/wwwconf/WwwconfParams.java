@@ -4,6 +4,7 @@ import info.xonix.utils.ConfigUtils;
 import info.xonix.zlo.search.config.Config;
 import org.apache.commons.lang.StringUtils;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.regex.Pattern;
@@ -20,6 +21,8 @@ public class WwwconfParams {
     private String markEndMsg2;
     private String msgNotExistOrWrong;
     private String withoutTopic;
+
+    private Method parentExtractMethod;
 
     // regexes
     private String msgRegReStr;
@@ -74,6 +77,18 @@ public class WwwconfParams {
         linkIndexReStr = p.getProperty("regex.link.index");
 
         linkIndexRe = Pattern.compile(linkIndexReStr);
+
+        String parentExtractMethodStr = p.getProperty("parent.extractMethod");
+        if (parentExtractMethodStr != null) {
+            String className = parentExtractMethodStr.replaceFirst("\\.[^\\.]+$", "");
+            String methodName = parentExtractMethodStr.replace(className + ".", "");
+            try {
+                Class klass = Class.forName(className);
+                parentExtractMethod = klass.getMethod(methodName, String.class);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
 
         siteUrl = p.getProperty("site.url");
         siteCharset = p.getProperty("site.charset");
@@ -164,5 +179,9 @@ public class WwwconfParams {
 
     public boolean isNoHost() {
         return noHost;
+    }
+
+    public Method getParentExtractMethod() {
+        return parentExtractMethod;
     }
 }

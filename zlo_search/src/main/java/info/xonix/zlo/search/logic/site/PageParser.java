@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.lang.reflect.Method;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -99,6 +100,16 @@ public class PageParser implements InitializingBean {
 
         message.setBody(m.group(groupsOrder.get(6)));
         message.setStatus(MessageStatus.OK);
+
+        Method parentExtractMethod = wwwconfParams.getParentExtractMethod();
+        if (parentExtractMethod != null) {
+            try {
+                Integer parentId = (Integer) parentExtractMethod.invoke(null, msg);
+                message.setParentNum(parentId);
+            } catch (Exception e) {
+                throw new PageParseException("Unable to parse parent" + e);
+            }
+        }
 
         return message;
     }

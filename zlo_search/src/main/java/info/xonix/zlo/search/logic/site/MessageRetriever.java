@@ -44,7 +44,8 @@ public class MessageRetriever implements InitializingBean {
 
         for (int i = 0; i <= retries; i++) {
             try {
-                return pageParser.parseMessage(forumId, wwwconfParams, pageRetriever.getPageContentByNumber(wwwconfParams, num), num);
+                String messageHtmlStr = pageRetriever.getPageContentByNumber(wwwconfParams, num);
+                return pageParser.parseMessage(forumId, wwwconfParams, messageHtmlStr, num);
             } catch (SiteException ex) {
                 lastException = ex;
 
