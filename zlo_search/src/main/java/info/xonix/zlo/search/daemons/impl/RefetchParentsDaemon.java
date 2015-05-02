@@ -1,9 +1,9 @@
 package info.xonix.zlo.search.daemons.impl;
 
+import info.xonix.utils.Util;
 import info.xonix.utils.daemon.Daemon;
 import info.xonix.utils.daemon.DaemonBase;
 import info.xonix.utils.daemon.DaemonState;
-import info.xonix.zlo.search.charts.ChartService;
 import info.xonix.zlo.search.dao.MessagesDao;
 import info.xonix.zlo.search.logic.ForumLogic;
 import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
@@ -54,7 +54,8 @@ public class RefetchParentsDaemon extends DaemonBase implements Daemon {
             }
 
             Collections.sort(messageIds);
-            log.debug("Will refetch parents for: " + messageIds);
+            log.info("Will refetch parents for: " + messageIds);
+            long start = System.currentTimeMillis();
 
             for (Integer messageId : messageIds) {
                 try {
@@ -64,6 +65,8 @@ public class RefetchParentsDaemon extends DaemonBase implements Daemon {
                     log.warn("Unable to fetch msg", e);
                 }
             }
+
+            log.info("Refetched " + messageIds.size() + " parents " + Util.showDurationAndRate(start, messageIds.size()));
         }
     }
 }

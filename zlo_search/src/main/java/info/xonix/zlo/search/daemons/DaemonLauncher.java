@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
  */
 public class DaemonLauncher {
     private static final Logger log = Logger.getLogger(DaemonLauncher.class);
+    public static final String ENV_DONT_START_DAEMONS = "dontStartDaemons";
 
     private static final DaemonManager daemonManager = AppSpringContext.get(DaemonManager.class);
 
@@ -31,7 +32,14 @@ public class DaemonLauncher {
     }
 
     private static void startDownloadAndIndexerDaemons() {
+        String dontStartDaemonsForumIds = System.getenv(ENV_DONT_START_DAEMONS);
+
         for (String forumId : GetForum.ids()) {
+            if (dontStartDaemonsForumIds.contains(forumId)) {
+                log.info("Not starting daemon by env: " + forumId);
+                continue;
+            }
+
             if (!GetForum.descriptor(forumId).isDead()) {
                 log.info("Starting daemons for: " + forumId);
 

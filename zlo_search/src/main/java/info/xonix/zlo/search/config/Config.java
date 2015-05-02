@@ -6,6 +6,7 @@ import info.xonix.utils.ExceptionUtils;
 import info.xonix.zlo.search.analyzers.AnalyzerProvider;
 import info.xonix.zlo.search.logic.MessageFields;
 import info.xonix.zlo.search.utils.SmartQueryParser;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.lucene.analysis.Analyzer;
@@ -173,8 +174,11 @@ public class Config {
     private void initPowerUserPwd() {
         final Context context;
         try {
-            context = loadEnvJndiCtx();
-            powerUserKey = (String) context.lookup("powerUserKey");
+            powerUserKey = System.getenv("powerUserKey");
+            if (StringUtils.isEmpty(powerUserKey)) {
+                context = loadEnvJndiCtx();
+                powerUserKey = (String) context.lookup("powerUserKey");
+            }
 
             log.info("Loaded powerUserKey: " +
                     (powerUserKey != null && powerUserKey.length() > 0

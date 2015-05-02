@@ -21,4 +21,9 @@ public class Util {
             map.remove(k);
         }
     }
+
+    public static String showDurationAndRate(long startTimestamp, int number) {
+        float durationSecs = (System.currentTimeMillis() - startTimestamp) / 1000f;
+        return "in " + (int) durationSecs + "secs. Rate: " + ((float) number) / durationSecs + "mps.";
+    }
 }
