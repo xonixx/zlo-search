@@ -5,6 +5,7 @@ import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.daemons.impl.ChartsDaemon;
 import info.xonix.zlo.search.daemons.impl.DownloaderDaemon;
 import info.xonix.zlo.search.daemons.impl.IndexerDaemon;
+import info.xonix.zlo.search.daemons.impl.RefetchParentsDaemon;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 
@@ -23,6 +24,7 @@ public class DaemonLauncher {
             log.info("Not starting download/indexer daemons.");
         } else {
             startDownloadAndIndexerDaemons();
+            daemonManager.startDaemon(new RefetchParentsDaemon("zlo"));
         }
 
         daemonManager.startDaemon(new ChartsDaemon());

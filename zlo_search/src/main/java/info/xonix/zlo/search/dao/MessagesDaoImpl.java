@@ -240,6 +240,23 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
         return getDates(queryProvider.getSelectDatesByIdsQuery(forumId), ids, start, end);
     }
 
+    @Override
+    public List<Integer> getMessageIdsByMissingParent(String forumId, int parentId, int limit) {
+        return getJdbcTemplate().queryForList(
+                queryProvider.getForumQueries(forumId).sql_select_by_noparent,
+                Integer.class,
+                parentId,
+                limit);
+    }
+
+    @Override
+    public void updateParent(String forumId, int msgId, int parentId) {
+        getJdbcTemplate().update(
+                queryProvider.getForumQueries(forumId).sql_update_parent,
+                parentId,
+                msgId);
+    }
+
     private List<Date> getDates(String sql, List<?> params, Date start, Date end) {
         if (params.isEmpty())
             return Collections.emptyList();

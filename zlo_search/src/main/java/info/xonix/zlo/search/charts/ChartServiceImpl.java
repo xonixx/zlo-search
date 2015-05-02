@@ -185,30 +185,34 @@ public class ChartServiceImpl implements ChartService {
     }
 
     @Override
-    public void processNextTask() {
+    public ChartTask getNextQueuedTask() {
         try {
-            ChartTask task = queue.take();
-            task.setStatus(ChartTaskStatus.STARTED);
-            chartsDao.updateChartTask(task);
-            try {
-                Object processedResult = process(task);
-
-                task.setStatus(ChartTaskStatus.READY);
-                task.setResult(JsonUtil.toJson(processedResult));
-
-                chartsDao.updateChartTask(task);
-
-                log.info("Processed for task.id=" + task.getId());
-            } catch (Exception e) {
-                log.error("Error processing " + task, e);
-
-                task.setStatus(ChartTaskStatus.READY);
-                task.setError(ExceptionUtils.getStackTrace(e));
-
-                chartsDao.updateChartTask(task);
-            }
+            return queue.take();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void processNextTask(ChartTask task) {
+        task.setStatus(ChartTaskStatus.STARTED);
+        chartsDao.updateChartTask(task);
+        try {
+            Object processedResult = process(task);
+
+            task.setStatus(ChartTaskStatus.READY);
+            task.setResult(JsonUtil.toJson(processedResult));
+
+            chartsDao.updateChartTask(task);
+
+            log.info("Processed for task.id=" + task.getId());
+        } catch (Exception e) {
+            log.error("Error processing " + task, e);
+
+            task.setStatus(ChartTaskStatus.READY);
+            task.setError(ExceptionUtils.getStackTrace(e));
+
+            chartsDao.updateChartTask(task);
         }
     }
 }

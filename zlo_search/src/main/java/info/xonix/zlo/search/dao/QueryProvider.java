@@ -13,7 +13,7 @@ import java.util.Properties;
  */
 public class QueryProvider {
 
-    private static final class ForumQueries {
+    static final class ForumQueries {
 //        private String INSERT_MSG;
 
         //        private String INSERT_UPDATE_MSG;
@@ -36,6 +36,9 @@ public class QueryProvider {
         private String SELECT_AUTOCOMPLETE;
         private String SELECT_DATES_BY_NICKS;
         private String SELECT_DATES_BY_IDS;
+
+        String sql_update_parent;
+        String sql_select_by_noparent;
     }
 
     private StringFactory<ForumQueries> siteQueriesSiteFactory = new StringFactory<ForumQueries>() {
@@ -73,6 +76,9 @@ public class QueryProvider {
             sq.SELECT_AUTOCOMPLETE = MessageFormat.format(props.getProperty("sql.select.autocomplete"), name);
             sq.SELECT_DATES_BY_NICKS = MessageFormat.format(props.getProperty("sql.select.msg_dates_by_nicks"), name);
             sq.SELECT_DATES_BY_IDS = MessageFormat.format(props.getProperty("sql.select.msg_dates_by_ids"), name);
+
+            sq.sql_update_parent = MessageFormat.format(props.getProperty("sql.update.parent"), name);
+            sq.sql_select_by_noparent = MessageFormat.format(props.getProperty("sql.select.by.noparent"), name);
         }
     };
 
@@ -85,7 +91,7 @@ public class QueryProvider {
         dbDictProps = ConfigUtils.loadProperties("info/xonix/zlo/search/db/db_dict.sql.properties");
     }
 
-    private ForumQueries getForumQueries(String forumId) {
+    public ForumQueries getForumQueries(String forumId) {
         return siteQueriesSiteFactory.get(forumId);
     }
 

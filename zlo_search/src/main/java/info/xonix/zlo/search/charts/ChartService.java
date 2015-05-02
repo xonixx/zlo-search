@@ -23,5 +23,7 @@ public interface ChartService {
 
     List<ChartTask> getLastTasks(int count);
 
-    void processNextTask();
+    ChartTask getNextQueuedTask();
+
+    void processNextTask(ChartTask task);
 }

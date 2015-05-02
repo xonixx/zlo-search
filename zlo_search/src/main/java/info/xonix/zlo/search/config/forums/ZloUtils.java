@@ -14,8 +14,8 @@ import org.jsoup.select.Elements;
 public class ZloUtils {
     private static final Logger log = Logger.getLogger(ZloUtils.class);
 
-    public static final int ROOT = -1;
-    public static final int ERR = ROOT;
+    public static final int ROOT = 0;
+    public static final int ERR = -5;
 
     public static int extractParentId(String msgHtml) {
         Document document = Jsoup.parse(msgHtml);

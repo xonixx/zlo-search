@@ -101,7 +101,7 @@ public abstract class DaemonBase implements Daemon {
         setStateIfNotExiting(prevState);
     }
 
-    void setStateIfNotExiting(DaemonState newDaemonState) {
+    protected void setStateIfNotExiting(DaemonState newDaemonState) {
         if (!isExiting()) {
             daemonState = newDaemonState;
         }

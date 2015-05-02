@@ -42,4 +42,8 @@ public interface MessagesDao {
     List<Date> getMessageDatesByNicks(String forumId, List<String> nicks, Date start, Date end);
 
     List<Date> getMessageDatesByIds(String forumId, List<Long> ids, Date start, Date end);
+
+    List<Integer> getMessageIdsByMissingParent(String forumId, int parentId, int limit);
+
+    void updateParent(String forumId, int msgId, int parentId);
 }
