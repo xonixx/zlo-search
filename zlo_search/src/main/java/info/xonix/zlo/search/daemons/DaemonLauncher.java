@@ -35,7 +35,7 @@ public class DaemonLauncher {
         String dontStartDaemonsForumIds = System.getenv(ENV_DONT_START_DAEMONS);
 
         for (String forumId : GetForum.ids()) {
-            if (dontStartDaemonsForumIds.contains(forumId)) {
+            if (dontStartDaemonsForumIds != null && dontStartDaemonsForumIds.contains(forumId)) {
                 log.info("Not starting daemon by env: " + forumId);
                 continue;
             }
