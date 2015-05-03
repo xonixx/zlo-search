@@ -1,5 +1,6 @@
 package info.xonix.zlo.search.model;
 
+import info.xonix.zlo.search.ParentIdsConstants;
 import info.xonix.zlo.search.utils.HtmlUtils;
 
 import java.io.Serializable;
@@ -14,12 +15,11 @@ import java.util.Date;
  * Time: 20:18:10
  */
 public class Message extends MessageShallow implements Serializable {
-    public static final int NO_PARENT = -1;
 
     private String altName;
     private int topicCode = -1;
     private String body;
-    private int parentNum = NO_PARENT; // default
+    private int parentNum = ParentIdsConstants.NO_PARENT; // default
 
     private String titleClean;
     private String bodyClean;

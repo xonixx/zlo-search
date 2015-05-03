@@ -1,5 +1,6 @@
 package info.xonix.zlo.search.config.forums;
 
+import info.xonix.zlo.search.ParentIdsConstants;
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -14,15 +15,12 @@ import org.jsoup.select.Elements;
 public class ZloUtils {
     private static final Logger log = Logger.getLogger(ZloUtils.class);
 
-    public static final int ROOT = 0;
-    public static final int ERR = -5;
-
     public static int extractParentId(String msgHtml) {
         Document document = Jsoup.parse(msgHtml);
         Elements thisCommentElt = document.select("span[id]>a[name]>b");
 
         if (thisCommentElt == null || thisCommentElt.isEmpty()) {
-            return ERR;
+            return ParentIdsConstants.ERR;
         }
 
         Element div = thisCommentElt.first().parent().parent().parent();
@@ -32,10 +30,10 @@ public class ZloUtils {
                 return Integer.parseInt(id.substring(1));
             } catch (NumberFormatException e) {
                 log.warn("Unable to parse id: " + id);
-                return ERR;
+                return ParentIdsConstants.ERR;
             }
         }
 
-        return ROOT;
+        return ParentIdsConstants.ROOT;
     }
 }

@@ -6,6 +6,7 @@ package info.xonix.zlo.search.xmlfp;
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 import info.xonix.forumsearch.xmlfp.XmlFpUrlsSubstitutions;
 import info.xonix.forumsearch.xmlfp.jaxb_generated.*;
+import info.xonix.zlo.search.ParentIdsConstants;
 import info.xonix.zlo.search.config.forums.GetForum;
 import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams;
 import info.xonix.zlo.search.model.Message;
@@ -51,7 +52,7 @@ class Convert {
                     new Date(info.getDate().toGregorianCalendar().getTime().getTime()),
                     author.isRegistered() == null ? false : author.isRegistered(),
                     (int) jaxbMessage.getId(),
-                    (int) (info.getParentId() == null ? Message.NO_PARENT : info.getParentId()),
+                    (int) (info.getParentId() == null ? ParentIdsConstants.NO_PARENT : info.getParentId()),
 
                     messageStatus.getInt()
             );

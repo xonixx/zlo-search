@@ -1,6 +1,7 @@
 package info.xonix.zlo.search.logic.site;
 
 import info.xonix.utils.Check;
+import info.xonix.zlo.search.ParentIdsConstants;
 import info.xonix.zlo.search.config.DateFormats;
 import info.xonix.zlo.search.logic.ControlsDataLogic;
 import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams;
@@ -48,6 +49,7 @@ public class PageParser implements InitializingBean {
             m = wwwconfParams.getMsgRegRe().matcher(msg);
             if (!m.find()) {
                 if (msg.contains(wwwconfParams.getMsgNotExistOrWrong())) {
+                    message.setParentNum(ParentIdsConstants.NO_PARENT_DELETED);
                     message.setStatus(MessageStatus.DELETED);
                 } else {
 //                    message.setStatus(MessageStatus.UNKNOWN);
