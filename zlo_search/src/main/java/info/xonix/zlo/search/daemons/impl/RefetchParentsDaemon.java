@@ -4,6 +4,7 @@ import info.xonix.utils.Util;
 import info.xonix.utils.daemon.Daemon;
 import info.xonix.utils.daemon.DaemonBase;
 import info.xonix.utils.daemon.DaemonState;
+import info.xonix.zlo.search.ParentIdsConstants;
 import info.xonix.zlo.search.dao.MessagesDao;
 import info.xonix.zlo.search.logic.ForumLogic;
 import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
@@ -63,6 +64,7 @@ public class RefetchParentsDaemon extends DaemonBase implements Daemon {
                     messagesDao.updateParent(forumId, messageId, message.getParentNum());
                 } catch (ForumAccessException e) {
                     log.warn("Unable to fetch msg", e);
+                    messagesDao.updateParent(forumId, messageId, ParentIdsConstants.ERR);
                 }
             }
 
