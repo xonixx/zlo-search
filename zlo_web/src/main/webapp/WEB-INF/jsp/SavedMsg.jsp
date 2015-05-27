@@ -25,18 +25,19 @@
 <c:choose>
     <c:when test="${empty requestScope['error']}">
         <c:if test="${not empty parentMsg or not empty childMsgs}">
-            <ul>
+            <ul class="msg-tree${empty parentMsg ? ' is-parent' : ''}">
                 <c:if test="${not empty parentMsg}">
-                    <li><b>В ответ на:</b> <util:msg_line msg="${parentMsg}"/></li>
+                    <li class="msg-parent"><util:msg_line msg="${parentMsg}"/></li>
                 </c:if>
+                <li class="msg-msg"><util:msg_line msg="${msg}" nolink="true"/></li>
                 <c:forEach items="${childMsgs}" var="child">
-                    <li><b>Ответ:</b> <util:msg_line msg="${child}"/></li>
+                    <li class="msg-child"><util:msg_line msg="${child}"/></li>
                 </c:forEach>
             </ul>
         </c:if>
         <div align="center">
             <big>
-                <c:if test="${not empty msg.topic}">[${msg.topic}]</c:if>
+                <c:if test="${not empty msg.topic}">[${msg.topic}]</c:if>${' '}
                 <jsp:setProperty name="hl" property="text" value="${msg.title}"/>
                 <c:out value="${hl.highlightedText}" escapeXml="false"/>
                 <a href="<%= adapter.prepareMessageUrl(msg.getNum()) %>">?</a>

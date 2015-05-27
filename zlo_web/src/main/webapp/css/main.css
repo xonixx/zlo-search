@@ -214,3 +214,9 @@ form.submitted .ng-invalid {
 .submitBtn1 {
     padding: 3px 30px;
 }
+
+ul.msg-tree.is-parent { margin-left: -20px }
+ul.msg-tree li { list-style: none }
+li.msg-msg { margin-left: 20px }
+li.msg-msg > b { text-decoration: underline }
+li.msg-child { margin-left: 40px }

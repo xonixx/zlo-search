@@ -25,7 +25,7 @@ public class DaemonLauncher {
             log.info("Not starting download/indexer daemons.");
         } else {
             startDownloadAndIndexerDaemons();
-            daemonManager.startDaemon(new RefetchParentsDaemon("zlo"));
+//            daemonManager.startDaemon(new RefetchParentsDaemon("zlo"));
         }
 
         daemonManager.startDaemon(new ChartsDaemon());
