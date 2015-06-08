@@ -31,4 +31,10 @@
         </sql>
     </changeSet>
 
+    <changeSet id="3" author="xonix">
+        <sql>
+            delete from zlo_topics where isNew = 0;
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>
