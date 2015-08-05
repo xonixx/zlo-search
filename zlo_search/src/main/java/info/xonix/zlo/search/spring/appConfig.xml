@@ -4,5 +4,5 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="appConfig" class="info.xonix.zlo.search.config.Config"/>
-    <bean class="info.xonix.zlo.search.config.HttpsCertVerificationDisabler"/>
+    <bean class="info.xonix.zlo.search.ignoressl.HttpsCertVerificationDisabler"/>
 </beans>
