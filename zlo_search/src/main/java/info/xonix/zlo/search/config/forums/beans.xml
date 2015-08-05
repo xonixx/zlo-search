@@ -41,7 +41,7 @@
 
                     <constructor-arg>
                         <bean class="info.xonix.zlo.search.logic.forum_adapters.impl.XmlFpForumAdapter">
-                            <constructor-arg value="http://x.mipt.cc/?xmlfp"/>
+                            <constructor-arg value="https://x.mipt.cc/?xmlfp"/>
                         </bean>
                     </constructor-arg>
                 </bean>
