@@ -3,7 +3,7 @@ package info.xonix.zlo.search.test.junit;
 import info.xonix.utils.TimeUtils;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * User: gubarkov

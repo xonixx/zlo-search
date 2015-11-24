@@ -190,7 +190,7 @@ public class MessagesDaoImpl extends DaoImplBase implements MessagesDao {
 
     @Override
     public int getLastMessageNumber(String forumId) {
-        return getJdbcTemplate().queryForInt(queryProvider.getSelectLastMsgNumQuery(forumId));
+        return getJdbcTemplate().queryForObject(queryProvider.getSelectLastMsgNumQuery(forumId), Integer.class);
     }
 
     @Override
