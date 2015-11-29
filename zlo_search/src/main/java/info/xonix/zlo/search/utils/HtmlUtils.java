@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  * Date: 22.09.2007
  * Time: 22:31:40
  */
-public class HtmlUtils {
+public final class HtmlUtils {
     private static final String[] BOTH_TAGS = {"a", "b", "i", "p", "blockquote", "span", "pre", "u", "center"};
     private static final String[] SINGLE_TAGS = {"br", "hr", "img"};
     private final static String SPACE = " ";
@@ -121,5 +121,8 @@ public class HtmlUtils {
             return false;
         text = text.trim();
         return !text.contains(" ") && !text.contains("\t") && text.startsWith("http");
+    }
+
+    private HtmlUtils() {
     }
 }

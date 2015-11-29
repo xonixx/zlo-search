@@ -8,7 +8,7 @@ import java.util.Date;
  * Date: 9/1/14
  * Time: 1:32 AM
  */
-public class DateUtil {
+final public class DateUtil {
     public static Date emptyTimePart(Calendar cal) {
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
@@ -23,5 +23,8 @@ public class DateUtil {
 
     public static Date currentDateNoTime() {
         return emptyTimePart(Calendar.getInstance());
+    }
+
+    private DateUtil() {
     }
 }

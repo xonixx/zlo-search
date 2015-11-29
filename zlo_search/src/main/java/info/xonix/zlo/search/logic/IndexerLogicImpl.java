@@ -9,6 +9,8 @@ import org.apache.log4j.Logger;
 import org.apache.lucene.document.DateTools;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.Field.Index;
+import org.apache.lucene.document.Field.Store;
 import org.apache.lucene.index.IndexWriter;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,21 +84,21 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
 
         Document doc = new Document();
 
-        doc.add(new Field(MessageFields.URL_NUM, URL_NUM_FORMAT.format(msg.getNum()), Field.Store.YES, Field.Index.NOT_ANALYZED));
-        doc.add(new Field(MessageFields.TOPIC_CODE, Integer.toString(msg.getTopicCode()), Field.Store.NO, Field.Index.NOT_ANALYZED));
-        doc.add(new Field(MessageFields.TITLE, msg.getCleanTitle(), Field.Store.NO, Field.Index.ANALYZED)); // "чистый" - индексируем, не храним
-        doc.add(new Field(MessageFields.NICK, msg.getNick().toLowerCase(), Field.Store.NO, Field.Index.NOT_ANALYZED));
-        doc.add(new Field(MessageFields.REG, msg.isReg() ? TRUE : FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.URL_NUM, URL_NUM_FORMAT.format(msg.getNum()), Store.YES, Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.TOPIC_CODE, Integer.toString(msg.getTopicCode()), Store.NO, Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.TITLE, msg.getCleanTitle(), Store.NO, Index.ANALYZED)); // "чистый" - индексируем, не храним
+        doc.add(new Field(MessageFields.NICK, msg.getNick().toLowerCase(), Store.NO, Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.REG, msg.isReg() ? TRUE : FALSE, Store.NO, Index.NOT_ANALYZED));
 
-        doc.add(new Field(MessageFields.HOST, hostLowerCase, Field.Store.NO, Field.Index.NOT_ANALYZED));
-        doc.add(new Field(MessageFields.HOST_REVERSED, StringUtils.reverse(hostLowerCase), Field.Store.NO, Field.Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.HOST, hostLowerCase, Store.NO, Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.HOST_REVERSED, StringUtils.reverse(hostLowerCase), Store.NO, Index.NOT_ANALYZED));
 
-        doc.add(new Field(MessageFields.DATE, DateTools.dateToString(msg.getDate(), DateTools.Resolution.MINUTE), Field.Store.NO, Field.Index.NOT_ANALYZED));
-        doc.add(new Field(MessageFields.BODY, msg.getCleanBody(), Field.Store.NO, Field.Index.ANALYZED)); // "чистый" - индексируем, не храним
-        doc.add(new Field(MessageFields.HAS_URL, MessageLogic.hasUrl(msg) ? TRUE : FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED));
-        doc.add(new Field(MessageFields.HAS_IMG, MessageLogic.hasImg(msg, forumId) ? TRUE : FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.DATE, DateTools.dateToString(msg.getDate(), DateTools.Resolution.MINUTE), Store.NO, Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.BODY, msg.getCleanBody(), Store.NO, Index.ANALYZED)); // "чистый" - индексируем, не храним
+        doc.add(new Field(MessageFields.HAS_URL, MessageLogic.hasUrl(msg) ? TRUE : FALSE, Store.NO, Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.HAS_IMG, MessageLogic.hasImg(msg, forumId) ? TRUE : FALSE, Store.NO, Index.NOT_ANALYZED));
 
-        doc.add(new Field(MessageFields.IS_ROOT, msg.getParentNum() <= 0 ? TRUE : FALSE, Field.Store.NO, Field.Index.NOT_ANALYZED));
+        doc.add(new Field(MessageFields.IS_ROOT, msg.getParentNum() <= 0 ? TRUE : FALSE, Store.NO, Index.NOT_ANALYZED));
 
         return doc;
     }
@@ -125,17 +127,5 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
         log.info(forumId + " - Setting last indexed: " + to);
 
         appLogic.setLastIndexedNumber(forumId, to);
-    }
-
-    @Override
-    public void closeIndexWriters() {
-//        TODO: ---VVV
-        for (IndexManager indexManager : IndexManager.all()) {
-            try {
-                indexManager.getWriter().close();
-            } catch (IOException e) {
-                log.error("Error closing: " + indexManager.getIndexDir(), e);
-            }
-        }
     }
 }

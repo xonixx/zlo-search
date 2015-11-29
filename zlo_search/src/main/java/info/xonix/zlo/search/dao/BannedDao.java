@@ -15,5 +15,5 @@ public interface BannedDao {
      * @return banned status of this IP
      */
     @Nonnull
-    public BannedStatus getBannedStatus(String ip);
+    BannedStatus getBannedStatus(String ip);
 }

@@ -11,6 +11,7 @@ import info.xonix.zlo.search.model.ChartTask;
 import info.xonix.zlo.search.model.ChartTaskStatus;
 import info.xonix.zlo.search.utils.DateUtil;
 import info.xonix.zlo.search.utils.JsonUtil;
+import info.xonix.zlo.search.utils.Util;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -97,10 +98,7 @@ public class ChartServiceImpl implements ChartService {
                 int[] ids = searchLogic.search(task.getForumId(),
                         SearchLogicImpl.formQueryString(task.getSearchQueries().get(0), task.getStart(), task.getEnd()),
                         0, 100000);
-                idsList = new ArrayList<Long>(ids.length);
-                for (int id : ids) {
-                    idsList.add((long)id);
-                }
+                idsList = Util.toLongsList(ids);
             } catch (SearchException e) {
                 throw new RuntimeException("Error doing FTS", e);
             }

@@ -26,4 +26,7 @@ public final class SysUtils {
 
         log.info("GC done...");
     }
+
+    private SysUtils() {
+    }
 }

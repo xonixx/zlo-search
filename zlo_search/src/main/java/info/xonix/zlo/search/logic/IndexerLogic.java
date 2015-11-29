@@ -7,6 +7,4 @@ package info.xonix.zlo.search.logic;
  */
 public interface IndexerLogic {
     void index(String forumId, int from, int to) throws IndexerException;
-
-    void closeIndexWriters();
 }

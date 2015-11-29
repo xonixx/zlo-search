@@ -210,13 +210,6 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     }
 
     @Override
-    @Deprecated
-    public void optimizeIndex(String forumId) {
-        // TODO: implement?
-        throw new UnsupportedOperationException("optimizeIndex");
-    }
-
-    @Override
     public void dropIndex(String forumId) throws IOException {
         final IndexManager indexManager = IndexManager.get(forumId);
         indexManager.drop();
@@ -246,36 +239,7 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
         }
 
         return skip(realLimitIds, skip);
-
-/*        try {
-    final int[] ids = search(searcher, query, realLimit);
-
-    if (ids.length == realLimit) {
-        return skip(ids, skip);
     }
-
-    realLimit -= ids.length;
-
-    if (realLimit <= 0) {
-        throw new IllegalStateException();
-    }
-
-    final IndexSearcher bigSearcher = new IndexSearcher(indexManager.getBigReader());
-
-    final int[] idsBig = search(bigSearcher, query, realLimit);
-
-
-    final int[] idsAll = ArrayUtils.addAll(ids, idsBig);
-    return skip(idsAll, skip); // TODO: optimize
-
-} catch (IOException e) {
-    throw new SearchException("search: I/O exception", e);
-}*/
-    }
-
-/*    private int[] last(int[] inp, int takeLast) {
-        return ArrayUtils.subarray(inp, inp.length - takeLast, inp.length);
-    }*/
 
     private int[] skip(int[] inp, int skip) {
         return ArrayUtils.subarray(inp, skip, inp.length);

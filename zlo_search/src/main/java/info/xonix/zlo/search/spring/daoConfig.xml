@@ -30,4 +30,8 @@
     <bean id="xmlFpDao" class="info.xonix.zlo.search.dao.XmlFpDaoImpl">
         <property name="dataSource" ref="dataSource"/>
     </bean>
+
+    <bean id="appDao" class="info.xonix.zlo.search.dao.AppDaoImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
 </beans>
