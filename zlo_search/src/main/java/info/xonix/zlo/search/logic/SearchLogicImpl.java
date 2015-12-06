@@ -35,10 +35,6 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     private static final Logger log = Logger.getLogger(SearchLogicImpl.class);
     public static final Sort REVERSED_INDEX_ORDER_SORT = new Sort(new SortField(null, SortField.Type.DOC, true));
 
-//    test --VVV
-//    public static final Sort REVERSED_INDEX_ORDER_SORT = Sort.INDEXORDER;
-//    public static final Sort REVERSED_INDEX_ORDER_SORT = new Sort(new SortField(MessageFields.URL_NUM, SortField.STRING, true));
-
     @Autowired
     private Config config;
 
@@ -162,14 +158,6 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
                 limit);
         searchResult.setLastSearch(req);
         return searchResult;
-    }
-
-    @Override
-    public Sort getDateSort() {
-        // sort causes slow first search & lot memory used!
-        return config.isSearchPerformSort()
-                ? new Sort(new SortField(MessageFields.DATE, SortField.Type.STRING, true))
-                : null;
     }
 
     private SearchResult search(String forumId, String queryStr, boolean searchAll, SortBy sortDirection, int limit) throws SearchException {

@@ -88,6 +88,7 @@ public class IndexManager {
         return sort;
     }
 
+    @SuppressWarnings("unused")
     public File getIndexDir() {
         return indexDir;
     }
@@ -167,6 +168,7 @@ public class IndexManager {
         }
     }
 
+    @SuppressWarnings("unused")
     public long getIndexSize() {
         return IndexUtils.getDirSize(indexDir);
     }

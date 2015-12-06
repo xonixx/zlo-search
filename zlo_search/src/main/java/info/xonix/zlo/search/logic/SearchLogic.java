@@ -14,8 +14,6 @@ import java.io.IOException;
 public interface SearchLogic {
     SearchResult search(SearchRequest searchRequest, int limit) throws SearchException;
 
-    Sort getDateSort();
-
     void dropIndex(String forumId) throws IOException;
 
     int[] search(String forumId, String searchString, int skip, int limit) throws SearchException;
