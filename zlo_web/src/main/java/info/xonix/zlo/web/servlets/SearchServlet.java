@@ -36,9 +36,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.ParseException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.*;
 
 import static info.xonix.zlo.search.config.Config.SMART_QUERY_PARSER;
 
@@ -212,7 +210,7 @@ public class SearchServlet extends BaseServlet {
                     SEARCH_TYPE_ALL.equals(searchType),
                     sortDirection);
 
-            if (searchRequest.canBeProcessed()) {
+            if (searchRequest.canBeProcessed() && isNotHeavySearch(text, request)) {
                 final String ip = RequestUtils.getClientIp(request);
 
                 if (userLogic.getBannedStatus(ip).isBanned()) {
@@ -322,6 +320,15 @@ public class SearchServlet extends BaseServlet {
         } else {
             request.forwardTo(JSP_SEARCH);
         }
+    }
+
+    private static final List<String> heavySearches = Arrays.asList("не", "*:*");
+
+    private boolean isNotHeavySearch(String text, HttpServletRequest request) {
+        // TODO: lowercase
+        // TODO: "не о" - through analyzer
+        // TODO: move to service
+        return text == null || !heavySearches.contains(text.trim()) || RequestUtils.isPowerUser(request);
     }
 
     private String smartGetParam(ForwardingRequest request, MultiMap<String> params, final String paramName) {

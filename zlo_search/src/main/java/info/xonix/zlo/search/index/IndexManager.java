@@ -77,6 +77,7 @@ public class IndexManager {
     }
 
     private Sort getSort(SortBy sortDirection) {
+        // TODO: move inside enum
         final Sort sort;
         if (sortDirection == SortBy.DATE) {
             sort = SearchLogicImpl.REVERSED_INDEX_ORDER_SORT;
