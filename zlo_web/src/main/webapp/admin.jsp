@@ -9,14 +9,27 @@
 
 <%@ include file="WEB-INF/jsp/restrictAccess.jsp" %>
 
-<%@ include file="WEB-INF/jsp/commonJsCss.jsp" %>
-<link rel="stylesheet" type="text/css" href="css/admin.css?${version}"/>
-
 <%!
     private static final DaemonManager daemonManager = AppSpringContext.get(DaemonManager.class);
     private static final AppLogic appLogic = AppSpringContext.get(AppLogic.class);
 %>
 
+<%
+    if ("POST".equals(request.getMethod())) {
+        final String command = request.getParameter("command");
+        if ("GC".equals(command)) {
+            SysUtils.gc();
+        } else if ("Reindex".equals(command)) {
+            AdminLogic.reindex(request.getParameter("forumId"));
+        }
+        response.sendRedirect("admin.jsp");
+        return;
+    }
+%>
+
+<%@ include file="WEB-INF/jsp/commonJsCss.jsp" %>
+
+<link rel="stylesheet" type="text/css" href="css/admin.css?${version}"/>
 <title>Admin area</title>
 
 <tiles:insertDefinition name="header.admin"/>
@@ -33,19 +46,6 @@
     
     <a href="detectspam.jsp">Spam?</a>
     <a href="db.jsp">DB</a>
-
-    <%
-        if ("POST".equals(request.getMethod())) {
-            final String command = request.getParameter("command");
-            if ("GC".equals(command)) {
-                SysUtils.gc();
-            } else if ("Reindex".equals(command)) {
-                AdminLogic.reindex(request.getParameter("forumId"));
-            }
-            response.sendRedirect("admin.jsp");
-            return;
-        }
-    %>
 
     <table>
         <tr>
