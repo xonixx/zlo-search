@@ -10,8 +10,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.KeywordAnalyzer;
-import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
+import org.apache.lucene.analysis.core.KeywordAnalyzer;
+import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
 
 import javax.annotation.Nullable;
 import javax.naming.Context;
@@ -19,6 +19,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -112,10 +114,10 @@ public class Config {
             throw ExceptionUtils.rethrowAsRuntime(e);
         }
 
-        final PerFieldAnalyzerWrapper perFieldAnalyzerWrapper = new PerFieldAnalyzerWrapper(new KeywordAnalyzer());
-        perFieldAnalyzerWrapper.addAnalyzer(MessageFields.TITLE, analyzer);
-        perFieldAnalyzerWrapper.addAnalyzer(MessageFields.BODY, analyzer);
-        messageAnalyzer = perFieldAnalyzerWrapper;
+        Map<String, Analyzer> analyzerMap = new HashMap<String, Analyzer>();
+        analyzerMap.put(MessageFields.TITLE, analyzer);
+        analyzerMap.put(MessageFields.BODY, analyzer);
+        messageAnalyzer = new PerFieldAnalyzerWrapper(new KeywordAnalyzer(), analyzerMap);
 
         log.info("Got analyzer: " + analyzer.getClass().getName());
     }

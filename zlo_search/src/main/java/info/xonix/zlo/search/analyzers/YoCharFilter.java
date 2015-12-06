@@ -1,9 +1,9 @@
 package info.xonix.zlo.search.analyzers;
 
 import org.apache.lucene.analysis.CharFilter;
-import org.apache.lucene.analysis.CharStream;
 
 import java.io.IOException;
+import java.io.Reader;
 
 /**
  * User: gubarkov
@@ -11,13 +11,18 @@ import java.io.IOException;
  * Time: 18:28
  */
 public class YoCharFilter extends CharFilter {
-    public YoCharFilter(CharStream in) {
-        super(in);
+    public YoCharFilter(Reader input) {
+        super(input);
+    }
+
+    @Override
+    protected int correct(int currentOff) {
+        return currentOff;
     }
 
     @Override
     public int read(char[] cbuf, int off, int len) throws IOException {
-        final int charsRead = super.read(cbuf, off, len);
+        final int charsRead = input.read(cbuf, off, len);
         if (charsRead > 0) {
             final int end = off + charsRead;
             while (off < end) {

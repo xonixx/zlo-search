@@ -6,7 +6,7 @@ import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.Query;
 
 import java.text.MessageFormat;
@@ -135,7 +135,7 @@ public class FoundTextHighlighter {
                 res[i++] = t.text();
             }
             return res;
-        } catch (org.apache.lucene.queryParser.ParseException e) {
+        } catch (org.apache.lucene.queryparser.classic.ParseException e) {
             log.error(e);
         } catch (UnsupportedOperationException e) {
             // for wildcard query

@@ -8,5 +8,5 @@ import org.apache.lucene.util.Version;
  * Time: 23:38
  */
 public class LuceneVersion {
-    public static final Version VERSION = Version.LUCENE_36;
+    public static final Version VERSION = Version.LUCENE_47;
 }

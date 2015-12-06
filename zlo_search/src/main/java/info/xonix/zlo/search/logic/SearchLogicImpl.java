@@ -11,8 +11,8 @@ import info.xonix.zlo.search.index.IndexManager;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.*;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ import static java.text.MessageFormat.format;
  */
 public class SearchLogicImpl implements SearchLogic, InitializingBean {
     private static final Logger log = Logger.getLogger(SearchLogicImpl.class);
-    public static final Sort REVERSED_INDEX_ORDER_SORT = new Sort(new SortField(null, SortField.DOC, true));
+    public static final Sort REVERSED_INDEX_ORDER_SORT = new Sort(new SortField(null, SortField.Type.DOC, true));
 
 //    test --VVV
 //    public static final Sort REVERSED_INDEX_ORDER_SORT = Sort.INDEXORDER;
@@ -169,7 +169,7 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
     public Sort getDateSort() {
         // sort causes slow first search & lot memory used!
         return config.isSearchPerformSort()
-                ? new Sort(new SortField(MessageFields.DATE, SortField.STRING, true))
+                ? new Sort(new SortField(MessageFields.DATE, SortField.Type.STRING, true))
                 : null;
     }
 

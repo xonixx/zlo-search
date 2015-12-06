@@ -6,10 +6,11 @@ import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.io.StringReader;
 
 /**
@@ -36,7 +37,11 @@ public class Test5 {
 
     private static void showTokens(String s, Analyzer analyzer) {
         Token t;
-        TokenStream ts = analyzer.tokenStream("body", new StringReader(s));
+        try {
+            TokenStream ts = analyzer.tokenStream("body", new StringReader(s));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 /*        try {
             while ((t = ts.next()) != null) {
                 System.out.println(t.termText());

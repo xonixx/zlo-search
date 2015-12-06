@@ -7,10 +7,7 @@ import info.xonix.zlo.search.domain.SortBy;
 import info.xonix.zlo.search.logic.SearchLogicImpl;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.index.LogByteSizeMergePolicy;
+import org.apache.lucene.index.*;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
@@ -97,9 +94,9 @@ public class IndexManager {
 
     public IndexReader getReader() throws IOException {
         if (indexReader == null) {
-            indexReader = IndexReader.open(getWriter(), true);
+            indexReader = DirectoryReader.open(getWriter(), true);
         } else {
-            final IndexReader updatedReader = IndexReader.openIfChanged(indexReader, getWriter(), true);
+            final IndexReader updatedReader = DirectoryReader.openIfChanged((DirectoryReader) indexReader, getWriter(), true);
             if (updatedReader != null) {
                 indexReader = updatedReader;
             }
