@@ -13,7 +13,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.io.StringReader;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -84,11 +84,17 @@ public class RussianAnalyzerTests {
 
         List<String> tokens = getTokens(theAnalyzer, str);
 
-        Assert.assertArrayEquals(expectedResult, tokens.toArray());
+        try {
+            Assert.assertArrayEquals(expectedResult, tokens.toArray());
+        } catch (AssertionError e) {
+            System.err.println("Expected: " + Arrays.asList(expectedResult));
+            System.err.println("Actual  : " + tokens);
+            throw e;
+        }
     }
 
     private List<String> getTokens(Analyzer theAnalyzer, String str) throws IOException {
-        final TokenStream tokenStream = theAnalyzer.tokenStream(MessageFields.BODY, new StringReader(str));
+        final TokenStream tokenStream = theAnalyzer.tokenStream(MessageFields.BODY, str);
 
         tokenStream.reset();
 

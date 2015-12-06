@@ -39,7 +39,10 @@ public final class AppSpringContext implements ApplicationContextAware {
             synchronized (AppSpringContext.class) {
                 if (applicationContext == null) {
                     initializing = true;
-                    applicationContext = new ClassPathXmlApplicationContext("all_beans.xml", AppSpringContext.class);
+                    ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("all_beans.xml", AppSpringContext.class);
+                    applicationContext.getEnvironment().setActiveProfiles("prod");
+                    applicationContext.refresh();
+                    AppSpringContext.applicationContext = applicationContext;
                     initializing = false;
                 }
             }
@@ -56,7 +59,10 @@ public final class AppSpringContext implements ApplicationContextAware {
         if (applicationContextTesting == null) {
             synchronized (AppSpringContext.class) {
                 if (applicationContextTesting == null) {
-                    applicationContextTesting = new ClassPathXmlApplicationContext("beans-testing.xml", AppSpringContext.class);
+                    ClassPathXmlApplicationContext applicationContextTesting = new ClassPathXmlApplicationContext("beans-testing.xml", AppSpringContext.class);
+                    applicationContextTesting.getEnvironment().setActiveProfiles("test");
+                    applicationContextTesting.refresh();
+                    AppSpringContext.applicationContextTesting = applicationContextTesting;
                 }
             }
         }
