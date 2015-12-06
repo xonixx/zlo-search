@@ -35,11 +35,6 @@ public class RefetchParentsDaemon extends DaemonBase implements Daemon {
     }
 
     @Override
-    protected Logger getLogger() {
-        return log;
-    }
-
-    @Override
     public void perform() {
         setStateIfNotExiting(DaemonState.PERFORMING);
 

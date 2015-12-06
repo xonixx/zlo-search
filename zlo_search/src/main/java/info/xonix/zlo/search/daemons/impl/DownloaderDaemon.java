@@ -36,11 +36,6 @@ public class DownloaderDaemon extends BaseSearcherDaemon {
     }
 
     @Override
-    protected Logger getLogger() {
-        return logger;
-    }
-
-    @Override
     protected int getFromIndex() {
         return appLogic.getLastSavedMessageNumber(getForumId());
     }

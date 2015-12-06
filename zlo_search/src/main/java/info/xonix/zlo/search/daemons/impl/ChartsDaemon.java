@@ -23,11 +23,6 @@ public class ChartsDaemon extends DaemonBase implements Daemon {
     }
 
     @Override
-    protected Logger getLogger() {
-        return log;
-    }
-
-    @Override
     public void perform() {
         while (true) {
             if (isExiting()) {

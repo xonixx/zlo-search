@@ -90,22 +90,7 @@ public class DaemonManager {
         log.info("Shutting down " + daemons.size() + " daemons...");
 
         for (DaemonBase daemon : daemons) {
-            final DaemonState daemonState = daemon.getDaemonState();
-
-            daemon.setExiting();
-
-//            System.out.println("ds="+ daemonState);
-//            System.out.println("ts="+ daemon.getProcess().getState());
-
-            final DaemonBase.Process process = daemon.getProcess();
-
-            if (daemonState == DaemonState.SLEEPING
-                    || process.getState() == Thread.State.TIMED_WAITING
-                    || process.getState() == Thread.State.WAITING) {
-                log.info("Terminating sleeping daemon: " + daemon.describe());
-
-                process.interrupt();
-            }
+            daemon.exit();
         }
 
         if (waitAllExit) {

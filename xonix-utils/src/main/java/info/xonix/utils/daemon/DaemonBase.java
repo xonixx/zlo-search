@@ -25,11 +25,13 @@ public abstract class DaemonBase implements Daemon {
         this.id = id;
     }
 
-    // TODO: this is NOT good!
-    protected abstract Logger getLogger();
-
     protected void setExiting() {
         daemonState = DaemonState.EXITING;
+    }
+
+    void exit() {
+        setExiting();
+        interruptIfSleeping();
     }
 
     protected boolean isExiting() {
@@ -72,6 +74,17 @@ public abstract class DaemonBase implements Daemon {
         }
 
         process = null;
+    }
+
+    void interruptIfSleeping() {
+        if (daemonState == DaemonState.SLEEPING
+                || process.getState() == Thread.State.TIMED_WAITING
+                || process.getState() == Thread.State.WAITING) {
+
+            log.info("Interrupt sleeping daemon: " + describe());
+
+            process.interrupt();
+        }
     }
 
     class Process extends Thread {

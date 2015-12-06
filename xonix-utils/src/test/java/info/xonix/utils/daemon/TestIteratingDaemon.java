@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
  * Time: 15:53
  */
 public class TestIteratingDaemon extends ForumIteratingDaemon {
-    private final Logger log = getLogger();
+    private static final Logger log = Logger.getLogger(TestIteratingDaemon.class);
     private int start;
     private int stop;
     private long cleanUpTime;
@@ -27,11 +27,6 @@ public class TestIteratingDaemon extends ForumIteratingDaemon {
         this.stop = stop;
         this.cleanUpTime = cleanUpTime;
         this.workTime = workTime;
-    }
-
-    @Override
-    protected Logger getLogger() {
-        return Logger.getLogger("testDaemon");
     }
 
     @Override

@@ -105,22 +105,22 @@ public class IndexManager {
         return indexReader;
     }
 
-    public synchronized IndexWriter getWriter() throws IOException {
-        if (indexWriter == null) {
-            indexWriter = createWriter();
-        }
+    private final Object indexWriterLock = new Object();
 
-        return indexWriter;
+    public IndexWriter getWriter() throws IOException {
+        synchronized (indexWriterLock) {
+            if (indexWriter == null) {
+                indexWriter = createWriter();
+            }
+            return indexWriter;
+        }
     }
 
     private IndexWriter createWriter() throws IOException {
-        /*
-        only this mergepolicy preserves the order of docIds
-        see:
-        http://mail-archives.apache.org/mod_mbox/lucene-java-user/201204.mbox/%3CCADuAvzefiry%2Bch1H%2BLoVcbepfG59HCFbYYPHxcQ0a%2BZmV5jr1A%40mail.gmail.com%3E
-        http://mail-archives.apache.org/mod_mbox/lucene-java-user/201204.mbox/%3CCAL8PwkaTs8qQzmoCYPzRLHVTwbf%2Bb0Qt32g2vQYG%2B%2BMTAFoZ4Q%40mail.gmail.com%3E
-         */
-
+        // only this mergepolicy preserves the order of docIds
+        // see:
+        // http://mail-archives.apache.org/mod_mbox/lucene-java-user/201204.mbox/%3CCADuAvzefiry%2Bch1H%2BLoVcbepfG59HCFbYYPHxcQ0a%2BZmV5jr1A%40mail.gmail.com%3E
+        // http://mail-archives.apache.org/mod_mbox/lucene-java-user/201204.mbox/%3CCAL8PwkaTs8qQzmoCYPzRLHVTwbf%2Bb0Qt32g2vQYG%2B%2BMTAFoZ4Q%40mail.gmail.com%3E
         final LogByteSizeMergePolicy mergePolicy = new LogByteSizeMergePolicy();
         mergePolicy.setMergeFactor(3); // aggressively merge - improve search speed
 
@@ -145,12 +145,15 @@ public class IndexManager {
     }
 
     public void drop() throws IOException {
-        IndexUtils.createEmptyIndex(indexDir);
-    }
+        synchronized (indexWriterLock) {
+            if (indexWriter != null) {
+                indexWriter.close();
+                indexWriter = null;
+            }
 
-/*    public void close() throws IOException {
-        IndexUtils.close(getReader());
-    }*/
+            IndexUtils.createEmptyIndex(indexDir);
+        }
+    }
 
     public void clearLocks() {
         try {

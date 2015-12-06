@@ -21,11 +21,6 @@ public class RandomlyFailingDaemon extends DaemonBase {
     }
 
     @Override
-    protected Logger getLogger() {
-        return log;
-    }
-
-    @Override
     public void perform() {
         try {
             while (random.nextFloat() >= failingRate) {

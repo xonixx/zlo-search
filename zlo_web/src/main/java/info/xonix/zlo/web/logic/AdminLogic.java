@@ -1,8 +1,11 @@
 package info.xonix.zlo.web.logic;
 
-import info.xonix.zlo.search.daemons.DaemonLauncher;
+import info.xonix.utils.daemon.DaemonBase;
+import info.xonix.utils.daemon.DaemonManager;
+import info.xonix.zlo.search.daemons.impl.IndexerDaemon;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.spring.AppSpringContext;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletContext;
 import javax.servlet.jsp.JspFactory;
@@ -15,7 +18,10 @@ import java.util.Map;
  * Time: 14:54
  */
 public class AdminLogic {
+    private static final Logger log = Logger.getLogger(AdminLogic.class);
+
     private static AppLogic appLogic = AppSpringContext.get(AppLogic.class);
+    private static final DaemonManager daemonManager = AppSpringContext.get(DaemonManager.class);
 
     public static final float MEGABYTE = 1024 * 1024f;
 
@@ -31,10 +37,10 @@ public class AdminLogic {
     }
 
     public static Map<String, String> versionsReport(ServletContext application) {
-        Map<String ,String > versions = new LinkedHashMap<String, String>();
+        Map<String, String> versions = new LinkedHashMap<String, String>();
 
         versions.put("Server Info", application.getServerInfo());
-        versions.put("Servlet Engine Version", "" + application.getMajorVersion() +  application.getMinorVersion());
+        versions.put("Servlet Engine Version", "" + application.getMajorVersion() + application.getMinorVersion());
         versions.put("JSP Version", JspFactory.getDefaultFactory().getEngineInfo().getSpecificationVersion());
         versions.put("Java Version", System.getProperty("java.version"));
         versions.put("Java VM Version", System.getProperty("java.vm.version"));
@@ -42,11 +48,17 @@ public class AdminLogic {
         return versions;
     }
 
-    public static void reindex(String forumId) {
-        DaemonLauncher.shutdownAll();
-
-        appLogic.setLastIndexedNumber(forumId, -1);
-
-        DaemonLauncher.startAllActive();
+    public static void reindex(final String forumId) {
+        for (DaemonBase daemon : daemonManager.listDaemons()) {
+            if (daemon instanceof IndexerDaemon && forumId.equals(daemon.getId())) {
+                ((IndexerDaemon) daemon).updateState(new Runnable() {
+                    @Override
+                    public void run() {
+                        log.info("Reset indexed id for " + forumId);
+                        appLogic.setLastIndexedNumber(forumId, -1);
+                    }
+                });
+            }
+        }
     }
 }

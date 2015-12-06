@@ -9,9 +9,12 @@ import org.apache.log4j.Logger;
  * Time: 19:01
  */
 public abstract class ForumIteratingDaemon extends DaemonBase {
+    private static final Logger log = Logger.getLogger(ForumIteratingDaemon.class);
+
     private int doPerTime;
     private long sleepPeriod;
     private long retryPeriod;
+    private Runnable updateStateRunnable;
 
     protected ForumIteratingDaemon(String forumId, int doPerTime, long sleepPeriod, long retryPeriod) {
         super(forumId);
@@ -37,11 +40,11 @@ public abstract class ForumIteratingDaemon extends DaemonBase {
             try {
                 doOneIteration();
             } catch (InterruptedException e) {
-                getLogger().info(getForumId() + " - Process interrupted.");
+                log.info(getForumId() + " - Process interrupted.");
             }
 
             if (isExiting()) {
-                getLogger().info(getForumId() + " - Performing cleanup...");
+                log.info(getForumId() + " - Performing cleanup...");
                 cleanUp();
 
                 break;
@@ -53,8 +56,17 @@ public abstract class ForumIteratingDaemon extends DaemonBase {
     private int end = -1;
 
     private void doOneIteration() throws InterruptedException {
-        final Logger logger = getLogger();
         try {
+            if (updateStateRunnable != null) {
+                try {
+                    indexFrom = -1;
+                    end = -1;
+                    updateStateRunnable.run();
+                } finally {
+                    updateStateRunnable = null;
+                }
+            }
+
             if (indexFrom == -1) {
                 indexFrom = getFromIndex() + 1;
             }
@@ -81,7 +93,7 @@ public abstract class ForumIteratingDaemon extends DaemonBase {
             stopIfExiting();
 
             while (indexFrom > end) {
-                logger.info(getForumId() + " - Sleeping " + TimeUtils.toMinutesSeconds(sleepPeriod) + "...");
+                log.info(getForumId() + " - Sleeping " + TimeUtils.toMinutesSeconds(sleepPeriod) + "...");
                 doSleep(sleepPeriod);
                 end = getEndIndex();
             }
@@ -91,12 +103,12 @@ public abstract class ForumIteratingDaemon extends DaemonBase {
             saveLastException(e);
 
             if (!processException(e)) {
-                logger.error("(" + getForumId() + ") Unknown exception", e);
+                log.error("(" + getForumId() + ") Unknown exception", e);
             }
 
             stopIfExiting();
 
-            logger.info(getForumId() + " - Retry in " + TimeUtils.toMinutesSeconds(retryPeriod));
+            log.info(getForumId() + " - Retry in " + TimeUtils.toMinutesSeconds(retryPeriod));
             doSleep(retryPeriod);
         }
     }
@@ -105,5 +117,14 @@ public abstract class ForumIteratingDaemon extends DaemonBase {
         setStateIfNotExiting(DaemonState.PERFORMING);
 
         perform(from, to);
+    }
+
+
+    /**
+     * This runnable will be called 1 time at the start of next daemon iteration.
+     */
+    public void updateState(Runnable runnable) {
+        updateStateRunnable = runnable;
+        interruptIfSleeping();
     }
 }

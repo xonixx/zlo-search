@@ -20,11 +20,9 @@ public class IndexUtils {
     private final static Logger log = Logger.getLogger(IndexUtils.class);
 
     public static void createEmptyIndex(File path) throws IOException {
-        // TODO: test
         final IndexWriter indexWriter = new IndexWriter(dir(path),
                 new IndexWriterConfig(LuceneVersion.VERSION, null)
                         .setOpenMode(IndexWriterConfig.OpenMode.CREATE));
-//                null, true, IndexWriter.MaxFieldLength.UNLIMITED);
         indexWriter.close();
     }
 
