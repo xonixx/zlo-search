@@ -39,7 +39,7 @@ public final class AppSpringContext implements ApplicationContextAware {
             synchronized (AppSpringContext.class) {
                 if (applicationContext == null) {
                     initializing = true;
-                    ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("all_beans.xml", AppSpringContext.class);
+                    ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("beans-all.xml", AppSpringContext.class);
                     applicationContext.getEnvironment().setActiveProfiles("prod");
                     applicationContext.refresh();
                     AppSpringContext.applicationContext = applicationContext;
