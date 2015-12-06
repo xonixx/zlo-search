@@ -6,12 +6,13 @@ import info.xonix.zlo.search.logic.MessageFields;
 import info.xonix.zlo.search.logic.SearchLogic;
 import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.model.NickHost;
-import org.apache.commons.io.IOUtils;
+import info.xonix.zlo.search.utils.IOUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 /**
  * User: xonix
@@ -29,23 +30,7 @@ public class AnalysisLogicImpl implements AnalysisLogic {
     private static final List<String> politicsList = preparePoliticsList();
 
     private static List<String> preparePoliticsList() {
-        try {
-            String fileContent = IOUtils.toString(AnalysisLogicImpl.class.getResourceAsStream("/politics.txt"), "UTF-8");
-            List<String> strings = Arrays.asList(fileContent.split("\n"));
-            List<String> resStrings = new ArrayList<String>();
-
-            // rm blank & comments
-            for (String string : strings) {
-                string = string.trim();
-
-                if (StringUtils.isNotBlank(string) && !string.startsWith("#"))
-                    resStrings.add(string);
-            }
-
-            return resStrings;
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+        return IOUtil.loadStrings(AnalysisLogicImpl.class.getResourceAsStream("/politics.txt"));
     }
 
     /**

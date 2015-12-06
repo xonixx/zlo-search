@@ -1,8 +1,10 @@
 package info.xonix.zlo.search.test.junit;
 
+import info.xonix.zlo.search.analyzers.RussianAnalyzerImproved;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.logic.MessageFields;
 import info.xonix.zlo.search.spring.AppSpringContext;
+import info.xonix.zlo.search.utils.IOUtil;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.ru.RussianAnalyzer;
@@ -54,6 +56,12 @@ public class RussianAnalyzerTests {
     public void testElka() throws IOException {
         checkCorrectAnalyzing(analyzer, "елка ёлка Ёлки ЁлКоЙ",
                 new String[]{"елк", "елк", "елк", "елк"});
+    }
+
+    @Test
+    public void testNostem() throws IOException {
+        checkCorrectAnalyzing(analyzer, ".Net c++ C#",
+                new String[]{"net", "c", "c"});
     }
 
     @Test
@@ -109,5 +117,11 @@ public class RussianAnalyzerTests {
         }
         tokenStream.close();
         return tokens;
+    }
+
+    @Test
+    public void printDefaultStopWords() {
+        System.out.println(RussianAnalyzerImproved.getDefaultStopSet());
+        System.out.println(IOUtil.loadStrings(RussianAnalyzerImproved.class.getResourceAsStream("zlo-russian-stop.txt")));
     }
 }
