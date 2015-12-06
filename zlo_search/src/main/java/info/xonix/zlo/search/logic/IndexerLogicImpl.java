@@ -8,9 +8,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.document.DateTools;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.Field.Index;
 import org.apache.lucene.document.Field.Store;
+import org.apache.lucene.document.StringField;
+import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,21 +84,21 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
 
         Document doc = new Document();
 
-        doc.add(new Field(MessageFields.URL_NUM, URL_NUM_FORMAT.format(msg.getNum()), Store.YES, Index.NOT_ANALYZED));
-        doc.add(new Field(MessageFields.TOPIC_CODE, Integer.toString(msg.getTopicCode()), Store.NO, Index.NOT_ANALYZED));
-        doc.add(new Field(MessageFields.TITLE, msg.getCleanTitle(), Store.NO, Index.ANALYZED)); // "чистый" - индексируем, не храним
-        doc.add(new Field(MessageFields.NICK, msg.getNick().toLowerCase(), Store.NO, Index.NOT_ANALYZED));
-        doc.add(new Field(MessageFields.REG, msg.isReg() ? TRUE : FALSE, Store.NO, Index.NOT_ANALYZED));
+        doc.add(new StringField(MessageFields.URL_NUM, URL_NUM_FORMAT.format(msg.getNum()), Store.YES));
+        doc.add(new StringField(MessageFields.TOPIC_CODE, Integer.toString(msg.getTopicCode()), Store.NO));
+        doc.add(new TextField(MessageFields.TITLE, msg.getCleanTitle(), Store.NO)); // "чистый" - индексируем, не храним
+        doc.add(new StringField(MessageFields.NICK, msg.getNick(), Store.NO));
+        doc.add(new StringField(MessageFields.REG, msg.isReg() ? TRUE : FALSE, Store.NO));
 
-        doc.add(new Field(MessageFields.HOST, hostLowerCase, Store.NO, Index.NOT_ANALYZED));
-        doc.add(new Field(MessageFields.HOST_REVERSED, StringUtils.reverse(hostLowerCase), Store.NO, Index.NOT_ANALYZED));
+        doc.add(new StringField(MessageFields.HOST, hostLowerCase, Store.NO));
+        doc.add(new StringField(MessageFields.HOST_REVERSED, StringUtils.reverse(hostLowerCase), Store.NO));
 
-        doc.add(new Field(MessageFields.DATE, DateTools.dateToString(msg.getDate(), DateTools.Resolution.MINUTE), Store.NO, Index.NOT_ANALYZED));
-        doc.add(new Field(MessageFields.BODY, msg.getCleanBody(), Store.NO, Index.ANALYZED)); // "чистый" - индексируем, не храним
-        doc.add(new Field(MessageFields.HAS_URL, MessageLogic.hasUrl(msg) ? TRUE : FALSE, Store.NO, Index.NOT_ANALYZED));
-        doc.add(new Field(MessageFields.HAS_IMG, MessageLogic.hasImg(msg, forumId) ? TRUE : FALSE, Store.NO, Index.NOT_ANALYZED));
+        doc.add(new StringField(MessageFields.DATE, DateTools.dateToString(msg.getDate(), DateTools.Resolution.MINUTE), Store.NO));
+        doc.add(new TextField(MessageFields.BODY, msg.getCleanBody(), Store.NO)); // "чистый" - индексируем, не храним
+        doc.add(new StringField(MessageFields.HAS_URL, MessageLogic.hasUrl(msg) ? TRUE : FALSE, Store.NO));
+        doc.add(new StringField(MessageFields.HAS_IMG, MessageLogic.hasImg(msg, forumId) ? TRUE : FALSE, Store.NO));
 
-        doc.add(new Field(MessageFields.IS_ROOT, msg.getParentNum() <= 0 ? TRUE : FALSE, Store.NO, Index.NOT_ANALYZED));
+        doc.add(new StringField(MessageFields.IS_ROOT, msg.getParentNum() <= 0 ? TRUE : FALSE, Store.NO));
 
         return doc;
     }

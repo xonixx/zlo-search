@@ -79,7 +79,6 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
         if (separator != null)
             separator = "".equals(separator) ? "," : separator.toLowerCase();
 
-        nick = StringUtils.lowerCase(nick);
         host = StringUtils.lowerCase(host);
 
         if (StringUtils.isNotEmpty(text)) {
