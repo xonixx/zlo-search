@@ -1,7 +1,6 @@
 package info.xonix.zlo.search.analyzers;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.ru.RussianAnalyzer;
 import org.apache.lucene.util.Version;
 
 /**
@@ -12,7 +11,7 @@ import org.apache.lucene.util.Version;
 public class RussianAnalyzerProvider implements AnalyzerProvider {
     @Override
     public Analyzer getAnalyzer() {
-//        return new RussianAnalyzerImproved();
-        return new RussianAnalyzer(Version.LUCENE_30);
+        return new RussianAnalyzerImproved(Version.LUCENE_30);
+//        return new RussianAnalyzer(Version.LUCENE_30);
     }
 }

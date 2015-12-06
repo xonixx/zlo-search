@@ -1,26 +1,36 @@
 package info.xonix.zlo.search.analyzers;
 
-import info.xonix.zlo.search.analyzers.YoCharFilter;
-//import org.apache.lucene.analysis.CharReader;
-//import org.apache.lucene.analysis.ReusableAnalyzerBase;
-import org.apache.lucene.analysis.ru.RussianAnalyzer;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.Tokenizer;
+import org.apache.lucene.analysis.core.LowerCaseFilter;
+import org.apache.lucene.analysis.core.StopFilter;
+import org.apache.lucene.analysis.miscellaneous.SetKeywordMarkerFilter;
+import org.apache.lucene.analysis.ru.RussianLetterTokenizer;
+import org.apache.lucene.analysis.snowball.SnowballFilter;
+import org.apache.lucene.analysis.standard.StandardFilter;
+import org.apache.lucene.analysis.standard.StandardTokenizer;
+import org.apache.lucene.analysis.util.CharArraySet;
+import org.apache.lucene.analysis.util.StopwordAnalyzerBase;
+import org.apache.lucene.analysis.util.WordlistLoader;
+import org.apache.lucene.util.IOUtils;
 import org.apache.lucene.util.Version;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.util.Arrays;
-import java.util.HashSet;
 
 /**
  * User: Vovan
  * Date: 24.04.11
  * Time: 16:19
  */
-public class RussianAnalyzerImproved /*extends ReusableAnalyzerBase*/ {
-/*//    see:
-//    http://mail-archives.apache.org/mod_mbox/lucene-java-user/201204.mbox/%3CCACP%2BLpfiGRGHMBVvXKzciXn4GRgBUS%2BeqHCY_PryMcBj9bD42Q%40mail.gmail.com%3E
-//    private static final Version RUSSIAN_ANALYZER_VERSION = LuceneVersion.VERSION;
-    private static final Version RUSSIAN_ANALYZER_VERSION = Version.LUCENE_30;
-
+public class RussianAnalyzerImproved extends StopwordAnalyzerBase {
+    /**
+     * List of typical Russian stopwords. (for backwards compatibility)
+     *
+     * @deprecated (3.1) Remove this for LUCENE 5.0
+     */
+    @Deprecated
     private static final String[] RUSSIAN_STOP_WORDS_30 = {
             "а", "без", "более", "бы", "был", "была", "были", "было", "быть", "в",
             "вам", "вас", "весь", "во", "вот", "все", "всего", "всех", "вы", "где",
@@ -34,16 +44,108 @@ public class RussianAnalyzerImproved /*extends ReusableAnalyzerBase*/ {
             "чем", "что", "чтобы", "чье", "чья", "эта", "эти", "это", "я"
     };
 
-    private RussianAnalyzer russianAnalyzer = new RussianAnalyzer(RUSSIAN_ANALYZER_VERSION,
-            new HashSet<Object>(Arrays.asList(RUSSIAN_STOP_WORDS_30)));
+    /**
+     * File containing default Russian stopwords.
+     */
+    public final static String DEFAULT_STOPWORD_FILE = "russian_stop.txt";
 
+    private static class DefaultSetHolder {
+        /**
+         * @deprecated (3.1) remove this for Lucene 5.0
+         */
+        @Deprecated
+        static final CharArraySet DEFAULT_STOP_SET_30 = CharArraySet
+                .unmodifiableSet(new CharArraySet(Version.LUCENE_CURRENT,
+                        Arrays.asList(RUSSIAN_STOP_WORDS_30), false));
+        static final CharArraySet DEFAULT_STOP_SET;
+
+        static {
+            try {
+                DEFAULT_STOP_SET = WordlistLoader.getSnowballWordSet(IOUtils.getDecodingReader(SnowballFilter.class,
+                        DEFAULT_STOPWORD_FILE, IOUtils.CHARSET_UTF_8), Version.LUCENE_CURRENT);
+            } catch (IOException ex) {
+                // default set should always be present as it is part of the
+                // distribution (JAR)
+                throw new RuntimeException("Unable to load default stopword set", ex);
+            }
+        }
+    }
+
+    private final CharArraySet stemExclusionSet;
+
+    /**
+     * Returns an unmodifiable instance of the default stop-words set.
+     *
+     * @return an unmodifiable instance of the default stop-words set.
+     */
+    public static CharArraySet getDefaultStopSet() {
+        return DefaultSetHolder.DEFAULT_STOP_SET;
+    }
+
+    public RussianAnalyzerImproved(Version matchVersion) {
+        this(matchVersion,
+                matchVersion.onOrAfter(Version.LUCENE_31) ? DefaultSetHolder.DEFAULT_STOP_SET
+                        : DefaultSetHolder.DEFAULT_STOP_SET_30);
+    }
+
+    /**
+     * Builds an analyzer with the given stop words
+     *
+     * @param matchVersion lucene compatibility version
+     * @param stopwords    a stopword set
+     */
+    public RussianAnalyzerImproved(Version matchVersion, CharArraySet stopwords) {
+        this(matchVersion, stopwords, CharArraySet.EMPTY_SET);
+    }
+
+    /**
+     * Builds an analyzer with the given stop words
+     *
+     * @param matchVersion     lucene compatibility version
+     * @param stopwords        a stopword set
+     * @param stemExclusionSet a set of words not to be stemmed
+     */
+    public RussianAnalyzerImproved(Version matchVersion, CharArraySet stopwords, CharArraySet stemExclusionSet) {
+        super(matchVersion, stopwords);
+        this.stemExclusionSet = CharArraySet.unmodifiableSet(CharArraySet.copy(matchVersion, stemExclusionSet));
+    }
+
+    /**
+     * Creates
+     * {@link org.apache.lucene.analysis.Analyzer.TokenStreamComponents}
+     * used to tokenize all the text in the provided {@link Reader}.
+     *
+     * @return {@link org.apache.lucene.analysis.Analyzer.TokenStreamComponents}
+     * built from a {@link StandardTokenizer} filtered with
+     * {@link StandardFilter}, {@link LowerCaseFilter}, {@link StopFilter}
+     * , {@link SetKeywordMarkerFilter} if a stem exclusion set is
+     * provided, and {@link SnowballFilter}
+     */
     @Override
-    protected Reader initReader(Reader reader) {
-        return new YoCharFilter(CharReader.get(reader));
+    protected TokenStreamComponents createComponents(String fieldName,
+                                                     Reader reader) {
+        if (matchVersion.onOrAfter(Version.LUCENE_31)) {
+            final Tokenizer source = new StandardTokenizer(matchVersion, reader);
+            TokenStream result = new StandardFilter(matchVersion, source);
+            result = new LowerCaseFilter(matchVersion, result);
+            result = new StopFilter(matchVersion, result, stopwords);
+            if (!stemExclusionSet.isEmpty()) result = new SetKeywordMarkerFilter(
+                    result, stemExclusionSet);
+            result = new SnowballFilter(result, new org.tartarus.snowball.ext.RussianStemmer());
+            return new TokenStreamComponents(source, result);
+        } else {
+            final Tokenizer source = new RussianLetterTokenizer(matchVersion, reader);
+            TokenStream result = new LowerCaseFilter(matchVersion, source);
+            result = new StopFilter(matchVersion, result, stopwords);
+            if (!stemExclusionSet.isEmpty()) result = new SetKeywordMarkerFilter(
+                    result, stemExclusionSet);
+            result = new SnowballFilter(result, new org.tartarus.snowball.ext.RussianStemmer());
+            return new TokenStreamComponents(source, result);
+        }
     }
 
     @Override
-    protected TokenStreamComponents createComponents(String fieldName, Reader reader) {
-        return russianAnalyzer.createComponents(fieldName, reader);
-    }*/
+    protected Reader initReader(String fieldName, Reader reader) {
+        return super.initReader(fieldName, new YoCharFilter(reader));
+    }
 }

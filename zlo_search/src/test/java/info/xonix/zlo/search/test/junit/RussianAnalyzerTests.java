@@ -107,6 +107,7 @@ public class RussianAnalyzerTests {
             tokens.add(term);
 //            System.out.println(">>" + term);
         }
+        tokenStream.close();
         return tokens;
     }
 }
