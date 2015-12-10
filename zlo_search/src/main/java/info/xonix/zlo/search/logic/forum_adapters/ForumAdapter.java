@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.logic.forum_adapters;
 
-import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.domain.Message;
 
 import java.util.List;
 

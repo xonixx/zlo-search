@@ -2,10 +2,10 @@ package info.xonix.zlo.search.dao;
 
 
 import info.xonix.utils.Check;
-import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.model.MessageShallow;
-import info.xonix.zlo.search.model.MessageStatus;
-import info.xonix.zlo.search.model.Topic;
+import info.xonix.zlo.search.domain.Message;
+import info.xonix.zlo.search.domain.MessageShallow;
+import info.xonix.zlo.search.domain.MessageStatus;
+import info.xonix.zlo.search.domain.Topic;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

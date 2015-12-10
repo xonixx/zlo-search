@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.dao;
 
-import info.xonix.zlo.search.model.NickHost;
+import info.xonix.zlo.search.domain.NickHost;
 
 import java.util.List;
 

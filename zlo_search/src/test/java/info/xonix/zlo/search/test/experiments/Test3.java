@@ -4,7 +4,7 @@ package info.xonix.zlo.search.test.experiments;
 import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfUtils;
 import info.xonix.zlo.search.logic.site.PageParseException;
 import info.xonix.zlo.search.logic.site.PageParser;
-import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.domain.Message;
 
 /**
  * Author: Vovan

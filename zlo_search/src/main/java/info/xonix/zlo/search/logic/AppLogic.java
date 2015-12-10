@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.logic;
 
-import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.domain.Message;
 
 import javax.annotation.Nullable;
 import java.util.Date;

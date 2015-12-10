@@ -6,9 +6,9 @@ import info.xonix.utils.daemon.DaemonBase;
 import info.xonix.utils.daemon.DaemonState;
 import info.xonix.zlo.search.ParentIdsConstants;
 import info.xonix.zlo.search.dao.MessagesDao;
+import info.xonix.zlo.search.domain.Message;
 import info.xonix.zlo.search.logic.ForumLogic;
 import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
-import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 

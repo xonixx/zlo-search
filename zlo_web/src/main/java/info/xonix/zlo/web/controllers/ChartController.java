@@ -1,7 +1,7 @@
 package info.xonix.zlo.web.controllers;
 
 import info.xonix.zlo.search.charts.ChartService;
-import info.xonix.zlo.search.model.ChartTask;
+import info.xonix.zlo.search.domain.ChartTask;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

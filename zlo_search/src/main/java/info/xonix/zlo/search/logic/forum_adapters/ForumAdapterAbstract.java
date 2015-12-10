@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.logic.forum_adapters;
 
 import info.xonix.zlo.search.config.forums.GetForum;
-import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.domain.Message;
 import org.apache.log4j.Logger;
 
 import java.net.URI;

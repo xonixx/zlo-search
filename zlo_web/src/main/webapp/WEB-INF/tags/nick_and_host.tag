@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/jsp/import_taglibs.jsp" %>
 
-<%@ attribute name="msg" required="true" type="info.xonix.zlo.search.model.Message" %>
+<%@ attribute name="msg" required="true" type="info.xonix.zlo.search.domain.Message" %>
 
 <tiles:insertDefinition name="nick">
     <tiles:putAttribute name="reg" value="${msg.reg}"/>

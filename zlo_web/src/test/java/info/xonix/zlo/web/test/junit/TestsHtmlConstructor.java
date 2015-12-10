@@ -1,6 +1,6 @@
 package info.xonix.zlo.web.test.junit;
 
-import info.xonix.zlo.search.domain.SortBy;
+import info.xonix.zlo.search.SortBy;
 import info.xonix.zlo.web.servlets.SearchServlet;
 import info.xonix.zlo.web.utils.html.HtmlConstructor;
 import info.xonix.zlo.web.utils.html.HtmlSelectBuilder;

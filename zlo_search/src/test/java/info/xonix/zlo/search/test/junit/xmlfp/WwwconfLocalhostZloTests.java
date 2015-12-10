@@ -5,7 +5,7 @@ import info.xonix.forumsearch.xmlfp.XmlFpForum;
 import info.xonix.zlo.search.dao.XmlFpDao;
 import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
 import info.xonix.zlo.search.logic.forum_adapters.impl.XmlFpForumAdapter;
-import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.domain.Message;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.xmlfp.ForumAccessor;
 import org.junit.Before;

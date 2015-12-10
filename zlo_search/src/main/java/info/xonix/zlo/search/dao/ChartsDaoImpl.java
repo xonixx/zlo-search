@@ -1,8 +1,8 @@
 package info.xonix.zlo.search.dao;
 
 import info.xonix.zlo.search.charts.ChartType;
-import info.xonix.zlo.search.model.ChartTask;
-import info.xonix.zlo.search.model.ChartTaskStatus;
+import info.xonix.zlo.search.domain.ChartTask;
+import info.xonix.zlo.search.domain.ChartTaskStatus;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;

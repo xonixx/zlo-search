@@ -1,7 +1,7 @@
 package info.xonix.zlo.web.decorators;
 
 import info.xonix.zlo.search.config.DateFormats;
-import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.domain.Message;
 import org.displaytag.decorator.TableDecorator;
 
 /**

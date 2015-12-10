@@ -2,7 +2,7 @@ package info.xonix.zlo.search.test.junit;
 
 import info.xonix.zlo.search.logic.analysis.AnalysisLogic;
 import info.xonix.zlo.search.logic.analysis.BotStatus;
-import info.xonix.zlo.search.model.NickHost;
+import info.xonix.zlo.search.domain.NickHost;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.junit.Test;
 

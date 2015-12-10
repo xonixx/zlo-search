@@ -4,7 +4,7 @@ import info.xonix.utils.UrlUtil;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.config.forums.ForumDescriptor;
 import info.xonix.zlo.search.config.forums.GetForum;
-import info.xonix.zlo.search.domain.SortBy;
+import info.xonix.zlo.search.SortBy;
 import info.xonix.zlo.search.logic.ControlsDataLogic;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.web.servlets.SearchServlet;

@@ -2,11 +2,11 @@ package info.xonix.zlo.search.daemons.impl;
 
 import info.xonix.zlo.search.config.forums.ForumParams;
 import info.xonix.zlo.search.config.forums.GetForum;
+import info.xonix.zlo.search.domain.Message;
 import info.xonix.zlo.search.logic.AppLogic;
 import info.xonix.zlo.search.logic.ForumLogic;
 import info.xonix.zlo.search.logic.exceptions.ExceptionCategory;
 import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
-import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 

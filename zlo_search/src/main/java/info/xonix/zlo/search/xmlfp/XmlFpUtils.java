@@ -7,11 +7,11 @@ import info.xonix.forumsearch.xmlfp.jaxb_generated.ObjectFactory;
 import info.xonix.forumsearch.xmlfp.utils.MarshalUtils;
 import info.xonix.forumsearch.xmlfp.utils.XmlFpMarshalException;
 import info.xonix.zlo.search.config.forums.GetForum;
+import info.xonix.zlo.search.domain.Message;
 import info.xonix.zlo.search.logic.forum_adapters.ForumAdapter;
 import info.xonix.zlo.search.logic.forum_adapters.impl.XmlFpForumAdapter;
 import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfForumAdapter;
 import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfUtils;
-import info.xonix.zlo.search.model.Message;
 
 import javax.xml.bind.JAXBElement;
 import java.util.List;

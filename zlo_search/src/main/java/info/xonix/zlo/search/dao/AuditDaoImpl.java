@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.dao;
 
 import info.xonix.utils.ConfigUtils;
-import info.xonix.zlo.search.model.SearchLog;
+import info.xonix.zlo.search.domain.SearchLog;
 
 import java.sql.Timestamp;
 import java.util.Date;

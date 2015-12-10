@@ -1,8 +1,8 @@
 package info.xonix.zlo.search.logic;
 
 
+import info.xonix.zlo.search.domain.Message;
 import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
-import info.xonix.zlo.search.model.Message;
 
 import java.util.List;
 

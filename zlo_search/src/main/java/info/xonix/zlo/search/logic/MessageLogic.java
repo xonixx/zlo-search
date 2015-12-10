@@ -1,8 +1,8 @@
 package info.xonix.zlo.search.logic;
 
 import info.xonix.zlo.search.config.forums.GetForum;
+import info.xonix.zlo.search.domain.Message;
 import info.xonix.zlo.search.logic.forum_adapters.ForumAdapter;
-import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.utils.HtmlUtils;
 
 /**

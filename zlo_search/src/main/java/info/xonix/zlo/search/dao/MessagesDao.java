@@ -1,8 +1,8 @@
 package info.xonix.zlo.search.dao;
 
-import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.model.MessageShallow;
-import info.xonix.zlo.search.model.Topic;
+import info.xonix.zlo.search.domain.Message;
+import info.xonix.zlo.search.domain.MessageShallow;
+import info.xonix.zlo.search.domain.Topic;
 
 import javax.annotation.Nullable;
 import java.util.Date;

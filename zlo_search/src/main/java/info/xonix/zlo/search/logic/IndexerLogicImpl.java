@@ -2,8 +2,8 @@ package info.xonix.zlo.search.logic;
 
 import info.xonix.utils.Check;
 import info.xonix.zlo.search.config.Config;
+import info.xonix.zlo.search.domain.Message;
 import info.xonix.zlo.search.index.IndexManager;
-import info.xonix.zlo.search.model.Message;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.document.DateTools;

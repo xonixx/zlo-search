@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.logic.analysis;
 
-import info.xonix.zlo.search.model.NickHost;
+import info.xonix.zlo.search.domain.NickHost;
 
 import java.util.Date;
 import java.util.List;

@@ -1,5 +1,5 @@
 <%@ page import="info.xonix.zlo.search.logic.MessageLogic" %>
-<%@ page import="info.xonix.zlo.search.model.Message" %>
+<%@ page import="info.xonix.zlo.search.domain.Message" %>
 <%@ page import="java.util.Date" %>
 <%--
   User: gubarkov

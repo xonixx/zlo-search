@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.dao;
 
-import info.xonix.zlo.search.model.ChartTask;
+import info.xonix.zlo.search.domain.ChartTask;
 
 import java.util.List;
 

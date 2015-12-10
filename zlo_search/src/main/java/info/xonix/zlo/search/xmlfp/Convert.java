@@ -8,9 +8,9 @@ import info.xonix.forumsearch.xmlfp.XmlFpUrlsSubstitutions;
 import info.xonix.forumsearch.xmlfp.jaxb_generated.*;
 import info.xonix.zlo.search.ParentIdsConstants;
 import info.xonix.zlo.search.config.forums.GetForum;
+import info.xonix.zlo.search.domain.Message;
+import info.xonix.zlo.search.domain.MessageStatus;
 import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams;
-import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.model.MessageStatus;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Date;

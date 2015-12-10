@@ -1,6 +1,6 @@
 package info.xonix.zlo.search.dao;
 
-import info.xonix.zlo.search.model.SearchLog;
+import info.xonix.zlo.search.domain.SearchLog;
 
 /**
  * User: Vovan

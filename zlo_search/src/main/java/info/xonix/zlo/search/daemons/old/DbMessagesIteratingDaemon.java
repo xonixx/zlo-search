@@ -2,8 +2,8 @@ package info.xonix.zlo.search.daemons.old;
 
 import info.xonix.utils.daemon.ForumIteratingDaemon;
 import info.xonix.zlo.search.dao.DbDict;
+import info.xonix.zlo.search.domain.Message;
 import info.xonix.zlo.search.logic.AppLogic;
-import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 

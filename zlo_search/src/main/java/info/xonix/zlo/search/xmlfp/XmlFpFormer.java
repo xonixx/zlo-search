@@ -1,8 +1,8 @@
 package info.xonix.zlo.search.xmlfp;
 
+import info.xonix.zlo.search.domain.Message;
+import info.xonix.zlo.search.domain.MessageStatus;
 import info.xonix.zlo.search.logic.AppLogic;
-import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.model.MessageStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 

@@ -5,7 +5,7 @@ import info.xonix.forumsearch.xmlfp.XmlFpFormatterOptions;
 import info.xonix.forumsearch.xmlfp.jaxb_generated.Forum;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.logic.AppLogic;
-import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.domain.Message;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import info.xonix.zlo.search.xmlfp.XmlFpUtils;
 import org.apache.commons.io.FileUtils;

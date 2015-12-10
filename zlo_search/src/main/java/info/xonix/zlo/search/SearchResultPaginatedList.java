@@ -1,10 +1,10 @@
 package info.xonix.zlo.search;
 
 import info.xonix.zlo.search.dao.MessagesDao;
-import info.xonix.zlo.search.domain.SearchResult;
+import info.xonix.zlo.search.domain.Message;
+import info.xonix.zlo.search.dto.SearchResult;
 import info.xonix.zlo.search.index.Hits;
 import info.xonix.zlo.search.logic.MessageFields;
-import info.xonix.zlo.search.model.Message;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;

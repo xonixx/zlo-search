@@ -2,10 +2,10 @@ package info.xonix.zlo.search.logic.analysis;
 
 import info.xonix.zlo.search.dao.AppDao;
 import info.xonix.zlo.search.dao.MessagesDao;
+import info.xonix.zlo.search.domain.Message;
+import info.xonix.zlo.search.domain.NickHost;
 import info.xonix.zlo.search.logic.MessageFields;
 import info.xonix.zlo.search.logic.SearchLogic;
-import info.xonix.zlo.search.model.Message;
-import info.xonix.zlo.search.model.NickHost;
 import info.xonix.zlo.search.utils.IOUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

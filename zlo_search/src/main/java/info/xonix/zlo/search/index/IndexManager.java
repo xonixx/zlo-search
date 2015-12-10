@@ -2,15 +2,13 @@ package info.xonix.zlo.search.index;
 
 import info.xonix.utils.factory.StringFactory;
 import info.xonix.zlo.search.LuceneVersion;
+import info.xonix.zlo.search.SortBy;
 import info.xonix.zlo.search.config.Config;
-import info.xonix.zlo.search.domain.SortBy;
-import info.xonix.zlo.search.logic.SearchLogicImpl;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.*;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.TopFieldDocs;
 import org.apache.lucene.store.Directory;
 

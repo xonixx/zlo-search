@@ -47,7 +47,7 @@ public class BoardSearchService {
         return forumId;
     }
 
-    private Message fromMessageModel(String forumId, info.xonix.zlo.search.model.Message messageModel) {
+    private Message fromMessageModel(String forumId, info.xonix.zlo.search.domain.Message messageModel) {
         return new Message(
                 messageModel.getNum(),
                 messageModel.getNick(),
@@ -61,7 +61,7 @@ public class BoardSearchService {
                 MessageLogic.hasImg(messageModel,forumId));
     }
 
-    private MessageShallow fromMessageModelShallow(info.xonix.zlo.search.model.MessageShallow message) {
+    private MessageShallow fromMessageModelShallow(info.xonix.zlo.search.domain.MessageShallow message) {
         return new MessageShallow(
                 message.getNum(),
                 message.getNick(),
@@ -108,11 +108,11 @@ public class BoardSearchService {
 
         final int[] resultIds = search(forumId, searchString, skip, limit);
 
-        final List<info.xonix.zlo.search.model.Message> messages = messagesDao.getMessages(forumId, resultIds);
+        final List<info.xonix.zlo.search.domain.Message> messages = messagesDao.getMessages(forumId, resultIds);
 
         List<Message> resultMessages = new ArrayList<Message>(messages.size());
 
-        for (info.xonix.zlo.search.model.Message message : messages) {
+        for (info.xonix.zlo.search.domain.Message message : messages) {
             resultMessages.add(fromMessageModel(forumId, message));
         }
 
@@ -131,11 +131,11 @@ public class BoardSearchService {
 
         final int[] resultIds = search(forumId, searchString, skip, limit);
 
-        final List<info.xonix.zlo.search.model.MessageShallow> messages = messagesDao.getShallowMessages(forumId, resultIds);
+        final List<info.xonix.zlo.search.domain.MessageShallow> messages = messagesDao.getShallowMessages(forumId, resultIds);
 
         List<MessageShallow> resultMessages = new ArrayList<MessageShallow>(messages.size());
 
-        for (info.xonix.zlo.search.model.MessageShallow message : messages) {
+        for (info.xonix.zlo.search.domain.MessageShallow message : messages) {
             resultMessages.add(fromMessageModelShallow(message));
         }
 

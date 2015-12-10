@@ -4,7 +4,7 @@ import info.xonix.utils.daemon.Daemon;
 import info.xonix.utils.daemon.DaemonBase;
 import info.xonix.utils.daemon.DaemonState;
 import info.xonix.zlo.search.charts.ChartService;
-import info.xonix.zlo.search.model.ChartTask;
+import info.xonix.zlo.search.domain.ChartTask;
 import info.xonix.zlo.search.spring.AppSpringContext;
 import org.apache.log4j.Logger;
 

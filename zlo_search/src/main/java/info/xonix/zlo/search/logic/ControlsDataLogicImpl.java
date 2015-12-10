@@ -2,7 +2,7 @@ package info.xonix.zlo.search.logic;
 
 import info.xonix.utils.factory.StringFactory;
 import info.xonix.zlo.search.dao.MessagesDao;
-import info.xonix.zlo.search.model.Topic;
+import info.xonix.zlo.search.domain.Topic;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;

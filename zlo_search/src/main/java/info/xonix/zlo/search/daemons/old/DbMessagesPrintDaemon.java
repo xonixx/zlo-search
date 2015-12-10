@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.daemons.old;
 
 
-import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.domain.Message;
 import org.apache.log4j.Logger;
 
 import java.util.List;

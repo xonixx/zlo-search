@@ -7,7 +7,7 @@
 <%@ include file="import.jsp" %>
 <%@ include file="/WEB-INF/jsp/setSite.jsp" %>
 
-<jsp:useBean id="msg" scope="request" class="info.xonix.zlo.search.model.Message"/>
+<jsp:useBean id="msg" scope="request" class="info.xonix.zlo.search.domain.Message"/>
 
 <jsp:useBean id="hl" class="info.xonix.zlo.search.FoundTextHighlighter" scope="request"/>
 <jsp:setProperty name="hl" property="hlClass" value="hl"/>

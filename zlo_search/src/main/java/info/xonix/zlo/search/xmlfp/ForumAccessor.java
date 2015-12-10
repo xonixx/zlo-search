@@ -2,7 +2,7 @@ package info.xonix.zlo.search.xmlfp;
 
 import info.xonix.forumsearch.xmlfp.XmlFpException;
 import info.xonix.forumsearch.xmlfp.XmlFpForum;
-import info.xonix.zlo.search.model.Message;
+import info.xonix.zlo.search.domain.Message;
 
 import java.util.ArrayList;
 import java.util.List;

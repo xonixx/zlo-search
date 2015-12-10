@@ -1,4 +1,4 @@
-package info.xonix.zlo.search.model;
+package info.xonix.zlo.search.domain;
 
 /**
  * User: xonix

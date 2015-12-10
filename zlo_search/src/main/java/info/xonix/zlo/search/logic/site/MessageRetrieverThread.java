@@ -1,7 +1,7 @@
 package info.xonix.zlo.search.logic.site;
 
+import info.xonix.zlo.search.domain.Message;
 import info.xonix.zlo.search.logic.forum_adapters.impl.wwwconf.WwwconfParams;
-import info.xonix.zlo.search.model.Message;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
