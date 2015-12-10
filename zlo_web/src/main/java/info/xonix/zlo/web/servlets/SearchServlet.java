@@ -249,7 +249,6 @@ public class SearchServlet extends BaseServlet {
                     throw e;
                 } catch (SearchException e) {
                     errorMsg = ErrorMessage.InvalidQueryString;
-                    errorMsg.setData(e.getQuery());
                     throw e;
                 }
 
@@ -297,10 +296,9 @@ public class SearchServlet extends BaseServlet {
                     ExceptionCategory.WEB);
 
         } catch (Exception e) {
-            if (errorMsg == null) {
-                // unknown error
-                log.error("Unknown error", e);
+            log.error("Unknown error", e);
 
+            if (errorMsg == null) {
                 exceptionsLogger.logException(e,
                         "Unknown exception while user search: " +
                                 searchRequest != null ? searchRequest.describeToString() : "N/A",

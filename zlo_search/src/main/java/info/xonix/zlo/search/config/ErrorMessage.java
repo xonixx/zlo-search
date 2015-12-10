@@ -27,29 +27,12 @@ public enum ErrorMessage {
     private Config config = AppSpringContext.get(Config.class);
 
     private String val;
-    private String data = null;
 
     ErrorMessage(String key) {
         this.val = config.message(key);
     }
 
     public String toString() {
-        return val +
-                (data == null
-                        ? ""
-                        : !config.isDebug()
-                        ? ""
-                        : ":<br/> " + data);
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    /*
-     * TODO: this is not OK : enum values should be immutable
-     */
-    public void setData(String data) {
-        this.data = data;
+        return val;
     }
 }
