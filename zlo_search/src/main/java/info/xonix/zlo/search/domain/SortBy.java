@@ -1,18 +1,24 @@
 package info.xonix.zlo.search.domain;
 
+import info.xonix.zlo.search.logic.SearchLogicImpl;
+import org.apache.lucene.search.Sort;
+
 /**
  * User: gubarkov
  * Date: 17.04.12
  * Time: 22:37
  */
 public enum SortBy {
-    DATE("date"),
-    RELEVANCE("rel");
+    DATE("date", SearchLogicImpl.REVERSED_INDEX_ORDER_SORT),
+    RELEVANCE("rel", Sort.RELEVANCE);
 
-    private String name;
+    private final String name;
 
-    SortBy(String name) {
+    private final Sort sort;
+
+    SortBy(String name, Sort sort) {
         this.name = name;
+        this.sort = sort;
     }
 
     public static SortBy byName(String name) {
@@ -27,5 +33,9 @@ public enum SortBy {
 
     public String getName() {
         return name;
+    }
+
+    public Sort getSort() {
+        return sort;
     }
 }

@@ -70,23 +70,10 @@ public class IndexManager {
         if (limit < 0) {
             throw new IllegalArgumentException("limit = " + limit + " < 0"); // TODO
         } else {
-            topFieldDocs = indexSearcher.search(query, null, limit, getSort(sortDirection));
+            topFieldDocs = indexSearcher.search(query, null, limit, sortDirection.getSort());
 
             return new Hits(topFieldDocs, indexSearcher);
         }
-    }
-
-    private Sort getSort(SortBy sortDirection) {
-        // TODO: move inside enum
-        final Sort sort;
-        if (sortDirection == SortBy.DATE) {
-            sort = SearchLogicImpl.REVERSED_INDEX_ORDER_SORT;
-        } else if (sortDirection == SortBy.RELEVANCE) {
-            sort = Sort.RELEVANCE;
-        } else {
-            throw new IllegalArgumentException("unknown sortDirection=" + sortDirection);
-        }
-        return sort;
     }
 
     @SuppressWarnings("unused")
