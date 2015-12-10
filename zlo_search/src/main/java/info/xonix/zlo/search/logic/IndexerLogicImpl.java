@@ -87,7 +87,7 @@ public class IndexerLogicImpl implements IndexerLogic, InitializingBean {
         doc.add(new StringField(MessageFields.URL_NUM, URL_NUM_FORMAT.format(msg.getNum()), Store.YES));
         doc.add(new StringField(MessageFields.TOPIC_CODE, Integer.toString(msg.getTopicCode()), Store.NO));
         doc.add(new TextField(MessageFields.TITLE, msg.getCleanTitle(), Store.NO)); // "чистый" - индексируем, не храним
-        doc.add(new StringField(MessageFields.NICK, msg.getNick(), Store.NO));
+        doc.add(new StringField(MessageFields.NICK, msg.getNick().toLowerCase(), Store.NO));
         doc.add(new StringField(MessageFields.REG, msg.isReg() ? TRUE : FALSE, Store.NO));
 
         doc.add(new StringField(MessageFields.HOST, hostLowerCase, Store.NO));
