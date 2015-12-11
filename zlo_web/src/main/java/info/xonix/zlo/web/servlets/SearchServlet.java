@@ -49,7 +49,7 @@ import static info.xonix.zlo.search.config.Config.SMART_QUERY_PARSER;
 public class SearchServlet extends BaseServlet {
     private static final Logger log = Logger.getLogger(SearchServlet.class);
 
-    public static final int MAX_RESULTS_LIMIT = 200000;
+    public static final int MAX_RESULTS_LIMIT = 100000;
 
     private final Config config = AppSpringContext.get(Config.class);
     private final AppLogic appLogic = AppSpringContext.get(AppLogic.class);
@@ -210,7 +210,7 @@ public class SearchServlet extends BaseServlet {
                     SEARCH_TYPE_ALL.equals(searchType),
                     sortDirection);
 
-            if (searchRequest.canBeProcessed() && isNotHeavySearch(text, request)) {
+            if (searchRequest.canBeProcessed() && !isHeavySearch(text, request)) {
                 final String ip = RequestUtils.getClientIp(request);
 
                 if (userLogic.getBannedStatus(ip).isBanned()) {
@@ -296,9 +296,9 @@ public class SearchServlet extends BaseServlet {
                     ExceptionCategory.WEB);
 
         } catch (Exception e) {
-            log.error("Unknown error", e);
-
             if (errorMsg == null) {
+                log.error("Unknown error", e);
+
                 exceptionsLogger.logException(e,
                         "Unknown exception while user search: " +
                                 searchRequest != null ? searchRequest.describeToString() : "N/A",
@@ -320,13 +320,20 @@ public class SearchServlet extends BaseServlet {
         }
     }
 
-    private static final List<String> heavySearches = Arrays.asList("не", "*:*");
+    private boolean isHeavySearch(String text, HttpServletRequest request) {
+        if (text == null || RequestUtils.isPowerUser(request))
+            return false;
 
-    private boolean isNotHeavySearch(String text, HttpServletRequest request) {
-        // TODO: lowercase
-        // TODO: "не о" - through analyzer
-        // TODO: move to service
-        return text == null || !heavySearches.contains(text.trim()) || RequestUtils.isPowerUser(request);
+        if (text.contains("*:*"))
+            return true;
+
+        text = text.toLowerCase().trim();
+
+        Set<String> tokens = new HashSet<String>(searchLogic.tokenize(text));
+        if (tokens.size() == 1 && "не".equals(tokens.iterator().next()))
+            return true;
+
+        return false;
     }
 
     private String smartGetParam(ForwardingRequest request, MultiMap<String> params, final String paramName) {

@@ -4,6 +4,7 @@ import info.xonix.zlo.search.dto.SearchRequest;
 import info.xonix.zlo.search.dto.SearchResult;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * User: Vovan
@@ -16,4 +17,11 @@ public interface SearchLogic {
     void dropIndex(String forumId) throws IOException;
 
     int[] search(String forumId, String searchString, int skip, int limit) throws SearchException;
+
+    /**
+     * Analyzes by configured message analyzer
+     * @param text text to analyze
+     * @return list of tokens
+     */
+    List<String> tokenize(String text);
 }

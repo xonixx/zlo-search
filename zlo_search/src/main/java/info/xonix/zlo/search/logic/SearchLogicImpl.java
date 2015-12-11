@@ -8,9 +8,11 @@ import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.dto.SearchRequest;
 import info.xonix.zlo.search.dto.SearchResult;
 import info.xonix.zlo.search.index.IndexManager;
+import info.xonix.zlo.search.utils.LuceneUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.*;
@@ -226,6 +228,12 @@ public class SearchLogicImpl implements SearchLogic, InitializingBean {
         }
 
         return skip(realLimitIds, skip);
+    }
+
+    @Override
+    public List<String> tokenize(String text) {
+        Analyzer analyzer = config.getMessageAnalyzer();
+        return LuceneUtils.tokenize(analyzer, MessageFields.BODY, text);
     }
 
     private int[] skip(int[] inp, int skip) {

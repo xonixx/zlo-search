@@ -5,6 +5,7 @@ import info.xonix.zlo.search.LuceneVersion;
 import info.xonix.zlo.search.SortBy;
 import info.xonix.zlo.search.config.Config;
 import info.xonix.zlo.search.spring.AppSpringContext;
+import info.xonix.zlo.search.utils.LuceneUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.index.*;
 import org.apache.lucene.search.IndexSearcher;
@@ -115,7 +116,7 @@ public class IndexManager {
                 LuceneVersion.VERSION, config.getMessageAnalyzer())
                 .setMergePolicy(mergePolicy);
 
-        return new IndexWriter(IndexUtils.dir(indexDir), indexWriterConfig);
+        return new IndexWriter(LuceneUtils.dir(indexDir), indexWriterConfig);
     }
 
     public IndexSearcher getSearcher() throws IOException {
@@ -138,7 +139,7 @@ public class IndexManager {
                 indexWriter = null;
             }
 
-            IndexUtils.createEmptyIndex(indexDir);
+            LuceneUtils.createEmptyIndex(indexDir);
         }
     }
 
@@ -146,7 +147,7 @@ public class IndexManager {
         try {
             log.info("Clearing lock: " + indexDir.getAbsolutePath());
 
-            final Directory d = IndexUtils.dir(indexDir);
+            final Directory d = LuceneUtils.dir(indexDir);
             d.clearLock(WRITE_LOCK_FILE);
             d.close();
         } catch (IOException e) {
@@ -156,6 +157,6 @@ public class IndexManager {
 
     @SuppressWarnings("unused")
     public long getIndexSize() {
-        return IndexUtils.getDirSize(indexDir);
+        return LuceneUtils.getDirSize(indexDir);
     }
 }
