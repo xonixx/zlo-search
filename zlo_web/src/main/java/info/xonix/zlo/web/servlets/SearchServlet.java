@@ -447,12 +447,16 @@ public class SearchServlet extends BaseServlet {
         }
     }
 
+    /**
+     * TODO: move to SearchLogic
+     */
     private String preprocessSearchText(String text, String searchType) {
         if (StringUtils.isEmpty(text))
             return text;
 
         // kill escaping "\" to be able search for \\host\share
-        text = text.replace("\\", ".");
+        text = StringUtils.replace(text, "\\", ".");
+        text = StringUtils.replace(text, "/", ".");
 
         // preprocess for search for urls with "?"
         if (HtmlUtils.remindsUrl(text)) {
@@ -469,7 +473,6 @@ public class SearchServlet extends BaseServlet {
     private String preprocessSearchNick(String nick) {
         if (nick == null)
             return "";
-        // todo: need to index stripped nicks too!! 
         return StringUtils.strip(nick)
                 .replace("\\", "\\\\"); // to be possible search for nick like \/\/0\/\/KA 
     }
