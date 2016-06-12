@@ -77,7 +77,11 @@ public class Config {
             System.out.println("Loading internal config...");
             loadProperties(props, "info/xonix/zlo/search/config/config.properties");
 
-            final String additionalConfName = "config.additional." + EnvUtils.getHostName();
+            String envId = EnvUtils.getEnvId();
+            if (envId == null)
+                envId = EnvUtils.getHostName();
+
+            final String additionalConfName = "config.additional." + envId;
             final String additionalConfigPath = props.getProperty(additionalConfName);
 
             if (additionalConfigPath != null) {

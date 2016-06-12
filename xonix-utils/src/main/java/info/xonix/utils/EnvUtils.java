@@ -17,6 +17,10 @@ public final class EnvUtils {
         }
     }
 
+    public static String getEnvId() {
+        return System.getenv("env");
+    }
+
     public static String getUserName() {
         return System.getProperty("user.name");
     }
