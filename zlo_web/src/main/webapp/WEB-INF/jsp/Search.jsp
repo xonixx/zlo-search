@@ -47,7 +47,7 @@
     <script type="text/javascript" src="lib/angular-strap/angular-strap.tpl${minSuffix}.js"></script>
 
     <script type="text/javascript" src="js/script.js?${version}"></script>
-    <script type="text/javascript" src="pic/lulz/db.js"></script>
+    <script type="text/javascript" src="pic/lulz/db.js?${version}"></script>
 
     <c:if test="${not isError and isSearchResultPresent}">
         <link rel="alternate" type="application/rss+xml" title="RSS" href="${rssUrl}">

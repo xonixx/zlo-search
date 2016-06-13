@@ -4,7 +4,8 @@
   Time: 21:19:42
 --%>
 <%@ page contentType="text/html; charset=UTF-8" %>
-<script type="text/javascript" src="pic/lulz/db.js"></script>
+<%@ include file="WEB-INF/jsp/import.jsp" %>
+<script type="text/javascript" src="pic/lulz/db.js?${version}"></script>
 <body>
 <input type="hidden" name="text" value="печеньки"/>
 <script>
