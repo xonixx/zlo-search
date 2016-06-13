@@ -8,7 +8,7 @@ F=/tmp/${T}.sql
 PORT=51306
 
 echo "Open tunnel..."
-ssh -C -fNL $PORT:127.0.0.1:3306 xonix@rt.mipt.ru
+ssh -C -fNL $PORT:127.0.0.1:3306 xonix@37.187.123.144
 
 MAX_ID=$(mysql -u$U -p$P $D -s -N -e "select max(num) from $T")
 

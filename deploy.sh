@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#SERV=xonix@rt.mipt.ru
-#TOMCAT=/usr/local/apache-tomcat-7.0/
 SERV=xonix@37.187.123.144
 TOMCAT=/home/xonix/apache-tomcat/
 WAR=$(ls -v zlo_web/target/*.war | tail -n 1)

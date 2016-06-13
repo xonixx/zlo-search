@@ -25,6 +25,9 @@ a, a:hover, a:focus {
     color: blue;
     text-decoration: underline;
 }
+a:visited {
+    color: #551A8B;
+}
 /* }} reset bs */
 
 input[type="checkbox"],
