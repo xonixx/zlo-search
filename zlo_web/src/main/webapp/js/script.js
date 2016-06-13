@@ -32,7 +32,7 @@ $(function () {
     };
 
     initAutocomplete();
-    dbInit();
+    davidBlaine.init();
 });
 
 angular.module('search', ['mgcrea.ngStrap']);

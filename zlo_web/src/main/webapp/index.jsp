@@ -7,5 +7,9 @@
 <script type="text/javascript" src="pic/lulz/db.js"></script>
 <body>
 <input type="hidden" name="text" value="печеньки"/>
-<script type="text/javascript">dbInit();</script>
+<script>
+    davidBlaine.init(function () {
+        location.href = 'search';
+    });
+</script>
 </body>
