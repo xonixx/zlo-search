@@ -7,6 +7,9 @@ BKP=$(date +%y%m%d%H%M)
 
 WA=$TOMCAT/webapps
 
+echo "Building..."
+mvn clean package -DskipTests
+
 ssh $SERV "
 echo 'Stop...'
 
@@ -24,6 +27,7 @@ fi
 rm -rf $TOMCAT/work/*
 "
 
+echo "Uploading..."
 scp $WAR $SERV:$WA/ROOT.war
 
 ssh $SERV "
