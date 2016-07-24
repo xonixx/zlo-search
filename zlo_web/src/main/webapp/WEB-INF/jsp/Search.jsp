@@ -1,5 +1,5 @@
-<%@ page import="info.xonix.zlo.search.logic.MessageLogic" %>
 <%@ page import="info.xonix.zlo.search.domain.Message" %>
+<%@ page import="info.xonix.zlo.search.logic.MessageLogic" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.List" %>
 <%--
@@ -277,7 +277,10 @@
                                 key="link.saved.msg"/></a>
                         <div>
                             <c:forEach var="imgUrl" items="<%= imgUrls %>">
-                                <img src="${imgUrl}" style="max-height: 60px">
+                                <a href="${imgUrl}"><img src="<c:url value="img">
+                                    <c:param name="url" value="${imgUrl}"/>
+                                    <c:param name="hash" value="${xonix:hash(imgUrl)}"/>
+                                </c:url>"></a>
                             </c:forEach>
                         </div>
                     </display:column>

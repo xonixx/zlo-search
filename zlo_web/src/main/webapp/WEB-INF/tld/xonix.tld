@@ -53,6 +53,13 @@
     </function>
 
     <function>
+        <description>Hash url</description>
+        <name>hash</name>
+        <function-class>info.xonix.zlo.web.logic.ImgLogic</function-class>
+        <function-signature>java.lang.String hash(java.lang.String)</function-signature>
+    </function>
+
+    <function>
         <description>Returns small User-Agent</description>
         <name>userAgentSmall</name>
         <function-class>info.xonix.zlo.web.utils.RequestUtils</function-class>
