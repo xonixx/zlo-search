@@ -15,7 +15,7 @@
     </parent>
 
     <properties>
-        <jetty.version>8.1.1.v20120215</jetty.version>
+        <jetty.version>9.2.17.v20160517</jetty.version>
     </properties>
 
     <dependencies>
@@ -41,11 +41,6 @@
             <version>${jetty.version}</version>
             <scope>compile</scope>
         </dependency>
-        <!--<dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-jsp-2.1</artifactId>
-            <version>7.5.4.v20111024</version>
-        </dependency>-->
 
         <dependency>
             <groupId>org.slf4j</groupId>

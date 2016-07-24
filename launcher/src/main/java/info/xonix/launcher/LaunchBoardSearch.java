@@ -3,8 +3,8 @@ package info.xonix.launcher;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.handler.HandlerList;
-import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.webapp.*;
 import sun.misc.JarFilter;
 
@@ -28,10 +28,9 @@ public class LaunchBoardSearch {
         String rootFolder = ".";
         String zloWeb = join(rootFolder, "zlo_web");
 
-        Server server = new Server();
+        Server server = new Server(8080);
 
-        Connector connector = new SelectChannelConnector();
-        connector.setPort(8080);
+        Connector connector = new ServerConnector(server);
         server.addConnector(connector);
 
         WebAppContext root = new WebAppContext(join(zloWeb, "src/main/webapp"), "/");

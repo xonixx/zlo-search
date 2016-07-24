@@ -156,14 +156,8 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-util</artifactId>
-            <version>8.1.2.v20120308</version>
+            <version>9.3.10.v20160621</version>
         </dependency>
-
-        <!--<dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>11.0.1</version>
-        </dependency>-->
 
         <!--lucene-->
         <dependency>
