@@ -6,6 +6,9 @@ import org.apache.commons.lang.StringUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -75,35 +78,47 @@ public final class HtmlUtils {
      *  - relative
      *  - url starting with forumHost
      *  are considered smiles (not images)
-     * @param s html code to search imgs in
+     * @param msgText html code to search imgs in
      * @param forumHost
      * @return boolean
      */
-    public static boolean hasImg(String s, String forumHost) {
-        if (StringUtils.isEmpty(s)) {
-            return false;
+    public static boolean hasImg(String msgText, String forumHost) {
+        return !extractImgUrls(msgText, forumHost, 1).isEmpty();
+    }
+
+    public static List<String> extractImgUrls(String msgText, String forumHost) {
+        return extractImgUrls(msgText, forumHost, 0); // all imgs
+    }
+
+    public static List<String> extractImgUrls(String msgText, String forumHost, int atMostCount) {
+        if (StringUtils.isEmpty(msgText)) {
+            return Collections.emptyList();
         }
 
         if (forumHost != null) {
             forumHost = forumHost.toLowerCase();
         }
 
-        Matcher matcher = IMG.matcher(s);// only absolute urls are matched according to regexp
+        Matcher matcher = IMG.matcher(msgText);// only absolute urls are matched according to regexp
 
-//        boolean isFound = matcher.find();
-        boolean isFound = false;
+        List<String> res = new ArrayList<>();
 
-        while(matcher.find()) {
-            final String imgUrlWithoutSchema = matcher.group(2).toLowerCase();
+        int cnt = 0;
+        while (matcher.find()) {
+            String imgUrl = matcher.group(2);
+            final String imgUrlWithoutSchema = imgUrl.toLowerCase();
 
             if (forumHost == null
                     || !imgUrlWithoutSchema.startsWith(forumHost)) { // img located on forum host = smile
-                isFound = true;
-                break;
+
+                res.add(imgUrl);
+
+                if (atMostCount > 0 && ++cnt >= atMostCount)
+                    break;
             }
         }
 
-        return isFound;
+        return res;
     }
 
     public static boolean hasImg(String s) {

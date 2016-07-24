@@ -12,6 +12,9 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 /**
  * Author: Vovan
  * Date: 22.03.2008
@@ -58,38 +61,38 @@ public class TestSitesRetrieving {
         Message m = forumLogic.getMessageByNumber(forumId, 19490);
         System.out.println(m);
 
-        Assert.assertEquals(19490, m.getNum());
-        Assert.assertEquals("sim", m.getNick());
-        Assert.assertTrue(m.isReg());
-        Assert.assertEquals("gw.zunet.ru", m.getHost());
-        Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
+        assertEquals(19490, m.getNum());
+        assertEquals("sim", m.getNick());
+        assertTrue(m.isReg());
+        assertEquals("gw.zunet.ru", m.getHost());
+        assertTrue(StringUtils.isNotEmpty(m.getBody()));
 
         m = forumLogic.getMessageByNumber(forumId, 19580);
         System.out.println(m);
 
-        Assert.assertEquals(19580, m.getNum());
-        Assert.assertEquals("bull", m.getNick());
-        Assert.assertTrue(!m.isReg());
-        Assert.assertEquals("ppp85-140-32-253.pppoe.mtu-net.ru", m.getHost());
-        Assert.assertTrue(StringUtils.isEmpty(m.getBody()));
+        assertEquals(19580, m.getNum());
+        assertEquals("bull", m.getNick());
+        assertTrue(!m.isReg());
+        assertEquals("ppp85-140-32-253.pppoe.mtu-net.ru", m.getHost());
+        assertTrue(StringUtils.isEmpty(m.getBody()));
 
         m = forumLogic.getMessageByNumber(forumId, 18869);
         System.out.println(m);
 
-        Assert.assertEquals("а многие собирают себе титановые ригиды на ХТЯ.....", m.getTitle());
-        Assert.assertEquals("Tormentor", m.getNick());
-        Assert.assertTrue(StringUtils.isEmpty(m.getBody()));
-        Assert.assertTrue(m.isReg());
+        assertEquals("а многие собирают себе титановые ригиды на ХТЯ.....", m.getTitle());
+        assertEquals("Tormentor", m.getNick());
+        assertTrue(StringUtils.isEmpty(m.getBody()));
+        assertTrue(m.isReg());
 
         m = forumLogic.getMessageByNumber(forumId, 25597);
         System.out.println(m);
-        Assert.assertEquals("Велотуризм", m.getTopic());
-        Assert.assertEquals("Отчет по походу по Карелии, который обещал выложить", m.getTitle());
-        Assert.assertEquals("timm", m.getNick());
-        Assert.assertTrue(m.isReg());
-        Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
-        Assert.assertTrue(MessageLogic.hasUrl(m));
-        Assert.assertEquals("localhost.localdomain", m.getHost());
+        assertEquals("Велотуризм", m.getTopic());
+        assertEquals("Отчет по походу по Карелии, который обещал выложить", m.getTitle());
+        assertEquals("timm", m.getNick());
+        assertTrue(m.isReg());
+        assertTrue(StringUtils.isNotEmpty(m.getBody()));
+        assertTrue(MessageLogic.hasUrl(m));
+        assertEquals("localhost.localdomain", m.getHost());
 
         checkMsgNotExists(forumId);
     }
@@ -102,31 +105,31 @@ public class TestSitesRetrieving {
 
         Message m = forumLogic.getMessageByNumber(dev, 9404);
 
-        Assert.assertEquals(9404, m.getNum());
-        Assert.assertEquals("Berk", m.getNick());
-        Assert.assertEquals("post.mirantis.ru", m.getHost());
-        Assert.assertTrue(m.isReg());
-        Assert.assertEquals("Unix/Linux", m.getTopic());
-        Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
+        assertEquals(9404, m.getNum());
+        assertEquals("Berk", m.getNick());
+        assertEquals("post.mirantis.ru", m.getHost());
+        assertTrue(m.isReg());
+        assertEquals("Unix/Linux", m.getTopic());
+        assertTrue(StringUtils.isNotEmpty(m.getBody()));
 
         System.out.println(m);
 
         m = forumLogic.getMessageByNumber(dev, 9374);
 
-        Assert.assertEquals(9374, m.getNum());
-        Assert.assertEquals("arfix.", m.getNick());
-        Assert.assertTrue(StringUtils.isEmpty(m.getBody()));
-        Assert.assertTrue(!m.isReg());
+        assertEquals(9374, m.getNum());
+        assertEquals("arfix.", m.getNick());
+        assertTrue(StringUtils.isEmpty(m.getBody()));
+        assertTrue(!m.isReg());
 
         System.out.println(m);
 
         m = forumLogic.getMessageByNumber(dev, 10153);
 
-        Assert.assertEquals(10153, m.getNum());
-        Assert.assertEquals("Рыбак", m.getNick());
-        Assert.assertEquals("ppp91-77-164-91.pppoe.mtu-net.ru", m.getHost());
-        Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
-        Assert.assertTrue(!m.isReg());
+        assertEquals(10153, m.getNum());
+        assertEquals("Рыбак", m.getNick());
+        assertEquals("ppp91-77-164-91.pppoe.mtu-net.ru", m.getHost());
+        assertTrue(StringUtils.isNotEmpty(m.getBody()));
+        assertTrue(!m.isReg());
 
         System.out.println(m);
     }
@@ -140,37 +143,37 @@ public class TestSitesRetrieving {
 
         Message m = forumLogic.getMessageByNumber(x, 55177);
 
-        Assert.assertEquals("uberdude", m.getNick());
-        Assert.assertEquals("wimax-client.yota.ru", m.getHost());
-        Assert.assertEquals("Почему?", m.getTitle());
-        Assert.assertTrue(m.isReg());
-        Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
+        assertEquals("uberdude", m.getNick());
+        assertEquals("wimax-client.yota.ru", m.getHost());
+        assertEquals("Почему?", m.getTitle());
+        assertTrue(m.isReg());
+        assertTrue(StringUtils.isNotEmpty(m.getBody()));
         System.out.println(m);
 
         m = forumLogic.getMessageByNumber(x, 55182);
 
-        Assert.assertEquals("Митя", m.getNick());
-        Assert.assertEquals("ip-46-73-158-249.bb.netbynet.ru", m.getHost());
-        Assert.assertEquals("+ к", m.getTitle());
-        Assert.assertTrue(m.isReg());
-        Assert.assertTrue(StringUtils.isEmpty(m.getBody()));
+        assertEquals("Митя", m.getNick());
+        assertEquals("ip-46-73-158-249.bb.netbynet.ru", m.getHost());
+        assertEquals("+ к", m.getTitle());
+        assertTrue(m.isReg());
+        assertTrue(StringUtils.isEmpty(m.getBody()));
         System.out.println(m);
 
         m = forumLogic.getMessageByNumber(x, 55207);
 
-        Assert.assertEquals("demerzel", m.getNick());
-        Assert.assertEquals("93.175.15.182", m.getHost());
-        Assert.assertEquals("+", m.getTitle());
-        Assert.assertTrue(!m.isReg());
-        Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
+        assertEquals("demerzel", m.getNick());
+        assertEquals("93.175.15.182", m.getHost());
+        assertEquals("+", m.getTitle());
+        assertTrue(!m.isReg());
+        assertTrue(StringUtils.isNotEmpty(m.getBody()));
         System.out.println(m);
 
         m = forumLogic.getMessageByNumber(x, 999999999);
 
-        Assert.assertEquals(null, m.getNick());
-        Assert.assertEquals(null, m.getHost());
-        Assert.assertEquals(null, m.getBody());
-        Assert.assertEquals(MessageStatus.DELETED, m.getStatus());
+        assertEquals(null, m.getNick());
+        assertEquals(null, m.getHost());
+        assertEquals(null, m.getBody());
+        assertEquals(MessageStatus.DELETED, m.getStatus());
         System.out.println(m);
     }
 
@@ -184,45 +187,45 @@ public class TestSitesRetrieving {
         Message m = forumLogic.getMessageByNumber(forumId, 138080);
 
         System.out.println(m);
-        Assert.assertEquals("Rook", m.getNick());
-        Assert.assertEquals("", m.getHost());
-        Assert.assertEquals("Не, ну чо тут сказать? Как обычно: Слава ЕР! И ныне и присно и во веки веков!", m.getTitle());
-        Assert.assertTrue(m.isReg());
-        Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
-        Assert.assertEquals("И да не кончатся богом данные бюллетени в ее поддержку!", m.getBody());
+        assertEquals("Rook", m.getNick());
+        assertEquals("", m.getHost());
+        assertEquals("Не, ну чо тут сказать? Как обычно: Слава ЕР! И ныне и присно и во веки веков!", m.getTitle());
+        assertTrue(m.isReg());
+        assertTrue(StringUtils.isNotEmpty(m.getBody()));
+        assertEquals("И да не кончатся богом данные бюллетени в ее поддержку!", m.getBody());
 
         m = forumLogic.getMessageByNumber(forumId, 138026);
 
         System.out.println(m);
-        Assert.assertEquals("@LuCiFeRsHa@", m.getNick());
-        Assert.assertEquals("", m.getHost());
-        Assert.assertEquals("Спасибо!!!!!!!!!!!!!!!!", m.getTitle());
-        Assert.assertTrue(m.isReg());
-        Assert.assertTrue(StringUtils.isEmpty(m.getBody()));
+        assertEquals("@LuCiFeRsHa@", m.getNick());
+        assertEquals("", m.getHost());
+        assertEquals("Спасибо!!!!!!!!!!!!!!!!", m.getTitle());
+        assertTrue(m.isReg());
+        assertTrue(StringUtils.isEmpty(m.getBody()));
 
         m = forumLogic.getMessageByNumber(forumId, 138034);
 
         System.out.println(m);
-        Assert.assertEquals("\\/", m.getNick());
-        Assert.assertEquals("", m.getHost());
-        Assert.assertEquals("пожелаем им скорейшего ВЫЗДОРОВЛЕНИЯ, а будут выёживацо-пусть роют себе свой коллектор", m.getTitle());
-        Assert.assertTrue(!m.isReg());
-        Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
+        assertEquals("\\/", m.getNick());
+        assertEquals("", m.getHost());
+        assertEquals("пожелаем им скорейшего ВЫЗДОРОВЛЕНИЯ, а будут выёживацо-пусть роют себе свой коллектор", m.getTitle());
+        assertTrue(!m.isReg());
+        assertTrue(StringUtils.isNotEmpty(m.getBody()));
 
         m = forumLogic.getMessageByNumber(forumId, 138004);
 
         System.out.println(m);
-        Assert.assertEquals("FIPS", m.getNick());
-        Assert.assertEquals("", m.getHost());
-        Assert.assertEquals("А кинологи в окресностях ближайших есть?", m.getTitle());
-        Assert.assertEquals("Вопрос", m.getTopic());
-        Assert.assertTrue(!m.isReg());
-        Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
-        Assert.assertEquals("С овчаркой позаниматься.", m.getBody());
+        assertEquals("FIPS", m.getNick());
+        assertEquals("", m.getHost());
+        assertEquals("А кинологи в окресностях ближайших есть?", m.getTitle());
+        assertEquals("Вопрос", m.getTopic());
+        assertTrue(!m.isReg());
+        assertTrue(StringUtils.isNotEmpty(m.getBody()));
+        assertEquals("С овчаркой позаниматься.", m.getBody());
 
         m = forumLogic.getMessageByNumber(forumId, 199);
         System.out.println(m);
-        Assert.assertEquals("<P>Люди кто нить знает что за проводок кинули с Лих 4 на Чайку уж не сетку ли?????", m.getBody());
+        assertEquals("<P>Люди кто нить знает что за проводок кинули с Лих 4 на Чайку уж не сетку ли?????", m.getBody());
 
         checkMsgNotExists(forumId);
     }
@@ -232,10 +235,10 @@ public class TestSitesRetrieving {
 
         System.out.println(m);
 
-        Assert.assertEquals(null, m.getNick());
-        Assert.assertEquals(null, m.getHost());
-        Assert.assertEquals(null, m.getBody());
-        Assert.assertEquals(MessageStatus.DELETED, m.getStatus());
+        assertEquals(null, m.getNick());
+        assertEquals(null, m.getHost());
+        assertEquals(null, m.getBody());
+        assertEquals(MessageStatus.DELETED, m.getStatus());
     }
 
     @Test
@@ -246,52 +249,52 @@ public class TestSitesRetrieving {
 
         Message m = forumLogic.getMessageByNumber(zlo, 4093778);
 
-        Assert.assertEquals(4093772, m.getParentNum());
-        Assert.assertEquals("QDiesel", m.getNick());
-        Assert.assertEquals("nokia.7ka.mipt.ru", m.getHost());
-        Assert.assertTrue(m.isReg());
-        Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
+        assertEquals(4093772, m.getParentNum());
+        assertEquals("QDiesel", m.getNick());
+        assertEquals("nokia.7ka.mipt.ru", m.getHost());
+        assertTrue(m.isReg());
+        assertTrue(StringUtils.isNotEmpty(m.getBody()));
         System.out.println(m);
 
         m = forumLogic.getMessageByNumber(zlo, 4093772);
-        Assert.assertEquals(-1, m.getParentNum());
-        Assert.assertEquals("HEMP", m.getNick());
+        assertEquals(0, m.getParentNum());
+        assertEquals("HEMP", m.getNick());
 
         m = forumLogic.getMessageByNumber(zlo, 4093788);
 
-        Assert.assertEquals(4093785, m.getParentNum());
-        Assert.assertEquals("Loki", m.getNick());
-        Assert.assertEquals("loki.3ka.mipt.ru", m.getHost());
-        Assert.assertTrue(m.isReg());
-        Assert.assertTrue(StringUtils.isEmpty(m.getBody()));
+        assertEquals(4093785, m.getParentNum());
+        assertEquals("Loki", m.getNick());
+        assertEquals("loki.3ka.mipt.ru", m.getHost());
+        assertTrue(m.isReg());
+        assertTrue(StringUtils.isEmpty(m.getBody()));
         System.out.println(m);
 
         m = forumLogic.getMessageByNumber(zlo, 405573);
 
-        Assert.assertEquals(405555, m.getParentNum());
-        Assert.assertEquals("Demoney", m.getNick());
-        Assert.assertEquals("morgue.7ka.mipt.ru", m.getHost());
-        Assert.assertTrue(!m.isReg());
-        Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
+        assertEquals(405555, m.getParentNum());
+        assertEquals("Demoney", m.getNick());
+        assertEquals("morgue.7ka.mipt.ru", m.getHost());
+        assertTrue(!m.isReg());
+        assertTrue(StringUtils.isNotEmpty(m.getBody()));
         System.out.println(m);
 
         m = forumLogic.getMessageByNumber(zlo, 7787566);
 
-        Assert.assertEquals(7787551, m.getParentNum());
-        Assert.assertEquals("vilfred", m.getNick());
-        Assert.assertEquals("77.51.192.172", m.getHost());
-        Assert.assertTrue(m.isReg());
-        Assert.assertTrue(MessageLogic.hasImg(m, zlo));
-        Assert.assertTrue("Сообщения в этом потоке".equals(m.getTitle()));
+        assertEquals(7787551, m.getParentNum());
+        assertEquals("vilfred", m.getNick());
+        assertEquals("77.51.192.172", m.getHost());
+        assertTrue(m.isReg());
+        assertTrue(MessageLogic.hasImg(m, zlo));
+        assertTrue("Сообщения в этом потоке".equals(m.getTitle()));
         System.out.println(m);
 
         m = forumLogic.getMessageByNumber(zlo, 999999999);
 
-        Assert.assertEquals(-1, m.getParentNum());
-        Assert.assertEquals(null, m.getNick());
-        Assert.assertEquals(null, m.getHost());
-        Assert.assertEquals(null, m.getBody());
-        Assert.assertEquals(MessageStatus.DELETED, m.getStatus());
+        assertEquals(-10, m.getParentNum());
+        assertEquals(null, m.getNick());
+        assertEquals(null, m.getHost());
+        assertEquals(null, m.getBody());
+        assertEquals(MessageStatus.DELETED, m.getStatus());
         System.out.println(m);
     }
 
@@ -305,30 +308,30 @@ public class TestSitesRetrieving {
 
         Message m = forumLogic.getMessageByNumber(takeoff, 13996);
 
-        Assert.assertEquals("Слава", m.getNick());
-        Assert.assertEquals("gluk.2ka.mipt.ru", m.getHost());
-        Assert.assertTrue(m.isReg());
-        Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
+        assertEquals("Слава", m.getNick());
+        assertEquals("gluk.2ka.mipt.ru", m.getHost());
+        assertTrue(m.isReg());
+        assertTrue(StringUtils.isNotEmpty(m.getBody()));
 
         System.out.println(m);
 
         m = forumLogic.getMessageByNumber(takeoff, 14003);
 
-        Assert.assertEquals(14003, m.getNum());
-        Assert.assertEquals("mitrich", m.getNick());
-        Assert.assertEquals("83.229.152.73", m.getHost());
-        Assert.assertTrue(m.isReg());
-        Assert.assertTrue(StringUtils.isEmpty(m.getBody()));
+        assertEquals(14003, m.getNum());
+        assertEquals("mitrich", m.getNick());
+        assertEquals("83.229.152.73", m.getHost());
+        assertTrue(m.isReg());
+        assertTrue(StringUtils.isEmpty(m.getBody()));
 
         System.out.println(m);
 
         m = forumLogic.getMessageByNumber(takeoff, 1729);
 
-        Assert.assertEquals(1729, m.getNum());
-        Assert.assertEquals("shpagin&stalker", m.getNick());
-        Assert.assertEquals("stalker.4ka.mipt.ru", m.getHost());
-        Assert.assertTrue(!m.isReg());
-        Assert.assertTrue(StringUtils.isNotEmpty(m.getBody()));
+        assertEquals(1729, m.getNum());
+        assertEquals("shpagin&stalker", m.getNick());
+        assertEquals("stalker.4ka.mipt.ru", m.getHost());
+        assertTrue(!m.isReg());
+        assertTrue(StringUtils.isNotEmpty(m.getBody()));
 
         System.out.println(m);
     }
@@ -343,35 +346,35 @@ public class TestSitesRetrieving {
         Message m = forumLogic.getMessageByNumber(anime, 16825);
         System.out.println(m);
 
-        Assert.assertTrue(m.isReg());
-        Assert.assertEquals("bestation", m.getNick());
-        Assert.assertEquals("10.55.110.140", m.getHost());
-        Assert.assertTrue(!MessageLogic.hasImg(m, anime));
-        Assert.assertTrue(!MessageLogic.hasUrl(m));
-        Assert.assertEquals("В качестве бонуса могу выдать батч скаченный на 54.2% с полностью скаченной первой серией, оп и ед.", m.getBody());
-        Assert.assertEquals("Ну, что? Кто в локалке возмется кланнад 1-5 скачать?", m.getTitle());
+        assertTrue(m.isReg());
+        assertEquals("bestation", m.getNick());
+        assertEquals("10.55.110.140", m.getHost());
+        assertTrue(!MessageLogic.hasImg(m, anime));
+        assertTrue(!MessageLogic.hasUrl(m));
+        assertEquals("В качестве бонуса могу выдать батч скаченный на 54.2% с полностью скаченной первой серией, оп и ед.", m.getBody());
+        assertEquals("Ну, что? Кто в локалке возмется кланнад 1-5 скачать?", m.getTitle());
 
         m = forumLogic.getMessageByNumber(anime, 16376);
         System.out.println(m);
 
-        Assert.assertTrue(MessageLogic.hasImg(m, anime));
-        Assert.assertTrue(MessageLogic.hasUrl(m));
-        Assert.assertTrue(m.isReg());
-        Assert.assertEquals("fth", m.getNick());
-        Assert.assertEquals("10.55.103.181", m.getHost());
-        Assert.assertEquals("С наступающим Новым Годом!", m.getTitle());
+        assertTrue(MessageLogic.hasImg(m, anime));
+        assertTrue(MessageLogic.hasUrl(m));
+        assertTrue(m.isReg());
+        assertEquals("fth", m.getNick());
+        assertEquals("10.55.103.181", m.getHost());
+        assertEquals("С наступающим Новым Годом!", m.getTitle());
 
         m = forumLogic.getMessageByNumber(anime, 16799);
         System.out.println(m);
 
         Assert.assertFalse(m.isReg());
-        Assert.assertEquals("zuzzik_", m.getNick());
-        Assert.assertEquals("Фотки и отчет будут? Ж)", m.getTitle());
+        assertEquals("zuzzik_", m.getNick());
+        assertEquals("Фотки и отчет будут? Ж)", m.getTitle());
 
         m = forumLogic.getMessageByNumber(anime, 2);
         System.out.println(m);
         Assert.assertFalse(m.isOk());
-        Assert.assertEquals(MessageStatus.DELETED, m.getStatus());
+        assertEquals(MessageStatus.DELETED, m.getStatus());
     }
 
 //    @Test
@@ -384,15 +387,15 @@ public class TestSitesRetrieving {
         Message m = forumLogic.getMessageByNumber(np, 96119);
         System.out.println(m);
 
-        Assert.assertEquals("там сочинение на страницу или больше", m.getTitle());
-        Assert.assertEquals("а я почему-то могу писать или писать только иногда, когда настроение", m.getBody());
-        Assert.assertEquals("без темы", m.getTopic());
+        assertEquals("там сочинение на страницу или больше", m.getTitle());
+        assertEquals("а я почему-то могу писать или писать только иногда, когда настроение", m.getBody());
+        assertEquals("без темы", m.getTopic());
 
         m = forumLogic.getMessageByNumber(np, 95933);
         System.out.println(m);
 
-        Assert.assertEquals("проверим", m.getTitle());
-        Assert.assertEquals("Кто здесь?", m.getTopic());
-        Assert.assertEquals("", m.getBody());
+        assertEquals("проверим", m.getTitle());
+        assertEquals("Кто здесь?", m.getTopic());
+        assertEquals("", m.getBody());
     }
 }

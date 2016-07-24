@@ -7,6 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Utility class for creating spring application contexts
+ * TODO do smth with this pornography
  */
 public final class AppSpringContext implements ApplicationContextAware {
     // this class is not for creation
@@ -41,7 +42,6 @@ public final class AppSpringContext implements ApplicationContextAware {
                     initializing = true;
                     ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("beans-all.xml", AppSpringContext.class);
                     applicationContext.getEnvironment().setActiveProfiles("prod");
-                    applicationContext.refresh();
                     AppSpringContext.applicationContext = applicationContext;
                     initializing = false;
                 }
@@ -61,7 +61,6 @@ public final class AppSpringContext implements ApplicationContextAware {
                 if (applicationContextTesting == null) {
                     ClassPathXmlApplicationContext applicationContextTesting = new ClassPathXmlApplicationContext("beans-testing.xml", AppSpringContext.class);
                     applicationContextTesting.getEnvironment().setActiveProfiles("test");
-                    applicationContextTesting.refresh();
                     AppSpringContext.applicationContextTesting = applicationContextTesting;
                 }
             }
