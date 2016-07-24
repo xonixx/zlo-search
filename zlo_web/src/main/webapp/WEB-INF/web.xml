@@ -75,6 +75,20 @@
         <url-pattern>/msg</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <description>Image Preview Servlet</description>
+        <servlet-name>img</servlet-name>
+        <servlet-class>info.xonix.zlo.web.servlets.ImgPreviewServlet</servlet-class>
+        <init-param>
+            <param-name>defaultRequestCharset</param-name>
+            <param-value>windows-1251</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>img</servlet-name>
+        <url-pattern>/img</url-pattern>
+    </servlet-mapping>
+
     <!-- tiles -->
     <servlet>
         <servlet-name>tiles</servlet-name>

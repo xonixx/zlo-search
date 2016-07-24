@@ -15,7 +15,8 @@
     </parent>
 
     <properties>
-        <jetty.version>9.2.17.v20160517</jetty.version>
+        <!--TODO: move to Tomcat embedded? 9.x has some issues w/ JSP-->
+        <jetty.version>8.1.19.v20160209</jetty.version>
     </properties>
 
     <dependencies>
