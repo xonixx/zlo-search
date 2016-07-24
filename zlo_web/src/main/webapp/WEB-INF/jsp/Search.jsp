@@ -1,6 +1,7 @@
 <%@ page import="info.xonix.zlo.search.logic.MessageLogic" %>
 <%@ page import="info.xonix.zlo.search.domain.Message" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="java.util.List" %>
 <%--
   User: gubarkov
   Date: 14.08.2007
@@ -267,12 +268,18 @@
                             <c:out value="${hl.highlightedText}" escapeXml="false"/></a>
                         <small>
                             <c:if test="${empty msg.body}">(-)</c:if>
+                            <% List<String> imgUrls = MessageLogic.extractImgUrls((Message) msg, forumId, 5); %>
                             <c:if test="<%= MessageLogic.hasUrl((Message) msg)%>">(url)</c:if>
-                            <c:if test="<%= MessageLogic.hasImg((Message) msg, forumId) %>">(pic)</c:if>
+                            <c:if test="<%= !imgUrls.isEmpty() %>">(pic)</c:if>
                         </small>
                         <a class="search"
                            href="msg?site=${descriptor.forumIntId}&num=${msg.num}<c:if test="${not empty hl.wordsStr}">&hw=${hl.wordsStr}</c:if>"><fmt:message
                                 key="link.saved.msg"/></a>
+                        <div>
+                            <c:forEach var="imgUrl" items="<%= imgUrls %>">
+                                <img src="${imgUrl}" style="max-height: 60px">
+                            </c:forEach>
+                        </div>
                     </display:column>
                     <c:if test="${hasNicks}">
                         <display:column title="Ник">

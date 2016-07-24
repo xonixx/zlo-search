@@ -90,7 +90,7 @@ public final class HtmlUtils {
         return extractImgUrls(msgText, forumHost, 0); // all imgs
     }
 
-    public static List<String> extractImgUrls(String msgText, String forumHost, int atMostCount) {
+    public static List<String> extractImgUrls(String msgText, String forumHost, int atMost) {
         if (StringUtils.isEmpty(msgText)) {
             return Collections.emptyList();
         }
@@ -113,7 +113,7 @@ public final class HtmlUtils {
 
                 res.add(imgUrl);
 
-                if (atMostCount > 0 && ++cnt >= atMostCount)
+                if (atMost > 0 && ++cnt >= atMost)
                     break;
             }
         }

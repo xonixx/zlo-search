@@ -302,7 +302,7 @@ public class TestSitesRetrieving {
         assertTrue(MessageLogic.hasImg(m, zlo));
         assertEquals(5, HtmlUtils.extractImgUrls(m.getBody(), "zlo.rt.mipt.ru", 5).size());
         assertEquals(64, HtmlUtils.extractImgUrls(m.getBody(), "zlo.rt.mipt.ru", -1).size());
-        assertEquals(64, HtmlUtils.extractImgUrls(m.getBody(), "zlo.rt.mipt.ru", 0).size());
+        assertEquals(64, HtmlUtils.extractImgUrls(m.getBody(), "zlo.rt.mipt.ru").size());
         assertEquals(64, HtmlUtils.extractImgUrls(m.getBody(), "zlo.rt.mipt.ru", 100).size());
         assertEquals("http://cs543105.vk.me/v543105862/4b006/nVnMYwGVEso.jpg",
                 HtmlUtils.extractImgUrls(m.getBody(), "zlo.rt.mipt.ru", 100).get(2));
