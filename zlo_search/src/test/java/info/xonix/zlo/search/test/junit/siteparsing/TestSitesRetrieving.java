@@ -7,6 +7,7 @@ import info.xonix.zlo.search.logic.forum_adapters.ForumAccessException;
 import info.xonix.zlo.search.domain.Message;
 import info.xonix.zlo.search.domain.MessageStatus;
 import info.xonix.zlo.search.spring.AppSpringContext;
+import info.xonix.zlo.search.utils.HtmlUtils;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -296,6 +297,17 @@ public class TestSitesRetrieving {
         assertEquals(null, m.getBody());
         assertEquals(MessageStatus.DELETED, m.getStatus());
         System.out.println(m);
+
+        m = forumLogic.getMessageByNumber(zlo, 9338324);
+        assertTrue(MessageLogic.hasImg(m, zlo));
+        assertEquals(5, HtmlUtils.extractImgUrls(m.getBody(), "zlo.rt.mipt.ru", 5).size());
+        assertEquals(64, HtmlUtils.extractImgUrls(m.getBody(), "zlo.rt.mipt.ru", -1).size());
+        assertEquals(64, HtmlUtils.extractImgUrls(m.getBody(), "zlo.rt.mipt.ru", 0).size());
+        assertEquals(64, HtmlUtils.extractImgUrls(m.getBody(), "zlo.rt.mipt.ru", 100).size());
+        assertEquals("http://cs543105.vk.me/v543105862/4b006/nVnMYwGVEso.jpg",
+                HtmlUtils.extractImgUrls(m.getBody(), "zlo.rt.mipt.ru", 100).get(2));
+        assertEquals("http://cs7001.vk.me/v7001128/23567/HQpKymOJ9A8.jpg",
+                HtmlUtils.extractImgUrls(m.getBody(), "zlo.rt.mipt.ru", 100).get(63));
     }
 
 //    @Test

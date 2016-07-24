@@ -9,6 +9,7 @@ import info.xonix.zlo.search.utils.HtmlUtils;
  * User: gubarkov
  * Date: 17.03.12
  * Time: 1:34
+ * TODO: rm this & move login into Message
  */
 public class MessageLogic {
     public static boolean hasUrl(Message message) {

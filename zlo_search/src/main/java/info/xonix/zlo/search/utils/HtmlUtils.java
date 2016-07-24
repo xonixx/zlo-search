@@ -24,7 +24,7 @@ public final class HtmlUtils {
     private final static String NEW_LINE = "\n";
 
     // суть в том, чтоб не считать смайлы за картинки, потому важно http
-    private static final Pattern IMG = Pattern.compile("(?i)<img.*?src\\s*=\\s*(\"?|\'?)https?://([^>]*)(\\1).*?>", Pattern.CASE_INSENSITIVE);
+    private static final Pattern IMG = Pattern.compile("(?i)<img.*?src\\s*=\\s*(\"?|\'?)(https?://([^>]*))(\\1).*?>", Pattern.CASE_INSENSITIVE);
     private static final Pattern URL = Pattern.compile("(?i)<a\\s.+?>", Pattern.CASE_INSENSITIVE);
     private static final Pattern URL_EXTRACTOR = Pattern.compile("(?i)<a\\s+href=(\"|\')(.+?)(\\1).*?>", Pattern.CASE_INSENSITIVE);
 
@@ -106,7 +106,7 @@ public final class HtmlUtils {
         int cnt = 0;
         while (matcher.find()) {
             String imgUrl = matcher.group(2);
-            final String imgUrlWithoutSchema = imgUrl.toLowerCase();
+            final String imgUrlWithoutSchema = matcher.group(3).toLowerCase();
 
             if (forumHost == null
                     || !imgUrlWithoutSchema.startsWith(forumHost)) { // img located on forum host = smile
