@@ -28,8 +28,7 @@ public class ImgPreviewServlet extends HttpServlet {
             ImageIO.write(previewImg, "jpg", resp.getOutputStream());
             resp.getOutputStream().flush();
         } catch (Exception e) {
-            resp.setStatus(404);
-            ImgLogic.emptyGif(resp);
+            getServletContext().getRequestDispatcher("/pic/FFFFFF-0.png").forward(req, resp);
         }
     }
 }
