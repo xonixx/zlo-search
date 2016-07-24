@@ -1,9 +1,7 @@
 package info.xonix.launcher;
 
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
-import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.webapp.*;
 import sun.misc.JarFilter;
@@ -30,9 +28,6 @@ public class LaunchBoardSearch {
 
         Server server = new Server(8080);
 
-        Connector connector = new ServerConnector(server);
-        server.addConnector(connector);
-
         WebAppContext root = new WebAppContext(join(zloWeb, "src/main/webapp"), "/");
 //        WebAppContext root = new WebAppContext(join(zloWeb, "src/main/webapp"), "/lol");
 
@@ -58,7 +53,6 @@ public class LaunchBoardSearch {
         handlerList.addHandler(root);
 
         server.setHandler(handlerList);
-
         server.start();
     }
 
