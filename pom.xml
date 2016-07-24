@@ -12,7 +12,7 @@
     <version>2.0</version>
 
     <prerequisites>
-        <maven>2.2.1</maven>
+        <maven>3.3.9</maven>
     </prerequisites>
 
     <scm>
@@ -20,19 +20,6 @@
     </scm>
 
     <repositories>
-        <!--not works now-->
-        <!--<repository>
-            <id>JBoss</id>
-            <name>JBoss Repsitory</name>
-            <layout>default</layout>
-            <url>http://repository.jboss.org/maven2</url>
-        </repository>-->
-
-        <!--<repository>
-            <id>com.springsource.repository.bundles.release</id>
-            <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
-            <url>http://repository.springsource.com/maven/bundles/release</url>
-        </repository>-->
         <repository>
             <id>com.springsource.repository.bundles.external</id>
             <name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
@@ -78,7 +65,7 @@
             <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
-                <version>2.4</version>
+                <version>2.5</version>
             </dependency>
 
             <dependency>
@@ -122,8 +109,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.2</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
