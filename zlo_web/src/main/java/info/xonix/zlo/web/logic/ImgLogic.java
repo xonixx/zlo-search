@@ -11,6 +11,7 @@ import org.imgscalr.AsyncScalr;
 import org.imgscalr.Scalr;
 
 import javax.imageio.ImageIO;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -49,7 +50,7 @@ public class ImgLogic {
         }
     }
 
-    public static void renderPreviewAndCache(String url, HttpServletResponse resp) {
+    public static void renderPreviewAndCache(String url, HttpServletResponse resp, ServletContext servletContext) {
         File previewFile = new File(config.getPicPreviewDir(), safeFilename(url));
         boolean err = false;
         OutputStream outputStream = null;
@@ -57,18 +58,22 @@ public class ImgLogic {
             outputStream = resp.getOutputStream();
             if (previewFile.exists()) {
                 if (previewFile.length() == 0) {
-                    log.info("renderPreviewAndCache " + url + ": cached is empty");
+//                    log.info("renderPreviewAndCache " + url + ": cached is empty");
                     err = true;
                 } else {
-                    log.info("renderPreviewAndCache " + url + ": cached");
+//                    log.info("renderPreviewAndCache " + url + ": cached");
                     resp.setContentType("image/jpeg");
                     FileUtils.copyFile(previewFile, outputStream);
                 }
             } else {
                 BufferedImage previewImg = null;
                 try {
-                    log.info("renderPreviewAndCache " + url + ": building preview");
-                    previewImg = preview(url, 70);
+//                    log.info("renderPreviewAndCache " + url + ": building preview");
+                    try {
+                        previewImg = preview(url, 70);
+                    } catch (Exception e) {
+                        previewImg = preview(url, 70);
+                    }
                 } catch (Exception e) {
                     if (!previewFile.createNewFile()) {
                         log.error("Can't create empty preview file!");
@@ -88,7 +93,7 @@ public class ImgLogic {
             try {
                 if (err) {
                     resp.setContentType("image/png");
-                    IOUtils.copy(ImgLogic.class.getClassLoader().getResourceAsStream("/pic/FFFFFF-0.png"), outputStream);
+                    IOUtils.copy(servletContext.getResourceAsStream("/pic/FFFFFF-0.png"), outputStream);
                 }
                 outputStream.flush();
             } catch (Exception e) {
@@ -102,7 +107,7 @@ public class ImgLogic {
 
         for (int i = 0; i < parts.length; i++) {
             // replaces any character that isn't a number, letter or underscore
-            parts[i] = parts[i].replaceAll("\\W+", "");
+            parts[i] = parts[i].replaceAll("\\W+", "_");
         }
 
         return StringUtils.join(parts, '.') + '_' + DigestUtils.shaHex(name);

@@ -20,6 +20,6 @@ public class ImgPreviewServlet extends HttpServlet {
             return;
         }
 
-        ImgLogic.renderPreviewAndCache(url, resp);
+        ImgLogic.renderPreviewAndCache(url, resp, getServletContext());
     }
 }
