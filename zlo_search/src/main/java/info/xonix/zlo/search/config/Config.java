@@ -17,6 +17,7 @@ import javax.annotation.Nullable;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -291,6 +292,16 @@ public class Config {
 
     public String getIndexDir(String forumId) {
         return getProp("indexer.dir") + "/index_" + forumId;
+    }
+
+    public String getPicPreviewDir() {
+        String dir = getProp("pic_preview.dir");
+        File dirF = new File(dir);
+        if (!dirF.exists()) {
+            if (!dirF.mkdirs())
+                throw new IllegalStateException("Can't create img preview dir");
+        }
+        return dir;
     }
 
     public String message(String key) {
