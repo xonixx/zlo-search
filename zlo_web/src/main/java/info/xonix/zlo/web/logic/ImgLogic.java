@@ -110,6 +110,9 @@ public class ImgLogic {
             parts[i] = parts[i].replaceAll("\\W+", "_");
         }
 
-        return StringUtils.join(parts, '.') + '_' + DigestUtils.shaHex(name);
+        String fname = StringUtils.join(parts, '.');
+        if (fname.length() > 200)
+            fname = fname.substring(0, 200);
+        return fname + '_' + DigestUtils.shaHex(name);
     }
 }
