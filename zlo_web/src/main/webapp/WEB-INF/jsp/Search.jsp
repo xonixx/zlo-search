@@ -275,14 +275,14 @@
                         <a class="search"
                            href="msg?site=${descriptor.forumIntId}&num=${msg.num}<c:if test="${not empty hl.wordsStr}">&hw=${hl.wordsStr}</c:if>"><fmt:message
                                 key="link.saved.msg"/></a>
-                        <%--<div>
+                        <div>
                             <c:forEach var="imgUrl" items="<%= imgUrls %>">
                                 <a href="${imgUrl}"><img src="<c:url value="img">
                                     <c:param name="url" value="${imgUrl}"/>
                                     <c:param name="hash" value="${xonix:hash(imgUrl)}"/>
                                 </c:url>"></a>
                             </c:forEach>
-                        </div>--%>
+                        </div>
                     </display:column>
                     <c:if test="${hasNicks}">
                         <display:column title="Ник">
