@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SERV=xonix@37.187.123.144
+SERV=xonix@search.mipt.me
 TOMCAT=/home/xonix/apache-tomcat/
 WAR=$(ls -v zlo_web/target/*.war | tail -n 1)
 BKP=$(date +%y%m%d%H%M)
