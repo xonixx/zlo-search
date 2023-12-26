@@ -62,7 +62,7 @@ public class ImgLogic {
                     err = true;
                 } else {
 //                    log.info("renderPreviewAndCache " + url + ": cached");
-                    resp.setContentType("image/jpeg");
+                    resp.setContentType("image/png");
                     FileUtils.copyFile(previewFile, outputStream);
                 }
             } else {
@@ -81,9 +81,9 @@ public class ImgLogic {
                     err = true;
                 }
                 if (previewImg != null) {
-                    resp.setContentType("image/jpeg");
-                    ImageIO.write(previewImg, "jpg", previewFile);
-                    ImageIO.write(previewImg, "jpg", outputStream);
+                    resp.setContentType("image/png");
+                    ImageIO.write(previewImg, "png", previewFile);
+                    ImageIO.write(previewImg, "png", outputStream);
                 }
             }
         } catch (Exception e) {
