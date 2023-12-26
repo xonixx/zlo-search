@@ -103,7 +103,7 @@ ALTER TABLE %(site)s_nickhost ADD INDEX idx_host (host);
 -- initial
 insert into %(site)s_nickhost (nick, host, reg, cnt)
 select nick, host, reg, count(*) cnt from %(site)s_messages
-group by nick, host;
+group by nick, host, reg;
 
 -- trigger
 DROP TRIGGER IF EXISTS %(site)s_trigger_nickhost;

@@ -32,7 +32,7 @@
     <c:when test="${byNick}">
         <sql:query var="res">
             select nick, user_id, reg, COUNT(*) cnt from ${messagesTbl}${' '}${msgDateWhereClause}
-            group by nick
+            group by nick, user_id, reg
             order by cnt desc;
             <sql:param>${periodDays}</sql:param>
         </sql:query>
