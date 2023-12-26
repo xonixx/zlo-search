@@ -15,7 +15,7 @@ ALTER TABLE nickhost ADD INDEX idx_host (host);
 -- initial
 insert into nickhost (nick, host, reg, cnt)
 select nick, host, reg, count(1) cnt from messages
-group by nick, host;
+group by nick, host, reg;
 
 -- trigger
 DROP TRIGGER IF EXISTS trigger_nickhost;

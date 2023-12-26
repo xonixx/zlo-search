@@ -86,7 +86,7 @@ ALTER TABLE anime_nickhost ADD INDEX idx_host (host);
 -- initial
 insert into anime_nickhost (nick, host, reg, cnt)
 select nick, host, reg, count(1) cnt from anime_messages
-group by nick, host;
+group by nick, host, reg;
 
 -- trigger
 DROP TRIGGER IF EXISTS anime_trigger_nickhost;
@@ -159,7 +159,7 @@ ALTER TABLE velo_nickhost ADD INDEX idx_host (host);
 -- initial
 insert into velo_nickhost (nick, host, reg, cnt)
 select nick, host, reg, count(1) cnt from velo_messages
-group by nick, host;
+group by nick, host, reg;
 
 -- trigger
 DROP TRIGGER IF EXISTS velo_trigger_nickhost;
@@ -232,7 +232,7 @@ ALTER TABLE sport_nickhost ADD INDEX idx_host (host);
 -- initial
 insert into sport_nickhost (nick, host, reg, cnt)
 select nick, host, reg, count(1) cnt from sport_messages
-group by nick, host;
+group by nick, host, reg;
 
 -- trigger
 DROP TRIGGER IF EXISTS sport_trigger_nickhost;
